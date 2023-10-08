@@ -16,6 +16,6 @@ git init
 git add -A
 git commit -m 'deploy'
 
-git push -f git@github.com:[username]/[username].github.io.git main
+git push -f git@github.com:IskraI/IskraI.github.io.git main
 
 cd -
