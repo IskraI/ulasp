@@ -1,8 +1,9 @@
 import Footer from "../../components/Footer/Footer";
+import { SignInClient } from "../../components/AuthForm/SignInClient";
 const LoginPage = () => {
   return (
     <>
-      <h1>Login</h1>
+      <SignInClient/>
       <Footer />
     </>
   );
