@@ -66,7 +66,7 @@ export const SignInClient = () => {
                   <StyledError>{errors.сontract.message}</StyledError>
                 </div>
               )}
-                          </StyledInputWrap>
+                 </StyledInputWrap>
            
                   </StyledInnerDiv>
                        <StyledTitle>Ідентифікаційний номер</StyledTitle>
