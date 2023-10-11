@@ -58,7 +58,7 @@ export const SignInClient = () => {
                       color: "red",
                       display: "flex",
                       position: "absolute",
-                      top: "35%",
+                      top: "50%",
                       transform: "translateY(-50%)",
                       right: "12px",
                     }}
@@ -94,7 +94,7 @@ export const SignInClient = () => {
                       color: "red",
                       display: "flex",
                       position: "absolute",
-                      top: "35%",
+                      top: "50%",
                       transform: "translateY(-50%)",
                       right: "12px",
                     }}
