@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-// import { SignInSchema } from "./Schema";
+import { SignInSchema, } from "./Schema";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { BiErrorCircle } from "react-icons/bi";
+import { VscError } from "react-icons/vsc";
 
 
 
@@ -24,7 +24,7 @@ export const SignInClient = () => {
   } = useForm({
     mode: "onChange",
     defaultValues: { сontract: "", identification: "" },
-    // resolver: yupResolver(SignInSchema),
+    resolver: yupResolver(SignInSchema),
   });
 
 
@@ -51,16 +51,16 @@ export const SignInClient = () => {
               />
               {errors.сontract && (
                 <div>
-                  <BiErrorCircle
+                  <VscError
                     style={{
-                      width: "24px",
-                      height: "24px",
+                      width: "25px",
+                      height: "25px",
                       color: "red",
                       display: "flex",
                       position: "absolute",
-                      top: "50%",
+                      top: "35%",
                       transform: "translateY(-50%)",
-                      right: "24px",
+                      right: "12px",
                     }}
                   />
                   <StyledError>{errors.сontract.message}</StyledError>
@@ -87,16 +87,16 @@ export const SignInClient = () => {
               />
               {errors.identification && (
                 <div>
-                  <BiErrorCircle
+                  <VscError
                     style={{
-                      width: "24px",
-                      height: "24px",
+                      width: "25px",
+                      height: "25px",
                       color: "red",
                       display: "flex",
                       position: "absolute",
-                      top: "50%",
+                      top: "35%",
                       transform: "translateY(-50%)",
-                      right: "24px",
+                      right: "12px",
                     }}
                   />
                   <StyledError>{errors.identification.message}</StyledError>
