@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import Footer from "../../components/Footer/Footer";
+
 import {
   WelcomeTitle,
   WelcomeText,
  } from "./WelcomPage.styled";
+
 import { StyledButton } from "../../components/AuthForm/SignInClient.styled";
 
 
@@ -54,6 +56,7 @@ const [animationEnd, setAnimationEnd] = useState(false);
         </StyledButton>
                <Footer />
             </>
+
   );
 };
 

@@ -1,8 +1,14 @@
+import { Link } from "react-router-dom";
+import { PageHeader, PageLogo } from "./Header.styled";
+import pageLogoPath from "../../images/logo.png";
+
 const Header = () => {
   return (
-    <>
-      <p>Header</p>
-    </>
+    <PageHeader>
+      <Link to="/">
+        <PageLogo src={pageLogoPath} width={50} />
+      </Link>
+    </PageHeader>
   );
 };
 
