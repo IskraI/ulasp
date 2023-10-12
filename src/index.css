@@ -33,16 +33,16 @@ body {
    @media (-webkit-min-device-pixel-ratio: 2) {
     background-image: url('../src/assets/Background@2x.jpg');
   }
-  background-repeat: no-repeat; /* Предотвращаем повторение фона */
+  background-repeat: no-repeat; 
    background-size: cover;
   /* animation: rotateBackground 500ms linear 1ms; */
   
 }
 
-/* body.animation-end { */
-  /* animation: none; 
-background-size: 100% 100%; */
-/* } */
+/* body.animation-end { 
+  animation: none; 
+background-size: 100% 100%; 
+ } */
 
 
 h1 {
@@ -82,11 +82,10 @@ button:focus-visible {
   }
 }
 
-/* @keyframes rotateBackground {
-   0% {
-    background-position: 0% 50%; /* Фон начинает двигаться с верхней середины */
-  /* }
-  100% {
-    background-position: 100% 50%; /* Фон доходит до верхней середины после оборота по кругу */
-  /* } */
-/* } */ 
+ /* @keyframes rotateBackground {
+   0%{background-position:0% 50%}
+
+50%{background-position:100% 50%}
+
+100%{background-position:0% 50%}
+ }   */
