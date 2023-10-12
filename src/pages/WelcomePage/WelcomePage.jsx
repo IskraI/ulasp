@@ -1,15 +1,36 @@
+import { useEffect, useState } from 'react';
 import Footer from "../../components/Footer/Footer";
 import {
   WelcomeTitle,
   WelcomeText,
- 
-} from "./WelcomPage.styled";
+ } from "./WelcomPage.styled";
 import { StyledButton } from "../../components/AuthForm/SignInClient.styled";
 
+
+
 const WelcomePage = () => {
+const [animationEnd, setAnimationEnd] = useState(false);
+
+  useEffect(() => {
+    
+    const animationDuration = 500; 
+    setTimeout(() => {
+      setAnimationEnd(true);
+    }, animationDuration);
+  }, []);
+
+  useEffect(() => {
+        if (animationEnd) {
+      document.body.classList.add('animation-end');
+    } else {
+      document.body.classList.remove('animation-end');
+    }
+  }, [animationEnd]);
+
+
   return (
     <>
-      <WelcomeTitle>УЛАСП 
+                   <WelcomeTitle>УЛАСП 
         <span style={{
           color: "#FFF3BF",
     fontFamily: "Inter",
@@ -30,9 +51,9 @@ const WelcomePage = () => {
       </WelcomeText>
       <StyledButton type="submit" >
             Вхід
-          </StyledButton>
-      <Footer />
-    </>
+        </StyledButton>
+               <Footer />
+            </>
   );
 };
 
