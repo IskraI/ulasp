@@ -7,9 +7,11 @@ export const colors = {
   primaryWhite: "#ffffff",
   BgModal: "#7F99C0",
   inputBgGrayColor: "rgba(0, 0, 0, 0.4)",
-  mileageInputBorderColor: "#8A8A8933",
 };
 
 export const transition = {
-  duration: "250ms linear",
+  duration: "300ms ease-out",
+};
+export const border = {
+  boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.60) inset",
 };
