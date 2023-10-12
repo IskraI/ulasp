@@ -6,12 +6,12 @@ import WelcomePage from "./pages/WelcomePage/WelcomePage";
 import Login from "./pages/LoginPage/LoginPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import EditorPage from "./pages/EditorPage/EditorPage";
-import { SharedLayout } from "./components/SharedLayout/SharedLayout";
+import SharedLayout from "./components/SharedLayout/SharedLayout";
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<SharedLayout />}>
+        <Route element={<SharedLayout />}>
           <Route index element={<WelcomePage />} redirectTo="/" />
           <Route path="/" element={<WelcomePage />} />
           <Route path="/signin" element={<Login />} />

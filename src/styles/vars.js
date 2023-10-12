@@ -5,8 +5,9 @@ export const colors = {
   activeBtnColor: "#8CACD7",
   accentHoverColor: "#FFF3BF",
   primaryWhite: "#ffffff",
-  BgModal: "#7F99C0",
-  inputBgGrayColor: "rgba(0, 0, 0, 0.4)",
+  bBgModal: "#7F99C0",
+  bgHeaderColor: "#3E6DA3",
+  inputGrayColor: "rgba(0, 0, 0, 0.4)",
 };
 
 export const transition = {
