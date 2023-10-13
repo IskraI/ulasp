@@ -3,10 +3,12 @@ import { keyframes } from "@emotion/react";
 import { colors } from "../../styles/vars";
 
 export const WelcomeSection = styled.div`
+  padding: 281px 0;
   display: flex;
   flex-direction: column;
 
   align-items: center;
+  padding: 203px 0;
 `;
 
 const slideInAnimation = keyframes`
@@ -52,4 +54,3 @@ export const WelcomeText = styled.p`
   // line-height: normal;
   animation: ${slideUpAnimation} 1s linear;
 `;
-

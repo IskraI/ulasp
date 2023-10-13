@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import { colors } from "../../styles/vars";
 export const PageHeader = styled.header`
   display: flex;
-  /* justify-content: space-evenly; */
   align-items: center;
   width: 100%;
   height: 80px;
@@ -10,6 +9,6 @@ export const PageHeader = styled.header`
 `;
 
 export const PageLogo = styled.img`
-  width: 50px;
-  max-height: 100%;
+  width: 56px;
+  height: 68px;
 `;
