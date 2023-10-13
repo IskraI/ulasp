@@ -1,7 +1,11 @@
+import Footer from "../../components/Footer/Footer";
+import { SignInAdminAndEditor } from "../../components/AuthForm/SignInAdminAndEditor";
+
 const EditorPage = () => {
   return (
     <>
-      <h1>EditorPage</h1>
+      <SignInAdminAndEditor/>
+      <Footer />
     </>
   );
 };

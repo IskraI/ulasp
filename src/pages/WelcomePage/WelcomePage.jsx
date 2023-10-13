@@ -14,7 +14,6 @@ const WelcomePage = () => {
 const [animationEnd, setAnimationEnd] = useState(false);
 
   useEffect(() => {
-    
     const animationDuration = 500; 
     setTimeout(() => {
       setAnimationEnd(true);
@@ -22,13 +21,12 @@ const [animationEnd, setAnimationEnd] = useState(false);
   }, []);
 
   useEffect(() => {
-        if (animationEnd) {
+    if (animationEnd) {
       document.body.classList.add('animation-end');
     } else {
       document.body.classList.remove('animation-end');
     }
   }, [animationEnd]);
-
 
   return (
     <>
@@ -54,9 +52,9 @@ const [animationEnd, setAnimationEnd] = useState(false);
       <StyledButton type="submit" >
             Вхід
         </StyledButton>
-               <Footer />
-            </>
-
+      <Footer />
+      </>
+         
   );
 };
 
