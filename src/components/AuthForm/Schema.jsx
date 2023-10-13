@@ -13,7 +13,7 @@ export const SignInSchema = Yup.object({
 export const AdminAndEditorSchema = Yup.object({
   login: Yup.string()
    .required("Поле обов'язкове для заповнення")
-    .matches(/^[a-zA-Zа-яА-Я0-9]{3,10}$/, 'Перевірте правельність введенних данних!'),
+    .matches(/^[a-zA-Z0-9]{3,10}$/, 'Перевірте правельність введенних данних!'),
   password: Yup.string()  
     .required("Пароль обов'язковий для заповнення")
     // .min(6, 'Password is too short - should be 6 chars minimum.')
