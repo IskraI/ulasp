@@ -4,9 +4,9 @@ import Footer from "../../components/Footer/Footer";
 import {
   WelcomeTitle,
   WelcomeText,
+  SignInNavLink
  } from "./WelcomPage.styled";
 
-import { StyledButton } from "../../components/AuthForm/SignInClient.styled";
 
 
 
@@ -49,9 +49,9 @@ const [animationEnd, setAnimationEnd] = useState(false);
           lineHeight: "normal",
      display: "block" ,   }}>Ліцензійна музика.</span>
       </WelcomeText>
-      <StyledButton type="submit" >
-            Вхід
-        </StyledButton>
+      <SignInNavLink to="/signin" >
+            Увійти
+        </SignInNavLink>
       <Footer />
       </>
          

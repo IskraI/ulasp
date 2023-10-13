@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { colors } from '../../styles/vars';
 
+
 export const StyledForm = styled.form`
   width: 100%;
   height: auto;
@@ -97,6 +98,8 @@ margin-top: 34px;
   }
   
 `;
+
+
 
 export const StyledError = styled.div`
  position: absolute;
