@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 
-
 import {
   WelcomeTitle,
   WelcomeText,
-  SignInNavLink, WelcomeSection
- } from "./WelcomPage.styled";
-
-
+  SignInNavLink,
+  WelcomeSection,
+} from "./WelcomPage.styled";
 
 const WelcomePage = () => {
   const [animationEnd, setAnimationEnd] = useState(false);
@@ -62,13 +60,8 @@ const WelcomePage = () => {
         </span>
       </WelcomeText>
 
-      <SignInNavLink to="/signin" >
-            Увійти
-        </SignInNavLink>
-           </>
-         
-
-
+      <SignInNavLink to="/signin">Увійти</SignInNavLink>
+    </WelcomeSection>
   );
 };
 
