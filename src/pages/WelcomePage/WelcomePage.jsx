@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 
-import { WelcomeTitle, WelcomeText, WelcomeSection } from "./WelcomPage.styled";
 
-import { StyledButton } from "../../components/AuthForm/SignInClient.styled";
+import {
+  WelcomeTitle,
+  WelcomeText,
+  SignInNavLink, WelcomeSection
+ } from "./WelcomPage.styled";
+
+
 
 const WelcomePage = () => {
   const [animationEnd, setAnimationEnd] = useState(false);
@@ -56,8 +61,14 @@ const WelcomePage = () => {
           Ліцензійна музика.
         </span>
       </WelcomeText>
-      <StyledButton type="submit">Вхід</StyledButton>
-    </WelcomeSection>
+
+      <SignInNavLink to="/signin" >
+            Увійти
+        </SignInNavLink>
+           </>
+         
+
+
   );
 };
 

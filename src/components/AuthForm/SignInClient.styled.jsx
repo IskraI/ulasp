@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { colors } from "../../styles/vars";
 
+
 export const StyledForm = styled.form`
   /* width: 100%; */
   height: auto;
@@ -85,6 +86,8 @@ export const StyledButton = styled.button`
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.4) inset;
   }
 `;
+
+
 
 export const StyledError = styled.div`
   position: absolute;
