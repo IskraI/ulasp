@@ -1,11 +1,10 @@
-import Footer from "../../components/Footer/Footer";
 import { SignInClient } from "../../components/AuthForm/SignInClient";
+import { WelcomeSection } from "../WelcomePage/WelcomPage.styled";
 const LoginPage = () => {
   return (
-    <>
-      <SignInClient/>
-      <Footer />
-    </>
+    <WelcomeSection>
+      <SignInClient />
+    </WelcomeSection>
   );
 };
 

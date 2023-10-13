@@ -1,7 +1,18 @@
+
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
 import { colors } from '../../styles/vars';
 import { NavLink } from "react-router-dom";
+
+
+export const WelcomeSection = styled.div`
+  padding: 203px 0;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
+`;
+
 
 const slideInAnimation = keyframes`
   0% {
@@ -27,25 +38,26 @@ opacity: 0;
 
 export const WelcomeTitle = styled.h1`
   color: ${colors.primaryColor};
-text-align: center;
-font-family: Inter;
-font-size: 74px;
-font-style: normal;
-font-weight: 500;
-// line-height: normal;
-margin-bottom: 36px;
-animation:  ${slideInAnimation} 1s linear;
+  text-align: center;
+  font-family: Inter;
+  font-size: 74px;
+  font-style: normal;
+  font-weight: 500;
+  // line-height: normal;
+  margin-bottom: 36px;
+  animation: ${slideInAnimation} 1s linear;
 `;
 export const WelcomeText = styled.p`
- color: ${colors.primaryColor};
-text-align: center;
-font-family: Inter;
-font-size: 32px;
-font-style: normal;
-font-weight: 400;
-// line-height: normal;
-animation:  ${slideUpAnimation} 1s linear;
+  color: ${colors.primaryColor};
+  text-align: center;
+  font-family: Inter;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  // line-height: normal;
+  animation: ${slideUpAnimation} 1s linear;
 `;
+
 
 export const SignInNavLink = styled(NavLink)`
 width: 422px;
@@ -74,3 +86,4 @@ margin-top: 34px;
 `;
 
   
+
