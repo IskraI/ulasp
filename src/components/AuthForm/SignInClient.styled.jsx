@@ -2,12 +2,12 @@ import styled from "@emotion/styled";
 import { colors } from "../../styles/vars";
 
 export const StyledForm = styled.form`
-  width: 100%;
+  /* width: 100%; */
   height: auto;
 `;
 
 export const StyledFormInsight = styled.div`
-  margin-top: 240px;
+  /* margin-top: 240px; */
 `;
 
 export const StyledTitle = styled.h2`
