@@ -48,6 +48,8 @@ animation:  ${slideUpAnimation} 1s linear;
 `;
 
 export const SignInNavLink = styled(NavLink)`
+display: flex;
+ box-sizing: border-box;
 width: 422px;
 height: 86px;
 padding: 8px;
@@ -64,11 +66,14 @@ color:  ${colors.mainFontColor};
 font-size: 20px;
 line-height: 120%; /* 24px */
 margin-top: 34px;
+margin-left:auto;
+margin-right:auto;
 
 
  
   &:hover {
       box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.40) inset;
+      color:  ${colors.mainFontColor};
   }
   
 `;

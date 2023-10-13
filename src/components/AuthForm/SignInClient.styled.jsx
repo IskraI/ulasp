@@ -74,6 +74,7 @@ export const StyledInput = styled.input`
 `;
 
 export const StyledButton = styled.button`
+display: block;
 width: 422px;
 height: 86px;
 padding: 8px;
@@ -90,6 +91,8 @@ color:  ${colors.mainFontColor};
 font-size: 20px;
 line-height: 120%; /* 24px */
 margin-top: 34px;
+margin-left:auto;
+margin-right:auto;
 
 
  
