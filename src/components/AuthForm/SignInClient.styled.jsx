@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { colors } from '../../styles/vars';
 
 export const StyledForm = styled.form`
   width: 100%;
@@ -6,11 +7,11 @@ export const StyledForm = styled.form`
 `;
 
 export const StyledFormInsight = styled.div`
- 
+ margin-top: 240px;
 `;
 
 export const StyledTitle = styled.h2`
-color: var(--TXT-color, #17161C);
+color:  ${colors.mainFontColor};
 font-family: Inter;
 font-size: 24px;
 font-style: normal;
@@ -37,7 +38,7 @@ export const StyledInput = styled.input`
   border: 1px solid var(--TXT-color, #17161C);
    background-color: transparent;
   padding: 8px;
-    color: #17161C;
+    color: ${colors.mainFontColor};
   font-size: 14px;
   align-items: center;
 
@@ -52,13 +53,13 @@ export const StyledInput = styled.input`
  
   &:focus,
   &:hover {
-   border: 1px solid var(--TXT-color, #17161C);
+   border: 1px solid ${colors.mainFontColor};
    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.60) inset;
     background-color: transparent;
   }
 
   &.valid-border {
-    border-color:  #17161C;
+    border-color:  ${colors.mainFontColor};
     outline: none;
     background-color: transparent;
   }
@@ -81,13 +82,14 @@ gap: 8px;
 flex-shrink: 0;
 border-radius: 10px;
 border: 1px solid #000;
-background: #FFF3BF;
+background: ${colors.primaryColor};
 cursor: pointer;
 
-color: var(--TXT-color, #17161C);
+color:  ${colors.mainFontColor};
 font-size: 20px;
 line-height: 120%; /* 24px */
 margin-top: 34px;
+
 
  
   &:hover {
@@ -125,6 +127,3 @@ export const StyledInnerDiv = styled.div`
 //   margin-left: 0;
 // `;
 
-export const StyledPasswordDiv = styled.div`
- 
-`;
