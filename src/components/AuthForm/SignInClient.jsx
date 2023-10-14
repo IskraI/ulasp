@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import { SignInSchema, } from "./Schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { VscError } from "react-icons/vsc";
+// import { useDispatch } from "react-redux";
+// import { signin, refreshUser } from "../../redux/operations";
 
 
 
@@ -27,10 +29,25 @@ export const SignInClient = () => {
     resolver: yupResolver(SignInSchema),
   });
 
+  // const dispatch = useDispatch();
+  // const onSubmit = async (values) => {
+  //   try {
+  //     const res = await dispatch(signin(values));
+  //     if (res.payload.response?.status === 401) {
+  //       // toast.error(res.payload.response.data.message);
+  //       throw new Error(res.payload.response.data.message);
+  //     }
 
+  //     // toast.success("Authentication successful");
+  //     dispatch(refreshUser());
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
   
   return (
     <>
+      {/* onSubmit={handleSubmit(onSubmit)} */}
       <StyledForm autoComplete="off" >
         <StyledFormInsight>
           <StyledTitle>Номер договору</StyledTitle>

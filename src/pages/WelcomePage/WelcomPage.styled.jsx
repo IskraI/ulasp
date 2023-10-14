@@ -60,6 +60,7 @@ export const WelcomeText = styled.p`
 
 
 export const SignInNavLink = styled(NavLink)`
+display: flex;
 width: 422px;
 height: 86px;
 padding: 8px;

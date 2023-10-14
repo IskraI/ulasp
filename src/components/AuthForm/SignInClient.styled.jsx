@@ -19,6 +19,7 @@ export const StyledTitle = styled.h2`
   font-weight: 400;
   line-height: normal;
   margin-left: 0px;
+  margin-bottom: 24px;
 `;
 
 export const StyledInputWrap = styled.div`
@@ -31,7 +32,7 @@ export const StyledInput = styled.input`
   box-sizing: border-box;
   height: 57px;
   border-radius: 10px;
-  border: 1px solid var(--TXT-color, #17161c);
+  border: 1px solid ${colors.mainFontColor};
   background-color: transparent;
   padding: 8px;
   color: ${colors.mainFontColor};
@@ -81,6 +82,8 @@ export const StyledButton = styled.button`
   font-size: 20px;
   line-height: 120%; /* 24px */
   margin-top: 34px;
+  margin-left:auto;
+  margin-right:auto;
 
   &:hover {
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.4) inset;
