@@ -1,9 +1,8 @@
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { AdminAndEditorSchema } from "./Schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { VscError } from "react-icons/vsc";
-
-
 
 import {
   StyledButton,
@@ -14,12 +13,16 @@ import {
   StyledInputWrap,
   StyledTitle,
   StyledInnerDiv,
- } from "./SignInClient.styled";
+} from "./SignInClient.styled";
+
+import { useSigninMutation } from "../../redux/authSlice";
 
 export const SignInAdminAndEditor = () => {
+  const [dispatch] = useSigninMutation();
   const {
     register,
-    // handleSubmit,
+    handleSubmit,
+    reset,
     formState: { errors, isValid, dirtyFields },
   } = useForm({
     mode: "onChange",
@@ -27,11 +30,19 @@ export const SignInAdminAndEditor = () => {
     resolver: yupResolver(AdminAndEditorSchema),
   });
 
+  const onSubmit = ({ login, password }) => {
+    console.log("login", login);
+    dispatch({ login, password })
+      .unwrap()
+      .then(() => {
+        reset();
+      })
+      .catch((e) => console.log(e.data.message));
+  };
 
-  
   return (
     <>
-      <StyledForm autoComplete="off" >
+      <StyledForm autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
         <StyledFormInsight>
           <StyledTitle>Логін</StyledTitle>
           <StyledInnerDiv>
@@ -66,10 +77,9 @@ export const SignInAdminAndEditor = () => {
                   <StyledError>{errors.login.message}</StyledError>
                 </div>
               )}
-                 </StyledInputWrap>
-           
-                  </StyledInnerDiv>
-                       <StyledTitle>Пароль</StyledTitle>
+            </StyledInputWrap>
+          </StyledInnerDiv>
+          <StyledTitle>Пароль</StyledTitle>
           <StyledInnerDiv>
             <StyledInputWrap>
               <StyledInput
@@ -102,8 +112,7 @@ export const SignInAdminAndEditor = () => {
                   <StyledError>{errors.password.message}</StyledError>
                 </div>
               )}
-                          </StyledInputWrap>
-           
+            </StyledInputWrap>
           </StyledInnerDiv>
           <StyledButton type="submit" disabled={!isValid}>
             Вхід
