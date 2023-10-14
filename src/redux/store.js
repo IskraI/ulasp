@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { authApi } from "./authSlice";
+import { userReducer } from "./userSlice";
 
 import {
   persistStore,
@@ -19,20 +20,17 @@ const persistConfig = {
   whitelist: ["token"],
 };
 
-const rootReducer = combineReducers({
-  [authApi.reducerPath]: authApi.reducer,
-  //   user: persistReducer(persistConfig),
-});
-
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: {
+    [authApi.reducerPath]: authApi.reducer,
+    user: persistReducer(persistConfig, userReducer),
+  },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(authApi.middleware),
 });
 
 export const persistor = persistStore(store);
-
