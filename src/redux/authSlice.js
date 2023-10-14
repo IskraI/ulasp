@@ -2,7 +2,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // import { setUserRole } from "./roleSlice";
 
+
 const BASE_URL = `http://localhost:8000`;
+
 
 export const authApi = createApi({
   reducerPath: "authApi",
@@ -60,3 +62,4 @@ export const {
   useLogoutMutation,
   useUpdateUserMutation,
 } = authApi;
+export const authReducer = authApi.reducer;
