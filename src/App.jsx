@@ -22,7 +22,7 @@ function App() {
           <Route path="/signin" element={<PublicRoute component={Login} />} />
 
           <Route
-            path="/admin"
+            path="/admin/signin"
             element={<PublicRoute component={AdminLoginPage} />}
           />
 
