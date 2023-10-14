@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { setUserRole } from "./roleSlice";
+// import { setUserRole } from "./roleSlice";
 
-const BASE_URL = `${process.env.REACT_APP_BASE_URL}/api`;
+// const BASE_URL = `${process.env.REACT_APP_BASE_URL}/api`;
 
 export const authApi = createApi({
   reducerPath: "authApi",
@@ -60,3 +60,4 @@ export const {
   useUpdateUserMutation,
   useSubscribeMutation,
 } = authApi;
+export const authReducer = authApi.reducer;
