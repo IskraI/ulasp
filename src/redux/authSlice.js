@@ -1,18 +1,19 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
+import { resetUser, setUser } from "./userSlice";
 // import { setUserRole } from "./roleSlice";
 
-
 const BASE_URL = `http://localhost:8000`;
-
 
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
+      console.log("BASE_URL", BASE_URL);
       console.log("зашли на запрос", headers);
+      console.log("user", getState().user);
       const token = getState().user.token;
+      console.log("зашли на запрос", getState().user);
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }
@@ -62,4 +63,3 @@ export const {
   useLogoutMutation,
   useUpdateUserMutation,
 } = authApi;
-export const authReducer = authApi.reducer;
