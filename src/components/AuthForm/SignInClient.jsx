@@ -2,8 +2,8 @@ import { useForm } from "react-hook-form";
 import { SignInSchema, } from "./Schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { VscError } from "react-icons/vsc";
-// import { useDispatch } from "react-redux";
-// import { signin, refreshUser } from "../../redux/operations";
+
+
 
 
 
@@ -16,39 +16,35 @@ import {
   StyledInputWrap,
   StyledTitle,
   StyledInnerDiv,
- } from "./SignInClient.styled";
+} from "./SignInClient.styled";
+ 
+import { useSignInMutation } from '../../redux/authUserSlice';
 
 export const SignInClient = () => {
   const {
     register,
-    // handleSubmit,
-    formState: { errors, isValid, dirtyFields },
-  } = useForm({
+    handleSubmit,
+     formState: { errors, isValid, dirtyFields },
+     } = useForm({
     mode: "onChange",
     defaultValues: { сontract: "", identification: "" },
     resolver: yupResolver(SignInSchema),
-  });
-
-  // const dispatch = useDispatch();
-  // const onSubmit = async (values) => {
-  //   try {
-  //     const res = await dispatch(signin(values));
-  //     if (res.payload.response?.status === 401) {
-  //       // toast.error(res.payload.response.data.message);
-  //       throw new Error(res.payload.response.data.message);
-  //     }
-
-  //     // toast.success("Authentication successful");
-  //     dispatch(refreshUser());
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+     });
+   const [dispatch, { isLoading }] = useSignInMutation();
   
+
+   const onSubmit = (data) => {
+  const credentials = {
+    сontract: data.сontract,
+    identification: data.identification,
+  };
+
+  dispatch(credentials);
+};
+    
   return (
     <>
-      {/* onSubmit={handleSubmit(onSubmit)} */}
-      <StyledForm autoComplete="off" >
+           <StyledForm autoComplete="off" onSubmit={handleSubmit(onSubmit)} >
         <StyledFormInsight>
           <StyledTitle>Номер договору</StyledTitle>
           <StyledInnerDiv>
@@ -122,7 +118,7 @@ export const SignInClient = () => {
                           </StyledInputWrap>
            
           </StyledInnerDiv>
-          <StyledButton type="submit" disabled={!isValid}>
+          <StyledButton type="submit" disabled={!isValid || isLoading}>
             Вхід
           </StyledButton>
         </StyledFormInsight>
