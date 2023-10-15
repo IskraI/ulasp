@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { isMobile } from "react-device-detect";
 import "./App.css";
 
 import { Route, Routes } from "react-router-dom";
@@ -13,53 +14,61 @@ import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
-  return (
-    <>
-      <Routes>
-        <Route element={<SharedLayout />}>
-          <Route path="/" element={<PublicRoute component={WelcomePage} />} />
+  if (isMobile) {
+    return (
+      <div>
+        <p>На даному пристрої додаток недоступний.</p>
+      </div>
+    );
+  } else {
+    return (
+      <>
+        <Routes>
+          <Route element={<SharedLayout />}>
+            <Route path="/" element={<PublicRoute component={WelcomePage} />} />
 
-          <Route path="/signin" element={<PublicRoute component={Login} />} />
+            <Route path="/signin" element={<PublicRoute component={Login} />} />
 
-          <Route
-            path="/admin/signin"
-            element={<PublicRoute component={AdminLoginPage} />}
-          />
+            <Route
+              path="/admin/signin"
+              element={<PublicRoute component={AdminLoginPage} />}
+            />
 
-          <Route
-            path="/user"
-            element={
-              <PrivateRoute
-                roles="user"
-                redirectTo="/"
-                component={<UserPage />}
-              />
-            }
-          ></Route>
-          <Route
-            path="/adminpage"
-            element={
-              <PrivateRoute
-                roles="editor"
-                redirectTo="/"
-                component={<AdminPage />}
-              />
-            }
-          ></Route>
-          <Route
-            path="/adminpage"
-            element={
-              <PrivateRoute
-                roles="admin"
-                redirectTo="/"
-                component={<AdminPage />}
-              />
-            }
-          ></Route>
-        </Route>
-      </Routes>
-    </>
-  );
+            <Route
+              path="/user"
+              element={
+                <PrivateRoute
+                  roles="user"
+                  redirectTo="/"
+                  component={<UserPage />}
+                />
+              }
+            ></Route>
+            <Route
+              path="/adminpage"
+              element={
+                <PrivateRoute
+                  roles="editor"
+                  redirectTo="/"
+                  component={<AdminPage />}
+                />
+              }
+            ></Route>
+            <Route
+              path="/adminpage"
+              element={
+                <PrivateRoute
+                  roles="admin"
+                  redirectTo="/"
+                  component={<AdminPage />}
+                />
+              }
+            ></Route>
+          </Route>
+        </Routes>
+      </>
+    );
+  }
 }
 
 export default App;
