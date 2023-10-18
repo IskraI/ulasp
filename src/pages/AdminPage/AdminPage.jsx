@@ -1,6 +1,8 @@
+import {NavMenu} from '../../components/NavMenu/NavMenu'
+
 const AdminPage = () => {
   console.log("AdminUsersPage");
-  return <>AdminUsersPage</>;
+  return <><NavMenu/>AdminUsersPage</>;
 };
 
 export default AdminPage;
