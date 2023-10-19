@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { resetUser, setUser } from "./userSlice";
+import { resetUser, setUser, setAdmin } from "./userSlice";
 // import { setUserRole } from "./roleSlice";
 
 const BASE_URL = `http://localhost:8000`;
@@ -9,15 +9,11 @@ export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
-      console.log("BASE_URL", BASE_URL);
-      console.log("зашли на запрос", headers);
-      console.log("user", getState().user);
       const token = getState().user.token;
-      console.log("зашли на запрос", getState().user);
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }
-
+      console.log("headers", headers);
       return headers;
     },
   }),
@@ -29,26 +25,26 @@ export const authApi = createApi({
         method: "POST",
         body: { login, password },
       }),
-      async onQueryFulfilled(data) {
-        //   const userRole = data.role;
-        //   dispatch(setUserRole(userRole));
-        console.log("data", data);
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        dispatch(setAdmin((await queryFulfilled).data));
+        console.log("data", (await queryFulfilled).data);
       },
+      invalidatesTags: ["auth"],
     }),
     currentUser: builder.query({
       query: () => ({
-        url: "/auth/current",
+        url: "/admin/current",
       }),
     }),
     logout: builder.mutation({
       query: () => ({
-        url: `/auth/logout`,
+        url: `/admin/logout`,
         method: "POST",
       }),
     }),
     updateUser: builder.mutation({
       query: (body) => ({
-        url: "/auth/user",
+        url: "/admin/",
         method: "PATCH",
         body,
         formData: true,

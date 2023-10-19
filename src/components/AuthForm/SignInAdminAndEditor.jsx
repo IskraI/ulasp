@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { AdminAndEditorSchema } from "./Schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { VscError } from "react-icons/vsc";
+import { useNavigate } from "react-router-dom";
 
 import {
   StyledButton,
@@ -18,6 +19,7 @@ import {
 import { useSigninMutation } from "../../redux/authSlice";
 
 export const SignInAdminAndEditor = () => {
+  const navigate = useNavigate();
   const [dispatch] = useSigninMutation();
   const {
     register,
@@ -31,10 +33,10 @@ export const SignInAdminAndEditor = () => {
   });
 
   const onSubmit = ({ login, password }) => {
-    console.log("login", login);
     dispatch({ login, password })
       .unwrap()
       .then(() => {
+        navigate("/admin");
         reset();
       })
       .catch((e) => console.log(e.data.message));

@@ -12,6 +12,7 @@ import UserPage from "./pages/UserPage/UserPage";
 import SharedLayout from "./components/SharedLayout/SharedLayout";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
+import CabinetAdmin from "./components/CabinetAdmin/CabinetAdmin";
 
 function App() {
   if (isMobile) {
@@ -30,7 +31,7 @@ function App() {
             <Route path="/signin" element={<PublicRoute component={Login} />} />
 
             <Route
-              path="/admin/signin"
+              path="/adminlogin"
               element={<PublicRoute component={AdminLoginPage} />}
             />
 
@@ -44,26 +45,13 @@ function App() {
                 />
               }
             ></Route>
+
             <Route
-              path="/adminpage"
-              element={
-                <PrivateRoute
-                  roles="editor"
-                  redirectTo="/"
-                  component={<AdminPage />}
-                />
-              }
-            ></Route>
-            <Route
-              path="/adminpage"
-              element={
-                <PrivateRoute
-                  roles="admin"
-                  redirectTo="/"
-                  component={<AdminPage />}
-                />
-              }
-            ></Route>
+              path="/admin"
+              element={<PrivateRoute redirectTo="/" component={AdminPage} />}
+            >
+              {/* <Route path="/cabinet" element={<CabinetAdmin />} /> */}
+            </Route>
           </Route>
         </Routes>
       </>
