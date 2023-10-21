@@ -1,6 +1,13 @@
 // import { useLocation } from "react-router-dom";
-import { Nav, List, Item, NavLink } from "./NavMenu.styled";
-import symbol from "../../assets/symbol.svg";
+
+import {
+    Nav,
+    List,
+    Item,
+    NavigationLink,
+   } from './NavMenu.styled';
+import symbol from '../../assets/symbol.svg'
+  
 
 import icon from "../../assets/symbol-defs.svg";
 
@@ -10,6 +17,7 @@ export const NavMenu = () => {
   return (
     <Nav>
       <List>
+
         <Item>
           <svg className="icon" width="24" height="24">
             <use href={`${symbol}#icon-cabinet`}></use>
@@ -44,5 +52,7 @@ export const NavMenu = () => {
         </Item>
       </List>
     </Nav>
+
+
   );
 };
