@@ -21,6 +21,7 @@ export const NavMenu = () => {
           <svg className="icon" width="24" height="24">
             <use href={`${symbol}#icon-message`}></use>
           </svg>
+
           <NavigationLink href="/messages">Повідомлення</NavigationLink>
         </Item>
         <Item>
