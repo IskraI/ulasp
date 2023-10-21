@@ -27,7 +27,6 @@ export const authApi = createApi({
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         dispatch(setAdmin((await queryFulfilled).data));
-        console.log("data", (await queryFulfilled).data);
       },
       invalidatesTags: ["auth"],
     }),
@@ -35,6 +34,9 @@ export const authApi = createApi({
       query: () => ({
         url: "/admin/current",
       }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        dispatch(setAdmin((await queryFulfilled).data));
+      },
     }),
     logout: builder.mutation({
       query: () => ({

@@ -5,6 +5,8 @@ const initialState = {
   avatarURL: "",
   token: null,
   isLoggedIn: false,
+  adminRole: false,
+  editorRole: false,
 };
 
 export const userSlice = createSlice({
@@ -13,21 +15,16 @@ export const userSlice = createSlice({
   reducers: {
     setAdmin: {
       reducer(state, action) {
-        console.log("action.payload.value", action.payload.value);
+        console.log("action.payload", action.payload);
         state = {
           ...state,
-          ...action.payload.value.admin,
-          token: action.payload.value.accessToken,
+          ...action.payload.admin,
+          token: action.payload.accessToken,
           isLoggedIn: true,
           adminRole: true,
           // _id: action.payload.value.accessToken.admin._id,
         };
         return state;
-      },
-      prepare(value) {
-        return {
-          payload: { value },
-        };
       },
     },
     setUser: {
