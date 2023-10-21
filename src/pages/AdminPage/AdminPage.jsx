@@ -1,3 +1,4 @@
+
 import { ContactInfo } from '../../components/ContactInfo/ContactInfo';
 import { NavMenu } from '../../components/NavMenu/NavMenu'
 import symbol from '../../assets/symbol.svg'
@@ -15,6 +16,7 @@ const AdminPage = () => {
             <use  href={`${symbol}#icon-exit`}></use> </svg>
     <LogOutLink href="/admin/signin"> Вихід </LogOutLink></Exit>
   </>);
+
 };
 
 export default AdminPage;
