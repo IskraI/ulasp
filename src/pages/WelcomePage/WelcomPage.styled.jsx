@@ -39,30 +39,23 @@ opacity: 0;
 export const WelcomeTitle = styled.h1`
   color: ${colors.primaryColor};
   text-align: center;
-  font-family: Inter;
-  font-size: 74px;
-  font-style: normal;
-  font-weight: 500;
-  // line-height: normal;
-  margin-bottom: 36px;
+   font-size: 74px;
+   font-weight: 500;
+   margin-bottom: 36px;
   animation: ${slideInAnimation} 1s linear;
 `;
 export const WelcomeText = styled.p`
   color: ${colors.primaryColor};
   text-align: center;
-  font-family: Inter;
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 400;
-  // line-height: normal;
+   font-size: 32px; 
   animation: ${slideUpAnimation} 1s linear;
 `;
 
 
 export const SignInNavLink = styled(NavLink)`
 display: flex;
-width: 422px;
-height: 86px;
+width: 380px;
+height: 66px;
 padding: 8px;
 justify-content: center;
 align-items: center;
@@ -75,7 +68,7 @@ cursor: pointer;
 
 color:  ${colors.mainFontColor};
 font-size: 20px;
-line-height: 120%; /* 24px */
+line-height: calc(44 / 40); 
 margin-top: 34px;
 
 
