@@ -21,6 +21,7 @@ const PrivateRoute = ({ component: Component, redirectTo = "/" }) => {
   console.log("user.isLoggedIn private page", user.isLoggedIn);
 
   if (user.isLoggedIn && user.adminRole && data) return <Component />;
+
   if (!user.isLoggedIn || !user.adminRole) return <Navigate to={redirectTo} />;
 
   if (isError || (!user.isLoggedIn && !user.token))
@@ -28,7 +29,7 @@ const PrivateRoute = ({ component: Component, redirectTo = "/" }) => {
 
   if (isLoading) return <>Loading....</>;
 
-  return <>Loading....</>;
+  return <Component />;
 };
 
 export default PrivateRoute;

@@ -46,12 +46,14 @@ function App() {
               }
             ></Route>
 
-            <Route
-              path="/admin"
-              element={<PrivateRoute redirectTo="/" component={AdminPage} />}
-            >
-              {/* <Route path="/cabinet" element={<CabinetAdmin />} /> */}
+            <Route path="/admin" element={<AdminPage />}>
+              <Route path="cabinet" element={<CabinetAdmin />} />
             </Route>
+            {/* <Route
+              path="/admin"
+              element={<PrivateRoute component={AdminPage} />}
+            > */}
+            {/* <Route path="/cabinet" element={<CabinetAdmin />} /> */}
           </Route>
         </Routes>
       </>
