@@ -13,11 +13,10 @@ export const StyledFormInsight = styled.div`
 
 export const StyledTitle = styled.h2`
   color: ${colors.mainFontColor};
-  font-family: Inter;
-  font-size: 24px;
+   font-size: 24px;
   font-style: normal;
   font-weight: 400;
-  line-height: normal;
+  line-height: calc(29/24);
   margin-left: 0px;
   margin-bottom: 24px;
 `;
@@ -66,8 +65,8 @@ export const StyledInput = styled.input`
 
 export const StyledButton = styled.button`
   display: block;
-  width: 422px;
-  height: 86px;
+  width: 380px;
+  height: 66px;
   padding: 8px;
   justify-content: center;
   align-items: center;
@@ -80,7 +79,7 @@ export const StyledButton = styled.button`
 
   color: ${colors.mainFontColor};
   font-size: 20px;
-  line-height: 120%; /* 24px */
+  line-height: calc(44 / 40);
   margin-top: 34px;
   margin-left:auto;
   margin-right:auto;
