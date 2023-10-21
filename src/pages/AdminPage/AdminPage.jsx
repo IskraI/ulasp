@@ -9,17 +9,18 @@ const AdminPage = () => {
   console.log("AdminUsersPage");
   return (
     <>
-      <Suspense fallback={"Loader"}>
-        <Outlet />
-      </Suspense>
+    
       <NavMenu />
       <ContactInfo />
       <Exit>
         <svg className="icon" width="24" height="24">
           <use href={`${symbol}#icon-exit`}></use>{" "}
         </svg>
-        <LogOutLink href="/admin/signin"> Вихід </LogOutLink>
+        <LogOutLink to="/adminlogin"> Вихід </LogOutLink>
       </Exit>
+      <Suspense fallback={"Loader"}>
+        <Outlet />
+      </Suspense>
     </>
   );
 };
