@@ -2,6 +2,12 @@ import styled from '@emotion/styled';
 import { colors } from '../../styles/vars';
 import { NavLink } from "react-router-dom";
 
+export const SiteBarNavConteiner = styled.div`
+width: 287px;
+height: calc(100vh - (80px + 68px));
+border-right: 2px solid ${colors.primaryColor};
+`;
+
 export const LogOutLink = styled(NavLink)`
  color:   ${colors.mainFontColor};
 font-family: Inter;

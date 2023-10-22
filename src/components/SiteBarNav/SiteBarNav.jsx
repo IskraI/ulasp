@@ -1,14 +1,14 @@
 import { ContactInfo } from "../../components/ContactInfo/ContactInfo";
 import { NavMenu } from "../../components/NavMenu/NavMenu";
 import symbol from "../../assets/symbol.svg";
-import { LogOutLink, Exit } from "./SiteBarNav.styled";
+import { LogOutLink, Exit, SiteBarNavConteiner } from "./SiteBarNav.styled";
 
 
 export const SiteBarNav = () => {
  
   return (
     <>
-    
+    <SiteBarNavConteiner>
       <NavMenu />
       <ContactInfo />
       <Exit>
@@ -17,7 +17,7 @@ export const SiteBarNav = () => {
         </svg>
         <LogOutLink to="/adminlogin"> Вихід </LogOutLink>
       </Exit>
-     
+     </SiteBarNavConteiner>
     </>
   );
 };

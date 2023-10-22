@@ -6,7 +6,7 @@ export const Nav = styled.nav`
 
 display: flex;
   align-items: center; /* Центрируем по вертикали */
-  height: 100vh; 
+  height: calc(100vh - (80px + 68px + 64px + 86px));
   margin-left: 32px;
 
 `;
