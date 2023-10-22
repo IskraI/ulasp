@@ -3,15 +3,25 @@ import { colors } from '../../styles/vars';
 import { NavLink } from "react-router-dom";
 
 export const Nav = styled.nav`
-  
+
+display: flex;
+  align-items: center; /* Центрируем по вертикали */
+  height: 100vh; 
+  margin-left: 32px;
+
 `;
 
 export const List = styled.ul`
-  
+  display: flex;
+  flex-direction: column;
+ color:black;
+  gap: 21px;
 `;
 
 export const Item = styled.li`
- color:black,
+display: flex;
+  align-items: center;
+  padding-left: 30px;
 `;
 
 export const NavigationLink = styled(NavLink)`
