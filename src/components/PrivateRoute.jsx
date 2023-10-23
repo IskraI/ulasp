@@ -10,26 +10,19 @@ import { Navigate } from "react-router-dom";
 const PrivateRoute = ({ component: Component, redirectTo = "/" }) => {
   const user = useSelector(getUserState);
   const skip = !user.token && !user.isLoggedIn;
-  console.log("skip ", skip);
-  console.log("user private page", user);
 
-  const { data, isLoading, adminRole, isError } = useCurrentUserQuery("", {
+  const { data, isLoading, isError } = useCurrentUserQuery("", {
     skip,
   });
-  console.log("data current private page ", data);
 
-  console.log("user.isLoggedIn private page", user.isLoggedIn);
-
-  // if (user.isLoggedIn && user.adminRole && data) return <Component />;
-
-  if (!user.isLoggedIn || !user.adminRole) return <Navigate to={redirectTo} />;
+  if (user.isLoggedIn && user.adminRole && data) return <Component />;
 
   if (isError || (!user.isLoggedIn && !user.token))
     return <Navigate to={redirectTo} />;
 
   if (isLoading) return <>Loading....</>;
 
-  return <Component />;
+  return "LoadingSpinner";
 };
 
 export default PrivateRoute;

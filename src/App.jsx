@@ -63,10 +63,10 @@ function App() {
               }
             ></Route>
 
-            {/* <Route path="/admin" element={<PrivateRoute component={SharedLayout} />}> */}
-            {/* <Route index element={<CabinetAdmin />} /> */}
-
-            <Route path="/admin" element={<AdminPage />}>
+            <Route
+              path="/admin"
+              element={<PrivateRoute component={AdminPage} />}
+            >
               <Route path="cabinet" element={<AdminCabinetPage />} />
               <Route path="messages" element={<Messages />} />
               <Route path="users" element={<Users />} />
@@ -75,10 +75,6 @@ function App() {
               {/* <Route path="*" element={<ErrorPage />} /> */}
             </Route>
           </Route>
-          {/* <Route
-              path="/admin"
-              element={<PrivateRoute component={AdminPage} />}
-            > */}
         </Routes>
       </>
     );
