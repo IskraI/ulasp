@@ -35,6 +35,7 @@ export const authApi = createApi({
         url: "/admin/current",
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        console.log("first");
         dispatch(setAdmin((await queryFulfilled).data));
       },
     }),
