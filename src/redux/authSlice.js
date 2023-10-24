@@ -35,7 +35,6 @@ export const authApi = createApi({
         url: "/admin/current",
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        console.log("first");
         dispatch(setAdmin((await queryFulfilled).data));
       },
     }),
@@ -44,22 +43,32 @@ export const authApi = createApi({
         url: `/admin/logout`,
         method: "POST",
       }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        await queryFulfilled;
+        dispatch(resetUser());
+      },
+      invalidatesTags: ["auth"],
     }),
-    updateUser: builder.mutation({
+    // updateUser: builder.mutation({
+    //   query: (body) => ({
+    //     url: "/admin/",
+    //     method: "PATCH",
+    //     body,
+    //     formData: true,
+    //   }),
+    //   async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+    //     dispatch(setAdmin((await queryFulfilled).data));
+    //   },
+    //   invalidatesTags: ["auth"],
+    // }),
+    updateUserAvatar: builder.mutation({
       query: (body) => ({
-        url: "/admin/",
+        url: "/admin/avatars",
         method: "PATCH",
         body,
         formData: true,
       }),
     }),
-    updateUserAvatar: builder.mutation({
-  query: (formData) => ({
-    url: "/admin/update-avatar",
-    method: "POST",
-    body: formData,
-  }),
-}),
   }),
 });
 
