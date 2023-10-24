@@ -2,62 +2,84 @@ import { UserName } from "./Profile.styled"
 // import { useState, useEffect } from 'react';
 import { getUserState } from "../../redux/userSelectors";
 import { useSelector } from "react-redux";
+import { useUpdateUserAvatarMutation } from '../../redux/authSlice/'; 
+import { useRef, useState } from 'react';
 
 export const Profile = () => {
     const user = useSelector(getUserState);
     
- const { firstName, lastName, fatherName, avatarURL } = user;
+    const { firstName, lastName, fatherName, avatarURL } = user;
  
-   const handleAvatarUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      // Обработка загруженного файла, например, отправка на бэкенд
-      // Пример: const formData = new FormData(); formData.append('avatar', file);
-      // Пример: fetch('/api/upload-avatar', { method: 'POST', body: formData });
-    }
-    };
+    // const [selectedFile, setSelectedFile] = useState(null);
+//     const inputRef = useRef(null);// State to hold the selected file
+//   const updateUserAvatarMutation = useUpdateUserAvatarMutation();
+
+//    const handleAvatarUpload = (event) => {
+//         const file = event.target.files[0];
+//         if (file) {
+//             const formData = new FormData();
+//             formData.append('avatar', file);
+//             updateUserAvatarMutation.mutate(formData);
+//         }
+//     };
     
-  return (
+    console.log(avatarURL);
+
+     return (
     <>
       {avatarURL ? (
         <img
           src={avatarURL}
           alt="Avatar"
           style={{
-            width: '124px',
-            height: '124px',
+            display: 'block',
+            width: '62px',
+            height: '62px',
             borderRadius: '62px',
             background: `url(${avatarURL}) lightgray 50% / cover no-repeat`,
+            marginTop: '25px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
           }}
         />
       ) : (
-        <label
-          htmlFor="fileInput"
+        <img
+          src="../../assets/avatar.jpg"
+          alt="Avatar"
           style={{
-            width: '124px',
-            height: '124px',
+            display: 'block',
+            width: '62px',
+            height: '62px',
             borderRadius: '62px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
+            background: 'url("../../assets/avatar.jpg") lightgray 50% / cover no-repeat',
+            marginTop: '25px',
             marginLeft: 'auto',
             marginRight: 'auto',
-            marginTop: '53px',
           }}
-        >
-          <input
-            id="fileInput"
-            type="file"
-            accept="image/*"
-            onChange={handleAvatarUpload}
-            style={{ display: 'none' }}
-          />
-          <span style={{ fontSize: '48px' }}>+</span>
-        </label>
+        />
       )}
+
+      {/* <input
+        type="file"
+        accept="image/*"
+        onChange={handleAvatarUpload}
+        style={{ display: 'none' }}
+        ref={inputRef}
+      />
+      <span
+        style={{ fontSize: '48px', cursor: 'pointer' }}
+        onClick={() => inputRef.current.click()}
+      >
+        +
+      </span> */}
+
+
       <UserName>
-        {`${firstName} ${lastName} ${fatherName}`}
+        {firstName}
+        <br />
+        {lastName}
+        <br />
+        {fatherName}
       </UserName>
     </>
   );

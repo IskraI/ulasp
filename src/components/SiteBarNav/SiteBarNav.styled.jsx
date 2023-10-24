@@ -4,8 +4,10 @@ import { NavLink } from "react-router-dom";
 
 export const SiteBarNavConteiner = styled.div`
 width: 287px;
-height: calc(100vh - (80px + 68px));
+height: calc(100vh - (80px + 68px - 51px));
 border-right: 2px solid ${colors.primaryColor};
+border-top: 2px solid ${colors.primaryColor};
+border-bottom: 2px solid ${colors.primaryColor};
 `;
 
 export const LogOutLink = styled(NavLink)`
