@@ -23,11 +23,15 @@ export const Profile = () => {
         <img
           src={avatarURL}
           alt="Avatar"
-          style={{
-            width: '124px',
-            height: '124px',
+                  style={{
+              display:'block',
+            width: '62px',
+            height: '62px',
             borderRadius: '62px',
-            background: `url(${avatarURL}) lightgray 50% / cover no-repeat`,
+                      background: `url(${avatarURL}) lightgray 50% / cover no-repeat`,
+                      marginTop: '25px',
+             marginLeft: 'auto',
+            marginRight: 'auto',
           }}
         />
       ) : (
@@ -57,7 +61,11 @@ export const Profile = () => {
         </label>
       )}
       <UserName>
-        {`${firstName} ${lastName} ${fatherName}`}
+        {firstName}
+        <br />
+        {lastName}
+        <br />
+        {fatherName}
       </UserName>
     </>
   );
