@@ -52,6 +52,13 @@ export const authApi = createApi({
         formData: true,
       }),
     }),
+    updateUserAvatar: builder.mutation({
+  query: (formData) => ({
+    url: "/admin/update-avatar",
+    method: "POST",
+    body: formData,
+  }),
+}),
   }),
 });
 
@@ -60,4 +67,5 @@ export const {
   useCurrentUserQuery,
   useLogoutMutation,
   useUpdateUserMutation,
+  useUpdateUserAvatarMutation,
 } = authApi;
