@@ -1,42 +1,35 @@
 import { UserName } from "./Profile.styled"
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
+import { getUserState } from "../../redux/userSelectors";
+import { useSelector } from "react-redux";
 
 export const Profile = () => {
- const [admin, setAdmin] = useState({
-    firstName: 'John',
-    lastName: 'Doe',
-    fatherName: 'Smith',
-    avatarURL: null, // Изначально нет аватара
-  });
+    const user = useSelector(getUserState);
+    
+ const { firstName, lastName, fatherName, avatarURL } = user;
  
-    // Функция для загрузки существующего аватара с бэка
-  const fetchAvatarFromBackend = () => {
-        fetch('/api/get-avatar').then(response => response.json()).then(data => setAdmin({ ...admin, avatarURL: data.avatarURL }));
-  };
-
-  useEffect(() => {
-    // При монтировании компонента загружаем аватар с бэка
-    fetchAvatarFromBackend();
-  }, []);
-
-  const handleAvatarUpload = (event) => {
-    const file = event.target.files[0]; // Получаем выбранный файл
-
+   const handleAvatarUpload = (event) => {
+    const file = event.target.files[0];
     if (file) {
       // Обработка загруженного файла, например, отправка на бэкенд
       // Пример: const formData = new FormData(); formData.append('avatar', file);
       // Пример: fetch('/api/upload-avatar', { method: 'POST', body: formData });
     }
-  };
+    };
+    
   return (
-      <>
-          {admin.avatarURL ? (
-        <img src={admin.avatarURL} alt="Avatar" style={{
-    width: '124px', 
-    height: '124px', 
-    borderRadius: '62px',
-    background: `url(${admin.avatarURL}) lightgray 50% / cover no-repeat`,
-  }} />
+    <>
+      {avatarURL ? (
+        <img
+          src={avatarURL}
+          alt="Avatar"
+          style={{
+            width: '124px',
+            height: '124px',
+            borderRadius: '62px',
+            background: `url(${avatarURL}) lightgray 50% / cover no-repeat`,
+          }}
+        />
       ) : (
         <label
           htmlFor="fileInput"
@@ -49,7 +42,7 @@ export const Profile = () => {
             justifyContent: 'center',
             cursor: 'pointer',
             marginLeft: 'auto',
-              marginRight: 'auto',
+            marginRight: 'auto',
             marginTop: '53px',
           }}
         >
@@ -63,9 +56,9 @@ export const Profile = () => {
           <span style={{ fontSize: '48px' }}>+</span>
         </label>
       )}
-           <UserName>
-              {`${admin.firstName} ${admin.lastName} ${admin.fatherName}`} 
-          </UserName> 
+      <UserName>
+        {`${firstName} ${lastName} ${fatherName}`}
+      </UserName>
     </>
   );
 };
