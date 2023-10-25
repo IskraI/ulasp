@@ -6,8 +6,10 @@ export const Nav = styled.nav`
 
 display: flex;
   align-items: center; /* Центрируем по вертикали */
-  height: calc(100vh - (80px + 68px + 64px + 86px + 130px));
+//   height: calc(100vh - (80px + 68px + 64px + 86px + 130px));
   margin-left: 32px;
+  margin-top:58px;
+  
 
 `;
 
@@ -16,7 +18,7 @@ export const List = styled.ul`
   flex-direction: column;
  color:black;
   gap: 21px;
-`;
+ `;
 
 export const Item = styled.li`
 display: flex;
