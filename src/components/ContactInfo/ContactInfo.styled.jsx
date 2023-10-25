@@ -3,6 +3,8 @@ import { colors } from '../../styles/vars';
 
 export const ListContact = styled.ul`
 margin-left: 59px;
+
+
 `;
 
 export const ItemContact = styled.li`
