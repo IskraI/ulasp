@@ -11,6 +11,7 @@ export const WelcomeSection = styled.div`
   flex-direction: column;
   margin: 0 auto;
   align-items: center;
+   height: calc(100vh - (80px + 68px));
 `;
 
 

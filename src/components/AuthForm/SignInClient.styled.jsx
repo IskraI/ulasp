@@ -3,12 +3,18 @@ import { colors } from "../../styles/vars";
 
 
 export const StyledForm = styled.form`
-  /* width: 100%; */
-  height: auto;
+   height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const StyledFormInsight = styled.div`
-  /* margin-top: 240px; */
+    display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  //  height: auto;
+   
 `;
 
 export const StyledTitle = styled.h2`
