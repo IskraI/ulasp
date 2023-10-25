@@ -2,10 +2,10 @@ import * as Yup from 'yup';
 
 export const SignInSchema = Yup.object({
   сontract: Yup.string()
-    .matches(/^[a-zA-Zа-яА-Я]{3}\d{6}[a-zA-Zа-яА-Я]$/, 'Перевірте правельність введенних данних!')
+    .matches(/^[a-zA-Zа-яА-Я]{3}\d{6}[a-zA-Zа-яА-Я]$/, 'Перевірте правильність введених даних!')
     .required("Поле обов'язкове для заповнення"),
   identification: Yup.string()  
-        .matches(/^\d{10}$/, 'Перевірте правельність введенних данних!')
+        .matches(/^\d{8}$|^\d{10}$/, 'Перевірте правильність введених даних!')
        .required("Поле обов'язкове для заповнення"),
 });
 
@@ -13,7 +13,7 @@ export const SignInSchema = Yup.object({
 export const AdminAndEditorSchema = Yup.object({
   login: Yup.string()
    .required("Поле обов'язкове для заповнення")
-    .matches(/^[a-zA-Z0-9]{3,10}$/, 'Перевірте правельність введенних данних!'),
+    .matches(/^[a-zA-Z0-9]{3,10}$/, 'Перевірте правильність введених даних!'),
   password: Yup.string()  
     .required("Пароль обов'язковий для заповнення")
     // .min(6, 'Password is too short - should be 6 chars minimum.')
