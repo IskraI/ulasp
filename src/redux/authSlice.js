@@ -68,6 +68,10 @@ export const authApi = createApi({
         body,
         formData: true,
       }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        dispatch(setUser((await queryFulfilled).data));
+      },
+      invalidatesTags: ["auth"],
     }),
   }),
 });

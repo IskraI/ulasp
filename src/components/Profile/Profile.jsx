@@ -4,6 +4,7 @@ import { getUserState } from "../../redux/userSelectors";
 import { useSelector } from "react-redux";
 import { useUpdateUserAvatarMutation } from "../../redux/authSlice/";
 import { useRef, useState } from "react";
+const BASE_URL = `http://localhost:8000`;
 
 export const Profile = () => {
   const user = useSelector(getUserState);
@@ -18,6 +19,7 @@ export const Profile = () => {
     const formData = new FormData();
 
     formData.append("avatarURL", selectedImage);
+
     dispatch(formData)
       .unwrap()
       .then(() => {
@@ -43,13 +45,15 @@ export const Profile = () => {
   //         }
   //     };
 
-  console.log(avatarURL);
-
   return (
     <>
       <form onSubmit={handleFormSubmit}>
         <img
-          src={selectedImage ? URL.createObjectURL(selectedImage) : avatarURL}
+          src={
+            selectedImage
+              ? URL.createObjectURL(selectedImage)
+              : `${BASE_URL}/${avatarURL}`
+          }
           alt="Avatar"
           style={{
             display: "block",
