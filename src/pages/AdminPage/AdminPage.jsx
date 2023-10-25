@@ -1,16 +1,22 @@
 import { SiteBarNav } from "../../components/SiteBarNav/SiteBarNav";
 import { Outlet } from "react-router-dom";
 import { Suspense } from "react";
+import {
+  AdminSection,
+  AdminSubpage,
+} from "../../pages/AdminPage/AdminPage.styled";
 
 const AdminPage = () => {
   console.log("AdminUsersPage");
   return (
-    <>
-        <SiteBarNav/>
-      <Suspense fallback={"Loader"}>
-        <Outlet />
-      </Suspense>
-    </>
+    <AdminSection>
+      <SiteBarNav />
+      <AdminSubpage>
+        <Suspense fallback={"Loader"}>
+          <Outlet />
+        </Suspense>
+      </AdminSubpage>
+    </AdminSection>
   );
 };
 
