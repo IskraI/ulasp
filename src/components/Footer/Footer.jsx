@@ -1,14 +1,17 @@
 import { Link } from "react-router-dom";
 import { PageFooter, PageLogo, ListContact, StyledLink, ContactAdress,Content  } from "./Footer.styled"
 import Logo from "../../images/logo-footer.png";
-
+import RetinaLogo from "../../images/logo-footer@2x.png";
 
 const Footer = () => {
   
  return (
     <PageFooter>
       <Link to="/">
-        <PageLogo src={Logo} />
+        <picture>
+          <source srcSet={RetinaLogo} media="(min-resolution: 192dpi)" />
+          <PageLogo src={Logo} alt="Footer logo" />
+        </picture>
      </Link>
      <ListContact>
        <StyledLink href="tel:+380504038208">+380504038208</StyledLink>
