@@ -17,22 +17,45 @@ export const List = styled.ul`
   display: flex;
   flex-direction: column;
  color:black;
-  gap: 21px;
+  // gap: 21px;
  `;
 
 export const Item = styled.li`
-display: flex;
-  align-items: center;
-  padding-left: 30px;
+// display: flex;
+  // align-items: center;
+  // padding-left: 30px;
+
 `;
 
 export const NavigationLink = styled(NavLink)`
   color:   ${colors.mainFontColor};
+  display: flex;
 font-family: Inter;
 font-size: 22px;
 font-style: normal;
 font-weight: 400;
 line-height:calc(26.4/22);
-margin-left: 30px;
+align-items: center;
+  padding-left: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  svg {
+margin-right: 30px;
+  }
+
+ /* Add styling for the active link */
+  &.active {
+     border: 2px solid #FFF3BF; /* Add a border to the active link */
+
+    
+         svg {
+        // fill: #FFF3BF; 
+        stroke: #FFF3BF;
+      
+    }
+  }
 `;
 
+export const CustomSVG = styled.svg`
+  /* Add styles for your custom SVG here */
+`;

@@ -1,5 +1,8 @@
+
+
 const CabinetAdmin = () => {
-  return <>CabinetAdmin</>;
+  return <>
+    </>;
 };
 
 export default CabinetAdmin;
