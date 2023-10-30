@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import {SearchUsersContainer, Input, Table, TableRow, TableCell, RowTitle,TitleTab  } from './SearchUsers.styled';
 
 export const SearchUsers=()=> {
   const [searchTerm, setSearchTerm] = useState('');
@@ -27,46 +28,48 @@ export const SearchUsers=()=> {
     }
   }, [searchTerm]);
 
-  return (
-    <div>
-      <input
+    return (<>
+        <SearchUsersContainer>
+       <TitleTab>Чекають на  підтвердження (посилання):</TitleTab>
+           <Input
         type="text"
         placeholder="Пошук користувачів"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-
-      <table>
+  </SearchUsersContainer>
+      <Table>
         <thead>
-          <tr>
-                     <th>Ім’я</th>
-                      <th>№ договору</th>
-                      <th>Дата заявки</th> 
-                       <th>Детальніше</th> 
-                     </tr>
+          <TableRow>
+            <RowTitle style={{ marginRight: '243px' }}>Ім’я</RowTitle>
+            <RowTitle style={{ marginRight: '94px' }}>№ договору</RowTitle>
+            <RowTitle style={{ marginRight: '102px' }}>Дата заявки</RowTitle>
+            <RowTitle>Детальніше</RowTitle>
+          </TableRow>
         </thead>
         <tbody>
           {isLoading ? (
-            <tr>
-              <td colSpan="3">Завантаження...</td>
-            </tr>
-          ) : searchResults.length === 0&& showNoResults ? (
-            <tr>
-              <td colSpan="3">Результати пошуку: не знайдено</td>
-            </tr>
+            <TableRow>
+              <TableCell colSpan="3">Завантаження...</TableCell>
+            </TableRow>
+          ) : searchResults.length === 0 && showNoResults ? (
+            <TableRow>
+              <TableCell colSpan="4">Результати пошуку: не знайдено</TableCell>
+            </TableRow>
           ) : (
             searchResults.map((user) => (
-              <tr key={user.id}>
-                 <td>{user.firstName} {user.lastName}</td>
-                <td>{user.contractNumber}</td>
-                    <td>{user.createdAt}</td>
-                    <td><button>картка</button></td>
-              </tr>
+              <TableRow key={user.id}>
+                <TableCell>{user.firstName} {user.lastName}</TableCell>
+                <TableCell>{user.contractNumber}</TableCell>
+                <TableCell>{user.createdAt}</TableCell>
+                <TableCell><button>картка</button></TableCell>
+              </TableRow>
             ))
           )}
         </tbody>
-      </table>
-    </div>
+      </Table>
+      
+        </>
   );
 }
 
