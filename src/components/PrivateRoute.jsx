@@ -14,8 +14,12 @@ const PrivateRoute = ({ component: Component, redirectTo = "/" }) => {
   const { data, isLoading, isError } = useCurrentUserQuery("", {
     skip,
   });
+  console.log("user", user);
+  console.log("data", data);
 
-  if (user.isLoggedIn && user.adminRole && data) return <Component />;
+  console.log("user.adminRole", user.adminRole);
+
+  if (user.isLoggedIn && user.adminRole) return <Component />;
 
   if (isError || (!user.isLoggedIn && !user.token))
     return <Navigate to={redirectTo} />;

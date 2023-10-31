@@ -16,7 +16,7 @@ export const userSlice = createSlice({
   reducers: {
     setAdmin: {
       reducer(state, action) {
-        console.log("action.payload", action.payload.admin);
+        // console.log("action.payload", action.payload.admin);
         state = {
           ...state,
           ...action.payload.admin,
@@ -28,26 +28,41 @@ export const userSlice = createSlice({
         return state;
       },
     },
-    setUser: {
+    setCurrent: {
       reducer(state, action) {
-        state = { ...state, ...action.payload.value, isLoggedIn: true };
-        return state;
-      },
-      prepare(value) {
-        return {
-          payload: { value },
+        // console.log("action.payload setCurrent", action.payload.admin);
+
+        state = {
+          ...state,
+          adminRole: action.payload.admin.adminRole,
+          avatarURL: action.payload.admin.avatarURL,
+          isLoggedIn: true,
         };
-      },
-    },
-    resetUser: {
-      reducer(state) {
-        state = initialState;
+        
         return state;
       },
     },
-  },
+
+    setUser: {
+        reducer(state, action) {
+          // console.log("action.payload setUser", action.payload.user);
+          state = { ...state, ...action.payload.user, isLoggedIn: true };
+          return state;
+        },
+      },
+
+    resetUser: {
+        reducer(state) {
+          state = initialState;
+          return state;
+        },
+      },
+
+
+    },
+  
 });
 
-export const { setUser, resetUser, setAdmin } = userSlice.actions;
+export const { setUser, resetUser, setAdmin, setCurrent } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;
