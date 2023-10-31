@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { resetUser, setUser, setAdmin } from "./userSlice";
+import { resetUser, setUser, setAdmin, setCurrent } from "./userSlice";
 // import { setUserRole } from "./roleSlice";
 
 const BASE_URL = `http://localhost:8000`;
@@ -35,7 +35,8 @@ export const authApi = createApi({
         url: "/admin/current",
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        dispatch(setAdmin((await queryFulfilled).data));
+        console.log("await queryFulfilled).data", (await queryFulfilled).data);
+        dispatch(setCurrent((await queryFulfilled).data));
       },
     }),
     logout: builder.mutation({
