@@ -3,7 +3,6 @@ import { colors } from '../../styles/vars';
 import { NavLink } from "react-router-dom";
 
 export const Nav = styled.nav`
-
 display: flex;
   align-items: center; /* Центрируем по вертикали */
 //   height: calc(100vh - (80px + 68px + 64px + 86px + 130px));
@@ -45,9 +44,12 @@ margin-right: 30px;
 
  /* Add styling for the active link */
   &.active {
-     border: 2px solid #FFF3BF; /* Add a border to the active link */
-
-    
+     border: 2px solid #FFF3BF; 
+    background-image: url('../../assets/VectorActive.svg'); 
+   z-index:10; 
+    background-size: contain; 
+    background-repeat: no-repeat; 
+    background-position: right center; 
          svg {
         // fill: #FFF3BF; 
         stroke: #FFF3BF;
