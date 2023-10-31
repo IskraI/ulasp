@@ -13,7 +13,7 @@ import SharedLayout from "./components/SharedLayout/SharedLayout";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import Messages from "./components/Messages/Messages";
-import Users from "./components/Users/Users";
+// import AdminUsers from "./components/AdminUsers/AdminUsers";
 import OnlineUsers from "./components/OnlineUsers/OnlineUsers";
 import Analytics from "./components/Analytics/Analytics";
 import { useSelector } from "react-redux";
@@ -24,7 +24,9 @@ import { lazy, useEffect } from "react";
 const AdminCabinetPage = lazy(() =>
   import("./pages/AdminCabinetPage/AdminCabinetPage")
 );
-
+const AdminUsers = lazy(() =>
+  import("./components/AdminUsers/AdminUsers")
+);
 function App() {
   const user = useSelector(getUserState);
   const skip = !user.token && !user.isLoggedIn;
@@ -69,7 +71,7 @@ function App() {
             >
               <Route path="cabinet" element={<AdminCabinetPage />} />
               <Route path="messages" element={<Messages />} />
-              <Route path="users" element={<Users />} />
+              <Route path="users" element={<AdminUsers />} />
               <Route path="online" element={<OnlineUsers />} />
               <Route path="analytics" element={<Analytics />} />
               {/* <Route path="*" element={<ErrorPage />} /> */}

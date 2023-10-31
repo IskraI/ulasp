@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { authApi } from "./authSlice";
 import { userReducer } from "./userSlice";
 import {signInClient} from "./authUserSlice"
+import {dataUsersApi} from "./dataUsersSlice"
 
 import {
   persistStore,
@@ -25,6 +26,7 @@ export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
     [signInClient.reducerPath]: signInClient.reducer,
+    [dataUsersApi.reducerPath]: dataUsersApi.reducer, /*данные юзера для админа */
     user: persistReducer(persistConfig, userReducer),
    
   },
@@ -33,7 +35,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(authApi.middleware).concat(signInClient.middleware),
+    }).concat(authApi.middleware).concat(signInClient.middleware).concat(dataUsersApi.middleware),
 });
 
 export const persistor = persistStore(store);
