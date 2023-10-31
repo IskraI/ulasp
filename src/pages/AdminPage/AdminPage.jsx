@@ -6,8 +6,11 @@ import {
   AdminSubpage,
 } from "../../pages/AdminPage/AdminPage.styled";
 
+
+
 const AdminPage = () => {
-  console.log("AdminUsersPage");
+
+ 
   return (
     <AdminSection>
       <SiteBarNav />
