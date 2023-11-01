@@ -9,7 +9,8 @@ const AdminCabinetPage = () => {
     <Title>Кабінет адміністратора</Title>
     <Statistic />
        <SearchUsers/>
-  </>;
+       <></>
+         </>;
 };
 
 export default AdminCabinetPage;
