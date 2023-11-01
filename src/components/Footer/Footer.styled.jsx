@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { colors } from "../../styles/vars";
 export const PageFooter = styled.footer`
   display: flex;
+   flex-direction: row;
     align-items: center;
   width: 100%;
   height: 68px;
@@ -48,5 +49,5 @@ export const ContactAdress = styled.p`
 export const Content = styled.div`
  display: flex;
   margin-left: auto;
-
+ /* flex-grow: 1; */
 `;
