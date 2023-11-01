@@ -1,8 +1,8 @@
 import React from "react";
 
  const UsersTable = ({ users }) => {
-  return (
-    <table>
+  return (<>
+  <table>
       <thead>
         <tr>
          
@@ -30,6 +30,8 @@ import React from "react";
         ))}
       </tbody>
     </table>
+    </>
+   
   );
 };
 
