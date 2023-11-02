@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { colors } from '../../styles/vars';
 import { NavLink } from "react-router-dom";
 
+
 export const Nav = styled.nav`
 display: flex;
   align-items: center; /* Центрируем по вертикали */
@@ -45,7 +46,8 @@ margin-right: 30px;
  /* Add styling for the active link */
   &.active {
      border: 2px solid #FFF3BF; 
-    background-image: url('../../assets/VectorActive.svg'); 
+     background-image: url('../../../src/assets/VectorActive.svg'); 
+    /* background-image: url('../../../public/VectorActive.svg');  */
    z-index:10; 
     // background-size: contain; 
     background-repeat: no-repeat; 
