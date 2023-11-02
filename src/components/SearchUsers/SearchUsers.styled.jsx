@@ -26,27 +26,61 @@ margin-top: 29px;
 `;
 
 export const Table = styled.table`
-  // Здесь вы можете определить стили для таблицы
+table-layout: fixed;
+width: 100%;
+border-collapse: collapse;
+margin-left: 127px;
+ 
+   tbody {
+    tr:nth-of-type(odd) {
+      background-color:  rgba(234, 234, 234, 0.32);
+    }
+    
+  }
+
+  thead th:nth-of-type(1) {
+  width: 27%;
+}
+
+thead th:nth-of-type(2) {
+  width: 18%;
+}
+
+thead th:nth-of-type(3) {
+  width: 18%;
+}
+
+thead th:nth-of-type(4) {
+  width: 16%;
+}
+
+thead th:nth-of-type(5) {
+  width: 21%;
+}
 `;
 
 export const RowTitle = styled.table`
  color:   ${colors.mainFontColor};
-// font-family: Inter;
 font-size: 16px;
-// font-style: normal;
 font-weight: 600;
-// line-height: normal;
 margin-top: 23px;
+flex: 1;
 `;
 
 
 export const TableRow = styled.tr`
  display: flex;
- margin-left: 127px;
-`;
+ 
+ /* gap: 129px; */
+ height: 54px;
+    border-radius: 10px;
+   `;
 
 export const TableCell = styled.td`
+
   // Здесь вы можете определить стили для ячеек таблицы
+         
+ 
 `;
 
 export const TitleTab = styled.h3`
@@ -58,3 +92,16 @@ line-height: calc(26.4 / 22);
 font-weight: 400;
   line-height: 1.28;
 `;
+
+export const TextLoader = styled.p`
+  color:   ${colors.mainFontColor};
+ font-size: 24px;
+font-weight: 500;
+`;
+
+export const TextInfo = styled.p`
+ color:   ${colors.mainFontColor};
+ font-size: 24px;
+font-weight: 500;
+`;
+ 

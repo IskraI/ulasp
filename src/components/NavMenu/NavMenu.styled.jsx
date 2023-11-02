@@ -47,7 +47,7 @@ margin-right: 30px;
      border: 2px solid #FFF3BF; 
     background-image: url('../../assets/VectorActive.svg'); 
    z-index:10; 
-    background-size: contain; 
+    // background-size: contain; 
     background-repeat: no-repeat; 
     background-position: right center; 
          svg {
