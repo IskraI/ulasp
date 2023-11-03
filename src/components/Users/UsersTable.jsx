@@ -1,7 +1,7 @@
 import React from "react";
 
 const UsersTable = ({ users }) => {
-  return (
+      return (
     <>
       <table>
         <thead>
