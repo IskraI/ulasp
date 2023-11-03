@@ -1,59 +1,28 @@
 import { useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import {Modal} from '../Modal/Modal';
+import UserCompanyCreateModal from "./UserCompanyCreateForm"
+import UserFopCreateModal from "./UserFopCreateForm"
+const UserCreateModal = () => {
 
-const UserCreateModal = ({showModal}) => {
-
-
-    console.log('showModal bp UserCreateModal ', showModal)
-    // const [dispatch, { isLoading }] = useUpdateUserMutation();
-   
-  
-    const handleCloseModal = () => {
-        showModal = !showModal;
-    };
-  
-  
-    const handleFormSubmit = e => {
-      e.preventDefault();
-      const formData = new FormData();
-     console.log('formData', formData)
-
-    //   dispatch(formData)
-    //     .unwrap()
-    //     .then(() => {
-       
-         
-    //     })
-    //     .catch(e => console.log(e.data.message));
-    };
-  
-
-  
+  const [typeOfUser,setTypeOfUser]= useState("fop")
+  const handleTypeOfUser = () => {
+    setTypeOfUser(typeOfUser === "tov" ? "fop" : "tov");
+};
  
-  
     return (
-      <Modal  width={"898px"} padding={"24px"} 
-      onClose={ handleCloseModal}>
-        <div >
-               <form onSubmit={handleFormSubmit}>
-            <div>
-            
-              <input
-                name="name"
-              
-                type="text"
-              
-              />
-            </div>
-            
-            <button type="submit" >
-              {'Додати'}
-            </button>
-          </form>
-        </div>
-      </Modal>
-    );
+    <>
+      <div>
+      <button onClick={handleTypeOfUser}>
+       {typeOfUser === "tov" ? "ТОВ" : "ФОП"}
+      </button>
+     
+     {typeOfUser === "tov" &&    <UserCompanyCreateModal/>}
+         
+
+     {typeOfUser === "fop" &&   <UserFopCreateModal/>}
+     </div>
+    </>
+  );
+ 
   };
   
   export default UserCreateModal;
