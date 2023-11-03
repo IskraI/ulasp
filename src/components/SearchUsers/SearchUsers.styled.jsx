@@ -27,7 +27,7 @@ export const Input = styled.input`
 
 export const Table = styled.table`
   table-layout: fixed;
-  width: 100%;
+  /* width: 100%; */
   border-collapse: collapse;
   margin-left: 127px;
 
@@ -38,23 +38,43 @@ export const Table = styled.table`
   }
 
   thead th:nth-of-type(1) {
-    width: 27%;
+    width: 30%;
   }
 
   thead th:nth-of-type(2) {
-    width: 18%;
+    width: 20%;
   }
 
   thead th:nth-of-type(3) {
-    width: 18%;
+    width: 15%;
   }
 
   thead th:nth-of-type(4) {
-    width: 16%;
+    width: 15%;
   }
 
   thead th:nth-of-type(5) {
-    width: 21%;
+    width: 20%;
+  }
+
+  tbody td:nth-of-type(1) {
+    width: 30%;
+  }
+
+  tbody td:nth-of-type(2) {
+    width: 20%;
+  }
+
+  tbody td:nth-of-type(3) {
+    width: 15%;
+  }
+
+  thead td:nth-of-type(4) {
+    width: 15%;
+  }
+
+  tbody td:nth-of-type(5) {
+    width: 20%;
   }
 `;
 
@@ -63,27 +83,35 @@ export const RowTitle = styled.th`
   font-size: 16px;
   font-weight: 600;
   margin-top: 23px;
-  flex: 1;
+  text-align: left;
+    /* flex: 1; */
 `;
 
 export const TableRow = styled.tr`
   display: flex;
-  flex: 1;
+  /* flex: 1; */
   /* gap: 129px; */
   height: 54px;
   border-radius: 10px;
+  display: flex;
+  align-items: center;
+padding-left: 16px;
 `;
 
 export const TableCell = styled.td`
- flex: 1;
+text-align: left;
+
+ /* flex: 1; */
   // Здесь вы можете определить стили для ячеек таблицы
+         
+ 
 `;
 
 export const TitleTab = styled.h3`
   color: ${colors.mainFontColor};
   font-size: 22px;
   margin-top: 43px;
-  margin-left: 111px;
+  /* margin-left: 111px; */
   line-height: calc(26.4 / 22);
   font-weight: 400;
   line-height: 1.28;
@@ -100,3 +128,17 @@ export const TextInfo = styled.p`
   font-size: 24px;
   font-weight: 500;
 `;
+
+export const DetailsBtn = styled.button`
+  color: ${colors.mainFontColor};
+ font-family: Inter;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+background-color: transparent;
+ outline: none;
+  border: none;
+
+`;
+
