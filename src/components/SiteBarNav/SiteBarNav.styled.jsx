@@ -20,6 +20,8 @@ export const LogOuButton = styled.button`
   font-weight: 400;
   line-height: normal;
   margin-left: 7px;
+  background: transparent;
+  border: none;
 `;
 
 export const Exit = styled.div`

@@ -2,6 +2,7 @@
   box-sizing: border-box;
 }
 body {
+  height: 100vh;
   margin: 0;
   font-family: "Inter", sans-serif;
   font-size: 14px;
@@ -51,6 +52,7 @@ address {
 
 html {
   scroll-behavior: smooth;
+  height: 100vh;
 }
 
 button {
@@ -59,6 +61,13 @@ button {
 .icon {
   fill: none;
   stroke: black;
+}
+
+.main { 
+  flex-grow: 1;
+}
+.footer {
+  margin-top: auto;
 }
 // a {
 //   font-weight: 500;

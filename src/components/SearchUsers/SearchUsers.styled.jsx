@@ -16,7 +16,7 @@ export const Input = styled.input`
   border-radius: 10px;
   border: 1px solid ${colors.mainFontColor};
   background-color: transparent;
-  margin-right: 64px;
+  /* margin-right: 64px; */
   margin-left: auto;
   margin-top: 29px;
   ::placeholder {
