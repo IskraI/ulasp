@@ -1,4 +1,4 @@
-import{n as t,c as o}from"./index-2a903511.js";const n=t.div`
+import{n as t,c as o}from"./index-9ae93602.js";const n=t.div`
   display: flex;
 `,i=t.input`
   display: flex;
@@ -11,7 +11,7 @@ import{n as t,c as o}from"./index-2a903511.js";const n=t.div`
   border-radius: 10px;
   border: 1px solid ${o.mainFontColor};
   background-color: transparent;
-  /* margin-right: 64px; */
+  margin-right: 64px;
   margin-left: auto;
   margin-top: 29px;
   ::placeholder {
