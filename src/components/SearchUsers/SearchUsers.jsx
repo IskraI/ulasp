@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useGetUsersListQuery } from "../../redux/dataUsersSlice";
 
 import {
@@ -51,43 +51,69 @@ const user = {
 
 export const SearchUsers = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  // const [searchResults, setSearchResults] = useState([user]);
+  const [searchResults, setSearchResults] = useState([]);
   const [isLoading1, setIsLoading] = useState(false);
   const [showNoResults, setShowNoResults] = useState(false);
- const { data: users, isLoading } = useGetUsersListQuery();
+  const { data: users, isLoading } = useGetUsersListQuery();
+ 
   
   console.log(users);
 
+ const filteredUsers = useMemo(() => {
+    if (users) {
+      return users.filter((user) => user.status === 'false');
+    }
+    return [];
+ }, [users]);
+  
+  const isSearching = searchTerm.trim() !== "";
+  
+  const title = isSearching
+    ? searchResults.length > 0
+      ? "Результати пошуку:"
+      : ""
+    : "Чекають на підтвердження (посилання):";
+
+  useEffect(() => {
+    setSearchResults(filteredUsers);
+  }, [filteredUsers]);
+
   useEffect(() => {
     if (searchTerm.trim() !== "") {
-      setIsLoading(true);
-      // Здесь вы можете выполнить поиск пользователей и установить результаты в setSearchResults
-      // Например, отправить запрос на сервер и обработать полученные данные
-      // const fetchData = async () => {
-      //   const response = await fetch(`/api/searchUsers?query=${searchTerm}`);
-      //   const data = await response.json();
-      //   setSearchResults(data);
-      //   setIsLoading(false);
-      // };
-      // setSearchResults([user]);
+      const filteredResults = filteredUsers.filter((user) => {
+        return (
+          user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          user.contractNumber.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      });
 
-      setIsLoading(false);
-      setShowNoResults(false);
+      setSearchResults(filteredResults);
+      setShowNoResults(filteredResults.length === 0);
     } else {
-      // Сбрасываем результаты поиска, если поле ввода пустое
-      // setSearchResults([user]);
-      setIsLoading(false);
-      setShowNoResults(false);
+      setSearchResults(filteredUsers);
+     setShowNoResults(false);
     }
-  }, [searchTerm]);
+  }, [searchTerm, filteredUsers]);
 
-
+//   const renderTitle = () => {
+//   if (isSearching && searchResults.length > 0) {
+//     return "Результати пошуку:";
+//   } else if (isSearching && searchResults.length === 0) {
+//     return "Результати пошуку: не знайдено";
+//   } else {
+//     return "Чекають на підтвердження (посилання):";
+//   }
+// };
 
 
   return (
     <>
       <SearchUsersContainer>
-        <TitleTab>Чекають на підтвердження (посилання):</TitleTab>
+        <TitleTab>{title}</TitleTab>
+        {/* {(searchTerm === "" || (searchTerm === "" && filteredUsers.length > 0)) && (
+          <TitleTab>{renderTitle()}</TitleTab>
+        )} */}
         <Input
           type="text"
           placeholder="Пошук користувачів"
@@ -97,7 +123,7 @@ export const SearchUsers = () => {
       </SearchUsersContainer>
       {isLoading ? (
         <TextLoader>Завантаження...</TextLoader>
-      ) : users.length === 0 && showNoResults ? (
+      ) : searchResults.length === 0 && showNoResults ? (
         <TextInfo>Результати пошуку: не знайдено</TextInfo>
       ) : (
         <Table>
@@ -111,7 +137,7 @@ export const SearchUsers = () => {
             </TableRow>
           </thead>
           <tbody>
-               {users.map((user, index) => {
+               {searchResults.map((user, index) => {
               const date = new Date(user.createdAt);
               const year = date.getFullYear();
               const month = String(date.getMonth() + 1).padStart(2, "0");
