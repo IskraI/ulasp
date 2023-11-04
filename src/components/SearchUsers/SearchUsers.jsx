@@ -1,5 +1,6 @@
+
 import { useState, useEffect, useMemo } from "react";
-import { useGetUsersListQuery } from "../../redux/dataUsersSlice";
+import { useGetUsersListQuery } from "../../redux/dataUsersSlice
 
 import {
   SearchUsersContainer,
@@ -11,8 +12,8 @@ import {
   TitleTab,
   TextLoader,
   TextInfo,
-  DetailsBtn
 } from "./SearchUsers.styled";
+import { useGetUsersListQuery } from "../../redux/dataUsersSlice";
 
 const user = {
   _id: {
@@ -47,10 +48,9 @@ const user = {
   },
 };
 
-
-
 export const SearchUsers = () => {
   const [searchTerm, setSearchTerm] = useState("");
+
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading1, setIsLoading] = useState(false);
   const [showNoResults, setShowNoResults] = useState(false);
@@ -90,7 +90,7 @@ export const SearchUsers = () => {
 
       setSearchResults(filteredResults);
       setShowNoResults(filteredResults.length === 0);
-    } else {
+    } else 
       setSearchResults(filteredUsers);
      setShowNoResults(false);
     }
@@ -107,6 +107,7 @@ export const SearchUsers = () => {
 // };
 
 
+
   return (
     <>
       <SearchUsersContainer>
@@ -121,21 +122,22 @@ export const SearchUsers = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </SearchUsersContainer>
-      {isLoading ? (
+      {isLoading1 ? (
         <TextLoader>Завантаження...</TextLoader>
       ) : searchResults.length === 0 && showNoResults ? (
         <TextInfo>Результати пошуку: не знайдено</TextInfo>
       ) : (
         <Table>
-          <thead>
+          {/* <thead>
             <TableRow>
-              <RowTitle >Ім’я</RowTitle>
-              <RowTitle >№ договору</RowTitle>
-              <RowTitle >Дата заявки</RowTitle>
+              <RowTitle style={{ marginRight: "243px" }}>Ім’я</RowTitle>
+              <RowTitle style={{ marginRight: "94px" }}>№ договору</RowTitle>
+              <RowTitle style={{ marginRight: "102px" }}>Дата заявки</RowTitle>
               <RowTitle>Детальніше</RowTitle>
               <RowTitle></RowTitle>
             </TableRow>
           </thead>
+
           <tbody>
                {searchResults.map((user, index) => {
               const date = new Date(user.createdAt);
@@ -144,24 +146,47 @@ export const SearchUsers = () => {
               const day = String(date.getDate()).padStart(2, "0");
               const formattedDate = `${year}/${month}/${day}`;
 
-              return (
-                <TableRow key={index}>
-                  <TableCell>
-                    {user.firstName} {user.lastName}
-                  </TableCell>
-                  <TableCell>{user.contractNumber}</TableCell>
-                  <TableCell>{formattedDate}</TableCell>
-                  <TableCell>
-                    <DetailsBtn>картка</DetailsBtn>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+
+              <th>Day </th>
+              <th>Tel Number</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            {!isLoading &&
+              users.map((user, index) => {
+                const date = new Date(user.createdAt);
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, "0");
+                const day = String(date.getDate()).padStart(2, "0");
+                const formattedDate = `${year}-${month}-${day}`;
+                return (
+                  <tr key={index}>
+                    <td>{user.firstName}</td>
+                    <td>
+                      {user.lastName} {user.fatherName}
+                    </td>
+                    <td>{formattedDate}</td>
+                    <td>{user.telNumber}</td>
+                    <td>{user.email}</td>
+                  </tr>
+                );
+              })}
+            {/* {searchResults.map((user) => (
+              <TableRow key={user._id.$oid}>
+                <TableCell>
+                  {user.firstName} {user.lastName}
+                </TableCell>
+                <TableCell>{user.contractNumber}</TableCell>
+                <TableCell>{user.createdAt.$date}</TableCell>
+                <TableCell>
+                  <button>картка</button>
+                </TableCell>
+              </TableRow>
+            ))} */}
           </tbody>
         </Table>
       )}
     </>
   );
 };
-
-
