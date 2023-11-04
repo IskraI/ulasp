@@ -109,12 +109,17 @@ text-align: left;
 
 export const TitleTab = styled.h3`
   color: ${colors.mainFontColor};
-  font-size: 22px;
+  /* font-size: 22px; */
   margin-top: 43px;
   /* margin-left: 111px; */
-  line-height: calc(26.4 / 22);
+  /* line-height: calc(26.4 / 22);
   font-weight: 400;
-  line-height: 1.28;
+  line-height: 1.28; */
+
+  
+font-size: 24px;
+font-weight: 500;
+
 `;
 
 export const TextLoader = styled.p`
