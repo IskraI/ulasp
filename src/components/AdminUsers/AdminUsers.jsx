@@ -47,8 +47,7 @@ const AdminUsers = () => {
       {showModal && (
         <Modal width={"898px"} padding={"24px"} onClose={handleShowModal}>
       
-          <h3>Новий користувач</h3>
-          <h3>Музичний редактор</h3>
+       
           <UserCreateModal />
         </Modal>
       )}

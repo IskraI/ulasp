@@ -12,6 +12,8 @@ import uk from 'date-fns/locale/uk';
 registerLocale('uk', uk);
 setDefaultLocale('uk');
 
+import {RegisterBlock, RegisterField, RegisterNameBlock} from "./UserCreateModal.styled"
+
 const UserFopCreateModal = () => {
     const [dayOfBirthday, setDayOfBirthday] = useState(null);
     const { control, register, handleSubmit,  setError, clearErrors,  formState: { errors, isValid, dirtyFields }  } = useForm({
@@ -39,21 +41,12 @@ const UserFopCreateModal = () => {
     // };
   
 
-    const handleNameChange = (e) => {
-      const value = e.target.value;
-      if (!/^[а-яА-Я\s]+$/.test(value)) {
-        setError('firstName', {
-          type: 'manual',
-          message: 'Имя должно содержать только кириллицу',
-        });
-      } else {
-        clearErrors('firstName'); // Очищаем ошибку, если значение верное
-      }
-    };
- 
+
 return(
 <form onSubmit={handleSubmit(onFormSubmit)}>
-<div>
+< RegisterBlock>
+< RegisterNameBlock>
+< RegisterField> 
   <label>Прізвище</label>
   <input
             type="text"
@@ -62,10 +55,10 @@ return(
             //  ${!errors.name && dirtyFields.name && scss.valid}`}
             {...register('lastName')}
           />
-  <p>{errors.firstName && errors.firstName.message}</p>
-</div>
+  <p>{errors.lastName && errors.lastName.message}</p>
+</RegisterField>
 
-<div>
+<RegisterField>
   <label>Ім'я</label>
   <input
             type="text"
@@ -74,136 +67,169 @@ return(
             //  ${!errors.name && dirtyFields.name && scss.valid}`}
             {...register('firstName')}
           />
-  
-</div>
+   <p>{errors.firstName && errors.firstName.message}</p>
+</RegisterField>
 
-<div>
+<RegisterField>
   <label>По-батькові</label>
   <input
             type="text"
-            placeholder="Ім'я"
+            placeholder="По-батькові"
             // className={`${scss.input} ${errors.name && scss.invalid}
             //  ${!errors.name && dirtyFields.name && scss.valid}`}
             {...register('fatherName')}
           />
- 
-</div>
+  <p>{errors.fatherName && errors.fatherName.message}</p>
+</RegisterField>
+</RegisterNameBlock>
 
-<div>
+<RegisterField>
   <label>№ договору</label>
   <input
             type="text"
-            placeholder="Ім'я"
+            placeholder="№ договору"
             // className={`${scss.input} ${errors.name && scss.invalid}
             //  ${!errors.name && dirtyFields.name && scss.valid}`}
             {...register('contractNumber')}
           />
- </div>
-<div>
+            <p>{errors.contractNumber && errors.contractNumber.message}</p>
+ </RegisterField>
+<RegisterField>
 <label>Код ЄДРПОУ (ІНН)*</label>
 <input
             type="text"
-            placeholder="Ім'я"
+            placeholder="Код ЄДРПОУ (ІНН)"
             // className={`${scss.input} ${errors.name && scss.invalid}
             //  ${!errors.name && dirtyFields.name && scss.valid}`}
             {...register('taxCode')}
           />
- </div>
-<div>
+           <p>{errors.taxCode && errors.taxCode.message}</p>
+ </RegisterField>
+<RegisterField>
   <label>Дата народження</label>
-
-  <DatePicker
+  <input
+            type="text"
+            placeholder="Дата народження"
+            // className={`${scss.input} ${errors.name && scss.invalid}
+            //  ${!errors.name && dirtyFields.name && scss.valid}`}
+            {...register('dayOfBirthday')}
+          />
+           <p>{errors.dayOfBirthday && errors.dayOfBirthday.message}</p>
+  {/* <DatePicker
   selected={dayOfBirthday}
   onChange={(date) => setDayOfBirthday(date)}
   dateFormat="dd.MM.yyyy"
   placeholderText="Выберите дату"
-/>
-</div>
-  {/* <input
+/> */}
+</RegisterField>
+ 
+
+<RegisterField>
+  <label>Номер телефону*</label>
+  <input
             type="text"
-            placeholder="Ім'я"
+            placeholder="Номер телефону"
             // className={`${scss.input} ${errors.name && scss.invalid}
             //  ${!errors.name && dirtyFields.name && scss.valid}`}
-            {...register('dayOfBirthday')}
-            as={<DateInput />}
-          /> */}
-
-{/* </div> */}
-<div>
-  <label>Номер телефону*</label>
-  <Controller
-    name="telNumber"
-    control={control}
-    render={({ field }) => <input {...field} />}
-  />
-</div>
-<div>
+            {...register('telNumber')}
+          />
+          {console.log('errors', errors)}
+  <p>{errors.telNumber && errors.telNumber.message}</p>
+</RegisterField>
+<RegisterField>
   <label>E-mail*</label>
-  <Controller
-    name="email"
-    control={control}
-    render={({ field }) => <input {...field} />}
-  />
-</div>
-<div>
+  <input
+            type="text"
+            placeholder="E-mail"
+            // className={`${scss.input} ${errors.name && scss.invalid}
+            //  ${!errors.name && dirtyFields.name && scss.valid}`}
+            {...register('email')}
+          />
+  <p>{errors.email && errors.email.message}</p>
+</RegisterField>
+<RegisterField>
   <label>Надання доступу до*</label>
-  <Controller
-    name="dateOfAccess"
-    control={control}
-    render={({ field }) => <input {...field} />}
-  />
-</div>
-<div>
+  <input
+            type="text"
+            placeholder="Надання доступу до"
+            // className={`${scss.input} ${errors.name && scss.invalid}
+            //  ${!errors.name && dirtyFields.name && scss.valid}`}
+            {...register('dateOfAccess')}
+          />
+  <p>{errors.dateOfAccess && errors.dateOfAccess.message}</p>
+</RegisterField>
+<RegisterField>
   <label>Остання оплата*  </label>
-  <Controller
-    name="lastPay"
-    control={control}
-    render={({ field }) => <input {...field} />}
-  />
-</div>
-<div>
+  <input
+            type="text"
+            placeholder="Остання оплата"
+            // className={`${scss.input} ${errors.name && scss.invalid}
+            //  ${!errors.name && dirtyFields.name && scss.valid}`}
+            {...register('lastPay')}
+          />
+            <p>{errors.lastPay && errors.lastPay.message}</p>
+</RegisterField>
+</RegisterBlock>
+< RegisterBlock>
+<RegisterField>
   <label>Контактна особа* </label>
-  <Controller
-    name="contactFace"
-    control={control}
-    render={({ field }) => <input {...field} />}
-  />
-</div>
-<div>
+  <input
+            type="text"
+            placeholder="Контактна особа"
+            // className={`${scss.input} ${errors.name && scss.invalid}
+            //  ${!errors.name && dirtyFields.name && scss.valid}`}
+            {...register('contactFace')}
+          />
+ <p>{errors.contactFace && errors.contactFace.message}</p>
+</RegisterField>
+<RegisterField>
   <label>Ідентифікаційний номер* </label>
-  <Controller
-    name="taxCodeContactFace"
-    control={control}
-    render={({ field }) => <input {...field} />}
-  />
-</div>
-<div>
+  <input
+            type="text"
+            placeholder="Ідентифікаційний номер"
+            // className={`${scss.input} ${errors.name && scss.invalid}
+            //  ${!errors.name && dirtyFields.name && scss.valid}`}
+            {...register('taxCodeContactFace')}
+          />
+           <p>{errors.taxCodeContactFace && errors.taxCodeContactFace.message}</p>
+</RegisterField>
+<RegisterField>
   <label>Номер телефону* </label>
-  <Controller
-    name="telNumberContactFace"
-    control={control}
-    render={({ field }) => <input {...field} />}
-  />
-</div>
-<div>
+  <input
+            type="text"
+            placeholder="Номер телефону"
+            // className={`${scss.input} ${errors.name && scss.invalid}
+            //  ${!errors.name && dirtyFields.name && scss.valid}`}
+            {...register('telNumberContactFace')}
+          />
+           <p>{errors.telNumberContactFace && errors.telNumberContactFace.message}</p>
+ 
+</RegisterField>
+<RegisterField>
   <label>E-mail </label>
-  <Controller
-    name="emailContactFace"
-    control={control}
-    render={({ field }) => <input {...field} />}
-  />
-</div>
-<div>
+  <input
+            type="text"
+            placeholder="E-mail"
+            // className={`${scss.input} ${errors.name && scss.invalid}
+            //  ${!errors.name && dirtyFields.name && scss.valid}`}
+            {...register('emailContactFace')}
+          />
+           <p>{errors.emailContactFace && errors.emailContactFace.message}</p>
+
+</RegisterField>
+<RegisterField>
   <label>Примітка </label>
-  <Controller
-    name="comment"
-    control={control}
-    render={({ field }) => <textarea {...field} />}
-  />
-</div>
+  <textarea
+            type="text"
+            placeholder="Примітка"
+            // className={`${scss.input} ${errors.name && scss.invalid}
+            //  ${!errors.name && dirtyFields.name && scss.valid}`}
+            {...register('comment')}
+          />
+           <p>{errors.comment && errors.comment.message}</p>
 
-
-{/* Добавьте остальные поля формы аналогично */}
+</RegisterField>
+</RegisterBlock>
 
 <button  type="submit"
           disabled={!isValid}>Отправить</button>
