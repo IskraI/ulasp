@@ -1,6 +1,6 @@
 
-import { useState, useEffect, useMemo } from "react";
-import { useGetUsersListQuery } from "../../redux/dataUsersSlice
+import { useState, useEffect } from "react";
+ import { useGetUsersListQuery } from "../../redux/dataUsersSlice";
 
 import {
   SearchUsersContainer,
@@ -13,7 +13,7 @@ import {
   TextLoader,
   TextInfo,
 } from "./SearchUsers.styled";
-import { useGetUsersListQuery } from "../../redux/dataUsersSlice";
+
 
 const user = {
   _id: {
