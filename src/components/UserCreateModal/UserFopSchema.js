@@ -25,15 +25,49 @@ export const UserFopSchema = yup.object().shape({
     .required("Must be filled!"),
   taxCode: yup
     .string()
-    .min(10, "Must be between 6 and 16 characters!")
-    .max(10, "Must be between 6 and 16 characters!")
+    .min(10, "Must be  10 characters!")
+    .max(10, "Must be  10 characters!")
     .required("Must be filled!")
     .matches(onlyNumberRegexp, "This is an ERROR taxCode"),
-    dayOfBirthday: yup
+  dayOfBirthday: yup
     .string()
-    .min(10, "Must be between 6 and 16 characters!")
-    .max(10, "Must be between 6 and 16 characters!")
     .required("Must be filled!")
     .matches(regularDateRegexp, "This is an ERROR taxCode"),
-    
+  telNumber: yup
+    .string()
+    .required("Must be filled!")
+    .matches(phoneNumberUaRegexp, "This is an ERROR taxCode"),
+  email: yup
+    .string()
+    .required("Must be filled!")
+    .matches(emailRegexp, "This is an ERROR taxCode"),
+  dateOfAccess: yup
+    .string()
+    .required("Must be filled!")
+    .matches(regularDateRegexp, "This is an ERROR taxCode"),
+  lastPay: yup
+    .string()
+    .required("Must be filled!")
+    .matches(regularDateRegexp, "This is an ERROR taxCode"),
+
+  contactFace: yup.string().required("Must be filled!"),
+
+  taxCodeContactFace: yup
+    .string()
+    .min(10, "Must be  10 characters!")
+    .max(10, "Must be  10 characters!")
+    .required("Must be filled!")
+    .matches(onlyNumberRegexp, "This is an ERROR taxCode"),
+
+  telNumberContactFace: yup
+    .string()
+    .required("Must be filled!")
+    .matches(phoneNumberUaRegexp, "This is an ERROR taxCode"),
+
+  emailContactFace: yup
+    .string()
+    .required("Must be filled!")
+    .matches(emailRegexp, "This is an ERROR taxCode"),
+    comment:yup
+    .string(),
 });

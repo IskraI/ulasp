@@ -28,3 +28,31 @@ width: 100%;
   opacity: 1;
 }
 `;
+export const RegisterForm = styled.div `
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+
+`
+export const RegisterBlock = styled.div `
+  display: flex;
+  flex-direction: column;
+
+`
+export const RegisterField = styled.div `
+  display: flex;
+  
+`
+export const NavCreateModal = styled.div `
+display: flex;
+justify-content: left;
+gap: 48px;
+color: var(--TXT-color, #17161C);
+text-align: center;
+font-family: Inter;
+font-size: 22px;
+font-style: normal;
+font-weight: 400;
+line-height: 120%
+
+`
