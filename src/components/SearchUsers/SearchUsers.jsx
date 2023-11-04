@@ -67,6 +67,7 @@ export const SearchUsers = () => {
  }, [users]);
   
   const isSearching = searchTerm.trim() !== "";
+   console.log(isSearching);
   
   const title = isSearching
     ? searchResults.length > 0
