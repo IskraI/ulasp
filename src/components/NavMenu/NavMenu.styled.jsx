@@ -18,6 +18,17 @@ export const List = styled.ul`
   flex-direction: column;
  color:black;
   // gap: 21px;
+
+   /* &.active {
+     border: 2px solid #FFF3BF;
+     background-image: url('../../../src/assets/VectorActive.svg');
+      z-index:10;
+    background-size: contain; 
+/* opacity: 0.5; */
+  /* background-repeat: no-repeat;
+    background-position: right center;
+   } */ 
+
  `;
 
 export const Item = styled.li`
@@ -36,6 +47,7 @@ font-style: normal;
 font-weight: 400;
 line-height:calc(26.4/22);
 align-items: center;
+border-radius: 10px;
   padding-left: 30px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -45,20 +57,25 @@ margin-right: 30px;
 
  /* Add styling for the active link */
   &.active {
-     border: 2px solid #FFF3BF; 
-     background-image: url('../../../src/assets/VectorActive.svg'); 
-    /* background-image: url('../../../public/VectorActive.svg');  */
-   z-index:10; 
-    // background-size: contain; 
-    background-repeat: no-repeat; 
-    background-position: right center; 
+     border: 2px solid #FFF3BF;
+     background-image: url('../../../src/assets/VectorActive.svg');
+      z-index:10;
+    background-size: contain; 
+/* opacity: 0.5; */
+  background-repeat: no-repeat;
+    background-position: right center;
          svg {
-        // fill: #FFF3BF; 
-        stroke: #FFF3BF;
+         // fill: #FFF3BF;
+       stroke: #FFF3BF;
       
     }
-  }
+   }
+
+   &:hover {
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.60) inset;
+   }
 `;
+
 
 export const CustomSVG = styled.svg`
   /* Add styles for your custom SVG here */

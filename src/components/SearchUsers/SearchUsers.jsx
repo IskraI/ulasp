@@ -57,7 +57,7 @@ export const SearchUsers = () => {
   const { data: users, isLoading } = useGetUsersListQuery();
  
   
-  console.log(users);
+  // console.log(users);
 
  const filteredUsers = useMemo(() => {
     if (users) {
@@ -67,7 +67,7 @@ export const SearchUsers = () => {
  }, [users]);
   
   const isSearching = searchTerm.trim() !== "";
-   console.log(isSearching);
+  //  console.log(isSearching);
   
   const title = isSearching
     ? searchResults.length > 0
