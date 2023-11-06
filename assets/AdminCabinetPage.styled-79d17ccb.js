@@ -1,4 +1,4 @@
-import{n as t,c as o}from"./index-9ae93602.js";const n=t.div`
+import{n as t,c as o}from"./index-58cfc0bc.js";const n=t.div`
   display: flex;
 `,i=t.input`
   display: flex;
@@ -11,7 +11,7 @@ import{n as t,c as o}from"./index-9ae93602.js";const n=t.div`
   border-radius: 10px;
   border: 1px solid ${o.mainFontColor};
   background-color: transparent;
-  margin-right: 64px;
+  /* margin-right: 64px; */
   margin-left: auto;
   margin-top: 29px;
   ::placeholder {
@@ -69,14 +69,14 @@ import{n as t,c as o}from"./index-9ae93602.js";const n=t.div`
   tbody td:nth-of-type(5) {
     width: 20%;
   }
-`;t.th`
+`,l=t.th`
   color: ${o.mainFontColor};
   font-size: 16px;
   font-weight: 600;
   margin-top: 23px;
   text-align: left;
     /* flex: 1; */
-`;t.tr`
+`,r=t.tr`
   display: flex;
   /* flex: 1; */
   /* gap: 129px; */
@@ -85,30 +85,35 @@ import{n as t,c as o}from"./index-9ae93602.js";const n=t.div`
   display: flex;
   align-items: center;
 padding-left: 16px;
-`;t.td`
+`,h=t.td`
 text-align: left;
 
  /* flex: 1; */
   // Здесь вы можете определить стили для ячеек таблицы
          
  
-`;const l=t.h3`
+`,d=t.h3`
   color: ${o.mainFontColor};
-  font-size: 22px;
+  /* font-size: 22px; */
   margin-top: 43px;
   /* margin-left: 111px; */
-  line-height: calc(26.4 / 22);
+  /* line-height: calc(26.4 / 22);
   font-weight: 400;
-  line-height: 1.28;
-`,r=t.p`
+  line-height: 1.28; */
+
+  
+font-size: 24px;
+font-weight: 500;
+
+`,p=t.p`
   color: ${o.mainFontColor};
   font-size: 24px;
   font-weight: 500;
-`,h=t.p`
+`,s=t.p`
   color: ${o.mainFontColor};
   font-size: 24px;
   font-weight: 500;
-`;t.button`
+`,f=t.button`
   color: ${o.mainFontColor};
  font-family: Inter;
 font-size: 16px;
@@ -119,9 +124,9 @@ background-color: transparent;
  outline: none;
   border: none;
 
-`;const d=t.h2`
+`,x=t.h2`
  color:   ${o.mainFontColor};
 font-size: 24px;
 font-weight: 500;
 
-`;export{i as I,n as S,l as T,r as a,h as b,a as c,d};
+`;export{f as D,i as I,l as R,n as S,d as T,p as a,s as b,a as c,r as d,h as e,x as f};
