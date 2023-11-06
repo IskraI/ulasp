@@ -14,20 +14,22 @@ import {
   TextInfo,
 } from "../SearchUsers/SearchUsers.styled";
 import { Title } from "../../pages/AdminCabinetPage/AdminCabinetPage.styled";
-import UserCreateModal from "../UserCreateModal/UserCreateModal";
+import UserCreateForm from "../UserCreateModal/UserCreateForm";
 
 const AdminUsers = () => {
   const { data, isLoading } = useGetUsersListQuery();
 
   const [showModal, setShowModal] = useState(false);
-  // const [typeOfUser,setTypeOfUser]= useState("fop");
+ 
   const handleShowModal = () => {
-    // document.activeElement.blur();
-    setShowModal((prev) => !prev);
+    setShowModal(true);
   };
 
-  // console.log('data', data)
-  // console.log('isLoading', isLoading)
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+
   return (
     <>
       <Title>Користувачі</Title>
@@ -45,10 +47,9 @@ const AdminUsers = () => {
       {!isLoading && <UserTable users={data} />}
 
       {showModal && (
-        <Modal width={"898px"} padding={"24px"} onClose={handleShowModal}>
+        <Modal width={"898px"} padding={"24px"} onClose={handleCloseModal}>
       
-       
-          <UserCreateModal />
+                 <UserCreateForm  onCloseModal={handleCloseModal}/>
         </Modal>
       )}
     </>
