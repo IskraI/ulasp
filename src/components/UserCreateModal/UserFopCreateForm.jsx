@@ -1,10 +1,10 @@
 import { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { useForm, Controller } from 'react-hook-form';
+
 import { InputStyle } from './UserCreateModal.styled';
 import { NavLink } from 'react-router-dom';
-import {UserFopSchema} from "./UserFopSchema"
-import { yupResolver } from '@hookform/resolvers/yup';
+
+
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { registerLocale, setDefaultLocale } from 'react-datepicker';
@@ -14,36 +14,15 @@ setDefaultLocale('uk');
 
 import {RegisterBlock, RegisterField, RegisterNameBlock,RegisterLabel,RegisterInput} from "./UserCreateModal.styled"
 
-const UserFopCreateModal = () => {
-    const [dayOfBirthday, setDayOfBirthday] = useState(null);
-    const { control, register, handleSubmit,  setError, clearErrors,  formState: { errors, isValid, dirtyFields }  } = useForm({
-        mode: 'onChange',
-        // defaultValues: { name: '', email: '', password: '' },
-        resolver: yupResolver(UserFopSchema),
-      });
+const UserFopCreateModal = ({register, errors}) => {
+    // const [dayOfBirthday, setDayOfBirthday] = useState(null);
 
-  const onFormSubmit = (data) => {
-    console.log(data);
-  };
-  
-    // const handleFormSubmit = e => {
-    //   e.preventDefault();
-    //   const formData = new FormData();
-    //  console.log('formData', formData)
 
-    // //   dispatch(formData)
-    // //     .unwrap()
-    // //     .then(() => {
-       
-         
-    // //     })
-    // //     .catch(e => console.log(e.data.message));
-    // };
   
 
 
 return(
-<form onSubmit={handleSubmit(onFormSubmit)}>
+<>
 < RegisterBlock>
 < RegisterNameBlock>
 < RegisterField> 
@@ -176,8 +155,6 @@ return(
   <RegisterInput
             type="text"
             placeholder="Контактна особа"
-            // className={`${scss.input} ${errors.name && scss.invalid}
-            //  ${!errors.name && dirtyFields.name && scss.valid}`}
             {...register('contactFace')}
           />
  <p>{errors.contactFace && errors.contactFace.message}</p>
@@ -232,9 +209,8 @@ return(
 
 </RegisterField>
 
+</>
 
-<button  type="submit"
-          disabled={!isValid}>Отправить</button>
-</form>
+
 )}
   export default UserFopCreateModal;
