@@ -41,6 +41,19 @@ export const RegisterBlock = styled.div `
 `
 export const RegisterField = styled.div `
   display: flex;
+  width: 400px;
+
+
+  
+`
+export const RegisterInput = styled.input `
+ 
+  width: 100%;
+  
+`
+export const RegisterLabel = styled.label `
+ 
+  width: 100%;
   
 `
 export const NavCreateModal = styled.div `
@@ -55,4 +68,9 @@ font-style: normal;
 font-weight: 400;
 line-height: 120%
 
+`
+
+export const RegisterNameBlock = styled.div `
+  display: flex;
+  
 `
