@@ -12,7 +12,7 @@ import uk from 'date-fns/locale/uk';
 registerLocale('uk', uk);
 setDefaultLocale('uk');
 
-import {RegisterBlock, RegisterField, RegisterNameBlock} from "./UserCreateModal.styled"
+import {RegisterBlock, RegisterField, RegisterNameBlock,RegisterLabel,RegisterInput} from "./UserCreateModal.styled"
 
 const UserFopCreateModal = () => {
     const [dayOfBirthday, setDayOfBirthday] = useState(null);
@@ -84,8 +84,8 @@ return(
 </RegisterNameBlock>
 
 <RegisterField>
-  <label>№ договору</label>
-  <input
+  <RegisterLabel>№ договору</RegisterLabel>
+  <RegisterInput
             type="text"
             placeholder="№ договору"
             // className={`${scss.input} ${errors.name && scss.invalid}
@@ -95,8 +95,8 @@ return(
             <p>{errors.contractNumber && errors.contractNumber.message}</p>
  </RegisterField>
 <RegisterField>
-<label>Код ЄДРПОУ (ІНН)*</label>
-<input
+<RegisterLabel>Код ЄДРПОУ (ІНН)*</RegisterLabel>
+<RegisterInput
             type="text"
             placeholder="Код ЄДРПОУ (ІНН)"
             // className={`${scss.input} ${errors.name && scss.invalid}
@@ -106,8 +106,8 @@ return(
            <p>{errors.taxCode && errors.taxCode.message}</p>
  </RegisterField>
 <RegisterField>
-  <label>Дата народження</label>
-  <input
+  <RegisterLabel>Дата народження</RegisterLabel>
+  <RegisterInput
             type="text"
             placeholder="Дата народження"
             // className={`${scss.input} ${errors.name && scss.invalid}
@@ -125,8 +125,8 @@ return(
  
 
 <RegisterField>
-  <label>Номер телефону*</label>
-  <input
+  <RegisterLabel>Номер телефону*</RegisterLabel>
+  <RegisterInput
             type="text"
             placeholder="Номер телефону"
             // className={`${scss.input} ${errors.name && scss.invalid}
@@ -137,8 +137,8 @@ return(
   <p>{errors.telNumber && errors.telNumber.message}</p>
 </RegisterField>
 <RegisterField>
-  <label>E-mail*</label>
-  <input
+  <RegisterLabel>E-mail*</RegisterLabel>
+  <RegisterInput
             type="text"
             placeholder="E-mail"
             // className={`${scss.input} ${errors.name && scss.invalid}
@@ -148,8 +148,8 @@ return(
   <p>{errors.email && errors.email.message}</p>
 </RegisterField>
 <RegisterField>
-  <label>Надання доступу до*</label>
-  <input
+  <RegisterLabel>Надання доступу до*</RegisterLabel>
+  <RegisterInput
             type="text"
             placeholder="Надання доступу до"
             // className={`${scss.input} ${errors.name && scss.invalid}
@@ -159,8 +159,8 @@ return(
   <p>{errors.dateOfAccess && errors.dateOfAccess.message}</p>
 </RegisterField>
 <RegisterField>
-  <label>Остання оплата*  </label>
-  <input
+  <RegisterLabel>Остання оплата*  </RegisterLabel>
+  <RegisterInput
             type="text"
             placeholder="Остання оплата"
             // className={`${scss.input} ${errors.name && scss.invalid}
@@ -172,8 +172,8 @@ return(
 </RegisterBlock>
 < RegisterBlock>
 <RegisterField>
-  <label>Контактна особа* </label>
-  <input
+  <RegisterLabel>Контактна особа* </RegisterLabel>
+  <RegisterInput
             type="text"
             placeholder="Контактна особа"
             // className={`${scss.input} ${errors.name && scss.invalid}
@@ -183,8 +183,8 @@ return(
  <p>{errors.contactFace && errors.contactFace.message}</p>
 </RegisterField>
 <RegisterField>
-  <label>Ідентифікаційний номер* </label>
-  <input
+  <RegisterLabel>Ідентифікаційний номер* </RegisterLabel>
+  <RegisterInput
             type="text"
             placeholder="Ідентифікаційний номер"
             // className={`${scss.input} ${errors.name && scss.invalid}
@@ -194,8 +194,8 @@ return(
            <p>{errors.taxCodeContactFace && errors.taxCodeContactFace.message}</p>
 </RegisterField>
 <RegisterField>
-  <label>Номер телефону* </label>
-  <input
+  <RegisterLabel>Номер телефону* </RegisterLabel>
+  <RegisterInput
             type="text"
             placeholder="Номер телефону"
             // className={`${scss.input} ${errors.name && scss.invalid}
@@ -206,8 +206,8 @@ return(
  
 </RegisterField>
 <RegisterField>
-  <label>E-mail </label>
-  <input
+  <RegisterLabel>E-mail </RegisterLabel>
+  <RegisterInput
             type="text"
             placeholder="E-mail"
             // className={`${scss.input} ${errors.name && scss.invalid}
@@ -217,6 +217,8 @@ return(
            <p>{errors.emailContactFace && errors.emailContactFace.message}</p>
 
 </RegisterField>
+<></>
+</RegisterBlock>
 <RegisterField>
   <label>Примітка </label>
   <textarea
@@ -229,7 +231,7 @@ return(
            <p>{errors.comment && errors.comment.message}</p>
 
 </RegisterField>
-</RegisterBlock>
+
 
 <button  type="submit"
           disabled={!isValid}>Отправить</button>
