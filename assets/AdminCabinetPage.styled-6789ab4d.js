@@ -1,4 +1,4 @@
-import{n as t,c as o}from"./index-f94ae407.js";const n=t.div`
+import{n as t,c as o}from"./index-4a3104f2.js";const n=t.div`
   display: flex;
 `,i=t.input`
   display: flex;
@@ -22,7 +22,7 @@ import{n as t,c as o}from"./index-f94ae407.js";const n=t.div`
   table-layout: fixed;
   /* width: 100%; */
   border-collapse: collapse;
-  margin-left: 127px;
+  /* margin-left: 127px; */
 
   tbody {
     tr:nth-of-type(odd) {
@@ -128,5 +128,6 @@ background-color: transparent;
  color:   ${o.mainFontColor};
 font-size: 24px;
 font-weight: 500;
+
 
 `;export{f as D,i as I,l as R,n as S,d as T,p as a,s as b,a as c,r as d,h as e,x as f};
