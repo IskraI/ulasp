@@ -7,7 +7,11 @@ export const regularDateRegexp = /\d{2}\.\d{2}\.\d{4}/;
 export const phoneNumberUaRegexp = /^\+?3?8?(0\d{2}\d{3}\d{2}\d{2})$/;
 export const passportUaRegexp = /^([А-ЯЇІЄ]{2}\d{6})$/;
 
-export const UserFopSchema = yup.object().shape({
+export const UserSchema = yup.object().shape({
+  name:  yup
+  .string()
+  .required("Must be filled!")
+  .matches(nameRegexp, "This is an ERROR name"),
   firstName: yup
     .string()
     .required("Must be filled!")

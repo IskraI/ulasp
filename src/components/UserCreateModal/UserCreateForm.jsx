@@ -1,88 +1,459 @@
-import { useState, useRef } from 'react';
-import UserCompanyCreateModal from "./UserCompanyCreateForm"
-import UserFopCreateModal from "./UserFopCreateForm"
-import {RegisterForm, NavCreateModal} from "./UserCreateModal.styled"
-import { useForm, Controller } from 'react-hook-form';
-import {UserFopSchema} from "./UserFopSchema"
-import { yupResolver } from '@hookform/resolvers/yup';
-import {useCreateFopUserMutation, useCreateCompanyUserMutation} from "../../redux/dataUsersSlice"
-import { useNavigate } from 'react-router-dom';
+import { useState, useRef } from "react";
+// import UserCompanyCreateModal from "./UserCompanyCreateForm"
+// import UserFopCreateModal from "./UserFopCreateForm"
 
-const UserCreateForm = ({onCloseModal}) => {
-  const [ dispatchFop , { isLoading: isLoadingFop }] = useCreateFopUserMutation();
-  const [ dispatchCompany, { isLoading: isLoadingCompany }] = useCreateCompanyUserMutation();
+import { useForm, Controller } from "react-hook-form";
+import { UserSchema } from "./UserFopSchema";
+import { yupResolver } from "@hookform/resolvers/yup";
+import {
+  useCreateFopUserMutation,
+  useCreateCompanyUserMutation,
+} from "../../redux/dataUsersSlice";
+import { useNavigate } from "react-router-dom";
+
+import {RegisterForm, RegisterNameField,RegisterNameLabel, RegisterNameInput,
+  RegisterBlock,
+  RegisterField,
+  RegisterNameBlock,
+  RegisterLabel,
+  RegisterInput,RegisterArea, SectionUserButton, SectionUser, UserCreateModal
+} from "./UserCreateModal.styled";
+const UserCreateForm = ({ onCloseModal }) => {
+  const [activeSection, setActiveSection] = useState("NewUser");
+  const [dispatchFop, { isLoading: isLoadingFop }] = useCreateFopUserMutation();
+  const [dispatchCompany, { isLoading: isLoadingCompany }] =
+    useCreateCompanyUserMutation();
   const navigate = useNavigate();
-  const { control, register, handleSubmit,  setError, clearErrors,  formState: { errors, isValid, dirtyFields }  } = useForm({
-    mode: 'onChange',
+  const {
+    control,
+    register,
+    handleSubmit,
+    setError,
+    clearErrors,
+    formState: { errors, isValid, dirtyFields },
+  } = useForm({
+    mode: "onChange",
     // defaultValues: { name: '', email: '', password: '' },
-    resolver: yupResolver(UserFopSchema),
+    resolver: yupResolver(UserSchema),
   });
+  const [typeStatus, setTypeofAccept] = useState("false");
+  // const [dayOfBirthday, setDayOfBirthday] = useState(null);
+  const handleTypeofAccept = () => {
+    setTypeofAccept(typeStatus === "true" ? "false" : "true");
+    console.log("typeStatus", typeStatus);
+  };
+  const [typeOfUser, setTypeOfUser] = useState("fop");
 
-  const [typeOfUser,setTypeOfUser]= useState("fop")
-  const [typeStatus,setTypeofAccept]= useState("false")
   const handleTypeOfUser = () => {
-    setTypeOfUser(typeOfUser === "tov" ? "fop" : "tov");
-};
- 
-const handleTypeofAccept = () => {
 
-  setTypeofAccept(typeStatus === "true" ? "false" : "true");
-console.log('typeStatus', typeStatus)
-}
+    setTypeOfUser(typeOfUser === "tov" ? "fop" : "tov");
+    
+  };
 
   const onFormSubmit = (data) => {
-const userFop = true
-    const formData = {...data, 'status': typeStatus, 'userFop': typeOfUser};
+       const formData = { ...data, status: typeStatus, userFop: typeOfUser };
     console.log(formData);
-    if(typeOfUser ==="fop") { dispatchFop(formData)
-      .unwrap()
-      .then(() => {
-        navigate('/admin/users');
-        onCloseModal();
-      
-      })
-      .catch(error => console.log(error.data.message));}
-      if(typeOfUser ==="tov") { dispatchCompany(formData)
+    if (typeOfUser === "fop") {
+      dispatchFop(formData)
         .unwrap()
         .then(() => {
-          navigate('/admin/users');
+          navigate("/admin/users");
           onCloseModal();
-        
         })
-        .catch(error => console.log(error.data.message));}
-
-   
+        .catch((error) => console.log(error.data.message));
+    }
+    if (typeOfUser === "tov") {
+      dispatchCompany(formData)
+        .unwrap()
+        .then(() => {
+          navigate("/admin/users");
+          onCloseModal();
+        })
+        .catch((error) => console.log(error.data.message));
+    }
   };
-    return (
-    <>
+  const handleSectionChange = (section) => {
+    setActiveSection(section);
+
+    clearErrors();
+  };
+
+
+  return (
+    <UserCreateModal>
+      <SectionUser>
+        <SectionUserButton  isActive={activeSection === "NewUser"} onClick={() => handleSectionChange("NewUser")}>
+          Новий користувач
+        </SectionUserButton>
+        <SectionUserButton   isActive={activeSection === "MusicEditor"} onClick={() => handleSectionChange("MusicEditor")}>
+          Музичний редактор
+        </SectionUserButton>
+      </SectionUser>
+      {activeSection === "NewUser" &&(<button onClick={handleTypeOfUser}>
+                  {typeOfUser === "tov" ? "ТОВ" : "ФОП"}
+                </button>)}
+
       <RegisterForm>
-      <form onSubmit={handleSubmit(onFormSubmit)}>
-        <NavCreateModal>
-      <h3>Новий користувач</h3>
-          <h3>Музичний редактор</h3>
-          </NavCreateModal>
+        <form onSubmit={handleSubmit(onFormSubmit)}>
           <div>
-      <button onClick={handleTypeOfUser}>
-       {typeOfUser === "tov" ? "ТОВ" : "ФОП"}
-      </button>
-      <button onClick={handleTypeofAccept}>
-       {typeStatus === "true" ? "On" : "Off"}
-      </button>
-      </div>
-     
-     {typeOfUser === "tov" &&    <UserCompanyCreateModal register={register} errors={errors}/>}
-         
+            {activeSection === "NewUser" && (<>
+                    
+               
+                <RegisterBlock>
+                <RegisterNameBlock>
+                {typeOfUser === "fop" ? (<>
+                    <RegisterNameField>
+                      <RegisterNameLabel>Прізвище</RegisterNameLabel>
+                      <input
+                        type="text"
+                        placeholder="Прізвище"
+                        // className={`${scss.input} ${errors.name && scss.invalid}
+                        //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                        {...register("lastName")}
+                      />
+                      <p>{errors.lastName && errors.lastName.message}</p>
+                    </RegisterNameField>
 
-     {typeOfUser === "fop" &&   <UserFopCreateModal register={register} errors={errors}/>}
-     <button  type="submit"
-          // disabled={!isValid}
-          >
-            Отправить</button>
-           </form>
-     </RegisterForm>
-    </>
-   );
+                    <RegisterNameField>
+                      <RegisterNameLabel>Ім'я</RegisterNameLabel>
+                      <RegisterNameInput
+                        type="text"
+                        placeholder="Ім'я"
+                        // className={`${scss.input} ${errors.name && scss.invalid}
+                        //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                        {...register("firstName")}
+                      />
+                      <p>{errors.firstName && errors.firstName.message}</p>
+                    </RegisterNameField>
 
-  };
-  
-  export default UserCreateForm;
+                    <RegisterNameField>
+                      <RegisterNameLabel>По-батькові</RegisterNameLabel>
+                      <RegisterNameInput
+                        type="text"
+                        placeholder="По-батькові"
+                        // className={`${scss.input} ${errors.name && scss.invalid}
+                        //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                        {...register("fatherName")}
+                      />
+                      <p>{errors.fatherName && errors.fatherName.message}</p>
+                    </RegisterNameField>
+                    <button onClick={handleTypeofAccept}>
+                      {typeStatus === "true" ? "On" : "Off"}
+                    </button>
+                  </>)
+                 : (<>
+                    <RegisterNameField>
+                      <RegisterNameLabel>Назва компанії</RegisterNameLabel>
+                      <RegisterNameInput
+                        type="text"
+                        placeholder="Назва компанії"
+                        // className={`${scss.input} ${errors.name && scss.invalid}
+                        //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                        {...register("name")}
+                      />
+                      <p>{errors.name && errors.lastName.message}</p>
+                    </RegisterNameField>
+                 
+
+                    <button onClick={handleTypeofAccept}>
+                      {typeStatus === "true" ? "On" : "Off"}
+                    </button>
+                  </>)}
+                  </RegisterNameBlock>
+                
+                  <RegisterField>
+                    <RegisterLabel>№ договору</RegisterLabel>
+                    <RegisterInput
+                      type="text"
+                      placeholder="№ договору"
+                      // className={`${scss.input} ${errors.name && scss.invalid}
+                      //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                      {...register("contractNumber")}
+                    />
+                    <p>
+                      {errors.contractNumber && errors.contractNumber.message}
+                    </p>
+                  </RegisterField>
+                  <RegisterField>
+                    <RegisterLabel>Код ЄДРПОУ (ІНН)*</RegisterLabel>
+                    <RegisterInput
+                      type="text"
+                      placeholder="Код ЄДРПОУ (ІНН)"
+                      // className={`${scss.input} ${errors.name && scss.invalid}
+                      //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                      {...register("taxCode")}
+                    />
+                    <p>{errors.taxCode && errors.taxCode.message}</p>
+                  </RegisterField>
+                  {typeOfUser === "fop" && (<RegisterField>
+                    <RegisterLabel>Дата народження</RegisterLabel>
+                    <RegisterInput
+                      type="text"
+                      placeholder="Дата народження"
+                      // className={`${scss.input} ${errors.name && scss.invalid}
+                      //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                      {...register("dayOfBirthday")}
+                    />
+                    <p>
+                      {errors.dayOfBirthday && errors.dayOfBirthday.message}
+                    </p>
+                    {/* <DatePicker
+  selected={dayOfBirthday}
+  onChange={(date) => setDayOfBirthday(date)}
+  dateFormat="dd.MM.yyyy"
+  placeholderText="Выберите дату"
+/> */}
+                  </RegisterField>)}
+
+                  <RegisterField>
+                    <RegisterLabel>Номер телефону*</RegisterLabel>
+                    <RegisterInput
+                      type="text"
+                      placeholder="Номер телефону"
+                      // className={`${scss.input} ${errors.name && scss.invalid}
+                      //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                      {...register("telNumber")}
+                    />
+                    {console.log("errors", errors)}
+                    <p>{errors.telNumber && errors.telNumber.message}</p>
+                  </RegisterField>
+                  <RegisterField>
+                    <RegisterLabel>E-mail*</RegisterLabel>
+                    <RegisterInput
+                      type="text"
+                      placeholder="E-mail"
+                      // className={`${scss.input} ${errors.name && scss.invalid}
+                      //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                      {...register("email")}
+                    />
+                    <p>{errors.email && errors.email.message}</p>
+                  </RegisterField>
+                  <RegisterField>
+                    <RegisterLabel>Надання доступу до*</RegisterLabel>
+                    <RegisterInput
+                      type="text"
+                      placeholder="Надання доступу до"
+                      // className={`${scss.input} ${errors.name && scss.invalid}
+                      //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                      {...register("dateOfAccess")}
+                    />
+                    <p>{errors.dateOfAccess && errors.dateOfAccess.message}</p>
+                  </RegisterField>
+                  <RegisterField>
+                    <RegisterLabel>Остання оплата* </RegisterLabel>
+                    <RegisterInput
+                      type="text"
+                      placeholder="Остання оплата"
+                      // className={`${scss.input} ${errors.name && scss.invalid}
+                      //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                      {...register("lastPay")}
+                    />
+                    <p>{errors.lastPay && errors.lastPay.message}</p>
+                  </RegisterField>
+               
+                
+                 
+                
+                  <RegisterField>
+                    <RegisterLabel>Контактна особа* </RegisterLabel>
+                    <RegisterInput
+                      type="text"
+                      placeholder="Контактна особа"
+                      {...register("contactFace")}
+                    />
+                    <p>{errors.contactFace && errors.contactFace.message}</p>
+                  </RegisterField>
+                  <RegisterField>
+                    <RegisterLabel>Ідентифікаційний номер* </RegisterLabel>
+                    <RegisterInput
+                      type="text"
+                      placeholder="Ідентифікаційний номер"
+                      // className={`${scss.input} ${errors.name && scss.invalid}
+                      //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                      {...register("taxCodeContactFace")}
+                    />
+                    <p>
+                      {errors.taxCodeContactFace &&
+                        errors.taxCodeContactFace.message}
+                    </p>
+                  </RegisterField>
+                  <RegisterField>
+                    <RegisterLabel>Номер телефону* </RegisterLabel>
+                    <RegisterInput
+                      type="text"
+                      placeholder="Номер телефону"
+                      // className={`${scss.input} ${errors.name && scss.invalid}
+                      //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                      {...register("telNumberContactFace")}
+                    />
+                    <p>
+                      {errors.telNumberContactFace &&
+                        errors.telNumberContactFace.message}
+                    </p>
+                  </RegisterField>
+                  <RegisterField>
+                    <RegisterLabel>E-mail </RegisterLabel>
+                    <RegisterInput
+                      type="text"
+                      placeholder="E-mail"
+                      // className={`${scss.input} ${errors.name && scss.invalid}
+                      //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                      {...register("emailContactFace")}
+                    />
+                    <p>
+                      {errors.emailContactFace &&
+                        errors.emailContactFace.message}
+                    </p>
+                  </RegisterField>
+                  <></>
+                </RegisterBlock>
+             
+                <RegisterField>
+                  <label>Примітка </label>
+                  <textarea
+                    type="text"
+                    placeholder="Примітка"
+                    // className={`${scss.input} ${errors.name && scss.invalid}
+                    //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                    {...register("comment")}
+                  />
+                  <p>{errors.comment && errors.comment.message}</p>
+                </RegisterField>
+               
+                
+                <button
+                  type="submit"
+                  // disabled={!isValid}
+                >
+                  Отправить
+                </button>
+                </>
+            )}
+
+            {activeSection === "MusicEditor" && (
+              <div>
+                <RegisterBlock>
+                  <RegisterNameBlock>
+                    <RegisterField>
+                      <label>Прізвище</label>
+                      <input
+                        type="text"
+                        placeholder="Прізвище"
+                        // className={`${scss.input} ${errors.name && scss.invalid}
+                        //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                        {...register("lastName")}
+                      />
+                      <p>{errors.lastName && errors.lastName.message}</p>
+                    </RegisterField>
+
+                    <RegisterField>
+                      <label>Ім'я</label>
+                      <input
+                        type="text"
+                        placeholder="Ім'я"
+                        // className={`${scss.input} ${errors.name && scss.invalid}
+                        //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                        {...register("firstName")}
+                      />
+                      <p>{errors.firstName && errors.firstName.message}</p>
+                    </RegisterField>
+
+                    <RegisterField>
+                      <label>По-батькові</label>
+                      <input
+                        type="text"
+                        placeholder="По-батькові"
+                        // className={`${scss.input} ${errors.name && scss.invalid}
+                        //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                        {...register("fatherName")}
+                      />
+                      <p>{errors.fatherName && errors.fatherName.message}</p>
+                    </RegisterField>
+                 
+                  </RegisterNameBlock>
+                                  
+                  <RegisterField>
+                    <RegisterLabel>Ідентифікаційний номер*</RegisterLabel>
+                    <RegisterInput
+                      type="text"
+                      placeholder="234567891"
+                      // className={`${scss.input} ${errors.name && scss.invalid}
+                      //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                      {...register("taxCode")}
+                    />
+                    <p>{errors.taxCode && errors.taxCode.message}</p>
+                  </RegisterField>
+                  <RegisterField>
+                    <RegisterLabel>Дата народження</RegisterLabel>
+                    <RegisterInput
+                      type="text"
+                      placeholder="Дата народження"
+                      // className={`${scss.input} ${errors.name && scss.invalid}
+                      //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                      {...register("dayOfBirthday")}
+                    />
+                    <p>
+                      {errors.dayOfBirthday && errors.dayOfBirthday.message}
+                    </p>
+                    {/* <DatePicker
+  selected={dayOfBirthday}
+  onChange={(date) => setDayOfBirthday(date)}
+  dateFormat="dd.MM.yyyy"
+  placeholderText="Выберите дату"
+/> */}
+                  </RegisterField>
+
+                  <RegisterField>
+                    <RegisterLabel>Номер телефону*</RegisterLabel>
+                    <RegisterInput
+                      type="text"
+                      placeholder="Номер телефону"
+                      // className={`${scss.input} ${errors.name && scss.invalid}
+                      //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                      {...register("telNumber")}
+                    />
+                    {console.log("errors", errors)}
+                    <p>{errors.telNumber && errors.telNumber.message}</p>
+                  </RegisterField>
+                  <RegisterField>
+                    <RegisterLabel>E-mail*</RegisterLabel>
+                    <RegisterInput
+                      type="text"
+                      placeholder="E-mail"
+                      // className={`${scss.input} ${errors.name && scss.invalid}
+                      //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                      {...register("email")}
+                    />
+                    <p>{errors.email && errors.email.message}</p>
+                  </RegisterField>
+                 
+                </RegisterBlock>
+                <RegisterField>
+                  <label>Примітка </label>
+                  <textarea
+                    type="text"
+                    placeholder="Примітка"
+                    // className={`${scss.input} ${errors.name && scss.invalid}
+                    //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                    {...register("comment")}
+                  />
+                  <p>{errors.comment && errors.comment.message}</p>
+                </RegisterField>
+
+           
+                <button
+                  type="submit"
+                  // disabled={!isValid}
+                >
+                  Отправить
+                </button>
+              </div>
+            )}
+          </div>
+        </form>
+      </RegisterForm>
+    </UserCreateModal>
+  );
+};
+
+export default UserCreateForm;
