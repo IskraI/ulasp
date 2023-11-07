@@ -47,6 +47,7 @@ font-style: normal;
 font-weight: 400;
 line-height:calc(26.4/22);
 align-items: center;
+width: 253px;
 border-radius: 10px;
   padding-left: 30px;
   padding-top: 10px;
@@ -58,12 +59,12 @@ margin-right: 30px;
  /* Add styling for the active link */
   &.active {
      border: 2px solid #FFF3BF;
-     background-image: url('../../../src/assets/VectorActive.svg');
+     /* background-image: url('../../../src/assets/VectorActive.svg');
       z-index:10;
     background-size: contain; 
 /* opacity: 0.5; */
-  background-repeat: no-repeat;
-    background-position: right center;
+  /* background-repeat: no-repeat;
+    background-position: right center; */
          svg {
          // fill: #FFF3BF;
        stroke: #FFF3BF;

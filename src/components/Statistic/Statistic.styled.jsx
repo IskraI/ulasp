@@ -4,7 +4,7 @@ import { colors } from '../../styles/vars';
 export const StatsListWrapper = styled.div`
 display:flex;
 gap: 8px;
-margin-left: 111px;
+/* margin-left: 111px; */
 margin-top:24px;
 `;
 
