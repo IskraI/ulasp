@@ -51,7 +51,23 @@ export const RegisterForm = styled.div `
 `
 export const RegisterBlock = styled.div `
   display: flex;
+  gap: 24px;
+  /* flex-direction: column; */
+
+`
+export const RegisterLeftBlock = styled.div `
+  display: flex;
   flex-direction: column;
+ 
+
+`
+export const RegisterRigthBlock = styled.div `
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  width: 100%;
+ 
 
 `
 export const RegisterField = styled.div `
@@ -92,6 +108,54 @@ export const RegisterLabel = styled.label `
   padding-left: 8px;
   
 `
+export const FormButton = styled.button `
+display: flex;
+width: 198px;
+height: 48px;
+padding: 8px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+display: block;
+justify-content: center;
+text-align: center;
+border-radius: 10px;
+border: 1px solid #17161C;
+background:  rgba(164, 188, 212, 0.30);
+text-transform: uppercase;
+font-family: Inter;
+font-size: 20px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+`
+export const CommentTextarea = styled.textarea `
+
+background-color:  rgba(234, 234, 234, 0.32);
+  width: 100%;
+  height: 220px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  outline: none;
+  border: 0.25px solid  rgba(23, 22, 28, 0.5);
+ /* border: 0.5px solid  #17161C; */
+ /* stroke-width: 0.5px; */
+  
+`
+export const Commentlabel = styled.label `
+
+font-family: Inter;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+color:  #17161C;
+  
+`
+
+
 
 export const SectionUserButton = styled.button `
 display: inline-block;
@@ -128,6 +192,16 @@ export const RegisterNameBlock = styled.div `
   gap: 16px;
   border: 0.25px solid  rgba(23, 22, 28, 0.5);
  background:rgba(234, 234, 234, 0.32);
+`
+
+export const RegisterCommentField = styled.div `
+  display: flex;
+  flex-direction: column;
+ 
+  width: 100%;
+  gap: 13px;
+  border:none;
+
 `
 
 export const RegisterNameField = styled.div `
