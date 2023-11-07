@@ -11,12 +11,21 @@ import {
 } from "../../redux/dataUsersSlice";
 import { useNavigate } from "react-router-dom";
 
-import {RegisterForm, RegisterNameField,RegisterNameLabel, RegisterNameInput,
+import {
+  RegisterForm,
+  RegisterNameField,
+  RegisterNameLabel,
+  RegisterNameInput,
   RegisterBlock,
+  ButtonSwitch,
   RegisterField,
   RegisterNameBlock,
   RegisterLabel,
-  RegisterInput,RegisterArea, SectionUserButton, SectionUser, UserCreateModal
+  RegisterInput,
+  RegisterArea,
+  SectionUserButton,
+  SectionUser,
+  UserCreateModal,
 } from "./UserCreateModal.styled";
 const UserCreateForm = ({ onCloseModal }) => {
   const [activeSection, setActiveSection] = useState("NewUser");
@@ -36,22 +45,20 @@ const UserCreateForm = ({ onCloseModal }) => {
     // defaultValues: { name: '', email: '', password: '' },
     resolver: yupResolver(UserSchema),
   });
-  const [typeStatus, setTypeofAccept] = useState("false");
+  const [typeStatus, setTypeofAccept] = useState(false);
   // const [dayOfBirthday, setDayOfBirthday] = useState(null);
   const handleTypeofAccept = () => {
-    setTypeofAccept(typeStatus === "true" ? "false" : "true");
-    console.log("typeStatus", typeStatus);
+    setTypeofAccept(typeStatus === true ? false : true);
+    clearErrors();
   };
   const [typeOfUser, setTypeOfUser] = useState("fop");
-
+  console.log("typeStatus", typeStatus);
   const handleTypeOfUser = () => {
-
     setTypeOfUser(typeOfUser === "tov" ? "fop" : "tov");
-    
   };
 
   const onFormSubmit = (data) => {
-       const formData = { ...data, status: typeStatus, userFop: typeOfUser };
+    const formData = { ...data, status: typeStatus, userFop: typeOfUser };
     console.log(formData);
     if (typeOfUser === "fop") {
       dispatchFop(formData)
@@ -77,90 +84,144 @@ const UserCreateForm = ({ onCloseModal }) => {
 
     clearErrors();
   };
-
-
+console.log('ButtonSwitch.props', ButtonSwitch)
   return (
     <UserCreateModal>
       <SectionUser>
-        <SectionUserButton  isActive={activeSection === "NewUser"} onClick={() => handleSectionChange("NewUser")}>
+        <SectionUserButton
+          isActive={activeSection === "NewUser"}
+          onClick={() => handleSectionChange("NewUser")}
+        >
           Новий користувач
         </SectionUserButton>
-        <SectionUserButton   isActive={activeSection === "MusicEditor"} onClick={() => handleSectionChange("MusicEditor")}>
+        <SectionUserButton
+          isActive={activeSection === "MusicEditor"}
+          onClick={() => handleSectionChange("MusicEditor")}
+        >
           Музичний редактор
         </SectionUserButton>
       </SectionUser>
-      {activeSection === "NewUser" &&(<button onClick={handleTypeOfUser}>
-                  {typeOfUser === "tov" ? "ТОВ" : "ФОП"}
-                </button>)}
+      {activeSection === "NewUser" && (
+        <ButtonSwitch type="button" onClick={handleTypeOfUser}>
+          {typeOfUser === "tov" ? "ТОВ" : "ФОП"}
+        </ButtonSwitch>
+      )}
 
       <RegisterForm>
         <form onSubmit={handleSubmit(onFormSubmit)}>
           <div>
-            {activeSection === "NewUser" && (<>
-                    
-               
+            {activeSection === "NewUser" && (
+              <>
                 <RegisterBlock>
-                <RegisterNameBlock>
-                {typeOfUser === "fop" ? (<>
-                    <RegisterNameField>
-                      <RegisterNameLabel>Прізвище</RegisterNameLabel>
-                      <input
-                        type="text"
-                        placeholder="Прізвище"
-                        // className={`${scss.input} ${errors.name && scss.invalid}
-                        //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                        {...register("lastName")}
-                      />
-                      <p>{errors.lastName && errors.lastName.message}</p>
-                    </RegisterNameField>
+                  <RegisterNameBlock>
+                    {typeOfUser === "fop" ? (
+                      <>
+                        <RegisterNameField>
+                          <RegisterNameLabel>Прізвище</RegisterNameLabel>
+                          <RegisterNameInput
+                            type="text"
+                            placeholder="Прізвище"
+                            // className={`${scss.input} ${errors.name && scss.invalid}
+                            //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                            {...register("lastName")}
+                          />
+                          <p>{errors.lastName && errors.lastName.message}</p>
+                        </RegisterNameField>
 
-                    <RegisterNameField>
-                      <RegisterNameLabel>Ім'я</RegisterNameLabel>
-                      <RegisterNameInput
-                        type="text"
-                        placeholder="Ім'я"
-                        // className={`${scss.input} ${errors.name && scss.invalid}
-                        //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                        {...register("firstName")}
-                      />
-                      <p>{errors.firstName && errors.firstName.message}</p>
-                    </RegisterNameField>
+                        <RegisterNameField>
+                          <RegisterNameLabel>Ім'я</RegisterNameLabel>
+                          <RegisterNameInput
+                            type="text"
+                            placeholder="Ім'я"
+                            // className={`${scss.input} ${errors.name && scss.invalid}
+                            //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                            {...register("firstName")}
+                          />
+                          <p>{errors.firstName && errors.firstName.message}</p>
+                        </RegisterNameField>
 
-                    <RegisterNameField>
-                      <RegisterNameLabel>По-батькові</RegisterNameLabel>
-                      <RegisterNameInput
-                        type="text"
-                        placeholder="По-батькові"
-                        // className={`${scss.input} ${errors.name && scss.invalid}
-                        //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                        {...register("fatherName")}
-                      />
-                      <p>{errors.fatherName && errors.fatherName.message}</p>
-                    </RegisterNameField>
-                    <button onClick={handleTypeofAccept}>
-                      {typeStatus === "true" ? "On" : "Off"}
-                    </button>
-                  </>)
-                 : (<>
-                    <RegisterNameField>
-                      <RegisterNameLabel>Назва компанії</RegisterNameLabel>
-                      <RegisterNameInput
-                        type="text"
-                        placeholder="Назва компанії"
-                        // className={`${scss.input} ${errors.name && scss.invalid}
-                        //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                        {...register("name")}
-                      />
-                      <p>{errors.name && errors.lastName.message}</p>
-                    </RegisterNameField>
-                 
+                        <RegisterNameField>
+                          <RegisterNameLabel>По-батькові</RegisterNameLabel>
+                          <RegisterNameInput
+                            type="text"
+                            placeholder="По-батькові"
+                            // className={`${scss.input} ${errors.name && scss.invalid}
+                            //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                            {...register("fatherName")}
+                          />
+                          <p>
+                            {errors.fatherName && errors.fatherName.message}
+                          </p>
+                        </RegisterNameField>
+                        <ButtonSwitch
+                      
+                          type="button"
+                          isTrue={typeStatus}
+                          onClick={() => handleTypeofAccept()}
+                        >
+                          {typeStatus  ? (
+                            <>
+                              On
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="13"
+                                height="13"
+                                viewBox="0 0 13 13"
+                                fill="none"
+                              >
+                                <circle
+                                  cx="6.5"
+                                  cy="6.5"
+                                  r="6"
+                                  fill="#8CACD7"
+                                />
+                              </svg>
+                            </>
+                          ) : (
+                            <>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="13"
+                                height="13"
+                                viewBox="0 0 13 13"
+                                fill="none"
+                              >
+                                <circle
+                                  cx="6.5"
+                                  cy="6.5"
+                                  r="6"
+                                  fill="#FFF3BF"
+                                />
+                              </svg>
+                              Off
+                            </>
+                          )}
+                        </ButtonSwitch>
+                      </>
+                    ) : (
+                      <>
+                        <RegisterNameField>
+                          <RegisterNameLabel>Назва компанії</RegisterNameLabel>
+                          <RegisterNameInput
+                            type="text"
+                            placeholder="Назва компанії"
+                            // className={`${scss.input} ${errors.name && scss.invalid}
+                            //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                            {...register("name")}
+                          />
+                          <p>{errors.name && errors.lastName.message}</p>
+                        </RegisterNameField>
 
-                    <button onClick={handleTypeofAccept}>
-                      {typeStatus === "true" ? "On" : "Off"}
-                    </button>
-                  </>)}
+                        <ButtonSwitch
+                          type="button"
+                          onClick={handleTypeofAccept}
+                        >
+                          {typeStatus === "true" ? "On" : "Off"}
+                        </ButtonSwitch>
+                      </>
+                    )}
                   </RegisterNameBlock>
-                
+
                   <RegisterField>
                     <RegisterLabel>№ договору</RegisterLabel>
                     <RegisterInput
@@ -185,25 +246,27 @@ const UserCreateForm = ({ onCloseModal }) => {
                     />
                     <p>{errors.taxCode && errors.taxCode.message}</p>
                   </RegisterField>
-                  {typeOfUser === "fop" && (<RegisterField>
-                    <RegisterLabel>Дата народження</RegisterLabel>
-                    <RegisterInput
-                      type="text"
-                      placeholder="Дата народження"
-                      // className={`${scss.input} ${errors.name && scss.invalid}
-                      //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                      {...register("dayOfBirthday")}
-                    />
-                    <p>
-                      {errors.dayOfBirthday && errors.dayOfBirthday.message}
-                    </p>
-                    {/* <DatePicker
+                  {typeOfUser === "fop" && (
+                    <RegisterField>
+                      <RegisterLabel>Дата народження</RegisterLabel>
+                      <RegisterInput
+                        type="text"
+                        placeholder="Дата народження"
+                        // className={`${scss.input} ${errors.name && scss.invalid}
+                        //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                        {...register("dayOfBirthday")}
+                      />
+                      <p>
+                        {errors.dayOfBirthday && errors.dayOfBirthday.message}
+                      </p>
+                      {/* <DatePicker
   selected={dayOfBirthday}
   onChange={(date) => setDayOfBirthday(date)}
   dateFormat="dd.MM.yyyy"
   placeholderText="Выберите дату"
 /> */}
-                  </RegisterField>)}
+                    </RegisterField>
+                  )}
 
                   <RegisterField>
                     <RegisterLabel>Номер телефону*</RegisterLabel>
@@ -250,10 +313,7 @@ const UserCreateForm = ({ onCloseModal }) => {
                     />
                     <p>{errors.lastPay && errors.lastPay.message}</p>
                   </RegisterField>
-               
-                
-                 
-                
+
                   <RegisterField>
                     <RegisterLabel>Контактна особа* </RegisterLabel>
                     <RegisterInput
@@ -307,7 +367,7 @@ const UserCreateForm = ({ onCloseModal }) => {
                   </RegisterField>
                   <></>
                 </RegisterBlock>
-             
+
                 <RegisterField>
                   <label>Примітка </label>
                   <textarea
@@ -319,15 +379,14 @@ const UserCreateForm = ({ onCloseModal }) => {
                   />
                   <p>{errors.comment && errors.comment.message}</p>
                 </RegisterField>
-               
-                
+
                 <button
                   type="submit"
                   // disabled={!isValid}
                 >
                   Отправить
                 </button>
-                </>
+              </>
             )}
 
             {activeSection === "MusicEditor" && (
@@ -369,9 +428,8 @@ const UserCreateForm = ({ onCloseModal }) => {
                       />
                       <p>{errors.fatherName && errors.fatherName.message}</p>
                     </RegisterField>
-                 
                   </RegisterNameBlock>
-                                  
+
                   <RegisterField>
                     <RegisterLabel>Ідентифікаційний номер*</RegisterLabel>
                     <RegisterInput
@@ -426,7 +484,6 @@ const UserCreateForm = ({ onCloseModal }) => {
                     />
                     <p>{errors.email && errors.email.message}</p>
                   </RegisterField>
-                 
                 </RegisterBlock>
                 <RegisterField>
                   <label>Примітка </label>
@@ -440,7 +497,6 @@ const UserCreateForm = ({ onCloseModal }) => {
                   <p>{errors.comment && errors.comment.message}</p>
                 </RegisterField>
 
-           
                 <button
                   type="submit"
                   // disabled={!isValid}
