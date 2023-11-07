@@ -2,7 +2,9 @@ import styled from "@emotion/styled";
 
 export const AdminSection = styled.div`
   display: flex;
+
   justify-content: center;
+
 `;
 export const AdminSubpage = styled.div`
   display: flex;

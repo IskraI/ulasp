@@ -27,6 +27,26 @@ export const dataUsersApi = createApi({
       query: () => ({ url: '/user' }),
       providesTags: ['dataUsers'],
     }),
+    createFopUser: builder.mutation({
+      query: body => ({
+        url: '/admin/create-fop',
+        method: 'POST',
+        body,      
+      }),
+      invalidatesTags: ['dataUsers'],
+    }),
+    createCompanyUser: builder.mutation({
+      query: body => ({
+        url: '/admin/create-company',
+        method: 'POST',
+        body,      
+      }),
+      onQueryCompleted: (data) => {
+        // Add logic here to close the modal
+        // For example, dispatch an action to update the modal state in your store.
+      },
+      invalidatesTags: ['dataUsers'],
+    }),
     
   }),
 });
@@ -34,5 +54,7 @@ export const dataUsersApi = createApi({
 export const {
   useGetUsersListQuery,
   useGetAdminCabinetQuery,
+  useCreateCompanyUserMutation,
+  useCreateFopUserMutation
 
 } = dataUsersApi;

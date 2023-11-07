@@ -69,6 +69,7 @@ function App() {
               path="/admin"
               element={<PrivateRoute component={AdminPage} />}
             >
+               <Route index element={<AdminCabinetPage />} />
               <Route path="cabinet" element={<AdminCabinetPage />} />
               <Route path="messages" element={<Messages />} />
               <Route path="users" element={<AdminUsers />} />
