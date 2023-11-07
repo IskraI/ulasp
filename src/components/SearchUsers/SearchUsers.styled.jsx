@@ -29,7 +29,7 @@ export const Table = styled.table`
   table-layout: fixed;
   /* width: 100%; */
   border-collapse: collapse;
-  margin-left: 127px;
+  /* margin-left: 127px; */
 
   tbody {
     tr:nth-of-type(odd) {

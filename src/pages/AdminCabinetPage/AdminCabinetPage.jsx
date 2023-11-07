@@ -6,11 +6,10 @@ import { Title} from './AdminCabinetPage.styled';
 const AdminCabinetPage = () => {
 
   return <>
-    <Title>Кабінет адміністратора</Title>
+        <Title>Кабінет адміністратора</Title>
     <Statistic />
-       <SearchUsers/>
-       <></>
-         </>;
+    <SearchUsers />
+                    </>;
 };
 
 export default AdminCabinetPage;
