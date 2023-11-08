@@ -20,11 +20,11 @@ export const dataUsersApi = createApi({
   tagTypes: ['dataUsers'],
   endpoints: builder => ({
     getUsersList: builder.query({
-        query: () => ({ url: '/user' }),
+        query: () => ({ url: 'admin/users' }),
         providesTags: ['dataUsers'],
       }),
     getAdminCabinet: builder.query({
-      query: () => ({ url: '/user' }),
+      query: () => ({ url: 'admin/users' }),
       providesTags: ['dataUsers'],
     }),
     createFopUser: builder.mutation({
