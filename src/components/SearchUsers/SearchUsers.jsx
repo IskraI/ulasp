@@ -54,17 +54,19 @@ export const SearchUsers = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading1, setIsLoading] = useState(false);
   const [showNoResults, setShowNoResults] = useState(false);
-  const { data: users, isLoading } = useGetUsersListQuery();
+  const { data, isLoading } = useGetUsersListQuery();
  
-  
-  // console.log(users);
+  // const users = data ? data.allUsers : [];
+
+
 
  const filteredUsers = useMemo(() => {
+  const users = data ? data.allUsers : [];
     if (users) {
       return users.filter((user) => user.status === 'false');
     }
     return [];
- }, [users]);
+ }, [data]);
   
   const isSearching = searchTerm.trim() !== "";
   //  console.log(isSearching);

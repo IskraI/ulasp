@@ -44,7 +44,7 @@ const AdminUsers = () => {
           placeholder="Пошук користувача"
         />
       </SearchUsersContainer>
-      {!isLoading && <UserTable users={data} />}
+      {!isLoading && <UserTable users={data.allUsers} />}
 
       {showModal && (
         <Modal width={"898px"} padding={"24px"} onClose={handleCloseModal}>
