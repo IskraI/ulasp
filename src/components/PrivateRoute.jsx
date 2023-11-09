@@ -1,10 +1,7 @@
 import { useSelector } from "react-redux";
 import { getUserState } from "../redux/userSelectors";
 import { useCurrentUserQuery } from "../redux/authSlice";
-// import {
-//   selectIsLoggedIn,
-//   selectIsRefreshing,
-// } from "../../redux/auth-selector";
+
 import { Navigate } from "react-router-dom";
 
 const PrivateRoute = ({ component: Component, redirectTo = "/" }) => {
@@ -25,8 +22,7 @@ const PrivateRoute = ({ component: Component, redirectTo = "/" }) => {
 
   if (user.isLoggedIn&& (user.adminRole||user.editorRole) ) return <Component />;
 
-  // if (user.isLoggedIn&& ( user.editorRole) ) return <Component />;
-
+  
   if (isError) {
     // console.log("Ошибка в запросе");
     return <Navigate to={redirectTo} />;
