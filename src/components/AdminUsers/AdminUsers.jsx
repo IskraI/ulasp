@@ -1,5 +1,5 @@
 import { useGetUsersListQuery } from "../../redux/dataUsersSlice";
-import UserTable from "../Users/UsersTable";
+import UserTable from "../UsersTable/UsersTable";
 import { useState, useEffect, useRef } from "react";
 import { Modal } from "../Modal/Modal";
 import {
@@ -23,7 +23,14 @@ const AdminUsers = () => {
   const handleCloseModal = () => {
     setShowModal(false);
   };
-
+  const  visibleColumns =[{ key: 'firstName', label: 'Ім’я', type: 'name' },
+  { key: 'contractNumber', label: '№ договору', type: 'string' },
+  { key: 'status', label: 'Статус',  type: 'boolean'  },
+  { key: 'lastPay', label: 'Дата оплати', type: 'date' },
+  { key: 'dateOfAccess', label: 'Відкрито до',  type: 'date'},
+  { key: 'acces', label: 'Допуск',  type: 'string'},
+  
+  ]
 
   return (
     <>
@@ -39,7 +46,7 @@ const AdminUsers = () => {
           placeholder="Пошук користувача"
         />
       </SearchUsersContainer>
-      {!isLoading && <UserTable users={data.allUsers} />}
+      {!isLoading && <UserTable users={data.allUsers} visibleColumns={visibleColumns}/>}
 
       {showModal && (
         <Modal width={"898px"} padding={"24px"} onClose={handleCloseModal}>

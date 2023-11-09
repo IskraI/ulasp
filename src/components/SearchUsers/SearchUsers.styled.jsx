@@ -33,18 +33,42 @@ export const Input = styled.input`
 `;
 
 export const Table = styled.table`
-  table-layout: fixed;
+  table-layout: fixed; 
   /* width: 100%; */
-  border-collapse: collapse;
+  /* border-collapse: collapse; */
   /* margin-left: 127px; */
+  display: flex;
+  flex-direction: column;
+  /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); // Здесь можно настроить ширину колонок
+  gap: 8px;   */ 
+margin-right: 20px;
+  width: 100%;
+  border-collapse: collapse;
+
+ 
+
+  th, td {
+    /* border: 1px solid #ddd; */
+    padding: 8px;
+    text-align: left;
+  }
+
+  td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
 
   tbody {
     tr:nth-of-type(odd) {
       background-color: rgba(234, 234, 234, 0.32);
+     
+      
     }
-  }
+  }`;
 
-  thead th:nth-of-type(1) {
+  /* thead th:nth-of-type(1) {
     width: 30%;
   }
 
@@ -82,35 +106,37 @@ export const Table = styled.table`
 
   tbody td:nth-of-type(5) {
     width: 20%;
-  }
-`;
+  } */
+
 
 export const RowTitle = styled.th`
   color: ${colors.mainFontColor};
   font-size: 16px;
   font-weight: 600;
-  margin-top: 23px;
   text-align: left;
-    /* flex: 1; */
+  padding: 8px;
+ 
+  flex: ${(props) => (props.isFirstColumn ? '0 0 30%' : '1')};
+  
 `;
 
 export const TableRow = styled.tr`
-  display: flex;
-  /* flex: 1; */
-  /* gap: 129px; */
   height: 54px;
   border-radius: 10px;
-  display: flex;
+
+display: flex;
+  justify-content: space-between;
   align-items: center;
-padding-left: 16px;
+
+
+  
 `;
 
 export const TableCell = styled.td`
-text-align: left;
-
- /* flex: 1; */
-  // Здесь вы можете определить стили для ячеек таблицы
-         
+padding: 8px;
+  text-align: left;
+  flex: ${(props) => (props.isFirstColumn ? '0 0 30%' : '1')};
+       
  
 `;
 

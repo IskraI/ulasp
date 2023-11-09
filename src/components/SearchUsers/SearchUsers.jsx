@@ -13,7 +13,7 @@ import {
   TextInfo,
   DetailsBtn
 } from "./SearchUsers.styled";
-
+import UserTable from "../UsersTable/UsersTable"
 const user = {
   _id: {
     $oid: "653d71507a484cf7a52cb57a",
@@ -109,7 +109,13 @@ export const SearchUsers = () => {
 //   }
 // };
 
+const  visibleColumns =[{ key: 'firstName', label: 'Ім’я', type: 'string' },
+{ key: 'contractNumber', label: '№ договору', type: 'string' },
+{ key: 'createdAt', label: 'Дата заявки',  type: 'date'  },
+{ key: 'details', label: 'Детальніше', type: 'link' },
+{ key: 'sendEmail', label: '',  type: 'button'},
 
+]
   return (
     <>
       <SearchUsersContainer>
@@ -128,40 +134,40 @@ export const SearchUsers = () => {
         <TextLoader>Завантаження...</TextLoader>
       ) : searchResults.length === 0 && showNoResults ? (
         <TextInfo>Результати пошуку: не знайдено</TextInfo>
-      ) : (
-        <Table>
-          <thead>
-            <TableRow>
-              <RowTitle >Ім’я</RowTitle>
-              <RowTitle >№ договору</RowTitle>
-              <RowTitle >Дата заявки</RowTitle>
-              <RowTitle>Детальніше</RowTitle>
-              <RowTitle></RowTitle>
-            </TableRow>
-          </thead>
-          <tbody>
-               {searchResults.map((user, index) => {
-              const date = new Date(user.createdAt);
-              const year = date.getFullYear();
-              const month = String(date.getMonth() + 1).padStart(2, "0");
-              const day = String(date.getDate()).padStart(2, "0");
-              const formattedDate = `${year}/${month}/${day}`;
+      ) : (<UserTable users={searchResults}  visibleColumns={visibleColumns} />
+        // <Table>
+        //   <thead>
+        //     <TableRow>
+        //       <RowTitle >Ім’я</RowTitle>
+        //       <RowTitle >№ договору</RowTitle>
+        //       <RowTitle >Дата заявки</RowTitle>
+        //       <RowTitle>Детальніше</RowTitle>
+        //       <RowTitle></RowTitle>
+        //     </TableRow>
+        //   </thead>
+        //   <tbody>
+        //        {searchResults.map((user, index) => {
+        //       const date = new Date(user.createdAt);
+        //       const year = date.getFullYear();
+        //       const month = String(date.getMonth() + 1).padStart(2, "0");
+        //       const day = String(date.getDate()).padStart(2, "0");
+        //       const formattedDate = `${year}/${month}/${day}`;
 
-              return (
-                <TableRow key={index}>
-                  <TableCell>
-                    {user.firstName} {user.lastName}
-                  </TableCell>
-                  <TableCell>{user.contractNumber}</TableCell>
-                  <TableCell>{formattedDate}</TableCell>
-                  <TableCell>
-                    <DetailsBtn>картка</DetailsBtn>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </tbody>
-        </Table>
+        //       return (
+        //         <TableRow key={index}>
+        //           <TableCell>
+        //             {user.firstName} {user.lastName}
+        //           </TableCell>
+        //           <TableCell>{user.contractNumber}</TableCell>
+        //           <TableCell>{formattedDate}</TableCell>
+        //           <TableCell>
+        //             <DetailsBtn>картка</DetailsBtn>
+        //           </TableCell>
+        //         </TableRow>
+        //       );
+        //     })}
+        //   </tbody>
+        // </Table>
       )}
     </>
   );
