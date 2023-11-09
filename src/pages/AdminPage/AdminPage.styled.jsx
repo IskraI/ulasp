@@ -7,6 +7,7 @@ export const AdminSection = styled.div`
 `;
 export const AdminSubpage = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
   padding: 20px;
   padding-left: 110px;

@@ -3,11 +3,13 @@ import { CustomButton } from "./Button.styled";
 export const Button = ({
   marginbottom,
   margintop,
+  marginrigth,
   padding,
   onClick,
   type,
   text,
   ariaLabel,
+  height
 }) => {
   return (
     <CustomButton
@@ -17,6 +19,7 @@ export const Button = ({
       margintop={margintop}
       padding={padding}
       onClick={onClick}
+      
     >
       {text}
     </CustomButton>
