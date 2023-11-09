@@ -1,5 +1,12 @@
-import{n as t,c as o}from"./index-2b2ef774.js";const n=t.div`
-  display: flex;
+import{n as t,c as o}from"./index-7fee1598.js";const n=t.div`
+
+ 
+   display: grid;
+  grid-template-columns: 1fr auto auto; /* Три колонки, первая динамическая, остальные фиксированные */
+  grid-gap: 20px; 
+   align-items: start;
+   margin-bottom: 40px;
+
 `,i=t.input`
   display: flex;
   width: 219px;
@@ -13,7 +20,7 @@ import{n as t,c as o}from"./index-2b2ef774.js";const n=t.div`
   background-color: transparent;
   /* margin-right: 64px; */
   margin-left: auto;
-  margin-top: 29px;
+  /* margin-top: 29px; */
   ::placeholder {
     text-align: right;
     color: rgba(0, 0, 0, 0.4);
@@ -85,14 +92,14 @@ import{n as t,c as o}from"./index-2b2ef774.js";const n=t.div`
   display: flex;
   align-items: center;
 padding-left: 16px;
-`,h=t.td`
+`,d=t.td`
 text-align: left;
 
  /* flex: 1; */
   // Здесь вы можете определить стили для ячеек таблицы
          
  
-`,d=t.h3`
+`,h=t.h3`
   color: ${o.mainFontColor};
   /* font-size: 22px; */
   margin-top: 43px;
@@ -124,10 +131,10 @@ background-color: transparent;
  outline: none;
   border: none;
 
-`,x=t.h2`
+`,g=t.h2`
  color:   ${o.mainFontColor};
 font-size: 24px;
 font-weight: 500;
 
 
-`;export{f as D,i as I,l as R,n as S,d as T,p as a,s as b,a as c,r as d,h as e,x as f};
+`;export{f as D,i as I,l as R,n as S,h as T,p as a,s as b,a as c,r as d,d as e,g as f};
