@@ -3,8 +3,6 @@
 import { Nav, List, Item, NavigationLink, } from "./NavMenu.styled";
 import symbol from "../../assets/symbol.svg";
 
-import icon from "../../assets/symbol-defs.svg";
-
 export const NavMenu = () => {
     // const location = useLocation();
  

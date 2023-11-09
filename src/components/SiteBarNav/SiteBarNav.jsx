@@ -10,12 +10,20 @@ import {
 } from "./SiteBarNav.styled";
 
 import { useLogoutMutation } from "../../redux/authSlice";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 export const SiteBarNav = () => {
   const [dispatch] = useLogoutMutation();
-
+  const navigate = useNavigate();
   const handleLogOut = () => {
-    dispatch();
+    dispatch()
+     .unwrap()
+      .then(() => {
+        navigate("/")
+       
+      })
+    
   };
 
   return (

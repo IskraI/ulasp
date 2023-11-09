@@ -69,7 +69,7 @@ function App() {
             ></Route>
 
             {user.adminRole && (
-              <>
+             
                 <Route
                   path="/admin"
                   element={<PrivateRoute component={AdminPage} />}
@@ -82,7 +82,7 @@ function App() {
                   <Route path="analytics" element={<Analytics />} />
                   <Route path="*" element={<ErrorPage />} />
                 </Route>
-              </>
+            
             )}
             {user.editorRole && (
                 <Route
@@ -95,7 +95,7 @@ function App() {
               </Route>
             )}
 
-            <Route path="*" element={<ErrorPage />} />
+<Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>
       </>

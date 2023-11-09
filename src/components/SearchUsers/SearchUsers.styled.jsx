@@ -2,7 +2,14 @@ import styled from "@emotion/styled";
 import { colors } from "../../styles/vars";
 
 export const SearchUsersContainer = styled.div`
-  display: flex;
+
+ 
+   display: grid;
+  grid-template-columns: 1fr auto auto; /* Три колонки, первая динамическая, остальные фиксированные */
+  grid-gap: 20px; 
+   align-items: start;
+   margin-bottom: 40px;
+
 `;
 
 export const Input = styled.input`
@@ -18,7 +25,7 @@ export const Input = styled.input`
   background-color: transparent;
   /* margin-right: 64px; */
   margin-left: auto;
-  margin-top: 29px;
+  /* margin-top: 29px; */
   ::placeholder {
     text-align: right;
     color: rgba(0, 0, 0, 0.4);

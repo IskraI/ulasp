@@ -5,14 +5,9 @@ import { Modal } from "../Modal/Modal";
 import {
   SearchUsersContainer,
   Input,
-  Table,
-  TableRow,
-  TableCell,
-  RowTitle,
-  TitleTab,
-  TextLoader,
-  TextInfo,
+
 } from "../SearchUsers/SearchUsers.styled";
+import {Button} from "../../components/Button/Button"
 import { Title } from "../../pages/AdminCabinetPage/AdminCabinetPage.styled";
 import UserCreateForm from "../UserCreateModal/UserCreateForm";
 
@@ -32,11 +27,11 @@ const AdminUsers = () => {
 
   return (
     <>
+    <SearchUsersContainer>
       <Title>Користувачі</Title>
-      <SearchUsersContainer>
-        <button type="button" onClick={handleShowModal}>
-          Додати
-        </button>
+      
+             <Button type="button" padding={"12px 46px"} onClick={handleShowModal} text = {"Додати"} ariaLabel ={"  Додати користувача"}>
+              </Button>
         <Input
           type="text"
           id="search"
