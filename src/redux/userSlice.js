@@ -16,7 +16,7 @@ export const userSlice = createSlice({
   reducers: {
     setAdmin: {
       reducer(state, action) {
-        console.log("action.payload", action.payload);
+        // console.log("action.payload", action.payload);
         if (action.payload.admin || action.payload.editor) {
           const role = action.payload.admin ? "admin" : "editor";
 
@@ -34,21 +34,16 @@ export const userSlice = createSlice({
     setCurrent: {
       reducer(state, action) {
         // console.log("action.payload setCurrent", action.payload.admin);
+        if (action.payload.admin || action.payload.editor) {
+          const role = action.payload.admin ? "admin" : "editor";
 
-        state = {
-          ...state,
-          adminRole: action.payload.admin
-            ? action.payload.admin.adminRole
-            : false,
-          editorRole: action.payload.editor
-            ? action.payload.editor.editorRole
-            : false,
-          avatarURL: action.payload.admin
-            ? action.payload.admin.avatarURL
-            : action.payload.editor.avatarURL,
-          isLoggedIn: true,
-        };
-
+          state = {
+            ...state,
+            [`${role}Role`]: action.payload[role][`${role}Role`],
+            avatarURL: action.payload[role].avatarURL,
+            isLoggedIn: true,
+          };
+        }
         return state;
       },
     },
