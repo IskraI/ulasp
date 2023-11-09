@@ -16,15 +16,27 @@ export const userSlice = createSlice({
   reducers: {
     setAdmin: {
       reducer(state, action) {
-        // console.log("action.payload", action.payload.admin);
+        console.log("action.payload", action.payload);
+        action.payload.admin &&(
         state = {
           ...state,
           ...action.payload.admin,
           token: action.payload.accessToken,
           isLoggedIn: true,
-          adminRole: true,
-          // _id: action.payload.value.accessToken.admin._id,
-        };
+          adminRole: action.payload.admin.adminRole,
+           // _id: action.payload.value.accessToken.admin._id,
+        })
+        
+        action.payload.editor &&(
+          state = {
+            ...state,
+            ...action.payload.editor,
+            token: action.payload.accessToken,
+            isLoggedIn: true,
+               editorRole: action.payload.editor.editorRole,
+            // _id: action.payload.value.accessToken.admin._id,
+          })
+        ;
         return state;
       },
     },
@@ -34,8 +46,9 @@ export const userSlice = createSlice({
 
         state = {
           ...state,
-          adminRole: action.payload.admin.adminRole,
-          avatarURL: action.payload.admin.avatarURL,
+          adminRole: action.payload.admin ? action.payload.admin.adminRole : false,
+          editorRole: action.payload.editor ? action.payload.editor.editorRole : false,
+          avatarURL: action.payload.admin? action.payload.admin.avatarURL:action.payload.editor.avatarURL,
           isLoggedIn: true,
         };
         
