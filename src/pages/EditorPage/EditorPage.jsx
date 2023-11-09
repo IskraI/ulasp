@@ -1,13 +1,26 @@
-import Footer from "../../components/Footer/Footer";
-import { SignInAdminAndEditor } from "../../components/AuthForm/SignInAdminAndEditor";
+import { SiteBarNav } from "../../components/SiteBarNav/SiteBarNav";
+import { Outlet } from "react-router-dom";
+import { Suspense } from "react";
+import {
+  AdminSection,
+  AdminSubpage,
+} from "../../pages/AdminPage/AdminPage.styled";
 
-const EditorPage = () => {
+
+
+const AdminPage = () => {
+
+ 
   return (
-    <>
-      <SignInAdminAndEditor/>
-      <Footer />
-    </>
+    <AdminSection>
+      <SiteBarNav />
+      <AdminSubpage>
+        <Suspense fallback={"Loader"}>
+          <Outlet />
+        </Suspense>
+      </AdminSubpage>
+    </AdminSection>
   );
 };
 
-export default EditorPage;
+export default AdminPage;

@@ -33,10 +33,14 @@ export const SignInAdminAndEditor = () => {
   });
 
   const onSubmit = ({ login, password }) => {
+    console.log('login', login);
+    console.log('password', password);
     dispatch({ login, password })
       .unwrap()
-      .then(() => {
-        navigate("/admin");
+      .then((res) => {
+      console.log("res", res)
+      res.admin && navigate("/admin");
+      res.editor&& navigate("/editor")
         reset();
       })
       .catch((e) => console.log(e.data.message));

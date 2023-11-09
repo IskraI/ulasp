@@ -6,6 +6,7 @@ import { useUpdateUserAvatarMutation } from "../../redux/authSlice/";
 import { useRef, useState } from "react";
 const BASE_URL = `http://localhost:8000`;
 
+
 export const Profile = () => {
   const user = useSelector(getUserState);
 
@@ -44,15 +45,19 @@ export const Profile = () => {
   //             updateUserAvatarMutation.mutate(formData);
   //         }
   //     };
+  const defaultAvatarSrc = "../avatar.jpg";
 
+  const avatarSrc = avatarURL
+    ? selectedImage
+      ? URL.createObjectURL(selectedImage)
+      : `${BASE_URL}/${avatarURL}`
+    : defaultAvatarSrc;
   return (
     <>
       <form onSubmit={handleFormSubmit}>
-        <img
+       <img
           src={
-            selectedImage
-              ? URL.createObjectURL(selectedImage)
-              : `${BASE_URL}/${avatarURL}`
+            avatarSrc
           }
           alt="Avatar"
           style={{
@@ -65,7 +70,7 @@ export const Profile = () => {
             marginLeft: "auto",
             marginRight: "auto",
           }}
-        />
+        /> 
         <input
           name="name"
           type="file"
