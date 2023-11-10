@@ -13,7 +13,7 @@ import {
   TextInfo,
   DetailsBtn
 } from "./SearchUsers.styled";
-import UserTable from "../UsersTable/UsersTable"
+import UsersTable from "../UsersTable/UsersTable"
 const user = {
   _id: {
     $oid: "653d71507a484cf7a52cb57a",
@@ -134,7 +134,7 @@ const  visibleColumns =[{ key: 'firstName', label: 'Ім’я', type: 'string' }
         <TextLoader>Завантаження...</TextLoader>
       ) : searchResults.length === 0 && showNoResults ? (
         <TextInfo>Результати пошуку: не знайдено</TextInfo>
-      ) : (<UserTable users={searchResults}  visibleColumns={visibleColumns} />
+      ) : (<UsersTable users={searchResults}  visibleColumns={visibleColumns} />
         // <Table>
         //   <thead>
         //     <TableRow>

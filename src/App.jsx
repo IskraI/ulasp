@@ -17,6 +17,8 @@ import Messages from "./components/Messages/Messages";
 // import AdminUsers from "./components/AdminUsers/AdminUsers";
 import OnlineUsers from "./components/OnlineUsers/OnlineUsers";
 import Analytics from "./components/Analytics/Analytics";
+import CardUser from "./components/CardUser/CardUser";
+import CardEditor from "./components/CardEditor/CardEditor";
 import { useSelector } from "react-redux";
 import { useCurrentUserQuery } from "../src/redux/authSlice";
 import { getUserState } from "../src/redux/userSelectors";
@@ -69,33 +71,34 @@ function App() {
             ></Route>
 
             {user.adminRole && (
-             
-                <Route
-                  path="/admin"
-                  element={<PrivateRoute component={AdminPage} />}
-                >
-                  <Route index element={<AdminCabinetPage />} />
-                  <Route path="cabinet" element={<AdminCabinetPage />} />
-                  <Route path="messages" element={<Messages />} />
-                  <Route path="users" element={<AdminUsers />} />
-                  <Route path="online" element={<OnlineUsers />} />
-                  <Route path="analytics" element={<Analytics />} />
-                  <Route path="*" element={<ErrorPage />} />
+              <Route
+                path="/admin"
+                element={<PrivateRoute component={AdminPage} />}
+              >
+                <Route index element={<AdminCabinetPage />} />
+                <Route path="cabinet" element={<AdminCabinetPage />} />
+                <Route path="messages" element={<Messages />} />
+                <Route path="users" element={<AdminUsers />}>
+                  <Route path="carduser" element={<CardUser />} />
+                  <Route path="cardeditor" element={<CardEditor />} />
                 </Route>
-            
+                <Route path="online" element={<OnlineUsers />} />
+                <Route path="analytics" element={<Analytics />} />
+                <Route path="*" element={<ErrorPage />} />
+              </Route>
             )}
             {user.editorRole && (
-                <Route
-              path="/editor"
-              element={<PrivateRoute component={EditorPage} />}
-            >
+              <Route
+                path="/editor"
+                element={<PrivateRoute component={EditorPage} />}
+              >
                 <Route index element={<EditorCabinetPage />} />
                 <Route path="cabinet" element={<EditorCabinetPage />} />
-                <Route path="*" element={<ErrorPage />}/>
+                <Route path="*" element={<ErrorPage />} />
               </Route>
             )}
 
-<Route path="*" element={<ErrorPage />} />
+            <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>
       </>
