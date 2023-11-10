@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import {
    Table,
   TableRow,
@@ -44,7 +45,11 @@ const UsersTable = ({ users,  visibleColumns}) => {
                 ? user.name? user.name : user.firstName +" "+user.lastName 
                   : column.type === 'link'
                   
-                  ? <DetailsBtn  type="button" onClick ={console.log("DetailsBtn")}>картка</DetailsBtn>
+                  ? (
+  <Link to="/admin/users/carduser"> 
+    <DetailsBtn type="link">картка</DetailsBtn>
+  </Link>
+)
                   :column.key === 'boolean'
                   ? user[column.key]
                   :column.key === 'sendEmail'

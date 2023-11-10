@@ -1,10 +1,10 @@
-// import { useLocation } from "react-router-dom";
-
+import { useLocation } from "react-router-dom";
+// import { TabNavigation } from "../TabNavigation/TabNavigation";
 import { Nav, List, Item, NavigationLink, } from "./NavMenu.styled";
 import symbol from "../../assets/symbol.svg";
 
 export const NavMenu = () => {
-    // const location = useLocation();
+    const location = useLocation();
  
   return (
     <Nav>
@@ -62,6 +62,7 @@ export const NavMenu = () => {
           </NavigationLink>
         </Item>
       </List>
+        {/* <TabNavigation currentPath={location.pathname || ''} /> */}
     </Nav>
   );
 };
