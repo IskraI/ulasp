@@ -258,3 +258,10 @@ font-weight: 400;
 line-height: 120%; /* 12px */
 letter-spacing: 1px;
   `
+
+export const Fieldform = styled.div `
+display: flex;
+flex-direction: column;
+/* width: 133px; */
+
+`
