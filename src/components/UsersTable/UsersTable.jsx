@@ -44,11 +44,11 @@ const UsersTable = ({ users,  visibleColumns}) => {
                 ? user.name? user.name : user.firstName +" "+user.lastName 
                   : column.type === 'link'
                   
-                  ? <DetailsBtn  type="button" onClick ={console.log("DetailsBtn")}>картка</DetailsBtn>
+                  ? <DetailsBtn  type="button" onClick ={()=>{console.log("DetailsBtn")}}>картка</DetailsBtn>
                   :column.key === 'boolean'
                   ? user[column.key]
                   :column.key === 'sendEmail'
-                  ? <Button type="button" text= "Відправити" padding = "8px" onClick ={console.log("send email")}></Button>
+                  ? <Button type="button" text= "Відправити" padding = "8px" onClick ={()=>console.log("send email")}></Button>
                   : user[column.key]}
                   </TableCell>
             ))}
