@@ -9,7 +9,7 @@ import {
 } from "../SearchUsers/SearchUsers.styled";
 import {Button} from "../../components/Button/Button"
 import { Title } from "../../pages/AdminCabinetPage/AdminCabinetPage.styled";
-import UserCreateForm from "../UserCreateModal/UserCreateForm";
+import UserCreateForm from "../UserForm/UserCreateForm";
 
 const AdminUsers = () => {
   const { data, isLoading } = useGetUsersListQuery();
