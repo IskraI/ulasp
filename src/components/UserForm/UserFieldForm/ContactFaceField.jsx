@@ -34,7 +34,17 @@ const ContactFaceField = ({ register, errors, margintop, control }) => {
       </RegisterField>
       <RegisterField>
       <RegisterLabel>Номер телефону* </RegisterLabel>
-  <Controller
+      <RegisterInput
+          type="text"
+          placeholder="Номер телефону"
+          // className={`${scss.input} ${errors.name && scss.invalid}
+          //  ${!errors.name && dirtyFields.name && scss.valid}`}
+          {...register("contactFaceTelNumber")}
+        />
+
+
+      
+  {/* <Controller
     name="contactFaceTelNumber"
     control={control}
     defaultValue=""
@@ -47,7 +57,7 @@ const ContactFaceField = ({ register, errors, margintop, control }) => {
         {...field}
       />
     )}
-  />
+  /> */}
   <p>
     {errors.contactFaceTelNumber && errors.contactFaceTelNumber.message}
   </p>
