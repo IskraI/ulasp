@@ -29,7 +29,7 @@ import {
   RegisterRigthBlock,Commentlabel,
   RegisterLeftBlock,FormButton, RegisterCommentField, CommentTextarea
 } from "./UserCreateModal.styled";
-import UserFieldForm from "../UserForm/UserForm"
+import UserFieldForm from "../UserForm/UserFieldForm/UserField"
 const UserCreateForm = ({ onCloseModal }) => {
   const [activeSection, setActiveSection] = useState("NewUser");
   const [dispatchFop, { isLoading: isLoadingFop }] = useCreateFopUserMutation();
@@ -113,7 +113,7 @@ const UserCreateForm = ({ onCloseModal }) => {
 
       <RegisterForm>
         <form onSubmit={handleSubmit(onFormSubmit)}>
-          {activeSection === "NewUser" && (
+          {/* {activeSection === "NewUser" && (
             <RegisterBlock>
               <RegisterLeftBlock>
                 <RegisterNameBlock>
@@ -252,7 +252,7 @@ const UserCreateForm = ({ onCloseModal }) => {
   dateFormat="dd.MM.yyyy"
   placeholderText="Выберите дату"
 /> */}
-                   </RegisterField>
+                   {/* </RegisterField>
                 )}
 
                 <RegisterField>
@@ -367,8 +367,8 @@ const UserCreateForm = ({ onCloseModal }) => {
                 </RegisterCommentField>
 
                 <FormButton
-                  type="submit"
-                  // disabled={!isValid}
+                  type="submit" */}
+                  {/* // disabled={!isValid}
                 >
                   Додати
                 </FormButton>
@@ -444,7 +444,7 @@ const UserCreateForm = ({ onCloseModal }) => {
   dateFormat="dd.MM.yyyy"
   placeholderText="Выберите дату"
           /> */}
-                 </RegisterField>
+                 {/* </RegisterField>
 
                 <RegisterField>
                   <RegisterLabel>Номер телефону*</RegisterLabel>
@@ -480,17 +480,17 @@ const UserCreateForm = ({ onCloseModal }) => {
                   {...register("comment")}
                 />
                 <p>{errors.comment && errors.comment.message}</p>
-</RegisterField>
+</RegisterField> */}
 
-{/* <UserFieldForm handleTypeofAccept={handleTypeofAccept} typeStatus ={typeStatus} register={register} isValid={isValid}  errors={errors} activeSection= {activeSection} typeOfUser={typeOfUser}/> */}
+<UserFieldForm handleTypeofAccept={handleTypeofAccept} typeStatus ={typeStatus} register={register} isValid={isValid}  errors={errors} activeSection= {activeSection} typeOfUser={typeOfUser}/>
               <button
                 type="submit"
                 // disabled={!isValid}
               >
                 Отправить
               </button>
-            </div>
-          )}
+            {/* </div> */}
+          {/* )} */}
        
         </form>
       </RegisterForm>

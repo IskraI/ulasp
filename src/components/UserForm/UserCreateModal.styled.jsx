@@ -176,7 +176,9 @@ text-decoration: ${(props) => (props.isActive ? "underline": "none")};
 
 `
 
-
+export const RegisterContactField = styled.div `
+ margin-top: ${(props) => (props. margintop)};
+  `
 
 
 
@@ -187,7 +189,7 @@ export const RegisterArea = styled.div `
 
 export const RegisterNameBlock = styled.div `
   display: flex;
-  padding: 8px 24px 4px 10px;
+  padding: 8px 24px 8px 10px;
   width: 558px;
   gap: 16px;
   border: 0.25px solid  rgba(23, 22, 28, 0.5);
@@ -257,6 +259,7 @@ font-style: normal;
 font-weight: 400;
 line-height: 120%; /* 12px */
 letter-spacing: 1px;
+margin-bottom: 20px;
   `
 
 export const Fieldform = styled.div `

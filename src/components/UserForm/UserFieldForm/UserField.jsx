@@ -17,8 +17,10 @@ import {
     UserCreateModal,
     RegisterRigthBlock,Commentlabel,Fieldform,
     RegisterLeftBlock,FormButton, RegisterCommentField, CommentTextarea
-  } from "../UserCreateModal/UserCreateModal.styled";
-const UserFieldForm = ({ handleTypeofAccept, activeSection, typeStatus, typeOfUser, isValid, errors, register }) => {
+  } from "../UserCreateModal.styled";
+  import ContactFaceField from "./ContactFaceField"
+  import {Button} from "../../Button/Button"
+const UserFieldForm = ({ control, handleTypeOfStatus, activeSection, typeOfStatus, typeOfUser, isValid, errors, register }) => {
     console.log('activeSection', activeSection)
   return (
     <Fieldform>
@@ -65,10 +67,10 @@ const UserFieldForm = ({ handleTypeofAccept, activeSection, typeStatus, typeOfUs
                   </RegisterNameField>
                   <ButtonSwitch
                     type="button"
-                    isTrue={typeStatus}
-                    onClick={() => handleTypeofAccept()}
+                    isTrue={typeOfStatus}
+                    onClick={() => handleTypeOfStatus()}
                   >
-                    {typeStatus ? (
+                    {typeOfStatus ? (
                       <>
                         On
                         <svg
@@ -111,8 +113,8 @@ const UserFieldForm = ({ handleTypeofAccept, activeSection, typeStatus, typeOfUs
                     <p>{errors.name && errors.lastName.message}</p>
                   </RegisterNameField>
 
-                  <ButtonSwitch type="button" onClick={handleTypeofAccept}>
-                    {typeStatus === "true" ? "On" : "Off"}
+                  <ButtonSwitch type="button" onClick={handleTypeOfStatus}>
+                    {typeOfStatus === "true" ? "On" : "Off"}
                   </ButtonSwitch>
                 </>
               )}
@@ -206,55 +208,8 @@ placeholderText="Выберите дату"
               <p>{errors.lastPay && errors.lastPay.message}</p>
             </RegisterField>
 
-            <RegisterField>
-              <RegisterLabel>Контактна особа* </RegisterLabel>
-              <RegisterInput
-                type="text"
-                placeholder="Контактна особа"
-                {...register("contactFace")}
-              />
-              <p>{errors.contactFace && errors.contactFace.message}</p>
-            </RegisterField>
-            <RegisterField>
-              <RegisterLabel>Ідентифікаційний номер* </RegisterLabel>
-              <RegisterInput
-                type="text"
-                placeholder="Ідентифікаційний номер"
-                // className={`${scss.input} ${errors.name && scss.invalid}
-                //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                {...register("taxCodeContactFace")}
-              />
-              <p>
-                {errors.taxCodeContactFace && errors.taxCodeContactFace.message}
-              </p>
-            </RegisterField>
-            <RegisterField>
-              <RegisterLabel>Номер телефону* </RegisterLabel>
-              <RegisterInput
-                type="text"
-                placeholder="Номер телефону"
-                // className={`${scss.input} ${errors.name && scss.invalid}
-                //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                {...register("telNumberContactFace")}
-              />
-              <p>
-                {errors.telNumberContactFace &&
-                  errors.telNumberContactFace.message}
-              </p>
-            </RegisterField>
-            <RegisterField>
-              <RegisterLabel>E-mail </RegisterLabel>
-              <RegisterInput
-                type="text"
-                placeholder="E-mail"
-                // className={`${scss.input} ${errors.name && scss.invalid}
-                //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                {...register("emailContactFace")}
-              />
-              <p>
-                {errors.emailContactFace && errors.emailContactFace.message}
-              </p>
-            </RegisterField>
+            <ContactFaceField control = {control} register={register} errors={errors} margintop={"36px"}/>
+           
             <></>
           </RegisterLeftBlock>
           <RegisterRigthBlock>
@@ -270,12 +225,14 @@ placeholderText="Выберите дату"
               <p>{errors.comment && errors.comment.message}</p>
             </RegisterCommentField>
 
-            <FormButton
+            <Button
               type="submit"
-              // disabled={!isValid}
-            >
-              Додати
-            </FormButton>
+              padding ="8px"
+       
+              text= "Додати"              // disabled={!isValid}
+            />
+          
+           
           </RegisterRigthBlock>
         </RegisterBlock>
       )}
