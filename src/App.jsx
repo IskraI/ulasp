@@ -78,10 +78,10 @@ function App() {
                 <Route index element={<AdminCabinetPage />} />
                 <Route path="cabinet" element={<AdminCabinetPage />} />
                 <Route path="messages" element={<Messages />} />
-                <Route path="users" element={<AdminUsers />}>
-                  <Route path="carduser" element={<CardUser />} />
-                  <Route path="cardeditor" element={<CardEditor />} />
-                </Route>
+                <Route path="users" element={<AdminUsers />} />
+                <Route path="users/carduser" element={<CardUser />} />
+                <Route path="users/cardeditor" element={<CardEditor />} />
+
                 <Route path="online" element={<OnlineUsers />} />
                 <Route path="analytics" element={<Analytics />} />
                 <Route path="*" element={<ErrorPage />} />
