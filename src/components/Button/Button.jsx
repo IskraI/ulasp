@@ -9,7 +9,7 @@ export const Button = ({
   type,
   text,
   ariaLabel,
-  height
+  height, fontsize="20px"
 }) => {
   return (
     <CustomButton
@@ -19,7 +19,7 @@ export const Button = ({
       margintop={margintop}
       padding={padding}
       onClick={onClick}
-      
+      fontsize ={fontsize}
     >
       {text}
     </CustomButton>

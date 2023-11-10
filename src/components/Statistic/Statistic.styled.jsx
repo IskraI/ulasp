@@ -6,6 +6,7 @@ display:flex;
 gap: 8px;
 /* margin-left: 111px; */
 margin-top:24px;
+    margin-bottom: 29px;
 `;
 
 export const StatItem = styled.p`

@@ -7,7 +7,7 @@ export const CustomButton = styled.button`
   border-radius: 10px;
   border: 1px solid #17161c;
   font-family: inherit;
-  font-size: 20px;
+  font-size: ${(props) => props.fontsize};
   font-weight: 400;
   color: #17161c;
   outline: none;

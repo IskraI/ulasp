@@ -11,9 +11,9 @@ import {
   TitleTab,
   TextLoader,
   TextInfo,
-  DetailsBtn
+  DetailsBtn,
 } from "./SearchUsers.styled";
-import UsersTable from "../UsersTable/UsersTable"
+import UsersTable from "../UsersTable/UsersTable";
 const user = {
   _id: {
     $oid: "653d71507a484cf7a52cb57a",
@@ -47,34 +47,30 @@ const user = {
   },
 };
 
-
-
 export const SearchUsers = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
- 
+
   const [showNoResults, setShowNoResults] = useState(false);
   const { data, isLoading } = useGetUsersListQuery();
- 
+
   // const users = data ? data.allUsers : [];
 
-
-
- const filteredUsers = useMemo(() => {
-  const users = data ? data.allUsers : [];
+  const filteredUsers = useMemo(() => {
+    const users = data ? data.allUsers : [];
     if (users) {
-      return users.filter((user) => user.status === 'false');
+      return users.filter((user) => user.status === "false");
     }
     return [];
- }, [data]);
-  
+  }, [data]);
+
   const isSearching = searchTerm.trim() !== "";
   //  console.log(isSearching);
-  
+
   const title = isSearching
     ? searchResults.length > 0
       ? "Результати пошуку:"
-      : ""
+      : "Результати пошуку:"
     : "Чекають на підтвердження (посилання):";
 
   useEffect(() => {
@@ -95,27 +91,27 @@ export const SearchUsers = () => {
       setShowNoResults(filteredResults.length === 0);
     } else {
       setSearchResults(filteredUsers);
-     setShowNoResults(false);
+      setShowNoResults(false);
     }
   }, [searchTerm, filteredUsers]);
 
-//   const renderTitle = () => {
-//   if (isSearching && searchResults.length > 0) {
-//     return "Результати пошуку:";
-//   } else if (isSearching && searchResults.length === 0) {
-//     return "Результати пошуку: не знайдено";
-//   } else {
-//     return "Чекають на підтвердження (посилання):";
-//   }
-// };
+  //   const renderTitle = () => {
+  //   if (isSearching && searchResults.length > 0) {
+  //     return "Результати пошуку:";
+  //   } else if (isSearching && searchResults.length === 0) {
+  //     return "Результати пошуку: не знайдено";
+  //   } else {
+  //     return "Чекають на підтвердження (посилання):";
+  //   }
+  // };
 
-const  visibleColumns =[{ key: 'firstName', label: 'Ім’я', type: 'name' },
-{ key: 'contractNumber', label: '№ договору', type: 'string' },
-{ key: 'createdAt', label: 'Дата заявки',  type: 'date'  },
-{ key: 'details', label: 'Детальніше', type: 'link' },
-{ key: 'sendEmail', label: '',  type: 'button'},
-
-]
+  const visibleColumns = [
+    { key: "firstName", label: "Ім’я", type: "name" },
+    { key: "contractNumber", label: "№ договору", type: "string" },
+    { key: "createdAt", label: "Дата заявки", type: "date" },
+    { key: "details", label: "Детальніше", type: "link" },
+    { key: "sendEmail", label: "", type: "button" },
+  ];
   return (
     <>
       <SearchUsersContainer>
@@ -133,8 +129,11 @@ const  visibleColumns =[{ key: 'firstName', label: 'Ім’я', type: 'name' },
       {isLoading ? (
         <TextLoader>Завантаження...</TextLoader>
       ) : searchResults.length === 0 && showNoResults ? (
-        <TextInfo>Результати пошуку: не знайдено</TextInfo>
-      ) : (<UsersTable users={searchResults}  visibleColumns={visibleColumns} />
+        <>
+          <TextInfo> не знайдено</TextInfo>
+        </>
+      ) : (
+        <UsersTable users={searchResults} visibleColumns={visibleColumns} />
         // <Table>
         //   <thead>
         //     <TableRow>
@@ -172,5 +171,3 @@ const  visibleColumns =[{ key: 'firstName', label: 'Ім’я', type: 'name' },
     </>
   );
 };
-
-
