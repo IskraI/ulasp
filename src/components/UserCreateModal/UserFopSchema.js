@@ -10,7 +10,7 @@ export const passportUaRegexp = /^([А-ЯЇІЄ]{2}\d{6})$/;
 export const UserSchema = yup.object().shape({
   name:  yup
   .string()
-  .required("Must be filled!")
+  // .required("Must be filled!")
   .matches(nameRegexp, "This is an ERROR name"),
   firstName: yup
     .string()
@@ -56,19 +56,19 @@ export const UserSchema = yup.object().shape({
 
   contactFace: yup.string().required("Must be filled!"),
 
-  taxCodeContactFace: yup
+  contactFaceTaxCode: yup
     .string()
     .min(10, "Must be  10 characters!")
     .max(10, "Must be  10 characters!")
     .required("Must be filled!")
     .matches(onlyNumberRegexp, "This is an ERROR taxCode"),
 
-  telNumberContactFace: yup
+    contactFaceTelNumber: yup
     .string()
     .required("Must be filled!")
     .matches(phoneNumberUaRegexp, "This is an ERROR taxCode"),
 
-  emailContactFace: yup
+    contactFaceEmail: yup
     .string()
     .required("Must be filled!")
     .matches(emailRegexp, "This is an ERROR taxCode"),

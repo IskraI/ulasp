@@ -29,6 +29,7 @@ import {
   RegisterRigthBlock,Commentlabel,
   RegisterLeftBlock,FormButton, RegisterCommentField, CommentTextarea
 } from "./UserCreateModal.styled";
+import UserFieldForm from "../UserForm/UserForm"
 const UserCreateForm = ({ onCloseModal }) => {
   const [activeSection, setActiveSection] = useState("NewUser");
   const [dispatchFop, { isLoading: isLoadingFop }] = useCreateFopUserMutation();
@@ -60,6 +61,7 @@ const UserCreateForm = ({ onCloseModal }) => {
   };
 
   const onFormSubmit = (data) => {
+    console.log(data);
     const formData = { ...data, status: typeStatus, userFop: typeOfUser };
     console.log(formData);
     if (typeOfUser === "fop") {
@@ -78,7 +80,7 @@ const UserCreateForm = ({ onCloseModal }) => {
           navigate("/admin/users");
           onCloseModal();
         })
-        .catch((error) => console.log(error.data.message));
+        .catch((error) => console.log(error.data));
     }
   };
   const handleSectionChange = (section) => {
@@ -250,7 +252,7 @@ const UserCreateForm = ({ onCloseModal }) => {
   dateFormat="dd.MM.yyyy"
   placeholderText="Выберите дату"
 /> */}
-                  </RegisterField>
+                   </RegisterField>
                 )}
 
                 <RegisterField>
@@ -315,7 +317,7 @@ const UserCreateForm = ({ onCloseModal }) => {
                     placeholder="Ідентифікаційний номер"
                     // className={`${scss.input} ${errors.name && scss.invalid}
                     //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                    {...register("taxCodeContactFace")}
+                    {...register("contactFaceTaxCode")}
                   />
                   <p>
                     {errors.taxCodeContactFace &&
@@ -329,7 +331,7 @@ const UserCreateForm = ({ onCloseModal }) => {
                     placeholder="Номер телефону"
                     // className={`${scss.input} ${errors.name && scss.invalid}
                     //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                    {...register("telNumberContactFace")}
+                    {...register("contactFaceTelNumber")}
                   />
                   <p>
                     {errors.telNumberContactFace &&
@@ -343,7 +345,7 @@ const UserCreateForm = ({ onCloseModal }) => {
                     placeholder="E-mail"
                     // className={`${scss.input} ${errors.name && scss.invalid}
                     //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                    {...register("emailContactFace")}
+                    {...register("contactFaceEmail")}
                   />
                   <p>
                     {errors.emailContactFace && errors.emailContactFace.message}
@@ -441,8 +443,8 @@ const UserCreateForm = ({ onCloseModal }) => {
   onChange={(date) => setDayOfBirthday(date)}
   dateFormat="dd.MM.yyyy"
   placeholderText="Выберите дату"
-/> */}
-                </RegisterField>
+          /> */}
+                 </RegisterField>
 
                 <RegisterField>
                   <RegisterLabel>Номер телефону*</RegisterLabel>
@@ -478,8 +480,9 @@ const UserCreateForm = ({ onCloseModal }) => {
                   {...register("comment")}
                 />
                 <p>{errors.comment && errors.comment.message}</p>
-              </RegisterField>
+</RegisterField>
 
+{/* <UserFieldForm handleTypeofAccept={handleTypeofAccept} typeStatus ={typeStatus} register={register} isValid={isValid}  errors={errors} activeSection= {activeSection} typeOfUser={typeOfUser}/> */}
               <button
                 type="submit"
                 // disabled={!isValid}
@@ -488,6 +491,7 @@ const UserCreateForm = ({ onCloseModal }) => {
               </button>
             </div>
           )}
+       
         </form>
       </RegisterForm>
     </UserCreateModal>
