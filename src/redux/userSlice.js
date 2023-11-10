@@ -33,20 +33,19 @@ export const userSlice = createSlice({
     },
     setCurrent: {
       reducer(state, action) {
-        // console.log("action.payload setCurrent", action.payload.admin);
+     
         if (action.payload.admin || action.payload.editor) {
           const role = action.payload.admin ? "admin" : "editor";
+                 state = {
+          ...state,
+          ...action.payload[role],
+          avatarURL: action.payload[role].avatarURL,
+          isLoggedIn: true,
+        };
 
-          state = {
-            ...state,
-            [`${role}Role`]: action.payload[role][`${role}Role`],
-            avatarURL: action.payload[role].avatarURL,
-            isLoggedIn: true,
-          };
-        }
         return state;
-      },
-    },
+      }
+    }},
 
     setUser: {
       reducer(state, action) {

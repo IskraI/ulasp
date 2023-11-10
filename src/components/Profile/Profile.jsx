@@ -28,7 +28,7 @@ export const Profile = () => {
       })
       .catch((e) => console.log(e.data.message));
   };
-
+console.log('user', user)
   const handleChooseIcon = (event) => {
     setSelectedImage(event.target.files[0]);
   };
