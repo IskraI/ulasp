@@ -1,4 +1,4 @@
-import{n as o,c as r,j as e,L as c}from"./index-5826c61f.js";const j=o.div`
+import{n as i,c as r,j as n,L as g}from"./index-fad82072.js";const k=i.div`
 
  
    display: grid;
@@ -7,7 +7,7 @@ import{n as o,c as r,j as e,L as c}from"./index-5826c61f.js";const j=o.div`
    align-items: start;
    margin-bottom: 40px;
 
-`,k=o.input`
+`,j=i.input`
   display: flex;
   width: 219px;
   height: 40px;
@@ -25,7 +25,7 @@ import{n as o,c as r,j as e,L as c}from"./index-5826c61f.js";const j=o.div`
     text-align: right;
     color: rgba(0, 0, 0, 0.4);
   }
-`,g=o.table`
+`,f=i.table`
   table-layout: fixed; 
   /* width: 100%; */
   /* border-collapse: collapse; */
@@ -59,7 +59,7 @@ margin-right: 20px;
      
       
     }
-  }`,f=o.th`
+  }`,h=i.th`
   color: ${r.mainFontColor};
   font-size: 16px;
   font-weight: 600;
@@ -68,7 +68,7 @@ margin-right: 20px;
  
   flex: ${t=>t.isFirstColumn?"0 0 30%":"1"};
   
-`,d=o.tr`
+`,x=i.tr`
   height: 54px;
   border-radius: 10px;
 
@@ -78,13 +78,13 @@ display: flex;
 
 
   
-`,h=o.td`
+`,m=i.td`
 padding: 8px;
   text-align: left;
   flex: ${t=>t.isFirstColumn?"0 0 30%":"1"};
        
  
-`,C=o.h3`
+`,$=i.h3`
   color: ${r.mainFontColor};
   /* font-size: 22px; */
   margin-top: 43px;
@@ -97,15 +97,15 @@ padding: 8px;
 font-size: 24px;
 font-weight: 500;
 
-`,F=o.p`
+`,C=i.p`
   color: ${r.mainFontColor};
   font-size: 24px;
   font-weight: 500;
-`,$=o.p`
+`,F=i.p`
   color: ${r.mainFontColor};
   font-size: 24px;
   font-weight: 500;
-`,m=o.button`
+`,b=i.button`
   color: ${r.mainFontColor};
  font-family: Inter;
 font-size: 16px;
@@ -116,7 +116,7 @@ background-color: transparent;
  outline: none;
   border: none;
 
-`,b=o.button`
+`,y=i.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -144,10 +144,10 @@ background-color: transparent;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.4) inset;
     border: 1px solid #17161c;
   }
-`,u=({marginbottom:t,margintop:l,marginrigth:n,padding:a,onClick:i,type:s,text:p,ariaLabel:x,height:y})=>e.jsx(b,{type:s,"aria-label":x,marginbottom:t,margintop:l,padding:a,onClick:i,children:p}),T=({users:t,visibleColumns:l})=>e.jsx(e.Fragment,{children:e.jsxs(g,{children:[e.jsx("thead",{children:e.jsx(d,{children:l.map((n,a)=>e.jsx(f,{isFirstColumn:a===0,children:n.label},n.key))})}),e.jsx("tbody",{children:t.map((n,a)=>e.jsx(d,{children:l.map((i,s)=>e.jsx(h,{isFirstColumn:s===0,children:i.type==="name"?n.name?n.name:n.firstName+" "+n.lastName:i.type==="link"?e.jsx(c,{to:"/admin/users/carduser",children:e.jsx(m,{type:"link",children:"картка"})}):i.key==="boolean"?n[i.key]:i.key==="sendEmail"?e.jsx(u,{type:"button",text:"Відправити",padding:"8px",onClick:()=>console.log("send email")}):n[i.key]},i.key))},a))})]})}),z=o.h2`
+`,u=({marginbottom:t,margintop:s,marginrigth:p,padding:e,onClick:a,type:o,text:l,ariaLabel:d,height:c})=>n.jsx(y,{type:o,"aria-label":d,marginbottom:t,margintop:s,padding:e,onClick:a,children:l}),T=({users:t,visibleColumns:s})=>{const p=e=>{const a=new Date("2023-11-10T14:58:20.594Z"),o=String(a.getDate()).padStart(2,"0"),l=String(a.getMonth()+1).padStart(2,"0"),d=a.getFullYear();return`${o}.${l}.${d}`};return n.jsx(n.Fragment,{children:n.jsxs(f,{children:[n.jsx("thead",{children:n.jsx(x,{children:s.map((e,a)=>n.jsx(h,{isFirstColumn:a===0,children:e.label},e.key))})}),n.jsx("tbody",{children:t.map((e,a)=>n.jsx(x,{children:s.map((o,l)=>n.jsx(m,{isFirstColumn:l===0,children:o.type==="date"?p(e[o.key]):o.type==="name"?e.name?e.name:e.firstName+" "+e.lastName:o.type==="link"?n.jsx(g,{to:"/admin/users/carduser",children:n.jsx(b,{type:"link",children:"картка"})}):o.key==="boolean"?e[o.key]:o.key==="sendEmail"?n.jsx(u,{type:"button",text:"Відправити",padding:"8px",onClick:()=>console.log("send email")}):e[o.key]},o.key))},a))})]})})},z=i.h2`
  color:   ${r.mainFontColor};
 font-size: 24px;
 font-weight: 500;
 
 
-`;export{u as B,k as I,j as S,C as T,T as U,F as a,$ as b,z as c};
+`;export{u as B,j as I,k as S,$ as T,T as U,C as a,F as b,z as c};
