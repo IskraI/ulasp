@@ -60,6 +60,7 @@ const UsersTable = ({ users, visibleColumns }) => {
                           type="button"
                           text="Відправити"
                           padding="8px"
+                          fontsize= "14px"
                           onClick={() => console.log("send email")}
                         ></Button>
                       ) : (

@@ -4,11 +4,10 @@ import { colors } from "../../styles/vars";
 export const SearchUsersContainer = styled.div`
 
  
-   display: grid;
-  grid-template-columns: 1fr auto auto; /* Три колонки, первая динамическая, остальные фиксированные */
-  grid-gap: 20px; 
-   align-items: start;
-   margin-bottom: 40px;
+   display: flex;
+  
+   align-items: end;
+   margin-bottom: 23px;
 
 `;
 
@@ -143,15 +142,15 @@ padding: 8px;
 export const TitleTab = styled.h3`
   color: ${colors.mainFontColor};
   /* font-size: 22px; */
-  margin-top: 43px;
+  /* margin-top: 43px; */
   /* margin-left: 111px; */
   /* line-height: calc(26.4 / 22);
   font-weight: 400;
   line-height: 1.28; */
 
   
-font-size: 24px;
-font-weight: 500;
+font-size: 22px;
+font-weight: 400;
 
 `;
 
@@ -163,8 +162,8 @@ export const TextLoader = styled.p`
 
 export const TextInfo = styled.p`
   color: ${colors.mainFontColor};
-  font-size: 24px;
-  font-weight: 500;
+  font-size: 22px;
+  font-weight: 400;
 `;
 
 export const DetailsBtn = styled.button`
