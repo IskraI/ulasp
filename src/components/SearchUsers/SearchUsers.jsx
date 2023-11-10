@@ -52,7 +52,7 @@ const user = {
 export const SearchUsers = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [isLoading1, setIsLoading] = useState(false);
+ 
   const [showNoResults, setShowNoResults] = useState(false);
   const { data, isLoading } = useGetUsersListQuery();
  
@@ -109,7 +109,7 @@ export const SearchUsers = () => {
 //   }
 // };
 
-const  visibleColumns =[{ key: 'firstName', label: 'Ім’я', type: 'string' },
+const  visibleColumns =[{ key: 'firstName', label: 'Ім’я', type: 'name' },
 { key: 'contractNumber', label: '№ договору', type: 'string' },
 { key: 'createdAt', label: 'Дата заявки',  type: 'date'  },
 { key: 'details', label: 'Детальніше', type: 'link' },

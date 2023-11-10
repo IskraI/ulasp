@@ -26,8 +26,8 @@ const AdminUsers = () => {
   const  visibleColumns =[{ key: 'firstName', label: 'Ім’я', type: 'name' },
   { key: 'contractNumber', label: '№ договору', type: 'string' },
   { key: 'status', label: 'Статус',  type: 'boolean'  },
-  { key: 'lastPay', label: 'Дата оплати', type: 'date' },
-  { key: 'dateOfAccess', label: 'Відкрито до',  type: 'date'},
+  { key: 'lastPay', label: 'Дата оплати', type: 'string' },
+  { key: 'dateOfAccess', label: 'Відкрито до',  type: 'string'},
   { key: 'acces', label: 'Допуск',  type: 'string'},
   
   ]
