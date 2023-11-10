@@ -10,7 +10,7 @@ import {
 import {Button} from "../../components/Button/Button"
 import { Title } from "../../pages/AdminCabinetPage/AdminCabinetPage.styled";
 import UserCreateForm from "../UserCreateModal/UserCreateForm";
-import { Outlet } from 'react-router-dom';
+
 const AdminUsers = () => {
   const { data, isLoading } = useGetUsersListQuery();
 
@@ -47,7 +47,7 @@ const AdminUsers = () => {
         />
       </SearchUsersContainer>
       {!isLoading && <UserTable users={data.allUsers} visibleColumns={visibleColumns}/>}
-      <Outlet />
+      
       {showModal && (
         <Modal width={"898px"} padding={"24px"} onClose={handleCloseModal}>
       
