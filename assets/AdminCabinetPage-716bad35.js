@@ -1,4 +1,4 @@
-import{n as x,c as d,j as e,r,u as j}from"./index-65388813.js";import{S as y,T as S,I as b,a as C,b as L,U as w,c as T}from"./AdminCabinetPage.styled-438aab41.js";const k=x.div`
+import{n as x,c as d,j as e,r,u as j}from"./index-d533876a.js";import{S as y,T as S,I as b,a as C,b as L,U as w,c as T}from"./AdminCabinetPage.styled-c8e361d2.js";const k=x.div`
 display:flex;
 gap: 8px;
 /* margin-left: 111px; */
