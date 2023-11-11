@@ -37,9 +37,9 @@ width: 100%;
 export const SectionUser = styled.div `
 margin-bottom: 24px;
 /* display: block; */
-/* display: flex;
+display: flex; 
 justify-content: left;
-gap: 48px; */
+gap: 48px; 
 
 
 `

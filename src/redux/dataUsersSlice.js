@@ -55,6 +55,7 @@ export const {
   useGetUsersListQuery,
   useGetAdminCabinetQuery,
   useCreateCompanyUserMutation,
-  useCreateFopUserMutation
+  useCreateFopUserMutation,
+  useGetEditorsListQuery
 
 } = dataUsersApi;
