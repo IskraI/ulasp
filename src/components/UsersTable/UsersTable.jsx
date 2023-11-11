@@ -4,7 +4,7 @@ import {
   TableRow,
   TableCell,
   RowTitle,
-  DetailsBtn,
+  Details,
 } from "../SearchUsers/SearchUsers.styled";
 import { Button } from "../Button/Button";
 
@@ -49,9 +49,9 @@ const UsersTable = ({ users, visibleColumns }) => {
                         ) : (
                           user.firstName + " " + user.lastName
                         )
-                      ) : column.type === "link" ? (
-                        <Link to="/admin/users/carduser">
-                          <DetailsBtn type="link">картка</DetailsBtn>
+                      ) : column.type === "link" ? ( 
+                        <Link to={`/admin/users/carduser/${user._id}`}>
+                        картка
                         </Link>
                       ) : column.key === "boolean" ? (
                         user[column.key]
