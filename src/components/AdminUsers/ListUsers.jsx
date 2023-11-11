@@ -3,7 +3,7 @@ import UserTable from "../UsersTable/UsersTable";
 
 const ListUsers = () => {
     const { data, isLoading } = useGetUsersListQuery();
- 
+ console.log(data)
   const visibleColumns = [
     { key: "firstName", label: "Ім’я", type: "name" },
     { key: "contractNumber", label: "№ договору", type: "string" },
@@ -15,11 +15,11 @@ const ListUsers = () => {
 
   return (
     <>
-       {!isLoading && (
+        {!isLoading && (
         <UserTable users={data.allUsers} visibleColumns={visibleColumns} />
-      )} 
+      )}  
 
-      {!data.allUsers && <p> Користувачів ще не має</p>}
+      {/* {!data.allUsers && <p> Користувачів ще не має</p>} */}
     </>
   );
 };

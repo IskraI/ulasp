@@ -12,8 +12,13 @@ import { Title } from "../../pages/AdminCabinetPage/AdminCabinetPage.styled";
 import UserCreateForm from "../UserForm/UserCreateForm";
 import ListUsers from "./ListUsers"
 import { NavLink, Outlet } from "react-router-dom";
+import ListEditors from "./ListEditors"
 
 const AdminUsers = () => {
+  
+ 
+ 
+
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => {
@@ -45,11 +50,11 @@ const AdminUsers = () => {
         />
       </SearchUsersContainer>
       <SectionUser>
-        <NavLink to="users/allusers">Усі користувачі</NavLink>
-        <NavLink to="users/alleditors">Музичні редактори та адміністратори</NavLink>
+        <NavLink to="allusers">Усі користувачі</NavLink>
+        <NavLink to="editors">Музичні редактори та адміністратори</NavLink>
       </SectionUser>
       <Outlet/>
-    
+      
      
 
       {showModal && (

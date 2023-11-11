@@ -82,8 +82,9 @@ function App() {
                 <Route path="messages" element={<Messages />} />
 
                 <Route path="users" element={<AdminUsers />}>
-                  <Route path="users/allusers" element={<ListUsers />} />
-                  <Route path="users/alleditors" element={<ListEditors />} />
+                <Route index element={<ListUsers />} />
+                  <Route path="allusers" element={<ListUsers />} />
+                  <Route path="editors" element={<ListEditors />} />
                 </Route>
 <Route path="users/carduser/:id" element={<CardUser/>} />
               
