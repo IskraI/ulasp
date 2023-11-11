@@ -27,6 +27,10 @@ export const dataUsersApi = createApi({
       query: () => ({ url: 'admin/users' }),
       providesTags: ['dataUsers'],
     }),
+    getUserById:builder.query({
+      query: (id) => ({ url: `admin/users/${id}` }),
+      providesTags: ['dataUser'],
+    }),
     createFopUser: builder.mutation({
       query: body => ({
         url: '/admin/create-fop',
@@ -54,8 +58,9 @@ export const dataUsersApi = createApi({
 export const {
   useGetUsersListQuery,
   useGetAdminCabinetQuery,
+  useGetUserByIdQuery,
   useCreateCompanyUserMutation,
   useCreateFopUserMutation,
-  useGetEditorsListQuery
+
 
 } = dataUsersApi;

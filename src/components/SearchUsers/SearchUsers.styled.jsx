@@ -166,7 +166,7 @@ export const TextInfo = styled.p`
   font-weight: 400;
 `;
 
-export const DetailsBtn = styled.button`
+export const Details = styled.div`
   color: ${colors.mainFontColor};
  font-family: Inter;
 font-size: 16px;
