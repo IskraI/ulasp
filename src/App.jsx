@@ -27,6 +27,8 @@ import { lazy, useEffect } from "react";
 const AdminCabinetPage = lazy(() =>
   import("./pages/AdminCabinetPage/AdminCabinetPage")
 );
+const ListUsers = lazy(() => import("./components/AdminUsers/ListUsers"));
+const ListEditors = lazy(() => import("./components/AdminUsers/ListEditors"));
 const EditorCabinetPage = lazy(() =>
   import("./components/EditorCabinetPage/EditorCabinetPage")
 );
@@ -78,8 +80,14 @@ function App() {
                 <Route index element={<AdminCabinetPage />} />
                 <Route path="cabinet" element={<AdminCabinetPage />} />
                 <Route path="messages" element={<Messages />} />
-                <Route path="users" element={<AdminUsers />} />
-                <Route path="users/carduser/:id" element={<CardUser/>} />
+
+                <Route path="users" element={<AdminUsers />}>
+                  <Route path="users/allusers" element={<ListUsers />} />
+                  <Route path="users/alleditors" element={<ListEditors />} />
+                </Route>
+<Route path="users/carduser/:id" element={<CardUser/>} />
+              
+
                 <Route path="users/cardeditor" element={<CardEditor />} />
 
                 <Route path="online" element={<OnlineUsers />} />
