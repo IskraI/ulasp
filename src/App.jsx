@@ -25,7 +25,7 @@ import { getUserState } from "../src/redux/userSelectors";
 import { lazy, useEffect } from "react";
 
 const AdminCabinetPage = lazy(() =>
-  import("./pages/AdminCabinetPage/AdminCabinetPage")
+  import("./components/AdminCabinetPage/AdminCabinetPage")
 );
 const ListUsers = lazy(() => import("./components/AdminUsers/ListUsers"));
 const ListEditors = lazy(() => import("./components/AdminUsers/ListEditors"));

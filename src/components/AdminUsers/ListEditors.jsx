@@ -3,7 +3,7 @@ import UserTable from "../UsersTable/UsersTable";
 
 const ListEditors = () => {
     const { data, isLoading } = useGetUsersListQuery(true);
- console.log('data', data)
+
   const visibleColumns = [
     { key: "firstName", label: "Ім’я", type: "name" },
     { key: "login", label: "Логін", type: "string" },

@@ -8,7 +8,7 @@ import {
   SectionUser,
 } from "../../components/UserForm/UserCreateModal.styled";
 import { Button } from "../../components/Button/Button";
-import { Title } from "../../pages/AdminCabinetPage/AdminCabinetPage.styled";
+import { Title } from "../AdminCabinetPage/AdminCabinetPage.styled";
 import UserCreateForm from "../UserForm/UserCreateForm";
 import ListUsers from "./ListUsers"
 import { NavLink, Outlet } from "react-router-dom";
@@ -16,8 +16,6 @@ import ListEditors from "./ListEditors"
 
 const AdminUsers = () => {
   
- 
- 
 
   const [showModal, setShowModal] = useState(false);
 

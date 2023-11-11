@@ -13,7 +13,7 @@ export const authApi = createApi({
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }
-      console.log("headers", headers);
+      // console.log("headers", headers);
       return headers;
     },
   }),
