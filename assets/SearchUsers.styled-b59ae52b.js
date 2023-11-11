@@ -1,4 +1,4 @@
-import{n as t,c as o}from"./index-d6a418a0.js";const i=t.div`
+import{n as t,c as o}from"./index-690a8ca5.js";const i=t.div`
 
  
    display: flex;
@@ -65,7 +65,7 @@ margin-right: 20px;
   text-align: left;
   padding: 8px;
  
-  flex: ${e=>e.isFirstColumn?"0 0 30%":"1"};
+  flex: ${e=>e.isFirstColumn?"0 0 20%":"1"};
   
 `,s=t.tr`
   height: 54px;
@@ -80,7 +80,7 @@ display: flex;
 `,p=t.td`
 padding: 8px;
   text-align: left;
-  flex: ${e=>e.isFirstColumn?"0 0 30%":"1"};
+  flex: ${e=>e.isFirstColumn?"0 0 20%":"1"};
        
  
 `,d=t.h3`
