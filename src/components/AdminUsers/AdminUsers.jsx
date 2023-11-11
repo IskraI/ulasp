@@ -49,7 +49,7 @@ const AdminUsers = () => {
       {!isLoading && <UserTable users={data.allUsers} visibleColumns={visibleColumns}/>}
       
       {showModal && (
-        <Modal width={"898px"} padding={"24px"} onClose={handleCloseModal}>
+        <Modal width={"898px"} padding={"24px"} onClose={handleCloseModal} showCloseButton={true}>
       
                  <UserCreateForm  onCloseModal={handleCloseModal}/>
         </Modal>

@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom';
-import { PathText } from './TabNavigation.styled';
+import { PathText, BackLink,PathContainer } from './TabNavigation.styled';
+import symbol from "../../assets/symbol.svg";
 
 export const TabNavigation = () => {
      const location = useLocation();
@@ -29,9 +30,14 @@ export const TabNavigation = () => {
   };
 
   return (
-    <>
+      <PathContainer>
+       <BackLink to="../"> 
+         <svg className="icon" width="24" height="24">
+              <use href={`${symbol}#icon-arrow`} width="24" height="24" fill="#17161C"></use>
+            </svg>
+      </BackLink>   
       <PathText>{getTranslatedPath()}</PathText>
-    </>
+    </PathContainer>
   );
 };
 
