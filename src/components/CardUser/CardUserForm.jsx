@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { UserSchema } from "../UserForm/UserFopSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
@@ -9,7 +9,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import {
-    ButtonSwitch,
+  ButtonSwitch,
   SectionUserButton,
   SectionUser,
   UserCreateModal,
@@ -17,8 +17,8 @@ import {
 
 import UserFieldForm from "../UserForm/UserFieldForm/UserField";
 
-const UserCardForm = () => {
-  const [activeSection, setActiveSection] = useState("NewUser");//user or editor
+const UserCardForm = ({ user }) => {
+  const [activeSection, setActiveSection] = useState("NewUser"); //user or editor
   const [typeOfStatus, setTypeOfStatus] = useState(false); //on/off
   const [typeOfUser, setTypeOfUser] = useState("fop"); //fop/tov
   const [dispatchFop, { isLoading: isLoadingFop }] = useCreateFopUserMutation();
@@ -27,7 +27,7 @@ const UserCardForm = () => {
   const navigate = useNavigate();
   const {
     control,
-      register,
+    register,
     handleSubmit,
     setError,
     clearErrors,
@@ -38,8 +38,7 @@ const UserCardForm = () => {
     resolver: yupResolver(UserSchema),
   });
 
-
-  //перемикач дапуска 
+  //перемикач дапуска
   const handleTypeOfStatus = () => {
     setTypeOfStatus(typeOfStatus === true ? false : true);
     clearErrors();
@@ -51,7 +50,6 @@ const UserCardForm = () => {
     setTypeOfUser(typeOfUser === "tov" ? "fop" : "tov");
   };
 
- 
   const handleSectionChange = (section) => {
     setActiveSection(section);
 
@@ -60,6 +58,7 @@ const UserCardForm = () => {
   console.log("ButtonSwitch.props", ButtonSwitch);
   return (
     <UserCreateModal>
+      
       <SectionUser>
         <SectionUserButton
           isActive={activeSection === "NewUser"}
@@ -79,20 +78,19 @@ const UserCardForm = () => {
           {typeOfUser === "tov" ? "ТОВ" : "ФОП"}
         </ButtonSwitch>
       )} */}
-        <form >
-          <UserFieldForm
-           control={control}
-            handleTypeOfStatus={handleTypeOfStatus}
-            typeOfStatus={typeOfStatus}
-            register={register}
-            isValid={isValid}
-            errors={errors}
-            activeSection={activeSection}
-            typeOfUser={typeOfUser}
-           
-          />
-        </form>
-     
+      <form>
+        <UserFieldForm
+          user={user}
+          control={control}
+          handleTypeOfStatus={handleTypeOfStatus}
+          typeOfStatus={typeOfStatus}
+          register={register}
+          isValid={isValid}
+          errors={errors}
+          activeSection={activeSection}
+          typeOfUser={typeOfUser}
+        />
+      </form>
     </UserCreateModal>
   );
 };
