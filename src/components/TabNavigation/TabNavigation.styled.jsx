@@ -7,6 +7,7 @@ export const PathText = styled.div`
 color: ${colors.mainFontColor};
 font-size: 16px;
 margin-left: 24px;
+
 `;
 
 export const PathContainer = styled(NavLink)`

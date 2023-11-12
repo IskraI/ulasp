@@ -3,7 +3,7 @@ import { colors } from "../../styles/vars";
 import { NavLink } from "react-router-dom";
 
 export const SiteBarNavConteiner = styled.div`
-  display: flex;
+   display: flex;
   flex-direction: column;
   width: 287px;
   height: calc(100vh - (80px + 68px));
