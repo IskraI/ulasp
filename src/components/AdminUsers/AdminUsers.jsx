@@ -2,20 +2,23 @@ import { useGetUsersListQuery } from "../../redux/dataUsersSlice";
 import UserTable from "../UsersTable/UsersTable";
 import { useState, useEffect, useRef } from "react";
 import { Modal } from "../Modal/Modal";
+import { SearchUsersContainer, Input } from "../SearchUsers/SearchUsers.styled";
 import {
-  SearchUsersContainer,
-  Input,
-
-} from "../SearchUsers/SearchUsers.styled";
-import {Button} from "../../components/Button/Button"
-import { Title } from "../../pages/AdminCabinetPage/AdminCabinetPage.styled";
+  SectionUserButton,
+  SectionUser,
+} from "../../components/UserForm/UserCreateModal.styled";
+import { Button } from "../../components/Button/Button";
+import { Title } from "../AdminCabinetPage/AdminCabinetPage.styled";
 import UserCreateForm from "../UserForm/UserCreateForm";
+import ListUsers from "./ListUsers"
+import { NavLink, Outlet } from "react-router-dom";
+import ListEditors from "./ListEditors"
 
 const AdminUsers = () => {
-  const { data, isLoading } = useGetUsersListQuery();
+  
 
   const [showModal, setShowModal] = useState(false);
- 
+
   const handleShowModal = () => {
     setShowModal(true);
   };
@@ -23,22 +26,20 @@ const AdminUsers = () => {
   const handleCloseModal = () => {
     setShowModal(false);
   };
-  const  visibleColumns =[{ key: 'firstName', label: 'Ім’я', type: 'name' },
-  { key: 'contractNumber', label: '№ договору', type: 'string' },
-  { key: 'status', label: 'Статус',  type: 'boolean'  },
-  { key: 'lastPay', label: 'Дата оплати', type: 'string' },
-  { key: 'dateOfAccess', label: 'Відкрито до',  type: 'string'},
-  { key: 'acces', label: 'Допуск',  type: 'string'},
-  
-  ]
+
 
   return (
     <>
-    <SearchUsersContainer>
-      <Title>Користувачі</Title>
-      
-             <Button type="button" padding={"12px 46px"} onClick={handleShowModal} text = {"Додати"} ariaLabel ={"  Додати користувача"}>
-              </Button>
+      <SearchUsersContainer>
+        <Title>Користувачі</Title>
+
+        <Button
+          type="button"
+          padding={"12px 46px"}
+          onClick={handleShowModal}
+          text={"Додати"}
+          ariaLabel={"  Додати користувача"}
+        ></Button>
         <Input
           type="text"
           id="search"
@@ -46,12 +47,22 @@ const AdminUsers = () => {
           placeholder="Пошук користувача"
         />
       </SearchUsersContainer>
-      {!isLoading && <UserTable users={data.allUsers} visibleColumns={visibleColumns}/>}
+      <SectionUser>
+        <NavLink to="allusers">Усі користувачі</NavLink>
+        <NavLink to="editors">Музичні редактори та адміністратори</NavLink>
+      </SectionUser>
+      <Outlet/>
       
+     
+
       {showModal && (
-        <Modal width={"898px"} padding={"24px"} onClose={handleCloseModal} showCloseButton={true}>
-      
-                 <UserCreateForm  onCloseModal={handleCloseModal}/>
+        <Modal
+          width={"898px"}
+          padding={"24px"}
+          onClose={handleCloseModal}
+          showCloseButton={true}
+        >
+          <UserCreateForm onCloseModal={handleCloseModal} />
         </Modal>
       )}
     </>

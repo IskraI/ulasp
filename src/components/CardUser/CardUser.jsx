@@ -2,13 +2,23 @@ import TabNavigation from "../TabNavigation/TabNavigation";
 import UserCardForm from "./CardUserForm";
 import { Button } from "../Button/Button";
 import symbol from "../../assets/symbol.svg";
-import { ButtonContainer } from './CardUser.styled';
+
+
+import { useParams } from 'react-router-dom';
+import {useGetUserByIdQuery} from "../../redux/dataUsersSlice"
+
 
 const CardUser = () => {
+    const { id } = useParams();
+    const { data: user, error, isLoading } = useGetUserByIdQuery(id );
+//     console.log('user', user)
+//   console.log('id', id)
   return <>
+
     <TabNavigation />
-    <UserCardForm />
+    <UserCardForm  user = {user} />
     <ButtonContainer>
+
          <Button
               type="button"
               padding ="8px 63px"

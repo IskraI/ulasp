@@ -1,5 +1,5 @@
-import { Statistic } from '../../components/Statistic/Statistic';
-import { SearchUsers } from '../../components/SearchUsers/SearchUsers';
+import { Statistic } from '../Statistic/Statistic';
+import { SearchUsers } from '../SearchUsers/SearchUsers';
 import { Title} from './AdminCabinetPage.styled';
 
 

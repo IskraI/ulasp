@@ -26,7 +26,7 @@ export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
     [signInClient.reducerPath]: signInClient.reducer,
-    [dataUsersApi.reducerPath]: dataUsersApi.reducer, /*данные юзера для админа */
+    [dataUsersApi.reducerPath]: dataUsersApi.reducer, /*данные юзеров для админа */
     user: persistReducer(persistConfig, userReducer),
    
   },

@@ -17,15 +17,23 @@ export const dataUsersApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['dataUsers'],
+  tagTypes: ['dataUsers', 'dataAdmins'],
   endpoints: builder => ({
+    // getAdminList: builder.query({
+    //   query: (admin:false) => ({ url: 'admin' }),
+    //   providesTags: ['dataAdmins'],
+    // }),
     getUsersList: builder.query({
-        query: () => ({ url: 'admin/users' }),
+        query: (admin=false) => {
+          const url = admin ? 'admin/' : 'admin/users';
+          return { url };},
         providesTags: ['dataUsers'],
       }),
-    getAdminCabinet: builder.query({
-      query: () => ({ url: 'admin/users' }),
-      providesTags: ['dataUsers'],
+    
+   
+    getUserById:builder.query({
+      query: (id) => ({ url: `admin/users/${id}` }),
+      providesTags: ['dataUser'],
     }),
     createFopUser: builder.mutation({
       query: body => ({
@@ -52,9 +60,14 @@ export const dataUsersApi = createApi({
 });
 
 export const {
+  // useGetAdminListQuery,
   useGetUsersListQuery,
-  useGetAdminCabinetQuery,
+  
+  useGetUserByIdQuery,
   useCreateCompanyUserMutation,
-  useCreateFopUserMutation
+  useCreateFopUserMutation,
+  
+ 
+
 
 } = dataUsersApi;

@@ -115,7 +115,7 @@ export const RowTitle = styled.th`
   text-align: left;
   padding: 8px;
  
-  flex: ${(props) => (props.isFirstColumn ? '0 0 30%' : '1')};
+  flex: ${(props) => (props.isFirstColumn ? '0 0 20%' : '1')};
   
 `;
 
@@ -134,7 +134,7 @@ display: flex;
 export const TableCell = styled.td`
 padding: 8px;
   text-align: left;
-  flex: ${(props) => (props.isFirstColumn ? '0 0 30%' : '1')};
+  flex: ${(props) => (props.isFirstColumn ? '0 0 20%' : '1')};
        
  
 `;
@@ -166,7 +166,7 @@ export const TextInfo = styled.p`
   font-weight: 400;
 `;
 
-export const DetailsBtn = styled.button`
+export const Details = styled.div`
   color: ${colors.mainFontColor};
  font-family: Inter;
 font-size: 16px;

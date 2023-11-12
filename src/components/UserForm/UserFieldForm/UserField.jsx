@@ -20,7 +20,7 @@ import {
   } from "../UserCreateModal.styled";
   import ContactFaceField from "./ContactFaceField"
   import {Button} from "../../Button/Button"
-const UserFieldForm = ({ control, handleTypeOfStatus, activeSection, typeOfStatus, typeOfUser, isValid, errors, register }) => {
+const UserFieldForm = ({ user, control, handleTypeOfStatus, activeSection, typeOfStatus, typeOfUser, isValid, errors, register }) => {
     console.log('activeSection', activeSection)
   return (
     <Fieldform>
@@ -28,6 +28,7 @@ const UserFieldForm = ({ control, handleTypeOfStatus, activeSection, typeOfStatu
         <RegisterBlock>
           <RegisterLeftBlock>
             <RegisterNameBlock>
+            
               {typeOfUser === "fop" ? (
                 <>
                   <RegisterNameField>
@@ -35,11 +36,12 @@ const UserFieldForm = ({ control, handleTypeOfStatus, activeSection, typeOfStatu
                     <RegisterNameInput
                       type="text"
                       placeholder="Прізвище"
+                      value={user ? user.firstName : ''}
                       // className={`${scss.input} ${errors.name && scss.invalid}
                       //  ${!errors.name && dirtyFields.name && scss.valid}`}
                       {...register("lastName")}
                     />
-                    <p>{errors.lastName && errors.lastName.message}</p>
+               
                   </RegisterNameField>
 
                   <RegisterNameField>
