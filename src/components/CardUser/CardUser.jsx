@@ -6,12 +6,12 @@ import symbol from "../../assets/symbol.svg";
 
 import { useParams } from 'react-router-dom';
 import {useGetUserByIdQuery} from "../../redux/dataUsersSlice"
-
+import {ButtonContainer} from "./CardUser.styled"
 
 const CardUser = () => {
     const { id } = useParams();
     const { data: user, error, isLoading } = useGetUserByIdQuery(id );
-//     console.log('user', user)
+    console.log('user', user)
 //   console.log('id', id)
   return <>
 
