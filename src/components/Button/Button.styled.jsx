@@ -14,6 +14,7 @@ export const CustomButton = styled.button`
   background: rgba(164, 188, 212, 0.3);
   margin-top: ${(props) => props.margintop};
   margin-bottom: ${(props) => props.marginbottom};
+  margin-left:${(props) => props.marginleft};
   padding: ${(props) => props.padding};
 
 

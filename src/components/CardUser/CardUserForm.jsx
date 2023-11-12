@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { useForm} from "react-hook-form";
 import { UserSchema } from "../UserForm/UserFopSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -24,7 +25,17 @@ const UserCardForm = () => {
   const [dispatchFop, { isLoading: isLoadingFop }] = useCreateFopUserMutation();
   const [dispatchCompany, { isLoading: isLoadingCompany }] =
     useCreateCompanyUserMutation();
-  const navigate = useNavigate();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.pathname.includes("carduser")) {
+      setActiveSection("NewUser");
+    } else if (location.pathname.includes("cardeditor")) {
+      setActiveSection("MusicEditor");
+    }
+    }, [location.pathname]);
+    
   const {
     control,
       register,
@@ -52,24 +63,24 @@ const UserCardForm = () => {
   };
 
  
-  const handleSectionChange = (section) => {
-    setActiveSection(section);
+//   const handleSectionChange = (section) => {
+//     setActiveSection(section);
 
-    clearErrors();
-  };
+//     clearErrors();
+//   };
   console.log("ButtonSwitch.props", ButtonSwitch);
   return (
-    <UserCreateModal>
+    <UserCreateModal style={{marginTop : '24px'}}>
       <SectionUser>
         <SectionUserButton
           isActive={activeSection === "NewUser"}
-          onClick={() => handleSectionChange("NewUser")}
+        //   onClick={() => handleSectionChange("NewUser")}
         >
           Картка користувача
         </SectionUserButton>
         <SectionUserButton
           isActive={activeSection === "MusicEditor"}
-          onClick={() => handleSectionChange("MusicEditor")}
+        //   onClick={() => handleSectionChange("MusicEditor")}
         >
           Картка музичного редактора
         </SectionUserButton>
