@@ -10,7 +10,7 @@ margin-left: 24px;
 
 `;
 
-export const PathContainer = styled(NavLink)`
+export const PathContainer = styled.div`
 display: flex;
 margin-top: 26.5px;
 `;

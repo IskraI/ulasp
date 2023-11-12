@@ -29,30 +29,66 @@ export const TabNavigation = () => {
 //     }
     //   };
     
-    const getTranslatedPath = () => {
-    if (startIndex !== -1 && startIndex < pathSegments.length) {
-      const lastSegment = pathSegments[pathSegments.length - 1];
+//     const getTranslatedPath = () => {
+//     if (startIndex !== -1 && startIndex < pathSegments.length) {
+//         const lastSegment = pathSegments[pathSegments.length - 1];
+        
 
-      const translatedSegments = pathSegments
-        .slice(startIndex, pathSegments.length - 1)
-        .map((segment, index) => (
-          <span key={index}>{segmentToUkrainianMapping[segment] || segment}/</span>
-        ));
+//       const translatedSegments = pathSegments
+//         .slice(startIndex, pathSegments.length - 1)
+//         .map((segment, index) => (
+//           <span key={index}>{segmentToUkrainianMapping[segment] || segment}/</span>
+//         ));
 
-      // Последний видимый сегмент с подчеркиванием, без завершающего "/"
-      return (
-        <span key={pathSegments.length - 1}>
-          {translatedSegments}
-          <span style={{ textDecoration: 'underline' }}>
-            {segmentToUkrainianMapping[lastSegment] || lastSegment}
-          </span>
+//       // Последний видимый сегмент с подчеркиванием, без завершающего "/"
+//       return (
+//         <span key={pathSegments.length - 1}>
+//           {translatedSegments}
+//           <span style={{ textDecoration: 'underline' }}>
+//             {segmentToUkrainianMapping[lastSegment] || lastSegment}
+//           </span>
+//         </span>
+//       );
+//     } else {
+//       return '';
+//     }
+    //   };
+    
+ const getTranslatedPath = () => {
+  if (startIndex !== -1 && startIndex < pathSegments.length) {
+    const lastSegment = pathSegments[pathSegments.length - 1];
+
+   
+    const isLastSegmentId = /^[a-f0-9]{24}$/i.test(lastSegment);
+
+    const translatedSegments = pathSegments
+      .slice(startIndex, isLastSegmentId ? pathSegments.length - 1 : pathSegments.length)
+      .map((segment, index, array) => (
+        <span key={index}>
+          {segmentToUkrainianMapping[segment] || segment}
+          {index < array.length - 1 ? '/' : ''}
         </span>
-      );
-    } else {
-      return '';
-    }
-  };
+      ));
 
+   
+    const lastVisibleSegment = isLastSegmentId ? null : (
+  <span style={{ textDecoration: 'underline' }}>
+    {segmentToUkrainianMapping[lastSegment] || lastSegment}
+  </span>
+);
+
+    return (
+      <>
+        {translatedSegments}
+        {lastVisibleSegment && '/'}
+        {lastVisibleSegment}
+      </>
+    );
+  } else {
+    return '';
+  }
+};
+    
   return (
       <PathContainer>
        <BackLink to="../"> 
