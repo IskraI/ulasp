@@ -1,4 +1,4 @@
-import{n as m,c as u,j as e,r,u as j}from"./index-b0ae6173.js";import{S as y,T as b,I as S,a as C,b as L}from"./SearchUsers.styled-0764c255.js";import{U as T}from"./UsersTable-d4748d02.js";import{T as w}from"./AdminCabinetPage.styled-5823f1dc.js";const k=m.div`
+import{n as m,c as u,j as e,r,u as j}from"./index-d694d289.js";import{S as y,T as b,I as S,a as C,b as L}from"./SearchUsers.styled-b4a4b9c3.js";import{U as T}from"./UsersTable-a04da63c.js";import{T as w}from"./AdminCabinetPage.styled-074217c8.js";const k=m.div`
 display:flex;
 gap: 8px;
 /* margin-left: 111px; */
