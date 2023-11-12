@@ -1,7 +1,6 @@
-
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import { UserSchema } from "../UserForm/UserFopSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -27,17 +26,17 @@ const UserCardForm = ({ user }) => {
   const [dispatchFop, { isLoading: isLoadingFop }] = useCreateFopUserMutation();
   const [dispatchCompany, { isLoading: isLoadingCompany }] =
     useCreateCompanyUserMutation();
-    const navigate = useNavigate();
-    const location = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    useEffect(() => {
-        if (location.pathname.includes("carduser")) {
+  useEffect(() => {
+    if (location.pathname.includes("carduser")) {
       setActiveSection("NewUser");
     } else if (location.pathname.includes("cardeditor")) {
       setActiveSection("MusicEditor");
     }
-    }, [location.pathname]);
-    
+  }, [location.pathname]);
+
   const {
     control,
     register,
@@ -63,30 +62,25 @@ const UserCardForm = ({ user }) => {
     setTypeOfUser(typeOfUser === "tov" ? "fop" : "tov");
   };
 
-
   const handleSectionChange = (section) => {
     setActiveSection(section);
+  };
 
-
-//     clearErrors();
-//   };
+  //     clearErrors();
+  //   };
   console.log("ButtonSwitch.props", ButtonSwitch);
   return (
-
-    <UserCreateModal style={{marginTop : '24px'}}>
-
-      
-
+    <UserCreateModal style={{ marginTop: "24px" }}>
       <SectionUser>
         <SectionUserButton
           isActive={activeSection === "NewUser"}
-        //   onClick={() => handleSectionChange("NewUser")}
+          //   onClick={() => handleSectionChange("NewUser")}
         >
           Картка користувача
         </SectionUserButton>
         <SectionUserButton
           isActive={activeSection === "MusicEditor"}
-        //   onClick={() => handleSectionChange("MusicEditor")}
+          //   onClick={() => handleSectionChange("MusicEditor")}
         >
           Картка музичного редактора
         </SectionUserButton>
