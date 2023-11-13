@@ -19,109 +19,17 @@ import {
     RegisterLeftBlock,FormButton, RegisterCommentField, CommentTextarea
   } from "../UserCreateModal.styled";
   import ContactFaceField from "./ContactFaceField"
+  import RegisterNameFieldForm from "./RegisterNameFieldForm"
   import {Button} from "../../Button/Button"
 const UserFieldForm = ({ user, control, handleTypeOfStatus, activeSection, typeOfStatus, typeOfUser, isValid, errors, register }) => {
     console.log('activeSection', activeSection)
   return (
     <Fieldform>
-      {activeSection === "NewUser" && (
+      {activeSection === "User" && (
         <RegisterBlock>
           <RegisterLeftBlock>
-            <RegisterNameBlock>
-            
-              {typeOfUser === "fop" ? (
-                <>
-                  <RegisterNameField>
-                    <RegisterNameLabel>Прізвище</RegisterNameLabel>
-                    <RegisterNameInput
-                      type="text"
-                      placeholder="Прізвище"
-                      value={user ? user.firstName : ''}
-                      // className={`${scss.input} ${errors.name && scss.invalid}
-                      //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                      {...register("lastName")}
-                    />
-               
-                  </RegisterNameField>
-
-                  <RegisterNameField>
-                    <RegisterNameLabel>Ім'я</RegisterNameLabel>
-                    <RegisterNameInput
-                      type="text"
-                      placeholder="Ім'я"
-                      // className={`${scss.input} ${errors.name && scss.invalid}
-                      //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                      {...register("firstName")}
-                    />
-                    <p>{errors.firstName && errors.firstName.message}</p>
-                  </RegisterNameField>
-
-                  <RegisterNameField>
-                    <RegisterNameLabel>По-батькові</RegisterNameLabel>
-                    <RegisterNameInput
-                      type="text"
-                      placeholder="По-батькові"
-                      // className={`${scss.input} ${errors.name && scss.invalid}
-                      //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                      {...register("fatherName")}
-                    />
-                    <p>{errors.fatherName && errors.fatherName.message}</p>
-                  </RegisterNameField>
-                  <ButtonSwitch
-                    type="button"
-                    isTrue={typeOfStatus}
-                    onClick={() => handleTypeOfStatus()}
-                  >
-                    {typeOfStatus ? (
-                      <>
-                        On
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="13"
-                          height="13"
-                          viewBox="0 0 13 13"
-                          fill="none"
-                        >
-                          <circle cx="6.5" cy="6.5" r="6" fill="#8CACD7" />
-                        </svg>
-                      </>
-                    ) : (
-                      <>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="13"
-                          height="13"
-                          viewBox="0 0 13 13"
-                          fill="none"
-                        >
-                          <circle cx="6.5" cy="6.5" r="6" fill="#FFF3BF" />
-                        </svg>
-                        Off
-                      </>
-                    )}
-                  </ButtonSwitch>
-                </>
-              ) : (
-                <>
-                  <RegisterNameField>
-                    <RegisterNameLabel>Назва компанії</RegisterNameLabel>
-                    <RegisterNameInput
-                      type="text"
-                      placeholder="Назва компанії"
-                      // className={`${scss.input} ${errors.name && scss.invalid}
-                      //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                      {...register("name")}
-                    />
-                    <p>{errors.name && errors.lastName.message}</p>
-                  </RegisterNameField>
-
-                  <ButtonSwitch type="button" onClick={handleTypeOfStatus}>
-                    {typeOfStatus === "true" ? "On" : "Off"}
-                  </ButtonSwitch>
-                </>
-              )}
-            </RegisterNameBlock>
-
+           
+<RegisterNameFieldForm />
             <RegisterField>
               <RegisterLabel>№ договору</RegisterLabel>
               <RegisterInput

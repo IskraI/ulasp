@@ -62,7 +62,7 @@ const AdminUsers = () => {
           onClose={handleCloseModal}
           showCloseButton={true}
         >
-          <UserCreateForm onCloseModal={handleCloseModal} />
+          <UserCreateForm onCloseModal={handleCloseModal}  typeOfPage={"modal"}/>
         </Modal>
       )}
     </>

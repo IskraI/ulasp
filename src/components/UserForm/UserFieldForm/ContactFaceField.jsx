@@ -19,7 +19,7 @@ const ContactFaceField = ({ register, errors, margintop, control }) => {
           placeholder="Контактна особа"
           {...register("contactFace")}
         />
-        <p>{errors.contactFace && errors.contactFace.message}</p>
+        {/* <p>{errors.contactFace && errors.contactFace.message}</p> */}
       </RegisterField>
       <RegisterField>
         <RegisterLabel>Ідентифікаційний номер* </RegisterLabel>
@@ -30,7 +30,7 @@ const ContactFaceField = ({ register, errors, margintop, control }) => {
           //  ${!errors.name && dirtyFields.name && scss.valid}`}
           {...register("contactFaceTaxCode")}
         />
-        <p>{errors.contactFaceTaxCode && errors.contactFaceTaxCode.message}</p>
+        {/* <p>{errors.contactFaceTaxCode && errors.contactFaceTaxCode.message}</p> */}
       </RegisterField>
       <RegisterField>
       <RegisterLabel>Номер телефону* </RegisterLabel>
@@ -59,7 +59,7 @@ const ContactFaceField = ({ register, errors, margintop, control }) => {
     )}
   /> */}
   <p>
-    {errors.contactFaceTelNumber && errors.contactFaceTelNumber.message}
+    {/* {errors.contactFaceTelNumber && errors.contactFaceTelNumber.message} */}
   </p>
       </RegisterField>
 
@@ -73,7 +73,7 @@ const ContactFaceField = ({ register, errors, margintop, control }) => {
           //  ${!errors.name && dirtyFields.name && scss.valid}`}
           {...register("contactFaceEmail")}
         />
-        <p>{errors.contactFaceEmail && errors.contactFaceEmail.message}</p>
+        {/* <p>{errors.contactFaceEmail && errors.contactFaceEmail.message}</p> */}
       </RegisterField>
     </RegisterContactField>
   );

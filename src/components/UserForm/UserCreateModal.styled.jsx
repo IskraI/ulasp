@@ -29,6 +29,7 @@ width: 100%;
 }
 `;
 
+
 export const UserCreateModal = styled.div `
 display: block;
 width: 100%;
@@ -40,6 +41,13 @@ margin-bottom: 24px;
 display: flex; 
 justify-content: left;
 gap: 48px; 
+
+
+`
+export const Fieldform = styled.div `
+display: flex;
+gap: 24px;
+
 
 
 `
@@ -140,6 +148,7 @@ background-color:  rgba(234, 234, 234, 0.32);
   border-radius: 10px;
   outline: none;
   border: 0.25px solid  rgba(23, 22, 28, 0.5);
+  resize: none;
  /* border: 0.5px solid  #17161C; */
  /* stroke-width: 0.5px; */
   
@@ -189,9 +198,11 @@ export const RegisterArea = styled.div `
 
 export const RegisterNameBlock = styled.div `
   display: flex;
-  padding: 8px 24px 8px 10px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px 8px 10px;
   width: 558px;
-  gap: 16px;
+  /* gap: 16px; */
   border: 0.25px solid  rgba(23, 22, 28, 0.5);
  background:rgba(234, 234, 234, 0.32);
 `
@@ -209,7 +220,8 @@ export const RegisterCommentField = styled.div `
 export const RegisterNameField = styled.div `
   display: flex;
   flex-direction: column;
-  width: 133px;
+  /* width: 133px; */
+
 
   `
 
@@ -225,6 +237,8 @@ font-size: 12px;
 font-style: normal;
 font-weight: 400;
 line-height: 18px;
+
+
   `
   export const RegisterNameInput = styled.input `
  
@@ -232,11 +246,12 @@ line-height: 18px;
  /* background:rgba(234, 234, 234, 0.32); */
  display: flex;
  background-color: inherit;
-width: 133px;
+ width: ${(props) => props.width ||'133px'};
 height: 32px;
 padding: 4px 8px;
 align-items: center;
 gap: 8px;
+/* width: 100%; */
 border-radius: 10px;
 border: 1px solid  rgba(0, 0, 0, 0.40);
 /* background: var(--Color-input1, rgba(234, 234, 234, 0.32)); */
@@ -262,9 +277,3 @@ letter-spacing: 1px;
 margin-bottom: 20px;
   `
 
-export const Fieldform = styled.div `
-display: flex;
-flex-direction: column;
-/* width: 133px; */
-
-`

@@ -17,10 +17,10 @@ import {
   UserCreateModal,
 } from "../UserForm/UserCreateModal.styled";
 
-import UserFieldForm from "../UserForm/UserFieldForm/UserField";
+import UserFieldForm from "../UserForm/UserFieldForm/UserFieldForm";
 
 const UserCardForm = ({ user }) => {
-  const [activeSection, setActiveSection] = useState("NewUser"); //user or editor
+  const [activeSection, setActiveSection] = useState("User"); //user or editor
   const [typeOfStatus, setTypeOfStatus] = useState(false); //on/off
   const [typeOfUser, setTypeOfUser] = useState("fop"); //fop/tov
   const [dispatchFop, { isLoading: isLoadingFop }] = useCreateFopUserMutation();
@@ -31,7 +31,7 @@ const UserCardForm = ({ user }) => {
 
   useEffect(() => {
     if (location.pathname.includes("carduser")) {
-      setActiveSection("NewUser");
+      setActiveSection("User");
     } else if (location.pathname.includes("cardeditor")) {
       setActiveSection("MusicEditor");
     }
@@ -73,7 +73,7 @@ const UserCardForm = ({ user }) => {
     <UserCreateModal style={{ marginTop: "24px" }}>
       <SectionUser>
         <SectionUserButton
-          isActive={activeSection === "NewUser"}
+          isActive={activeSection === "User"}
           //   onClick={() => handleSectionChange("NewUser")}
         >
           Картка користувача

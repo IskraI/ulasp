@@ -19,16 +19,21 @@ import {
   UserCreateModal,
 } from "./UserCreateModal.styled";
 
-import UserFieldForm from "./UserFieldForm/UserField";
+import UserFieldForm from "./UserFieldForm/UserFieldForm";
+import UserFieldCard from "./UserFieldForm/UserFieldCard";
 
-const UserCreateForm = ({ onCloseModal }) => {
-  const [activeSection, setActiveSection] = useState("NewUser");//user or editor
-  const [typeOfStatus, setTypeOfStatus] = useState(false); //on/off
-  const [typeOfUser, setTypeOfUser] = useState("fop"); //fop/tov
-  const [dispatchFop, { isLoading: isLoadingFop }] = useCreateFopUserMutation();
-  const [dispatchCompany, { isLoading: isLoadingCompany }] =
+ // получаем функцию на закрітие модального окна и значение страниці что открілась форма для добавления нового юзера - модальное окно
+
+ const UserCreateForm = ({ onCloseModal, typeOfPage }) => {
+  const [activeSection, setActiveSection] = useState("User");//user or editor следим какой пользователь добавляется
+  const [typeOfStatus, setTypeOfStatus] = useState(false); //on/off статус он или офф
+  const [typeOfUser, setTypeOfUser] = useState("fop"); // тип юзера fop или tov
+  const [dispatchFop, { isLoading: isLoadingFop }] = useCreateFopUserMutation(); //ф-я для отправки формы юзера фоп
+  const [dispatchCompany, { isLoading: isLoadingCompany }] =   //ф-я для отправки формы юзера тов
     useCreateCompanyUserMutation();
+
   const navigate = useNavigate();
+//создание формы - юзформ
   const {
     control,
       register,
@@ -49,12 +54,14 @@ const UserCreateForm = ({ onCloseModal }) => {
     clearErrors();
   };
 
-  console.log("typeStatus", typeOfStatus);
+  console.log("typeOfPage", typeOfPage);
 
+  //перемикач типа юзера тов или фоп 
   const handleTypeOfUser = () => {
     setTypeOfUser(typeOfUser === "tov" ? "fop" : "tov");
   };
 
+  //отправка данных формы в зависимости о тфоп или тов
   const onFormSubmit = (data) => {
       const formData = { ...data, status: typeOfStatus, userFop: typeOfUser };
     console.log(formData);
@@ -76,19 +83,30 @@ const UserCreateForm = ({ onCloseModal }) => {
         })
         .catch((error) => console.log(error.data));
     }
+    if (activeSection === "MusicEditor") {
+      dispatchCompany(formData)
+        .unwrap()
+        .then(() => {
+          navigate("/admin/editor");
+          onCloseModal();
+        })
+        .catch((error) => console.log(error.data));
+    }
   };
+
+  // добавляем юзера или муз редактора
   const handleSectionChange = (section) => {
     setActiveSection(section);
-
+   
     clearErrors();
   };
-  console.log("ButtonSwitch.props", ButtonSwitch);
+
   return (
     <UserCreateModal>
       <SectionUser>
         <SectionUserButton
-          isActive={activeSection === "NewUser"}
-          onClick={() => handleSectionChange("NewUser")}
+          isActive={activeSection === "User"}
+          onClick={() => handleSectionChange("User")}
         >
           Новий користувач
         </SectionUserButton>
@@ -99,23 +117,40 @@ const UserCreateForm = ({ onCloseModal }) => {
           Музичний редактор
         </SectionUserButton>
       </SectionUser>
-      {activeSection === "NewUser" && (
+      {activeSection === "User" && typeOfPage ==="modal"&&(
         <ButtonSwitch type="button" onClick={handleTypeOfUser}>
           {typeOfUser === "tov" ? "ТОВ" : "ФОП"}
         </ButtonSwitch>
       )}
+
+      {/* форма изпользует компонент  UserFieldForm - в зависимости от пропсов выводятся те или иные поля*/}
         <form onSubmit={handleSubmit(onFormSubmit)}>
-          <UserFieldForm
+       { typeOfPage === "modal" && (
+          <UserFieldForm 
            control={control}
-            handleTypeOfStatus={handleTypeOfStatus}
+                  handleTypeOfStatus={handleTypeOfStatus}
             typeOfStatus={typeOfStatus}
             register={register}
             isValid={isValid}
             errors={errors}
             activeSection={activeSection}
             typeOfUser={typeOfUser}
+          
+          />)}
+           { typeOfPage === "card" && (
+          <UserFieldCard 
+           control={control}
+                 handleTypeOfStatus={handleTypeOfStatus}
+            typeOfStatus={typeOfStatus}
+            register={register}
+            isValid={isValid}
+            errors={errors}
+            activeSection={activeSection}
+            typeOfUser={typeOfUser}
+
            
-          />
+          />)}
+
         </form>
      
     </UserCreateModal>
