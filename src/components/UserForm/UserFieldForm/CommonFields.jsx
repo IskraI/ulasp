@@ -14,7 +14,7 @@ import {
   
     RegisterCommentField,
     CommentTextarea,
-  } from "../UserCreateModal.styled";
+  } from "../UserCreateForm.styled";
 
   import { Button } from "../../Button/Button";
   const CommonFieldForm = ({

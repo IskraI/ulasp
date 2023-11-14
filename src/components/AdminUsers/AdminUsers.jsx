@@ -6,7 +6,7 @@ import { SearchUsersContainer, Input } from "../SearchUsers/SearchUsers.styled";
 import {
   SectionUserButton,
   SectionUser,
-} from "../../components/UserForm/UserCreateModal.styled";
+} from "../UserForm/UserCreateForm.styled";
 import { Button } from "../../components/Button/Button";
 import { Title } from "../AdminCabinetPage/AdminCabinetPage.styled";
 import UserCreateForm from "../UserForm/UserCreateForm";

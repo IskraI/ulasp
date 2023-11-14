@@ -17,7 +17,7 @@ import {
   SectionUserButton,
   SectionUser,
   UserCreateModal,
-} from "./UserCreateModal.styled";
+} from "./UserCreateForm.styled";
 
 import UserFieldForm from "./UserFieldForm/UserFieldForm";
 import UserFieldCard from "./UserFieldForm/UserFieldCard";
@@ -138,7 +138,7 @@ import UserFieldCard from "./UserFieldForm/UserFieldCard";
           
           />)}
            { typeOfPage === "card" && (
-          <UserFieldCard 
+          <UserFieldForm  
            control={control}
                  handleTypeOfStatus={handleTypeOfStatus}
             typeOfStatus={typeOfStatus}

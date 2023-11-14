@@ -17,7 +17,7 @@ import {
     UserCreateModal,
     RegisterRigthBlock,Commentlabel,Fieldform,
     RegisterLeftBlock,FormButton, RegisterCommentField, CommentTextarea
-  } from "../UserCreateModal.styled";
+  } from "../UserCreateForm.styled";
   import ContactFaceField from "./ContactFaceField"
   import RegisterNameFieldForm from "./RegisterNameFieldForm"
   import {Button} from "../../Button/Button"

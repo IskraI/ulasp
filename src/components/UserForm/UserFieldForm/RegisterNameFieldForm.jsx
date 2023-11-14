@@ -4,7 +4,7 @@ import {
   RegisterNameLabel,
   RegisterNameInput,
   ButtonSwitch,
-} from "../UserCreateModal.styled";
+} from "../UserCreateForm.styled";
 
 
 
