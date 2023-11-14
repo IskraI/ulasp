@@ -211,7 +211,7 @@ export const RegisterCommentField = styled.div `
   display: flex;
   flex-direction: column;
  
-  width: 100%;
+ width: 421px;
   gap: 13px;
   border:none;
 

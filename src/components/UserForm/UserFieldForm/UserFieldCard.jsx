@@ -1,261 +1,184 @@
 //typeOfUser - fop , tov
 //activeSection createuser, create editor, carduser, cardeditor
+import { useState } from "react";
 import {
-    RegisterForm,
-    RegisterNameField,
-    RegisterNameLabel,
-    RegisterNameInput,
-    RegisterBlock,
-    ButtonSwitch,
-    RegisterField,
-    RegisterNameBlock,
-    RegisterLabel,
-    RegisterInput,
-    RegisterArea,
-    SectionUserButton,
-    SectionUser,
-    UserCreateModal,
-    RegisterRigthBlock,Commentlabel,Fieldform,
-    RegisterLeftBlock,FormButton, RegisterCommentField, CommentTextarea
-  } from "../UserCreateForm.styled";
-  import ContactFaceField from "./ContactFaceField"
-  import RegisterNameFieldForm from "./RegisterNameFieldForm"
-  import {Button} from "../../Button/Button"
-const UserFieldForm = ({ user, control, handleTypeOfStatus, activeSection, typeOfStatus, typeOfUser, isValid, errors, register }) => {
-    console.log('activeSection', activeSection)
+  RegisterField,
+  RegisterLabel,
+  RegisterInput,
+  RegisterRigthBlock,
+  Commentlabel,
+  Fieldform,
+  RegisterLeftBlock,
+  RegisterCommentField,
+  CommentTextarea,
+} from "../UserCreateForm.styled";
+import ContactFaceField from "./ContactFaceField";
+import RegisterNameFieldForm from "./RegisterNameFieldForm";
+import CommonFieldForm from "../UserFieldForm/CommonFields";
+import { Button } from "../../Button/Button";
+import { useForm, Controller } from 'react-hook-form';
+const UserFieldForm = ({
+  user,
+  control,
+  handleTypeOfStatus,
+  activeSectionCard,
+  typeOfStatus,
+  typeOfUser,
+  isValid,
+  errors,
+  register,
+}) => {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleEditActivation = () => {
+    // You can perform additional actions if needed before allowing editing
+    setIsEditing(true);
+  };
+  console.log('isEditing', isEditing)
   return (
     <Fieldform>
-      {activeSection === "User" && (
-        <RegisterBlock>
-          <RegisterLeftBlock>
-           
-<RegisterNameFieldForm />
+      <RegisterLeftBlock>
+        <RegisterNameFieldForm
+          handleTypeOfStatus={handleTypeOfStatus}
+          register={register}
+          errors={errors}
+          typeOfUser={typeOfUser}
+          typeOfStatus={typeOfStatus}
+          isValid={isValid}
+          activeSectionCard={activeSectionCard}
+          readOnly={!isEditing}
+          user={user}
+          handleEditActivation={handleEditActivation}
+        />
+
+        {activeSectionCard === "User" && (
+          <>
             <RegisterField>
               <RegisterLabel>№ договору</RegisterLabel>
-              <RegisterInput
-                type="text"
-                placeholder="№ договору"
-                // className={`${scss.input} ${errors.name && scss.invalid}
-                //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                {...register("contractNumber")}
+              <Controller
+                name="contractNumber"
+                control={control}
+                defaultValue={user.contractNumber}
+                render={({ field }) => (
+                  <RegisterInput
+                    type="text"
+                    placeholder="№ договору"
+                    readOnly={!isEditing}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                )}
               />
-              <p>{errors.contractNumber && errors.contractNumber.message}</p>
             </RegisterField>
-            <RegisterField>
-              <RegisterLabel>Код ЄДРПОУ (ІНН)*</RegisterLabel>
-              <RegisterInput
-                type="text"
-                placeholder="Код ЄДРПОУ (ІНН)"
-                // className={`${scss.input} ${errors.name && scss.invalid}
-                //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                {...register("taxCode")}
-              />
-              <p>{errors.taxCode && errors.taxCode.message}</p>
-            </RegisterField>
-            {typeOfUser === "fop" && (
-              <RegisterField>
-                <RegisterLabel>Дата народження</RegisterLabel>
-                <RegisterInput
-                  type="text"
-                  placeholder="Дата народження"
-                  // className={`${scss.input} ${errors.name && scss.invalid}
-                  //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                  {...register("dayOfBirthday")}
-                />
-                <p>{errors.dayOfBirthday && errors.dayOfBirthday.message}</p>
-                {/* <DatePicker
-selected={dayOfBirthday}
-onChange={(date) => setDayOfBirthday(date)}
-dateFormat="dd.MM.yyyy"
-placeholderText="Выберите дату"
-/> */}
-              </RegisterField>
-            )}
 
-            <RegisterField>
-              <RegisterLabel>Номер телефону*</RegisterLabel>
-              <RegisterInput
-                type="text"
-                placeholder="Номер телефону"
-                // className={`${scss.input} ${errors.name && scss.invalid}
-                //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                {...register("telNumber")}
-              />
-              {console.log("errors", errors)}
-              <p>{errors.telNumber && errors.telNumber.message}</p>
-            </RegisterField>
-            <RegisterField>
-              <RegisterLabel>E-mail*</RegisterLabel>
-              <RegisterInput
-                type="text"
-                placeholder="E-mail"
-                // className={`${scss.input} ${errors.name && scss.invalid}
-                //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                {...register("email")}
-              />
-              <p>{errors.email && errors.email.message}</p>
-            </RegisterField>
+            <CommonFieldForm
+              typeOfUser={typeOfUser}
+              register={register}
+              control={control}
+              isValid={isValid}
+              errors={errors}
+              readOnly={!isEditing}
+              user={user}
+            />
+
             <RegisterField>
               <RegisterLabel>Надання доступу до*</RegisterLabel>
               <RegisterInput
                 type="text"
                 placeholder="Надання доступу до"
-                // className={`${scss.input} ${errors.name && scss.invalid}
-                //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                readOnly={!isEditing}
+                value={user.dateOfAccess}
                 {...register("dateOfAccess")}
               />
-              <p>{errors.dateOfAccess && errors.dateOfAccess.message}</p>
             </RegisterField>
             <RegisterField>
               <RegisterLabel>Остання оплата* </RegisterLabel>
               <RegisterInput
                 type="text"
                 placeholder="Остання оплата"
-                // className={`${scss.input} ${errors.name && scss.invalid}
-                //  ${!errors.name && dirtyFields.name && scss.valid}`}
+                readOnly={!isEditing}
+                value={user.lastPay}
                 {...register("lastPay")}
               />
-              <p>{errors.lastPay && errors.lastPay.message}</p>
+            </RegisterField>
+            <RegisterField>
+              <RegisterLabel>Кількість доданих плейлистів </RegisterLabel>
+              <RegisterInput
+                type="text"
+                placeholder="з бека запрос"
+                readOnly={true}
+              />
+            </RegisterField>
+            <RegisterField>
+              <RegisterLabel>Кількість доданих пісень </RegisterLabel>
+              <RegisterInput
+                type="text"
+                placeholder="з бека запрос"
+                readOnly={true}
+              />
             </RegisterField>
 
-            <ContactFaceField control = {control} register={register} errors={errors} margintop={"36px"}/>
-           
-            <></>
-          </RegisterLeftBlock>
-          <RegisterRigthBlock>
-            <RegisterCommentField>
-              <Commentlabel>Примітка </Commentlabel>
-              <CommentTextarea
-                type="text"
-                placeholder="Примітка"
-                // className={`${scss.input} ${errors.name && scss.invalid}
-                //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                {...register("comment")}
-              />
-              <p>{errors.comment && errors.comment.message}</p>
-            </RegisterCommentField>
-
-            <Button
-              type="submit"
-              padding ="8px"
-       
-              text= "Додати"              // disabled={!isValid}
+            <ContactFaceField
+              control={control}
+              register={register}
+              errors={errors}
+              margintop={"36px"}
+              readOnly={!isEditing}
+              user={user}
             />
-          
-           
-          </RegisterRigthBlock>
-        </RegisterBlock>
-      )}
+          </>
+        )}
 
-      {activeSection === "MusicEditor" && (
-        <div>
-          <RegisterBlock>
-            <RegisterNameBlock>
-              <RegisterField>
-                <label>Прізвище</label>
-                <input
-                  type="text"
-                  placeholder="Прізвище"
-                  // className={`${scss.input} ${errors.name && scss.invalid}
-                  //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                  {...register("lastName")}
-                />
-                <p>{errors.lastName && errors.lastName.message}</p>
-              </RegisterField>
-
-              <RegisterField>
-                <label>Ім'я</label>
-                <input
-                  type="text"
-                  placeholder="Ім'я"
-                  // className={`${scss.input} ${errors.name && scss.invalid}
-                  //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                  {...register("firstName")}
-                />
-                <p>{errors.firstName && errors.firstName.message}</p>
-              </RegisterField>
-
-              <RegisterField>
-                <label>По-батькові</label>
-                <input
-                  type="text"
-                  placeholder="По-батькові"
-                  // className={`${scss.input} ${errors.name && scss.invalid}
-                  //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                  {...register("fatherName")}
-                />
-                <p>{errors.fatherName && errors.fatherName.message}</p>
-              </RegisterField>
-            </RegisterNameBlock>
-
-            <RegisterField>
-              <RegisterLabel>Ідентифікаційний номер*</RegisterLabel>
-              <RegisterInput
-                type="text"
-                placeholder="234567891"
-                // className={`${scss.input} ${errors.name && scss.invalid}
-                //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                {...register("taxCode")}
-              />
-              <p>{errors.taxCode && errors.taxCode.message}</p>
-            </RegisterField>
-            <RegisterField>
-              <RegisterLabel>Дата народження</RegisterLabel>
-              <RegisterInput
-                type="text"
-                placeholder="Дата народження"
-                // className={`${scss.input} ${errors.name && scss.invalid}
-                //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                {...register("dayOfBirthday")}
-              />
-              <p>{errors.dayOfBirthday && errors.dayOfBirthday.message}</p>
-              {/* <DatePicker
-selected={dayOfBirthday}
-onChange={(date) => setDayOfBirthday(date)}
-dateFormat="dd.MM.yyyy"
-placeholderText="Выберите дату"
-/> */}
-            </RegisterField>
-
-            <RegisterField>
-              <RegisterLabel>Номер телефону*</RegisterLabel>
-              <RegisterInput
-                type="text"
-                placeholder="Номер телефону"
-                // className={`${scss.input} ${errors.name && scss.invalid}
-                //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                {...register("telNumber")}
-              />
-              {console.log("errors", errors)}
-              <p>{errors.telNumber && errors.telNumber.message}</p>
-            </RegisterField>
-            <RegisterField>
-              <RegisterLabel>E-mail*</RegisterLabel>
-              <RegisterInput
-                type="text"
-                placeholder="E-mail"
-                // className={`${scss.input} ${errors.name && scss.invalid}
-                //  ${!errors.name && dirtyFields.name && scss.valid}`}
-                {...register("email")}
-              />
-              <p>{errors.email && errors.email.message}</p>
-            </RegisterField>
-          </RegisterBlock>
-          <RegisterField>
-            <label>Примітка </label>
-            <textarea
-              type="text"
-              placeholder="Примітка"
-              // className={`${scss.input} ${errors.name && scss.invalid}
-              //  ${!errors.name && dirtyFields.name && scss.valid}`}
-              {...register("comment")}
+        {activeSectionCard === "MusicEditor" && (
+          <>
+            <CommonFieldForm
+              typeOfUser={"fop"}
+              register={register}
+              control={control}
+              isValid={isValid}
+              errors={errors}
+              readOnly={!isEditing}
+              user={user}
             />
-            <p>{errors.comment && errors.comment.message}</p>
-          </RegisterField>
-
-     
-        </div>
-      )}
+            <RegisterField>
+              <RegisterInput
+                type="text"
+                placeholder="Логін"
+                readOnly={!isEditing}
+                {...register("login")}
+              />
+            </RegisterField>
+            <RegisterField>
+              <RegisterInput
+                type="text"
+                placeholder="Пароль"
+                readOnly={!isEditing}
+                {...register("password")}
+              />
+            </RegisterField>
+          </>
+        )}
+      </RegisterLeftBlock>
+      <RegisterRigthBlock>
+        <RegisterCommentField>
+          <Commentlabel>Примітка </Commentlabel>
+          <CommentTextarea
+            type="text"
+            placeholder="Примітка"
+            readOnly={!isEditing}
+            value={user.comment}
+            {...register("comment")}
+          />
+        </RegisterCommentField>
+        {/* <
+       Button
+         type="submit"
+         padding="8px"
+         text="Додати" 
+         // disabled={!isValid}
+       /> 
+       */}
+      </RegisterRigthBlock>
     </Fieldform>
   );
 };
