@@ -18,6 +18,8 @@ import {
 
   import { Button } from "../../Button/Button";
   const CommonFieldForm = ({
+    user,
+    readOnly,
     control,
     isValid,
     errors,
@@ -33,7 +35,8 @@ import {
                 <RegisterInput
                   type="text"
                   placeholder="Код ЄДРПОУ (ІНН)"
-               
+                  readOnly={readOnly}
+                  value ={user.taxCode}
                   {...register("taxCode")}
                 />
              
@@ -45,7 +48,8 @@ import {
                   <RegisterInput
                     type="text"
                     placeholder="Дата народження"
-                     
+                    readOnly={readOnly}
+                    value ={user.dayOfBirthday}
                     {...register("dayOfBirthday")}
                   />
                             </RegisterField>
@@ -56,7 +60,8 @@ import {
                 <RegisterInput
                   type="text"
                   placeholder="Номер телефону"
-                 
+                  readOnly={readOnly}
+                    value ={user.telNumber}
                   {...register("telNumber")}
                 />
             
@@ -68,10 +73,11 @@ import {
                 <RegisterInput
                   type="text"
                   placeholder="E-mail"
-                
+                  readOnly={readOnly}
+                    value ={user.email}
                   {...register("email")}
                 />
-                <p>{errors.email && errors.email.message}</p>
+             
               </RegisterField>
               
           

@@ -18,25 +18,25 @@ import {
   SectionUser,
   UserCreateModal,
 } from "./UserCreateForm.styled";
-
+import { Title } from "../AdminCabinetPage/AdminCabinetPage.styled";
 import UserFieldForm from "./UserFieldForm/UserFieldForm";
 import UserFieldCard from "./UserFieldForm/UserFieldCard";
 
- // получаем функцию на закрітие модального окна и значение страниці что открілась форма для добавления нового юзера - модальное окно
-
- const UserCreateForm = ({ onCloseModal, typeOfPage }) => {
-  const [activeSection, setActiveSection] = useState("User");//user or editor следим какой пользователь добавляется
+// получаем функцию на закрітие модального окна и значение страниці что открілась форма для добавления нового юзера - модальное окно
+//typeOfPage card modal
+const UserCreateForm = ({ onCloseModal, typeOfPage, activeSectionCard, user }) => {
+  const [activeSection, setActiveSection] = useState("User"); //user or editor следим какой пользователь добавляется
   const [typeOfStatus, setTypeOfStatus] = useState(false); //on/off статус он или офф
   const [typeOfUser, setTypeOfUser] = useState("fop"); // тип юзера fop или tov
   const [dispatchFop, { isLoading: isLoadingFop }] = useCreateFopUserMutation(); //ф-я для отправки формы юзера фоп
-  const [dispatchCompany, { isLoading: isLoadingCompany }] =   //ф-я для отправки формы юзера тов
+  const [dispatchCompany, { isLoading: isLoadingCompany }] = //ф-я для отправки формы юзера тов
     useCreateCompanyUserMutation();
 
   const navigate = useNavigate();
-//создание формы - юзформ
+  //создание формы - юзформ
   const {
     control,
-      register,
+    register,
     handleSubmit,
     setError,
     clearErrors,
@@ -47,8 +47,7 @@ import UserFieldCard from "./UserFieldForm/UserFieldCard";
     resolver: yupResolver(UserSchema),
   });
 
-
-  //перемикач дапуска 
+  //перемикач дапуска
   const handleTypeOfStatus = () => {
     setTypeOfStatus(typeOfStatus === true ? false : true);
     clearErrors();
@@ -56,15 +55,20 @@ import UserFieldCard from "./UserFieldForm/UserFieldCard";
 
   console.log("typeOfPage", typeOfPage);
 
-  //перемикач типа юзера тов или фоп 
+  //перемикач типа юзера тов или фоп
   const handleTypeOfUser = () => {
     setTypeOfUser(typeOfUser === "tov" ? "fop" : "tov");
   };
 
   //отправка данных формы в зависимости о тфоп или тов
   const onFormSubmit = (data) => {
-      const formData = { ...data, status: typeOfStatus, userFop: typeOfUser };
+    const formData = { ...data, status: typeOfStatus, userFop: typeOfUser };
     console.log(formData);
+    if (typeOfPage === "card") {
+      
+      return console.log(formData);
+    }
+
     if (typeOfUser === "fop") {
       dispatchFop(formData)
         .unwrap()
@@ -92,67 +96,78 @@ import UserFieldCard from "./UserFieldForm/UserFieldCard";
         })
         .catch((error) => console.log(error.data));
     }
+   
   };
 
-  // добавляем юзера или муз редактора
+  // определяем секцию кого добавляем юзера или муз редактора
   const handleSectionChange = (section) => {
     setActiveSection(section);
-   
+
     clearErrors();
   };
 
   return (
     <UserCreateModal>
-      <SectionUser>
-        <SectionUserButton
-          isActive={activeSection === "User"}
-          onClick={() => handleSectionChange("User")}
-        >
-          Новий користувач
-        </SectionUserButton>
-        <SectionUserButton
-          isActive={activeSection === "MusicEditor"}
-          onClick={() => handleSectionChange("MusicEditor")}
-        >
-          Музичний редактор
-        </SectionUserButton>
-      </SectionUser>
-      {activeSection === "User" && typeOfPage ==="modal"&&(
-        <ButtonSwitch type="button" onClick={handleTypeOfUser}>
-          {typeOfUser === "tov" ? "ТОВ" : "ФОП"}
-        </ButtonSwitch>
+      {typeOfPage === "modal" && (
+        <>
+          <SectionUser>
+            <SectionUserButton
+              isActive={activeSection === "User"}
+              onClick={() => handleSectionChange("User")}
+            >
+              Новий користувач
+            </SectionUserButton>
+            <SectionUserButton
+              isActive={activeSection === "MusicEditor"}
+              onClick={() => handleSectionChange("MusicEditor")}
+            >
+              Музичний редактор
+            </SectionUserButton>
+          </SectionUser>
+          {activeSection === "User" && (
+            <ButtonSwitch type="button" onClick={handleTypeOfUser}>
+              {typeOfUser === "tov" ? "ТОВ" : "ФОП"}
+            </ButtonSwitch>
+          )}
+        </>
+      )}
+
+      {typeOfPage === "card" && (
+        <Title margintop="8px" marginbottom="16px">
+          {activeSectionCard === "User"
+            ? "Картка кориcтувача"
+            : "Картка музичного редактора"}
+        </Title>
       )}
 
       {/* форма изпользует компонент  UserFieldForm - в зависимости от пропсов выводятся те или иные поля*/}
-        <form onSubmit={handleSubmit(onFormSubmit)}>
-       { typeOfPage === "modal" && (
-          <UserFieldForm 
-           control={control}
-                  handleTypeOfStatus={handleTypeOfStatus}
+      <form onSubmit={handleSubmit(onFormSubmit)}>
+        {typeOfPage === "modal" && (
+          <UserFieldForm
+            control={control}
+            handleTypeOfStatus={handleTypeOfStatus}
             typeOfStatus={typeOfStatus}
             register={register}
             isValid={isValid}
             errors={errors}
             activeSection={activeSection}
             typeOfUser={typeOfUser}
-          
-          />)}
-           { typeOfPage === "card" && (
-          <UserFieldForm  
-           control={control}
-                 handleTypeOfStatus={handleTypeOfStatus}
+          />
+        )}
+        {typeOfPage === "card" && (
+          <UserFieldCard
+          user= {user}
+            control={control}
+            handleTypeOfStatus={handleTypeOfStatus}
             typeOfStatus={typeOfStatus}
             register={register}
             isValid={isValid}
             errors={errors}
-            activeSection={activeSection}
+            activeSectionCard={activeSectionCard}
             typeOfUser={typeOfUser}
-
-           
-          />)}
-
-        </form>
-     
+          />
+        )}
+      </form>
     </UserCreateModal>
   );
 };
