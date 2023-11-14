@@ -3,7 +3,7 @@ import {
   RegisterLabel,
   RegisterInput,
   RegisterContactField,
-} from "../UserCreateModal.styled";
+} from "../UserCreateForm.styled";
 import InputMask from 'react-input-mask';
 import { Controller } from 'react-hook-form';
 

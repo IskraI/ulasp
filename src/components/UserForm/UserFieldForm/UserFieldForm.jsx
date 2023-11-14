@@ -10,7 +10,7 @@ import {
   RegisterLeftBlock,
   RegisterCommentField,
   CommentTextarea,
-} from "../UserCreateModal.styled";
+} from "../UserCreateForm.styled";
 import ContactFaceField from "./ContactFaceField";
 import RegisterNameFieldForm from "./RegisterNameFieldForm";
 import CommonFieldForm from "./CommonFields";

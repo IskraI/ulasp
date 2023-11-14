@@ -10,13 +10,13 @@ import {ButtonContainer} from "./CardUser.styled"
 
 const CardUser = () => {
     const { id } = useParams();
-    const { data: user, error, isLoading } = useGetUserByIdQuery(id );
-    console.log('user', user)
-//   console.log('id', id)
+
+    const { data:user, error, isLoading } = useGetUserByIdQuery(id );
+    
   return <>
 
     <TabNavigation />
-    <UserCardForm  user = {user} />
+    {!isLoading && <UserCardForm  user = {user} />} 
     <ButtonContainer>
 
          <Button
