@@ -113,6 +113,38 @@ const CardUser = () => {
           />
           </ModalBtnContainer>
         </Modal>
+    )}
+    
+     {activeModal === 'delUser' && (
+      <Modal
+        width={"664px"}
+          padding={"138px 138px 74px"}
+           onClose={handleCloseModal}
+          showCloseButton={true}
+          flexDirection="column"      
+        >
+          <TextModal>Ви впевнені, що хочете
+видалити користувача?</TextModal>
+        <ModalBtnContainer>
+        <Button
+              type="button"
+              padding ="8px 37px"
+      height="48px"
+          display="block"
+            text="Так"
+            
+                                  />
+        <Button
+              type="button"
+        padding="8px 44px"
+        display="block"
+      height="48px"
+          text="Ні"
+            marginleft='31px' 
+            onClick={handleCloseModal}
+          />
+          </ModalBtnContainer>
+        </Modal>
       )}
 
     
