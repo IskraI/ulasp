@@ -10,6 +10,11 @@ export const SiteBarNavConteiner = styled.div`
   border-right: 2px solid ${colors.primaryColor};
   border-top: 2px solid ${colors.primaryColor};
   border-bottom: 2px solid ${colors.primaryColor};
+   /* position: fixed;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+   left: 0; */
 `;
 
 export const LogOuButton = styled.button`
