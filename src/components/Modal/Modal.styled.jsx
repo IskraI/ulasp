@@ -15,6 +15,7 @@ export const Overlay = styled.div`
 export const ModalWindow = styled.div`
   width: ${(props) => props.width};
   padding: ${(props) => props.padding};
+  flex-direction:${(props) => props.flexDirection};
   border-radius: 15px;
   background: #7f99c0;
   position: relative;

@@ -2,17 +2,30 @@ import TabNavigation from "../TabNavigation/TabNavigation";
 import UserCardForm from "./CardUserForm";
 import { Button } from "../Button/Button";
 import symbol from "../../assets/symbol.svg";
+import { Modal } from "../Modal/Modal";
 
-
+import { useState } from "react";
 import { useParams } from 'react-router-dom';
 import {useGetUserByIdQuery} from "../../redux/dataUsersSlice"
-import {ButtonContainer} from "./CardUser.styled"
+import {ButtonContainer, TextModal, ModalBtnContainer} from "./CardUser.styled"
 
 const CardUser = () => {
+   
     const { id } = useParams();
     const { data: user, error, isLoading } = useGetUserByIdQuery(id );
     console.log('user', user)
-//   console.log('id', id)
+  //   console.log('id', id)
+  const [activeModal, setActiveModal] = useState(null);
+
+  const handleShowModal = (modalContent) => {
+    setActiveModal(modalContent);
+  };
+
+  const handleCloseModal = () => {
+    setActiveModal(null);
+    
+  };
+
   return <>
 
     <TabNavigation />
@@ -32,7 +45,7 @@ const CardUser = () => {
             Звіт
           </>
         }
-     
+     onClick={() => handleShowModal('report')}
     />
     <Button
               type="button"
@@ -41,6 +54,7 @@ const CardUser = () => {
       height="48px"
                      text="Відправити посилання"
         marginleft='50px' 
+        onClick={() => handleShowModal('sendLink')}
     />
     <Button
               type="button"
@@ -48,7 +62,8 @@ const CardUser = () => {
         display="block"
       height="48px"
              text="Розблокувати"
-         marginleft = {"auto"}
+        marginleft={"auto"}
+        onClick={() => handleShowModal('unBlock')}
       />
       </ButtonContainer>
    <Button
@@ -66,8 +81,40 @@ const CardUser = () => {
             Видалити користувача
           </>
         }
-      
+      onClick={() => handleShowModal('delUser')}
     />
+
+    {activeModal === 'unBlock' && (
+      <Modal
+        width={"664px"}
+          padding={"138px 138px 74px"}
+           onClose={handleCloseModal}
+          showCloseButton={true}
+          flexDirection="column"      
+        >
+          <TextModal>Користувач  - Евген Клопотенко 
+          заблокован!</TextModal>
+        <ModalBtnContainer>
+        <Button
+              type="button"
+              padding ="8px 24px"
+      height="48px"
+          display="block"
+            text="Назад"
+            onClick={handleCloseModal}
+                                  />
+        <Button
+              type="button"
+        padding="8px 30px"
+        display="block"
+      height="48px"
+          text="Розблокувати"
+           marginleft='31px' 
+          />
+          </ModalBtnContainer>
+        </Modal>
+      )}
+
     
     </>
                    
