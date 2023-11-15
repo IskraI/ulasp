@@ -92,7 +92,7 @@ const CardUser = () => {
           showCloseButton={true}
           flexDirection="column"      
         >
-          <TextModal>Користувач  - Евген Клопотенко 
+        <TextModal>Користувач  - ${user.firstName} ${user.lastName} <br/>
           заблокован!</TextModal>
         <ModalBtnContainer>
         <Button
