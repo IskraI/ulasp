@@ -1,4 +1,4 @@
-import{n as x,c as u,j as e,r,u as j,T as y}from"./index-36d44d60.js";import{S as b,T as S,I as C,a as L,b as T}from"./SearchUsers.styled-21316c99.js";import{U as w}from"./UsersTable-854e44e4.js";const k=x.div`
+import{n as x,c as u,j as e,r,u as j,T as y}from"./index-7bc03f15.js";import{S as b,T as S,I as C,a as L,b as T}from"./SearchUsers.styled-f539ef13.js";import{U as w}from"./UsersTable-cafdbda5.js";const k=x.div`
 display:flex;
 gap: 8px;
 /* margin-left: 111px; */
