@@ -3,7 +3,7 @@ import UserCardForm from "./CardUserForm";
 import { Button } from "../Button/Button";
 import symbol from "../../assets/symbol.svg";
 import { useState } from "react";
-
+import { Modal } from "../Modal/Modal";
 import { useParams } from "react-router-dom";
 import { useGetUserByIdQuery } from "../../redux/dataUsersSlice";
 import {
@@ -63,6 +63,7 @@ const CardUser = () => {
           height="48px"
           text="Розблокувати"
           marginleft={"auto"}
+          onClick={() => handleShowModal('unBlock')}
         />
       </ButtonContainer>
       <Button
@@ -95,7 +96,7 @@ const CardUser = () => {
           showCloseButton={true}
           flexDirection="column"      
         >
-        <TextModal>Користувач  - ${user.firstName} ${user.lastName} <br/>
+        <TextModal>Користувач  - {`${user.firstName} ${user.lastName}`} <br/>
           заблокован!</TextModal>
         <ModalBtnContainer>
         <Button
