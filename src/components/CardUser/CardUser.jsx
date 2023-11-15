@@ -12,24 +12,14 @@ import {ButtonContainer, TextModal, ModalBtnContainer} from "./CardUser.styled"
 const CardUser = () => {
    
     const { id } = useParams();
-    const { data: user, error, isLoading } = useGetUserByIdQuery(id );
-    console.log('user', user)
-  //   console.log('id', id)
-  const [activeModal, setActiveModal] = useState(null);
 
-  const handleShowModal = (modalContent) => {
-    setActiveModal(modalContent);
-  };
 
-  const handleCloseModal = () => {
-    setActiveModal(null);
-    
-  };
+    const { data:user, error, isLoading } = useGetUserByIdQuery(id );
 
   return <>
 
     <TabNavigation />
-    <UserCardForm  user = {user} />
+    {!isLoading && <UserCardForm  user = {user} />} 
     <ButtonContainer>
 
          <Button
