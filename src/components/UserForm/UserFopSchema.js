@@ -75,3 +75,36 @@ export const UserSchema = yup.object().shape({
     comment:yup
     .string(),
 });
+export const MusicEditorSchema = yup.object().shape({
+  
+  firstName: yup
+    .string()
+    .required("Must be filled!")
+    .matches(nameRegexp, "This is an ERROR name"),
+  lastName: yup
+    .string()
+    .required("Must be filled!")
+    .matches(nameRegexp, "This is an ERROR name"),
+  fatherName: yup.string().matches(nameRegexp, "This is an ERROR name"),
+
+    taxCode: yup
+    .string()
+    .min(10, "Must be  10 characters!")
+    .max(10, "Must be  10 characters!")
+    .required("Must be filled!")
+    .matches(onlyNumberRegexp, "This is an ERROR taxCode"),
+  dayOfBirthday: yup
+    .string()
+    .required("Must be filled!")
+    .matches(regularDateRegexp, "This is an ERROR taxCode"),
+  telNumber: yup
+    .string()
+    .required("Must be filled!")
+    .matches(phoneNumberUaRegexp, "This is an ERROR taxCode"),
+  email: yup
+    .string()
+    .required("Must be filled!")
+    .matches(emailRegexp, "This is an ERROR taxCode"),
+     comment:yup
+    .string(),
+});

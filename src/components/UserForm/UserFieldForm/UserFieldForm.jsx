@@ -9,7 +9,7 @@ import {
   Fieldform,
   RegisterLeftBlock,
   RegisterCommentField,
-  CommentTextarea,
+  CommentTextarea,Tooltip
 } from "../UserCreateForm.styled";
 import ContactFaceField from "./ContactFaceField";
 import RegisterNameFieldForm from "./RegisterNameFieldForm";
@@ -26,7 +26,6 @@ const UserFieldForm = ({
   register,
   dirtyFields
 }) => {
-  console.log('errors.contractNumber', errors.contractNumber)
 
   return (
     <Fieldform>
@@ -39,6 +38,7 @@ const UserFieldForm = ({
           typeOfStatus={typeOfStatus}
           isValid={isValid}
           activeSection={activeSection}
+          dirtyFields={dirtyFields}
         />
 
         {activeSection === "User" && (
@@ -48,11 +48,19 @@ const UserFieldForm = ({
               <RegisterInput
                 type="text"
                 placeholder="№ договору"
-                valid={`${errors.contractNumber ? 'invalid' : ""}${!errors.contractNumber && dirtyFields.contractNumber?'valid':""}`}
-                // valid={`${errors.contractNumber ? 'invalid' : "valid"} ${!errors.contractNumber && dirtyFields.contractNumber &&'valid' }`}
+                aria-describedby="contractNumberTooltip"
+                className={`${errors.contractNumber ? "invalid" : ""}${
+                  !errors.contractNumber && dirtyFields.contractNumber ? "valid" : ""
+                }`}
                      
                 {...register("contractNumber")}
               />
+               <Tooltip
+              id="contractNumberTooltip"
+              className={`${errors.contractNumber ? "visible" : ""}`}
+            >
+                    {errors.contractNumber && errors.contractNumber.message}
+            </Tooltip>
             </RegisterField>
 
             <CommonFieldForm
@@ -62,6 +70,7 @@ const UserFieldForm = ({
               isValid={isValid}
               errors={errors}
               readOnly="false"
+              dirtyFields={dirtyFields}
             
             />
 
@@ -70,18 +79,36 @@ const UserFieldForm = ({
               <RegisterInput
                 type="text"
                 placeholder="Надання доступу до"
-                valid={`${errors.contractNumber ? 'invalid' : ""}${!errors.contractNumber && dirtyFields.contractNumber?'valid':""}`}
+                aria-describedby="dateOfAccessTooltip"
+                className={`${errors.dateOfAccess ? "invalid" : ""}${
+                  !errors.dateOfAccess && dirtyFields.dateOfAccess ? "valid" : ""
+                }`}
                 {...register("dateOfAccess")}
               />
+               <Tooltip
+              id="dateOfAccessTooltip"
+              className={`${errors.dateOfAccess ? "visible" : ""}`}
+            >
+                    {errors.dateOfAccess && errors.dateOfAccess.message}
+            </Tooltip>
             </RegisterField>
             <RegisterField>
               <RegisterLabel>Остання оплата* </RegisterLabel>
               <RegisterInput
                 type="text"
                 placeholder="Остання оплата"
-                valid={`${errors.contractNumber ? 'invalid' : ""}${!errors.contractNumber && dirtyFields.contractNumber?'valid':""}`}
+                aria-describedby="lastPayTooltip"
+                className={`${errors.lastPay ? "invalid" : ""}${
+                  !errors.lastPay && dirtyFields.lastPay ? "valid" : ""
+                }`}
                 {...register("lastPay")}
               />
+                <Tooltip
+              id="lastPayTooltip"
+              className={`${errors.lastPay ? "visible" : ""}`}
+            >
+                    {errors.lastPay && errors.lastPay.message}
+            </Tooltip>
             </RegisterField>
 
             <ContactFaceField
@@ -90,6 +117,7 @@ const UserFieldForm = ({
               errors={errors}
               margintop={"36px"}
               isValid={isValid}
+              dirtyFields={dirtyFields}
             />
             
           </>
@@ -103,13 +131,14 @@ const UserFieldForm = ({
             isValid={isValid}
             errors={errors}
             readOnly="false"
+            dirtyFields={dirtyFields}
           />
  <RegisterField>
              
              <RegisterInput
                type="text"
                placeholder="Логін"
-               valid={`${errors.contractNumber ? 'invalid' : ""}${!errors.contractNumber && dirtyFields.contractNumber?'valid':""}`}
+               valid={`${errors.login ? 'invalid' : ""}${!errors.login && dirtyFields.login?'valid':""}`}
                {...register("login")}
              />
            </RegisterField>
@@ -118,7 +147,7 @@ const UserFieldForm = ({
              <RegisterInput
                type="text"
                placeholder="Пароль"
-               valid={`${errors.contractNumber ? 'invalid' : ""}${!errors.contractNumber && dirtyFields.contractNumber?'valid':""}`}
+               valid={`${errors.password ? 'invalid' : ""}${!errors.password && dirtyFields.password?'valid':""}`}
                {...register("password")}
              />
            </RegisterField>
