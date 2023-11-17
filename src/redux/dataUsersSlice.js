@@ -30,7 +30,15 @@ export const dataUsersApi = createApi({
         providesTags: ['dataUsers'],
       }),
     
-   
+   delUserById: builder.mutation({
+      query: (id) => ({
+        url: `admin/users/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['dataUsers'], 
+    }),
+
+    
     getUserById:builder.query({
       query: (id) => ({ url: `admin/users/${id}` }),
       providesTags: ['dataUser'],
@@ -62,7 +70,7 @@ export const dataUsersApi = createApi({
 export const {
   // useGetAdminListQuery,
   useGetUsersListQuery,
-  
+  useDelUserByIdMutation,
   useGetUserByIdQuery,
   useCreateCompanyUserMutation,
   useCreateFopUserMutation,
