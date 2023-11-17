@@ -59,7 +59,7 @@ export const SearchUsers = () => {
   const filteredUsers = useMemo(() => {
     const users = data ? data.allUsers : [];
     if (users) {
-      return users.filter((user) => user.status === "false");
+      return users.filter((user) => user.status === false);
     }
     return [];
   }, [data]);
