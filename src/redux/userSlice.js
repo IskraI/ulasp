@@ -49,8 +49,8 @@ export const userSlice = createSlice({
 
     setUser: {
       reducer(state, action) {
-        // console.log("action.payload setUser", action.payload.user);
-        state = { ...state, ...action.payload.user, isLoggedIn: true };
+        console.log("action.payload setUser", action.payload);
+        state = { ...state, ...action.payload, isLoggedIn: true };
         return state;
       },
     },

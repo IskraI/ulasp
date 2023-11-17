@@ -4,7 +4,7 @@ import UserTable from "../UsersTable/UsersTable";
 const ListUsers = () => {
   const { data, isLoading } = useGetUsersListQuery();
 
-  console.log(data);
+
 
 
   const visibleColumns = [
