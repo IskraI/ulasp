@@ -63,7 +63,7 @@ function App() {
     return (
       <>
         <Routes>
-          <Route element={<SharedLayout />}>
+          <Route element={<SharedLayout avatarURL={user.avatarURL} />}>
             <Route path="/" element={<PublicRoute component={WelcomePage} />} />
 
             <Route path="/signin" element={<PublicRoute component={Login} />} />
