@@ -53,7 +53,7 @@ const UserCreateForm = ({ onCloseModal, typeOfPage, activeSectionCard, user }) =
     clearErrors();
   };
 
-  console.log("typeOfPage", typeOfPage);
+  // console.log("typeOfPage", typeOfPage);
 
   //перемикач типа юзера тов или фоп
   const handleTypeOfUser = () => {
@@ -65,7 +65,7 @@ const UserCreateForm = ({ onCloseModal, typeOfPage, activeSectionCard, user }) =
     const formData = { ...data, status: typeOfStatus, userFop: typeOfUser };
     console.log(formData);
     if (typeOfPage === "card") {
-      
+
       return console.log(formData);
     }
 
@@ -105,7 +105,7 @@ const UserCreateForm = ({ onCloseModal, typeOfPage, activeSectionCard, user }) =
 
     clearErrors();
   };
-
+console.log('typeOfPage', typeOfPage)
   return (
     <UserCreateModal>
       {typeOfPage === "modal" && (
@@ -152,6 +152,8 @@ const UserCreateForm = ({ onCloseModal, typeOfPage, activeSectionCard, user }) =
             errors={errors}
             activeSection={activeSection}
             typeOfUser={typeOfUser}
+            dirtyFields={dirtyFields}
+           
           />
         )}
         {typeOfPage === "card" && (
@@ -165,6 +167,7 @@ const UserCreateForm = ({ onCloseModal, typeOfPage, activeSectionCard, user }) =
             errors={errors}
             activeSectionCard={activeSectionCard}
             typeOfUser={typeOfUser}
+           
           />
         )}
       </form>

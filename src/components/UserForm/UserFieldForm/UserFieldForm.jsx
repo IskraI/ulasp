@@ -16,8 +16,7 @@ import RegisterNameFieldForm from "./RegisterNameFieldForm";
 import CommonFieldForm from "./CommonFields";
 import { Button } from "../../Button/Button";
 const UserFieldForm = ({
-  user,
-  control,
+   control,
   handleTypeOfStatus,
   activeSection,
   typeOfStatus,
@@ -25,7 +24,10 @@ const UserFieldForm = ({
   isValid,
   errors,
   register,
+  dirtyFields
 }) => {
+  console.log('errors.contractNumber', errors.contractNumber)
+
   return (
     <Fieldform>
       <RegisterLeftBlock>
@@ -46,7 +48,9 @@ const UserFieldForm = ({
               <RegisterInput
                 type="text"
                 placeholder="№ договору"
-            
+                valid={`${errors.contractNumber ? 'invalid' : ""}${!errors.contractNumber && dirtyFields.contractNumber?'valid':""}`}
+                // valid={`${errors.contractNumber ? 'invalid' : "valid"} ${!errors.contractNumber && dirtyFields.contractNumber &&'valid' }`}
+                     
                 {...register("contractNumber")}
               />
             </RegisterField>
@@ -57,6 +61,8 @@ const UserFieldForm = ({
               control={control}
               isValid={isValid}
               errors={errors}
+              readOnly="false"
+            
             />
 
             <RegisterField>
@@ -64,7 +70,7 @@ const UserFieldForm = ({
               <RegisterInput
                 type="text"
                 placeholder="Надання доступу до"
-     
+                valid={`${errors.contractNumber ? 'invalid' : ""}${!errors.contractNumber && dirtyFields.contractNumber?'valid':""}`}
                 {...register("dateOfAccess")}
               />
             </RegisterField>
@@ -73,7 +79,7 @@ const UserFieldForm = ({
               <RegisterInput
                 type="text"
                 placeholder="Остання оплата"
-               
+                valid={`${errors.contractNumber ? 'invalid' : ""}${!errors.contractNumber && dirtyFields.contractNumber?'valid':""}`}
                 {...register("lastPay")}
               />
             </RegisterField>
@@ -83,6 +89,7 @@ const UserFieldForm = ({
               register={register}
               errors={errors}
               margintop={"36px"}
+              isValid={isValid}
             />
             
           </>
@@ -95,13 +102,14 @@ const UserFieldForm = ({
             control={control}
             isValid={isValid}
             errors={errors}
+            readOnly="false"
           />
  <RegisterField>
              
              <RegisterInput
                type="text"
                placeholder="Логін"
-    
+               valid={`${errors.contractNumber ? 'invalid' : ""}${!errors.contractNumber && dirtyFields.contractNumber?'valid':""}`}
                {...register("login")}
              />
            </RegisterField>
@@ -110,7 +118,7 @@ const UserFieldForm = ({
              <RegisterInput
                type="text"
                placeholder="Пароль"
-    
+               valid={`${errors.contractNumber ? 'invalid' : ""}${!errors.contractNumber && dirtyFields.contractNumber?'valid':""}`}
                {...register("password")}
              />
            </RegisterField>

@@ -8,21 +8,31 @@ import {
 import {Button} from "../../Button/Button"
 
 
-const RegisterNameFieldForm = ({
-    register,
+const RegisterNameFieldCard = ({
+  user,
+  activeSectionCard,
+  register,
   errors,
   typeOfUser,
   typeOfStatus,
   handleTypeOfStatus,
   isValid,
-  activeSection
-  
+  readOnly,
+  handleEditActivation
 }) => {
- 
+  console.log('readOnly', readOnly)
   return (
     <RegisterNameBlock>
+       {readOnly ?(  <Button type="button" onClick={()=>handleEditActivation()}   text="Редагувати" />
+      ):  (   <Button
+        type="submit"
+        padding="8px"
+        text="Зберегти" 
+        // disabled={!isValid}
+      />)}
+{!readOnly ? (<>
 
-      {typeOfUser === "fop" || activeSection === "MusicEditor" ? (
+      {typeOfUser === "fop" || activeSectionCard === "MusicEditor" ? (
         <>
           <RegisterNameField>
             <RegisterNameLabel>Прізвище</RegisterNameLabel>
@@ -50,18 +60,20 @@ const RegisterNameFieldForm = ({
               {...register("fatherName")}
             />
           </RegisterNameField>
-        </>):(<RegisterNameField>
-            <RegisterNameLabel>Назва компанії</RegisterNameLabel>
+        
+        </>
+      ) : (
+              <RegisterNameField>
+          
             <RegisterNameInput
+            width = {"270px"}
               type="text"
-              placeholder="Назва компанії"
+             value= {`${user.firstName} ${user.lastName}` }
               {...register("name")}
             />
           </RegisterNameField>
-          
-        )}
-       
-           
+
+            )}
         <ButtonSwitch
             type="button"
             isTrue={typeOfStatus}
@@ -95,11 +107,64 @@ const RegisterNameFieldForm = ({
               </>
             )}
           </ButtonSwitch>
-          
+          </>):
+          (
+            <>
+   {typeOfUser === "fop" || activeSectionCard === "MusicEditor" ? (
+        <>
+          <RegisterNameField>
+          { ` ${user.firstName} ${user.lastName}` } 
+          </RegisterNameField>
+
+              
         
+        </>
+      ) : (
+              <RegisterNameField>
+             { ` ${user.name} ` } 
+          </RegisterNameField>
+
+            )}
+        <ButtonSwitch
+            type="button"
+            isTrue={user.status}
+          
+          >
+            {typeOfStatus ? (
+              <>
+                On
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="13"
+                  height="13"
+                  viewBox="0 0 13 13"
+                  fill="none"
+                >
+                  <circle cx="6.5" cy="6.5" r="6" fill="#8CACD7" />
+                </svg>
+              </>
+            ) : (
+              <>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="13"
+                  height="13"
+                  viewBox="0 0 13 13"
+                  fill="none"
+                >
+                  <circle cx="6.5" cy="6.5" r="6" fill="#FFF3BF" />
+                </svg>
+                Off
+              </>
+            )}
+          </ButtonSwitch>
+            </>
+          )}
+
+
     </RegisterNameBlock>
    
   )
 };
 
-export default RegisterNameFieldForm;
+export default RegisterNameFieldCard;

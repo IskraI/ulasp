@@ -13,11 +13,11 @@ import {
   CommentTextarea,
 } from "../UserCreateForm.styled";
 import ContactFaceField from "./ContactFaceField";
-import RegisterNameFieldForm from "./RegisterNameFieldForm";
+import RegisterNameFieldForm from "./RegisterNameFieldCard";
 import CommonFieldForm from "../UserFieldForm/CommonFields";
 import { Button } from "../../Button/Button";
 import { useForm, Controller } from 'react-hook-form';
-const UserFieldForm = ({
+const UserFieldCard = ({
   user,
   control,
   handleTypeOfStatus,
@@ -183,4 +183,4 @@ const UserFieldForm = ({
   );
 };
 
-export default UserFieldForm;
+export default UserFieldCard;

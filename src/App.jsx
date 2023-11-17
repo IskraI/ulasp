@@ -24,6 +24,7 @@ import { useCurrentUserQuery } from "../src/redux/authSlice";
 import { getUserState } from "../src/redux/userSelectors";
 import { lazy, useEffect } from "react";
 
+import { Navigate } from "react-router-dom";
 const AdminCabinetPage = lazy(() =>
   import("./components/AdminCabinetPage/AdminCabinetPage")
 );
@@ -38,9 +39,21 @@ function App() {
   const user = useSelector(getUserState);
   const skip = !user.token && !user.isLoggedIn;
 
-  const { isLoading } = useCurrentUserQuery("", { skip });
-  if (isLoading) return "Loading...";
+  const { isLoading, isError, error } = useCurrentUserQuery("", { skip });
 
+  if (isLoading) return "Loading...";
+  if (isError) {
+    console.log("Ошибка в запросе");
+    return      <Routes>
+    <Route element={<SharedLayout />}>
+       <Route
+    path="/adminlogin"
+    element={<PublicRoute component={AdminLoginPage} />}
+  />;</Route>
+  </Routes>
+  }
+ 
+console.log('user.editorRole', user.editorRole)
   if (isMobile) {
     return (
       <div>
@@ -55,11 +68,12 @@ function App() {
             <Route path="/" element={<PublicRoute component={WelcomePage} />} />
 
             <Route path="/signin" element={<PublicRoute component={Login} />} />
-
+            
             <Route
               path="/adminlogin"
               element={<PublicRoute component={AdminLoginPage} />}
             />
+           
 
             <Route
               path="/user"
@@ -82,12 +96,11 @@ function App() {
                 <Route path="messages" element={<Messages />} />
 
                 <Route path="users" element={<AdminUsers />}>
-                <Route index element={<ListUsers />} />
+                  <Route index element={<ListUsers />} />
                   <Route path="allusers" element={<ListUsers />} />
                   <Route path="editors" element={<ListEditors />} />
                 </Route>
-<Route path="users/carduser/:id" element={<CardUser/>} />
-              
+                <Route path="users/carduser/:id" element={<CardUser />} />
 
                 <Route path="users/cardeditor" element={<CardEditor />} />
 
@@ -106,7 +119,7 @@ function App() {
                 <Route path="*" element={<ErrorPage />} />
               </Route>
             )}
-
+ {isError &&  <Route path="/signin" element={<PublicRoute component={Login} />} />}
             <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>
