@@ -42,18 +42,17 @@ function App() {
   const { isLoading, isError, error } = useCurrentUserQuery("", { skip });
 
   if (isLoading) return "Loading...";
-  if (isError) {
-    console.log("Ошибка в запросе");
-    return      <Routes>
-    <Route element={<SharedLayout />}>
-       <Route
-    path="/adminlogin"
-    element={<PublicRoute component={AdminLoginPage} />}
-  />;</Route>
-  </Routes>
-  }
- 
-console.log('user.editorRole', user.editorRole)
+  // if (isError) {
+  //   console.log("Ошибка в запросе");
+  //   return      <Routes>
+  //   <Route element={<SharedLayout />}>
+  //      <Route
+  //   path="/adminlogin"
+  //   element={<PublicRoute component={AdminLoginPage} />}
+  // />;</Route>
+  // </Routes>
+  // }
+
   if (isMobile) {
     return (
       <div>

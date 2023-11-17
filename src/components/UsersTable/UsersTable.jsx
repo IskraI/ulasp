@@ -49,13 +49,27 @@ const UsersTable = ({ users, visibleColumns }) => {
                         ) : (
                           user.firstName + " " + user.lastName
                         )
+                      ) : column.type === "nameLink" ? (
+                        user.name ? (
+                          <Link to={`/admin/users/carduser/${user._id}`}>
+                         { user.name }
+                          </Link>
+                        ) : (
+                          <Link to={`/admin/users/carduser/${user._id}`}>
+                        {  `${user.firstName} ${user.lastName}`}
+                          </Link>
+                        )
                       ) : column.type === "link" ? ( 
                         <Link to={`/admin/users/carduser/${user._id}`}>
                         картка
                         </Link>
-                      ) : column.key === "boolean" ? (
-                        user[column.key]
-                      ) : column.key === "sendEmail" ? (
+                      ) :
+                      column.key === "access" ? (
+                        ( <>{user[column.key] === "true" ? "On" : "Off"}</>)
+                      ) :
+                      column.key === "status" ? (
+                       ( <>{user[column.key] === "true" ? "Відкрито" : "Заблоковано"}</>)
+                      ): column.key === "sendEmail" ? (
                         <Button
                           type="button"
                           text="Відправити"

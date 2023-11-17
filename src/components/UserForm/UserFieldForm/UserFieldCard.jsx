@@ -12,9 +12,9 @@ import {
   RegisterCommentField,
   CommentTextarea,
 } from "../UserCreateForm.styled";
-import ContactFaceField from "./ContactFaceField";
-import RegisterNameFieldForm from "./RegisterNameFieldCard";
-import CommonFieldForm from "../UserFieldForm/CommonFields";
+import ContactFaceFieldCard from "./ContactFaceFieldCard";
+import RegisterNameFieldCard from "./RegisterNameFieldCard";
+import CommonFieldCard from "../UserFieldForm/CommonFieldsCard";
 import { Button } from "../../Button/Button";
 import { useForm, Controller } from 'react-hook-form';
 const UserFieldCard = ({
@@ -38,7 +38,7 @@ const UserFieldCard = ({
   return (
     <Fieldform>
       <RegisterLeftBlock>
-        <RegisterNameFieldForm
+        <RegisterNameFieldCard
           handleTypeOfStatus={handleTypeOfStatus}
           register={register}
           errors={errors}
@@ -71,7 +71,7 @@ const UserFieldCard = ({
               />
             </RegisterField>
 
-            <CommonFieldForm
+            <CommonFieldCard
               typeOfUser={typeOfUser}
               register={register}
               control={control}
@@ -118,7 +118,7 @@ const UserFieldCard = ({
               />
             </RegisterField>
 
-            <ContactFaceField
+            <ContactFaceFieldCard
               control={control}
               register={register}
               errors={errors}
@@ -131,7 +131,7 @@ const UserFieldCard = ({
 
         {activeSectionCard === "MusicEditor" && (
           <>
-            <CommonFieldForm
+            <CommonFieldCard
               typeOfUser={"fop"}
               register={register}
               control={control}

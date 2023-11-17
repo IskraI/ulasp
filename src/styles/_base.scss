@@ -16,10 +16,11 @@ body {
   background-size: cover;
  animation: rotateBackground 500ms linear 1ms; 
 }
-// main {
+main {
 //  width: 1440px;
-//   margin: auto;
-// }
+  margin-top: 80px;
+  // height: calc(100vh - (80px + 68px));
+}
 
 h1,
 h2,

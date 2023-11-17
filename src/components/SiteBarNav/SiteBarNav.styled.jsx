@@ -2,14 +2,24 @@ import styled from "@emotion/styled";
 import { colors } from "../../styles/vars";
 import { NavLink } from "react-router-dom";
 
+
+export const Con = styled.div`
+height:100vh -68px;
+border-right: 2px solid ${colors.primaryColor};
+
+`
 export const SiteBarNavConteiner = styled.div`
    display: flex;
   flex-direction: column;
   width: 287px;
-  height: calc(100vh - (80px + 68px));
-  border-right: 2px solid ${colors.primaryColor};
-  border-top: 2px solid ${colors.primaryColor};
-  border-bottom: 2px solid ${colors.primaryColor};
+  /* height: calc(100vh - (80px + 68px)); */
+  height: calc(100vh - (148px));
+ 
+  /* border-top: 2px solid ${colors.primaryColor};
+  border-bottom: 2px solid ${colors.primaryColor}; */
+  position: sticky;
+  top: 80px;
+  /* background-color: #f1f1f1; */
    /* position: fixed;
   top: 0;
   bottom: 0;

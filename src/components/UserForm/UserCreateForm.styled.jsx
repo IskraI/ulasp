@@ -71,7 +71,7 @@ export const RegisterField = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-
+  position: relative;
   /* background: rgba(234, 234, 234, 0.32); */
   height: 42px;
 `;
@@ -81,18 +81,28 @@ export const RegisterInput = styled.input`
   padding-left: 8px;
   display: flex;
   align-items: center;
-  /* border: none; */
+  position: relative;
   /* outline: none; */
   border: 0.25px solid rgba(23, 22, 28, 0.5);
-  /* border: 0.25px solid ${(props) =>
-    props.isValid ? " rgba(23, 22, 28, 0.5)" : "#FFF3BF"}; */
+  &.invalid {
+  outline: 1px solid red
+ }
+ &.valid {
+  outline: 1px solid green
+ }
 
-    outline: ${(props) => {
-      console.log('props.valid', props.valid)
-    if (props.valid === 'invalid') return '1px solid red';
-    if (props.valid === 'valid') return '1px solid green';
-    return 'none';
-  }};
+  &.invalid:hover + span {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    top: 100%; /* Положение подсказки относительно верхней границы input */
+    left: 75%;
+    transform: translateX(-50%);
+    width: 50%;
+  
+    /* Дополнительные стили для видимой подсказки при ховере */
+  }
+  
 `;
 export const RegisterLabel = styled.label`
   border: 0.25px solid rgba(23, 22, 28, 0.5);
@@ -195,6 +205,7 @@ export const RegisterCommentField = styled.div`
 export const RegisterNameField = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
 export const RegisterNameLabel = styled.label`
@@ -210,8 +221,7 @@ export const RegisterNameLabel = styled.label`
   line-height: 18px;
 `;
 export const RegisterNameInput = styled.input`
-  /* border: 0.25px solid  rgba(23, 22, 28, 0.5); */
-  /* background:rgba(234, 234, 234, 0.32); */
+
   display: flex;
   background-color: inherit;
   width: ${(props) => props.width || "133px"};
@@ -219,10 +229,28 @@ export const RegisterNameInput = styled.input`
   padding: 4px 8px;
   align-items: center;
   gap: 8px;
-  /* width: 100%; */
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.4);
-  /* background: var(--Color-input1, rgba(234, 234, 234, 0.32)); */
+  outline: none;
+  
+ &.invalid {
+  outline: 1px solid red
+ }
+ &.valid {
+  outline: 1px solid green
+ }
+
+  &.invalid:hover + span {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    top: 100%; /* Положение подсказки относительно верхней границы input */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 75%;
+  }
+
+ 
 `;
 export const ButtonSwitch = styled.button`
   display: flex;
@@ -242,4 +270,22 @@ export const ButtonSwitch = styled.button`
   line-height: 120%; /* 12px */
   letter-spacing: 1px;
   margin-bottom: 20px;
+`;
+
+
+export const Tooltip = styled.span`
+  display: none;
+  position: absolute;
+  background-color: #8CACD7; 
+  color: rgba(23, 22, 28, 1);
+
+  padding: 4px;
+  border: 1px solid rgba(23, 22, 28, 0.5);
+  border-radius: 4px;
+  font-size: 14px;
+
+  &.hover  {
+    display: block;
+    /* Ваши стили для видимой подсказки */
+  }
 `;

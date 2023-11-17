@@ -6,6 +6,7 @@ import {
   LogOuButton,
   Exit,
   SiteBarNavConteiner,
+  Con,
   BottomSection,
 } from "./SiteBarNav.styled";
 
@@ -27,7 +28,7 @@ export const SiteBarNav = () => {
   };
 
   return (
-    <>
+    <Con>
       <SiteBarNavConteiner>
         <Profile />
         <NavMenu />
@@ -43,6 +44,6 @@ export const SiteBarNav = () => {
           </Exit>
         </BottomSection>
       </SiteBarNavConteiner>
-    </>
+    </Con>
   );
 };

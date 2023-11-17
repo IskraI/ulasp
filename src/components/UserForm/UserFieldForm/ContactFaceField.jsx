@@ -2,13 +2,13 @@ import {
   RegisterField,
   RegisterLabel,
   RegisterInput,
-  RegisterContactField,
+  RegisterContactField,Tooltip
 } from "../UserCreateForm.styled";
 import InputMask from 'react-input-mask';
 import { Controller } from 'react-hook-form';
 
 
-const ContactFaceField = ({ register, errors, margintop, control }) => {
+const ContactFaceField = ({ register, errors, margintop, control, dirtyFields }) => {
   
   return (
     <RegisterContactField margintop={margintop}>
@@ -17,31 +17,51 @@ const ContactFaceField = ({ register, errors, margintop, control }) => {
         <RegisterInput
           type="text"
           placeholder="Контактна особа"
+          aria-describedby="contactFaceTooltip"
+          className={`${errors.contactFace ? "invalid" : ""}${
+            !errors.contactFace && dirtyFields.contactFace ? "valid" : ""
+          }`}
           {...register("contactFace")}
         />
-        {/* <p>{errors.contactFace && errors.contactFace.message}</p> */}
+        <Tooltip
+              id="contactFaceTooltip"
+              className={`${errors.contactFace ? "visible" : ""}`}
+            > {errors.contactFace && errors.contactFace.message}
+            </Tooltip>
       </RegisterField>
       <RegisterField>
         <RegisterLabel>Ідентифікаційний номер* </RegisterLabel>
         <RegisterInput
           type="text"
           placeholder="Ідентифікаційний номер"
-          // className={`${scss.input} ${errors.name && scss.invalid}
-          //  ${!errors.name && dirtyFields.name && scss.valid}`}
+          aria-describedby="contactFaceTaxCodeTooltip"
+          className={`${errors.contactFaceTaxCode ? "invalid" : ""}${
+            !errors.contactFaceTaxCode && dirtyFields.contactFaceTaxCode ? "valid" : ""
+          }`}
           {...register("contactFaceTaxCode")}
         />
-        {/* <p>{errors.contactFaceTaxCode && errors.contactFaceTaxCode.message}</p> */}
+        <Tooltip
+              id="contactFaceTaxCodeTooltip"
+              className={`${errors.contactFaceTaxCode ? "visible" : ""}`}
+            > {errors.contactFaceTaxCode && errors.contactFaceTaxCode.message}
+            </Tooltip>
       </RegisterField>
       <RegisterField>
       <RegisterLabel>Номер телефону* </RegisterLabel>
       <RegisterInput
           type="text"
           placeholder="Номер телефону"
-          // className={`${scss.input} ${errors.name && scss.invalid}
-          //  ${!errors.name && dirtyFields.name && scss.valid}`}
+          aria-describedby="contactFaceTelNumberTooltip"
+          className={`${errors.contactFaceTelNumber ? "invalid" : ""}${
+            !errors.contactFaceTelNumber && dirtyFields.contactFaceTelNumber ? "valid" : ""
+          }`}
           {...register("contactFaceTelNumber")}
         />
-
+ <Tooltip
+              id="contactFaceTelNumberTooltip"
+              className={`${errors.contactFaceTelNumber ? "visible" : ""}`}
+            > {errors.contactFaceTelNumber && errors.contactFaceTelNumber.message}
+            </Tooltip>
 
       
   {/* <Controller
@@ -69,11 +89,17 @@ const ContactFaceField = ({ register, errors, margintop, control }) => {
         <RegisterInput
           type="text"
           placeholder="E-mail"
-          // className={`${scss.input} ${errors.name && scss.invalid}
-          //  ${!errors.name && dirtyFields.name && scss.valid}`}
+          aria-describedby="contactFaceEmailTooltip"
+          className={`${errors.contactFaceEmail ? "invalid" : ""}${
+            !errors.contactFaceEmail && dirtyFields.contactFaceEmail ? "valid" : ""
+          }`}
           {...register("contactFaceEmail")}
         />
-        {/* <p>{errors.contactFaceEmail && errors.contactFaceEmail.message}</p> */}
+        <Tooltip
+              id="contactFaceEmailTooltip"
+              className={`${errors.contactFaceEmail ? "visible" : ""}`}
+            > {errors.contactFaceEmail && errors.contactFaceEmail.message}
+            </Tooltip>
       </RegisterField>
     </RegisterContactField>
   );

@@ -17,7 +17,7 @@ import {
   } from "../UserCreateForm.styled";
 
   import { Button } from "../../Button/Button";
-  const CommonFieldForm = ({
+  const CommonFieldCard = ({
     user,
     readOnly,
     control,
@@ -88,5 +88,5 @@ import {
 
   }
   
-  export default CommonFieldForm;
+  export default CommonFieldCard;
   

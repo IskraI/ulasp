@@ -7,6 +7,8 @@ export const PageHeader = styled.header`
   height: 80px;
   background-color: ${colors.bgHeaderColor};
   border-bottom: 2px solid ${colors.primaryColor};
+  position:fixed;
+  z-index: 3;
 `;
 
 export const PageLogo = styled.img`
