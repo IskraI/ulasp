@@ -39,6 +39,14 @@ export const dataUsersApi = createApi({
       invalidatesTags: ["dataUsers"],
     }),
 
+    unblockUserById: builder.mutation({
+      query: (id) => ({
+        url: `admin/users/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["dataUsers"],
+    }),
+
     getUserById: builder.query({
       query: (id) => ({ url: `admin/users/${id}` }),
       providesTags: ["dataUser"],
@@ -79,6 +87,7 @@ export const {
   // useGetAdminListQuery,
   useGetUsersListQuery,
   useDelUserByIdMutation,
+  useUnblockUserByIdMutation,
   useGetUserByIdQuery,
   useCreateCompanyUserMutation,
   useCreateFopUserMutation,
