@@ -1,4 +1,4 @@
-import{n as o,c as x,j as t,a as y,b as u}from"./index-7c9f31d9.js";import{S as b,b as p}from"./Statistic.styled-28f75b07.js";const T=o.table`
+import{n as o,c as x,j as t,d as y,e as u}from"./index-ffab4c86.js";import{S as b,b as p}from"./Statistic.styled-6ed43003.js";const T=o.table`
   text-align: left;
   font-size: 18px;
   table-layout: fixed;
