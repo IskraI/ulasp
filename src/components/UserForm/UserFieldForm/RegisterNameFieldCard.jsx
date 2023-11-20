@@ -6,7 +6,7 @@ import {
   ButtonSwitch,
 } from "../UserCreateForm.styled";
 import {Button} from "../../Button/Button"
-
+import { Controller } from 'react-hook-form';
 
 const RegisterNameFieldCard = ({
   user,
@@ -14,51 +14,76 @@ const RegisterNameFieldCard = ({
   register,
   errors,
   typeOfUser,
-  typeOfStatus,
-  handleTypeOfStatus,
+  typeOfAccess,
+  handleTypeOfAccess,
   isValid,
   readOnly,
-  handleEditActivation
+  
+  control
 }) => {
-  console.log('readOnly', readOnly)
+
   return (
     <RegisterNameBlock>
-       {readOnly ?(  <Button type="button" onClick={()=>handleEditActivation()}   text="Редагувати" />
-      ):  (   <Button
-        type="submit"
-        padding="8px"
-        text="Зберегти" 
-        // disabled={!isValid}
-      />)}
+     
 {!readOnly ? (<>
 
       {typeOfUser === "fop" || activeSectionCard === "MusicEditor" ? (
         <>
           <RegisterNameField>
             <RegisterNameLabel>Прізвище</RegisterNameLabel>
-            <RegisterNameInput
-              type="text"
-              placeholder="Прізвище"
-              {...register("lastName")}
-            />
+            <Controller
+                name="lastName"
+                control={control}
+                defaultValue={user.lastName}
+                render={({ field }) => (
+                  <RegisterNameInput
+                    type="text"
+                    placeholder="Прізвище"
+                    readOnly={readOnly}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                )}
+              />
+        
           </RegisterNameField>
 
           <RegisterNameField>
             <RegisterNameLabel>Ім'я</RegisterNameLabel>
-            <RegisterNameInput
-              type="text"
-              placeholder="Ім'я"
-              {...register("firstName")}
-            />
+            <Controller
+                name="firstName"
+                control={control}
+                defaultValue={user.firstName}
+                render={({ field }) => (
+                  <RegisterNameInput
+                    type="text"
+                    placeholder="Ім'я"
+                    readOnly={readOnly}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                )}
+              />
+           
           </RegisterNameField>
 
           <RegisterNameField>
             <RegisterNameLabel>По-батькові</RegisterNameLabel>
-            <RegisterNameInput
-              type="text"
-              placeholder="По-батькові"
-              {...register("fatherName")}
-            />
+            <Controller
+                name="fatherName"
+                control={control}
+                defaultValue={user.fatherName}
+                render={({ field }) => (
+                  <RegisterNameInput
+                    type="text"
+                    placeholder="По-батькові"
+                    readOnly={readOnly}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                )}
+              />
+          
           </RegisterNameField>
         
         </>
@@ -76,10 +101,10 @@ const RegisterNameFieldCard = ({
             )}
         <ButtonSwitch
             type="button"
-            isTrue={typeOfStatus}
-            onClick={() => handleTypeOfStatus()}
+            isTrue={typeOfAccess}
+            onClick={() => handleTypeOfAccess()}
           >
-            {typeOfStatus ? (
+            {typeOfAccess ? (
               <>
                 On
                 <svg
@@ -130,7 +155,7 @@ const RegisterNameFieldCard = ({
             isTrue={user.status}
           
           >
-            {typeOfStatus ? (
+            {typeOfAccess ? (
               <>
                 On
                 <svg

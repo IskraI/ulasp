@@ -70,7 +70,7 @@ const UserCreateForm = ({ onCloseModal   }) => {
   
     if (activeSection === "MusicEditor") {
       const formData = { ...data};
-       console.log('formData', formData);
+      //  console.log('formData', formData);
        dispatchEditor(formData)
         .unwrap()
         .then(() => {
@@ -83,7 +83,7 @@ const UserCreateForm = ({ onCloseModal   }) => {
 
     if (typeOfUser === "fop") {
       const formData = { ...data, access: typeOfAccess, userFop: typeOfUser };
-      console.log(formData);
+      // console.log(formData);
       dispatchFop(formData)
         .unwrap()
         .then(() => {
@@ -111,7 +111,7 @@ const UserCreateForm = ({ onCloseModal   }) => {
     setActiveSection(section);
     reset();
   };
-  console.log("typeOfAccess", typeOfAccess);
+  // console.log("typeOfAccess", typeOfAccess);
 
   return (
     <UserCreateModal>
@@ -135,7 +135,7 @@ const UserCreateForm = ({ onCloseModal   }) => {
               {typeOfUser === "tov" ? "ТОВ" : "ФОП"}
             </ButtonSwitch>
           )}
-   
+    
  
       {/* форма изпользует компонент  UserFieldForm - в зависимости от пропсов выводятся те или иные поля*/}
       <form onSubmit={handleSubmit(onFormSubmit)}>

@@ -20,35 +20,31 @@ import { useForm, Controller } from 'react-hook-form';
 const UserFieldCard = ({
   user,
   control,
-  handleTypeOfStatus,
+  handleTypeOfAccess,
   activeSectionCard,
-  typeOfStatus,
+  typeOfAccess,
   typeOfUser,
   isValid,
   errors,
   register,
+  isEditing
 }) => {
-  const [isEditing, setIsEditing] = useState(false);
+  console.log('isEditing UserFieldCard', isEditing)
 
-  const handleEditActivation = () => {
-    // You can perform additional actions if needed before allowing editing
-    setIsEditing(true);
-  };
-  console.log('isEditing', isEditing)
   return (
     <Fieldform>
       <RegisterLeftBlock>
         <RegisterNameFieldCard
-          handleTypeOfStatus={handleTypeOfStatus}
+          handleTypeOfAccess={handleTypeOfAccess}
           register={register}
           errors={errors}
           typeOfUser={typeOfUser}
-          typeOfStatus={typeOfStatus}
+          typeOfAccess={typeOfAccess}
           isValid={isValid}
           activeSectionCard={activeSectionCard}
           readOnly={!isEditing}
           user={user}
-          handleEditActivation={handleEditActivation}
+                 control={control}
         />
 
         {activeSectionCard === "User" && (
@@ -83,23 +79,39 @@ const UserFieldCard = ({
 
             <RegisterField>
               <RegisterLabel>Надання доступу до*</RegisterLabel>
-              <RegisterInput
-                type="text"
-                placeholder="Надання доступу до"
-                readOnly={!isEditing}
-                value={user.dateOfAccess}
-                {...register("dateOfAccess")}
-              />
+              <Controller
+                name="dateOfAccess"
+                control={control}
+                defaultValue={user.dateOfAccess}
+                render={({ field }) => (
+                  <RegisterInput
+                    type="text"
+                    placeholder="Надання доступу до"
+                    readOnly={!isEditing}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                  )}
+                  />
+          
             </RegisterField>
             <RegisterField>
               <RegisterLabel>Остання оплата* </RegisterLabel>
-              <RegisterInput
-                type="text"
-                placeholder="Остання оплата"
-                readOnly={!isEditing}
-                value={user.lastPay}
-                {...register("lastPay")}
-              />
+              <Controller
+                name="lastPay"
+                control={control}
+                defaultValue={user.lastPay}
+                render={({ field }) => (
+                  <RegisterInput
+                    type="text"
+                    placeholder="Остання оплата"
+                    readOnly={!isEditing}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                  )}
+                  />
+            
             </RegisterField>
             <RegisterField>
               <RegisterLabel>Кількість доданих плейлистів </RegisterLabel>
