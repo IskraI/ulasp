@@ -68,7 +68,7 @@ const UsersTable = ({ users, visibleColumns }) => {
                         ( <>{user[column.key] === "true" ? "On" : "Off"}</>)
                       ) :
                       column.key === "status" ? (
-                       ( <>{user[column.key] === "true" ? "Відкрито" : "Заблоковано"}</>)
+                       ( <>{user[column.key] === true ? "Відкрито" : "Заблоковано"}</>)
                       ): column.key === "sendEmail" ? (
                         <Button
                           type="button"
