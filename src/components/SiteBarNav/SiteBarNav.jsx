@@ -11,19 +11,17 @@ import {
 
 import { useLogoutMutation } from "../../redux/authSlice";
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export const SiteBarNav = () => {
   const [dispatch] = useLogoutMutation();
   const navigate = useNavigate();
   const handleLogOut = () => {
     dispatch()
-     .unwrap()
+      .unwrap()
       .then(() => {
-        navigate("/")
-       
-      })
-    
+        navigate("/");
+      });
   };
 
   return (
@@ -35,7 +33,7 @@ export const SiteBarNav = () => {
           <ContactInfo />
           <Exit>
             <svg className="icon" width="24" height="24">
-              <use href={`${symbol}#icon-exit`}></use>{" "}
+              <use href={`${symbol}#icon-exit`}></use>
             </svg>
             <LogOuButton type="button" onClick={handleLogOut}>
               Вихід

@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { sizes } from "../../styles/SharedStyles";
 
 export const Container = styled.div`
   /* min-height: calc(100vh); */
@@ -6,9 +7,10 @@ export const Container = styled.div`
 `;
 
 export const ContainerWrraper = styled.div`
-  min-height: 100vh;
-  display:flex;
+  /* max-height: 100vh; */
+  min-height: calc(100vh - (${sizes.header.height} + ${sizes.footer.height}));
+
+  display: flex;
   flex-direction: column;
   /* margin: auto; */
-
 `;

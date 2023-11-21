@@ -17,20 +17,29 @@ const EditorCabinetPage = () => {
     isLoading: isLoadingPlaylists,
   } = useGetPlaylistsCountQuery();
 
-   const {
+  const {
+    data: tracksCount,
+    error: isError,
+    isFetching: isFetchingTracksCount,
+  } = useGetTracksCountQuery();
+  const {
     data: allTracks,
     isLoading: isLoadingAllTracks,
     error: errorLoadingAllTracks,
+    isFetching: isFetchingAllTracks,
+    isSuccess,
+    isUninitialized,
   } = useGetAllTracksQuery();
 
+  // console.log("isSuccess", isSuccess);
+  // console.log("isUninitialized", isUninitialized);
   return (
     <>
       <EditorText> Кабінет редактора</EditorText>
 
       <StatsListWrapper>
         <StatItemEditor>
-          {/* {!isLoadingTracks && tracksCount.countTracks} */}
-          {!isLoadingAllTracks && allTracks.length}
+          {!isFetchingTracksCount && !isError && tracksCount.countTracks}
           <br /> Доданої музики
         </StatItemEditor>
         <StatItemEditor>
@@ -40,12 +49,13 @@ const EditorCabinetPage = () => {
           <br /> Створених плейлистів
         </StatItemEditor>
       </StatsListWrapper>
-      {!isLoadingAllTracks && (
+      {isFetchingAllTracks && <p>Загружаемся.....</p>}
+      {!isFetchingAllTracks && !errorLoadingAllTracks && (
         <TracksTable
           tracks={allTracks}
-          // visibleColumns={visibleColumns}
           isLoading={isLoadingAllTracks}
           error={errorLoadingAllTracks}
+          isFetching={isFetchingAllTracks}
         />
       )}
     </>

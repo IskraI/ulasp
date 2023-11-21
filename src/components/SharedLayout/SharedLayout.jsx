@@ -11,15 +11,15 @@ import { ContainerWrraper } from "./SharedLayout.styled";
 export const SharedLayout = () => {
   return (
     <>
-      <ContainerWrraper>
       <Header />
-      <main>
-        <Suspense fallback={"Loader"}>
-          <Outlet />
-        </Suspense>
-      </main>
-        <Footer />
-        </ContainerWrraper>
+      <ContainerWrraper>
+        <main>
+          <Suspense fallback={"Loader"}>
+            <Outlet />
+          </Suspense>
+        </main>
+      </ContainerWrraper>
+      <Footer />
     </>
   );
 };

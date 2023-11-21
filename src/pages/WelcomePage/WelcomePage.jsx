@@ -29,7 +29,7 @@ const WelcomePage = () => {
     <WelcomeSection>
       <WelcomeTitle>
         УЛАСП
-        <span
+        <p
           style={{
             color: "#FFF3BF",
             fontFamily: "Inter",
@@ -37,15 +37,15 @@ const WelcomePage = () => {
             fontStyle: "normal",
             fontWeight: 400,
             lineHeight: "normal",
-            display: "block",
+            // display: "block",
           }}
         >
           Streem Music
-        </span>
+        </p>
       </WelcomeTitle>
       <WelcomeText>
         Зручний інструмент для Вашого бізнесу!
-        <span
+        <p
           style={{
             color: "#FFF3BF",
             fontFamily: "Inter",
@@ -53,11 +53,11 @@ const WelcomePage = () => {
             fontStyle: "normal",
             fontWeight: 400,
             lineHeight: "normal",
-            display: "block",
+            // display: "block",
           }}
         >
           Ліцензійна музика.
-        </span>
+        </p>
       </WelcomeText>
 
       <SignInNavLink to="/signin">Увійти</SignInNavLink>

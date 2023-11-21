@@ -4,8 +4,8 @@ import { getUserState } from "../../redux/userSelectors";
 import { useSelector } from "react-redux";
 import { useUpdateUserAvatarMutation } from "../../redux/authSlice/";
 import { useRef, useState } from "react";
+import FileUpload from "../FIleUpload/FIleUpload";
 const BASE_URL = `http://localhost:8000`;
-
 
 export const Profile = () => {
   const user = useSelector(getUserState);
@@ -28,8 +28,9 @@ export const Profile = () => {
       })
       .catch((e) => console.log(e.data.message));
   };
-// console.log('user', user)
+  // console.log('user', user)
   const handleChooseIcon = (event) => {
+    // setSelectedImage(event.target.files[0]);
     setSelectedImage(event.target.files[0]);
   };
 
@@ -55,10 +56,8 @@ export const Profile = () => {
   return (
     <>
       <form onSubmit={handleFormSubmit}>
-       <img
-          src={
-            avatarSrc
-          }
+        <img
+          src={avatarSrc}
           alt="Avatar"
           style={{
             display: "block",
@@ -70,8 +69,19 @@ export const Profile = () => {
             marginLeft: "auto",
             marginRight: "auto",
           }}
-        /> 
-        <input
+        />
+        {/* Я закомментил */}
+
+        <FileUpload
+          selectedImage={""}
+          setSelectedImage={setSelectedImage}
+          accept="image/*"
+          change={handleChooseIcon}
+        >
+          <button type="button">+</button>
+        </FileUpload>
+
+        {/* <input
           name="name"
           type="file"
           accept="image/*"
@@ -80,8 +90,9 @@ export const Profile = () => {
         />
         <button type="submit" disabled={isLoading}>
           {isLoading ? "<LoadingSpinner size={30} />" : "Save changes"}
-        </button>
+        </button> */}
       </form>
+
       {/* <input
         type="file"
         accept="image/*"
@@ -97,11 +108,9 @@ export const Profile = () => {
       </span> */}
 
       <UserName>
-        {firstName}
-        <br />
-        {lastName}
-        <br />
-        {fatherName}
+        {`${lastName}${" "}`}
+        {`${firstName.slice(0, 1)}${"."}`}
+        {fatherName.slice(0, 1)}
       </UserName>
     </>
   );

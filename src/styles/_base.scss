@@ -2,24 +2,42 @@
   box-sizing: border-box;
 }
 body {
+  width: 100vw;
   height: 100vh;
   margin: 0;
   font-family: "Inter", sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 1.28;
-  background-image: url("../src/assets/Background.jpg");
-  @media (-webkit-min-device-pixel-ratio: 2) {
+
+  @media screen and (max-width: 1440px) {
+    background-image: url("../src/assets/Background@2x.jpg");
+    @media (-webkit-min-device-pixel-ratio: 2) {
+      background-image: url("../src/assets/Background@2x.jpg");
+    }
+  }
+
+  @media screen and (min-width: 1441px) {
     background-image: url("../src/assets/Background@2x.jpg");
   }
+
   background-repeat: no-repeat;
-  background-size: cover;
- animation: rotateBackground 500ms linear 1ms; 
+
+  animation: rotateBackground 500ms linear 1ms;
+  background-size: auto;
 }
 // main {
 //  width: 1440px;
 //   margin: auto;
 // }
+
+main {
+  flex-grow: 1;
+
+  @media screen and (min-width: 1921px) {
+    min-height: calc(100vh - 148px);
+  }
+}
 
 h1,
 h2,
@@ -56,7 +74,7 @@ address {
 
 html {
   scroll-behavior: smooth;
-  height: 100vh;
+  height: 100%;
 }
 
 button {
@@ -67,12 +85,9 @@ button {
   stroke: black;
 }
 
-.main { 
-  flex-grow: 1;
-}
-.footer {
-  margin-top: auto;
-}
+// .footer {
+//   margin-top: auto;
+// }
 // a {
 //   font-weight: 500;
 //   color: #646cff;
@@ -112,4 +127,4 @@ button {
 // 50%{background-position:100% 50%}
 
 // 100%{background-position:0% 50%}
-//  }   
+//  }
