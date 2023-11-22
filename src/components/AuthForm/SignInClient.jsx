@@ -1,11 +1,8 @@
 import { useForm } from "react-hook-form";
-import { SignInSchema, } from "./Schema";
+import { SignInSchema } from "./Schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { VscError } from "react-icons/vsc";
-
-
-
-
+import { useNavigate } from "react-router-dom";
 
 import {
   StyledButton,
@@ -17,34 +14,44 @@ import {
   StyledTitle,
   StyledInnerDiv,
 } from "./SignInClient.styled";
- 
-import { useSignInMutation } from '../../redux/authUserSlice';
+
+import { useSignInMutation } from "../../redux/authUserSlice";
 
 export const SignInClient = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
-     formState: { errors, isValid, dirtyFields },
-     } = useForm({
+    reset,
+    formState: { errors, isValid, dirtyFields },
+  } = useForm({
     mode: "onChange",
-    defaultValues: { сontract: "", identification: "" },
+    defaultValues: { сontractNumber: "", password: "" },
     resolver: yupResolver(SignInSchema),
-     });
-   const [dispatch, { isLoading }] = useSignInMutation();
-  
+  });
+  const [dispatch, { isLoading }] = useSignInMutation();
 
-   const onSubmit = (data) => {
-  const credentials = {
-    сontract: data.сontract,
-    identification: data.identification,
+  const onSubmit = (data) => {
+    console.log(data);
+    const credentials = {
+      contractNumber: data.сontract,
+      password: data.identification,
+    };
+
+    dispatch(credentials)
+      .unwrap()
+      .then(() => {
+        navigate("/user");
+
+        reset();
+      })
+      .catch((e) => console.log(e.data.message));
   };
 
-  dispatch(credentials);
-};
-    
   return (
     <>
-           <StyledForm autoComplete="off" onSubmit={handleSubmit(onSubmit)} >
+      <StyledForm autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
         <StyledFormInsight>
           <StyledTitle>Номер договору</StyledTitle>
           <StyledInnerDiv>
@@ -79,10 +86,9 @@ export const SignInClient = () => {
                   <StyledError>{errors.сontract.message}</StyledError>
                 </div>
               )}
-                 </StyledInputWrap>
-           
-                  </StyledInnerDiv>
-                       <StyledTitle>Ідентифікаційний номер</StyledTitle>
+            </StyledInputWrap>
+          </StyledInnerDiv>
+          <StyledTitle>Ідентифікаційний номер</StyledTitle>
           <StyledInnerDiv>
             <StyledInputWrap>
               <StyledInput
@@ -115,8 +121,7 @@ export const SignInClient = () => {
                   <StyledError>{errors.identification.message}</StyledError>
                 </div>
               )}
-                          </StyledInputWrap>
-           
+            </StyledInputWrap>
           </StyledInnerDiv>
           <StyledButton type="submit" disabled={!isValid || isLoading}>
             Вхід

@@ -7,11 +7,14 @@ export const signInClient = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
     signIn: builder.mutation({
-      query: (credentials) => ({
-        url: "/ulasp/signin",
-        method: "POST",
-        body: credentials, //  данные для входа (номер договора и идентификационный номер)
-      }),
+      query: (credentials ) => (
+        console.log(credentials),
+        {
+          url: "/user/signin",
+          method: "POST",
+          body: credentials, //  данные для входа (номер договора и идентификационный номер)
+        }
+      ),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         dispatch(setUser((await queryFulfilled).data));
       },

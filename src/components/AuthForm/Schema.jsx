@@ -1,12 +1,12 @@
 import * as Yup from 'yup';
 
 export const SignInSchema = Yup.object({
-  сontract: Yup.string()
-    .matches(/^[a-zA-Zа-яА-Я]{3}\d{6}[a-zA-Zа-яА-Я]$/, 'Перевірте правильність введених даних!')
-    .required("Поле обов'язкове для заповнення"),
-  identification: Yup.string()  
-        .matches(/^\d{8}$|^\d{10}$/, 'Перевірте правильність введених даних!')
-       .required("Поле обов'язкове для заповнення"),
+  // сontractNumber: Yup.string()
+  //   .matches(/^[a-zA-Zа-яА-Я]{3}\d{6}[a-zA-Zа-яА-Я]$/, 'Перевірте правильність введених даних!')
+  //   .required("Поле обов'язкове для заповнення"),
+  // password: Yup.string()  
+  //       .matches(/^\d{8}$|^\d{10}$/, 'Перевірте правильність введених даних!')
+  //      .required("Поле обов'язкове для заповнення"),
 });
 
 
