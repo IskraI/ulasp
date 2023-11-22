@@ -33,14 +33,14 @@ export const SignInAdminAndEditor = () => {
   });
 
   const onSubmit = ({ login, password }) => {
-    console.log('login', login);
-    console.log('password', password);
+    console.log("login", login);
+    console.log("password", password);
     dispatch({ login, password })
       .unwrap()
       .then((res) => {
-      console.log("res", res)
-      res.admin && navigate("/admin");
-      res.editor&& navigate("/editor")
+        console.log("res", res);
+        res.admin && navigate("/admin");
+        res.editor && navigate("/editor/cabinet"); //добавил /cabinet
         reset();
       })
       .catch((e) => console.log(e.data.message));
@@ -49,81 +49,84 @@ export const SignInAdminAndEditor = () => {
   return (
     <>
       <StyledForm autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-        <StyledFormInsight>
+        {/* <StyledFormInsight> */}
+
+        {/* <StyledInnerDiv> */}
+        <StyledInputWrap>
           <StyledTitle>Логін</StyledTitle>
-          <StyledInnerDiv>
-            <StyledInputWrap>
-              <StyledInput
-                type="login"
-                name="login"
-                placeholder="№"
-                {...register("login")}
-                className={
-                  errors.login
-                    ? "invalid-border"
-                    : dirtyFields.login
-                    ? "valid-border"
-                    : ""
-                }
+          <StyledInput
+            type="login"
+            name="login"
+            placeholder="№"
+            {...register("login")}
+            className={
+              errors.login
+                ? "invalid-border"
+                : dirtyFields.login
+                ? "valid-border"
+                : ""
+            }
+          />
+          {errors.login && (
+            <div>
+              <VscError
+                style={{
+                  width: "25px",
+                  height: "25px",
+                  color: "red",
+                  display: "flex",
+                  position: "absolute",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  right: "12px",
+                }}
               />
-              {errors.login && (
-                <div>
-                  <VscError
-                    style={{
-                      width: "25px",
-                      height: "25px",
-                      color: "red",
-                      display: "flex",
-                      position: "absolute",
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      right: "12px",
-                    }}
-                  />
-                  <StyledError>{errors.login.message}</StyledError>
-                </div>
-              )}
-            </StyledInputWrap>
-          </StyledInnerDiv>
+              <StyledError>{errors.login.message}</StyledError>
+            </div>
+          )}
+        </StyledInputWrap>
+        {/* </StyledInnerDiv> */}
+
+        {/* <StyledInnerDiv> */}
+        <StyledInputWrap>
           <StyledTitle>Пароль</StyledTitle>
-          <StyledInnerDiv>
-            <StyledInputWrap>
-              <StyledInput
-                type="password"
-                name="password"
-                placeholder="№"
-                {...register("password")}
-                className={
-                  errors.password
-                    ? "invalid-border"
-                    : dirtyFields.password
-                    ? "valid-border"
-                    : ""
-                }
+          <StyledInput
+            type="password"
+            name="password"
+            placeholder="№"
+            {...register("password")}
+            className={
+              errors.password
+                ? "invalid-border"
+                : dirtyFields.password
+                ? "valid-border"
+                : ""
+            }
+          />
+          {errors.password && (
+            <div>
+              <VscError
+                style={{
+                  width: "25px",
+                  height: "25px",
+                  color: "red",
+                  display: "flex",
+                  position: "absolute",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  right: "12px",
+                }}
               />
-              {errors.password && (
-                <div>
-                  <VscError
-                    style={{
-                      width: "25px",
-                      height: "25px",
-                      color: "red",
-                      display: "flex",
-                      position: "absolute",
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      right: "12px",
-                    }}
-                  />
-                  <StyledError>{errors.password.message}</StyledError>
-                </div>
-              )}
-            </StyledInputWrap>
-          </StyledInnerDiv>
-          <StyledButton type="submit" disabled={!isValid}>
-            Вхід
-          </StyledButton>
-        </StyledFormInsight>
+              <StyledError>{errors.password.message}</StyledError>
+            </div>
+          )}
+        </StyledInputWrap>
+
+        {/* </StyledInnerDiv> */}
+        <StyledButton type="submit" disabled={!isValid}>
+          Вхід
+        </StyledButton>
+        {/* </StyledFormInsight> */}
       </StyledForm>
     </>
   );

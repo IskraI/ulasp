@@ -11,15 +11,17 @@ import { ContainerWrraper } from "./SharedLayout.styled";
 export const SharedLayout = ({avatarURL}) => {
   return (
     <>
+
+         <Header avatarURL = {avatarURL}/>
       <ContainerWrraper>
-      <Header avatarURL = {avatarURL}/>
-      <main>
-        <Suspense fallback={"Loader"}>
-          <Outlet />
-        </Suspense>
-      </main>
-        <Footer />
-        </ContainerWrraper>
+        <main>
+          <Suspense fallback={"Loader"}>
+            <Outlet />
+          </Suspense>
+        </main>
+      </ContainerWrraper>
+      <Footer />
+
     </>
   );
 };

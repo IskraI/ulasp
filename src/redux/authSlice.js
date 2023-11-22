@@ -75,11 +75,7 @@ export const authApi = createApi({
       },
       invalidatesTags: ["auth"],
     }),
-    getPlaylistsCount: builder.query({
-      query: () => ({
-        url: "/editor/playlist/count",
-      }),
-    }),
+
   }),
 });
 
@@ -89,5 +85,4 @@ export const {
   useLogoutMutation,
   useUpdateUserMutation,
   useUpdateUserAvatarMutation,
-  useGetPlaylistsCountQuery,
 } = authApi;

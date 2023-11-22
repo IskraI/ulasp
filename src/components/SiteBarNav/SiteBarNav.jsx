@@ -8,41 +8,45 @@ import {
   SiteBarNavConteiner,
   Con,
   BottomSection,
+  SideBarLineWrapper,
+  SideBarBottomLineWrapper,
 } from "./SiteBarNav.styled";
 
 import { useLogoutMutation } from "../../redux/authSlice";
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export const SiteBarNav = () => {
   const [dispatch] = useLogoutMutation();
   const navigate = useNavigate();
   const handleLogOut = () => {
     dispatch()
-     .unwrap()
+      .unwrap()
       .then(() => {
-        navigate("/")
-       
-      })
-    
+        navigate("/");
+      });
   };
 
   return (
     <Con>
       <SiteBarNavConteiner>
-        <Profile />
+        <SideBarLineWrapper>
+          <Profile />
+        </SideBarLineWrapper>
         <NavMenu />
-        <BottomSection>
-          <ContactInfo />
-          <Exit>
-            <svg className="icon" width="24" height="24">
-              <use href={`${symbol}#icon-exit`}></use>{" "}
-            </svg>
-            <LogOuButton type="button" onClick={handleLogOut}>
-              Вихід
-            </LogOuButton>
-          </Exit>
-        </BottomSection>
+        <SideBarBottomLineWrapper>
+          <BottomSection>
+            <ContactInfo />
+            <Exit>
+              <svg className="icon" width="24" height="24">
+                <use href={`${symbol}#icon-exit`}></use>
+              </svg>
+              <LogOuButton type="button" onClick={handleLogOut}>
+                Вихід
+              </LogOuButton>
+            </Exit>
+          </BottomSection>
+        </SideBarBottomLineWrapper>
       </SiteBarNavConteiner>
     </Con>
   );

@@ -14,7 +14,7 @@ import { Button } from "../Button/Button";
 import { BASE_URL, ERROR_NOT_FOUND } from "../../constants/constants";
 
 const TracksTable = ({ tracks, isLoading, error }) => {
-  console.log(tracks);
+//   console.log(tracks);
   const sToStr = (sec) => {
     sec = Math.round(sec);
     let m = Math.trunc(sec / 60) + "";

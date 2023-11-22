@@ -14,12 +14,13 @@ export const tracksApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["LatestTracks"],
+  tagTypes: ["Tracks"],
+
   endpoints: (builder) => ({
     getAllTracks: builder.query({
       query: () => ({
         url: "/editor/tracks/latestTracks",
-        provideTags: ["LatestTracks"],
+        provideTags: ["Tracks"],
       }),
     }),
     // getTracksCount: builder.query({

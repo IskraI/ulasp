@@ -1,36 +1,37 @@
 import styled from "@emotion/styled";
 import { colors } from "../../styles/vars";
 
-
 export const StyledForm = styled.form`
-   /* height: auto; */
+  /* height: auto; */
   display: flex;
   justify-content: center;
   /* align-items: center; */
-
+  flex-direction: column; // Добавил 
 `;
 
 export const StyledFormInsight = styled.div`
-    display: flex; 
-  flex-direction: column; 
+  display: flex;
+  flex-direction: column;
   /* align-items: center;  */
-   /* height: auto;  */
- 
+  /* height: auto;  */
 `;
 
 export const StyledTitle = styled.h2`
   color: ${colors.mainFontColor};
-   font-size: 24px;
+  font-size: 24px;
   font-style: normal;
   font-weight: 400;
-  line-height: calc(29/24);
+  line-height: calc(29 / 24);
   margin-left: 0px;
   margin-bottom: 24px;
 `;
 
 export const StyledInputWrap = styled.div`
   position: relative;
-  margin-bottom: 60px;
+  margin-bottom: 24px;
+  &:nth-of-type(2) {
+    margin-bottom: 44px;
+  }
 `;
 
 export const StyledInput = styled.input`
@@ -87,16 +88,14 @@ export const StyledButton = styled.button`
   color: ${colors.mainFontColor};
   font-size: 20px;
   line-height: calc(44 / 40);
-  margin-top: 34px;
-  margin-left:auto;
-  margin-right:auto;
+  /* margin-top: 34px; */
+  margin-left: auto;
+  margin-right: auto;
 
   &:hover {
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.4) inset;
   }
 `;
-
-
 
 export const StyledError = styled.div`
   position: absolute;
