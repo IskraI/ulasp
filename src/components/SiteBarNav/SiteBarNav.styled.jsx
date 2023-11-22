@@ -8,7 +8,7 @@ export const SiteBarNavConteiner = styled.div`
   flex-direction: column;
   width: 287px;
   min-height: calc(100vh - (${sizes.header.height} + ${sizes.footer.height}));
-  border-right: 2px solid ${colors.primaryColor};
+  /* border-right: 2px solid ${colors.primaryColor}; */
   /* border-top: 2px solid ${colors.primaryColor}; */
   /* border-bottom: 2px solid ${colors.primaryColor}; */
   /* position: fixed;
@@ -17,14 +17,29 @@ export const SiteBarNavConteiner = styled.div`
   height: 100%;
    left: 0; */
 
-  background: linear-gradient(
+  /* background: linear-gradient(
     180deg,
     rgba(28, 84, 141, 0.01) 30%,
     rgba(255, 243, 191, 0.5) 100%
+  ); */
+  background: linear-gradient(
+    180deg,
+    transparent 50%,
+    rgba(255, 243, 191, 0.5) 100%
   );
+
 `;
 
+export const SideBarLineWrapper = styled.div`
+  border-right: 2px solid ${colors.accentHoverColor};
+`;
 
+export const SideBarBottomLineWrapper = styled.div`
+  display: flex;
+  align-items: end;
+  border-right: 2px solid ${colors.accentHoverColor};
+  height: 100%;
+`;
 
 export const LogOuButton = styled.button`
   color: ${colors.mainFontColor};
@@ -47,7 +62,4 @@ export const Exit = styled.div`
 `;
 
 export const BottomSection = styled.div`
-  display: flex;
-  margin-top: auto;
-  flex-direction: column;
 `;

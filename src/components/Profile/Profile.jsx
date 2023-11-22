@@ -1,9 +1,13 @@
-import { UserName } from "./Profile.styled";
+import {
+  UserName,
+  ProfileAvatar,
+  ProfileAvatarWrapper,
+} from "./Profile.styled";
 // import { useState, useEffect } from 'react';
 import { getUserState } from "../../redux/userSelectors";
 import { useSelector } from "react-redux";
 import { useUpdateUserAvatarMutation } from "../../redux/authSlice/";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import FileUpload from "../FIleUpload/FIleUpload";
 const BASE_URL = `http://localhost:8000`;
 
@@ -16,8 +20,12 @@ export const Profile = () => {
   const [dispatch, { isLoading }] = useUpdateUserAvatarMutation();
 
   const handleFormSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     const formData = new FormData();
+
+    if (!selectedImage) {
+      return;
+    }
 
     formData.append("avatarURL", selectedImage);
 
@@ -28,6 +36,9 @@ export const Profile = () => {
       })
       .catch((e) => console.log(e.data.message));
   };
+
+  useEffect(() => handleFormSubmit(), [selectedImage]);
+
   // console.log('user', user)
   const handleChooseIcon = (event) => {
     // setSelectedImage(event.target.files[0]);
@@ -38,14 +49,14 @@ export const Profile = () => {
   //     const inputRef = useRef(null);// State to hold the selected file
   //   const updateUserAvatarMutation = useUpdateUserAvatarMutation();
 
-  //    const handleAvatarUpload = (event) => {
-  //         const file = event.target.files[0];
-  //         if (file) {
-  //             const formData = new FormData();
-  //             formData.append('avatar', file);
-  //             updateUserAvatarMutation.mutate(formData);
-  //         }
-  //     };
+  const handleAvatarUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append("avatar", file);
+      updateUserAvatarMutation.mutate(formData);
+    }
+  };
   const defaultAvatarSrc = "../avatar.jpg";
 
   const avatarSrc = avatarURL
@@ -55,32 +66,20 @@ export const Profile = () => {
     : defaultAvatarSrc;
   return (
     <>
-      <form onSubmit={handleFormSubmit}>
-        <img
-          src={avatarSrc}
-          alt="Avatar"
-          style={{
-            display: "block",
-            width: "62px",
-            height: "62px",
-            borderRadius: "62px",
-            // background: `url(${avatarURL}) lightgray 50% / cover no-repeat`,
-            marginTop: "25px",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        />
+      {/* <form onSubmit={handleFormSubmit}> */}
+      <form>
+        <ProfileAvatarWrapper>
+          <FileUpload
+            selectedImage={""}
+            setSelectedImage={setSelectedImage}
+            accept="image/*"
+            change={handleChooseIcon}
+            saveChanges={handleFormSubmit}
+          >
+            <ProfileAvatar src={avatarSrc} alt="Avatar" />
+          </FileUpload>
+        </ProfileAvatarWrapper>
         {/* Я закомментил */}
-
-        <FileUpload
-          selectedImage={""}
-          setSelectedImage={setSelectedImage}
-          accept="image/*"
-          change={handleChooseIcon}
-        >
-          <button type="button">+</button>
-        </FileUpload>
-
         {/* <input
           name="name"
           type="file"

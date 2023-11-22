@@ -7,6 +7,8 @@ import {
   Exit,
   SiteBarNavConteiner,
   BottomSection,
+  SideBarLineWrapper,
+  SideBarBottomLineWrapper,
 } from "./SiteBarNav.styled";
 
 import { useLogoutMutation } from "../../redux/authSlice";
@@ -27,19 +29,23 @@ export const SiteBarNav = () => {
   return (
     <>
       <SiteBarNavConteiner>
-        <Profile />
+        <SideBarLineWrapper>
+          <Profile />
+        </SideBarLineWrapper>
         <NavMenu />
-        <BottomSection>
-          <ContactInfo />
-          <Exit>
-            <svg className="icon" width="24" height="24">
-              <use href={`${symbol}#icon-exit`}></use>
-            </svg>
-            <LogOuButton type="button" onClick={handleLogOut}>
-              Вихід
-            </LogOuButton>
-          </Exit>
-        </BottomSection>
+        <SideBarBottomLineWrapper>
+          <BottomSection>
+            <ContactInfo />
+            <Exit>
+              <svg className="icon" width="24" height="24">
+                <use href={`${symbol}#icon-exit`}></use>
+              </svg>
+              <LogOuButton type="button" onClick={handleLogOut}>
+                Вихід
+              </LogOuButton>
+            </Exit>
+          </BottomSection>
+        </SideBarBottomLineWrapper>
       </SiteBarNavConteiner>
     </>
   );

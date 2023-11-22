@@ -6,14 +6,18 @@ export const Nav = styled.nav`
   display: flex;
   align-items: center; /* Центрируем по вертикали */
   //   height: calc(100vh - (80px + 68px + 64px + 86px + 130px));
-  margin-left: 32px;
-  margin-top: 58px;
+  margin-left: auto;
+  /* margin-top: 58px; */
 `;
 
 export const List = styled.ul`
   display: flex;
   flex-direction: column;
   color: black;
+  /* margin-right: 10px; */
+
+  margin-left: auto;
+
   // gap: 21px;
 
   /* &.active {
@@ -43,10 +47,13 @@ export const NavigationLink = styled(NavLink)`
   line-height: calc(26.4 / 22);
   align-items: center;
   width: 253px;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
   padding-left: 30px;
   padding-top: 10px;
   padding-bottom: 10px;
+
+  border-right: 2px solid #fff3bf;
 
   position: relative;
   /* color: #fff; */
@@ -58,6 +65,7 @@ export const NavigationLink = styled(NavLink)`
 
   /* Add styling for the active link */
   &.active {
+    border-right: none;
     border-top: 2px solid #fff3bf;
     border-bottom: 2px solid #fff3bf;
     border-left: 2px solid #fff3bf;
@@ -67,27 +75,20 @@ export const NavigationLink = styled(NavLink)`
     border-right: none;
     border-top-right-radius: -20px; */
     /* background-image: url("../../../src/assets/VectorActive.svg"); */
+    background: linear-gradient(
+      90deg,
+      rgba(28, 84, 141, 0.6) 80%,
+
+      transparent 100%
+    );
+
+    transition: border 450ms cubic-bezier(0.4, 0, 0.2, 1);
     /* z-index: 10;
     background-size: contain; */
     /* opacity: 0.5; */
     /* background-repeat: no-repeat;
     background-position: right center; */
-    &.active::after,
-    &.active::before {
-      content: "";
-      width: 30px;
-      height: 30px;
-      position: absolute;
-      right: 0;
-    }
-    &.active::after {
-      top: -30px;
-      background: radial-gradient(circle at left top, #000 30px, #fff 30px);
-    }
-    &.active::before {
-      bottom: -30px;
-      background: radial-gradient(circle at left bottom, #000 30px, #fff 30px);
-    }
+
     svg {
       // fill: #FFF3BF;
       stroke: #fff3bf;
@@ -95,7 +96,16 @@ export const NavigationLink = styled(NavLink)`
   }
 
   &:hover {
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.6) inset;
+    /* box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.6) inset; */
+
+    svg {
+      stroke: #fff3bf;
+      transition: stroke 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  }
+
+  &:active:hover {
+    color: #000;
   }
 `;
 
