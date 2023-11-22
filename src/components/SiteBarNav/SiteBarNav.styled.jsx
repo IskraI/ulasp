@@ -3,23 +3,15 @@ import { colors } from "../../styles/vars";
 import { NavLink } from "react-router-dom";
 import { sizes } from "../../styles/SharedStyles";
 
-
-export const Con = styled.div`
-height:100vh -68px;
-border-right: 2px solid ${colors.primaryColor};
-
-`
 export const SiteBarNavConteiner = styled.div`
   display: flex;
   flex-direction: column;
   width: 287px;
-
   min-height: calc(100vh - (${sizes.header.height} + ${sizes.footer.height}));
   /* border-right: 2px solid ${colors.primaryColor}; */
   /* border-top: 2px solid ${colors.primaryColor}; */
   /* border-bottom: 2px solid ${colors.primaryColor}; */
   /* position: fixed;
-
   top: 0;
   bottom: 0;
   height: 100%;
@@ -35,7 +27,6 @@ export const SiteBarNavConteiner = styled.div`
     transparent 50%,
     rgba(255, 243, 191, 0.5) 100%
   );
-
 `;
 
 export const SideBarLineWrapper = styled.div`
@@ -69,5 +60,4 @@ export const Exit = styled.div`
   align-items: center;
 `;
 
-export const BottomSection = styled.div`
-`;
+export const BottomSection = styled.div``;
