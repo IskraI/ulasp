@@ -1,6 +1,5 @@
 import symbol from "../assets/symbol.svg";
 
-
 export const propEditorNav = [
   {
     id: "navCabinet",
@@ -47,11 +46,18 @@ export const propAdminNav = [
     navigation: "users",
     picture: `${symbol}#icon-list`,
   },
+
   {
-    id: "navMedia",
-    title: "Медіатека",
-    navigation: "medialibrary",
-    picture: `${symbol}#icon-rmediaTec`,
+    id: "navOnline",
+    title: "Онлайн",
+    navigation: "online",
+    picture: `${symbol}#icon-online`,
+  },
+  {
+    id: "navAnalytics",
+    title: "Аналітика",
+    navigation: "analytics",
+    picture: `${symbol}#icon-analytics`,
   },
 ];
 
@@ -76,15 +82,9 @@ export const propUserNav = [
   },
 
   {
-    id: "navOnline",
-    title: "Онлайн",
-    navigation: "online",
-    picture: `${symbol}#icon-online`,
-  },
-  {
-    id: "navAnalytics",
-    title: "Аналітика",
-    navigation: "analytics",
-    picture: `${symbol}#icon-analytics`,
+    id: "navMedia",
+    title: "Медіатека",
+    navigation: "medialibrary",
+    picture: `${symbol}#icon-rmediaTec`,
   },
 ];
