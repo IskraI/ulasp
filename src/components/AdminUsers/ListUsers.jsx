@@ -4,17 +4,17 @@ import UserTable from "../UsersTable/UsersTable";
 const ListUsers = () => {
   const { data, isLoading } = useGetUsersListQuery();
 
-  console.log(data);
+
 
 
   const visibleColumns = [
-    { key: "firstName", label: "Ім’я", type: "name" },
+    { key: "firstName", label: "Ім’я", type: "nameLink" },
     { key: "contractNumber", label: "№ договору", type: "string" },
     { key: "taxCode", label: "ИНН", type: "string" },
-    { key: "status", label: "Статус", type: "boolean" },
+    { key: "status", label: "Статус", type: "status" }, // відкрито заблоковано
     { key: "lastPay", label: "Дата оплати", type: "string" },
     { key: "dateOfAccess", label: "Відкрито до", type: "string" },
-    { key: "acces", label: "Допуск", type: "string" },
+    { key: "access", label: "Допуск", type: "access" }, // он - офф
   ];
 
   return (

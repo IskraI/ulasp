@@ -6,15 +6,18 @@ import {
 // import { useState, useEffect } from 'react';
 import { getUserState } from "../../redux/userSelectors";
 import { useSelector } from "react-redux";
+
 import { useUpdateUserAvatarMutation } from "../../redux/authSlice/";
 import { useEffect, useRef, useState } from "react";
 import FileUpload from "../FIleUpload/FIleUpload";
+
 const BASE_URL = `http://localhost:8000`;
 
 export const Profile = () => {
   const user = useSelector(getUserState);
 
   const { firstName, lastName, fatherName, avatarURL } = user;
+
   //для смены аватар
   const [selectedImage, setSelectedImage] = useState(null);
   const [dispatch, { isLoading }] = useUpdateUserAvatarMutation();
@@ -57,15 +60,15 @@ export const Profile = () => {
       updateUserAvatarMutation.mutate(formData);
     }
   };
-  const defaultAvatarSrc = "../avatar.jpg";
 
+  const defaultAvatarSrc = "../avatar.jpg";
   const avatarSrc = avatarURL
-    ? selectedImage
-      ? URL.createObjectURL(selectedImage)
-      : `${BASE_URL}/${avatarURL}`
-    : defaultAvatarSrc;
+      ?  `${BASE_URL}/${avatarURL}`
+      : defaultAvatarSrc;
+ 
   return (
     <>
+
       {/* <form onSubmit={handleFormSubmit}> */}
       <form>
         <ProfileAvatarWrapper>
@@ -91,6 +94,7 @@ export const Profile = () => {
           {isLoading ? "<LoadingSpinner size={30} />" : "Save changes"}
         </button> */}
       </form>
+
 
       {/* <input
         type="file"

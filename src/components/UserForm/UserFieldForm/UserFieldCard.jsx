@@ -12,43 +12,39 @@ import {
   RegisterCommentField,
   CommentTextarea,
 } from "../UserCreateForm.styled";
-import ContactFaceField from "./ContactFaceField";
-import RegisterNameFieldForm from "./RegisterNameFieldForm";
-import CommonFieldForm from "../UserFieldForm/CommonFields";
+import ContactFaceFieldCard from "./ContactFaceFieldCard";
+import RegisterNameFieldCard from "./RegisterNameFieldCard";
+import CommonFieldCard from "../UserFieldForm/CommonFieldsCard";
 import { Button } from "../../Button/Button";
 import { useForm, Controller } from 'react-hook-form';
-const UserFieldForm = ({
+const UserFieldCard = ({
   user,
   control,
-  handleTypeOfStatus,
+  handleTypeOfAccess,
   activeSectionCard,
-  typeOfStatus,
+  typeOfAccess,
   typeOfUser,
   isValid,
   errors,
   register,
+  isEditing
 }) => {
-  const [isEditing, setIsEditing] = useState(false);
+  console.log('isEditing UserFieldCard', isEditing)
 
-  const handleEditActivation = () => {
-    // You can perform additional actions if needed before allowing editing
-    setIsEditing(true);
-  };
-  console.log('isEditing', isEditing)
   return (
     <Fieldform>
       <RegisterLeftBlock>
-        <RegisterNameFieldForm
-          handleTypeOfStatus={handleTypeOfStatus}
+        <RegisterNameFieldCard
+          handleTypeOfAccess={handleTypeOfAccess}
           register={register}
           errors={errors}
           typeOfUser={typeOfUser}
-          typeOfStatus={typeOfStatus}
+          typeOfAccess={typeOfAccess}
           isValid={isValid}
           activeSectionCard={activeSectionCard}
           readOnly={!isEditing}
           user={user}
-          handleEditActivation={handleEditActivation}
+                 control={control}
         />
 
         {activeSectionCard === "User" && (
@@ -71,7 +67,7 @@ const UserFieldForm = ({
               />
             </RegisterField>
 
-            <CommonFieldForm
+            <CommonFieldCard
               typeOfUser={typeOfUser}
               register={register}
               control={control}
@@ -83,23 +79,39 @@ const UserFieldForm = ({
 
             <RegisterField>
               <RegisterLabel>Надання доступу до*</RegisterLabel>
-              <RegisterInput
-                type="text"
-                placeholder="Надання доступу до"
-                readOnly={!isEditing}
-                value={user.dateOfAccess}
-                {...register("dateOfAccess")}
-              />
+              <Controller
+                name="dateOfAccess"
+                control={control}
+                defaultValue={user.dateOfAccess}
+                render={({ field }) => (
+                  <RegisterInput
+                    type="text"
+                    placeholder="Надання доступу до"
+                    readOnly={!isEditing}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                  )}
+                  />
+          
             </RegisterField>
             <RegisterField>
               <RegisterLabel>Остання оплата* </RegisterLabel>
-              <RegisterInput
-                type="text"
-                placeholder="Остання оплата"
-                readOnly={!isEditing}
-                value={user.lastPay}
-                {...register("lastPay")}
-              />
+              <Controller
+                name="lastPay"
+                control={control}
+                defaultValue={user.lastPay}
+                render={({ field }) => (
+                  <RegisterInput
+                    type="text"
+                    placeholder="Остання оплата"
+                    readOnly={!isEditing}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                  )}
+                  />
+            
             </RegisterField>
             <RegisterField>
               <RegisterLabel>Кількість доданих плейлистів </RegisterLabel>
@@ -118,7 +130,7 @@ const UserFieldForm = ({
               />
             </RegisterField>
 
-            <ContactFaceField
+            <ContactFaceFieldCard
               control={control}
               register={register}
               errors={errors}
@@ -131,7 +143,7 @@ const UserFieldForm = ({
 
         {activeSectionCard === "MusicEditor" && (
           <>
-            <CommonFieldForm
+            <CommonFieldCard
               typeOfUser={"fop"}
               register={register}
               control={control}
@@ -183,4 +195,4 @@ const UserFieldForm = ({
   );
 };
 
-export default UserFieldForm;
+export default UserFieldCard;

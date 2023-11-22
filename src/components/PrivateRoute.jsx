@@ -24,8 +24,8 @@ const PrivateRoute = ({ component: Component, redirectTo = "/" }) => {
 
   
   if (isError) {
-    // console.log("Ошибка в запросе");
-    return <Navigate to={redirectTo} />;
+    console.log("Ошибка в запросе");
+    return <Navigate to={"/adminlogin"} />;
   }
 
 

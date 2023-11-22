@@ -70,6 +70,7 @@ export const authApi = createApi({
         formData: true,
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        console.log('await queryFulfilled).data', await queryFulfilled);
         dispatch(setUser((await queryFulfilled).data));
       },
       invalidatesTags: ["auth"],

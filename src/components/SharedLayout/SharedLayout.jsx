@@ -8,10 +8,11 @@ import { ContainerWrraper } from "./SharedLayout.styled";
 
 // import { Container } from "./SharedLayout.styled";
 
-export const SharedLayout = () => {
+export const SharedLayout = ({avatarURL}) => {
   return (
     <>
-      <Header />
+
+         <Header avatarURL = {avatarURL}/>
       <ContainerWrraper>
         <main>
           <Suspense fallback={"Loader"}>
@@ -20,6 +21,7 @@ export const SharedLayout = () => {
         </main>
       </ContainerWrraper>
       <Footer />
+
     </>
   );
 };

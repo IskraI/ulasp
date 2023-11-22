@@ -26,10 +26,11 @@ body {
   animation: rotateBackground 500ms linear 1ms;
   background-size: auto;
 }
-// main {
+main {
 //  width: 1440px;
-//   margin: auto;
-// }
+  margin-top: 80px;
+  // height: calc(100vh - (80px + 68px));
+}
 
 main {
   flex-grow: 1;

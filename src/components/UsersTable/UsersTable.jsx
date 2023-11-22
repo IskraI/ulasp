@@ -7,6 +7,8 @@ import {
   Details,
 } from "../SearchUsers/SearchUsers.styled";
 import { Button } from "../Button/Button";
+import { useUnblockUserByIdMutation } from "../../redux/dataUsersSlice";
+import { useNavigate, useParams } from "react-router-dom";
 
 const UsersTable = ({ users, visibleColumns }) => {
 
@@ -19,6 +21,19 @@ const UsersTable = ({ users, visibleColumns }) => {
     const formattedDate = `${day}.${month}.${year}`;
     return formattedDate;
   };
+   const navigate = useNavigate();
+      const [dispatchUnblock, { isLoading: isLoadingUnblock }] = useUnblockUserByIdMutation(); 
+
+  const handleSend = async (id) => {
+     console.log("ID:", id);
+    dispatchUnblock(id)
+      .unwrap()
+      .then(() => {
+        navigate("/admin/users");
+      })
+      .catch((error) => console.log(error.data.message));
+  };
+
 
   return (
     <>
@@ -49,19 +64,34 @@ const UsersTable = ({ users, visibleColumns }) => {
                         ) : (
                           user.firstName + " " + user.lastName
                         )
+                      ) : column.type === "nameLink" ? (
+                        user.name ? (
+                          <Link to={`/admin/users/carduser/${user._id}`}>
+                         { user.name }
+                          </Link>
+                        ) : (
+                          <Link to={`/admin/users/carduser/${user._id}`}>
+                        {  `${user.firstName} ${user.lastName}`}
+                          </Link>
+                        )
                       ) : column.type === "link" ? ( 
                         <Link to={`/admin/users/carduser/${user._id}`}>
                         картка
                         </Link>
-                      ) : column.key === "boolean" ? (
-                        user[column.key]
-                      ) : column.key === "sendEmail" ? (
+                      ) :
+                      column.key === "access" ? (
+                        ( <>{user[column.key] === true ? "On" : "Off"}</>)
+                      ) :
+                      column.key === "status" ? (
+                       ( <>{user[column.key] === true ? "Відкрито" : "Заблоковано"}</>)
+                      ): column.key === "sendEmail" ? (
                         <Button
                           type="button"
                           text="Відправити"
                           padding="8px"
                           fontsize= "14px"
-                          onClick={() => console.log("send email")}
+                          onClick={() => handleSend(user._id)}
+                                      
                         ></Button>
                       ) : (
                         user[column.key]
