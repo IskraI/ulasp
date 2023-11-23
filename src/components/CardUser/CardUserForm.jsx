@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-import { UserSchema, MusicEditorSchema } from "../UserForm/UserFopSchema";
+import { UserFopSchema, MusicEditorSchema } from "../UserForm/UserSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
-  useCreateFopUserMutation,
-  useCreateCompanyUserMutation,
+  useUpdateEditorUserMutation,
+  useUpdateCompanyUserMutation,
+  useUpdateFopUserMutation,
 } from "../../redux/dataUsersSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -31,7 +32,7 @@ import { Button } from "../Button/Button";
 
 
 const UserCardForm = ({ user }) => {
-const {userFop, access, status, editorRole, adminRole} = user;
+const {userFop, access, status, editorRole, adminRole, _id:id} = user;
   const activeSectionCard =  adminRole||editorRole? "Editor" : "User"; //user or editor
 
   // const typeOfStatus = status; //on/off
@@ -39,7 +40,11 @@ const {userFop, access, status, editorRole, adminRole} = user;
 
   const [isEditing, setIsEditing] = useState(false);
   const [typeOfAccess, setTypeOfAccess] = useState(access); //on/off статус он или офф
-  
+  const [dispatchFopUpdate, { isLoading: isLoadingFop }] = useUpdateFopUserMutation(); //ф-я для отправки формы юзера фоп
+  const [dispatchCompanyUpdate, { isLoading: isLoadingCompany }] = //ф-я для отправки формы юзера тов
+    useUpdateCompanyUserMutation();
+    const [dispatchEditorUpdate, { isLoading: isLoadingEditor }] = //ф-я для отправки формы юзера тов
+    useUpdateEditorUserMutation();
   
 
 
@@ -66,9 +71,49 @@ const {userFop, access, status, editorRole, adminRole} = user;
   };
 
   const onFormSubmit = (data) => {
+    
+  
+    // if (editorRole === true) {
+    //   const formData = { ...data};
+    //   //  console.log('formData', formData);
+    //    dispatchEditorUpdate(formData)
+    //     .unwrap()
+    //     .then(() => {
+    //       navigate("/admin/editor");
+    //       onCloseModal();
+    //     })
+    //     .catch((error) => console.log(error.data));
+        
+    // }
+
+    if (typeOfUser === "fop") {
+      const formData = { ...data, access: typeOfAccess};
+      console.log("formData", id, formData);
+      dispatchFopUpdate(id, formData)
+        .unwrap()
+        .then(() => {
+          setIsEditing( false);
+          // navigate("/admin/users");
+         
+        })
+        .catch((error) => console.log(error.data.message));
+    }
+    if (typeOfUser === "tov") {
+      const formData = { ...data, access: typeOfAccess, userFop: typeOfUser };
+      console.log("formData тов", formData);
+      dispatchCompanyUpdate(formData)
+        .unwrap()
+        .then(() => {
+          // navigate("/admin/users");
+          setIsEditing( false);
+        })
+        .catch((error) => console.log(error.data));
+    }
+    
    
-    console.log("data", data);
-    setIsEditing( false);
+   
+    
+
 
    
   };
@@ -77,7 +122,7 @@ const {userFop, access, status, editorRole, adminRole} = user;
   
   };
 
-
+console.log('typeOfAccess', typeOfAccess)
   return (<>
 
    {/* <UserCreateModal> */}

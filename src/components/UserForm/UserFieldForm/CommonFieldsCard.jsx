@@ -1,22 +1,14 @@
 import {
-    RegisterForm,
-    RegisterBlock,
-    ButtonSwitch,
+   
     RegisterField,
-    RegisterNameBlock,
+ 
     RegisterLabel,
     RegisterInput,
-    RegisterArea,
-   
-    RegisterRigthBlock,
-    Commentlabel,
-    Fieldform,
-  
-    RegisterCommentField,
-    CommentTextarea,
+
   } from "../UserCreateForm.styled";
 
-  import { Button } from "../../Button/Button";
+  import { useForm, Controller } from "react-hook-form";
+  
   const CommonFieldCard = ({
     user,
     readOnly,
@@ -26,58 +18,90 @@ import {
     register,
     typeOfUser
   }) => {
-   console.log('readOnly', readOnly)
+
 
     return (
     <>
                
               <RegisterField>
                 <RegisterLabel>Код ЄДРПОУ (ІНН)*</RegisterLabel>
-                <RegisterInput
-                  type="text"
-                  placeholder="Код ЄДРПОУ (ІНН)"
-                  readOnly={readOnly}
-                  value={user.taxCode ?? ""}
-                  {...register("taxCode")}
-                />
+                <Controller
+                name="taxCode"
+                control={control}
+                defaultValue={user.taxCode}
+                render={({ field }) => (
+                  <RegisterInput
+                    type="text"
+                    placeholder="Код ЄДРПОУ (ІНН)"
+                    readOnly={readOnly}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                  )}
+                  />
+               
              
               </RegisterField>
 
               {(typeOfUser === "fop") && (
                 <RegisterField>
                   <RegisterLabel>Дата народження</RegisterLabel>
+                  <Controller
+                name="dayOfBirthday"
+                control={control}
+                defaultValue={user.dayOfBirthday}
+                render={({ field }) => (
                   <RegisterInput
                     type="text"
                     placeholder="Дата народження"
                     readOnly={readOnly}
-                    value ={user.dayOfBirthday}
-                    {...register("dayOfBirthday")}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
                   />
+                  )}
+                  />
+                 
                             </RegisterField>
               )}
   
               <RegisterField>
                 <RegisterLabel>Номер телефону*</RegisterLabel>
-                <RegisterInput
-                  type="text"
-                  placeholder="Номер телефону"
-                  readOnly={readOnly}
-                    value ={user.telNumber}
-                  {...register("telNumber")}
-                />
+                <Controller
+                name="telNumber"
+                control={control}
+                defaultValue={user.telNumber}
+                render={({ field }) => (
+                  <RegisterInput
+                    type="text"
+                    placeholder="Номер телефону"
+                    readOnly={readOnly}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                  )}
+                  />
+              
             
              
               </RegisterField>
 
               <RegisterField>
                 <RegisterLabel>E-mail*</RegisterLabel>
-                <RegisterInput
-                  type="text"
-                  placeholder="E-mail"
-                  readOnly={readOnly}
-                    value ={user.email}
-                  {...register("email")}
-                />
+                  <Controller
+                name="email"
+                control={control}
+                defaultValue={user.email}
+                render={({ field }) => (
+                  <RegisterInput
+                    type="text"
+                    placeholder="Номер телефону"
+                    readOnly={readOnly}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                  )}
+                  />
+             
              
               </RegisterField>
               
