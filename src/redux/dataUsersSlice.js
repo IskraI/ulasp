@@ -17,7 +17,7 @@ export const dataUsersApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["dataUsers", "dataAdmins"],
+  tagTypes: ["dataUsers", "dataAdmins", "dataUser"],
   endpoints: (builder) => ({
     // getAdminList: builder.query({
     //   query: (admin:false) => ({ url: 'admin' }),
@@ -36,15 +36,15 @@ export const dataUsersApi = createApi({
         url: `admin/users/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["dataUsers"],
+      invalidatesTags: ["dataUsers", "dataUser"],
     }),
 
     unblockUserById: builder.mutation({
       query: (id) => ({
-        url: `admin/users/${id}`,
+        url: `admin/users/status/${id}`,
         method: "PATCH",
       }),
-      invalidatesTags: ["dataUsers"],
+      invalidatesTags: ["dataUsers", "dataUser"],
     }),
 
     getUserById: builder.query({
@@ -75,6 +75,37 @@ export const dataUsersApi = createApi({
       }),
       invalidatesTags: ["dataUsers"],
     }),
+    updateEditorUser: builder.mutation({
+      query: (id, data) => ({
+        url: `/admin/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["dataUsers"],
+    }),
+
+    updateFopUser: builder.mutation({
+      query: (id, data) => ({
+        url: `admin/users/${id}`,
+        method: "PATCH",
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }),
+      invalidatesTags: ["dataUsers"],
+    }),
+    updateCompanyUser: builder.mutation({
+      query: (id, data) => ({
+        url: `admin/users/${id}`,
+        method: "PATCH",
+        body: data,
+       
+      }),
+      invalidatesTags: ["dataUsers"],
+    }),
+
+
     onQueryCompleted: (data) => {
       // Add logic here to close the modal
       // For example, dispatch an action to update the modal state in your store.
@@ -92,4 +123,9 @@ export const {
   useCreateCompanyUserMutation,
   useCreateFopUserMutation,
   useCreateEditorUserMutation,
+  useUpdateEditorUserMutation,
+  useUpdateFopUserMutation,
+  useUpdateCompanyUserMutation,
+  
+  
 } = dataUsersApi;

@@ -14,69 +14,82 @@ const ContactFaceFieldCard = ({ user, register, errors, margintop, control, dirt
     <RegisterContactField margintop={margintop}>
       <RegisterField>
         <RegisterLabel>Контактна особа* </RegisterLabel>
-        <RegisterInput
-          type="text"
-          placeholder="Контактна особа"
-          readOnly = {readOnly}
-                value={user.contactFace}
-   
-          {...register("contactFace")}
-        />
-      
+        <Controller
+                name="contactFace"
+                control={control}
+                defaultValue={user.contactFace}
+                render={({ field }) => (
+                  <RegisterInput
+                    type="text"
+                    placeholder="Контактна особа"
+                    readOnly={readOnly}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                  )}
+                  />
+     
       </RegisterField>
       <RegisterField>
         <RegisterLabel>Ідентифікаційний номер* </RegisterLabel>
-        <RegisterInput
-          type="text"
-          placeholder="Ідентифікаційний номер"
-          readOnly = {readOnly}
-          value={user.contactFaceTaxCode}
-          {...register("contactFaceTaxCode")}
-        />
+        <Controller
+                name="contactFaceTaxCode"
+                control={control}
+                defaultValue={user.contactFaceTaxCode}
+                render={({ field }) => (
+                  <RegisterInput
+                    type="text"
+                    placeholder="Ідентифікаційний номер"
+                    readOnly={readOnly}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                  )}
+                  />
+      
    
       </RegisterField>
       <RegisterField>
       <RegisterLabel>Номер телефону* </RegisterLabel>
-      <RegisterInput
-          type="text"
-          placeholder="Номер телефону"
-          readOnly = {readOnly}
-          value={user.contactFaceTelNumber}
-          {...register("contactFaceTelNumber")}
-        />
-
+      <Controller
+                name="contactFaceTelNumber"
+                control={control}
+                defaultValue={user.contactFaceTelNumber}
+                render={({ field }) => (
+                  <RegisterInput
+                    type="text"
+                    placeholder="Номер телефону"
+                    readOnly={readOnly}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                  )}
+                  />
+     
 
       
-  {/* <Controller
-    name="contactFaceTelNumber"
-    control={control}
-    defaultValue=""
-    render={({ field }) => (
-      <InputMask
-        mask="+380999999999"
-        // maskChar={null}
-        type="text"
-        placeholder="Номер телефону"
-        {...field}
-      />
-    )}
-  /> */}
-  <p>
-    {/* {errors.contactFaceTelNumber && errors.contactFaceTelNumber.message} */}
-  </p>
+
       </RegisterField>
 
       
       <RegisterField>
         <RegisterLabel>E-mail </RegisterLabel>
-        <RegisterInput
-          type="text"
-          placeholder="E-mail"
-          readOnly = {readOnly}
-          value={user.contactFaceEmail}
-          {...register("contactFaceEmail")}
-        />
-  
+        <Controller
+                name="contactFaceEmail"
+                control={control}
+                defaultValue={user.contactFaceEmail}
+                render={({ field }) => (
+                  <RegisterInput
+                    type="text"
+                    placeholder="E-mail"
+                    readOnly={readOnly}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                  )}
+                  />
+     
+        
       </RegisterField>
     </RegisterContactField>
   );

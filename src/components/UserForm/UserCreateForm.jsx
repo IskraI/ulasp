@@ -2,7 +2,7 @@ import { useState } from "react";
 
 
 import { useForm, Controller } from "react-hook-form";
-import { UserSchema, MusicEditorSchema } from "./UserFopSchema";
+import { UserFopSchema, UserCompanySchema, MusicEditorSchema } from "./UserSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   useCreateFopUserMutation,
@@ -46,7 +46,7 @@ const UserCreateForm = ({ onCloseModal   }) => {
   } = useForm({
     mode: "onChange",
     // defaultValues: { name: '', email: '', password: '' },
-    resolver: activeSection === 'User' ? yupResolver(UserSchema) : yupResolver(MusicEditorSchema)
+    resolver: typeOfUser === 'fop' ? yupResolver(UserFopSchema) : typeOfUser === 'tov' ? yupResolver(UserCompanySchema): yupResolver(MusicEditorSchema)
   });
 
   //перемикач дапуска
@@ -61,12 +61,13 @@ const UserCreateForm = ({ onCloseModal   }) => {
   //перемикач типа юзера тов или фоп
   const handleTypeOfUser = () => {
     setTypeOfUser(typeOfUser === "tov" ? "fop" : "tov");
+    reset();
   };
 
   //отправка данных формы в зависимости от фоп или тов или редактор
   const onFormSubmit = (data) => {
    
-   
+    console.log(data);
   
     if (activeSection === "MusicEditor") {
       const formData = { ...data};
@@ -94,6 +95,7 @@ const UserCreateForm = ({ onCloseModal   }) => {
     }
     if (typeOfUser === "tov") {
       const formData = { ...data, access: typeOfAccess, userFop: typeOfUser };
+      console.log(formData);
       dispatchCompany(formData)
         .unwrap()
         .then(() => {
