@@ -46,11 +46,15 @@ export const dataUsersApi = createApi({
       }),
       invalidatesTags: ["dataUsers", "dataUser"],
     }),
-
+    getAdminById: builder.query({
+      query: (id) => ({ url: `admin/${id}` }),
+      providesTags: ["dataUser"],
+    }),
     getUserById: builder.query({
       query: (id) => ({ url: `admin/users/${id}` }),
       providesTags: ["dataUser"],
     }),
+   
     createFopUser: builder.mutation({
       query: (body) => ({
         url: "/admin/create-fop",
@@ -76,33 +80,41 @@ export const dataUsersApi = createApi({
       invalidatesTags: ["dataUsers"],
     }),
     updateEditorUser: builder.mutation({
-      query: (id, data) => ({
+      query: ( {id, ...body}) => ({
+
+
         url: `/admin/${id}`,
         method: "PATCH",
-        body: data,
+        body,
+       
       }),
-      invalidatesTags: ["dataUsers"],
+          
+      invalidatesTags: ["dataUsers", "dataUser"],
     }),
 
     updateFopUser: builder.mutation({
-      query: (id, data) => ({
+      query: ( {id, ...body}) => ({
+
+
         url: `admin/users/${id}`,
         method: "PATCH",
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }),
-      invalidatesTags: ["dataUsers"],
-    }),
-    updateCompanyUser: builder.mutation({
-      query: (id, data) => ({
-        url: `admin/users/${id}`,
-        method: "PATCH",
-        body: data,
+        body,
        
       }),
-      invalidatesTags: ["dataUsers"],
+      
+      invalidatesTags: ["dataUsers", "dataUser"],
+    }),
+    updateCompanyUser: builder.mutation({
+      query: ( {id, ...body}) => ({
+
+
+        url: `admin/users/${id}`,
+        method: "PATCH",
+        body,
+       
+      }),
+     
+      invalidatesTags: ["dataUsers", "dataUser"],
     }),
 
 
@@ -115,7 +127,7 @@ export const dataUsersApi = createApi({
 });
 
 export const {
-  // useGetAdminListQuery,
+  useGetAdminByIdQuery,
   useGetUsersListQuery,
   useDelUserByIdMutation,
   useUnblockUserByIdMutation,

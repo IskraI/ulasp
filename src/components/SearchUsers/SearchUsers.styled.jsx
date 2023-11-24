@@ -1,12 +1,31 @@
 import styled from "@emotion/styled";
 import { colors } from "../../styles/vars";
 
+import { NavLink } from "react-router-dom";
+
+
+export const Link = styled(NavLink)`
+
+ &.active {text-decoration: underline}
+
+`;
 export const SearchUsersContainer = styled.div`
 
  
    display: flex;
+   justify-content: space-between;
   
    align-items: end;
+   margin-bottom: 23px;
+
+`;
+export const UsersContainer = styled.div`
+
+ 
+   display: flex;
+   justify-content: space-between; 
+   align-items: start;
+   padding-top: 4px;
    margin-bottom: 23px;
 
 `;
@@ -22,8 +41,9 @@ export const Input = styled.input`
   border-radius: 10px;
   border: 1px solid ${colors.mainFontColor};
   background-color: transparent;
+
   /* margin-right: 64px; */
-  margin-left: auto;
+  /* margin-left: auto; */
   /* margin-top: 29px; */
   ::placeholder {
     text-align: right;
