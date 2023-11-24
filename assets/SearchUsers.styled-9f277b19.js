@@ -1,12 +1,26 @@
-import{n as t,c as o}from"./index-345223ce.js";const i=t.div`
+import{n as t,N as n,c as e}from"./index-09340bcb.js";const a=t(n)`
+
+ &.active {text-decoration: underline}
+
+`,l=t.div`
 
  
    display: flex;
+   justify-content: space-between;
   
    align-items: end;
    margin-bottom: 23px;
 
-`,l=t.input`
+`,r=t.div`
+
+ 
+   display: flex;
+   justify-content: space-between; 
+   align-items: start;
+   padding-top: 4px;
+   margin-bottom: 23px;
+
+`,s=t.input`
   display: flex;
   width: 219px;
   height: 40px;
@@ -15,16 +29,17 @@ import{n as t,c as o}from"./index-345223ce.js";const i=t.div`
   align-items: center;
   flex-shrink: 0;
   border-radius: 10px;
-  border: 1px solid ${o.mainFontColor};
+  border: 1px solid ${e.mainFontColor};
   background-color: transparent;
+
   /* margin-right: 64px; */
-  margin-left: auto;
+  /* margin-left: auto; */
   /* margin-top: 29px; */
   ::placeholder {
     text-align: right;
     color: rgba(0, 0, 0, 0.4);
   }
-`,a=t.table`
+`,p=t.table`
   table-layout: fixed; 
   /* width: 100%; */
   /* border-collapse: collapse; */
@@ -58,16 +73,16 @@ margin-right: 20px;
      
       
     }
-  }`,r=t.th`
-  color: ${o.mainFontColor};
+  }`,d=t.th`
+  color: ${e.mainFontColor};
   font-size: 16px;
   font-weight: 600;
   text-align: left;
   padding: 8px;
  
-  flex: ${e=>e.isFirstColumn?"0 0 20%":"1"};
+  flex: ${o=>o.isFirstColumn?"0 0 20%":"1"};
   
-`,s=t.tr`
+`,x=t.tr`
   height: 54px;
   border-radius: 10px;
 
@@ -77,14 +92,14 @@ display: flex;
 
 
   
-`,p=t.td`
+`,c=t.td`
 padding: 8px;
   text-align: left;
-  flex: ${e=>e.isFirstColumn?"0 0 20%":"1"};
+  flex: ${o=>o.isFirstColumn?"0 0 20%":"1"};
        
  
-`,d=t.h3`
-  color: ${o.mainFontColor};
+`,f=t.h3`
+  color: ${e.mainFontColor};
   /* font-size: 22px; */
   /* margin-top: 43px; */
   /* margin-left: 111px; */
@@ -96,16 +111,16 @@ padding: 8px;
 font-size: 22px;
 font-weight: 400;
 
-`,x=t.p`
-  color: ${o.mainFontColor};
+`,g=t.p`
+  color: ${e.mainFontColor};
   font-size: 24px;
   font-weight: 500;
-`,c=t.p`
-  color: ${o.mainFontColor};
+`,m=t.p`
+  color: ${e.mainFontColor};
   font-size: 22px;
   font-weight: 400;
 `;t.div`
-  color: ${o.mainFontColor};
+  color: ${e.mainFontColor};
  font-family: Inter;
 font-size: 16px;
 font-style: normal;
@@ -115,4 +130,4 @@ background-color: transparent;
  outline: none;
   border: none;
 
-`;export{l as I,r as R,i as S,d as T,x as a,c as b,a as c,s as d,p as e};
+`;export{s as I,a as L,d as R,l as S,f as T,r as U,g as a,m as b,p as c,x as d,c as e};
