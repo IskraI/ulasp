@@ -37,6 +37,12 @@ export const SectionUser = styled.div`
   display: flex;
   justify-content: left;
   gap: 48px;
+  font-family: Inter;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+
 `;
 export const Fieldform = styled.div`
   display: flex;
@@ -84,6 +90,11 @@ export const RegisterInput = styled.input`
   position: relative;
   /* outline: none; */
   border: 0.25px solid rgba(23, 22, 28, 0.5);
+  font-family: Inter;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
   &.invalid {
   outline: 1px solid red
  }
@@ -136,7 +147,7 @@ export const FormButton = styled.button`
 export const CommentTextarea = styled.textarea`
   background-color: rgba(234, 234, 234, 0.32);
   /* width: 100%; */
-  height: 220px;
+  height: ${(props) => (props.height ? props.height : "220px")};
   padding: 8px;
   display: flex;
   align-items: center;
@@ -197,7 +208,7 @@ export const RegisterCommentField = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: ${(props) => (props.width ? "props.width" : "auto")};
+  width: ${(props) => (props.width ? props.width : "auto")};
   gap: 13px;
   border: none;
 `;
@@ -206,6 +217,11 @@ export const RegisterNameField = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  font-family: Inter;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
 `;
 
 export const RegisterNameLabel = styled.label`
@@ -232,6 +248,11 @@ export const RegisterNameInput = styled.input`
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.4);
   outline: none;
+  font-family: Inter;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
   
  &.invalid {
   outline: 1px solid red
@@ -288,4 +309,68 @@ export const Tooltip = styled.span`
     display: block;
     /* Ваши стили для видимой подсказки */
   }
+`;
+export const LoginForm = styled.form`
+  display: flex;
+  margin-top: 90px;
+  flex-direction: column;
+width: 277px;
+  gap: 16px;
+
+`;
+
+
+export const LoginField = styled.div`
+display: flex;
+flex-direction: column;
+ 
+
+`;
+export const LoginLabel= styled.label`
+display: flex;
+flex-direction: column;
+border: none;
+
+color: rgba(0, 0, 0, 0.4);
+font-family: Inter;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 18px;
+`;
+export const LoginInput = styled.input`
+font-family: Inter;
+font-size: 20px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+  display: flex;
+  background-color: inherit;
+  width:100%;
+  height: 40px;
+  padding: 4px 8px;
+  align-items: center;
+  gap: 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  outline: none;
+  
+ &.invalid {
+  outline: 1px solid red
+ }
+ &.valid {
+  outline: 1px solid green
+ }
+
+  &.invalid:hover + span {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    top: 100%; /* Положение подсказки относительно верхней границы input */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 75%;
+  }
+
+ 
 `;

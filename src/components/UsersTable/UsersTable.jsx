@@ -78,7 +78,13 @@ const UsersTable = ({ users, visibleColumns }) => {
                         <Link to={`/admin/users/carduser/${user._id}`}>
                         картка
                         </Link>
-                      ) :
+                      ) : column.type === "nameLinkEditor" ? 
+                   (
+                          <Link to={`/admin/users/cardeditor/${user._id}`}>
+                         {  `${user.firstName} ${user.lastName}`}
+                          </Link>
+                        ) :
+
                       column.key === "access" ? (
                         ( <>{user[column.key] === true ? "On" : "Off"}</>)
                       ) :

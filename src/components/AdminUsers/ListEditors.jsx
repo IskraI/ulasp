@@ -5,7 +5,7 @@ const ListEditors = () => {
     const { data, isLoading } = useGetUsersListQuery(true);
 
   const visibleColumns = [
-    { key: "firstName", label: "Ім’я", type: "nameLink" },
+    { key: "firstName", label: "Ім’я", type: "nameLinkEditor" },
     { key: "login", label: "Логін", type: "string" },
     { key: "adminRole", label: "Тип админа", type: "string" },
     { key: "editorRole", label: "Тип админа", type: "string" },

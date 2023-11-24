@@ -89,14 +89,21 @@ const RegisterNameFieldCard = ({
         </>
       ) : (
               <RegisterNameField>
-          
-            <RegisterNameInput
-            width = {"270px"}
-              type="text"
-             value= {`${user.firstName} ${user.lastName}` }
-              {...register("name")}
-            />
-          </RegisterNameField>
+                <Controller
+                name="name"
+                control={control}
+                defaultValue={user.name}
+                render={({ field }) => (
+                  <RegisterNameInput
+                    type="text"
+                    placeholder="Назва компанії"
+                    readOnly={readOnly}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                  )}
+                  />
+                    </RegisterNameField>
 
             )}
         <ButtonSwitch

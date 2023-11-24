@@ -29,8 +29,8 @@ const UserFieldCard = ({
   register,
   isEditing
 }) => {
-  console.log('isEditing UserFieldCard', isEditing)
 
+console.log('activeSectionCard', activeSectionCard)
   return (
     <Fieldform>
       <RegisterLeftBlock>
@@ -152,13 +152,21 @@ const UserFieldCard = ({
               readOnly={!isEditing}
               user={user}
             />
-            <RegisterField>
-              <RegisterInput
-                type="text"
-                placeholder="Логін"
-                readOnly={!isEditing}
-                {...register("login")}
-              />
+            {/* <RegisterField>
+            <Controller
+                name="login"
+                control={control}
+                defaultValue={user.login}
+                render={({ field }) => (
+                  <RegisterInput
+                    type="text"
+                    placeholder="Остання оплата"
+                    readOnly={!isEditing}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                  )}
+                  />
             </RegisterField>
             <RegisterField>
               <RegisterInput
@@ -167,20 +175,29 @@ const UserFieldCard = ({
                 readOnly={!isEditing}
                 {...register("password")}
               />
-            </RegisterField>
+            </RegisterField> */}
           </>
         )}
       </RegisterLeftBlock>
       <RegisterRigthBlock>
         <RegisterCommentField>
           <Commentlabel>Примітка </Commentlabel>
-          <CommentTextarea
-            type="text"
-            placeholder="Примітка"
-            readOnly={!isEditing}
-            value={user.comment}
-            {...register("comment")}
-          />
+          <Controller
+                name="comment"
+                control={control}
+                defaultValue={user.comment}
+                render={({ field }) => (
+                  <CommentTextarea
+                    type="text"
+                    placeholder="Примітка"
+                    readOnly={!isEditing}
+                    value={field.value}
+                    height= "178px"
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                  )}
+                  />
+          
         </RegisterCommentField>
         {/* <
        Button

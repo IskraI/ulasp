@@ -95,13 +95,13 @@ function App() {
                 <Route path="messages" element={<Messages />} />
 
                 <Route path="users" element={<AdminUsers />}>
-                  <Route index element={<ListUsers />} />
+                  <Route index element={<Navigate to="allusers" />} />
                   <Route path="allusers" element={<ListUsers />} />
                   <Route path="editors" element={<ListEditors />} />
                 </Route>
                 <Route path="users/carduser/:id" element={<CardUser />} />
 
-                <Route path="users/cardeditor" element={<CardEditor />} />
+                <Route path="users/cardeditor/:id" element={<CardEditor />} />
 
                 <Route path="online" element={<OnlineUsers />} />
                 <Route path="analytics" element={<Analytics />} />
