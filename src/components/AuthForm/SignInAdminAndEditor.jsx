@@ -76,7 +76,7 @@ export const SignInAdminAndEditor = () => {
                   color: "red",
                   display: "flex",
                   position: "absolute",
-                  top: "50%",
+                  top: "75%",
                   transform: "translateY(-50%)",
                   right: "12px",
                 }}
@@ -112,7 +112,7 @@ export const SignInAdminAndEditor = () => {
                   color: "red",
                   display: "flex",
                   position: "absolute",
-                  top: "50%",
+                  top: "75%",
                   transform: "translateY(-50%)",
                   right: "12px",
                 }}
