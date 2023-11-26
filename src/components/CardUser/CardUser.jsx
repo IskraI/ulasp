@@ -29,7 +29,7 @@ const CardUser = () => {
   };
 
   const handleDeleteUser = async () => {
-    dispatchDel(id)
+    dispatchDel({ id: id})
       .unwrap()
       .then(() => {
         navigate("/admin/users");

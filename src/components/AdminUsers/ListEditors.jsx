@@ -13,6 +13,7 @@ const ListEditors = () => {
 
   return (
     <>
+    
        {!isLoading && (
         <UserTable users={data.result} visibleColumns={visibleColumns} />
       )} 

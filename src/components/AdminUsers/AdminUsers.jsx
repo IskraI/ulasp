@@ -4,25 +4,33 @@ import { useState, useEffect, useRef } from "react";
 import { Modal } from "../Modal/Modal";
 import { SearchUsersContainer, Input, UsersContainer, Link } from "../SearchUsers/SearchUsers.styled";
 import {
-
   SectionUser,
 } from "../UserForm/UserCreateForm.styled";
 import { Button } from "../../components/Button/Button";
 import { Title } from "../AdminCabinetPage/AdminCabinetPage.styled";
 import UserCreateForm from "../UserForm/UserCreateForm";
 
-import { NavLink, Outlet } from "react-router-dom";
-import { useNavigate, Route, Routes } from 'react-router-dom';
+import {  Outlet, useLocation  } from "react-router-dom";
+
 
 const AdminUsers = () => {
-  // const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   // При первой загрузке перенаправляем пользователя на маршрут "allusers"
-  //   navigate('/allusers');
-  // }, [navigate]);
 
   const [showModal, setShowModal] = useState(false);
+  const [section, setSection] = useState('User');
+  const location = useLocation();
+
+  useEffect(() => {
+    // Извлекаем часть пути из текущего URL
+    const path = location.pathname.split('/').pop();
+
+    // Устанавливаем начальное значение section в зависимости от части пути
+    if (path === 'allusers') {
+      setSection('User');
+    } else if (path === 'editors') {
+      setSection('MusicEditor');
+    }
+  }, [location.pathname]);
 
   const handleShowModal = () => {
     setShowModal(true);
@@ -55,8 +63,14 @@ const AdminUsers = () => {
         />
       </UsersContainer>
       <SectionUser>
-        <Link to="allusers" activeclassname="active" >Усі користувачі</Link>
-        <Link to="editors" activeclassname="active">Музичні редактори та адміністратори</Link>
+      <Link to="allusers" activeclassname={section === 'User' ? 'active' : ''} onClick={() =>  setSection('User')}>
+          Усі користувачі
+        </Link>
+        <Link to="editors" activeclassname={section === 'MusicEditor' ? 'active' : ''} onClick={() => { setSection('MusicEditor') }}>
+          Музичні редактори та адміністратори
+        </Link>
+
+     
       </SectionUser>
       <Outlet/>
       
@@ -69,7 +83,7 @@ const AdminUsers = () => {
           onClose={handleCloseModal}
           showCloseButton={true}
         >
-          <UserCreateForm onCloseModal={handleCloseModal}  typeOfPage={"modal"}/>
+          <UserCreateForm onCloseModal={handleCloseModal}  section={section}/>
         </Modal>
       )}
     </>

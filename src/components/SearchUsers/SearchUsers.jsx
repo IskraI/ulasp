@@ -54,6 +54,7 @@ export const SearchUsers = () => {
   const [showNoResults, setShowNoResults] = useState(false);
   const { data, isLoading } = useGetUsersListQuery();
 
+
   // const users = data ? data.allUsers : [];
 
   const filteredUsers = useMemo(() => {
@@ -65,7 +66,7 @@ export const SearchUsers = () => {
   }, [data]);
 
   const isSearching = searchTerm.trim() !== "";
-  //  console.log(isSearching);
+  
 
   const title = isSearching
     ? searchResults.length > 0
@@ -79,11 +80,14 @@ export const SearchUsers = () => {
 
   useEffect(() => {
     if (searchTerm.trim() !== "") {
+
       const filteredResults = filteredUsers.filter((user) => {
-        return (
-          user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          user.contractNumber.toLowerCase().includes(searchTerm.toLowerCase())
+       
+        
+        return (user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          user.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          user.lastName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          user.contractNumber?.toLowerCase().includes(searchTerm.toLowerCase())
         );
       });
 
