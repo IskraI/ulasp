@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { Button } from "../Button/Button";
 
 import { useForm, Controller } from "react-hook-form";
 import { UserFopSchema, UserCompanySchema, MusicEditorSchema } from "./UserSchema";
@@ -23,8 +23,8 @@ import UserFieldForm from "./UserFieldForm/UserFieldForm";
 
 // получаем функцию на закрітие модального окна и значение страниці что открілась форма для добавления нового юзера - модальное окно
 //typeOfPage card modal
-const UserCreateForm = ({ onCloseModal   }) => {
-  const [activeSection, setActiveSection] = useState("User"); //user or editor следим какой пользователь добавляется
+const UserCreateForm = ({ onCloseModal, section  }) => {
+  const [activeSection, setActiveSection] = useState(section); //user or editor следим какой пользователь добавляется
   const [typeOfAccess, setTypeOfAccess] = useState(false); //on/off статус он или офф
   const [typeOfUser, setTypeOfUser] = useState("fop"); // тип юзера fop или tov
   const [dispatchFop, { isLoading: isLoadingFop }] = useCreateFopUserMutation(); //ф-я для отправки формы юзера фоп
@@ -36,6 +36,12 @@ const UserCreateForm = ({ onCloseModal   }) => {
 
   const navigate = useNavigate();
   //создание формы - юзформ
+  let resolverShema = activeSection === 'MusicEditor'
+  ? MusicEditorSchema
+  : typeOfUser === 'fop'
+  ? UserFopSchema
+  : UserCompanySchema;
+console.log('resolverShema', resolverShema)
   const {
     control,
     register,
@@ -46,36 +52,33 @@ const UserCreateForm = ({ onCloseModal   }) => {
   } = useForm({
     mode: "onChange",
     // defaultValues: { name: '', email: '', password: '' },
-    resolver: typeOfUser === 'fop' ? yupResolver(UserFopSchema) : typeOfUser === 'tov' ? yupResolver(UserCompanySchema): yupResolver(MusicEditorSchema)
+    resolver:  yupResolver(resolverShema), 
   });
 
+
+
+ 
   //перемикач дапуска
   const handleTypeOfAccess = () => {
     setTypeOfAccess(typeOfAccess === true ? false : true);
   
   };
 
-  // console.log("typeOfPage", typeOfPage);
-  // console.log("user", user);
 
-  //перемикач типа юзера тов или фоп
-  const handleTypeOfUser = () => {
-    setTypeOfUser(typeOfUser === "tov" ? "fop" : "tov");
-    reset();
-  };
+
 
   //отправка данных формы в зависимости от фоп или тов или редактор
   const onFormSubmit = (data) => {
    
-    console.log(data);
   
     if (activeSection === "MusicEditor") {
-      const formData = { ...data};
+      const formData = { ...data, editorRole:true, status: false
+      };
       //  console.log('formData', formData);
        dispatchEditor(formData)
         .unwrap()
         .then(() => {
-          navigate("/admin/editor");
+          navigate("/admin/users/editors");
           onCloseModal();
         })
         .catch((error) => console.log(error.data));
@@ -88,7 +91,7 @@ const UserCreateForm = ({ onCloseModal   }) => {
       dispatchFop(formData)
         .unwrap()
         .then(() => {
-          navigate("/admin/users");
+          navigate("/admin/users/allusers");
           onCloseModal();
         })
         .catch((error) => console.log(error.data.message));
@@ -112,8 +115,15 @@ const UserCreateForm = ({ onCloseModal   }) => {
   const handleSectionChange = (section) => {
     setActiveSection(section);
     reset();
+    
   };
-  // console.log("typeOfAccess", typeOfAccess);
+    //перемикач типа юзера тов или фоп
+    const handleTypeOfUser = () => {
+      setTypeOfUser(typeOfUser === "tov" ? "fop" : "tov");
+      reset();
+    };
+  
+  console.log("activeSection", activeSection);
 
   return (
     <UserCreateModal>
@@ -154,7 +164,13 @@ const UserCreateForm = ({ onCloseModal   }) => {
             dirtyFields={dirtyFields}
            
           />
-                  
+                   {/* <Button
+          type="submit"
+          padding="8px"
+          text="Додати" 
+          // onClick={()=>{console.log('click')}}
+          // disabled={!isValid}
+        />    */}
       </form>
     </UserCreateModal>
   );

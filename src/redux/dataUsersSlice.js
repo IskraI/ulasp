@@ -32,8 +32,8 @@ export const dataUsersApi = createApi({
     }),
 
     delUserById: builder.mutation({
-      query: (id) => ({
-        url: `admin/users/${id}`,
+      query: ({id, admin = false}) => ({
+        url:  admin ?  `admin/${id}`:`admin/users/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["dataUsers", "dataUser"],

@@ -32,9 +32,9 @@ export const Modal = ({
     };
   }, [onClose]);
 
-  const handleBackdropClick = (e) => {
-    if (e.currentTarget === e.target) onClose();
-  };
+  // const handleBackdropClick = (e) => {
+  //   if (e.currentTarget === e.target) onClose();
+  // };
 
   const closeButtonStyle = {
     display: showCloseButton ? "block" : "none",
@@ -47,7 +47,9 @@ export const Modal = ({
   };
 
   return createPortal(
-    <Overlay onClick={handleBackdropClick} style={overlayStyle}>
+    // <Overlay onClick={handleBackdropClick} style={overlayStyle}>
+        <Overlay  style={overlayStyle}>
+  
       <ModalWindow width={width} padding={padding} flexDirection={flexDirection}>
         <CloseBtn onClick={onClose} style={closeButtonStyle}>
           <CloseIcon />
