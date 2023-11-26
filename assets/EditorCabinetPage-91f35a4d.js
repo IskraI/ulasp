@@ -1,4 +1,4 @@
-import{n as e,c as j,j as t,d as m,e as y,f as T}from"./index-09340bcb.js";import{S as b,b as f}from"./Statistic.styled-d911fe9f.js";const w=e.table`
+import{n as e,c as j,j as t,d as m,e as y,f as T}from"./index-a4f01415.js";import{S as b,b as f}from"./Statistic.styled-98a991e5.js";const w=e.table`
   text-align: left;
   font-size: 18px;
   table-layout: fixed;
