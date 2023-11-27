@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 
-export const AdminSection = styled.div`
+export const PageSection = styled.div`
   display: flex;
 
   justify-content: center;
 `;
-export const AdminSubpage = styled.div`
+export const PageSubpage = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;

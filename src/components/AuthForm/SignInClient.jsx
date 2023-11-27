@@ -15,7 +15,7 @@ import {
   StyledInnerDiv,
 } from "./SignInClient.styled";
 
-import { useSignInMutation } from "../../redux/authUserSlice";
+import { useSigninUserMutation } from "../../redux/authSlice";
 
 export const SignInClient = () => {
   const navigate = useNavigate();
@@ -30,10 +30,10 @@ export const SignInClient = () => {
     defaultValues: { сontractNumber: "", password: "" },
     resolver: yupResolver(SignInSchema),
   });
-  const [dispatch, { isLoading }] = useSignInMutation();
+  const [dispatch, { isLoading }] = useSigninUserMutation();
 
   const onSubmit = (data) => {
-    console.log(data);
+    console.log("onSubmit", data);
     const credentials = {
       contractNumber: data.сontract,
       password: data.identification,

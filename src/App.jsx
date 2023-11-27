@@ -13,7 +13,11 @@ import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import SharedLayout from "./components/SharedLayout/SharedLayout";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
+import PrivateUserRoute from "./components/PrivateUserRoute";
 import Messages from "./components/Messages/Messages";
+import MessagesUser from "./components/MessagesUser/MessagesUser"
+import Medialibrary from "./components/Medialibrary/Medialibrary"
+import AllmusicUser from "./components/AllmusicUser/AllmusicUser"
 // import AdminUsers from "./components/AdminUsers/AdminUsers";
 import OnlineUsers from "./components/OnlineUsers/OnlineUsers";
 import Analytics from "./components/Analytics/Analytics";
@@ -27,6 +31,9 @@ import { lazy, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 const AdminCabinetPage = lazy(() =>
   import("./components/AdminCabinetPage/AdminCabinetPage")
+);
+const UserCabinetPage = lazy(() =>
+  import("./components/UserCabinetPage/UserCabinetPage")
 );
 const ListUsers = lazy(() => import("./components/AdminUsers/ListUsers"));
 const ListEditors = lazy(() => import("./components/AdminUsers/ListEditors"));
@@ -42,6 +49,27 @@ function App() {
   const { isLoading, isError, error } = useCurrentUserQuery("", { skip });
 
   if (isLoading) return "Loading...";
+console.log('user.userRole', user.userRole)
+  // if (isError) {
+  //   // Проверяем, является ли ошибка ошибкой аутентификации или истечением срока действия токена
+  //   const isAuthenticationError = error.status === 401;
+
+  //   if (isAuthenticationError) {
+  //     // Определяем роль пользователя
+  //     const userRole = user?.adminRole
+  //       ? "admin"
+  //       : user?.editorRole
+  //       ? "editor"
+  //       : "user";
+
+  //     // Перенаправляем пользователя в зависимости от его роли
+  //     if (userRole === "admin") {
+  //       console.log("userRole", userRole);
+  //     } else {
+  //       console.log("userRole", userRole);
+  //     }
+  //   }
+  // }
   // if (isError) {
   //   console.log("Ошибка в запросе");
   //   return      <Routes>
@@ -63,27 +91,27 @@ function App() {
     return (
       <>
         <Routes>
-          <Route element={<SharedLayout avatarURL={user.avatarURL} />}>
+          <Route element={<SharedLayout />}>
             <Route path="/" element={<PublicRoute component={WelcomePage} />} />
 
             <Route path="/signin" element={<PublicRoute component={Login} />} />
-            
+
             <Route
               path="/adminlogin"
               element={<PublicRoute component={AdminLoginPage} />}
             />
-           
 
-            <Route
+            {user.userRole &&(<Route
               path="/user"
-              element={
-                <PrivateRoute
-                  roles="user"
-                  redirectTo="/"
-                  component={<UserPage />}
-                />
-              }
-            ></Route>
+              element={<PrivateUserRoute component={UserPage} />}
+            >
+              <Route index element={<UserCabinetPage />} />
+              <Route path="cabinet" element={<UserCabinetPage />} />
+              <Route path="messages" element={<MessagesUser />} />
+              <Route path="medialibrary" element={<Medialibrary />} />
+              <Route path="allmusic" element={<AllmusicUser />} />
+              <Route path="*" element={<ErrorPage />} />
+            </Route>)}
 
             {user.adminRole && (
               <Route
@@ -118,7 +146,12 @@ function App() {
                 <Route path="*" element={<ErrorPage />} />
               </Route>
             )}
- {isError &&  <Route path="/signin" element={<PublicRoute component={Login} />} />}
+            {isError && (
+              <Route
+                path="/signin"
+                element={<PublicRoute component={Login} />}
+              />
+            )}
             <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>
