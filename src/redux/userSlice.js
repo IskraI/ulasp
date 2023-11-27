@@ -8,6 +8,7 @@ const initialState = {
   isLoggedIn: false,
   adminRole: false,
   editorRole: false,
+  userRole:false,
 };
 
 export const userSlice = createSlice({
@@ -50,7 +51,7 @@ export const userSlice = createSlice({
     setUser: {
       reducer(state, action) {
         console.log("action.payload setUser", action.payload);
-        state = { ...state, ...action.payload, isLoggedIn: true };
+        state = { ...state, ...action.payload.user, isLoggedIn: true, userRole:true };
         return state;
       },
     },

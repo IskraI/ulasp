@@ -16,8 +16,11 @@ export const signInClient = createApi({
         }
       ),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+       console.log('(await queryFulfilled).data', (await queryFulfilled).data)
+
         dispatch(setUser((await queryFulfilled).data));
       },
+      invalidatesTags: ["auth"],
     }),
   }),
 });

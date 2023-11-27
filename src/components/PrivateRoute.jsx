@@ -4,7 +4,7 @@ import { useCurrentUserQuery } from "../redux/authSlice";
 
 import { Navigate } from "react-router-dom";
 
-const PrivateRoute = ({ component: Component, redirectTo = "/" }) => {
+const PrivateRoute = ({ component: Component, redirectTo = "/adminlogin" }) => {
   const user = useSelector(getUserState);
   const skip = !user.token && !user.isLoggedIn;
 
