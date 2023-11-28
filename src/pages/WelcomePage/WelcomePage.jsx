@@ -28,7 +28,7 @@ const WelcomePage = () => {
   return (
     <WelcomeSection>
       <WelcomeTitle>
-        УЛАСП
+       УЛАСП
         <p
           style={{
             color: "#FFF3BF",

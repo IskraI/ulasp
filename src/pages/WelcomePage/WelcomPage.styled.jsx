@@ -46,7 +46,7 @@ export const WelcomeTitle = styled.h1`
   margin-bottom: 36px;
   animation: ${slideInAnimation} 1s linear;
 `;
-export const WelcomeText = styled.p`
+export const WelcomeText = styled.div`
   color: ${colors.primaryColor};
   text-align: center;
   font-size: 32px;

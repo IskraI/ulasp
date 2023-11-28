@@ -17,17 +17,7 @@ export const authClientApi = createApi({
     },
   }),
   tagTypes: ["authClient"],
-  // signinUser: builder.mutation({
-  //   query: ({ contractNumber, password }) => ({
-  //     url: "/user/signin",
-  //     method: "POST",
-  //     body: { contractNumber, password },
-  //   }),
-  //   async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-  //     dispatch(setUser((await queryFulfilled).data));
-  //   },
-  //   invalidatesTags: ["auth"],
-  // }),
+ 
 
   endpoints: (builder) => ({
     signInClient: builder.mutation({
