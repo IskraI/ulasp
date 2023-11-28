@@ -30,17 +30,7 @@ export const authApi = createApi({
       },
       invalidatesTags: ["auth"],
     }),
-    signinUser: builder.mutation({
-      query: ({ contractNumber, password }) => ({
-        url: "/user/signin",
-        method: "POST",
-        body: { contractNumber, password },
-      }),
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        dispatch(setUser((await queryFulfilled).data));
-      },
-      invalidatesTags: ["auth"],
-    }),
+  
 
 
     currentUser: builder.query({
@@ -48,7 +38,7 @@ export const authApi = createApi({
         url: "/admin/current",
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        // console.log("await queryFulfilled).data", (await queryFulfilled).data);
+        console.log("await queryFulfilled).data", (await queryFulfilled).data);
         dispatch(setCurrent((await queryFulfilled).data));
       },
     }),
@@ -94,7 +84,7 @@ export const authApi = createApi({
 
 export const {
   useSigninMutation,
-  useSigninUserMutation,
+  
   useCurrentUserQuery,
   useLogoutMutation,
   useUpdateUserMutation,

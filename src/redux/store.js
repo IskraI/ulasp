@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { authApi } from "./authSlice";
 import { userReducer } from "./userSlice";
-import { signInClient } from "./authUserSlice";
+import { authClientApi } from "./authClientSlice";
 import { dataUsersApi } from "./dataUsersSlice";
 import { statisticApi } from "./statisticSlice";
 
@@ -21,13 +21,13 @@ import { tracksApi } from "./tracksSlice";
 const persistConfig = {
   key: "user",
   storage,
-  whitelist: ["token"],
+  // whitelist: ["token","adminRole"],
 };
 
 export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
-    [signInClient.reducerPath]: signInClient.reducer,
+    [authClientApi.reducerPath]: authClientApi.reducer,
     [dataUsersApi.reducerPath]:
       dataUsersApi.reducer /*данные юзеров для админа */,
     [statisticApi.reducerPath]: statisticApi.reducer,
@@ -41,7 +41,7 @@ export const store = configureStore({
       },
     })
       .concat(authApi.middleware)
-      .concat(signInClient.middleware)
+      .concat(authClientApi.middleware)
       .concat(dataUsersApi.middleware)
       .concat(statisticApi.middleware)
       .concat(tracksApi.middleware),

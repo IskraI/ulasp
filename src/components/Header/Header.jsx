@@ -38,7 +38,7 @@ const Header = ({avatarURL}) => {
       : `${BASE_URL}/${avatarURL}`
     : defaultAvatarSrc;
 
-  console.log('user', avatarURL)
+  // console.log('user', avatarURL)
 
   return (
     <PageHeader>
