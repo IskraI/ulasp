@@ -15,9 +15,9 @@ import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import PrivateUserRoute from "./components/PrivateUserRoute";
 import Messages from "./components/Messages/Messages";
-import MessagesUser from "./components/MessagesUser/MessagesUser"
-import Medialibrary from "./components/Medialibrary/Medialibrary"
-import AllmusicUser from "./components/AllmusicUser/AllmusicUser"
+import MessagesUser from "./components/MessagesUser/MessagesUser";
+import Medialibrary from "./components/Medialibrary/Medialibrary";
+import AllmusicUser from "./components/AllmusicUser/AllmusicUser";
 // import AdminUsers from "./components/AdminUsers/AdminUsers";
 import OnlineUsers from "./components/OnlineUsers/OnlineUsers";
 import Analytics from "./components/Analytics/Analytics";
@@ -25,6 +25,7 @@ import CardUser from "./components/CardUser/CardUser";
 import CardEditor from "./components/CardEditor/CardEditor";
 import { useSelector } from "react-redux";
 import { useCurrentUserQuery } from "../src/redux/authSlice";
+import { useCurrentClientQuery } from "../src/redux/authClientSlice";
 import { getUserState } from "../src/redux/userSelectors";
 import { lazy, useEffect } from "react";
 
@@ -44,42 +45,22 @@ const AdminUsers = lazy(() => import("./components/AdminUsers/AdminUsers"));
 
 function App() {
   const user = useSelector(getUserState);
-  const skip = !user.token && !user.isLoggedIn;
 
-  const { isLoading, isError, error } = useCurrentUserQuery("", { skip });
+  const skipAdmin = (!user.token && !user.isLoggedIn) || user.userRole;
+  const skipClient =
+    (!user.token && !user.isLoggedIn) || user.adminRole || user.editorRole;
 
-  if (isLoading) return "Loading...";
-console.log('user.userRole', user.userRole)
-  // if (isError) {
-  //   // Проверяем, является ли ошибка ошибкой аутентификации или истечением срока действия токена
-  //   const isAuthenticationError = error.status === 401;
+  const { data, isLoading, isError } = useCurrentUserQuery("", {
+    skip: skipAdmin,
+  }); //если пользователь клиент, то скип = тру и єтот запрос пропустится
 
-  //   if (isAuthenticationError) {
-  //     // Определяем роль пользователя
-  //     const userRole = user?.adminRole
-  //       ? "admin"
-  //       : user?.editorRole
-  //       ? "editor"
-  //       : "user";
-
-  //     // Перенаправляем пользователя в зависимости от его роли
-  //     if (userRole === "admin") {
-  //       console.log("userRole", userRole);
-  //     } else {
-  //       console.log("userRole", userRole);
-  //     }
-  //   }
-  // }
-  // if (isError) {
-  //   console.log("Ошибка в запросе");
-  //   return      <Routes>
-  //   <Route element={<SharedLayout />}>
-  //      <Route
-  //   path="/adminlogin"
-  //   element={<PublicRoute component={AdminLoginPage} />}
-  // />;</Route>
-  // </Routes>
-  // }
+  const {
+    data: dataClient,
+    isLoading: isLoadingClient,
+    isError: isErrorClient,
+  } = useCurrentClientQuery("", {
+    skip: skipClient,
+  }); //если пользователь админ или редаткор, то скип = тру и єтот запрос пропустится
 
   if (isMobile) {
     return (
@@ -101,17 +82,19 @@ console.log('user.userRole', user.userRole)
               element={<PublicRoute component={AdminLoginPage} />}
             />
 
-            {user.userRole &&(<Route
-              path="/user"
-              element={<PrivateUserRoute component={UserPage} />}
-            >
-              <Route index element={<UserCabinetPage />} />
-              <Route path="cabinet" element={<UserCabinetPage />} />
-              <Route path="messages" element={<MessagesUser />} />
-              <Route path="medialibrary" element={<Medialibrary />} />
-              <Route path="allmusic" element={<AllmusicUser />} />
-              <Route path="*" element={<ErrorPage />} />
-            </Route>)}
+            {user.userRole && (
+              <Route
+                path="/user"
+                element={<PrivateUserRoute component={UserPage} />}
+              >
+                <Route index element={<UserCabinetPage />} />
+                <Route path="cabinet" element={<UserCabinetPage />} />
+                <Route path="messages" element={<MessagesUser />} />
+                <Route path="medialibrary" element={<Medialibrary />} />
+                <Route path="allmusic" element={<AllmusicUser />} />
+                <Route path="*" element={<ErrorPage />} />
+              </Route>
+            )}
 
             {user.adminRole && (
               <Route
@@ -146,12 +129,12 @@ console.log('user.userRole', user.userRole)
                 <Route path="*" element={<ErrorPage />} />
               </Route>
             )}
-            {isError && (
+            {/* {isError && (
               <Route
                 path="/signin"
                 element={<PublicRoute component={Login} />}
               />
-            )}
+            )} */}
             <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>

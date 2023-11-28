@@ -7,6 +7,9 @@ import {
 } from "../AdminPage/AdminPage.styled";
 
 const UserPage = () => {
+ 
+  
+
   return (
     <PageSection>
     <SiteBarNav />
