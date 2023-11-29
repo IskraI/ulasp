@@ -16,7 +16,6 @@ import PrivateRoute from "./components/PrivateRoute";
 import PrivateUserRoute from "./components/PrivateUserRoute";
 import Messages from "./components/Messages/Messages";
 import MessagesUser from "./components/MessagesUser/MessagesUser";
-import Medialibrary from "./components/Medialibrary/Medialibrary";
 import AllmusicUser from "./components/AllmusicUser/AllmusicUser";
 // import AdminUsers from "./components/AdminUsers/AdminUsers";
 import OnlineUsers from "./components/OnlineUsers/OnlineUsers";
@@ -131,17 +130,17 @@ function App() {
                 <Route path="cabinet" element={<EditorCabinetPage />} />
 
                 <Route path="medialibrary" element={<MediaLibrary />} />
-                <Route path="medialibrary/genres" element={<Genres display={"none"}/>} />
+                <Route path="medialibrary/genres" element={<Genres display={"none"} />} />
                 <Route path="shops" element={<Genres />} />
 
                 <Route path="*" element={<ErrorPage />} />
               </Route>
-
+            )}
             {/* {isError && (
               <Route
                 path="/signin"
                 element={<PublicRoute component={Login} />}
-
+/>
             )} */}
             <Route path="*" element={<ErrorPage />} />
           </Route>
