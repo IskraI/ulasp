@@ -62,7 +62,9 @@ function App() {
     isError: isErrorClient,
   } = useCurrentClientQuery("", {
     skip: skipClient,
-  }); //если пользователь админ или редаткор, то скип = тру и єтот запрос пропустится
+  });
+  
+  //если пользователь админ или редаткор, то скип = тру и єтот запрос пропустится
 
   if (isMobile) {
     return (
@@ -92,7 +94,7 @@ function App() {
                 <Route index element={<UserCabinetPage />} />
                 <Route path="cabinet" element={<UserCabinetPage />} />
                 <Route path="messages" element={<MessagesUser />} />
-                <Route path="medialibrary" element={<Medialibrary />} />
+                <Route path="medialibrary" element={<MediaLibrary />} />
                 <Route path="allmusic" element={<AllmusicUser />} />
                 <Route path="*" element={<ErrorPage />} />
               </Route>

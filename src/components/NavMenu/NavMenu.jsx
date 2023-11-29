@@ -20,25 +20,16 @@ import { useState } from "react";
 
 export const NavMenu = () => {
   const user = useSelector(getUserState);
-  const navigate = useNavigate();
 
   const [menuVisible, setMenuVisible] = useState(false);
 
   let propNav;
-  switch (user.adminRole) {
-    case true:
-      propNav = propAdminNav;
-      break;
 
-    case false:
-      propNav = propEditorNav;
-      break;
-
-    default:
-      propNav = propUserNav;
-  }
-
-  // console.log(propNav);
+  propNav = user.adminRole
+    ? propAdminNav
+    : user.editorRole
+    ? propEditorNav
+    : propUserNav;
 
   const toogleLink = () => {
     return setMenuVisible((prevMenuVisible) => !menuVisible);
