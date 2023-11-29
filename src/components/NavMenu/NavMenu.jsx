@@ -1,4 +1,4 @@
-import { useLocation, NavLink } from "react-router-dom";
+import { useNavigate, Navigate, NavLink } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 // import { TabNavigation } from "../TabNavigation/TabNavigation";
@@ -16,9 +16,14 @@ import {
   NavigationLink,
   SubMenuLink,
 } from "./NavMenu.styled";
+import { useState } from "react";
 
 export const NavMenu = () => {
   const user = useSelector(getUserState);
+  const navigate = useNavigate();
+
+  const [menuVisible, setMenuVisible] = useState(false);
+
   let propNav;
   switch (user.adminRole) {
     case true:
@@ -33,27 +38,26 @@ export const NavMenu = () => {
       propNav = propUserNav;
   }
 
+  // console.log(propNav);
+
+  const toogleLink = () => {
+    return setMenuVisible((prevMenuVisible) => !menuVisible);
+  };
+
+  const disableMenu = () => {
+    setMenuVisible(false);
+  };
+
   return (
-    // <Nav>
-    //   <List>
-    //     {propNav.map((item) => (
-    //       <Item key={item.id}>
-    //         <NavigationLink to={item.navigation}>
-    //           <svg className="icon" width="24" height="24">
-    //             <use href={item.picture}></use>
-    //           </svg>
-    //           {item.title}
-    //         </NavigationLink>
-    //       </Item>
-    //     ))}
-    //   </List>
-    // </Nav>
     <Nav>
       <List>
         {propNav.map((item) => {
           return (
             <Item key={item.id}>
-              <NavigationLink to={item.navigation}>
+              <NavigationLink
+                to={item.navigation}
+                onClick={item.menu ? toogleLink : disableMenu}
+              >
                 <svg className="icon" width="24" height="24">
                   <use href={item.picture}></use>
                 </svg>
@@ -62,12 +66,14 @@ export const NavMenu = () => {
               <List>
                 {item.menu?.map((menu) => (
                   <SubItem key={menu.id}>
-                    <SubMenuLink to={menu.navigation}>
-                      <svg className="icon" width="24" height="24">
-                        <use href={menu.picture}></use>
-                      </svg>
-                      {menu.title}
-                    </SubMenuLink>
+                    {menu && menuVisible && (
+                      <SubMenuLink to={menu.navigation}>
+                        <svg className="icon" width="24" height="24">
+                          <use href={menu.picture}></use>
+                        </svg>
+                        {menu.title}
+                      </SubMenuLink>
+                    )}
                   </SubItem>
                 ))}
               </List>
