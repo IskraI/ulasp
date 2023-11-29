@@ -14,18 +14,27 @@ export const NavMenu = () => {
   const user = useSelector(getUserState);
   let propNav;
 
-  switch (user.adminRole) {
-    case true:
-      propNav = propAdminNav;
-      break;
+  // switch (user.adminRole) {
+  //   case true:
+  //     propNav = propAdminNav;
+  //     break;
 
-    case false:
-      propNav = propEditorNav;
-      break;
+  //   case false:
+  //     propNav = propEditorNav;
+  //     break;
 
-    default:
-      propNav = propUserNav;
-  }
+  //   default:
+  //     propNav = propUserNav;
+  // }
+
+//   if (user.adminRole) {
+//   propNav = propAdminNav;
+// } else if (user.editorRole) {
+//   propNav = propEditorNav;
+// } else {
+//   propNav = propUserNav;
+// }
+  propNav =  user.adminRole? propAdminNav: user.editorRole? propEditorNav: propUserNav
 
   return (
     <Nav>
