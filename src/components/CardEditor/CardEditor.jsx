@@ -33,7 +33,7 @@ const CardEditor = () => {
   };
 
   const handleDeleteUser = async () => {
-    dispatchDel(id)
+    dispatchDel({ id: id, admin: true })
       .unwrap()
       .then(() => {
         navigate("/admin/users/editors");

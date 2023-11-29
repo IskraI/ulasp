@@ -13,7 +13,11 @@ import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import SharedLayout from "./components/SharedLayout/SharedLayout";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
+import PrivateUserRoute from "./components/PrivateUserRoute";
 import Messages from "./components/Messages/Messages";
+import MessagesUser from "./components/MessagesUser/MessagesUser";
+import Medialibrary from "./components/Medialibrary/Medialibrary";
+import AllmusicUser from "./components/AllmusicUser/AllmusicUser";
 // import AdminUsers from "./components/AdminUsers/AdminUsers";
 import OnlineUsers from "./components/OnlineUsers/OnlineUsers";
 import Analytics from "./components/Analytics/Analytics";
@@ -23,6 +27,7 @@ import MediaLibrary from "./components/MediaLibrary/MediaLibrary";
 import Genres from "./components/Genres/Genres";
 import { useSelector } from "react-redux";
 import { useCurrentUserQuery } from "../src/redux/authSlice";
+import { useCurrentClientQuery } from "../src/redux/authClientSlice";
 import { getUserState } from "../src/redux/userSelectors";
 import { lazy, useEffect } from "react";
 
@@ -30,6 +35,9 @@ import { Navigate } from "react-router-dom";
 
 const AdminCabinetPage = lazy(() =>
   import("./components/AdminCabinetPage/AdminCabinetPage")
+);
+const UserCabinetPage = lazy(() =>
+  import("./components/UserCabinetPage/UserCabinetPage")
 );
 const ListUsers = lazy(() => import("./components/AdminUsers/ListUsers"));
 const ListEditors = lazy(() => import("./components/AdminUsers/ListEditors"));
@@ -40,21 +48,22 @@ const AdminUsers = lazy(() => import("./components/AdminUsers/AdminUsers"));
 
 function App() {
   const user = useSelector(getUserState);
-  const skip = !user.token && !user.isLoggedIn;
 
-  const { isLoading, isError, error } = useCurrentUserQuery("", { skip });
+  const skipAdmin = (!user.token && !user.isLoggedIn) || user.userRole;
+  const skipClient =
+    (!user.token && !user.isLoggedIn) || user.adminRole || user.editorRole;
 
-  if (isLoading) return "Loading...";
-  // if (isError) {
-  //   console.log("Ошибка в запросе");
-  //   return      <Routes>
-  //   <Route element={<SharedLayout />}>
-  //      <Route
-  //   path="/adminlogin"
-  //   element={<PublicRoute component={AdminLoginPage} />}
-  // />;</Route>
-  // </Routes>
-  // }
+  const { data, isLoading, isError } = useCurrentUserQuery("", {
+    skip: skipAdmin,
+  }); //если пользователь клиент, то скип = тру и єтот запрос пропустится
+
+  const {
+    data: dataClient,
+    isLoading: isLoadingClient,
+    isError: isErrorClient,
+  } = useCurrentClientQuery("", {
+    skip: skipClient,
+  }); //если пользователь админ или редаткор, то скип = тру и єтот запрос пропустится
 
   if (isMobile) {
     return (
@@ -76,16 +85,19 @@ function App() {
               element={<PublicRoute component={AdminLoginPage} />}
             />
 
-            <Route
-              path="/user"
-              element={
-                <PrivateRoute
-                  roles="user"
-                  redirectTo="/"
-                  component={<UserPage />}
-                />
-              }
-            ></Route>
+            {user.userRole && (
+              <Route
+                path="/user"
+                element={<PrivateUserRoute component={UserPage} />}
+              >
+                <Route index element={<UserCabinetPage />} />
+                <Route path="cabinet" element={<UserCabinetPage />} />
+                <Route path="messages" element={<MessagesUser />} />
+                <Route path="medialibrary" element={<Medialibrary />} />
+                <Route path="allmusic" element={<AllmusicUser />} />
+                <Route path="*" element={<ErrorPage />} />
+              </Route>
+            )}
 
             {user.adminRole && (
               <Route
@@ -124,13 +136,13 @@ function App() {
 
                 <Route path="*" element={<ErrorPage />} />
               </Route>
-            )}
-            {isError && (
+
+            {/* {isError && (
               <Route
                 path="/signin"
                 element={<PublicRoute component={Login} />}
-              />
-            )}
+
+            )} */}
             <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>

@@ -30,12 +30,15 @@ export const authApi = createApi({
       },
       invalidatesTags: ["auth"],
     }),
+  
+
+
     currentUser: builder.query({
       query: () => ({
         url: "/admin/current",
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        // console.log("await queryFulfilled).data", (await queryFulfilled).data);
+        console.log("await queryFulfilled).data", (await queryFulfilled).data);
         dispatch(setCurrent((await queryFulfilled).data));
       },
     }),
@@ -81,6 +84,7 @@ export const authApi = createApi({
 
 export const {
   useSigninMutation,
+  
   useCurrentUserQuery,
   useLogoutMutation,
   useUpdateUserMutation,

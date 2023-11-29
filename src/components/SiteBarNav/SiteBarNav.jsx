@@ -10,20 +10,31 @@ import {
   SideBarLineWrapper,
   SideBarBottomLineWrapper,
 } from "./SiteBarNav.styled";
-
+import { useSelector } from "react-redux";
+import { getUserState } from "../../redux/userSelectors";
 import { useLogoutMutation } from "../../redux/authSlice";
-
+import {useLogoutClientMutation} from "../../redux/authClientSlice";
 import { useNavigate } from "react-router-dom";
 
 export const SiteBarNav = () => {
+  const user = useSelector(getUserState);
   const [dispatch] = useLogoutMutation();
+  const [dispatchClient] = useLogoutClientMutation();
+
   const navigate = useNavigate();
   const handleLogOut = () => {
-    dispatch()
+    if (user.userRole) {
+      dispatchClient()
       .unwrap()
       .then(() => {
         navigate("/");
       });
+    }else { dispatch()
+      .unwrap()
+      .then(() => {
+        navigate("/adminlogin");
+      });}
+   
   };
 
   return (

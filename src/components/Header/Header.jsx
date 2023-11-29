@@ -33,12 +33,10 @@ const Header = ({avatarURL}) => {
   const defaultAvatarSrc = "../avatar.jpg";
 
   const avatarSrc = avatarURL
-    ? selectedImage
-      ? URL.createObjectURL(selectedImage)
-      : `${BASE_URL}/${avatarURL}`
+    ? `${BASE_URL}/${avatarURL}`
     : defaultAvatarSrc;
 
-  console.log('user', avatarURL)
+  // console.log('user', avatarURL)
 
   return (
     <PageHeader>
@@ -62,7 +60,7 @@ const Header = ({avatarURL}) => {
       
         }}
       />
-      <form onSubmit={handleFormSubmit}>
+      {/* <form onSubmit={handleFormSubmit}>
          <input
           name="name"
           type="file"
@@ -73,7 +71,7 @@ const Header = ({avatarURL}) => {
         <button type="submit" disabled={isLoading}>
           {isLoading ? "<LoadingSpinner size={30} />" : "Save changes"}
         </button>
-      </form>
+      </form> */}
         </>)}
         {/* </AvatarHeader> */}
 

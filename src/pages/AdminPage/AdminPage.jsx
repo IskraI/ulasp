@@ -2,8 +2,8 @@ import { SiteBarNav } from "../../components/SiteBarNav/SiteBarNav";
 import { Outlet } from "react-router-dom";
 import { Suspense } from "react";
 import {
-  AdminSection,
-  AdminSubpage,
+  PageSection,
+  PageSubpage,
 } from "../../pages/AdminPage/AdminPage.styled";
 
 
@@ -12,14 +12,14 @@ const AdminPage = () => {
 
  
   return (
-    <AdminSection>
+    <PageSection>
       <SiteBarNav />
-      <AdminSubpage>
+      <PageSubpage>
         <Suspense fallback={"Loader"}>
           <Outlet />
         </Suspense>
-      </AdminSubpage>
-    </AdminSection>
+      </PageSubpage>
+    </PageSection>
   );
 };
 

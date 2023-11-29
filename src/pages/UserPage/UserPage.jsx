@@ -2,20 +2,23 @@ import { SiteBarNav } from "../../components/SiteBarNav/SiteBarNav";
 import { Outlet } from "react-router-dom";
 import { Suspense } from "react";
 import {
-  AdminSection,
-  AdminSubpage,
-} from "../../pages/AdminPage/AdminPage.styled";
+  PageSection,
+  PageSubpage,
+} from "../AdminPage/AdminPage.styled";
 
 const UserPage = () => {
+ 
+  
+
   return (
-    <AdminSection>
-      <SiteBarNav />
-      <AdminSubpage>
-        <Suspense fallback={"Loader"}>
-          <Outlet />
-        </Suspense>
-      </AdminSubpage>
-    </AdminSection>
+    <PageSection>
+    <SiteBarNav />
+    <PageSubpage>
+      <Suspense fallback={"Loader"}>
+        <Outlet />
+      </Suspense>
+    </PageSubpage>
+  </PageSection>
   );
 };
 
