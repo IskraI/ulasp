@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { colors } from "../../styles/vars";
 
 export const TableStyle = styled.table`
+  margin-bottom: 34px;
   text-align: left;
   font-size: 18px;
   table-layout: fixed;
@@ -81,7 +82,7 @@ export const TracksNotFound = styled.p`
 `;
 
 export const MockPlayer = styled.div`
-  margin-top: 34px;
+  margin-top: auto;
   display: flex;
   width: 100%;
   height: 86px;

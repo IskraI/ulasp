@@ -1,10 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../constants/constants";
 
-
-
-export const tracksApi = createApi({
-  reducerPath: "tracksApi",
+export const playlistsApi = createApi({
+  reducerPath: "playlistsApi",
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
@@ -15,21 +13,16 @@ export const tracksApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Tracks"],
+  tagTypes: ["Playlists"],
 
   endpoints: (builder) => ({
-    getAllTracks: builder.query({
+    getLatestPlaylists: builder.query({
       query: () => ({
-        url: "/editor/tracks/latestTracks",
-        provideTags: ["Tracks"],
+        url: "/editor/playlist/latest",
+        provideTags: ["Playlists"],
       }),
     }),
-    // getTracksCount: builder.query({
-    //   query: () => ({
-    //     url: "/editor/tracks/count",
-    //   }),
-    // }),
   }),
 });
 
-export const { useGetAllTracksQuery } = tracksApi;
+export const { useGetLatestPlaylistsQuery } = playlistsApi;

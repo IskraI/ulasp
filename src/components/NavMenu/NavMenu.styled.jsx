@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { colors } from "../../styles/vars";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 export const Nav = styled.nav`
   display: flex;
@@ -35,6 +35,11 @@ export const Item = styled.li`
   // display: flex;
   // align-items: center;
   // padding-left: 30px;
+`;
+
+export const SubItem = styled.li`
+  /* margin-left: auto; */
+  margin-left: 50px;
 `;
 
 export const NavigationLink = styled(NavLink)`
@@ -106,6 +111,36 @@ export const NavigationLink = styled(NavLink)`
 
   &:active:hover {
     color: #000;
+  }
+`;
+
+export const SubMenuLink = styled(NavLink)`
+  color: ${colors.mainFontColor};
+  display: flex;
+  font-size: 20px;
+
+  align-items: center;
+
+  line-height: calc(24.2 / 20);
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+
+  border-right: 2px solid #fff3bf;
+  padding-top: 9px;
+  padding-bottom: 18px;
+  svg {
+    margin-right: 10px;
+  }
+
+  &.active {
+    color: #000;
+
+    transition: color 450ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    svg {
+      stroke: #fff3bf;
+      transition: stroke 450ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
   }
 `;
 
