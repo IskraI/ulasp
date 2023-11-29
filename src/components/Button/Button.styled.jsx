@@ -7,6 +7,7 @@ export const CustomButton = styled.button`
   border-radius: 10px;
   border: 1px solid #17161c;
   font-family: inherit;
+  width: ${(props) => props.width};
   font-size: ${(props) => props.fontsize};
   font-weight: 400;
   color: #17161c;
@@ -14,10 +15,9 @@ export const CustomButton = styled.button`
   background: rgba(164, 188, 212, 0.3);
   margin-top: ${(props) => props.margintop};
   margin-bottom: ${(props) => props.marginbottom};
-  margin-left:${(props) => props.marginleft};
-  margin-right:${(props) => props.marginright};
+  margin-left: ${(props) => props.marginleft};
+  margin-right: ${(props) => props.marginright};
   padding: ${(props) => props.padding};
-
 
   &:hover,
   :focus {

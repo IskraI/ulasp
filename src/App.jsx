@@ -23,6 +23,8 @@ import OnlineUsers from "./components/OnlineUsers/OnlineUsers";
 import Analytics from "./components/Analytics/Analytics";
 import CardUser from "./components/CardUser/CardUser";
 import CardEditor from "./components/CardEditor/CardEditor";
+import MediaLibrary from "./components/MediaLibrary/MediaLibrary";
+import Genres from "./components/Genres/Genres";
 import { useSelector } from "react-redux";
 import { useCurrentUserQuery } from "../src/redux/authSlice";
 import { useCurrentClientQuery } from "../src/redux/authClientSlice";
@@ -30,6 +32,7 @@ import { getUserState } from "../src/redux/userSelectors";
 import { lazy, useEffect } from "react";
 
 import { Navigate } from "react-router-dom";
+
 const AdminCabinetPage = lazy(() =>
   import("./components/AdminCabinetPage/AdminCabinetPage")
 );
@@ -126,14 +129,19 @@ function App() {
               >
                 <Route index element={<EditorCabinetPage />} />
                 <Route path="cabinet" element={<EditorCabinetPage />} />
+
+                <Route path="medialibrary" element={<MediaLibrary />} />
+                <Route path="medialibrary/genres" element={<Genres display={"none"}/>} />
+                <Route path="shops" element={<Genres />} />
+
                 <Route path="*" element={<ErrorPage />} />
               </Route>
-            )}
+
             {/* {isError && (
               <Route
                 path="/signin"
                 element={<PublicRoute component={Login} />}
-              />
+
             )} */}
             <Route path="*" element={<ErrorPage />} />
           </Route>

@@ -1,13 +1,16 @@
 import { CustomButton } from "./Button.styled";
+import symbol from "../../assets/symbol.svg";
 
 export const Button = ({
+  width,
   marginbottom,
   margintop,
-  marginright, 
- marginleft,
+  marginright,
+  marginleft,
   padding,
   onClick,
   type,
+  icon,
   text,
   ariaLabel,
   height,
@@ -17,16 +20,24 @@ export const Button = ({
   return (
     <CustomButton
       type={type}
+      width={width}
       aria-label={ariaLabel}
       marginbottom={marginbottom}
       margintop={margintop}
       marginright={marginright}
-       marginleft={marginleft} 
+      marginleft={marginleft}
       padding={padding}
       onClick={onClick}
       fontsize={fontsize}
-     display={display}
+      display={display}
     >
+      <svg
+        width="24"
+        height="24"
+        style={{ display: { display }, marginRight: "8px" }}
+      >
+        <use href={icon}></use>
+      </svg>
       {text}
     </CustomButton>
   );

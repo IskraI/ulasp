@@ -7,6 +7,7 @@ import {
   useGetTracksCountQuery,
 } from "../../redux/statisticSlice";
 import { useGetAllTracksQuery } from "../../redux/tracksSlice";
+
 import TracksTable from "../TracksTable/TracksTable";
 import { EditorText } from "./EditorCabinetPage.styled";
 
@@ -31,8 +32,8 @@ const EditorCabinetPage = () => {
     isUninitialized,
   } = useGetAllTracksQuery();
 
-  // console.log("isSuccess", isSuccess);
-  // console.log("isUninitialized", isUninitialized);
+
+
   return (
     <>
       <EditorText> Кабінет редактора</EditorText>

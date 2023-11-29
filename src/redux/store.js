@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import { authApi } from "./authSlice";
 import { userReducer } from "./userSlice";
 import { authClientApi } from "./authClientSlice";
@@ -17,6 +17,8 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { tracksApi } from "./tracksSlice";
+import { genresApi } from "./genresSlice";
+import { playlistsApi } from "./playlistsSlice";
 
 const persistConfig = {
   key: "user",
@@ -32,6 +34,8 @@ export const store = configureStore({
       dataUsersApi.reducer /*данные юзеров для админа */,
     [statisticApi.reducerPath]: statisticApi.reducer,
     [tracksApi.reducerPath]: tracksApi.reducer,
+    [genresApi.reducerPath]: genresApi.reducer,
+    [playlistsApi.reducerPath]: playlistsApi.reducer,
     user: persistReducer(persistConfig, userReducer),
   },
   middleware: (getDefaultMiddleware) =>
@@ -44,7 +48,9 @@ export const store = configureStore({
       .concat(authClientApi.middleware)
       .concat(dataUsersApi.middleware)
       .concat(statisticApi.middleware)
-      .concat(tracksApi.middleware),
+      .concat(tracksApi.middleware)
+      .concat(genresApi.middleware)
+      .concat(playlistsApi.middleware),
 });
 
 export const persistor = persistStore(store);
