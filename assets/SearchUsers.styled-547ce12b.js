@@ -1,4 +1,4 @@
-import{n as t,N as n,c as e}from"./index-50ec55d9.js";const a=t(n)`
+import{n as t,Q as n,c as e}from"./index-563703e0.js";const a=t(n)`
 
  &.active {text-decoration: underline}
 
