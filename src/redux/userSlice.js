@@ -53,6 +53,8 @@ export const userSlice = createSlice({
             avatarURL: action.payload.user.avatarURL,
             isLoggedIn: true,
             userRole: true,
+            adminRole: false,
+            editorRole: false,
           };
 
           
