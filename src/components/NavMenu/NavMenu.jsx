@@ -39,6 +39,7 @@ export const NavMenu = () => {
     setMenuVisible(false);
   };
 
+
   return (
     <Nav>
       <List>
