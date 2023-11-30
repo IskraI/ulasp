@@ -47,6 +47,7 @@ const AdminUsers = lazy(() => import("./components/AdminUsers/AdminUsers"));
 
 function App() {
   const user = useSelector(getUserState);
+  console.log('App user', user)
 
   const skipAdmin = (!user.token && !user.isLoggedIn) || user.userRole;
   const skipClient =
