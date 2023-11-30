@@ -10,7 +10,9 @@ import {
 import {TitleSecond, DataUser, TitleThird, } from './UserCabinetPage.styled'
 import { useSelector } from "react-redux";
 import { getUserState } from "../../redux/userSelectors";
-
+import { AdminWriteForm } from '../../components/Form/AdminWriteForm';
+import { ActForm } from '../../components/Form/ActForm';
+import { ReportForm } from '../../components/Form/ReportForm';
 const UserCabinetPage = () => {
 
  const user = useSelector(getUserState);
@@ -31,8 +33,10 @@ const UserCabinetPage = () => {
       <DataUser>{user.dateOfAccess}</DataUser>
 
       <TitleThird>Написати адміністратору:</TitleThird>
+      <AdminWriteForm/>
       <TitleThird>Запросити акт звірки:</TitleThird>
-      
+      <ActForm />
+      <ReportForm/>
     </>
   );
 };
