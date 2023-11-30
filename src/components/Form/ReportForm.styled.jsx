@@ -8,6 +8,9 @@ flex-shrink: 0;
 border-radius: 10px;
 border: 0.5px solid ${colors.mainFontColor};
 background:  rgba(234, 234, 234, 0.32);
+position: absolute;
+margin-left:580px;
+margin-top: 86px;
 `; 
 
 export const TitleThird = styled.h3`
@@ -54,6 +57,13 @@ border-radius: 10px;
 border: 1px solid ${colors.mainFontColor};
 background:  rgba(234, 234, 234, 0.32);
 margin-left:8px;
+
+::placeholder {
+color:  rgba(0, 0, 0, 0.40);
+font-size: 20px;
+justify-content: center;
+line-height: calc(24/20);
+}
 `; 
 
 export const Label = styled.label`
@@ -63,4 +73,34 @@ font-family: Inter;
 font-size: 20px;
 line-height: calc(24/20); 
 
+`; 
+
+export const Input3 = styled.input`
+height: 31px;
+width:59px;
+padding: 3px 6px 4px 14px;
+justify-content: flex-end;
+align-items: flex-start;
+gap: 12px;
+border-radius: 10px;
+border: 1px solid  ${colors.mainFontColor};
+background:  rgba(234, 234, 234, 0.32);
+margin-left:8px;
+margin-right: 8px;
+
+::placeholder {
+color:  rgba(0, 0, 0, 0.40);
+font-size: 20px;
+line-height: calc(24/20);
+justify-content: center;
+}
+`; 
+
+export const Label3 = styled.label`
+margin-left:12px;
+color: ${colors.mainFontColor};
+font-family: Inter;
+font-size: 20px;
+line-height: calc(24/20); 
+margin-top: 16px;
 `; 

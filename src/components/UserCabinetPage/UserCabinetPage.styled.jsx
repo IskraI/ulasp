@@ -40,6 +40,7 @@ export const DataUser = styled.p`
 export const FormContainer = styled.div`
  display: flex;
  gap: 135px;
+ position: relative;
 `; 
 
 
