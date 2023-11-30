@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import {
   TableCell,
   RowTitle,
@@ -10,11 +9,9 @@ import {
   TracksNotFound,
   MockPlayer,
 } from "../TracksTable/TracksTable.styled";
-import { Button } from "../Button/Button";
 import { BASE_URL, ERROR_NOT_FOUND } from "../../constants/constants";
 
-const TracksTable = ({ tracks, isLoading, error }) => {
-//   console.log(tracks);
+const TracksTable = ({ tracks, isLoading, error, display }) => {
   const sToStr = (sec) => {
     sec = Math.round(sec);
     let m = Math.trunc(sec / 60) + "";
@@ -30,10 +27,12 @@ const TracksTable = ({ tracks, isLoading, error }) => {
 
       {tracks?.length !== 0 && !isLoading && !error && (
         <>
-          <LatestTracks>Остання додана музика </LatestTracks>
+          <LatestTracks style={{ display }}>
+            Остання додана музика{" "}
+          </LatestTracks>
           <TableStyle>
             <THeadStyle>
-              <tr>
+              <tr style={{ display }}>
                 <RowTitle></RowTitle>
                 <RowTitle>Назва пісні</RowTitle>
                 <RowTitle>Виконавець</RowTitle>
@@ -58,7 +57,7 @@ const TracksTable = ({ tracks, isLoading, error }) => {
                     <TrStyle key={_id}>
                       <TableCell>
                         <TrackCover
-                          src={BASE_URL + trackPictureURL}
+                          src={BASE_URL + "/" + trackPictureURL}
                           alt={trackName}
                           width={55}
                         />
@@ -68,8 +67,10 @@ const TracksTable = ({ tracks, isLoading, error }) => {
                       <TableCell>{artist}</TableCell>
                       <TableCell>{sToStr(trackDuration)}</TableCell>
                       <TableCell>{trackGenre}</TableCell>
-                      <TableCell>{playList?.playListName}</TableCell>
-                      <TableCell>***</TableCell>
+                      <TableCell style={{ display }}>
+                        {playList?.playListName}
+                      </TableCell>
+                      <TableCell style={{ display }}>***</TableCell>
                     </TrStyle>
                   );
                 }

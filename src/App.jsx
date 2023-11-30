@@ -16,13 +16,14 @@ import PrivateRoute from "./components/PrivateRoute";
 import PrivateUserRoute from "./components/PrivateUserRoute";
 import Messages from "./components/Messages/Messages";
 import MessagesUser from "./components/MessagesUser/MessagesUser";
-import Medialibrary from "./components/Medialibrary/Medialibrary";
 import AllmusicUser from "./components/AllmusicUser/AllmusicUser";
 // import AdminUsers from "./components/AdminUsers/AdminUsers";
 import OnlineUsers from "./components/OnlineUsers/OnlineUsers";
 import Analytics from "./components/Analytics/Analytics";
 import CardUser from "./components/CardUser/CardUser";
 import CardEditor from "./components/CardEditor/CardEditor";
+import MediaLibrary from "./components/MediaLibrary/MediaLibrary";
+import Genres from "./components/Genres/Genres";
 import { useSelector } from "react-redux";
 import { useCurrentUserQuery } from "../src/redux/authSlice";
 import { useCurrentClientQuery } from "../src/redux/authClientSlice";
@@ -30,6 +31,7 @@ import { getUserState } from "../src/redux/userSelectors";
 import { lazy, useEffect } from "react";
 
 import { Navigate } from "react-router-dom";
+
 const AdminCabinetPage = lazy(() =>
   import("./components/AdminCabinetPage/AdminCabinetPage")
 );
@@ -45,6 +47,7 @@ const AdminUsers = lazy(() => import("./components/AdminUsers/AdminUsers"));
 
 function App() {
   const user = useSelector(getUserState);
+  console.log('App user', user)
 
   const skipAdmin = (!user.token && !user.isLoggedIn) || user.userRole;
   const skipClient =
@@ -60,7 +63,9 @@ function App() {
     isError: isErrorClient,
   } = useCurrentClientQuery("", {
     skip: skipClient,
-  }); //если пользователь админ или редаткор, то скип = тру и єтот запрос пропустится
+  });
+  
+  //если пользователь админ или редаткор, то скип = тру и єтот запрос пропустится
 
   if (isMobile) {
     return (
@@ -90,7 +95,7 @@ function App() {
                 <Route index element={<UserCabinetPage />} />
                 <Route path="cabinet" element={<UserCabinetPage />} />
                 <Route path="messages" element={<MessagesUser />} />
-                <Route path="medialibrary" element={<Medialibrary />} />
+                <Route path="medialibrary" element={<MediaLibrary />} />
                 <Route path="allmusic" element={<AllmusicUser />} />
                 <Route path="*" element={<ErrorPage />} />
               </Route>
@@ -126,6 +131,11 @@ function App() {
               >
                 <Route index element={<EditorCabinetPage />} />
                 <Route path="cabinet" element={<EditorCabinetPage />} />
+
+                <Route path="medialibrary" element={<MediaLibrary />} />
+                <Route path="medialibrary/genres" element={<Genres display={"none"} />} />
+                <Route path="shops" element={<Genres />} />
+
                 <Route path="*" element={<ErrorPage />} />
               </Route>
             )}
@@ -133,7 +143,7 @@ function App() {
               <Route
                 path="/signin"
                 element={<PublicRoute component={Login} />}
-              />
+/>
             )} */}
             <Route path="*" element={<ErrorPage />} />
           </Route>

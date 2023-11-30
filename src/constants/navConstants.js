@@ -5,7 +5,7 @@ export const propEditorNav = [
     id: "navCabinet",
     title: "Кабінет",
     navigation: "cabinet",
-    picture: `${symbol}#icon-analytics`,
+    picture: `${symbol}#icon-cabinet`,
   },
   {
     id: "navMessages",
@@ -18,7 +18,34 @@ export const propEditorNav = [
     title: "Медіатека",
     navigation: "medialibrary",
     picture: `${symbol}#icon-rmediaTec`,
+    menu: [
+      {
+        id: "genres",
+        title: "Жанри",
+        navigation: "medialibrary/genres",
+        picture: `${symbol}#icon-music-album`,
+      },
+      {
+        id: "shops",
+        title: "Заклади",
+        navigation: "medialibrary/shops",
+        picture: `${symbol}#icon-build`,
+      },
+      {
+        id: "newPlaylists",
+        title: "Нові плейлисти",
+        navigation: "medialibrary/newplaylists",
+        picture: `${symbol}#icon-playlist`,
+      },
+      {
+        id: "newTracks",
+        title: "Нові пісні",
+        navigation: "medialibrary/newtracks",
+        picture: `${symbol}#icon-song`,
+      },
+    ],
   },
+
   {
     id: "navAllMusic",
     title: "Вся музика",

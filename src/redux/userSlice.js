@@ -26,6 +26,7 @@ export const userSlice = createSlice({
             ...action.payload[role],
             token: action.payload.accessToken,
             isLoggedIn: true,
+            userRole: false,
             [`${role}Role`]: action.payload[role][`${role}Role`],
           };
         }
@@ -48,6 +49,7 @@ export const userSlice = createSlice({
           state = {
             ...state,
             ...action.payload.user,
+            // token: action.payload.accessToken,
             avatarURL: action.payload.user.avatarURL,
             isLoggedIn: true,
             userRole: true,
@@ -68,6 +70,8 @@ export const userSlice = createSlice({
           token: action.payload.accessToken,
           isLoggedIn: true,
           userRole: true,
+          adminRole: false,
+  editorRole: false,
         };
         return state;
       },
