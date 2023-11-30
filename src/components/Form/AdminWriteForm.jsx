@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { AdminForm, FormInput1, FormInput2, Button, TitleThird} from './AdminWriteForm.styled'
 
 export const AdminWriteForm = () => {
   const { register, handleSubmit, setValue } = useForm();
@@ -8,20 +9,16 @@ export const AdminWriteForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label>
-              <input {...register('Тема')}
+    <AdminForm onSubmit={handleSubmit(onSubmit)}>
+      <TitleThird>Написати адміністратору:</TitleThird>
+                   <FormInput1 {...register('Тема')}
         placeholder="Тема"      />
-      </label>
-      <br />
-      <label>
-              <input {...register('Текст')}
+            <br />
+                    <FormInput2 {...register('Текст')}
               placeholder="Текст" />
-              
-      </label>
-      <br />
-      <button type="submit">Відправити</button>
-    </form>
+            <br />
+      <Button type="submit">Відправити</Button>
+    </AdminForm>
   );
 };
 

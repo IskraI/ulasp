@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { TitleThird, ReportFormContainer, Button, InputContainer, Input, Label } from './ReportForm.styled';
 
 export const ReportForm = () => {
   const { register, handleSubmit, setValue } = useForm();
@@ -8,17 +9,18 @@ export const ReportForm = () => {
   };
 
   return (
-      <form onSubmit={handleSubmit(onSubmit)}>
-          <h3>Звіт:</h3>
-      <label>З
-              <input {...register('Дата')}
+      <ReportFormContainer onSubmit={handleSubmit(onSubmit)}>
+      <TitleThird>Звіт:</TitleThird>
+      <InputContainer>
+      <Label>З
+              <Input {...register('Дата')}
         placeholder="Дата"      />
-      </label>
-           <label>по:
-              <input {...register('Дата')}
+      </Label>
+           <Label>по:
+              <Input {...register('Дата')}
               placeholder="Дата" />
-              
-      </label>
+        </Label>
+        </InputContainer>
           <br />
           <label>За
               <input {...register('З')}
@@ -26,7 +28,7 @@ export const ReportForm = () => {
               
       </label>
       <br />
-      <button type="submit">Сформувати</button>
-    </form>
+      <Button type="submit">Сформувати</Button>
+    </ReportFormContainer>
   );
 };

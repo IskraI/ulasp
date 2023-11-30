@@ -7,7 +7,7 @@ import {
   useGetTracksCountQuery,
 } from "../../redux/statisticSlice";
 
-import {TitleSecond, DataUser, TitleThird, } from './UserCabinetPage.styled'
+import {TitleSecond, DataUser, TitleFirst,FormContainer } from './UserCabinetPage.styled'
 import { useSelector } from "react-redux";
 import { getUserState } from "../../redux/userSelectors";
 import { AdminWriteForm } from '../../components/Form/AdminWriteForm';
@@ -21,7 +21,7 @@ const UserCabinetPage = () => {
   // console.log("isUninitialized", isUninitialized);
   return (
     <>
-      <TitleSecond>Кабінет</TitleSecond>
+      <TitleFirst>Кабінет</TitleFirst>
       
       <TitleSecond>Номер договору</TitleSecond>
       <DataUser>{user.contractNumber}</DataUser>
@@ -31,11 +31,11 @@ const UserCabinetPage = () => {
       <DataUser>{user.lastPay}</DataUser>
       <TitleSecond>Наступна оплата</TitleSecond>
       <DataUser>{user.dateOfAccess}</DataUser>
-
-      <TitleThird>Написати адміністратору:</TitleThird>
+<FormContainer>
+      
       <AdminWriteForm/>
-      <TitleThird>Запросити акт звірки:</TitleThird>
-      <ActForm />
+              <ActForm />
+        </FormContainer>
       <ReportForm/>
     </>
   );
