@@ -33,6 +33,21 @@ export const userSlice = createSlice({
         return state;
       },
     },
+    setUser: {
+      reducer(state, action) {
+        console.log("action.payload setUser", action.payload);
+        state = {
+          ...state,
+          ...action.payload.user,
+          token: action.payload.accessToken,
+          isLoggedIn: true,
+          userRole: true,
+          adminRole: false,
+  editorRole: false,
+        };
+        return state;
+      },
+    },
     setCurrent: {
       reducer(state, action) {
         if (action.payload.admin || action.payload.editor) {
@@ -63,21 +78,7 @@ export const userSlice = createSlice({
       },
     },
 
-    setUser: {
-      reducer(state, action) {
-        console.log("action.payload setUser", action.payload);
-        state = {
-          ...state,
-          ...action.payload.user,
-          token: action.payload.accessToken,
-          isLoggedIn: true,
-          userRole: true,
-          adminRole: false,
-  editorRole: false,
-        };
-        return state;
-      },
-    },
+
 
     resetUser: {
       reducer(state) {

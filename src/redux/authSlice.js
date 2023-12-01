@@ -41,6 +41,10 @@ export const authApi = createApi({
         // console.log("await queryFulfilled).data", (await queryFulfilled).data);
         dispatch(setCurrent((await queryFulfilled).data));
       },
+      async onQueryError(arg, { dispatch, error, queryFulfilled }) {
+        console.error("Query failed", error);
+        dispatch(resetUser()); // Сбросить состояние до значения по умолчанию
+      },
     }),
     logout: builder.mutation({
       query: () => ({

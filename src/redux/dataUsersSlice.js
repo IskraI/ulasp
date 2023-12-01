@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
+import { resetUser, setUser, setAdmin, setCurrent } from "./userSlice";
 const BASE_URL = `http://localhost:8000`;
 
 export const dataUsersApi = createApi({
@@ -36,6 +36,10 @@ export const dataUsersApi = createApi({
         url:  admin ?  `admin/${id}`:`admin/users/${id}`,
         method: "DELETE",
       }),
+      async onQueryError(arg, { dispatch, error, queryFulfilled }) {
+        console.error("Query failed", error);
+        dispatch(resetUser()); // Сбросить состояние до значения по умолчанию
+      },
       invalidatesTags: ["dataUsers", "dataUser"],
     }),
 
@@ -53,6 +57,10 @@ export const dataUsersApi = createApi({
     getUserById: builder.query({
       query: (id) => ({ url: `admin/users/${id}` }),
       providesTags: ["dataUser"],
+      async onQueryError(arg, { dispatch, error, queryFulfilled }) {
+        console.error("Query failed", error);
+        dispatch(resetUser()); // Сбросить состояние до значения по умолчанию
+      },
     }),
    
     createFopUser: builder.mutation({
