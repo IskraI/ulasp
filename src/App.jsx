@@ -16,7 +16,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import PrivateUserRoute from "./components/PrivateUserRoute";
 import Messages from "./components/Messages/Messages";
 import MessagesUser from "./components/MessagesUser/MessagesUser";
-import AllmusicUser from "./components/AllmusicUser/AllmusicUser";
+import MyPlaylistsUser from "./components/MyPlaylistsUser/MyPlaylistsUser";
 // import AdminUsers from "./components/AdminUsers/AdminUsers";
 import OnlineUsers from "./components/OnlineUsers/OnlineUsers";
 import Analytics from "./components/Analytics/Analytics";
@@ -103,7 +103,7 @@ function App() {
                 <Route path="cabinet" element={<UserCabinetPage />} />
                 <Route path="messages" element={<MessagesUser />} />
                 <Route path="medialibrary" element={<MediaLibrary />} />
-                <Route path="allmusic" element={<AllmusicUser />} />
+                <Route path="myplaylists" element={<MyPlaylistsUser />} />
                 <Route path="*" element={<ErrorPage />} />
               </Route>
             )}
