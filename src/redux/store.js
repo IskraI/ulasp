@@ -23,6 +23,7 @@ import { playlistsApi } from "./playlistsSlice";
 const persistConfig = {
   key: "user",
   storage,
+  whitelist: ["token","adminRole", "userRole", "editorRole", "isLoggedIn"],
   // whitelist: ["token","adminRole", "userRole", "editorRole", "isLoggedIn"],
 };
 
