@@ -149,24 +149,7 @@ function App() {
                 <Route path="*" element={<ErrorPage />} />
               </Route>
             )}
-              {/* {user.userRole&&isErrorClient&& (
-              <Route
-                path="/signin"
-                element={<PublicRoute component={Login} />}
-/>
-            )} */}
-            {/* {isError&& (
-              <Route
-                path="/signin"
-                element={<PublicRoute component={AdminLoginPage} />}
-/>
-            )}  */}
-            {/* {isError && (
-              <Route
-                path="/signin"
-                element={<PublicRoute component={Login} />}
-/>
-            )} */}
+             
             <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>
