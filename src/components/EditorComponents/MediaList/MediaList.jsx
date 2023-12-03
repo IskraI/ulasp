@@ -1,5 +1,5 @@
-import { BASE_URL } from "../../constants/constants";
-import symbol from "../../assets/symbol.svg";
+import { BASE_URL } from "../../../constants/constants";
+import symbol from "../../../assets/symbol.svg";
 
 import {
   MediaItem,

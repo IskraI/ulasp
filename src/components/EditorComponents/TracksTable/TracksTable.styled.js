@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { colors } from "../../styles/vars";
+import { colors } from "../../../styles/vars";
 
 export const TableStyle = styled.table`
   margin-bottom: 34px;
@@ -8,6 +8,7 @@ export const TableStyle = styled.table`
   table-layout: fixed;
   width: 100%;
   border-collapse: collapse;
+  /* border-collapse: separate; */
 `;
 
 export const THeadStyle = styled.thead``;
@@ -18,7 +19,7 @@ export const RowTitle = styled.th`
   font-weight: 500;
   line-height: 1.21;
   text-align: left;
-
+  gap: 20px;
   padding-top: 8px;
   padding-bottom: 18px;
   padding-right: 30px;
@@ -51,6 +52,13 @@ export const TrStyle = styled.tr`
   &:nth-of-type(even) {
     background-color: rgba(234, 234, 234, 0.32);
   }
+
+  /* &:first-child,
+  &:last-child {
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+  } */
 `;
 
 export const TableCell = styled.td`
@@ -58,6 +66,19 @@ export const TableCell = styled.td`
   padding-bottom: 8px;
   padding-left: 10px;
   /* padding-right: 30px; */
+
+  border: solid 1px transparent;
+  border-style: none solid;
+
+  &:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  &:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
 `;
 
 export const TrackCover = styled.img`

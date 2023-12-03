@@ -1,16 +1,9 @@
-import { SiteBarNav } from "../../components/SiteBarNav/SiteBarNav";
+import { SiteBarNav } from "../../../components/SiteBarNav/SiteBarNav";
 import { Outlet } from "react-router-dom";
 import { Suspense } from "react";
-import {
-  PageSection,
-  PageSubpage,
-} from "../../pages/AdminPage/AdminPage.styled";
+import { PageSection, PageSubpage } from "../../AdminPage/AdminPage.styled";
 
-
-
-const AdminPage = () => {
-
- 
+const EditorPage = () => {
   return (
     <PageSection>
       <SiteBarNav />
@@ -23,4 +16,4 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+export default EditorPage;

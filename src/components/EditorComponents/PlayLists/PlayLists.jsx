@@ -1,15 +1,22 @@
-import { useGetLatestPlaylistsQuery } from "../../redux/playlistsSlice";
 import MediaListItem from "../MediaList/MediaList";
+import MediaNavigationLink from "../../NavigationLink/NavigationLink";
+
 import {
   TitleWrapper,
   ControlWrapper,
   MediaList,
 } from "../MediaList/MediaList.styled";
-import { Button } from "../Button/Button";
-import symbol from "../../assets/symbol.svg";
+import { MockPlayer } from "../TracksTable/TracksTable.styled";
+import { Button } from "../../Button/Button";
+import symbol from "../../../assets/symbol.svg";
 
-const LatestPlaylists = () => {
-  const { data: playlists, isFetching, error } = useGetLatestPlaylistsQuery();
+const LatestPlaylists = ({
+  displayPlayer,
+  display,
+  data: playlists,
+  isFetching,
+  error,
+}) => {
 
   return (
     <>
@@ -37,6 +44,10 @@ const LatestPlaylists = () => {
               />
             ))}
           </MediaList>
+          <MediaNavigationLink link={"newplaylists"} display={display} />
+          <MockPlayer style={{ display: displayPlayer }}>
+            Тут будет плеер
+          </MockPlayer>
         </>
       )}
     </>

@@ -7,7 +7,7 @@ import WelcomePage from "./pages/WelcomePage/WelcomePage";
 import Login from "./pages/LoginPage/LoginPage";
 import AdminLoginPage from "./pages/AdminLoginPage/AdminLoginPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
-import EditorPage from "./pages/EditorPage/EditorPage";
+import EditorPage from "./pages/Editor/EditorPage/EditorPage";
 import UserPage from "./pages/UserPage/UserPage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import SharedLayout from "./components/SharedLayout/SharedLayout";
@@ -22,8 +22,11 @@ import OnlineUsers from "./components/OnlineUsers/OnlineUsers";
 import Analytics from "./components/Analytics/Analytics";
 import CardUser from "./components/CardUser/CardUser";
 import CardEditor from "./components/CardEditor/CardEditor";
-import MediaLibrary from "./components/MediaLibrary/MediaLibrary";
-import Genres from "./components/Genres/Genres";
+import MediaLibrary from "./pages/Editor/MediaLibrary/MediaLibrary";
+import AllTracksEditor from "./pages/Editor/AllTracksEditor/AllTracksEditor";
+import AllGenres from "./pages/Editor/AllGenres/AllGenres";
+import NewPlaylists from "./pages/Editor/NewPlaylists/NewPlaylists";
+import NewTracks from "./pages/Editor/NewTracks/NewTracks";
 import { useSelector } from "react-redux";
 import { useCurrentUserQuery } from "../src/redux/authSlice";
 import { useCurrentClientQuery } from "../src/redux/authClientSlice";
@@ -41,7 +44,7 @@ const UserCabinetPage = lazy(() =>
 const ListUsers = lazy(() => import("./components/AdminUsers/ListUsers"));
 const ListEditors = lazy(() => import("./components/AdminUsers/ListEditors"));
 const EditorCabinetPage = lazy(() =>
-  import("./components/EditorCabinetPage/EditorCabinetPage")
+  import("./pages/Editor/EditorCabinetPage/EditorCabinetPage")
 );
 const AdminUsers = lazy(() => import("./components/AdminUsers/AdminUsers"));
 
@@ -63,7 +66,7 @@ function App() {
   } = useCurrentClientQuery("", {
     skip: skipClient,
   });
-  
+
   //если пользователь админ или редаткор, то скип = тру и єтот запрос пропустится
 
   if (isMobile) {
@@ -132,9 +135,20 @@ function App() {
                 <Route path="cabinet" element={<EditorCabinetPage />} />
 
                 <Route path="medialibrary" element={<MediaLibrary />} />
-                <Route path="medialibrary/genres" element={<Genres display={"none"} />} />
-                <Route path="shops" element={<Genres />} />
-
+                <Route
+                  path="medialibrary/genres"
+                  element={<AllGenres display={"none"} />}
+                />
+                <Route
+                  path="medialibrary/newplaylists"
+                  element={<NewPlaylists display={"none"} />}
+                />
+                <Route
+                  path="medialibrary/newtracks"
+                  element={<AllTracksEditor display={"none"} />}
+                />
+                <Route path="shops" element={<AllGenres />} />
+                <Route path="allmusic" element={<NewTracks />} />
                 <Route path="*" element={<ErrorPage />} />
               </Route>
             )}

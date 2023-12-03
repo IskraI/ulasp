@@ -9,15 +9,16 @@ import {
   TracksNotFound,
   MockPlayer,
 } from "../TracksTable/TracksTable.styled";
-import { BASE_URL, ERROR_NOT_FOUND } from "../../constants/constants";
+import { BASE_URL, ERROR_NOT_FOUND } from "../../../constants/constants";
 
-const TracksTable = ({ tracks, isLoading, error, display }) => {
+const TracksTable = ({ rows, tracks, isLoading, error, display }) => {
   const sToStr = (sec) => {
     sec = Math.round(sec);
     let m = Math.trunc(sec / 60) + "";
     sec = (sec % 60) + "";
     return m.padStart(2, 0) + ":" + sec.padStart(2, 0);
   };
+
   return (
     <>
       {error && <TracksNotFound>{ERROR_NOT_FOUND}</TracksNotFound>}
@@ -27,19 +28,13 @@ const TracksTable = ({ tracks, isLoading, error, display }) => {
 
       {tracks?.length !== 0 && !isLoading && !error && (
         <>
-          <LatestTracks style={{ display }}>
-            Остання додана музика{" "}
-          </LatestTracks>
+          <LatestTracks style={{ display }}>Остання додана музика</LatestTracks>
           <TableStyle>
             <THeadStyle>
-              <tr style={{ display }}>
-                <RowTitle></RowTitle>
-                <RowTitle>Назва пісні</RowTitle>
-                <RowTitle>Виконавець</RowTitle>
-                <RowTitle>Тривалість</RowTitle>
-                <RowTitle>Жанр</RowTitle>
-                <RowTitle>Плейлист</RowTitle>
-                <RowTitle></RowTitle>
+              <tr>
+                {rows.map((row, rowindex) => {
+                  return <RowTitle key={rowindex}>{row}</RowTitle>;
+                })}
               </tr>
             </THeadStyle>
             <tbody>
@@ -55,6 +50,7 @@ const TracksTable = ({ tracks, isLoading, error, display }) => {
                 }) => {
                   return (
                     <TrStyle key={_id}>
+                      {/* <TableCell></TableCell> */}
                       <TableCell>
                         <TrackCover
                           src={BASE_URL + "/" + trackPictureURL}
@@ -67,6 +63,7 @@ const TracksTable = ({ tracks, isLoading, error, display }) => {
                       <TableCell>{artist}</TableCell>
                       <TableCell>{sToStr(trackDuration)}</TableCell>
                       <TableCell>{trackGenre}</TableCell>
+
                       <TableCell style={{ display }}>
                         {playList?.playListName}
                       </TableCell>
@@ -77,6 +74,7 @@ const TracksTable = ({ tracks, isLoading, error, display }) => {
               )}
             </tbody>
           </TableStyle>
+
           <MockPlayer>Тут будет плеер</MockPlayer>
         </>
       )}

@@ -1,18 +1,22 @@
-import { useGetAllGenresQuery } from "../../redux/genresSlice";
 import { GenresWrapper } from "./Genres.styled";
 import MediaListItem from "../MediaList/MediaList";
 import { MockPlayer } from "../TracksTable/TracksTable.styled";
-import MediaNavigationLink from "../NavigationLink/NavigationLink";
+import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 import {
   TitleWrapper,
   ControlWrapper,
   MediaList,
 } from "../MediaList/MediaList.styled";
-import { Button } from "../Button/Button";
-import symbol from "../../assets/symbol.svg";
+import { Button } from "../../Button/Button";
+import symbol from "../../../assets/symbol.svg";
 
-const Genres = ({ display, displayPlayer }) => {
-  const { data: genres, isFetching, error } = useGetAllGenresQuery();
+const Genres = ({
+  display,
+  displayPlayer,
+  data: genres,
+  isFetching,
+  error,
+}) => {
   return (
     <>
       {!isFetching && !error && (

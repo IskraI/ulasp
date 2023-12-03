@@ -1,15 +1,26 @@
 import {
   StatsListWrapper,
   StatItemEditor,
-} from "../Statistic/Statistic.styled";
+} from "../../../components/Statistic/Statistic.styled";
+
 import {
   useGetPlaylistsCountQuery,
   useGetTracksCountQuery,
-} from "../../redux/statisticSlice";
-import { useGetAllTracksQuery } from "../../redux/tracksSlice";
+} from "../../../redux/statisticSlice";
+import { useGetAllTracksQuery } from "../../../redux/tracksSlice";
 
-import TracksTable from "../TracksTable/TracksTable";
+import TracksTable from "../../../components/EditorComponents/TracksTable/TracksTable";
 import { EditorText } from "./EditorCabinetPage.styled";
+
+const RowsTitle = [
+  "",
+  "Назва пісні",
+  "Виконавець",
+  "Тривалість",
+  "Жанр",
+  "Плейлист",
+  "",
+];
 
 const EditorCabinetPage = () => {
   const {
@@ -28,11 +39,7 @@ const EditorCabinetPage = () => {
     isLoading: isLoadingAllTracks,
     error: errorLoadingAllTracks,
     isFetching: isFetchingAllTracks,
-    isSuccess,
-    isUninitialized,
   } = useGetAllTracksQuery();
-
-
 
   return (
     <>
@@ -57,6 +64,7 @@ const EditorCabinetPage = () => {
           isLoading={isLoadingAllTracks}
           error={errorLoadingAllTracks}
           isFetching={isFetchingAllTracks}
+          rows={RowsTitle}
         />
       )}
     </>
