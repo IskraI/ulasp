@@ -1,4 +1,6 @@
-import { useGetAllGenresQuery } from "../../redux/genresSlice";
+import { useGetAllGenresQuery, useGetAllGenresForUserQuery } from "../../redux/genresSlice";
+import { useSelector } from "react-redux";
+import { getUserState } from "../../redux/userSelectors";
 import { GenresWrapper } from "./Genres.styled";
 import MediaListItem from "../MediaList/MediaList";
 import { MockPlayer } from "../TracksTable/TracksTable.styled";
@@ -12,7 +14,25 @@ import { Button } from "../Button/Button";
 import symbol from "../../assets/symbol.svg";
 
 const Genres = ({ display, displayPlayer }) => {
+
   const { data: genres, isFetching, error } = useGetAllGenresQuery();
+
+//   const user = useSelector(getUserState);
+
+//   const { data: genres, isFetching, error } = useGetAllGenresQuery("", { skip: !user.editorRole });
+
+//   const { data: userGenres, isFetching: userIsFetching, error: userError } = useGetAllGenresForUserQuery("", { skip: !user.userRole });
+  
+// if (isFetching || userIsFetching) {
+//     return <div>Loading...</div>;
+//   }
+
+//   if (error || userError) {
+//     return <div>Error loading playlists</div>;
+//   } 
+
+//    const displayedGeners = user.editorRole ? genres : userGenres;
+
   return (
     <>
       {!isFetching && !error && (
@@ -31,7 +51,7 @@ const Genres = ({ display, displayPlayer }) => {
             />
           </ControlWrapper>
           <MediaList>
-            {genres.map(({ _id, genre, genreAvatarURL }) => (
+            { genres.map(({ _id, genre, genreAvatarURL }) => (
               <MediaListItem key={_id} title={genre} icon={genreAvatarURL} />
             ))}
           </MediaList>

@@ -22,7 +22,13 @@ export const genresApi = createApi({
         provideTags: ["Genres"],
       }),
     }),
+     getAllGenresForUser: builder.query({
+      query: () => ({
+        url: "/user/genres/all",
+        provideTags: ["Genres"],
+      }),
+    }),
   }),
 });
 
-export const { useGetAllGenresQuery } = genresApi;
+export const { useGetAllGenresQuery, useGetAllGenresForUserQuery } = genresApi;

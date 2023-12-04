@@ -1,4 +1,6 @@
-import { useGetAllTracksQuery } from "../../redux/tracksSlice";
+import { useGetAllTracksQuery, useGetAllTracksforUserQuery } from "../../redux/tracksSlice";
+import { useSelector } from "react-redux";
+import { getUserState } from "../../redux/userSelectors";
 import MediaListItem from "../MediaList/MediaList";
 import TracksTable from "../TracksTable/TracksTable";
 import {
@@ -11,6 +13,23 @@ import symbol from "../../assets/symbol.svg";
 
 const NewSongs = () => {
   const { data: allTracks, isFetching, error } = useGetAllTracksQuery();
+
+//   const user = useSelector(getUserState);
+  
+//   const { data: allTracks, isFetching, error } = useGetAllTracksQuery("", { skip: !user.editorRole });
+  
+//    const { data: userAllTracks, isFetching: userIsFetching, error: userError } = useGetAllTracksforUserQuery ("", { skip: !user.userRole });
+  
+// if (isFetching || userIsFetching) {
+//     return <div>Loading...</div>;
+//   }
+
+//   if (error || userError) {
+//     return <div>Error loading playlists</div>;
+//   } 
+
+//    const displayedAllTracks = user.editorRole ? allTracks : userAllTracks;
+
   return (
     <>
       {!isFetching && !error && (

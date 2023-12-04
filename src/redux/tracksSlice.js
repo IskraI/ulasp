@@ -24,6 +24,12 @@ export const tracksApi = createApi({
         provideTags: ["Tracks"],
       }),
     }),
+    getAllTracksforUser: builder.query({
+      query: () => ({
+        url: "/user/tracks/latestTracks",
+        provideTags: ["Tracks"],
+      }),
+    }),
     // getTracksCount: builder.query({
     //   query: () => ({
     //     url: "/editor/tracks/count",
@@ -32,4 +38,4 @@ export const tracksApi = createApi({
   }),
 });
 
-export const { useGetAllTracksQuery } = tracksApi;
+export const { useGetAllTracksQuery, useGetAllTracksforUserQuery} = tracksApi;
