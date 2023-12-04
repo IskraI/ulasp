@@ -31,11 +31,7 @@ export const Button = ({
       fontsize={fontsize}
       display={display}
     >
-      <svg
-        width="24"
-        height="24"
-        style={{ display: { display }, marginRight: "8px" }}
-      >
+      <svg width="24" height="24" style={{ display, marginRight: "8px" }}>
         <use href={icon}></use>
       </svg>
       {text}

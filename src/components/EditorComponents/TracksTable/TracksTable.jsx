@@ -50,7 +50,6 @@ const TracksTable = ({ rows, tracks, isLoading, error, display }) => {
                 }) => {
                   return (
                     <TrStyle key={_id}>
-                      {/* <TableCell></TableCell> */}
                       <TableCell>
                         <TrackCover
                           src={BASE_URL + "/" + trackPictureURL}

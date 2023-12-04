@@ -15,13 +15,15 @@ const NewTracks = () => {
   const { data: allTracks, isFetching, error } = useGetAllTracksQuery();
   return (
     <>
-      <TracksTable
-        tracks={allTracks}
-        error={error}
-        isFetching={isFetching}
-        display="none"
-        rows={RowsTitle}
-      />
+      {!isFetching && !error && (
+        <TracksTable
+          tracks={allTracks}
+          error={error}
+          isFetching={isFetching}
+          display="none"
+          rows={RowsTitle}
+        />
+      )}
     </>
   );
 };
