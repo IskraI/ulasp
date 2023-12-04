@@ -82,12 +82,8 @@ function App() {
   } else {
     return (
       <>
-      
-
         <Routes>
-        
           <Route element={<SharedLayout avatarURL={user.avatarURL} />}>
-        
             <Route path="/" element={<PublicRoute component={WelcomePage} />} />
 
             <Route path="/signin" element={<PublicRoute component={Login} />} />
@@ -143,13 +139,24 @@ function App() {
                 <Route path="cabinet" element={<EditorCabinetPage />} />
 
                 <Route path="medialibrary" element={<MediaLibrary />} />
-                <Route path="medialibrary/genres" element={<Genres display={"none"} />} />
-                <Route path="shops" element={<Genres />} />
-
+                <Route
+                  path="medialibrary/genres"
+                  element={<AllGenres display={"none"} />}
+                />
+                <Route
+                  path="medialibrary/newplaylists"
+                  element={<NewPlaylists display={"none"} />}
+                />
+                <Route
+                  path="medialibrary/newtracks"
+                  element={<AllTracksEditor display={"none"} />}
+                />
+                <Route path="shops" element={<AllGenres />} />
+                <Route path="allmusic" element={<NewTracks />} />
                 <Route path="*" element={<ErrorPage />} />
               </Route>
             )}
-             
+
             <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>
