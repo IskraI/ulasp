@@ -24,7 +24,7 @@ const Genres = ({
   const [showModal, setShowModal] = useState(false);
   
   
-  const [genre, setGenre] = useState(null);
+  // const [genre, setGenre] = useState(null);
   
   
   const toogleModal = () => {
