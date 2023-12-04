@@ -15,14 +15,21 @@ export const playlistsApi = createApi({
   }),
   tagTypes: ["Playlists"],
 
-  endpoints: (builder) => ({
-    getLatestPlaylists: builder.query({
-      query: () => ({
-        url: "/editor/playlist/latest",
-        provideTags: ["Playlists"],
-      }),
+ endpoints: (builder) => ({
+  getLatestPlaylists: builder.query({
+    query: () => ({
+      url: "/editor/playlist/latest",
+      provideTags: ["Playlists"],
     }),
   }),
+  getLatestPlaylistsForUser: builder.query({
+    query: () => ({
+      url: "/user/playlist/latest", 
+      provideTags: ["Playlists"],
+    }),
+  }),
+}),
+  
 });
 
-export const { useGetLatestPlaylistsQuery } = playlistsApi;
+export const { useGetLatestPlaylistsQuery, useGetLatestPlaylistsForUserQuery } = playlistsApi;

@@ -13,19 +13,17 @@ const PrivateUserRoute = ({ component: Component, redirectTo = "/signin" }) => {
     skip,
   });
 
-  // console.log("user.isLoggedIn из страниці юзера", user.isLoggedIn);
-  
-  // if (isLoading) return <>Loading....</>;
+  if (isLoading) return <>Loading....</>;
   // console.log("user.isLoggedIn", user.isLoggedIn);
+  if (isError) {
+    console.log("Ошибка в запросе");
+    return <Navigate to={"/signin"} />;
+  }
 
 
   if (user.isLoggedIn ) return <Component />;
 
   
-  if (isError) {
-    console.log("Ошибка в запросе");
-    return <Navigate to={"/signin"} />;
-  }
 
 
 

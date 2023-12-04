@@ -26,9 +26,25 @@ export const userSlice = createSlice({
             ...action.payload[role],
             token: action.payload.accessToken,
             isLoggedIn: true,
+            userRole: false,
             [`${role}Role`]: action.payload[role][`${role}Role`],
           };
         }
+        return state;
+      },
+    },
+    setUser: {
+      reducer(state, action) {
+        console.log("action.payload setUser", action.payload);
+        state = {
+          ...state,
+          ...action.payload.user,
+          token: action.payload.accessToken,
+          isLoggedIn: true,
+          userRole: true,
+          adminRole: false,
+  editorRole: false,
+        };
         return state;
       },
     },
@@ -48,9 +64,12 @@ export const userSlice = createSlice({
           state = {
             ...state,
             ...action.payload.user,
+            // token: action.payload.accessToken,
             avatarURL: action.payload.user.avatarURL,
             isLoggedIn: true,
             userRole: true,
+            adminRole: false,
+            editorRole: false,
           };
 
           
@@ -59,19 +78,7 @@ export const userSlice = createSlice({
       },
     },
 
-    setUser: {
-      reducer(state, action) {
-        console.log("action.payload setUser", action.payload);
-        state = {
-          ...state,
-          ...action.payload.user,
-          token: action.payload.accessToken,
-          isLoggedIn: true,
-          userRole: true,
-        };
-        return state;
-      },
-    },
+
 
     resetUser: {
       reducer(state) {

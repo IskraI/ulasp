@@ -8,12 +8,12 @@ import {
 
 
 
-const AdminPage = () => {
+const AdminPage = ({user}) => {
 
  
   return (
     <PageSection>
-      <SiteBarNav />
+      <SiteBarNav user = {user}/>
       <PageSubpage>
         <Suspense fallback={"Loader"}>
           <Outlet />

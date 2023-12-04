@@ -16,6 +16,7 @@ const BASE_URL = `http://localhost:8000`;
 export const Profile = () => {
   const user = useSelector(getUserState);
 
+
   const { firstName, lastName, fatherName, avatarURL } = user;
 
   //для смены аватар
@@ -111,9 +112,9 @@ export const Profile = () => {
       </span> */}
 
       <UserName>
-        {`${lastName}${" "}`}
-        {`${firstName.slice(0, 1)}${"."}`}
-        {fatherName.slice(0, 1)}
+      {lastName&&`${lastName}${" "}`}
+        {firstName&&`${firstName.slice(0, 1)}${"."}`}
+        {fatherName&&fatherName.slice(0, 1)}
       </UserName>
     </>
   );

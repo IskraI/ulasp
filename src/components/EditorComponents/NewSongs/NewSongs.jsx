@@ -1,11 +1,16 @@
+import { useGetAllTracksQuery } from "../../redux/tracksSlice";
+import MediaListItem from "../MediaList/MediaList";
 import TracksTable from "../TracksTable/TracksTable";
-import { TitleWrapper, ControlWrapper } from "../MediaList/MediaList.styled";
-import { Button } from "../../Button/Button";
-import symbol from "../../../assets/symbol.svg";
+import {
+  TitleWrapper,
+  ControlWrapper,
+  MediaList,
+} from "../MediaList/MediaList.styled";
+import { Button } from "../Button/Button";
+import symbol from "../../assets/symbol.svg";
 
-const RowsTitle = ["", "", "", "", ""];
-
-const NewSongs = ({ data: allTracks, isFetching, error }) => {
+const NewSongs = () => {
+  const { data: allTracks, isFetching, error } = useGetAllTracksQuery();
   return (
     <>
       {!isFetching && !error && (
@@ -28,7 +33,6 @@ const NewSongs = ({ data: allTracks, isFetching, error }) => {
             error={error}
             isFetching={isFetching}
             display="none"
-            rows={RowsTitle}
           />
         </>
       )}

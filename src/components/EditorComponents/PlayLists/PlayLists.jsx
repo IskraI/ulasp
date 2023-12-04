@@ -18,6 +18,21 @@ const LatestPlaylists = ({
   error,
 }) => {
 
+  const user = useSelector(getUserState);
+  
+    const { data: playlists, isFetching, error } = useGetLatestPlaylistsQuery("", { skip: !user.editorRole });
+  const { data: userPlaylists, isFetching: userIsFetching, error: userError } = useGetLatestPlaylistsForUserQuery("", { skip: !user.userRole });
+  
+  if (isFetching || userIsFetching) {
+    return <div>Loading...</div>;
+  }
+
+  if (error || userError) {
+    return <div>Error loading playlists</div>;
+  } 
+  
+  const displayedPlaylists = user.editorRole ? playlists : userPlaylists;
+console.log('list', displayedPlaylists )
   return (
     <>
       {!isFetching && !error && (

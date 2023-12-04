@@ -22,18 +22,7 @@ export const genresApi = createApi({
         provideTags: ["Genres"],
       }),
     }),
-    createGenre: builder.mutation({
-      query: (body) => ({
-        url: "/editor/genres/create",
-        method: "POST",
-        body: {
-          genre: body,
-        },
-      }),
-
-      invalidatesTags: ["Genres"],
-    }),
   }),
 });
 
-export const { useGetAllGenresQuery, useCreateGenreMutation } = genresApi;
+export const { useGetAllGenresQuery } = genresApi;
