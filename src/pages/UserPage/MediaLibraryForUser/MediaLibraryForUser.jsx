@@ -1,28 +1,29 @@
-// import Genres from "../../../components/EditorComponents/Genres/Genres";
-// import LatestPlaylists from "../../../components/EditorComponents/PlayLists/PlayLists";
+import Genres from "../../../components/UserMediaComponent/Genres/Genres";
+import LatestPlaylists from "../../../components/UserMediaComponent/PlayLists/PlayLists";
+import NewMusic from "../../../components/UserMediaComponent/NewMusic/NewMusic";
 // import NewSongs from "../../../components/EditorComponents/NewSongs/NewSongs";
-// import { useGetAllGenresQuery } from "../../../redux/genresSlice";
-// import { useGetLatestPlaylistsQuery } from "../../../redux/playlistsSlice";
-// import { useGetAllTracksQuery } from "../../../redux/tracksSlice";
+import { useGetAllGenresForUserQuery } from "../../../redux/genresSlice";
+import { useGetLatestPlaylistsForUserQuery } from "../../../redux/playlistsSlice";
+import { useGetAllTracksforUserQuery } from "../../../redux/tracksSlice";
 
-// import { ERROR_NOT_FOUND } from "../../../constants/constants";
+import { ERROR_NOT_FOUND } from "../../../constants/constants";
 
 const MediaLibraryForUser = () => {
   const {
     data: genres,
     isFetching: isFetchingAllGenre,
     error: isErrorAllGenre,
-  } = useGetAllGenresQuery();
+  } = useGetAllGenresForUserQuery();
   const {
     data: playlists,
     isFetching: isFetchingLatestPlaylist,
     error: isErrorLatestPlaylist,
-  } = useGetLatestPlaylistsQuery();
+  } = useGetLatestPlaylistsForUserQuery();
   const {
     data: allTracks,
     isFetching: isFetchingNewSongs,
     error: isErrorNewSongs,
-  } = useGetAllTracksQuery();
+  } = useGetAllTracksforUserQuery();
 
   const fetching =
     !isFetchingAllGenre &&
@@ -64,12 +65,13 @@ const MediaLibraryForUser = () => {
             data={playlists}
             isFetching={isFetchingLatestPlaylist}
             error={isErrorLatestPlaylist}
-          />
-          <NewSongs
+                  />
+                  <NewMusic/>
+          {/* <NewSongs
             data={allTracks}
             isFetching={isFetchingNewSongs}
             error={isErrorNewSongs}
-          />
+          /> */}
         </>
       )}
     </>
