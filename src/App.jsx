@@ -23,6 +23,7 @@ import Analytics from "./components/Analytics/Analytics";
 import CardUser from "./components/CardUser/CardUser";
 import CardEditor from "./components/CardEditor/CardEditor";
 import MediaLibrary from "./pages/Editor/MediaLibrary/MediaLibrary";
+import MediaLibraryForUser from "./pages/UserPage/MediaLibraryForUser/MediaLibraryForUser"
 import AllTracksEditor from "./pages/Editor/AllTracksEditor/AllTracksEditor";
 import AllGenres from "./pages/Editor/AllGenres/AllGenres";
 import NewPlaylists from "./pages/Editor/NewPlaylists/NewPlaylists";
@@ -101,7 +102,7 @@ function App() {
                 <Route index element={<UserCabinetPage />} />
                 <Route path="cabinet" element={<UserCabinetPage />} />
                 <Route path="messages" element={<MessagesUser />} />
-                <Route path="medialibrary" element={<MediaLibrary />} />
+                <Route path="medialibrary" element={<MediaLibraryForUser />} />
                 <Route path="myplaylists" element={<MyPlaylistsUser />} />
                 <Route path="*" element={<ErrorPage />} />
               </Route>

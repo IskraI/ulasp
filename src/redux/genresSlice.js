@@ -22,6 +22,12 @@ export const genresApi = createApi({
         provideTags: ["Genres"],
       }),
     }),
+    getAllGenresForUser: builder.query({
+      query: () => ({
+        url: "/user/genres/all",
+        provideTags: ["Genres"],
+      }),
+    }),
     createGenre: builder.mutation({
       query: (body) => ({
         url: "/editor/genres/create",
