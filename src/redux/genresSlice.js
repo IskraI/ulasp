@@ -28,9 +28,7 @@ export const genresApi = createApi({
       query: (body) => ({
         url: "/editor/genres/create",
         method: "POST",
-        body: {
-          genre: body,
-        },
+        body,
       }),
       invalidatesTags: ["Genres"],
     }),

@@ -13,12 +13,13 @@ import {
 
 import { Link } from "react-router-dom";
 
-const PlaylistListItem = ({ id, title, icon }) => {
+const PlaylistListItem = ({ id, title, icon, refetch }) => {
   const location = useLocation();
 
   const [deletePlaylist, { isLoading }] = useDeletePlaylistMutation();
   const deleteMediaItem = () => {
     deletePlaylist(id);
+    // refetch();
   };
   return (
     <>

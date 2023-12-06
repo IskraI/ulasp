@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 import ControlMediateca from "../ControlMediateca/ControlMediaTeca";
 import ModalForm from "../ControlMediateca/ModalForm";
@@ -5,34 +6,58 @@ import PlaylistListItem from "./PlayListItem";
 import { Modal } from "../../Modal/Modal";
 
 import { MockPlayer } from "../TracksTable/TracksTable.styled";
-import { Button } from "../../Button/Button";
 import symbol from "../../../assets/symbol.svg";
 
 import { PlaylistWrapper, PlaylistList } from "./PlayLists.styled";
-import { useCreatePlaylistMutation } from "../../../redux/playlistsSlice";
+import {
+  useCreatePlaylistMutation,
+  useCreatePlaylistInGenreMutation,
+} from "../../../redux/playlistsSlice";
 
 import { useState } from "react";
+
+import { useParams } from "react-router-dom";
 
 const LatestPlaylists = ({
   title,
   displayPlayer,
   display,
   data: playlists,
+  genre,
   isFetching,
   error,
+  refetch,
 }) => {
   const [showModal, setShowModal] = useState(false);
+
+  const { id } = useParams();
 
   const [createPlaylist, { isSuccess, isLoading, isError }] =
     useCreatePlaylistMutation();
 
-  const handleSubmit = async (e) => {
+  const [createPlaylistInGenre, result] = useCreatePlaylistInGenreMutation();
+
+  const handleSubmitPlaylist = async (data) => {
     try {
-      e.preventDefault();
-      // e.currentTarget.reset();
-      const content = e.currentTarget.elements.playlist.value;
       closeModal();
-      await createPlaylist(content);
+      await createPlaylist(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSubmitInGenre = async (data) => {
+    try {
+      const formData = {
+        id,
+        ...data,
+      };
+
+      console.log(formData);
+
+      closeModal();
+      await createPlaylistInGenre(formData);
+      // refetch();
     } catch (error) {
       console.log(error);
     }
@@ -65,6 +90,7 @@ const LatestPlaylists = ({
                 id={_id}
                 title={playListName}
                 icon={playListAvatarURL}
+                refetch={ refetch}
               />
             ))}
           </PlaylistList>
@@ -75,12 +101,23 @@ const LatestPlaylists = ({
         </PlaylistWrapper>
       )}
       {showModal && (
-        <Modal width={"814px"} onClose={toogleModal}>
-          <ModalForm
-            handleSubmit={handleSubmit}
-            idInput={"playlist"}
-            placeholder={"Назва плейлисту*"}
-          />
+        <Modal width={"814px"} onClose={closeModal}>
+          {genre ? (
+            <ModalForm
+              onSubmit={handleSubmitInGenre}
+              genre={`${genre}`}
+              idInputFirst={"playListName"}
+              idInputSecond={"type"}
+              placeholderFirst={`Назва плейлисту у жанрі ${genre}*`}
+            />
+          ) : (
+            <ModalForm
+              onSubmit={handleSubmitPlaylist}
+              idInputFirst={"playListName"}
+              idInputSecond={"type"}
+              placeholderFirst={"Назва плейлисту*"}
+            />
+          )}
         </Modal>
       )}
     </>

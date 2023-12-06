@@ -27,7 +27,7 @@ import AllTracksEditor from "./pages/Editor/AllTracksEditor/AllTracksEditor";
 import AllGenres from "./pages/Editor/AllGenres/AllGenres";
 import NewPlaylists from "./pages/Editor/NewPlaylists/NewPlaylists";
 import NewTracks from "./pages/Editor/NewTracks/NewTracks";
-import Playlists from "./pages/Editor/Playlists/PlaylistsPage";
+import Playlists from "./pages/Editor/Playlists/PlaylistsPageInGenre";
 import Tracks from "./pages/Editor/TracksPage/TracksPage";
 import { useSelector } from "react-redux";
 import { useCurrentUserQuery } from "../src/redux/authSlice";

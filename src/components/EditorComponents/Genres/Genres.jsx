@@ -24,13 +24,10 @@ const Genres = ({
   const [createGenre, { isSuccess, isLoading, isError }] =
     useCreateGenreMutation();
 
-  const handleSubmit = async (e) => {
+  const handleSubmitGenre = async (data) => {
     try {
-      e.preventDefault();
-      // e.currentTarget.reset();
-      const content = e.currentTarget.elements.genre.value;
       closeModal();
-      await createGenre(content);
+      await createGenre(data);
     } catch (error) {
       console.log(error);
     }
@@ -73,9 +70,10 @@ const Genres = ({
       {showModal && (
         <Modal width={"814px"} onClose={toogleModal}>
           <ModalForm
-            handleSubmit={handleSubmit}
-            idInput={"genre"}
-            placeholder={"Назва жанру*"}
+            onSubmit={handleSubmitGenre}
+            idInputFirst={"genre"}
+            idInputSecond={"type"}
+            placeholderFirst={"Назва жанру*"}
           />
         </Modal>
       )}
