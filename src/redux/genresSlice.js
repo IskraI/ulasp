@@ -24,11 +24,12 @@ export const genresApi = createApi({
       query: (id) => ({ url: `/editor/genres/${id}` }),
       providesTags: ["Genres"],
     }),
-     getAllGenresForUser: builder.query({
+    getAllGenresForUser: builder.query({
       query: () => ({
         url: "/user/genres/all",
-        provideTags: ["Genres"],
       }),
+
+      provideTags: ["Genres"],
     }),
     createGenre: builder.mutation({
       query: (body) => ({
@@ -49,13 +50,10 @@ export const genresApi = createApi({
   }),
 });
 
-
 export const {
   useGetAllGenresQuery,
   useGetGenreByIdQuery,
   useCreateGenreMutation,
   useDeleteGenreMutation,
-  useGetAllGenresForUserQuery
+  useGetAllGenresForUserQuery,
 } = genresApi;
-
-

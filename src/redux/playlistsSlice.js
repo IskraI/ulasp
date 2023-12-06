@@ -13,7 +13,7 @@ export const playlistsApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Playlists", "Genres"],
+  tagTypes: ["Playlists"],
 
   endpoints: (builder) => ({
     getLatestPlaylists: builder.query({
