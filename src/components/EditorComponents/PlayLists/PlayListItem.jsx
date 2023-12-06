@@ -1,6 +1,7 @@
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 import { useDeletePlaylistMutation } from "../../../redux/playlistsSlice";
+import { useDeletePlaylistInGenreMutation } from "../../../redux/genresSlice";
 import { useLocation } from "react-router-dom";
 
 import {
@@ -12,14 +13,21 @@ import {
 } from "./PlayLists.styled";
 
 import { Link } from "react-router-dom";
+import { Modal } from "../../Modal/Modal";
 
-const PlaylistListItem = ({ id, title, icon, refetch }) => {
+const PlaylistListItem = ({ id, title, icon, genre }) => {
   const location = useLocation();
 
-  const [deletePlaylist, { isLoading }] = useDeletePlaylistMutation();
+  const [deletePlaylist, { data, isLoading }] = useDeletePlaylistMutation();
+  const [deletePlaylistInGenre, { isSuccess }] =
+    useDeletePlaylistInGenreMutation();
+
   const deleteMediaItem = () => {
+    if (genre) {
+      deletePlaylistInGenre(id);
+    }
+
     deletePlaylist(id);
-    // refetch();
   };
   return (
     <>
@@ -59,6 +67,11 @@ const PlaylistListItem = ({ id, title, icon, refetch }) => {
           </PlaylistDeleteButton>
         </PlaylistIconsWrapper>
       </PlaylistItem>
+      {/* {data && (
+        <Modal width={"814px"}>
+          <p>{data.message}</p>
+        </Modal>
+      )} */}
     </>
   );
 };

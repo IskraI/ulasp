@@ -7,13 +7,12 @@ import { Loader } from "../../../components/Loader/Loader";
 const Playlists = () => {
   const { id } = useParams();
 
-  const { data, isFetching, isError, isSuccess, refetch } =
-    useGetGenreByIdQuery(id);
+  const { data, isFetching, isError, isSuccess } = useGetGenreByIdQuery(id);
 
   return (
     <>
       {isFetching && !isError && <Loader />}
-      {!isFetching && !isError && isSuccess && (
+      {!isError && isSuccess && (
         <LatestPlaylists
           title={`Плейлисти жанру "${data.genre}"`}
           genre={data.genre}
@@ -21,7 +20,6 @@ const Playlists = () => {
           displayPlayer={"none"}
           data={data.playList}
           isFetching={isFetching}
-          refetch={refetch}
         />
       )}
     </>

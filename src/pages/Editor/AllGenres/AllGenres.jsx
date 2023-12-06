@@ -7,12 +7,13 @@ const AllGenres = () => {
     data: genres,
     isFetching: isFetchingAllGenre,
     error: isErrorAllGenre,
+    isSuccess,
   } = useGetAllGenresQuery();
 
   return (
     <>
       {isFetchingAllGenre && !isErrorAllGenre && <Loader />}
-      {!isFetchingAllGenre && !isErrorAllGenre && (
+      {isSuccess && !isErrorAllGenre && (
         <Genres
           displayPlayer={"flex"}
           display={"none"}

@@ -20,11 +20,13 @@ export const playlistsApi = createApi({
       query: () => ({
         url: "/editor/playlist/latest",
       }),
-      providesTags: ["Playlists"],
+      // providesTags: ["Playlists"],
+      providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
     }),
     getPlaylistById: builder.query({
       query: (id) => ({ url: `/editor/playlist/${id}` }),
-      providesTags: ["Playlists"],
+      // providesTags: ["Playlists"],
+      providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
     }),
     createPlaylist: builder.mutation({
       query: (body) => ({
@@ -34,14 +36,7 @@ export const playlistsApi = createApi({
       }),
       invalidatesTags: ["Playlists"],
     }),
-    createPlaylistInGenre: builder.mutation({
-      query: ({ id, ...body }) => ({
-        url: `editor/genre/playlist/create/${id}`,
-        method: "POST",
-        body,
-      }),
-      invalidatesTags: ["Playlists"],
-    }),
+
     deletePlaylist: builder.mutation({
       query: (id) => ({
         url: `/editor/playlist/delete/${id}`,
@@ -63,6 +58,5 @@ export const {
   useGetLatestPlaylistsForUserQuery,
   useGetPlaylistByIdQuery,
   useCreatePlaylistMutation,
-  useCreatePlaylistInGenreMutation,
   useDeletePlaylistMutation,
 } = playlistsApi;

@@ -6,16 +6,21 @@ const NewPlaylists = () => {
     data: playlists,
     isFetching: isFetchingLatestPlaylist,
     error: isErrorLatestPlaylist,
+    isSuccess,
   } = useGetLatestPlaylistsQuery();
   return (
-    <LatestPlaylists
-      title={"Нові плейлисти"}
-      displayPlayer={"none"}
-      display={"none"}
-      data={playlists}
-      isFetching={isFetchingLatestPlaylist}
-      error={isErrorLatestPlaylist}
-    />
+    <>
+      {isSuccess && !isErrorLatestPlaylist && (
+        <LatestPlaylists
+          title={"Нові плейлисти"}
+          displayPlayer={"none"}
+          display={"none"}
+          data={playlists}
+          isFetching={isFetchingLatestPlaylist}
+          error={isErrorLatestPlaylist}
+        />
+      )}
+    </>
   );
 };
 

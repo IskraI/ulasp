@@ -3,6 +3,7 @@ import { BASE_URL } from "../constants/constants";
 
 export const genresApi = createApi({
   reducerPath: "genresApi",
+  tagTypes: ["Genres"],
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
@@ -13,16 +14,16 @@ export const genresApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Genres"],
-
   endpoints: (builder) => ({
     getAllGenres: builder.query({
       query: () => "/editor/genres/all",
-      providesTags: ["Genres"],
+      // providesTags: ["Genres"],
+      providesTags: (_result, _err, id) => [{ type: "Genres", id }],
     }),
     getGenreById: builder.query({
       query: (id) => ({ url: `/editor/genres/${id}` }),
-      providesTags: ["Genres"],
+      // providesTags: ["Genres"],
+      providesTags: (_result, _err, id) => [{ type: "Genres", id }],
     }),
     getAllGenresForUser: builder.query({
       query: () => ({
@@ -40,9 +41,26 @@ export const genresApi = createApi({
       invalidatesTags: ["Genres"],
     }),
 
+    createPlaylistInGenre: builder.mutation({
+      query: ({ id, ...body }) => ({
+        url: `editor/genre/playlist/create/${id}`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Genres"],
+    }),
+
     deleteGenre: builder.mutation({
       query: (id) => ({
         url: `/editor/genres/delete/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Genres"],
+    }),
+
+    deletePlaylistInGenre: builder.mutation({
+      query: (id) => ({
+        url: `/editor/playlist/delete/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Genres"],
@@ -56,4 +74,6 @@ export const {
   useCreateGenreMutation,
   useDeleteGenreMutation,
   useGetAllGenresForUserQuery,
+  useCreatePlaylistInGenreMutation,
+  useDeletePlaylistInGenreMutation,
 } = genresApi;
