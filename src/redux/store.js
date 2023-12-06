@@ -19,6 +19,9 @@ import storage from "redux-persist/lib/storage";
 import { tracksApi } from "./tracksSlice";
 import { genresApi } from "./genresSlice";
 import { playlistsApi } from "./playlistsSlice";
+import { tracksUserApi } from "./tracksUserSlice";
+import { genresUserApi } from "./genersUserSlice";
+import { playlistsUserApi } from "./playlistsUserSlice";
 
 const persistConfig = {
   key: "user",
@@ -37,6 +40,9 @@ export const store = configureStore({
     [tracksApi.reducerPath]: tracksApi.reducer,
     [genresApi.reducerPath]: genresApi.reducer,
     [playlistsApi.reducerPath]: playlistsApi.reducer,
+    [tracksUserApi.reducerPath]: tracksUserApi.reducer,
+    [genresUserApi.reducerPath]: genresUserApi.reducer,
+    [playlistsUserApi.reducerPath]: playlistsUserApi.reducer,
     user: persistReducer(persistConfig, userReducer),
   },
   middleware: (getDefaultMiddleware) =>
@@ -51,7 +57,10 @@ export const store = configureStore({
       .concat(statisticApi.middleware)
       .concat(tracksApi.middleware)
       .concat(genresApi.middleware)
-      .concat(playlistsApi.middleware),
+      .concat(playlistsApi.middleware)
+  .concat(tracksUserApi.middleware)
+      .concat(genresUserApi.middleware)
+      .concat(playlistsUserApi.middleware),
 });
 
 export const persistor = persistStore(store);

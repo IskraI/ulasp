@@ -9,9 +9,9 @@ import {
 } from "../MediaList/MediaList.styled";
 import { Button } from "../../Button/Button";
 import symbol from "../../../assets/symbol.svg";
-import { Modal } from "../../Modal/Modal";
-import { useState, useEffect } from "react";
-import { useCreateGenreMutation } from "../../../redux/genresSlice";
+// import { Modal } from "../../Modal/Modal";
+// import { useState, useEffect } from "react";
+// import { useCreateGenreMutation } from "../../../redux/genresSlice";
 
 const Genres = ({
   display,
