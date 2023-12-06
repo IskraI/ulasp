@@ -55,6 +55,7 @@ export const {
   useGetGenreByIdQuery,
   useCreateGenreMutation,
   useDeleteGenreMutation,
+  useGetAllGenresForUserQuery
 } = genresApi;
 
 
