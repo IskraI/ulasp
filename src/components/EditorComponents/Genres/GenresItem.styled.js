@@ -1,19 +1,7 @@
 import styled from "@emotion/styled";
 import { colors } from "../../../styles/vars";
 
-
-export const PlaylistWrapper = styled.section`
-  /* display: flex; */
-`;
-
-export const PlaylistList = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-  margin-bottom: 50px;
-`;
-
-export const PlaylistItem = styled.li`
+export const GenresItem = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -25,24 +13,24 @@ export const PlaylistItem = styled.li`
   background-color: ${colors.activeBtnColor};
 `;
 
-export const PlaylistImg = styled.img`
+export const GenresImg = styled.img`
   border-radius: 10px;
   margin-right: auto;
 `;
 
-export const PlaylistItemText = styled.p`
+export const GenresItemText = styled.p`
   font-size: 16px;
   line-height: 1.19;
   color: ${colors.mainFontColor};
   margin-right: auto;
 `;
 
-export const PlaylistIconsWrapper = styled.div`
+export const GenresIconsWrapper = styled.div`
   display: flex;
   gap: 4px;
 `;
 
-export const PlaylistDeleteButton = styled.button`
+export const GenresDeleteButton = styled.button`
   background: none;
   border: none;
 `;

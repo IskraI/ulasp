@@ -12,6 +12,8 @@ import { useGetAllTracksQuery } from "../../../redux/tracksSlice";
 import TracksTable from "../../../components/EditorComponents/TracksTable/TracksTable";
 import { EditorText } from "./EditorCabinetPage.styled";
 
+import { Loader } from "../../../components/Loader/Loader";
+
 const RowsTitle = [
   "",
   "Назва пісні",
@@ -57,9 +59,10 @@ const EditorCabinetPage = () => {
           <br /> Створених плейлистів
         </StatItemEditor>
       </StatsListWrapper>
-      {isFetchingAllTracks && <p>Загружаемся.....</p>}
+      {isFetchingAllTracks && <Loader />}
       {!isFetchingAllTracks && !errorLoadingAllTracks && (
         <TracksTable
+          title={" Остання додана музика"}
           tracks={allTracks}
           isLoading={isLoadingAllTracks}
           error={errorLoadingAllTracks}

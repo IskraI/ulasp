@@ -1,5 +1,6 @@
 import Genres from "../../../components/EditorComponents/Genres/Genres";
 import { useGetAllGenresQuery } from "../../../redux/genresSlice";
+import { Loader } from "../../../components/Loader/Loader";
 
 const AllGenres = () => {
   const {
@@ -10,12 +11,16 @@ const AllGenres = () => {
 
   return (
     <>
-      <Genres
-        displayPlayer={"none"}
-        data={genres}
-        isFetching={isFetchingAllGenre}
-        error={isErrorAllGenre}
-      />
+      {isFetchingAllGenre && !isErrorAllGenre && <Loader />}
+      {!isFetchingAllGenre && !isErrorAllGenre && (
+        <Genres
+          displayPlayer={"flex"}
+          display={"none"}
+          data={genres}
+          isFetching={isFetchingAllGenre}
+          error={isErrorAllGenre}
+        />
+      )}
     </>
   );
 };

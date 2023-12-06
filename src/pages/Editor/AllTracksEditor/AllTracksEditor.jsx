@@ -1,9 +1,13 @@
+
+
 import TracksTable from "../../../components/EditorComponents/TracksTable/TracksTable";
-import { useGetAllTracksQuery } from "../../../redux/tracksSlice";
+import { useGetAllTracksQuery,  } from "../../../redux/tracksSlice";
 
 const RowsTitle = ["", "Назва пісні", "Виконавець", "Тривалість", "Жанр", ""];
 
 const AllTracksEditor = () => {
+
+
   const {
     data: allTracks,
 
@@ -16,6 +20,7 @@ const AllTracksEditor = () => {
       {isFetchingAllTracks && <p>Загружаемся.....</p>}
       {!isFetchingAllTracks && !errorLoadingAllTracks && (
         <TracksTable
+          title={" Остання додана музика"}
           tracks={allTracks}
           error={errorLoadingAllTracks}
           isFetching={isFetchingAllTracks}

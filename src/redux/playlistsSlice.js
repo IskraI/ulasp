@@ -15,21 +15,47 @@ export const playlistsApi = createApi({
   }),
   tagTypes: ["Playlists"],
 
- endpoints: (builder) => ({
-  getLatestPlaylists: builder.query({
-    query: () => ({
-      url: "/editor/playlist/latest",
+  endpoints: (builder) => ({
+    getLatestPlaylists: builder.query({
+      query: () => ({
+        url: "/editor/playlist/latest",
+      }),
+      providesTags: ["Playlists"],
+    }),
+    getPlaylistById: builder.query({
+      query: (id) => ({ url: `/editor/playlist/${id}` }),
+      providesTags: ["Playlists"],
+    }),
+    createPlaylist: builder.mutation({
+      query: (body) => ({
+        url: "/editor/playlist/create",
+        method: "POST",
+        body: {
+          playListName: body,
+        },
+      }),
+      invalidatesTags: ["Playlists"],
+    }),
+    deletePlaylist: builder.mutation({
+      query: (id) => ({
+        url: `/editor/playlist/delete/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Playlists"],
+    }),
+    getLatestPlaylistsForUser: builder.query({
+      query: () => ({
+        url: "/user/playlist/latest",
+      }),
       provideTags: ["Playlists"],
     }),
   }),
-  getLatestPlaylistsForUser: builder.query({
-    query: () => ({
-      url: "/user/playlist/latest", 
-      provideTags: ["Playlists"],
-    }),
-  }),
-}),
-  
 });
 
-export const { useGetLatestPlaylistsQuery, useGetLatestPlaylistsForUserQuery } = playlistsApi;
+export const {
+  useGetLatestPlaylistsQuery,
+  useGetLatestPlaylistsForUserQuery,
+  useGetPlaylistByIdQuery,
+  useCreatePlaylistMutation,
+  useDeletePlaylistMutation,
+} = playlistsApi;

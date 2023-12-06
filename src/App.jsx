@@ -27,6 +27,8 @@ import AllTracksEditor from "./pages/Editor/AllTracksEditor/AllTracksEditor";
 import AllGenres from "./pages/Editor/AllGenres/AllGenres";
 import NewPlaylists from "./pages/Editor/NewPlaylists/NewPlaylists";
 import NewTracks from "./pages/Editor/NewTracks/NewTracks";
+import Playlists from "./pages/Editor/Playlists/PlaylistsPage";
+import Tracks from "./pages/Editor/TracksPage/TracksPage";
 import { useSelector } from "react-redux";
 import { useCurrentUserQuery } from "../src/redux/authSlice";
 import { useCurrentClientQuery } from "../src/redux/authClientSlice";
@@ -60,17 +62,15 @@ function App() {
     skip: skipAdmin,
   }); //если пользователь клиент, то скип = тру и єтот запрос пропустится
 
-
-
   const {
     data: dataClient,
     isLoading: isLoadingClient,
     isError: isErrorClient,
-    error:errorClient
+    error: errorClient,
   } = useCurrentClientQuery("", {
     skip: skipClient,
   });
-  
+
   //если пользователь админ или редаткор, то скип = тру и єтот запрос пропустится
 
   if (isMobile) {
@@ -144,13 +144,26 @@ function App() {
                   element={<AllGenres display={"none"} />}
                 />
                 <Route
+                  path="medialibrary/genres/:id/playlists"
+                  element={<Playlists />}
+                />
+                <Route
+                  path="medialibrary/genres/:id/playlists/:id/tracks"
+                  element={<Tracks />}
+                />
+                <Route
                   path="medialibrary/newplaylists"
                   element={<NewPlaylists display={"none"} />}
+                />
+                <Route
+                  path="medialibrary/newplaylists/:id/tracks"
+                  element={<Tracks display={"none"} />}
                 />
                 <Route
                   path="medialibrary/newtracks"
                   element={<AllTracksEditor display={"none"} />}
                 />
+
                 <Route path="shops" element={<AllGenres />} />
                 <Route path="allmusic" element={<NewTracks />} />
                 <Route path="*" element={<ErrorPage />} />

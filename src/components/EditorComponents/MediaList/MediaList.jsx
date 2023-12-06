@@ -1,5 +1,6 @@
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
+import { useDeleteGenreMutation } from "../../../redux/genresSlice";
 
 import {
   MediaItem,
@@ -8,7 +9,13 @@ import {
   MediaImg,
 } from "./MediaList.styled";
 
-const MediaListItem = ({ title, icon }) => {
+const MediaListItem = ({ id, title, icon, deleteItem, isLoading }) => {
+// const MediaListItem = ({ id, title, icon }) => {
+  // const [deleteGenre, { isLoading }] = useDeleteGenreMutation();
+  const deleteMediaItem = () => {
+    deleteItem(id);
+  };
+  
   return (
     <>
       <MediaItem>
@@ -19,9 +26,22 @@ const MediaListItem = ({ title, icon }) => {
             <use href={`${symbol}#icon-pen`}></use>
           </svg>
 
-          <svg width="24" height="24">
-            <use href={`${symbol}#icon-del-basket`}></use>
-          </svg>
+          <button
+            style={{ background: "none", border: "none" }}
+            type="button"
+            onClick={deleteMediaItem}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <svg width="24" height="24" stroke="#888889">
+                <use href={`${symbol}#icon-del-basket`}></use>
+              </svg>
+            ) : (
+              <svg width="24" height="24">
+                <use href={`${symbol}#icon-del-basket`}></use>
+              </svg>
+            )}
+          </button>
         </IconsWrapper>
       </MediaItem>
     </>

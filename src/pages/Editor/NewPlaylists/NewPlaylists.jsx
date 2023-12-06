@@ -9,7 +9,9 @@ const NewPlaylists = () => {
   } = useGetLatestPlaylistsQuery();
   return (
     <LatestPlaylists
+      title={"Нові плейлисти"}
       displayPlayer={"none"}
+      display={"none"}
       data={playlists}
       isFetching={isFetchingLatestPlaylist}
       error={isErrorLatestPlaylist}

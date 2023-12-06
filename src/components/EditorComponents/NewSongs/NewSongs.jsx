@@ -24,6 +24,7 @@ const NewSongs = ({ data: allTracks, isFetching, error }) => {
             />
           </ControlWrapper>
           <TracksTable
+            title={" Остання додана музика"}
             tracks={allTracks}
             error={error}
             isFetching={isFetching}

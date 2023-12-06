@@ -20,6 +20,7 @@ export const MediaList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
+  margin-bottom: 50px;
 `;
 
 export const MediaItem = styled.li`
