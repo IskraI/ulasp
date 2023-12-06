@@ -1,17 +1,15 @@
 import { GenresWrapper } from "./Genres.styled";
-import MediaListItem from "../MediaList/MediaList";
+import GenreListItem from "./GenresItem";
 import { MockPlayer } from "../TracksTable/TracksTable.styled";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
-import {
-  TitleWrapper,
-  ControlWrapper,
-  MediaList,
-} from "../MediaList/MediaList.styled";
-import { Button } from "../../Button/Button";
+import { GenresList } from "./Genres.styled";
+import ControlMediateca from "../ControlMediateca/ControlMediaTeca";
 import symbol from "../../../assets/symbol.svg";
-import { Modal } from "../../Modal/Modal";
-import { useState, useEffect } from "react";
+import { Modal } from "../../../components/Modal/Modal";
+import ModalForm from "../../../components/EditorComponents/ControlMediateca/ModalForm";
 import { useCreateGenreMutation } from "../../../redux/genresSlice";
+
+import { useState } from "react";
 
 const Genres = ({
   display,
@@ -19,53 +17,50 @@ const Genres = ({
   data: genres,
   isFetching,
   error,
+  isLoadingCreateGenre,
 }) => {
-  const [createGenre, { isSuccess }] = useCreateGenreMutation();
   const [showModal, setShowModal] = useState(false);
-  
-  
-  const [genre, setGenre] = useState(null);
-  
-  
+
+  const [createGenre, { isSuccess, isLoading, isError }] =
+    useCreateGenreMutation();
+
+  const handleSubmitGenre = async (data) => {
+    try {
+      closeModal();
+      await createGenre(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const closeModal = () => {
+    return setShowModal(false);
+  };
+
   const toogleModal = () => {
     return setShowModal((prevsetShowModal) => !showModal);
   };
 
-  const handleSubmit = (e) => {
-    const content = e.currentTarget.elements.genre.value;
-    e.preventDefault();
-    // setGenre(content);
-    createGenre(content);
-    e.currentTarget.reset();
-
-    if (isSuccess) {
-      toogleModal();
-    }
-  };
-  useEffect(() => {}, [genre]);
   return (
     <>
-      {!isFetching && !error && (
+      <ControlMediateca
+        title={"Жанри"}
+        iconButton={`${symbol}#icon-music-album`}
+        textButton={"Жанр"}
+        onClick={toogleModal}
+      />
+      {!isFetching && !error && !isLoadingCreateGenre && (
         <GenresWrapper>
-          <ControlWrapper>
-            <TitleWrapper>Жанри</TitleWrapper>
-
-            <Button
-              icon={`${symbol}#icon-music-album`}
-              type="button"
-              text={"Жанр"}
-              width="198px"
-              display="block"
-              fontsize="24px"
-              padding="8px"
-              onClick={toogleModal}
-            />
-          </ControlWrapper>
-          <MediaList>
+          <GenresList>
             {genres.map(({ _id, genre, genreAvatarURL }) => (
-              <MediaListItem key={_id} title={genre} icon={genreAvatarURL} />
+              <GenreListItem
+                key={_id}
+                id={_id}
+                title={genre}
+                icon={genreAvatarURL}
+              />
             ))}
-          </MediaList>
+          </GenresList>
           <MediaNavigationLink link={"genres"} display={display} />
         </GenresWrapper>
       )}
@@ -74,41 +69,12 @@ const Genres = ({
       </MockPlayer>
       {showModal && (
         <Modal width={"814px"} onClose={toogleModal}>
-          <form
-            autoComplete="off"
-            onSubmit={handleSubmit}
-            style={{ display: "flex", flexDirection: "column" }}
-          >
-            <input
-              // value={genre}
-              // onChange={setGenre}
-              style={{
-                width: "649px",
-                height: "64px",
-                padding: 8,
-                marginTop: 64,
-                marginBottom: 24,
-                borderRadius: 10,
-                border: "none",
-                fontSize: 20,
-
-                backgroundColor: "rgba(234, 234, 234, 0.32)",
-              }}
-              type="text"
-              id="genre"
-              placeholder="Назва жанру*"
-            />
-            <Button
-              type="Submit"
-              text={"Створити"}
-              width="198px"
-              display="none"
-              fontsize="24px"
-              padding="8px"
-              marginleft={"auto"}
-              marginbottom={"28px"}
-            />
-          </form>
+          <ModalForm
+            onSubmit={handleSubmitGenre}
+            idInputFirst={"genre"}
+            idInputSecond={"type"}
+            placeholderFirst={"Назва жанру*"}
+          />
         </Modal>
       )}
     </>

@@ -10,24 +10,35 @@ body {
   font-weight: 400;
   line-height: 1.28;
 
-  @media screen and (max-width: 1440px) {
+  background: #3e6da3;
+  // background: linear-gradient(
+  //   to right,
+  //   #7b94bd 35%,
+
+  //   #3e6da3 65%
+  // );
+  @media screen and (max-width: 1441px) {
     background-image: url("../src/assets/Background@2x.jpg");
     @media (-webkit-min-device-pixel-ratio: 2) {
       background-image: url("../src/assets/Background@2x.jpg");
     }
+    background-size: auto;
   }
 
-  @media screen and (min-width: 1441px) {
+  @media screen and (min-width: 1442px) {
     background-image: url("../src/assets/Background@2x.jpg");
+    @media (-webkit-min-device-pixel-ratio: 2) {
+      background-image: url("../src/assets/Background@2x.jpg");
+    }
+    background-size: auto;
   }
 
   background-repeat: no-repeat;
 
   animation: rotateBackground 500ms linear 1ms;
-  background-size: auto;
 }
 main {
-//  width: 1440px;
+  //  width: 1440px;
   margin-top: 80px;
   // height: calc(100vh - (80px + 68px));
 }

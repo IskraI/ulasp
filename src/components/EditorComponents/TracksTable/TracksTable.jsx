@@ -11,7 +11,7 @@ import {
 } from "../TracksTable/TracksTable.styled";
 import { BASE_URL, ERROR_NOT_FOUND } from "../../../constants/constants";
 
-const TracksTable = ({ rows, tracks, isLoading, error, display }) => {
+const TracksTable = ({ rows, tracks, isLoading, error, display, title }) => {
   const sToStr = (sec) => {
     sec = Math.round(sec);
     let m = Math.trunc(sec / 60) + "";
@@ -28,7 +28,7 @@ const TracksTable = ({ rows, tracks, isLoading, error, display }) => {
 
       {tracks?.length !== 0 && !isLoading && !error && (
         <>
-          <LatestTracks style={{ display }}>Остання додана музика</LatestTracks>
+          <LatestTracks>{title}</LatestTracks>
           <TableStyle>
             <THeadStyle>
               <tr>
