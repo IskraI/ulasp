@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import { PageHeader, PageLogo, AvatarHeader } from "./Header.styled";
 import pageLogoPath from "../../images/logo.png";
 const BASE_URL = `http://localhost:8000`;
-import { useUpdateUserAvatarMutation } from "../../redux/authSlice/";
+import { useUpdateAdminAvatarMutation } from "../../redux/authSlice/";
 import { useRef, useState } from "react";
 
 
 const Header = ({avatarURL}) => {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [dispatch, { isLoading }] = useUpdateUserAvatarMutation();
+  const [dispatch, { isLoading }] = useUpdateAdminAvatarMutation();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();

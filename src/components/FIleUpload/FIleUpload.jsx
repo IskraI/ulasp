@@ -37,9 +37,17 @@ const FileUpload = ({
         onChange={change}
         onBlur={saveChanges}
       />
+    
       {children}
     </InputWrapper>
   );
 };
+{/* <input
+name="name"
+type="file"
+accept="image/*"
+disabled={isLoading}
+onChange={handleChooseIcon}
+/> */}
 
 export default FileUpload;
