@@ -43,8 +43,18 @@ export const authApi = createApi({
       },
       async onQueryError(arg, { dispatch, error, queryFulfilled }) {
         console.error("Query failed", error);
-        dispatch(resetUser()); // Сбросить состояние до значения по умолчанию
-      },
+    
+        // Обрабатываем ошибку неавторизации (статус 401)
+        if (error.status === 401) {
+          console.error("Unauthorized error. Redirecting to login page.");
+          // Выполните действия, например, перенаправление на страницу входа
+          // history.push('/login') или другие подходящие действия
+        } else {
+          // Для других типов ошибок выводим в консоль
+          console.error("Error status is not 401. Logging the error:", error);
+          dispatch(resetUser()); // Сбросить состояние до значения по умолчанию
+        }}
+        
     }),
     logout: builder.mutation({
       query: () => ({

@@ -5,7 +5,7 @@ import {
   RegisterNameInput,
   ButtonSwitch,
 } from "../UserCreateForm.styled";
-import {Button} from "../../Button/Button"
+import {Button} from "../../../Button/Button"
 import { Controller } from 'react-hook-form';
 
 const RegisterNameFieldCard = ({

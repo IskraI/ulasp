@@ -15,7 +15,7 @@ import {
 import ContactFaceFieldCard from "./ContactFaceFieldCard";
 import RegisterNameFieldCard from "./RegisterNameFieldCard";
 import CommonFieldCard from "../UserFieldForm/CommonFieldsCard";
-import { Button } from "../../Button/Button";
+import { Button } from "../../../Button/Button";
 import { useForm, Controller } from 'react-hook-form';
 const UserFieldCard = ({
   user,

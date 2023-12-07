@@ -1,38 +1,42 @@
-import TabNavigation from "../TabNavigation/TabNavigation";
-import UserCardForm from "./CardUserForm";
-import { Button } from "../Button/Button";
-import symbol from "../../assets/symbol.svg";
+
+
+  import TabNavigation from "../../TabNavigation/TabNavigation";
+import EditorCardForm from "./CardEditorForm";
+import { Button } from "../../Button/Button";
+import symbol from "../../../assets/symbol.svg";
 import { useState } from "react";
-import { Modal } from "../Modal/Modal";
+import { Modal } from "../../Modal/Modal";
 import { useParams } from "react-router-dom";
-import { useGetUserByIdQuery,  useDelUserByIdMutation, useUnblockUserByIdMutation } from "../../redux/dataUsersSlice";
+import { useGetAdminByIdQuery,  useDelUserByIdMutation, useUnblockUserByIdMutation } from "../../../redux/dataUsersSlice";
 import {
   ButtonContainer,
   TextModal,
   ModalBtnContainer,
-} from "./CardUser.styled";
+} from "../CardUser/CardUser.styled";
 import { useNavigate } from "react-router-dom";
+import EditorLoginForm from "../UserForm/EditorLoginForm"
 
-const CardUser = () => {
+const CardEditor = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-     const { data: user, error, isLoading } = useGetUserByIdQuery(id);
+     const { data: user, error, isLoading } = useGetAdminByIdQuery(id);
   const [dispatchDel, { isLoading: isLoadingDel }] = useDelUserByIdMutation();
   const [dispatchUnblock, { isLoading: isLoadingUnblock }] = useUnblockUserByIdMutation(); 
   const [activeModal, setActiveModal] = useState(null);
   const handleShowModal = (modalContent) => {
     setActiveModal(modalContent);
   };
+  console.log('user edit', user)
 
   const handleCloseModal = () => {
     setActiveModal(null);
   };
 
   const handleDeleteUser = async () => {
-    dispatchDel({ id: id})
+    dispatchDel({ id: id, admin: true })
       .unwrap()
       .then(() => {
-        navigate("/admin/users");
+        navigate("/admin/users/editors");
       })
       .catch((error) => console.log(error.data.message));
   };
@@ -41,7 +45,7 @@ const CardUser = () => {
     dispatchUnblock(id)
       .unwrap()
       .then(() => {
-        navigate("/admin/users");
+        navigate("/admin/users/editors");
       })
       .catch((error) => console.log(error.data.message));
   };
@@ -49,35 +53,11 @@ const CardUser = () => {
   return (
     <>
       <TabNavigation />
-      {!isLoading && <UserCardForm user={user} />}
+      {!isLoading && <EditorCardForm user={user} />}
+      {!isLoading && <EditorLoginForm user={user} />}
       <ButtonContainer>
-        <Button
-          type="button"
-          padding="8px 63px"
-          height="48px"
-          display="block"
-          text={
-            <>
-              <svg
-                className="icon"
-                width="24"
-                height="24"
-                style={{ marginRight: "8px" }}
-              >
-                <use href={`${symbol}#icon-analytics`}></use>
-              </svg>
-              Звіт
-            </>
-          }
-        />
-        <Button
-          type="button"
-          padding="8px 45px"
-          display="block"
-          height="48px"
-          text="Відправити посилання"
-          marginleft="50px"
-        />
+       
+       
         <Button
           type="button"
           padding="8px 30px"
@@ -177,4 +157,4 @@ onClick={handleDeleteUser}
     </>
   );
 };
-export default CardUser;
+export default CardEditor;

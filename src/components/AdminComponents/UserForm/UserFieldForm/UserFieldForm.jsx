@@ -14,7 +14,7 @@ import {
 import ContactFaceField from "./ContactFaceField";
 import RegisterNameFieldForm from "./RegisterNameFieldForm";
 import CommonFieldForm from "./CommonFields";
-import { Button } from "../../Button/Button";
+import { Button } from "../../../Button/Button";
 const UserFieldForm = ({
    control,
   handleTypeOfStatus,

@@ -5,9 +5,9 @@ import {
   TableCell,
   RowTitle,
   Details,
-} from "../SearchUsers/SearchUsers.styled";
-import { Button } from "../Button/Button";
-import { useUnblockUserByIdMutation } from "../../redux/dataUsersSlice";
+} from "../../SearchUsers/SearchUsers.styled";
+import { Button } from "../../Button/Button";
+import { useUnblockUserByIdMutation } from "../../../redux/dataUsersSlice";
 import { useNavigate, useParams } from "react-router-dom";
 
 const UsersTable = ({ users, visibleColumns }) => {

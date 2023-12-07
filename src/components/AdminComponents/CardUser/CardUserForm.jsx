@@ -7,7 +7,7 @@ import {
   useUpdateEditorUserMutation,
   useUpdateCompanyUserMutation,
   useUpdateFopUserMutation,
-} from "../../redux/dataUsersSlice";
+} from "../../../redux/dataUsersSlice";
 import { useNavigate } from "react-router-dom";
 
 
@@ -28,7 +28,7 @@ import {
 import { Title } from "../AdminCabinetPage/AdminCabinetPage.styled";
 
 import UserFieldCard from "../UserForm/UserFieldForm/UserFieldCard";
-import { Button } from "../Button/Button";
+import { Button } from "../../Button/Button";
 
 
 const UserCardForm = ({ user }) => {

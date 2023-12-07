@@ -1,5 +1,5 @@
-import { useGetUsersListQuery } from "../../redux/dataUsersSlice";
-import UserTable from "../UsersTable/UsersTable";
+import { useGetUsersListQuery } from "../../../redux/dataUsersSlice";
+import UserTable from "../../UsersTable/UsersTable";
 
 const ListUsers = () => {
   const { data, isLoading } = useGetUsersListQuery();
