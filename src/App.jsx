@@ -74,7 +74,19 @@ function App() {
 
   console.log("skipClient", skipClient);
   const { data, isLoading, isError, error } = useCurrentUserQuery("", {
-    skip: skipAdmin,
+    skip: skipAdmin, onError: (err) => {
+      console.log('err', err)
+      // Проверка, является ли ошибка ошибкой аутентификации (например, статус 401)
+      if (err.status === 401) {
+        // Обработка ошибки аутентификации
+        console.error("Ошибка аутентификации", err);
+        // Выполните соответствующие действия, например, перенаправление на страницу входа
+        // history.push('/login') или другие подходящие действия
+      } else {
+        // Для других типов ошибок выполните обычное поведение библиотеки
+        console.error("Общая ошибка", err);
+      }
+    },
   }); //если пользователь клиент, то скип = тру и єтот запрос пропустится
 
   const {
@@ -138,7 +150,7 @@ function App() {
               </Route>
             )}
           
-            {/* {user.adminRole && (
+            {user.adminRole && (
               <Route
                 path="/admin"
                 element={<PrivateRoute component={AdminPage} />}
@@ -199,7 +211,7 @@ function App() {
                 <Route path="allmusic" element={<NewTracks />} />
                 <Route path="*" element={<ErrorPage />} />
               </Route>
-            )} */}
+            )}
 
             <Route path="*" element={<ErrorPage />} />
           </Route>
