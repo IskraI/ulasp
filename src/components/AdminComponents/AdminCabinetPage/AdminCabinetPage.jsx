@@ -1,4 +1,4 @@
-import { Statistic } from '../Statistic/Statistic';
+import { Statistic } from '../../Statistic/Statistic';
 import { SearchUsers } from '../SearchUsers/SearchUsers';
 import { Title} from './AdminCabinetPage.styled';
 
