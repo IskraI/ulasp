@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "../Button/Button";
+import { Button } from "../../Button/Button";
 
 import { useForm, Controller } from "react-hook-form";
 import { UserFopSchema, UserCompanySchema, MusicEditorSchema } from "./UserSchema";
@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import {
   useCreateFopUserMutation,
   useCreateCompanyUserMutation, useCreateEditorUserMutation
-} from "../../redux/dataUsersSlice";
+} from "../../../redux/dataUsersSlice";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -18,7 +18,7 @@ import {
   UserCreateModal,
 } from "./UserCreateForm.styled";
 
-import UserFieldForm from "./UserFieldForm/UserFieldForm";
+import UserFieldForm from "../UserForm/UserFieldForm/UserFieldForm";
 
 
 // получаем функцию на закрітие модального окна и значение страниці что открілась форма для добавления нового юзера - модальное окно

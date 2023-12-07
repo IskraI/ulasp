@@ -14,16 +14,16 @@ import SharedLayout from "./components/SharedLayout/SharedLayout";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import PrivateUserRoute from "./components/PrivateUserRoute";
-import Messages from "./components/Messages/Messages";
+import Messages from "./components/AdminComponents/Messages/Messages";
 import MessagesUser from "./components/MessagesUser/MessagesUser";
 import MyPlaylistsUser from "./components/MyPlaylistsUser/MyPlaylistsUser";
 // import AdminUsers from "./components/AdminUsers/AdminUsers";
-import OnlineUsers from "./components/OnlineUsers/OnlineUsers";
-import Analytics from "./components/Analytics/Analytics";
-import CardUser from "./components/CardUser/CardUser";
-import CardEditor from "./components/CardEditor/CardEditor";
+import OnlineUsers from "./components/AdminComponents/OnlineUsers/OnlineUsers";
+import Analytics from "./components/AdminComponents/Analytics/Analytics";
+import CardUser from "./components/AdminComponents/CardUser/CardUser";
+import CardEditor from "./components/AdminComponents/CardEditor/CardEditor";
 import MediaLibrary from "./pages/Editor/MediaLibrary/MediaLibrary";
-import MediaLibraryForUser from "./pages/UserPage/MediaLibraryForUser/MediaLibraryForUser"
+import MediaLibraryForUser from "./pages/UserPage/MediaLibraryForUser/MediaLibraryForUser";
 import AllTracksEditor from "./pages/Editor/AllTracksEditor/AllTracksEditor";
 import AllGenres from "./pages/Editor/AllGenres/AllGenres";
 import NewPlaylists from "./pages/Editor/NewPlaylists/NewPlaylists";
@@ -39,26 +39,40 @@ import { lazy, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
 const AdminCabinetPage = lazy(() =>
-  import("./components/AdminCabinetPage/AdminCabinetPage")
+  import("./components/AdminComponents/AdminCabinetPage/AdminCabinetPage")
 );
 const UserCabinetPage = lazy(() =>
   import("./components/UserCabinetPage/UserCabinetPage")
 );
-const ListUsers = lazy(() => import("./components/AdminUsers/ListUsers"));
-const ListEditors = lazy(() => import("./components/AdminUsers/ListEditors"));
+const ListUsers = lazy(() =>
+  import("./components/AdminComponents/AdminUsers/ListUsers")
+);
+const ListEditors = lazy(() =>
+  import("./components/AdminComponents/AdminUsers/ListEditors")
+);
 const EditorCabinetPage = lazy(() =>
   import("./pages/Editor/EditorCabinetPage/EditorCabinetPage")
 );
-const AdminUsers = lazy(() => import("./components/AdminUsers/AdminUsers"));
+const AdminUsers = lazy(() =>
+  import("./components/AdminComponents/AdminUsers/AdminUsers")
+);
 
 function App() {
   const user = useSelector(getUserState);
-  // console.log("App user", user);
+  console.log("App user", user);
+  console.log("user.token", user.token);
+  console.log(" user.editorRole", user.editorRole);
+  console.log("user.adminRole", user.adminRole);
+  console.log("user.userRole", user.userRole);
+  console.log("user.isLoggedIn", user.isLoggedIn);
 
-  const skipAdmin = (!user.token && !user.isLoggedIn) || user.userRole;
+  const skipAdmin = !user.token && !user.isLoggedIn && user.userRole;
+  console.log("skipAdmin", skipAdmin);
+
   const skipClient =
     (!user.token && !user.isLoggedIn) || user.adminRole || user.editorRole;
 
+  console.log("skipClient", skipClient);
   const { data, isLoading, isError, error } = useCurrentUserQuery("", {
     skip: skipAdmin,
   }); //если пользователь клиент, то скип = тру и єтот запрос пропустится
@@ -73,6 +87,22 @@ function App() {
   });
 
   //если пользователь админ или редаткор, то скип = тру и єтот запрос пропустится
+
+  if (isError&&user.editorRole) {
+    return(
+      <Routes>
+        <Route
+          element={<SharedLayout avatarURL={user.avatarURL} />}
+        >
+          {/* Render the AdminLoginPage when there is an error and the user has an editor role */}
+          <Route
+            path="/"
+            element={<PublicRoute component={AdminLoginPage} />}
+          />
+        </Route>
+      </Routes>
+    );
+  } 
 
   if (isMobile) {
     return (
@@ -107,8 +137,8 @@ function App() {
                 <Route path="*" element={<ErrorPage />} />
               </Route>
             )}
-
-            {user.adminRole && (
+          
+            {/* {user.adminRole && (
               <Route
                 path="/admin"
                 element={<PrivateRoute component={AdminPage} />}
@@ -169,7 +199,7 @@ function App() {
                 <Route path="allmusic" element={<NewTracks />} />
                 <Route path="*" element={<ErrorPage />} />
               </Route>
-            )}
+            )} */}
 
             <Route path="*" element={<ErrorPage />} />
           </Route>

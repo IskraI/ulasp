@@ -6,7 +6,7 @@ import {
   ButtonSwitch,
   Tooltip,
 } from "../UserCreateForm.styled";
-import { Button } from "../../Button/Button";
+import { Button } from "../../../Button/Button";
 
 const RegisterNameFieldForm = ({
   register,

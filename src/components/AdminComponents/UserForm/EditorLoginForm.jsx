@@ -7,9 +7,9 @@ import {
   MusicEditorSchema,
 } from "./UserSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useCreateEditorUserMutation } from "../../redux/dataUsersSlice";
+import { useCreateEditorUserMutation } from "../../../redux/dataUsersSlice";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../Button/Button";
+import { Button } from "../../Button/Button";
 import {
   LoginLabel,
   LoginForm,
