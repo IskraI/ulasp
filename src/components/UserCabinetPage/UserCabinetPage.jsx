@@ -1,7 +1,7 @@
 import {
   StatsListWrapper,
   StatItemEditor,
-} from "../Statistic/Statistic.styled";
+} from "../AdminComponents/Statistic/Statistic.styled";
 import {
   useGetPlaylistsCountQuery,
   useGetTracksCountQuery,
