@@ -1,4 +1,4 @@
-import { useGetUsersListQuery } from "../../redux/dataUsersSlice";
+import { useGetUsersListQuery } from "../../../redux/dataUsersSlice";
 import UserTable from "../UsersTable/UsersTable";
 
 const ListEditors = () => {
