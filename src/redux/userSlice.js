@@ -43,7 +43,7 @@ export const userSlice = createSlice({
           isLoggedIn: true,
           userRole: true,
           adminRole: false,
-  editorRole: false,
+          editorRole: false,
         };
         return state;
       },
@@ -52,7 +52,7 @@ export const userSlice = createSlice({
       reducer(state, action) {
         if (action.payload.admin || action.payload.editor) {
           const role = action.payload.admin ? "admin" : "editor";
-          console.log('action.payload.admin', action.payload.admin)
+          console.log("action.payload.admin", action.payload.admin);
           state = {
             ...state,
             ...action.payload[role],
@@ -60,7 +60,7 @@ export const userSlice = createSlice({
             isLoggedIn: true,
           };
         } else {
-          console.log('action.payload.user', action.payload.user)
+          console.log("action.payload.user", action.payload.user);
           state = {
             ...state,
             ...action.payload.user,
@@ -71,14 +71,10 @@ export const userSlice = createSlice({
             adminRole: false,
             editorRole: false,
           };
-
-          
         }
         return state;
       },
     },
-
-
 
     resetUser: {
       reducer(state) {

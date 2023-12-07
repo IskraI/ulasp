@@ -54,7 +54,7 @@ export const authApi = createApi({
           console.error("Error status is not 401. Logging the error:", error);
           dispatch(resetUser()); // Сбросить состояние до значения по умолчанию
         }}
-        
+
     }),
     logout: builder.mutation({
       query: () => ({
@@ -79,7 +79,7 @@ export const authApi = createApi({
     //   },
     //   invalidatesTags: ["auth"],
     // }),
-    updateUserAvatar: builder.mutation({
+    updateAdminAvatar: builder.mutation({
       query: (body) => ({
         url: "/admin/avatars",
         method: "PATCH",
@@ -88,7 +88,7 @@ export const authApi = createApi({
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         console.log('await queryFulfilled).data', await queryFulfilled);
-        dispatch(setUser((await queryFulfilled).data));
+        dispatch(setAdmin((await queryFulfilled).data));
       },
       invalidatesTags: ["auth"],
     }),
@@ -102,5 +102,5 @@ export const {
   useCurrentUserQuery,
   useLogoutMutation,
   useUpdateUserMutation,
-  useUpdateUserAvatarMutation,
+  useUpdateAdminAvatarMutation,
 } = authApi;
