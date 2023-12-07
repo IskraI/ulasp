@@ -1,12 +1,12 @@
 import { useGetUsersListQuery } from "../../../redux/dataUsersSlice";
 import UserTable from "../UsersTable/UsersTable";
 import { useState, useEffect, useRef } from "react";
-import { Modal } from "../Modal/Modal";
+import { Modal } from "../../Modal/Modal";
 import { SearchUsersContainer, Input, UsersContainer, Link } from "../SearchUsers/SearchUsers.styled";
 import {
   SectionUser,
 } from "../UserForm/UserCreateForm.styled";
-import { Button } from "../../components/Button/Button";
+import { Button } from "../../Button/Button";
 import { Title } from "../AdminCabinetPage/AdminCabinetPage.styled";
 import UserCreateForm from "../UserForm/UserCreateForm";
 

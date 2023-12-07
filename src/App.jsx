@@ -66,7 +66,7 @@ function App() {
   console.log("user.userRole", user.userRole);
   console.log("user.isLoggedIn", user.isLoggedIn);
 
-  const skipAdmin = !user.token && !user.isLoggedIn && user.userRole;
+  const skipAdmin = !user.token && !user.isLoggedIn || user.userRole;
   console.log("skipAdmin", skipAdmin);
 
   const skipClient =
