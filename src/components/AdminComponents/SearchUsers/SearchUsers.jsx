@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { useGetUsersListQuery } from "../../redux/dataUsersSlice";
+import { useGetUsersListQuery } from "../../../redux/dataUsersSlice";
 
 import {
   SearchUsersContainer,
