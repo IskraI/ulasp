@@ -7,11 +7,13 @@ import {
   PlaylistItemText,
   PlaylistIconsWrapper,
   PlaylistDeleteButton,
+  TextWrapper,
+  PlaylistItemText2
 } from "./PlayLists.styled";
 
 import { Link } from "react-router-dom";
 
-const TrackItem = ({ id, title, icon , isLoading}) => {
+const TrackItem = ({ id, title, icon , artist, isLoading}) => {
    
   return (
     <>
@@ -27,7 +29,11 @@ const TrackItem = ({ id, title, icon , isLoading}) => {
           }}
         >
           <PlaylistImg src={BASE_URL + "/" + icon} alt={title} />
+          <TextWrapper>
           <PlaylistItemText>{title}</PlaylistItemText>
+<PlaylistItemText2 style={{ fontWeight: "400px"
+            }} >{artist}</PlaylistItemText2>
+            </TextWrapper>
         </Link>
         <PlaylistIconsWrapper>
           
