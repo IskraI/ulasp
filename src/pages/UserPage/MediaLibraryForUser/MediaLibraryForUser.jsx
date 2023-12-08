@@ -1,7 +1,6 @@
 import Genres from "../../../components/UserMediaComponent/Genres/Genres";
 import LatestPlaylists from "../../../components/UserMediaComponent/PlayLists/PlayLists";
-import NewMusic from "../../../components/UserMediaComponent/NewMusic/NewMusic";
-// import NewSongs from "../../../components/EditorComponents/NewSongs/NewSongs";
+import NewSongs from "../../../components/UserMediaComponent/NewSongs/NewSongs";
 import { useGetAllGenresForUserQuery } from "../../../redux/genresSlice";
 import { useGetLatestPlaylistsForUserQuery } from "../../../redux/playlistsSlice";
 import { useGetAllTracksforUserQuery } from "../../../redux/tracksSlice";
@@ -66,12 +65,11 @@ const MediaLibraryForUser = () => {
             isFetching={isFetchingLatestPlaylist}
             error={isErrorLatestPlaylist}
                   />
-                  <NewMusic/>
-          {/* <NewSongs
+                           <NewSongs
             data={allTracks}
             isFetching={isFetchingNewSongs}
             error={isErrorNewSongs}
-          /> */}
+          />
         </>
       )}
     </>

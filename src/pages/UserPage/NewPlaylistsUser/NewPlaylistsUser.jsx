@@ -1,5 +1,5 @@
 import LatestPlaylists from "../../../components/EditorComponents/PlayLists/PlayLists";
-import { useGetLatestPlaylistsForUserQuery } from "../../../redux/playlistsSlice";
+import { useGetLatestPlaylistsForUserQuery } from "../../../redux/playlistsUserSlice";
 
 const NewPlaylistsUser = () => {
   const {

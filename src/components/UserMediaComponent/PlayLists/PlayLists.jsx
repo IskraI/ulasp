@@ -7,7 +7,6 @@ import {
   MediaList,
 } from "../MediaList/MediaList.styled";
 // import { MockPlayer } from "../TracksTable/TracksTable.styled";
-// import { Button } from "../../Button/Button";
 import symbol from "../../../assets/symbol.svg";
 
 const LatestPlaylists = ({
@@ -25,16 +24,7 @@ const LatestPlaylists = ({
           <ControlWrapper>
             <TitleWrapper>Нові плейлисти</TitleWrapper>
 
-            {/* <Button
-              icon={`${symbol}#icon-redo-active`}
-              type="button"
-              text={"Плейлист"}
-              width="198px"
-              display="block"
-              fontsize="24px"
-              padding="8px"
-            /> */}
-          </ControlWrapper>
+                </ControlWrapper>
           <MediaList>
             {playlists.map(({ _id, playListName, playListAvatarURL }) => (
               <MediaListItem
