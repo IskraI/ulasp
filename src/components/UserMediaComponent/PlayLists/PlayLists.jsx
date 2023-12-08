@@ -1,4 +1,4 @@
-import MediaListItem from "../MediaList/MediaList";
+import PlayListItem from "./PlayListsItem";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 
 import {
@@ -27,7 +27,7 @@ const LatestPlaylists = ({
                 </ControlWrapper>
           <MediaList>
             {playlists.map(({ _id, playListName, playListAvatarURL }) => (
-              <MediaListItem
+              <PlayListItem
                 key={_id}
                 title={playListName}
                 icon={playListAvatarURL}
