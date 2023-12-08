@@ -1,7 +1,8 @@
 import { TitleWrapper, ControlWrapper } from "../MediaList/MediaList.styled";
-import { Button } from "../../Button/Button";
-import symbol from "../../../assets/symbol.svg";
-import {Tracks, TracksItem } from "./NewSongs.styled";
+// import { Button } from "../../Button/Button";
+// import symbol from "../../../assets/symbol.svg";
+import { Tracks } from "./NewSongs.styled";
+import TracksItem from "./TrackItem";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 
 const NewSongs = ({ data: allTracks, isFetching, error, display, }) => {
@@ -21,19 +22,16 @@ const NewSongs = ({ data: allTracks, isFetching, error, display, }) => {
                   }) => (
               <TracksItem
                 key={_id}
+                 id={_id}
                 title={trackName}
                 artist={artist}
-                icon={ trackPictureURL}
+                icon={trackPictureURL}
               />
             ))}
+        
           </Tracks>
           <MediaNavigationLink link={"newplaylists"} display={display} />
-          <Tracks
-            tracks={allTracks}
-            error={error}
-            isFetching={isFetching}
-            display="none"
-                     />
+         
         </>
       )}
     </>

@@ -9,11 +9,12 @@ const NewTracks = () => {
     <>
       {!isFetching && !error && (
         <LatestTracks
-          title={" Остання додана музика"}
-          tracks={allTracks}
+          title={"Нові плейлисти"}
+          data={allTracks}
           error={error}
           isFetching={isFetching}
-          display="none"
+           display={"none"}
+          
                  />
       )}
     </>
