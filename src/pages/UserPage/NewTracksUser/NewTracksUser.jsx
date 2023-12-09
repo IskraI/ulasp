@@ -1,15 +1,14 @@
 import LatestTracks from "../../../components/UserMediaComponent/NewSongs/NewSongs";
-import { useGetAllTracksQuery } from "../../../redux/tracksSlice";
+import { useGetAllTracksforUserQuery } from "../../../redux/tracksUserSlice";
 
 
 
-const NewTracks = () => {
-  const { data: allTracks, isFetching, error } = useGetAllTracksQuery();
+const NewTracksUser = () => {
+  const { data: allTracks, isFetching, error } = useGetAllTracksforUserQuery();
   return (
     <>
       {!isFetching && !error && (
         <LatestTracks
-          title={"Нові плейлисти"}
           data={allTracks}
           error={error}
           isFetching={isFetching}
@@ -21,4 +20,4 @@ const NewTracks = () => {
   );
 };
 
-export default NewTracks;
+export default NewTracksUser;

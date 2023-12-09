@@ -30,7 +30,7 @@ const NewSongs = ({ data: allTracks, isFetching, error, display, }) => {
             ))}
         
           </Tracks>
-          <MediaNavigationLink link={"newplaylists"} display={display} />
+          <MediaNavigationLink link={"newtracks"} display={display} />
          
         </>
       )}

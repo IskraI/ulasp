@@ -37,6 +37,9 @@ import { getUserState } from "../src/redux/userSelectors";
 import { lazy, useEffect } from "react";
 
 import { Navigate } from "react-router-dom";
+import AllGenresForUser from "./pages/UserPage/AllGenresForUser/AllGenresForUser";
+import NewPlaylistsUser from "./pages/UserPage/NewPlaylistsUser/NewPlaylistsUser";
+import NewTracksUser from "./pages/UserPage/NewTracksUser/NewTracksUser";
 
 const AdminCabinetPage = lazy(() =>
   import("./components/AdminComponents/AdminCabinetPage/AdminCabinetPage")
@@ -134,6 +137,18 @@ function App() {
                 <Route path="cabinet" element={<UserCabinetPage />} />
                 <Route path="messages" element={<MessagesUser />} />
                 <Route path="medialibrary" element={<MediaLibraryForUser />} />
+                <Route
+                  path="medialibrary/genres"
+                  element={<AllGenresForUser display={"none"} />}
+                />
+                               <Route
+                  path="medialibrary/newplaylists"
+                  element={<NewPlaylistsUser display={"none"} />}
+                />
+                                <Route
+                  path="medialibrary/newtracks"
+                  element={<NewTracksUser display={"none"} />}
+                />
                 <Route path="myplaylists" element={<MyPlaylistsUser />} />
                 <Route path="*" element={<ErrorPage />} />
               </Route>
