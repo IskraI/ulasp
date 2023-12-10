@@ -3,10 +3,12 @@ import { colors } from "../../../styles/vars";
 
 export const ButtonCustomSwitch = styled.button`
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 8px;
   width: 66px;
   height: 23px;
-  padding: 2px 10px;
+  /* padding: 2px 10px; */
   border-radius: 10px;
   background-color: ${(props) => (props.isTrue ? "#FFF3BF" : "#8CACD7")};
   color: rgba(23, 22, 28, 1);
@@ -19,4 +21,10 @@ export const ButtonCustomSwitch = styled.button`
   line-height: 120%; /* 12px */
   letter-spacing: 1px;
   /* margin-bottom: 20px; */
+`;
+export const ContentButton = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+
 `;
