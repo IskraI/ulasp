@@ -4,10 +4,6 @@ import { useGetUsersListQuery } from "../../../redux/dataUsersSlice";
 import {
   SearchUsersContainer,
   Input,
-  Table,
-  TableRow,
-  TableCell,
-  RowTitle,
   TitleTab,
   TextLoader,
   TextInfo,
@@ -99,15 +95,6 @@ export const SearchUsers = () => {
     }
   }, [searchTerm, filteredUsers]);
 
-  //   const renderTitle = () => {
-  //   if (isSearching && searchResults.length > 0) {
-  //     return "Результати пошуку:";
-  //   } else if (isSearching && searchResults.length === 0) {
-  //     return "Результати пошуку: не знайдено";
-  //   } else {
-  //     return "Чекають на підтвердження (посилання):";
-  //   }
-  // };
 
   const visibleColumns = [
     { key: "firstName", label: "Ім’я", type: "name" },

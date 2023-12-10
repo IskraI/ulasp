@@ -68,7 +68,7 @@ margin-right: 20px;
 
   th, td {
     /* border: 1px solid #ddd; */
-    padding: 8px;
+    padding: 10px;
     text-align: left;
   }
 
@@ -77,6 +77,12 @@ margin-right: 20px;
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  /* th:last-child,
+td:last-child{
+  display:flex;
+  justify-content: end;
+  padding-right: 24px;
+} */
 
 
   tbody {
@@ -135,7 +141,7 @@ export const RowTitle = styled.th`
   text-align: left;
   padding: 8px;
  
-  flex: ${(props) => (props.isFirstColumn ? '0 0 20%' : '1')};
+  flex: ${(props) => (props.isFirstColumn ? '0 0 20%' : props.isLastColumn ? '0 0 10%':'1')};
   
 `;
 
@@ -154,7 +160,7 @@ display: flex;
 export const TableCell = styled.td`
 padding: 8px;
   text-align: left;
-  flex: ${(props) => (props.isFirstColumn ? '0 0 20%' : '1')};
+  flex: ${(props) => (props.isFirstColumn ? '0 0 20%' : props.isLastColumn ? '0 0 10%':'1')};
        
  
 `;

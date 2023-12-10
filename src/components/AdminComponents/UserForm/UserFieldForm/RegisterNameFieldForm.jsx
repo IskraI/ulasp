@@ -3,11 +3,10 @@ import {
   RegisterNameBlock,
   RegisterNameLabel,
   RegisterNameInput,
-  ButtonSwitch,
   Tooltip,
 } from "../UserCreateForm.styled";
 import { Button } from "../../../Button/Button";
-
+import { ButtonSwitch } from "../../ButtonSwitch/ButtonSwitch";
 const RegisterNameFieldForm = ({
   register,
   errors,
@@ -105,35 +104,9 @@ const RegisterNameFieldForm = ({
         type="button"
         isTrue={typeOfStatus}
         onClick={() => handleTypeOfStatus()}
-      >
-        {typeOfStatus ? (
-          <>
-            On
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="13"
-              height="13"
-              viewBox="0 0 13 13"
-              fill="none"
-            >
-              <circle cx="6.5" cy="6.5" r="6" fill="#8CACD7" />
-            </svg>
-          </>
-        ) : (
-          <>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="13"
-              height="13"
-              viewBox="0 0 13 13"
-              fill="none"
-            >
-              <circle cx="6.5" cy="6.5" r="6" fill="#FFF3BF" />
-            </svg>
-            Off
-          </>
-        )}
-      </ButtonSwitch>
+      />
+     
+       
     </RegisterNameBlock>
   );
 };

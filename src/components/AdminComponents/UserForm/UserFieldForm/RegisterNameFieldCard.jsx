@@ -3,8 +3,9 @@ import {
   RegisterNameBlock,
   RegisterNameLabel,
   RegisterNameInput,
-  ButtonSwitch,
+ 
 } from "../UserCreateForm.styled";
+import {ButtonSwitch} from "../../ButtonSwitch/ButtonSwitch"
 import {Button} from "../../../Button/Button"
 import { Controller } from 'react-hook-form';
 
@@ -106,39 +107,12 @@ const RegisterNameFieldCard = ({
                     </RegisterNameField>
 
             )}
-        <ButtonSwitch
-            type="button"
-            isTrue={typeOfAccess}
+            
+        <ButtonSwitch type="button"
+             isTrue={typeOfAccess}
             onClick={() => handleTypeOfAccess()}
-          >
-            {typeOfAccess ? (
-              <>
-                On
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="13"
-                  height="13"
-                  viewBox="0 0 13 13"
-                  fill="none"
-                >
-                  <circle cx="6.5" cy="6.5" r="6" fill="#8CACD7" />
-                </svg>
-              </>
-            ) : (
-              <>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="13"
-                  height="13"
-                  viewBox="0 0 13 13"
-                  fill="none"
-                >
-                  <circle cx="6.5" cy="6.5" r="6" fill="#FFF3BF" />
-                </svg>
-                Off
-              </>
-            )}
-          </ButtonSwitch>
+         />
+          
           </>):
           (
             <>
@@ -159,37 +133,10 @@ const RegisterNameFieldCard = ({
             )}
         <ButtonSwitch
             type="button"
-            isTrue={user.status}
-          
-          >
-            {typeOfAccess ? (
-              <>
-                On
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="13"
-                  height="13"
-                  viewBox="0 0 13 13"
-                  fill="none"
-                >
-                  <circle cx="6.5" cy="6.5" r="6" fill="#8CACD7" />
-                </svg>
-              </>
-            ) : (
-              <>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="13"
-                  height="13"
-                  viewBox="0 0 13 13"
-                  fill="none"
-                >
-                  <circle cx="6.5" cy="6.5" r="6" fill="#FFF3BF" />
-                </svg>
-                Off
-              </>
-            )}
-          </ButtonSwitch>
+            isTrue={typeOfAccess}
+            onClick={() => console.log('edite card')}
+          />
+                       
             </>
           )}
 

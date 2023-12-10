@@ -5,8 +5,6 @@ const ListUsers = () => {
   const { data, isLoading } = useGetUsersListQuery();
 
 
-
-
   const visibleColumns = [
     { key: "firstName", label: "Ім’я", type: "nameLink" },
     { key: "contractNumber", label: "№ договору", type: "string" },
@@ -17,13 +15,20 @@ const ListUsers = () => {
     { key: "access", label: "Допуск", type: "access" }, // он - офф
   ];
 
+  const handleSwitchAccess = (id,access) => {
+    console.log('handleSwitchAccess', !access)
+    console.log('handleSwitchAccess', id)
+  };
+
   return (
     <>
       {!isLoading && (
-        <UserTable users={data.allUsers} visibleColumns={visibleColumns} />
+        <UserTable users={data.allUsers} visibleColumns={visibleColumns} switchAccess = {handleSwitchAccess}/>
       )}
 
-      {/* {!data.allUsers && <p> Користувачів ще не має</p>} */}
+{!isLoading && data.allUsers.length === 0&&(
+       <p> Користувачів ще не має</p> 
+      )}
     </>
   );
 };
