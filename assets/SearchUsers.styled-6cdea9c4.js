@@ -1,4 +1,4 @@
-import{n as t,V as n,c as e}from"./index-b261080c.js";const a=t(n)`
+import{n as t,X as n,c as e}from"./index-820d66d6.js";const a=t(n)`
 
  &.active {text-decoration: underline}
 
@@ -39,7 +39,7 @@ import{n as t,V as n,c as e}from"./index-b261080c.js";const a=t(n)`
     text-align: right;
     color: rgba(0, 0, 0, 0.4);
   }
-`,p=t.table`
+`,d=t.table`
   table-layout: fixed; 
   /* width: 100%; */
   /* border-collapse: collapse; */
@@ -56,7 +56,7 @@ margin-right: 20px;
 
   th, td {
     /* border: 1px solid #ddd; */
-    padding: 8px;
+    padding: 10px;
     text-align: left;
   }
 
@@ -65,6 +65,12 @@ margin-right: 20px;
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  /* th:last-child,
+td:last-child{
+  display:flex;
+  justify-content: end;
+  padding-right: 24px;
+} */
 
 
   tbody {
@@ -73,16 +79,16 @@ margin-right: 20px;
      
       
     }
-  }`,d=t.th`
+  }`,p=t.th`
   color: ${e.mainFontColor};
   font-size: 16px;
   font-weight: 600;
   text-align: left;
   padding: 8px;
  
-  flex: ${o=>o.isFirstColumn?"0 0 20%":"1"};
+  flex: ${o=>o.isFirstColumn?"0 0 20%":o.isLastColumn?"0 0 10%":"1"};
   
-`,x=t.tr`
+`,c=t.tr`
   height: 54px;
   border-radius: 10px;
 
@@ -92,10 +98,10 @@ display: flex;
 
 
   
-`,c=t.td`
+`,x=t.td`
 padding: 8px;
   text-align: left;
-  flex: ${o=>o.isFirstColumn?"0 0 20%":"1"};
+  flex: ${o=>o.isFirstColumn?"0 0 20%":o.isLastColumn?"0 0 10%":"1"};
        
  
 `,f=t.h3`
@@ -115,7 +121,7 @@ font-weight: 400;
   color: ${e.mainFontColor};
   font-size: 24px;
   font-weight: 500;
-`,m=t.p`
+`,h=t.p`
   color: ${e.mainFontColor};
   font-size: 22px;
   font-weight: 400;
@@ -130,4 +136,4 @@ background-color: transparent;
  outline: none;
   border: none;
 
-`;export{s as I,a as L,d as R,l as S,f as T,r as U,g as a,m as b,p as c,x as d,c as e};
+`;export{s as I,a as L,p as R,l as S,f as T,r as U,g as a,h as b,d as c,c as d,x as e};
