@@ -15,6 +15,7 @@ function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 const UsersTable = ({ users, visibleColumns, switchAccess }) => {
+ 
   const formatDate = (dateString) => {
     const originalDate = new Date("2023-11-10T14:58:20.594Z");
 
@@ -99,8 +100,7 @@ const UsersTable = ({ users, visibleColumns, switchAccess }) => {
                       <ButtonSwitch
                         isTrue={user[column.key]}
                         idUser={user._id}
-                        onClick={() => switchAccess(user._id, user[column.key])}
-                      />
+                                             />
                     ) : column.key === "status" ? (
                       <>
                         {user[column.key] === true ? "Відкрито" : "Заблоковано"}
