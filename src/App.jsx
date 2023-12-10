@@ -59,20 +59,20 @@ const AdminUsers = lazy(() =>
 
 function App() {
   const user = useSelector(getUserState);
-  console.log("App user", user);
-  console.log("user.token", user.token);
-  console.log(" user.editorRole", user.editorRole);
-  console.log("user.adminRole", user.adminRole);
-  console.log("user.userRole", user.userRole);
-  console.log("user.isLoggedIn", user.isLoggedIn);
+  // console.log("App user", user);
+  // console.log("user.token", user.token);
+  // console.log(" user.editorRole", user.editorRole);
+  // console.log("user.adminRole", user.adminRole);
+  // console.log("user.userRole", user.userRole);
+  // console.log("user.isLoggedIn", user.isLoggedIn);
 
   const skipAdmin = !user.token && !user.isLoggedIn || user.userRole;
-  console.log("skipAdmin", skipAdmin);
+  // console.log("skipAdmin", skipAdmin);
 
   const skipClient =
     (!user.token && !user.isLoggedIn) || user.adminRole || user.editorRole;
 
-  console.log("skipClient", skipClient);
+  // console.log("skipClient", skipClient);
   const { data, isLoading, isError, error } = useCurrentUserQuery("", {
     skip: skipAdmin, 
   
@@ -93,7 +93,7 @@ function App() {
     return(
       <Routes>
         <Route
-          element={<SharedLayout avatarURL={user.avatarURL} />}
+          element={<SharedLayout avatarURL={user.avatarURL}/>}
         >
           {/* Render the AdminLoginPage when there is an error and the user has an editor role */}
           <Route
