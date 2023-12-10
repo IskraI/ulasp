@@ -104,6 +104,7 @@ const RegisterNameFieldForm = ({
         type="button"
         isTrue={typeOfStatus}
         onClick={() => handleTypeOfStatus()}
+        form= {true}
       />
      
        

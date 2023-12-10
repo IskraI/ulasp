@@ -41,7 +41,7 @@ const UserCreateForm = ({ onCloseModal, section  }) => {
   : typeOfUser === 'fop'
   ? UserFopSchema
   : UserCompanySchema;
-console.log('resolverShema', resolverShema)
+// console.log('resolverShema', resolverShema)
   const {
     control,
     register,
