@@ -1,5 +1,5 @@
 import {
-    ButtonCustomSwitch,
+    ButtonCustomSwitch,ContentButton
   } from "../ButtonSwitch/ButtonSwitch.styled";
   import { useAccessUserUpdateByIdMutation } from "../../../redux/dataUsersSlice";
 
@@ -23,12 +23,19 @@ const handleSwitchAccess = (idUser) => {
 
     return(<>
 
-      {isLoadingAccess && <>Loading</>}
+      {isLoadingAccess &&  <ButtonCustomSwitch   type="button"
+ >
+
+         Loading
+   
+  </ButtonCustomSwitch>}
+
       {!isLoadingAccess && typeOfAccess && (
   <ButtonCustomSwitch   type="button"
   isTrue={typeOfAccess}
-  disable = {isLoadingAccess}
+
   onClick={()=>handleSwitchAccess(idUser)}>
+ 
          On
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +46,7 @@ const handleSwitchAccess = (idUser) => {
     >
       <circle cx="6.5" cy="6.5" r="6" fill="#8CACD7" />
     </svg>
- 
+
   </ButtonCustomSwitch>
 ) }
 {!isLoadingAccess && !typeOfAccess && 
