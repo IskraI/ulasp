@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 import {
 
-  ButtonSwitch,
+  ButtonCompany,
   SectionUserButton,
   SectionUser,
   UserCreateModal,
@@ -143,9 +143,9 @@ console.log('resolverShema', resolverShema)
             </SectionUserButton>
           </SectionUser>
           {activeSection === "User" && (
-            <ButtonSwitch type="button" onClick={handleTypeOfUser}>
+            <ButtonCompany type="button" onClick={handleTypeOfUser}>
               {typeOfUser === "tov" ? "ТОВ" : "ФОП"}
-            </ButtonSwitch>
+            </ButtonCompany>
           )}
     
  

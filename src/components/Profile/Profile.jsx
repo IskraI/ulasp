@@ -71,6 +71,7 @@ export const Profile = () => {
   const avatarSrc = selectedImage
     ? URL.createObjectURL(selectedImage):avatarURL?
      `${BASE_URL}/${avatarURL}` : defaultAvatarSrc;
+  
 
   return (
     <>

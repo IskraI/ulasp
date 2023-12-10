@@ -9,7 +9,7 @@ import {
 import { Button } from "../../Button/Button";
 import { Title } from "../AdminCabinetPage/AdminCabinetPage.styled";
 import UserCreateForm from "../UserForm/UserCreateForm";
-
+import symbol from "../../../assets/symbol.svg";
 import {  Outlet, useLocation  } from "react-router-dom";
 
 
@@ -47,6 +47,7 @@ const AdminUsers = () => {
         <Title>Користувачі</Title>
 
         <Button
+         icon={`${symbol}#icon-plus`}
           type="button"
           padding={"12px 46px"}
           onClick={handleShowModal}

@@ -3,7 +3,6 @@ import UserTable from "../UsersTable/UsersTable";
 
 const ListEditors = () => {
     const { data, isLoading } = useGetUsersListQuery(true);
-
   const visibleColumns = [
     { key: "firstName", label: "Ім’я", type: "nameLinkEditor" },
     { key: "login", label: "Логін", type: "string" },
@@ -17,8 +16,11 @@ const ListEditors = () => {
        {!isLoading && (
         <UserTable users={data.result} visibleColumns={visibleColumns} />
       )} 
+          {!isLoading && data.result.length === 0&&(
+       <p> Користувачів ще не має</p> 
+      )}
 
-      {/* {!data.allAdmin && <p> Користувачів ще не має</p>} */}
+   
     </>
   );
 };

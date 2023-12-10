@@ -273,7 +273,7 @@ line-height: normal;
 
  
 `;
-export const ButtonSwitch = styled.button`
+export const ButtonCompany = styled.button`
   display: flex;
   gap: 8px;
   width: 66px;
