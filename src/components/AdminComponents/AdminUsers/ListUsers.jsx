@@ -1,6 +1,8 @@
 import { useGetUsersListQuery } from "../../../redux/dataUsersSlice";
 import UserTable from "../UsersTable/UsersTable";
 
+import id from "date-fns/locale/id/index.js";
+
 const ListUsers = () => {
   const { data, isLoading } = useGetUsersListQuery();
 
@@ -14,16 +16,12 @@ const ListUsers = () => {
     { key: "dateOfAccess", label: "Відкрито до", type: "string" },
     { key: "access", label: "Допуск", type: "access" }, // он - офф
   ];
-
-  const handleSwitchAccess = (id,access) => {
-    console.log('handleSwitchAccess', !access)
-    console.log('handleSwitchAccess', id)
-  };
+ 
 
   return (
     <>
       {!isLoading && (
-        <UserTable users={data.allUsers} visibleColumns={visibleColumns} switchAccess = {handleSwitchAccess}/>
+        <UserTable users={data.allUsers} visibleColumns={visibleColumns} />
       )}
 
 {!isLoading && data.allUsers.length === 0&&(

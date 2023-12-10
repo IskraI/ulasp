@@ -19,11 +19,7 @@ export const dataUsersApi = createApi({
   }),
   tagTypes: ["dataUsers", "dataAdmins", "dataUser"],
   endpoints: (builder) => ({
-    // getAdminList: builder.query({
-    //   query: (admin:false) => ({ url: 'admin' }),
-    //   providesTags: ['dataAdmins'],
-    // }),
-    getUsersList: builder.query({
+      getUsersList: builder.query({
       query: (admin = false) => {
         const url = admin ? "admin/" : "admin/users";
         return { url };
@@ -38,7 +34,7 @@ export const dataUsersApi = createApi({
       }),
       async onQueryError(arg, { dispatch, error, queryFulfilled }) {
         console.error("Query failed", error);
-        dispatch(resetUser()); // Сбросить состояние до значения по умолчанию
+        dispatch(resetUser()); //?????? Сбросить состояние до значения по умолчанию
       },
       invalidatesTags: ["dataUsers", "dataUser"],
     }),
@@ -50,6 +46,14 @@ export const dataUsersApi = createApi({
       }),
       invalidatesTags: ["dataUsers", "dataUser"],
     }),
+    accessUserUpdateById:builder.mutation({
+      query: (id) => ({
+        url: `admin/users/access/${id}`,
+        method: "PATCH",
+      }),
+          invalidatesTags: ["dataUsers", "dataUser"],
+    }),
+
     getAdminById: builder.query({
       query: (id) => ({ url: `admin/${id}` }),
       providesTags: ["dataUser"],
@@ -146,6 +150,7 @@ export const {
   useUpdateEditorUserMutation,
   useUpdateFopUserMutation,
   useUpdateCompanyUserMutation,
+  useAccessUserUpdateByIdMutation,
   
   
 } = dataUsersApi;
