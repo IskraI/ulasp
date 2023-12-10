@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { resetUser, setUser, setAdmin, setCurrent } from "./userSlice";
-// import { setUserRole } from "./roleSlice";
+import { resetUser, setAvatar, setAdmin, setCurrent } from "./userSlice";
 
 const BASE_URL = `http://localhost:8000`;
 
@@ -13,7 +12,7 @@ export const authApi = createApi({
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }
-      // console.log("headers", headers);
+
       return headers;
     },
   }),
@@ -30,8 +29,6 @@ export const authApi = createApi({
       },
       invalidatesTags: ["auth"],
     }),
-  
-
 
     currentUser: builder.query({
       query: () => ({
@@ -42,19 +39,8 @@ export const authApi = createApi({
         dispatch(setCurrent((await queryFulfilled).data));
       },
       async onQueryError(arg, { dispatch, error, queryFulfilled }) {
-        console.error("Query failed", error);
-    
-        // Обрабатываем ошибку неавторизации (статус 401)
-        if (error.status === 401) {
-          console.error("Unauthorized error. Redirecting to login page.");
-          // Выполните действия, например, перенаправление на страницу входа
-          // history.push('/login') или другие подходящие действия
-        } else {
-          // Для других типов ошибок выводим в консоль
-          console.error("Error status is not 401. Logging the error:", error);
-          dispatch(resetUser()); // Сбросить состояние до значения по умолчанию
-        }}
-
+        dispatch(resetUser()); // Сбросить состояние до значения по умолчанию
+      },
     }),
     logout: builder.mutation({
       query: () => ({
@@ -87,20 +73,17 @@ export const authApi = createApi({
         formData: true,
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        console.log('await queryFulfilled).data', await queryFulfilled);
-        dispatch(setAdmin((await queryFulfilled).data));
+        dispatch(setAvatar((await queryFulfilled).data));
       },
       invalidatesTags: ["auth"],
     }),
-
   }),
 });
 
 export const {
   useSigninMutation,
-  
   useCurrentUserQuery,
   useLogoutMutation,
-  useUpdateUserMutation,
+  // useUpdateUserMutation,
   useUpdateAdminAvatarMutation,
 } = authApi;

@@ -12,7 +12,7 @@ const FileUpload = ({
 }) => {
   const ref = useRef();
 
-  console.log(ref);
+  // console.log(ref);
 
   return (
     // <InputWrapper>
