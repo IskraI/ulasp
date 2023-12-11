@@ -40,6 +40,7 @@ import { Navigate } from "react-router-dom";
 import AllGenresForUser from "./pages/UserPage/AllGenresForUser/AllGenresForUser";
 import NewPlaylistsUser from "./pages/UserPage/NewPlaylistsUser/NewPlaylistsUser";
 import NewTracksUser from "./pages/UserPage/NewTracksUser/NewTracksUser";
+import AllTracksUser from "./pages/UserPage/AllTracksUser/AllTracksUser";
 
 const AdminCabinetPage = lazy(() =>
   import("./components/AdminComponents/AdminCabinetPage/AdminCabinetPage")
@@ -147,7 +148,7 @@ function App() {
                 />
                                 <Route
                   path="medialibrary/newtracks"
-                  element={<NewTracksUser display={"none"} />}
+                  element={<AllTracksUser display={"none"} />}
                 />
                 <Route path="myplaylists" element={<MyPlaylistsUser />} />
                 <Route path="*" element={<ErrorPage />} />

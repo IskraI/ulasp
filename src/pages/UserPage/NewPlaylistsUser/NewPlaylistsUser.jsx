@@ -1,3 +1,4 @@
+import TabNavigation from "../../../components/TabNavigation/TabNavigation";
 import LatestPlaylists from "../../../components/UserMediaComponent/PlayLists/PlayLists";
 import { useGetLatestPlaylistsForUserQuery } from "../../../redux/playlistsUserSlice";
 
@@ -7,7 +8,9 @@ const NewPlaylistsUser = () => {
     isFetching: isFetchingLatestPlaylist,
     error: isErrorLatestPlaylist,
   } = useGetLatestPlaylistsForUserQuery();
-  return (
+    return (
+        <>
+      <TabNavigation/>
       <LatestPlaylists
           title={"Нові плейлисти"}
           displayPlayer={"none"}
@@ -15,7 +18,8 @@ const NewPlaylistsUser = () => {
       data={playlists}
       isFetching={isFetchingLatestPlaylist}
       error={isErrorLatestPlaylist}
-    />
+            />
+            </>
   );
 };
 
