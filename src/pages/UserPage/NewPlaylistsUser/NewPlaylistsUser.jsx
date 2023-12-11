@@ -1,6 +1,7 @@
 import TabNavigation from "../../../components/TabNavigation/TabNavigation";
 import LatestPlaylists from "../../../components/UserMediaComponent/PlayLists/PlayLists";
 import { useGetLatestPlaylistsForUserQuery } from "../../../redux/playlistsUserSlice";
+import { NewSongsLink } from "./NewPlaylistsUser.styled";
 
 const NewPlaylistsUser = () => {
   const {
@@ -10,7 +11,8 @@ const NewPlaylistsUser = () => {
   } = useGetLatestPlaylistsForUserQuery();
     return (
         <>
-      <TabNavigation/>
+            <TabNavigation />                 
+            <NewSongsLink to = "/user/medialibrary/newtracks">Нова музика</NewSongsLink>
       <LatestPlaylists
           title={"Нові плейлисти"}
           displayPlayer={"none"}
