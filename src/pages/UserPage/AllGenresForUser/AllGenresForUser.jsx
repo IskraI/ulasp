@@ -1,7 +1,7 @@
 import Genres from "../../../components/UserMediaComponent/Genres/Genres";
 import { useGetAllGenresForUserQuery } from "../../../redux/genresSlice";
 import { Loader } from "../../../components/Loader/Loader";
-
+import TabNavigation from "../../../components/TabNavigation/TabNavigation";
 const AllGenresForUser = () => {
   const {
     data: genres,
@@ -11,6 +11,7 @@ const AllGenresForUser = () => {
 
   return (
       <>
+          <TabNavigation/> 
           {isFetchingAllGenre && !isErrorAllGenre && <Loader />}
           {!isFetchingAllGenre && !isErrorAllGenre && (
               <Genres

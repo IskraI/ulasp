@@ -15,6 +15,11 @@ export const TabNavigation = () => {
   const segmentToUkrainianMapping = {
     users: 'Користувачі',
     carduser: 'Картка користувача',
+    medialibrary: 'Медіатека',
+    newtracks: 'Нові пісні',
+    user: ' ',
+    genres: 'Жанри',
+    newplaylists: 'Нові Плейлисти',
     // Добавьте другие сегменты и их соответствующие переводы
   };
 
