@@ -30,6 +30,7 @@ export const authClientApi = createApi({
         }
       ),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        dispatch(resetUser());
         dispatch(setUser((await queryFulfilled).data));
       },
       invalidatesTags: ["authClient"],

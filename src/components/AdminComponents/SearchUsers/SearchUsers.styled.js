@@ -21,7 +21,7 @@ export const SearchUsersContainer = styled.div`
 `;
 export const UsersContainer = styled.div`
 
- 
+ position:relative;
    display: flex;
    justify-content: space-between; 
    align-items: start;
@@ -41,6 +41,12 @@ export const Input = styled.input`
   border-radius: 10px;
   border: 1px solid ${colors.mainFontColor};
   background-color: transparent;
+
+  position: ${(props) => (props.pageType === 'list' && 'absolute')};
+  top: ${(props) => (props.pageType === 'list' && ' 104px')};
+  right: ${(props) => (props.pageType === 'list' && '60px')};
+
+  
 
   /* margin-right: 64px; */
   /* margin-left: auto; */

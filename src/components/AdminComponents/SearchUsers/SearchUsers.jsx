@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { useGetUsersListQuery } from "../../../redux/dataUsersSlice";
+// import { useGetUsersListQuery } from "../../../redux/dataUsersSlice";
 
 import {
   SearchUsersContainer,
@@ -10,6 +10,7 @@ import {
  
 } from "./SearchUsers.styled";
 import UsersTable from "../UsersTable/UsersTable";
+import { SearchInput } from "./SearchInput";
 const user = {
   _id: {
     $oid: "653d71507a484cf7a52cb57a",
@@ -43,43 +44,33 @@ const user = {
   },
 };
 
-export const SearchUsers = () => {
+export const SearchUsers = ({dataUsers, isLoading, titleDefault, visibleColumns, pageType}) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
   const [showNoResults, setShowNoResults] = useState(false);
-  const { data, isLoading } = useGetUsersListQuery();
-
-
-  // const users = data ? data.allUsers : [];
-
-  const filteredUsers = useMemo(() => {
-    const users = data ? data.allUsers : [];
-    if (users) {
-      return users.filter((user) => user.status === false);
-    }
-    return [];
-  }, [data]);
 
   const isSearching = searchTerm.trim() !== "";
-  
+  const handleSearchTermChange = (value) => {
+    setSearchTerm(value);
+ 
+  };
 
   const title = isSearching
     ? searchResults.length > 0
       ? "Результати пошуку:"
       : "Результати пошуку:"
-    : "Чекають на підтвердження (посилання):";
+    : titleDefault;
 
   useEffect(() => {
-    setSearchResults(filteredUsers);
-  }, [filteredUsers]);
+    setSearchResults(dataUsers);
+  }, [dataUsers]);
 
   useEffect(() => {
     if (searchTerm.trim() !== "") {
 
-      const filteredResults = filteredUsers.filter((user) => {
-       
-        
+      const filteredResults = dataUsers.filter((user) => {
+              
         return (user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
           user.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
           user.lastName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -90,32 +81,18 @@ export const SearchUsers = () => {
       setSearchResults(filteredResults);
       setShowNoResults(filteredResults.length === 0);
     } else {
-      setSearchResults(filteredUsers);
+      setSearchResults(dataUsers);
       setShowNoResults(false);
     }
-  }, [searchTerm, filteredUsers]);
+  }, [searchTerm, dataUsers]);
 
 
-  const visibleColumns = [
-    { key: "firstName", label: "Ім’я", type: "name" },
-    { key: "contractNumber", label: "№ договору", type: "string" },
-    { key: "createdAt", label: "Дата заявки", type: "date" },
-    { key: "details", label: "Детальніше", type: "link" },
-    { key: "sendEmail", label: "", type: "button" },
-  ];
   return (
     <>
       <SearchUsersContainer>
         <TitleTab>{title}</TitleTab>
-        {/* {(searchTerm === "" || (searchTerm === "" && filteredUsers.length > 0)) && (
-          <TitleTab>{renderTitle()}</TitleTab>
-        )} */}
-        <Input
-          type="text"
-          placeholder="Пошук користувачів"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        <SearchInput onSearchTermChange={handleSearchTermChange} pageType={pageType} />
+      
       </SearchUsersContainer>
       {isLoading ? (
         <TextLoader>Завантаження...</TextLoader>
@@ -124,7 +101,7 @@ export const SearchUsers = () => {
           <TextInfo> не знайдено</TextInfo>
         </>
       ) : (
-        <UsersTable users={searchResults} visibleColumns={visibleColumns} />
+                <UsersTable users={searchResults} visibleColumns={visibleColumns} />
    
       )}
     </>
