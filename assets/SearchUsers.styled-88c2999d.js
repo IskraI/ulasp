@@ -1,4 +1,4 @@
-import{n as t,X as n,c as e}from"./index-e15cb6d2.js";const a=t(n)`
+import{n as t,X as n,c as o}from"./index-597509a6.js";const a=t(n)`
 
  &.active {text-decoration: underline}
 
@@ -11,16 +11,16 @@ import{n as t,X as n,c as e}from"./index-e15cb6d2.js";const a=t(n)`
    align-items: end;
    margin-bottom: 23px;
 
-`,r=t.div`
+`,s=t.div`
 
- 
+ position:relative;
    display: flex;
    justify-content: space-between; 
    align-items: start;
    padding-top: 4px;
    margin-bottom: 23px;
 
-`,s=t.input`
+`,r=t.input`
   display: flex;
   width: 219px;
   height: 40px;
@@ -29,8 +29,14 @@ import{n as t,X as n,c as e}from"./index-e15cb6d2.js";const a=t(n)`
   align-items: center;
   flex-shrink: 0;
   border-radius: 10px;
-  border: 1px solid ${e.mainFontColor};
+  border: 1px solid ${o.mainFontColor};
   background-color: transparent;
+
+  position: ${e=>e.pageType==="list"&&"absolute"};
+  top: ${e=>e.pageType==="list"&&" 104px"};
+  right: ${e=>e.pageType==="list"&&"60px"};
+
+  
 
   /* margin-right: 64px; */
   /* margin-left: auto; */
@@ -39,7 +45,7 @@ import{n as t,X as n,c as e}from"./index-e15cb6d2.js";const a=t(n)`
     text-align: right;
     color: rgba(0, 0, 0, 0.4);
   }
-`,d=t.table`
+`,p=t.table`
   table-layout: fixed; 
   /* width: 100%; */
   /* border-collapse: collapse; */
@@ -79,16 +85,16 @@ td:last-child{
      
       
     }
-  }`,p=t.th`
-  color: ${e.mainFontColor};
+  }`,d=t.th`
+  color: ${o.mainFontColor};
   font-size: 16px;
   font-weight: 600;
   text-align: left;
   padding: 8px;
  
-  flex: ${o=>o.isFirstColumn?"0 0 20%":o.isLastColumn?"0 0 10%":"1"};
+  flex: ${e=>e.isFirstColumn?"0 0 20%":e.isLastColumn?"0 0 10%":"1"};
   
-`,c=t.tr`
+`,x=t.tr`
   height: 54px;
   border-radius: 10px;
 
@@ -98,14 +104,14 @@ display: flex;
 
 
   
-`,x=t.td`
+`,c=t.td`
 padding: 8px;
   text-align: left;
-  flex: ${o=>o.isFirstColumn?"0 0 20%":o.isLastColumn?"0 0 10%":"1"};
+  flex: ${e=>e.isFirstColumn?"0 0 20%":e.isLastColumn?"0 0 10%":"1"};
        
  
-`,f=t.h3`
-  color: ${e.mainFontColor};
+`,g=t.h3`
+  color: ${o.mainFontColor};
   /* font-size: 22px; */
   /* margin-top: 43px; */
   /* margin-left: 111px; */
@@ -117,16 +123,16 @@ padding: 8px;
 font-size: 22px;
 font-weight: 400;
 
-`,g=t.p`
-  color: ${e.mainFontColor};
+`,f=t.p`
+  color: ${o.mainFontColor};
   font-size: 24px;
   font-weight: 500;
 `,h=t.p`
-  color: ${e.mainFontColor};
+  color: ${o.mainFontColor};
   font-size: 22px;
   font-weight: 400;
 `;t.div`
-  color: ${e.mainFontColor};
+  color: ${o.mainFontColor};
  font-family: Inter;
 font-size: 16px;
 font-style: normal;
@@ -136,4 +142,4 @@ background-color: transparent;
  outline: none;
   border: none;
 
-`;export{s as I,a as L,p as R,l as S,f as T,r as U,g as a,h as b,d as c,c as d,x as e};
+`;export{r as I,a as L,d as R,l as S,p as T,s as U,x as a,c as b,g as c,f as d,h as e};
