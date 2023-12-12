@@ -1,28 +1,27 @@
 import TracksTable from "../TracksTable/TracksTable";
-import { TitleWrapper, ControlWrapper } from "../MediaList/MediaList.styled";
-import { Button } from "../../Button/Button";
+
+import ControlMediateca from "../ControlMediateca/ControlMediaTeca";
 import symbol from "../../../assets/symbol.svg";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const RowsTitle = ["", "", "", "", ""];
 
 const NewSongs = ({ data: allTracks, isFetching, error }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   return (
     <>
       {!isFetching && !error && (
         <>
-          <ControlWrapper>
-            <TitleWrapper>Нові пісні</TitleWrapper>
-
-            <Button
-              icon={`${symbol}#icon-redo-active`}
-              type="button"
-              text={"Музику"}
-              width="198px"
-              display="block"
-              fontsize="24px"
-              padding="8px"
-            />
-          </ControlWrapper>
+          <ControlMediateca
+            title={"Нові пісні"}
+            iconButton={`${symbol}#icon-plus`}
+            textButton={"Музику"}
+            onClick={() =>
+              navigate(`${location.pathname}/newtracks`, { replace: true })
+            }
+          />
           <TracksTable
             title={" Остання додана музика"}
             tracks={allTracks}

@@ -30,7 +30,7 @@ const LatestPlaylists = ({
 }) => {
   const [showModal, setShowModal] = useState(false);
 
-  const { id } = useParams();
+  const { genreId } = useParams();
 
   const [createPlaylist, { isSuccess, isLoading, isError }] =
     useCreatePlaylistMutation();
@@ -50,12 +50,9 @@ const LatestPlaylists = ({
   const handleSubmitInGenre = async (data) => {
     try {
       const formData = {
-        id,
+        genreId,
         ...data,
       };
-
-      console.log(formData);
-
       closeModal();
       await createPlaylistInGenre(formData);
     } catch (error) {

@@ -42,8 +42,8 @@ export const genresApi = createApi({
     }),
 
     createPlaylistInGenre: builder.mutation({
-      query: ({ id, ...body }) => ({
-        url: `editor/genre/playlist/create/${id}`,
+      query: ({ genreId, ...body }) => ({
+        url: `editor/genre/playlist/create/${genreId}`,
         method: "POST",
         body,
       }),

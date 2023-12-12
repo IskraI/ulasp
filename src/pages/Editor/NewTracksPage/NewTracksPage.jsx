@@ -11,7 +11,7 @@ const RowsTitle = [
   "",
 ];
 
-const NewTracks = () => {
+const NewTracksPage = () => {
   const { data: allTracks, isFetching, error } = useGetAllTracksQuery();
   return (
     <>
@@ -29,4 +29,4 @@ const NewTracks = () => {
   );
 };
 
-export default NewTracks;
+export default NewTracksPage;

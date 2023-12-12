@@ -4,10 +4,11 @@ import { useGetGenreByIdQuery } from "../../../redux/genresSlice";
 import LatestPlaylists from "../../../components/EditorComponents/PlayLists/PlayLists";
 import { Loader } from "../../../components/Loader/Loader";
 
-const Playlists = () => {
-  const { id } = useParams();
+const PlaylistsPageInGenre = () => {
+  const { genreId } = useParams();
 
-  const { data, isFetching, isError, isSuccess } = useGetGenreByIdQuery(id);
+  const { data, isFetching, isError, isSuccess } =
+    useGetGenreByIdQuery(genreId);
 
   return (
     <>
@@ -26,4 +27,4 @@ const Playlists = () => {
   );
 };
 
-export default Playlists;
+export default PlaylistsPageInGenre;

@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { colors } from "../../styles/vars";
 
 export const CustomButton = styled.button`
   display: flex;
@@ -29,5 +30,11 @@ export const CustomButton = styled.button`
     background: #fff3bf;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.4) inset;
     border: 1px solid #17161c;
+  }
+
+  &:disabled {
+    background-color: rgba(171, 171, 171, 1);
+    box-shadow: none;
+    cursor: default;
   }
 `;

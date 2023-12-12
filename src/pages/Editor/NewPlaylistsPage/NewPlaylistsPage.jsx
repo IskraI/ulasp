@@ -1,7 +1,7 @@
 import LatestPlaylists from "../../../components/EditorComponents/PlayLists/PlayLists";
 import { useGetLatestPlaylistsQuery } from "../../../redux/playlistsSlice";
 
-const NewPlaylists = () => {
+const NewPlaylistsPage = () => {
   const {
     data: playlists,
     isFetching: isFetchingLatestPlaylist,
@@ -24,4 +24,4 @@ const NewPlaylists = () => {
   );
 };
 
-export default NewPlaylists;
+export default NewPlaylistsPage;

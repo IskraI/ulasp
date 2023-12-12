@@ -13,11 +13,10 @@ const RowsTitle = [
   "",
 ];
 
-const Tracks = () => {
-  const { id } = useParams();
+const TracksPage = () => {
+  const { playlistId } = useParams();
 
-  console.log(id);
-  const { data, isFetching, error } = useGetPlaylistByIdQuery(id);
+  const { data, isFetching, error } = useGetPlaylistByIdQuery(playlistId);
 
   if (!isFetching) {
     console.log(data);
@@ -39,4 +38,4 @@ const Tracks = () => {
   );
 };
 
-export default Tracks;
+export default TracksPage;
