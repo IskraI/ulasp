@@ -15,26 +15,28 @@ const MediaLibraryPage = () => {
     isFetching: isFetchingAllGenre,
     isSuccess: isSuccesAllGenre,
     isError: isErrorAllGenre,
-  } = useGetAllGenresQuery();
-  const {
-    data: playlists,
-    isFetching: isFetchingLatestPlaylist,
-    isSuccess: isSuccesLatestPlaylist,
-    isError: isErrorLatestPlaylist,
-  } = useGetLatestPlaylistsQuery();
-  const {
-    data: allTracks,
-    isFetching: isFetchingNewSongs,
-    isSuccess: isSuccesLatestNewSongs,
-    isError: isErrorNewSongs,
-  } = useGetAllTracksQuery();
+  } = useGetAllGenresQuery(`?&limit=${12}`);
 
   const {
     data: shops,
     isFetching: isFetchingShops,
     isSuccess: isSuccessShops,
     isError: isErrorShops,
-  } = useGetAllShopsQuery();
+  } = useGetAllShopsQuery(`?&limit=${12}`);
+
+  const {
+    data: playlists,
+    isFetching: isFetchingLatestPlaylist,
+    isSuccess: isSuccesLatestPlaylist,
+    isError: isErrorLatestPlaylist,
+  } = useGetLatestPlaylistsQuery(`?&limit=${12}`);
+
+  const {
+    data: allTracks,
+    isFetching: isFetchingNewSongs,
+    isSuccess: isSuccesLatestNewSongs,
+    isError: isErrorNewSongs,
+  } = useGetAllTracksQuery(`?&limit=${9}`);
 
   const fetching =
     !isFetchingAllGenre &&
@@ -58,7 +60,7 @@ const MediaLibraryPage = () => {
 
   const success =
     isSuccesAllGenre && isSuccesLatestPlaylist && isSuccesLatestNewSongs;
-   isSuccessShops;
+  isSuccessShops;
 
   const error = isErrorAllGenre && isErrorLatestPlaylist && isErrorNewSongs;
 

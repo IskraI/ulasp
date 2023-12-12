@@ -16,13 +16,15 @@ export const genresApi = createApi({
   }),
   endpoints: (builder) => ({
     getAllGenres: builder.query({
-      query: () => "/editor/genres/all",
-      // providesTags: ["Genres"],
+      query: (page = "", limit = "") => ({
+        url: `/editor/genres/all?${page && `page=${page}`} & ${
+          limit && `limit=${limit}`
+        }`,
+      }),
       providesTags: (_result, _err, id) => [{ type: "Genres", id }],
     }),
     getGenreById: builder.query({
       query: (id) => ({ url: `/editor/genres/${id}` }),
-      // providesTags: ["Genres"],
       providesTags: (_result, _err, id) => [{ type: "Genres", id }],
     }),
     getAllGenresForUser: builder.query({
