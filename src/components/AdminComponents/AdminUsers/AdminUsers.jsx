@@ -11,10 +11,15 @@ import { Title } from "../AdminCabinetPage/AdminCabinetPage.styled";
 import UserCreateForm from "../UserForm/UserCreateForm";
 import symbol from "../../../assets/symbol.svg";
 import {  Outlet, useLocation  } from "react-router-dom";
-
+import { SearchInput } from "../SearchUsers/SearchInput";
 
 const AdminUsers = () => {
 
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearchTermChange = (value) => {
+    setSearchTerm(value);
+  };
 
   const [showModal, setShowModal] = useState(false);
   const [section, setSection] = useState('User');
@@ -56,12 +61,7 @@ const AdminUsers = () => {
           text={"Додати"}
           ariaLabel={"  Додати користувача"}
         ></Button>
-        <Input
-          type="text"
-          id="search"
-          name="search"
-          placeholder="Пошук користувача"
-        />
+       {/* <SearchInput onSearchTermChange={handleSearchTermChange} /> */}
       </UsersContainer>
       <SectionUser>
       <Link to="allusers" activeclassname={section === 'User' ? 'active' : ''} onClick={() =>  setSection('User')}>
@@ -73,7 +73,7 @@ const AdminUsers = () => {
 
      
       </SectionUser>
-      <Outlet/>
+      <Outlet searchTerm={searchTerm}/>
       
      
 

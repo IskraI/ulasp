@@ -1,8 +1,10 @@
 import { useGetUsersListQuery } from "../../../redux/dataUsersSlice";
 import UserTable from "../UsersTable/UsersTable";
+import { SearchUsers } from "../SearchUsers/SearchUsers";
 
-const ListEditors = () => {
+const ListEditors = ({searchTerm}) => {
     const { data, isLoading } = useGetUsersListQuery(true);
+    console.log('data', data)
   const visibleColumns = [
     { key: "firstName", label: "Ім’я", type: "nameLinkEditor" },
     { key: "login", label: "Логін", type: "string" },
@@ -13,9 +15,13 @@ const ListEditors = () => {
   return (
     <>
     
-       {!isLoading && (
-        <UserTable users={data.result} visibleColumns={visibleColumns} />
-      )} 
+    {!isLoading && (<SearchUsers
+    searchTerm={searchTerm}
+        dataUsers={data.result}
+        isLoading={isLoading}
+          visibleColumns={visibleColumns}
+          pageType={"list"}
+      />)}
           {!isLoading && data.result.length === 0&&(
        <p> Користувачів ще не має</p> 
       )}

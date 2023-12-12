@@ -1,9 +1,9 @@
 import { useGetUsersListQuery } from "../../../redux/dataUsersSlice";
 import UserTable from "../UsersTable/UsersTable";
-
+import { SearchUsers } from "../SearchUsers/SearchUsers";
 import id from "date-fns/locale/id/index.js";
 
-const ListUsers = () => {
+const ListUsers = ({searchTerm}) => {
   const { data, isLoading } = useGetUsersListQuery();
 
 
@@ -20,9 +20,17 @@ const ListUsers = () => {
 
   return (
     <>
-      {!isLoading && (
+      {!isLoading && (<SearchUsers
+        pageType={"list"}
+      searchTerm={searchTerm}
+        dataUsers={data.allUsers}
+        isLoading={isLoading}
+          visibleColumns={visibleColumns}
+      />  )}
+
+      {/* {!isLoading && (
         <UserTable users={data.allUsers} visibleColumns={visibleColumns} />
-      )}
+      )} */}
 
 {!isLoading && data.allUsers.length === 0&&(
        <p> Користувачів ще не має</p> 

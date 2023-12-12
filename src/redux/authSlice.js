@@ -25,6 +25,7 @@ export const authApi = createApi({
         body: { login, password },
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        dispatch(resetUser());
         dispatch(setAdmin((await queryFulfilled).data));
       },
       invalidatesTags: ["auth"],
@@ -35,10 +36,11 @@ export const authApi = createApi({
         url: "/admin/current",
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        // console.log("await queryFulfilled).data", (await queryFulfilled).data);
+        console.log("await queryFulfilled).data", (await queryFulfilled).data);
         dispatch(setCurrent((await queryFulfilled).data));
       },
       async onQueryError(arg, { dispatch, error, queryFulfilled }) {
+        console.log('error', error)
         dispatch(resetUser()); // Сбросить состояние до значения по умолчанию
       },
     }),
@@ -48,6 +50,7 @@ export const authApi = createApi({
         method: "POST",
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+    
         await queryFulfilled;
         dispatch(resetUser());
       },
