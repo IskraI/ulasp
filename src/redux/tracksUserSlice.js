@@ -4,7 +4,7 @@ import { BASE_URL } from "../constants/constants";
 
 
 export const tracksUserApi = createApi({
-  reducerPath: "tracksApi",
+  reducerPath: "tracksUserApi",
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
