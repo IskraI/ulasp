@@ -7,8 +7,9 @@ import ControlMediateca from "../ControlMediateca/ControlMediaTeca";
 import symbol from "../../../assets/symbol.svg";
 import { Modal } from "../../../components/Modal/Modal";
 import ModalForm from "../../../components/EditorComponents/ControlMediateca/ModalForm";
-import { useCreateGenreMutation } from "../../../redux/genresSlice";
 import { ErrorNotFound } from "../../Errors/Errors";
+import { useCreateShopMutation } from "../../../redux/shopsSlice";
+import { Loader } from "../../Loader/Loader";
 
 import { useState } from "react";
 
@@ -22,17 +23,19 @@ const Shops = ({
 }) => {
   const [showModal, setShowModal] = useState(false);
 
-  //   const [createGenre, { isSuccess, isLoading, isError }] =
-  //     useCreateGenreMutation();
+  const [
+    createShop,
+    { isSuccess: isSuccessCreateShop, isLoading, isError: isErrorCreateShop },
+  ] = useCreateShopMutation();
 
-  //   const handleSubmitGenre = async (data) => {
-  //     try {
-  //       closeModal();
-  //       await createGenre(data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
+  const handleSubmitShop = async (data) => {
+    try {
+      closeModal();
+      await createShop(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const closeModal = () => {
     return setShowModal(false);
@@ -41,7 +44,6 @@ const Shops = ({
   const toogleModal = () => {
     return setShowModal((prevsetShowModal) => !showModal);
   };
-
   return (
     <>
       <ControlMediateca
@@ -52,18 +54,20 @@ const Shops = ({
         disabled={isError}
       />
       {isError && <ErrorNotFound />}
-      {!shops && !isError && <div>Заклади ще не додані</div>}
+      {isFetching && !isSuccess && !isError && <Loader />}
+      {!isError && isSuccess && !shops && <div>Заклади ще не додані</div>}
+
       {!isError && isSuccess && (
         <ShopsWrapper>
           <ShopsList>
-            {/*  {shops.map(({ _id, genre, genreAvatarURL }) => (
-            <ShopListItem
-              key={_id}
-              id={_id}
-              title={genre}
-              icon={genreAvatarURL}
-            />
-          ))}*/}
+            {shops.map(({ _id, shopCategoryName, shopAvatarURL }) => (
+              <ShopListItem
+                key={_id}
+                id={_id}
+                title={shopCategoryName}
+                icon={shopAvatarURL}
+              />
+            ))}
           </ShopsList>
           <MediaNavigationLink link={"shops"} display={display} />
         </ShopsWrapper>
@@ -72,8 +76,8 @@ const Shops = ({
       {showModal && (
         <Modal width={"814px"} onClose={toogleModal}>
           <ModalForm
-            // onSubmit={handleSubmitGenre}
-            idInputFirst={"shop"}
+            onSubmit={handleSubmitShop}
+            idInputFirst={"shopCategoryName"}
             idInputSecond={"type"}
             placeholderFirst={"Назва закладу*"}
           />

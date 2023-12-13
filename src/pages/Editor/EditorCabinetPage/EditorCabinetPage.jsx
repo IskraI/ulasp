@@ -41,6 +41,7 @@ const EditorCabinetPage = () => {
     isLoading: isLoadingAllTracks,
     error: errorLoadingAllTracks,
     isFetching: isFetchingAllTracks,
+    isSuccess: isSuccessAllTracks,
   } = useGetAllTracksQuery();
 
   return (
@@ -67,6 +68,7 @@ const EditorCabinetPage = () => {
           isLoading={isLoadingAllTracks}
           error={errorLoadingAllTracks}
           isFetching={isFetchingAllTracks}
+          isSuccess={isSuccessAllTracks}
           rows={RowsTitle}
         />
       )}

@@ -22,15 +22,29 @@ export const tracksApi = createApi({
           limit && `limit=${limit}`
         }`,
       }),
-      provideTags: ["Tracks"],
+      // provideTags: ["Tracks"],
+      providesTags: (_result, _err, id) => [{ type: "Tracks", id }],
+    }),
+    uploadTrack: builder.mutation({
+      query: (body) => ({
+        url: "/editor/tracks/upload",
+        method: "POST",
+        body,
+        formData: true,
+      }),
+      invalidatesTags: ["Tracks"],
     }),
     getAllTracksforUser: builder.query({
       query: () => ({
         url: "/user/tracks/latestTracks",
-        provideTags: ["Tracks"],
       }),
+      provideTags: ["Tracks"],
     }),
   }),
 });
 
-export const { useGetAllTracksQuery, useGetAllTracksforUserQuery } = tracksApi;
+export const {
+  useGetAllTracksQuery,
+  useGetAllTracksforUserQuery,
+  useUploadTrackMutation,
+} = tracksApi;

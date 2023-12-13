@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   TableCell,
   RowTitle,
@@ -11,7 +12,15 @@ import {
 } from "../TracksTable/TracksTable.styled";
 import { BASE_URL, ERROR_NOT_FOUND } from "../../../constants/constants";
 
-const TracksTable = ({ rows, tracks, isLoading, error, display, title }) => {
+const TracksTable = ({
+  rows,
+  tracks,
+  isLoading,
+  isSuccess,
+  error,
+  display,
+  title,
+}) => {
   const sToStr = (sec) => {
     sec = Math.round(sec);
     let m = Math.trunc(sec / 60) + "";
@@ -26,7 +35,7 @@ const TracksTable = ({ rows, tracks, isLoading, error, display, title }) => {
         <TracksNotFound>Музика ще не завантажена</TracksNotFound>
       )}
 
-      {tracks?.length !== 0 && !isLoading && !error && (
+      {isSuccess && !error && (
         <>
           <LatestTracks>{title}</LatestTracks>
           <TableStyle>

@@ -16,7 +16,8 @@ const RowsTitle = [
 const TracksPage = () => {
   const { playlistId } = useParams();
 
-  const { data, isFetching, error } = useGetPlaylistByIdQuery(playlistId);
+  const { data, isFetching, isSuccess, error } =
+    useGetPlaylistByIdQuery(playlistId);
 
   if (!isFetching) {
     console.log(data);
@@ -24,12 +25,13 @@ const TracksPage = () => {
 
   return (
     <>
-      {!isFetching && !error && (
+      {isSuccess && !error && (
         <TracksTable
           title={` Музика плейлисту "${data.playListName}"`}
           tracks={data.trackList}
           error={error}
           isFetching={isFetching}
+          isSuccess={isSuccess}
           display="none"
           rows={RowsTitle}
         />

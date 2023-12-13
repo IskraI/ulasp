@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import TracksTable from "../TracksTable/TracksTable";
 
 import ControlMediateca from "../ControlMediateca/ControlMediaTeca";
@@ -6,13 +7,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 const RowsTitle = ["", "", "", "", ""];
 
-const NewSongs = ({ data: allTracks, isFetching, error }) => {
+const NewSongs = ({ data: allTracks, isFetching, isSuccess, error }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
   return (
     <>
-      {!isFetching && !error && (
+      {isSuccess && !error && (
         <>
           <ControlMediateca
             title={"Нові пісні"}
@@ -27,6 +28,7 @@ const NewSongs = ({ data: allTracks, isFetching, error }) => {
             tracks={allTracks}
             error={error}
             isFetching={isFetching}
+            isSuccess={isSuccess}
             display="none"
             rows={RowsTitle}
           />

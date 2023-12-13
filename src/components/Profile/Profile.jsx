@@ -3,19 +3,17 @@ import {
   ProfileAvatar,
   ProfileAvatarWrapper,
 } from "./Profile.styled";
-// import { useState, useEffect } from 'react';
 import { getUserState } from "../../redux/userSelectors";
 import { useSelector } from "react-redux";
 
 import { useUpdateUserAvatarMutation } from "../../redux/authSlice/";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import FileUpload from "../FIleUpload/FIleUpload";
 
 const BASE_URL = `http://localhost:8000`;
 
 export const Profile = () => {
   const user = useSelector(getUserState);
-
 
   const { firstName, lastName, fatherName, avatarURL } = user;
 
@@ -62,20 +60,16 @@ export const Profile = () => {
     }
   };
 
-  const defaultAvatarSrc = "../avatar.jpg";
-  const avatarSrc = avatarURL
-      ?  `${BASE_URL}/${avatarURL}`
-      : defaultAvatarSrc;
- 
+  const defaultAvatarSrc = "../src/assets/avatar.jpg";
+
+  const avatarSrc = avatarURL ? `${BASE_URL}/${avatarURL}` : defaultAvatarSrc;
+
   return (
     <>
-
       {/* <form onSubmit={handleFormSubmit}> */}
       <form>
         <ProfileAvatarWrapper>
           <FileUpload
-            selectedImage={""}
-            setSelectedImage={setSelectedImage}
             accept="image/*"
             change={handleChooseIcon}
             saveChanges={handleFormSubmit}
@@ -96,7 +90,6 @@ export const Profile = () => {
         </button> */}
       </form>
 
-
       {/* <input
         type="file"
         accept="image/*"
@@ -112,9 +105,9 @@ export const Profile = () => {
       </span> */}
 
       <UserName>
-      {lastName&&`${lastName}${" "}`}
-        {firstName&&`${firstName.slice(0, 1)}${"."}`}
-        {fatherName&&fatherName.slice(0, 1)}
+        {lastName && `${lastName}${" "}`}
+        {firstName && `${firstName.slice(0, 1)}${"."}`}
+        {fatherName && fatherName.slice(0, 1)}
       </UserName>
     </>
   );

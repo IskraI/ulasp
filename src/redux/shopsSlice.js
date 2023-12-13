@@ -16,10 +16,29 @@ export const shopsApi = createApi({
   }),
   endpoints: (builder) => ({
     getAllShops: builder.query({
-      query: () => "/editor/shops/all",
+      query: (page = "", limit = "") => ({
+        url: `/editor/shops/all?${page && `page=${page}`} & ${
+          limit && `limit=${limit}`
+        }`,
+      }),
       providesTags: ["Shops"],
+    }),
+    createShop: builder.mutation({
+      query: (body) => ({
+        url: "/editor/shops/create",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Shops"],
+    }),
+    deleteShop: builder.mutation({
+      query: (id) => ({
+        url: `/editor/shops/delete/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Shops"],
     }),
   }),
 });
 
-export const { useGetAllShopsQuery } = shopsApi;
+export const { useGetAllShopsQuery, useCreateShopMutation, useDeleteShopMutation } = shopsApi;

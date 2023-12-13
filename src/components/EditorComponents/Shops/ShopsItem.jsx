@@ -1,6 +1,6 @@
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
-import { useDeleteGenreMutation } from "../../../redux/genresSlice";
+import { useDeleteShopMutation } from "../../../redux/shopsSlice";
 import { useLocation } from "react-router-dom";
 
 import {
@@ -15,9 +15,9 @@ import { Link } from "react-router-dom";
 
 const ShopListItem = ({ id, title, icon }) => {
   const location = useLocation();
-  const [deleteGenre, { isLoading }] = useDeleteGenreMutation();
+  const [deleteShop, { isLoading }] = useDeleteShopMutation();
   const deleteMediaItem = () => {
-    deleteGenre(id);
+    deleteShop(id);
   };
   return (
     <>

@@ -39,10 +39,10 @@ const MediaLibraryPage = () => {
   } = useGetAllTracksQuery(`?&limit=${9}`);
 
   const fetching =
-    !isFetchingAllGenre &&
-    !isFetchingLatestPlaylist &&
-    !isFetchingNewSongs &&
-    !isFetchingShops &&
+    isFetchingAllGenre &&
+    isFetchingLatestPlaylist &&
+    isFetchingNewSongs &&
+    isFetchingShops &&
     !isErrorAllGenre &&
     !isErrorLatestPlaylist &&
     !isErrorNewSongs &&
@@ -86,6 +86,7 @@ const MediaLibraryPage = () => {
             data={shops}
             isFetching={isFetchingShops}
             isError={isErrorShops}
+            isSuccess={isSuccessShops}
           />
 
           <LatestPlaylists
@@ -100,6 +101,7 @@ const MediaLibraryPage = () => {
             data={allTracks}
             isFetching={isFetchingNewSongs}
             error={isErrorNewSongs}
+            isSuccess={isSuccesLatestNewSongs}
           />
         </>
       )}
