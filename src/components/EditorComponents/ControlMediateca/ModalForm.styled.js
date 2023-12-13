@@ -4,6 +4,10 @@ import { colors } from "../../../styles/vars";
 export const FormControlModal = styled.form`
   display: flex;
   flex-direction: column;
+  margin-top: ${(props) => props.margintop};
+  margin-bottom: ${(props) => props.marginbottom};
+  margin-left: ${(props) => props.marginleft};
+  margin-right: ${(props) => props.marginright};
 `;
 
 export const InputControlModal = styled.input`

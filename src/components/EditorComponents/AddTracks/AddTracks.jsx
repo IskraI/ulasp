@@ -11,8 +11,11 @@ import { useState } from "react";
 
 import { Button } from "../../Button/Button";
 
+import { ButtonLabel } from "./AddTrack.styled";
+
 const AddTracks = ({ title, iconButton, textButton, onClick, disabled }) => {
-  const [uploadTrack, { isSuccess, isError }] = useUploadTrackMutation();
+  const [uploadTrack, { isSuccess, isError: isErrorUploadTrack, error }] =
+    useUploadTrackMutation();
   const [selectedTracks, setSelectedTracks] = useState([]);
 
   const {
@@ -40,32 +43,37 @@ const AddTracks = ({ title, iconButton, textButton, onClick, disabled }) => {
       return;
     }
 
-    try {
-      for (let track of selectedTracks) {
-        formData.append("trackURL", track);
-        await uploadTrack(formData)
-          .unwrap()
-          .then(() => {
-            formData.delete("trackURL");
-            console.log("Your profile has been updated", "success");
-          });
-      }
-    } catch (error) {
-      console.log("ERROR", error);
+    for (let track of selectedTracks) {
+      formData.append("trackURL", track);
+      await uploadTrack(formData)
+        .unwrap()
+        .then(() => {
+          console.log("Your profile has been updated", "success");
+        })
+        .catch((error) => console.log("ERROR 1", error))
+        .finally(() => formData.delete("trackURL"));
     }
   };
 
   return (
     <ControlWrapper>
-      <FormControlModal autoComplete="off">
+      <FormControlModal autoComplete="off" marginleft="auto">
+        <ButtonLabel htmlFor="tracks_input">
+          <svg width="24" height="24" style={{ marginRight: "8px" }}>
+            <use href={iconButton}></use>
+          </svg>
+          Музику
+        </ButtonLabel>
         <InputControlModal
           {...register("trackURL")}
+          id="tracks_input"
           type="file"
           multiple={true}
           accept="audio/*"
           onChange={handleChooseTracks}
+          style={{ display: "none" }}
         />
-        <Button
+        {/* <Button
           icon={iconButton}
           type="button"
           text={textButton}
@@ -76,7 +84,7 @@ const AddTracks = ({ title, iconButton, textButton, onClick, disabled }) => {
           onClick={handleSubmitTracks}
           disabled={selectedTracks.length === 0 ? true : false}
           marginleft="auto"
-        />
+        /> */}
       </FormControlModal>
     </ControlWrapper>
   );
