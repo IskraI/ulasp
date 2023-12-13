@@ -1,22 +1,23 @@
 /* eslint-disable react/prop-types */
 import { ControlWrapper } from "../MediaList/MediaList.styled";
 import { useUploadTrackMutation } from "../../../redux/tracksSlice";
+
 import {
-  FormControlModal,
-  InputControlModal,
-} from "../ControlMediateca/ModalForm.styled";
-
+  FormControlAddTrack,
+  InputControlAddTrack,
+  ButtonLabel,
+} from "./AddTrack.styled";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
-
-import { Button } from "../../Button/Button";
-
-import { ButtonLabel } from "./AddTrack.styled";
+import { useState, useEffect } from "react";
 
 const AddTracks = ({ title, iconButton, textButton, onClick, disabled }) => {
   const [uploadTrack, { isSuccess, isError: isErrorUploadTrack, error }] =
     useUploadTrackMutation();
   const [selectedTracks, setSelectedTracks] = useState([]);
+
+  useEffect(() => {
+    handleSubmitTracks();
+  }, [selectedTracks]);
 
   const {
     control,
@@ -24,7 +25,7 @@ const AddTracks = ({ title, iconButton, textButton, onClick, disabled }) => {
     handleSubmit,
     setError,
     clearErrors,
-    reset,
+    resetField,
     getValues,
     getFieldState,
     formState: { errors, isValid, dirtyFields },
@@ -37,6 +38,7 @@ const AddTracks = ({ title, iconButton, textButton, onClick, disabled }) => {
   };
 
   const handleSubmitTracks = async () => {
+    resetField("trackURL");
     const formData = new FormData();
 
     if (!selectedTracks) {
@@ -48,6 +50,7 @@ const AddTracks = ({ title, iconButton, textButton, onClick, disabled }) => {
       await uploadTrack(formData)
         .unwrap()
         .then(() => {
+          formData.delete("trackURL");
           console.log("Your profile has been updated", "success");
         })
         .catch((error) => console.log("ERROR 1", error))
@@ -57,35 +60,22 @@ const AddTracks = ({ title, iconButton, textButton, onClick, disabled }) => {
 
   return (
     <ControlWrapper>
-      <FormControlModal autoComplete="off" marginleft="auto">
+      <FormControlAddTrack autoComplete="off">
         <ButtonLabel htmlFor="tracks_input">
           <svg width="24" height="24" style={{ marginRight: "8px" }}>
             <use href={iconButton}></use>
           </svg>
           Музику
         </ButtonLabel>
-        <InputControlModal
+        <InputControlAddTrack
           {...register("trackURL")}
           id="tracks_input"
           type="file"
           multiple={true}
           accept="audio/*"
           onChange={handleChooseTracks}
-          style={{ display: "none" }}
         />
-        {/* <Button
-          icon={iconButton}
-          type="button"
-          text={textButton}
-          width="198px"
-          display="block"
-          fontsize="24px"
-          padding="8px"
-          onClick={handleSubmitTracks}
-          disabled={selectedTracks.length === 0 ? true : false}
-          marginleft="auto"
-        /> */}
-      </FormControlModal>
+      </FormControlAddTrack>
     </ControlWrapper>
   );
 };

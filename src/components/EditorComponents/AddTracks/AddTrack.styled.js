@@ -1,5 +1,24 @@
 import styled from "@emotion/styled";
 
+export const FormControlAddTrack = styled.form`
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+`;
+
+export const InputControlAddTrack = styled.input`
+  width: 649px;
+  height: 64px;
+  padding: 8px;
+  margin-top: 64px;
+  margin-bottom: 24px;
+  border-radius: 10px;
+  border: none;
+  font-size: 20px;
+  background-color: rgba(234, 234, 234, 0.32);
+  display: none;
+`;
+
 export const ButtonLabel = styled.label`
   display: flex;
   justify-content: center;
