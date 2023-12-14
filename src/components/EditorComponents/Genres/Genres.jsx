@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { GenresWrapper } from "./Genres.styled";
 import GenreListItem from "./GenresItem";
 import { MockPlayer } from "../TracksTable/TracksTable.styled";
@@ -49,7 +50,7 @@ const Genres = ({
         textButton={"Жанр"}
         onClick={toogleModal}
       />
-      {!isFetching && !error && !isLoadingCreateGenre && (
+      {!error && !isLoadingCreateGenre && (
         <GenresWrapper>
           <GenresList>
             {genres.map(({ _id, genre, genreAvatarURL }) => (

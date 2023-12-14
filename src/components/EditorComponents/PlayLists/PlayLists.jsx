@@ -11,8 +11,9 @@ import symbol from "../../../assets/symbol.svg";
 import { PlaylistWrapper, PlaylistList } from "./PlayLists.styled";
 import {
   useCreatePlaylistMutation,
-  useCreatePlaylistInGenreMutation,
+  // useCreatePlaylistInGenreMutation,
 } from "../../../redux/playlistsSlice";
+import { useCreatePlaylistInGenreMutation } from "../../../redux/genresSlice";
 
 import { useState } from "react";
 
@@ -26,16 +27,16 @@ const LatestPlaylists = ({
   genre,
   isFetching,
   error,
-  refetch,
 }) => {
   const [showModal, setShowModal] = useState(false);
 
-  const { id } = useParams();
+  const { genreId } = useParams();
 
   const [createPlaylist, { isSuccess, isLoading, isError }] =
     useCreatePlaylistMutation();
 
-  const [createPlaylistInGenre, result] = useCreatePlaylistInGenreMutation();
+  const [createPlaylistInGenre, { isSuccess: success }] =
+    useCreatePlaylistInGenreMutation();
 
   const handleSubmitPlaylist = async (data) => {
     try {
@@ -49,15 +50,11 @@ const LatestPlaylists = ({
   const handleSubmitInGenre = async (data) => {
     try {
       const formData = {
-        id,
+        genreId,
         ...data,
       };
-
-      console.log(formData);
-
       closeModal();
       await createPlaylistInGenre(formData);
-      // refetch();
     } catch (error) {
       console.log(error);
     }
@@ -81,7 +78,7 @@ const LatestPlaylists = ({
       {!isFetching && !error && !playlists.length && (
         <p>Плейлисти ще не додані</p>
       )}
-      {!isFetching && !error && playlists.length !== 0 && (
+      {!error && playlists.length !== 0 && (
         <PlaylistWrapper>
           <PlaylistList>
             {playlists.map(({ _id, playListName, playListAvatarURL }) => (
@@ -90,7 +87,7 @@ const LatestPlaylists = ({
                 id={_id}
                 title={playListName}
                 icon={playListAvatarURL}
-                refetch={ refetch}
+                genre={genre}
               />
             ))}
           </PlaylistList>

@@ -17,14 +17,18 @@ export const playlistsApi = createApi({
 
   endpoints: (builder) => ({
     getLatestPlaylists: builder.query({
-      query: () => ({
-        url: "/editor/playlist/latest",
+      query: (page = "", limit = "") => ({
+        url: `/editor/playlist/latest?${page && `page=${page}`} & ${
+          limit && `limit=${limit}`
+        }`,
       }),
-      providesTags: ["Playlists"],
+
+      providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
     }),
     getPlaylistById: builder.query({
       query: (id) => ({ url: `/editor/playlist/${id}` }),
-      providesTags: ["Playlists"],
+
+      providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
     }),
     createPlaylist: builder.mutation({
       query: (body) => ({
@@ -34,14 +38,7 @@ export const playlistsApi = createApi({
       }),
       invalidatesTags: ["Playlists"],
     }),
-    createPlaylistInGenre: builder.mutation({
-      query: ({ id, ...body }) => ({
-        url: `editor/genre/playlist/create/${id}`,
-        method: "POST",
-        body,
-      }),
-      invalidatesTags: ["Playlists"],
-    }),
+
     deletePlaylist: builder.mutation({
       query: (id) => ({
         url: `/editor/playlist/delete/${id}`,
@@ -63,6 +60,5 @@ export const {
   useGetLatestPlaylistsForUserQuery,
   useGetPlaylistByIdQuery,
   useCreatePlaylistMutation,
-  useCreatePlaylistInGenreMutation,
   useDeletePlaylistMutation,
 } = playlistsApi;

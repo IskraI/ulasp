@@ -8,6 +8,7 @@ export const colors = {
   bBgModal: "#7F99C0",
   bgHeaderColor: "#3E6DA3",
   inputGrayColor: "rgba(0, 0, 0, 0.4)",
+  errorColor: "#870505",
 };
 
 export const transition = {

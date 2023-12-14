@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 import { useDeleteGenreMutation } from "../../../redux/genresSlice";
@@ -10,12 +11,10 @@ import {
 } from "./MediaList.styled";
 
 const MediaListItem = ({ id, title, icon, deleteItem, isLoading }) => {
-// const MediaListItem = ({ id, title, icon }) => {
-  // const [deleteGenre, { isLoading }] = useDeleteGenreMutation();
   const deleteMediaItem = () => {
     deleteItem(id);
   };
-  
+
   return (
     <>
       <MediaItem>

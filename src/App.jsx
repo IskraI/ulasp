@@ -18,18 +18,21 @@ import Messages from "./components/AdminComponents/Messages/Messages";
 import MessagesUser from "./components/MessagesUser/MessagesUser";
 import MyPlaylistsUser from "./components/MyPlaylistsUser/MyPlaylistsUser";
 // import AdminUsers from "./components/AdminUsers/AdminUsers";
-import OnlineUsers from "./components/AdminComponents/OnlineUsers/OnlineUsers";
-import Analytics from "./components/AdminComponents/Analytics/Analytics";
-import CardUser from "./components/AdminComponents/CardUser/CardUser";
-import CardEditor from "./components/AdminComponents/CardEditor/CardEditor";
-import MediaLibrary from "./pages/Editor/MediaLibrary/MediaLibrary";
+
+import OnlineUsers from "./components/OnlineUsers/OnlineUsers";
+import Analytics from "./components/Analytics/Analytics";
+import CardUser from "./components/CardUser/CardUser";
+import CardEditor from "./components/CardEditor/CardEditor";
+import MediaLibraryPage from "./pages/Editor/MediaLibraryPage/MediaLibraryPage";
 import MediaLibraryForUser from "./pages/UserPage/MediaLibraryForUser/MediaLibraryForUser";
-import AllTracksEditor from "./pages/Editor/AllTracksEditor/AllTracksEditor";
-import AllGenres from "./pages/Editor/AllGenres/AllGenres";
-import NewPlaylists from "./pages/Editor/NewPlaylists/NewPlaylists";
-import NewTracks from "./pages/Editor/NewTracks/NewTracks";
-import Playlists from "./pages/Editor/Playlists/PlaylistsPageInGenre";
-import Tracks from "./pages/Editor/TracksPage/TracksPage";
+import AllTracksEditor from "./pages/Editor/AllTracksEditorPage/AllTracksEditorPage";
+import AllGenresPage from "./pages/Editor/AllGenresPage/AllGenresPage";
+import NewPlaylistsPage from "./pages/Editor/NewPlaylistsPage/NewPlaylistsPage";
+import NewTracksPage from "./pages/Editor/NewTracksPage/NewTracksPage";
+import PlaylistsPageInGenre from "./pages/Editor/PlaylistsPage/PlaylistsPageInGenre";
+import TracksPage from "./pages/Editor/TracksPage/TracksPage";
+import ShopsPage from "./pages/Editor/ShopsPage/ShopPage";
+
 import { useSelector } from "react-redux";
 import { useCurrentUserQuery } from "../src/redux/authSlice";
 import { useCurrentClientQuery } from "../src/redux/authClientSlice";
@@ -186,34 +189,36 @@ function App() {
                 <Route index element={<EditorCabinetPage />} />
                 <Route path="cabinet" element={<EditorCabinetPage />} />
 
-                <Route path="medialibrary" element={<MediaLibrary />} />
+                <Route path="medialibrary" element={<MediaLibraryPage />} />
                 <Route
                   path="medialibrary/genres"
-                  element={<AllGenres display={"none"} />}
+                  element={<AllGenresPage display={"none"} />}
+                />
+                <Route path="medialibrary/shops" element={<ShopsPage />} />
+                <Route
+                  path="medialibrary/genres/:genreId/playlists"
+                  element={<PlaylistsPageInGenre />}
                 />
                 <Route
-                  path="medialibrary/genres/:id/playlists"
-                  element={<Playlists />}
+                  path="medialibrary/genres/:genreId/playlists/:playlistId/tracks"
+                  element={<TracksPage />}
                 />
-                <Route
-                  path="medialibrary/genres/:id/playlists/:id/tracks"
-                  element={<Tracks />}
-                />
+
                 <Route
                   path="medialibrary/newplaylists"
-                  element={<NewPlaylists display={"none"} />}
+                  element={<NewPlaylistsPage display={"none"} />}
                 />
                 <Route
-                  path="medialibrary/newplaylists/:id/tracks"
-                  element={<Tracks display={"none"} />}
+                  path="medialibrary/newplaylists/:playlistId/tracks"
+                  element={<TracksPage display={"none"} />}
                 />
                 <Route
                   path="medialibrary/newtracks"
                   element={<AllTracksEditor display={"none"} />}
                 />
 
-                <Route path="shops" element={<AllGenres />} />
-                <Route path="allmusic" element={<NewTracks />} />
+                <Route path="shops" element={<AllGenresPage />} />
+                <Route path="allmusic" element={<NewTracksPage />} />
                 <Route path="*" element={<ErrorPage />} />
               </Route>
             )}

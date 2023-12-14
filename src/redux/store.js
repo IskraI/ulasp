@@ -4,6 +4,11 @@ import { userReducer } from "./userSlice";
 import { authClientApi } from "./authClientSlice";
 import { dataUsersApi } from "./dataUsersSlice";
 import { statisticApi } from "./statisticSlice";
+import storage from "redux-persist/lib/storage";
+import { tracksApi } from "./tracksSlice";
+import { genresApi } from "./genresSlice";
+import { playlistsApi } from "./playlistsSlice";
+import { shopsApi } from "./shopsSlice";
 
 import {
   persistStore,
@@ -15,6 +20,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+
 import storage from "redux-persist/lib/storage";
 import { tracksApi } from "./tracksSlice";
 import { genresApi } from "./genresSlice";
@@ -23,10 +29,11 @@ import { tracksUserApi } from "./tracksUserSlice";
 import { genresUserApi } from "./genersUserSlice";
 import { playlistsUserApi } from "./playlistsUserSlice";
 
+
 const persistConfig = {
   key: "user",
   storage,
-  whitelist: ["token","adminRole", "userRole", "editorRole", "isLoggedIn"],
+  whitelist: ["token", "adminRole", "userRole", "editorRole", "isLoggedIn"],
   // whitelist: ["token","adminRole", "userRole", "editorRole", "isLoggedIn"],
 };
 
@@ -40,6 +47,7 @@ export const store = configureStore({
     [tracksApi.reducerPath]: tracksApi.reducer,
     [genresApi.reducerPath]: genresApi.reducer,
     [playlistsApi.reducerPath]: playlistsApi.reducer,
+    [shopsApi.reducerPath]: shopsApi.reducer,
     [tracksUserApi.reducerPath]: tracksUserApi.reducer,
     [genresUserApi.reducerPath]: genresUserApi.reducer,
     [playlistsUserApi.reducerPath]: playlistsUserApi.reducer,
@@ -58,7 +66,8 @@ export const store = configureStore({
       .concat(tracksApi.middleware)
       .concat(genresApi.middleware)
       .concat(playlistsApi.middleware)
-  .concat(tracksUserApi.middleware)
+      .concat(shopsApi.middleware)
+      .concat(tracksUserApi.middleware)
       .concat(genresUserApi.middleware)
       .concat(playlistsUserApi.middleware),
 });

@@ -2,17 +2,18 @@ import Genres from "../../../components/EditorComponents/Genres/Genres";
 import { useGetAllGenresQuery } from "../../../redux/genresSlice";
 import { Loader } from "../../../components/Loader/Loader";
 
-const AllGenres = () => {
+const AllGenresPage = () => {
   const {
     data: genres,
     isFetching: isFetchingAllGenre,
     error: isErrorAllGenre,
+    isSuccess,
   } = useGetAllGenresQuery();
 
   return (
     <>
       {isFetchingAllGenre && !isErrorAllGenre && <Loader />}
-      {!isFetchingAllGenre && !isErrorAllGenre && (
+      {isSuccess && !isErrorAllGenre && (
         <Genres
           displayPlayer={"flex"}
           display={"none"}
@@ -25,4 +26,4 @@ const AllGenres = () => {
   );
 };
 
-export default AllGenres;
+export default AllGenresPage;

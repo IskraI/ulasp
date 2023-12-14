@@ -16,6 +16,7 @@ export const Button = ({
   height,
   fontsize = "20px",
   display,
+  disabled,
 }) => {
   return (
     <CustomButton
@@ -30,6 +31,7 @@ export const Button = ({
       onClick={onClick}
       fontsize={fontsize}
       display={display}
+      disabled={disabled}
     >
       <svg width="24" height="24" style={{ display, marginRight: "8px" }}>
         <use href={icon}></use>

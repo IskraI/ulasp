@@ -1,31 +1,17 @@
-import { useRef, useState } from "react";
+/* eslint-disable react/prop-types */
+import { useRef } from "react";
 
 import { InputWrapper, LabelAdd } from "./FileUpload.styled";
 
-const FileUpload = ({
-  selectedImage,
-  setSelectedImage,
-  accept,
-  children,
-  change,
-  saveChanges,
-}) => {
+const FileUpload = ({ accept, children, change, saveChanges }) => {
   const ref = useRef();
+
+
 
   // console.log(ref);
 
-  return (
-    // <InputWrapper>
-    //   <input
-    //     type="file"
-    //     accept={accept}
-    //     style={{ display: "none" }}
-    //     ref={ref}
-    //     onChange={change}
-    //   />
 
-    //   {children}
-    // </InputWrapper>
+  return (
     <InputWrapper>
       <LabelAdd htmlFor="avatar_input">+</LabelAdd>
       <input

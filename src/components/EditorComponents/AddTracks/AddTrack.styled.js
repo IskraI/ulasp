@@ -1,15 +1,33 @@
 import styled from "@emotion/styled";
-import { colors } from "../../styles/vars";
 
-export const CustomButton = styled.button`
+export const FormControlAddTrack = styled.form`
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+`;
+
+export const InputControlAddTrack = styled.input`
+  width: 649px;
+  height: 64px;
+  padding: 8px;
+  margin-top: 64px;
+  margin-bottom: 24px;
+  border-radius: 10px;
+  border: none;
+  font-size: 20px;
+  background-color: rgba(234, 234, 234, 0.32);
+  display: none;
+`;
+
+export const ButtonLabel = styled.label`
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
   border: 1px solid #17161c;
   font-family: inherit;
-  width: ${(props) => props.width};
-  font-size: ${(props) => props.fontsize};
+  width: 198px;
+  font-size: 24px;
   font-weight: 400;
   color: #17161c;
   outline: none;
@@ -18,7 +36,8 @@ export const CustomButton = styled.button`
   margin-bottom: ${(props) => props.marginbottom};
   margin-left: ${(props) => props.marginleft};
   margin-right: ${(props) => props.marginright};
-  padding: ${(props) => props.padding};
+  padding: 8px;
+  cursor: pointer;
 
   &:hover,
   :focus {
