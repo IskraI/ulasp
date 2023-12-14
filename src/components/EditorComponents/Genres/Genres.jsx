@@ -10,6 +10,8 @@ import { Modal } from "../../../components/Modal/Modal";
 import ModalForm from "../../../components/EditorComponents/ControlMediateca/ModalForm";
 import { useCreateGenreMutation } from "../../../redux/genresSlice";
 
+import { useLocation, useNavigate } from "react-router-dom";
+
 import { useState } from "react";
 
 const Genres = ({
@@ -22,8 +24,17 @@ const Genres = ({
 }) => {
   const [showModal, setShowModal] = useState(false);
 
-  const [createGenre, { isSuccess, isLoading, isError }] =
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  console.log(location);
+
+  const [createGenre, { isSuccess: isSuccessCreateGenre, isLoading, isError }] =
     useCreateGenreMutation();
+
+  if ((location.pathname === "/editor/medialibrary") & isSuccessCreateGenre) {
+    navigate(`${location.pathname}${"/genres"}`, { replace: true });
+  }
 
   const handleSubmitGenre = async (data) => {
     try {
