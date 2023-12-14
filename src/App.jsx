@@ -19,10 +19,10 @@ import MessagesUser from "./components/MessagesUser/MessagesUser";
 import MyPlaylistsUser from "./components/MyPlaylistsUser/MyPlaylistsUser";
 // import AdminUsers from "./components/AdminUsers/AdminUsers";
 
-import OnlineUsers from "./components/OnlineUsers/OnlineUsers";
-import Analytics from "./components/Analytics/Analytics";
-import CardUser from "./components/CardUser/CardUser";
-import CardEditor from "./components/CardEditor/CardEditor";
+import OnlineUsers from "./components/AdminComponents/OnlineUsers/OnlineUsers";
+import Analytics from "./components/AdminComponents/Analytics/Analytics";
+import CardUser from "./components/AdminComponents/CardUser/CardUser";
+import CardEditor from "./components/AdminComponents/CardEditor/CardEditor";
 import MediaLibraryPage from "./pages/Editor/MediaLibraryPage/MediaLibraryPage";
 import MediaLibraryForUser from "./pages/UserPage/MediaLibraryForUser/MediaLibraryForUser";
 import AllTracksEditor from "./pages/Editor/AllTracksEditorPage/AllTracksEditorPage";
