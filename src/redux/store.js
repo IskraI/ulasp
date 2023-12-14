@@ -10,6 +10,10 @@ import { genresApi } from "./genresSlice";
 import { playlistsApi } from "./playlistsSlice";
 import { shopsApi } from "./shopsSlice";
 
+import { tracksUserApi } from "./tracksUserSlice";
+import { genresUserApi } from "./genersUserSlice";
+import { playlistsUserApi } from "./playlistsUserSlice";
+
 import {
   persistStore,
   persistReducer,
@@ -21,13 +25,7 @@ import {
   REGISTER,
 } from "redux-persist";
 
-import storage from "redux-persist/lib/storage";
-import { tracksApi } from "./tracksSlice";
-import { genresApi } from "./genresSlice";
-import { playlistsApi } from "./playlistsSlice";
-import { tracksUserApi } from "./tracksUserSlice";
-import { genresUserApi } from "./genersUserSlice";
-import { playlistsUserApi } from "./playlistsUserSlice";
+
 
 
 const persistConfig = {
