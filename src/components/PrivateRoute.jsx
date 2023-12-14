@@ -12,7 +12,7 @@ const PrivateRoute = ({ component: Component, redirectTo = "/adminlogin" }) => {
     skip: !user.token || !user.isLoggedIn,
   });
 
-
+  console.log("зашли в приват",);
   if (isLoading) return <>Loading....</>;
   console.log("user.isLoading", isLoading);
   if (!user.isLoggedIn || !user.token) {
@@ -20,7 +20,7 @@ const PrivateRoute = ({ component: Component, redirectTo = "/adminlogin" }) => {
     return <Navigate to={redirectTo} />;
   }
 
-  if (user.isLoggedIn && data&&(user.adminRole||user.editorRole) ) return <Component />;
+  if (user.isLoggedIn && (user.adminRole||user.editorRole) ) return <Component />;
 
   
   // if (isError) {

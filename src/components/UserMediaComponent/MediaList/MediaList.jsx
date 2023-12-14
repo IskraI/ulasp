@@ -14,7 +14,7 @@ const MediaListItem = ({ title, icon }) => {
       <MediaItem>
         <MediaImg src={BASE_URL + "/" + icon} alt={title} />
         <MediaItemText>{title}</MediaItemText>
-        <IconsWrapper>
+        {/* <IconsWrapper>
           <svg width="24" height="24">
             <use href={`${symbol}#icon-pen`}></use>
           </svg>
@@ -22,7 +22,7 @@ const MediaListItem = ({ title, icon }) => {
           <svg width="24" height="24">
             <use href={`${symbol}#icon-del-basket`}></use>
           </svg>
-        </IconsWrapper>
+        </IconsWrapper> */}
       </MediaItem>
     </>
   );

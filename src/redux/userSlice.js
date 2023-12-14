@@ -30,12 +30,23 @@ export const userSlice = createSlice({
             [`${role}Role`]: action.payload[role][`${role}Role`],
           };
         }
+
+        return state;
+      },
+    },
+    setAvatar: {
+      reducer(state, action) {
+          state = {
+          ...state,
+          avatarURL: action.payload.avatarURL,
+        };
+
         return state;
       },
     },
     setUser: {
       reducer(state, action) {
-        console.log("action.payload setUser", action.payload);
+        // console.log("action.payload setUser", action.payload);
         state = {
           ...state,
           ...action.payload.user,
@@ -43,7 +54,7 @@ export const userSlice = createSlice({
           isLoggedIn: true,
           userRole: true,
           adminRole: false,
-  editorRole: false,
+          editorRole: false,
         };
         return state;
       },
@@ -52,7 +63,7 @@ export const userSlice = createSlice({
       reducer(state, action) {
         if (action.payload.admin || action.payload.editor) {
           const role = action.payload.admin ? "admin" : "editor";
-          console.log('action.payload.admin', action.payload.admin)
+          // console.log("action.payload.admin", action.payload.admin);
           state = {
             ...state,
             ...action.payload[role],
@@ -60,25 +71,21 @@ export const userSlice = createSlice({
             isLoggedIn: true,
           };
         } else {
-          console.log('action.payload.user', action.payload.user)
+          console.log("action.payload.user", action.payload.user);
           state = {
             ...state,
             ...action.payload.user,
             // token: action.payload.accessToken,
             avatarURL: action.payload.user.avatarURL,
             isLoggedIn: true,
-            userRole: true,
-            adminRole: false,
-            editorRole: false,
+            // userRole: true,
+            // adminRole: false,
+            // editorRole: false,
           };
-
-          
         }
         return state;
       },
     },
-
-
 
     resetUser: {
       reducer(state) {
@@ -89,6 +96,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUser, resetUser, setAdmin, setCurrent } = userSlice.actions;
+export const { setUser, resetUser, setAdmin, setCurrent, setAvatar } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;

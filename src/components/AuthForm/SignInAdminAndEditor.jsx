@@ -39,7 +39,7 @@ export const SignInAdminAndEditor = () => {
       .unwrap()
       .then((res) => {
         console.log("res", res);
-        res.admin && navigate("/admin");
+        res.admin && navigate("/admin/cabinet");
         res.editor && navigate("/editor/cabinet"); //добавил /cabinet
         reset();
       })
@@ -94,6 +94,7 @@ export const SignInAdminAndEditor = () => {
             type="password"
             name="password"
             placeholder="№"
+            autoComplete="none"
             {...register("password")}
             className={
               errors.password

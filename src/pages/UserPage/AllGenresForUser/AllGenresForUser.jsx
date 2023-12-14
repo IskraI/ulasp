@@ -1,6 +1,7 @@
-import Genres from "../../../components/EditorComponents/Genres/Genres";
+import Genres from "../../../components/UserMediaComponent/Genres/Genres";
 import { useGetAllGenresForUserQuery } from "../../../redux/genresSlice";
-
+import { Loader } from "../../../components/Loader/Loader";
+import TabNavigation from "../../../components/TabNavigation/TabNavigation";
 const AllGenresForUser = () => {
   const {
     data: genres,
@@ -9,13 +10,18 @@ const AllGenresForUser = () => {
   } = useGetAllGenresForUserQuery();
 
   return (
-    <>
-      <Genres
-        displayPlayer={"none"}
-        data={genres}
-        isFetching={isFetchingAllGenre}
-        error={isErrorAllGenre}
-      />
+      <>
+          <TabNavigation/> 
+          {isFetchingAllGenre && !isErrorAllGenre && <Loader />}
+          {!isFetchingAllGenre && !isErrorAllGenre && (
+              <Genres
+                  displayPlayer={"none"}
+                   display={"none"}
+                  data={genres}
+                  isFetching={isFetchingAllGenre}
+                  error={isErrorAllGenre}
+              />
+          )}
     </>
   );
 };

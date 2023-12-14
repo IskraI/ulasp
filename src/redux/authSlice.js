@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { resetUser, setUser, setAdmin, setCurrent } from "./userSlice";
-// import { setUserRole } from "./roleSlice";
+import { resetUser, setAvatar, setAdmin, setCurrent } from "./userSlice";
 
 const BASE_URL = `http://localhost:8000`;
 
@@ -13,7 +12,7 @@ export const authApi = createApi({
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }
-      // console.log("headers", headers);
+
       return headers;
     },
   }),
@@ -26,23 +25,22 @@ export const authApi = createApi({
         body: { login, password },
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        dispatch(resetUser());
         dispatch(setAdmin((await queryFulfilled).data));
       },
       invalidatesTags: ["auth"],
     }),
-  
-
 
     currentUser: builder.query({
       query: () => ({
         url: "/admin/current",
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        // console.log("await queryFulfilled).data", (await queryFulfilled).data);
+        console.log("await queryFulfilled).data", (await queryFulfilled).data);
         dispatch(setCurrent((await queryFulfilled).data));
       },
       async onQueryError(arg, { dispatch, error, queryFulfilled }) {
-        console.error("Query failed", error);
+        console.log('error', error)
         dispatch(resetUser()); // Сбросить состояние до значения по умолчанию
       },
     }),
@@ -52,6 +50,7 @@ export const authApi = createApi({
         method: "POST",
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+    
         await queryFulfilled;
         dispatch(resetUser());
       },
@@ -69,7 +68,7 @@ export const authApi = createApi({
     //   },
     //   invalidatesTags: ["auth"],
     // }),
-    updateUserAvatar: builder.mutation({
+    updateAdminAvatar: builder.mutation({
       query: (body) => ({
         url: "/admin/avatars",
         method: "PATCH",
@@ -77,20 +76,17 @@ export const authApi = createApi({
         formData: true,
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        console.log('await queryFulfilled).data', await queryFulfilled);
-        dispatch(setUser((await queryFulfilled).data));
+        dispatch(setAvatar((await queryFulfilled).data));
       },
       invalidatesTags: ["auth"],
     }),
-
   }),
 });
 
 export const {
   useSigninMutation,
-  
   useCurrentUserQuery,
   useLogoutMutation,
-  useUpdateUserMutation,
-  useUpdateUserAvatarMutation,
+  // useUpdateUserMutation,
+  useUpdateAdminAvatarMutation,
 } = authApi;

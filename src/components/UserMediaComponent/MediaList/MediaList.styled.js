@@ -24,8 +24,7 @@ export const MediaList = styled.ul`
 
 export const MediaItem = styled.li`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+    align-items: center;
   width: 310px;
 
   padding: 10px;
@@ -36,9 +35,12 @@ export const MediaItem = styled.li`
 
 export const MediaImg = styled.img`
   border-radius: 10px;
+  margin-right: 10px;
 `;
 
 export const MediaItemText = styled.p`
+ flex: 1;
+ text-align: center;
   font-size: 16px;
   line-height: 1.19;
   color: ${colors.mainFontColor};

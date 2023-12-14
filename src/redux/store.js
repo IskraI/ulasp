@@ -21,6 +21,15 @@ import {
   REGISTER,
 } from "redux-persist";
 
+import storage from "redux-persist/lib/storage";
+import { tracksApi } from "./tracksSlice";
+import { genresApi } from "./genresSlice";
+import { playlistsApi } from "./playlistsSlice";
+import { tracksUserApi } from "./tracksUserSlice";
+import { genresUserApi } from "./genersUserSlice";
+import { playlistsUserApi } from "./playlistsUserSlice";
+
+
 const persistConfig = {
   key: "user",
   storage,
@@ -39,6 +48,9 @@ export const store = configureStore({
     [genresApi.reducerPath]: genresApi.reducer,
     [playlistsApi.reducerPath]: playlistsApi.reducer,
     [shopsApi.reducerPath]: shopsApi.reducer,
+    [tracksUserApi.reducerPath]: tracksUserApi.reducer,
+    [genresUserApi.reducerPath]: genresUserApi.reducer,
+    [playlistsUserApi.reducerPath]: playlistsUserApi.reducer,
     user: persistReducer(persistConfig, userReducer),
   },
   middleware: (getDefaultMiddleware) =>
@@ -54,7 +66,10 @@ export const store = configureStore({
       .concat(tracksApi.middleware)
       .concat(genresApi.middleware)
       .concat(playlistsApi.middleware)
-      .concat(shopsApi.middleware),
+      .concat(shopsApi.middleware)
+      .concat(tracksUserApi.middleware)
+      .concat(genresUserApi.middleware)
+      .concat(playlistsUserApi.middleware),
 });
 
 export const persistor = persistStore(store);

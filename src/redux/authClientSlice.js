@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { resetUser, setUser, setCurrent } from "./userSlice";
+import { resetUser, setUser,setAvatar, setCurrent } from "./userSlice";
 
 const BASE_URL = `http://localhost:8000`;
 
@@ -30,6 +30,7 @@ export const authClientApi = createApi({
         }
       ),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        dispatch(resetUser());
         dispatch(setUser((await queryFulfilled).data));
       },
       invalidatesTags: ["authClient"],
@@ -42,6 +43,18 @@ export const authClientApi = createApi({
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         dispatch(setCurrent((await queryFulfilled).data));
       },
+    }),
+    updateClientAvatar: builder.mutation({
+      query: (body) => ({
+        url: "/user/avatars",
+        method: "PATCH",
+        body,
+        formData: true,
+      }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        dispatch(setAvatar((await queryFulfilled).data));
+      },
+      invalidatesTags: ["auth"],
     }),
 
     logoutClient: builder.mutation({
@@ -61,5 +74,6 @@ export const authClientApi = createApi({
 export const {
   useSignInClientMutation,
   useCurrentClientQuery,
+  useUpdateClientAvatarMutation,
   useLogoutClientMutation,
 } = authClientApi;
