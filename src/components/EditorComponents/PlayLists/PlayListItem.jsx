@@ -15,10 +15,14 @@ import {
 import { Link } from "react-router-dom";
 import { Modal } from "../../Modal/Modal";
 
-const PlaylistListItem = ({ id, title, icon, genre }) => {
+const PlaylistListItem = ({ id, title, icon, genre, placeListCardInfo }) => {
   const location = useLocation();
 
-  const [deletePlaylist, { data, isLoading }] = useDeletePlaylistMutation();
+  const mediaLibrary = `/editor/medialibrary`;
+
+  console.log(location.pathname === mediaLibrary);
+
+  const [deletePlaylist, { isLoading }] = useDeletePlaylistMutation();
   const [deletePlaylistInGenre, { isSuccess }] =
     useDeletePlaylistInGenreMutation();
 
@@ -34,8 +38,13 @@ const PlaylistListItem = ({ id, title, icon, genre }) => {
       <PlaylistItem>
         <Link
           key={id}
-          to={`${id}/tracks`}
+          to={
+            location.pathname === mediaLibrary
+              ? `playlists/${id}/tracks`
+              : `${id}/tracks`
+          }
           state={{ from: location }}
+          disabled={!placeListCardInfo ? true : false}
           style={{
             width: "100%",
             display: "flex",
@@ -45,6 +54,29 @@ const PlaylistListItem = ({ id, title, icon, genre }) => {
           <PlaylistImg src={BASE_URL + "/" + icon} alt={title} />
           <PlaylistItemText>{title}</PlaylistItemText>
         </Link>
+
+        {/* {!placeListCardInfo ? (
+          <Link
+            key={id}
+            // to={placeListCardInfo ? `${id}/tracks` : null}
+            to={`${id}/tracks`}
+            state={{ from: location }}
+            // disabled={!placeListCardInfo ? true : false}
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <PlaylistImg src={BASE_URL + "/" + icon} alt={title} />
+            <PlaylistItemText>{title}</PlaylistItemText>
+          </Link>
+        ) : (
+          <>
+            <PlaylistImg src={BASE_URL + "/" + icon} alt={title} />
+            <PlaylistItemText>{title}</PlaylistItemText>
+          </>
+        )} */}
         <PlaylistIconsWrapper>
           <svg width="24" height="24">
             <use href={`${symbol}#icon-pen`}></use>
@@ -53,7 +85,7 @@ const PlaylistListItem = ({ id, title, icon, genre }) => {
           <PlaylistDeleteButton
             type="button"
             onClick={deleteMediaItem}
-            // disabled={isLoading}
+            disabled={isLoading}
           >
             {isLoading ? (
               <svg width="24" height="24" stroke="#888889">

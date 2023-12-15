@@ -1,5 +1,6 @@
 import TracksTable from "../../../components/EditorComponents/TracksTable/TracksTable";
 import { useGetPlaylistByIdQuery } from "../../../redux/playlistsSlice";
+import PlaylistListItem from "../../../components/EditorComponents/PlayLists/PlayListItem";
 
 import { useParams } from "react-router-dom";
 
@@ -26,15 +27,21 @@ const TracksPage = () => {
   return (
     <>
       {isSuccess && !error && (
-        <TracksTable
-          title={` Музика плейлисту "${data.playListName}"`}
-          tracks={data.trackList}
-          error={error}
-          isFetching={isFetching}
-          isSuccess={isSuccess}
-          display="none"
-          rows={RowsTitle}
-        />
+        <>
+          <PlaylistListItem
+            icon={data.playListAvatarURL}
+            placeListCardInfo={true}
+          />
+          <TracksTable
+            title={` Музика плейлисту "${data.playListName}"`}
+            tracks={data.trackList}
+            error={error}
+            isFetching={isFetching}
+            isSuccess={isSuccess}
+            display="none"
+            rows={RowsTitle}
+          />
+        </>
       )}
     </>
   );

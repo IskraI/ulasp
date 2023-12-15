@@ -27,12 +27,15 @@ const Genres = ({
   const location = useLocation();
   const navigate = useNavigate();
 
-  console.log(location);
+  const [
+    createGenre,
+    { isSuccess: isSuccessCreateGenre, isError: isErrorCreateGenre },
+  ] = useCreateGenreMutation();
 
-  const [createGenre, { isSuccess: isSuccessCreateGenre, isLoading, isError }] =
-    useCreateGenreMutation();
-
-  if ((location.pathname === "/editor/medialibrary") & isSuccessCreateGenre) {
+  if (
+    (location.pathname === "/editor/medialibrary") & isSuccessCreateGenre &&
+    !isErrorCreateGenre
+  ) {
     navigate(`${location.pathname}${"/genres"}`, { replace: true });
   }
 
