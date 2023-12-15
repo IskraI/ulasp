@@ -21,7 +21,7 @@ const TracksPage = () => {
     useGetPlaylistByIdQuery(playlistId);
 
   if (!isFetching) {
-    console.log(data);
+    console.log(data.trackList);
   }
 
   return (
@@ -30,7 +30,9 @@ const TracksPage = () => {
         <>
           <PlaylistListItem
             icon={data.playListAvatarURL}
+            title={data.playListName}
             placeListCardInfo={true}
+            id={playlistId}
           />
           <TracksTable
             title={` Музика плейлисту "${data.playListName}"`}
