@@ -9,7 +9,7 @@ import { tracksApi } from "./tracksSlice";
 import { genresApi } from "./genresSlice";
 import { playlistsApi } from "./playlistsSlice";
 import { shopsApi } from "./shopsSlice";
-
+import { shopsUserApi } from "./shopsUserSlice";
 import { tracksUserApi } from "./tracksUserSlice";
 import { genresUserApi } from "./genersUserSlice";
 import { playlistsUserApi } from "./playlistsUserSlice";
@@ -49,6 +49,7 @@ export const store = configureStore({
     [tracksUserApi.reducerPath]: tracksUserApi.reducer,
     [genresUserApi.reducerPath]: genresUserApi.reducer,
     [playlistsUserApi.reducerPath]: playlistsUserApi.reducer,
+    [shopsUserApi.reducerPath]: shopsUserApi.reducer,
     user: persistReducer(persistConfig, userReducer),
   },
   middleware: (getDefaultMiddleware) =>
@@ -67,7 +68,8 @@ export const store = configureStore({
       .concat(shopsApi.middleware)
       .concat(tracksUserApi.middleware)
       .concat(genresUserApi.middleware)
-      .concat(playlistsUserApi.middleware),
+      .concat(playlistsUserApi.middleware)
+      .concat(shopsUserApi.middleware),
 });
 
 export const persistor = persistStore(store);
