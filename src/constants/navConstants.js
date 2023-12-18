@@ -116,5 +116,31 @@ export const propUserNav = [
     title: "Медіатека",
     navigation: "medialibrary",
     picture: `${symbol}#icon-rmediaTec`,
+     menu: [
+      {
+        id: "genres",
+        title: "Жанри",
+        navigation: "medialibrary/genres",
+        picture: `${symbol}#icon-music-album`,
+      },
+      {
+        id: "shops",
+        title: "Заклади",
+        navigation: "medialibrary/shops",
+        picture: `${symbol}#icon-build`,
+      },
+      {
+        id: "newPlaylists",
+        title: "Нові плейлисти",
+        navigation: "medialibrary/newplaylists",
+        picture: `${symbol}#icon-playlist`,
+      },
+      {
+        id: "newTracks",
+        title: "Нова музика",
+        navigation: "medialibrary/newtracks",
+        picture: `${symbol}#icon-song`,
+      },
+    ],
   },
 ];

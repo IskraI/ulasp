@@ -5,7 +5,7 @@ export const ControlWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 26px;
+  /* margin-top: 145px; */
   margin-bottom: 24px;
 `;
 
@@ -20,6 +20,8 @@ export const MediaList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
+ 
+
 `;
 
 export const MediaItem = styled.li`

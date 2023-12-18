@@ -7,6 +7,7 @@ const NewTracksUser = () => {
   const { data: allTracks, isFetching, error } = useGetAllTracksforUserQuery();
   return (
     <>
+      
       {!isFetching && !error && (
         <LatestTracks
           data={allTracks}
