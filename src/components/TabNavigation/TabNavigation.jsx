@@ -21,6 +21,7 @@ export const TabNavigation = () => {
     user: ' ',
     genres: 'Жанри',
     newplaylists: 'Нові Плейлисти',
+    shops: 'Заклади',
     // Добавьте другие сегменты и их соответствующие переводы
   };
 
