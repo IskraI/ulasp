@@ -15,8 +15,6 @@ export const NavigationLink = styled(NavLink)`
    color: ${colors.mainFontColor};
   font-size: 24px;
   font-weight: 500;
-  /* margin-top: 80px;
-  margin-left: 220px; */
   text-decoration: none;
  
 
@@ -24,7 +22,7 @@ export const NavigationLink = styled(NavLink)`
     text-decoration: underline;
   }
 
-  &.active-link {
+  &.active {
     text-decoration: underline;
   }
 `;
