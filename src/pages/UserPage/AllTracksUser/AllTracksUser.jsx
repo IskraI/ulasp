@@ -4,6 +4,7 @@ import { useGetAllTracksforUserQuery  } from "../../../redux/tracksUserSlice";
 import { BtnSort } from "./AllTracksUser.styled";
 import symbol from "../../../assets/symbol.svg";
 import { useState } from "react";
+import NavMusic from "../../../components/UserMediaComponent/NavMusic/NavMusic"
 
 
 
@@ -54,7 +55,8 @@ const AllTracksUser = () => {
     
        return (
       <>
-          <TabNavigation /> 
+           <TabNavigation /> 
+           <NavMusic/>
        <BtnSort onClick={handleSortClick}><svg width="24" height="24" >
                 <use href={`${symbol}#icon-sort`}></use>
               </svg></BtnSort>   

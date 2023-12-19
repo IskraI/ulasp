@@ -21,10 +21,10 @@ const LatestPlaylists = ({
     <>
       {!isFetching && !error && (
         <>
-          <ControlWrapper>
-            <TitleWrapper>Нові плейлисти</TitleWrapper>
+          {/* <ControlWrapper> */}
+            {/* <TitleWrapper>Нові плейлисти</TitleWrapper> */}
 
-                </ControlWrapper>
+                {/* </ControlWrapper> */}
           <MediaList>
             {playlists.map(({ _id, playListName, playListAvatarURL }) => (
               <PlayListItem
