@@ -73,7 +73,7 @@ const Shops = ({
           <MediaNavigationLink link={"shops"} display={display} />
         </ShopsWrapper>
       )}
-      <Player display={displayPlayer} />
+      {/* <Player display={displayPlayer} /> */}
       {/* {showModal && (
         <Modal width={"814px"} onClose={toogleModal}>
           <ModalForm
