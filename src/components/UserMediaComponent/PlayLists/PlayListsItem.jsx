@@ -1,7 +1,7 @@
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 import { useState } from "react";
-// import { updateFavoriteStatusApi } from "../../../redux/playlistsUserSlice";
+import { useUpdateFavoriteStatusApiMutation } from "../../../redux/playlistsUserSlice";
 import {
   MediaItem,
   IconsWrapper,
@@ -11,22 +11,17 @@ import {
 
 const PlayListItem = ({ playlistId, title, icon, isFavorite: initialFavorite }) => {
 // { _id, title, icon, isFavorite: initialFavorite }
-
+const [toggleFavorite] = useUpdateFavoriteStatusApiMutation();
     const [isFavorite, setIsFavorite] = useState(initialFavorite);
     
-    const handleToggleFavorite = () => {
-              setIsFavorite((prevIsFavorite) => !prevIsFavorite);
-    }
-  //   const handleToggleFavorite = async () => {
-  //   try {
-  //     // Call the API to update the favorite status
-  //     await updateFavoriteStatusApi({playlistId, isFavorite: !isFavorite });
-  //     // Update the local state after a successful API call
-  //     setIsFavorite((prevIsFavorite) => !prevIsFavorite);
-  //   } catch (error) {
-  //     console.error('Error updating favorite status:', error);
-  //   }
-  // };
+    // const handleToggleFavorite = () => {
+    //           setIsFavorite((prevIsFavorite) => !prevIsFavorite);
+    // }
+    const handleToggleFavorite = (playlistId) => {
+      toggleFavorite(playlistId)
+     
+      };
+
 
   return (
     <>
@@ -37,9 +32,9 @@ const PlayListItem = ({ playlistId, title, icon, isFavorite: initialFavorite }) 
           <svg
             width="24"
             height="24"
-            fill={isFavorite ? "#17161C" : "none"}
+            fill={isFavorite ? "#17161C" : "#1dca57"}
             stroke="#17161C"
-            onClick={handleToggleFavorite}
+            onClick={()=>handleToggleFavorite(playlistId)}
             style={{ cursor: "pointer" }}
           >
             <use href={`${symbol}#icon-heart-empty`}></use>
