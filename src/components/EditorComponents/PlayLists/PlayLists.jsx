@@ -9,10 +9,7 @@ import { MockPlayer } from "../TracksTable/TracksTable.styled";
 import symbol from "../../../assets/symbol.svg";
 
 import { PlaylistWrapper, PlaylistList } from "./PlayLists.styled";
-import {
-  useCreatePlaylistMutation,
-  // useCreatePlaylistInGenreMutation,
-} from "../../../redux/playlistsSlice";
+import { useCreatePlaylistMutation } from "../../../redux/playlistsSlice";
 import { useCreatePlaylistInGenreMutation } from "../../../redux/genresSlice";
 
 import { useState } from "react";
@@ -83,6 +80,7 @@ const LatestPlaylists = ({
           <PlaylistList>
             {playlists.map(({ _id, playListName, playListAvatarURL }) => (
               <PlaylistListItem
+                countTracks={"1"}
                 key={_id}
                 id={_id}
                 title={playListName}

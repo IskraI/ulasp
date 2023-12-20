@@ -1,13 +1,16 @@
+/* eslint-disable react/prop-types */
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 import { useDeletePlaylistMutation } from "../../../redux/playlistsSlice";
 import { useDeletePlaylistInGenreMutation } from "../../../redux/genresSlice";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import {
   PlaylistItem,
   PlaylistImg,
+  PlaylistInfoWrapper,
   PlaylistItemText,
+  PlaylistCountTracks,
   PlaylistIconsWrapper,
   PlaylistDeleteButton,
 } from "./PlayLists.styled";
@@ -15,12 +18,40 @@ import {
 import { Link } from "react-router-dom";
 import { Modal } from "../../Modal/Modal";
 
-const PlaylistListItem = ({ id, title, icon, genre }) => {
+const PlaylistListItem = ({
+  id,
+  title,
+  icon,
+  genre,
+  placeListCardInfo,
+  countTracks,
+}) => {
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const [deletePlaylist, { data, isLoading }] = useDeletePlaylistMutation();
+  const mediaLibrary = `/editor/medialibrary`;
+  const newPlaylists = `/editor/medialibrary/newplaylists/${id}/tracks`;
+
+  console.log(countTracks);
+
+  const [
+    deletePlaylist,
+    {
+      isLoading,
+      isSuccess: isSuccessDeletePlaylist,
+      isError: isErrorDeletePlaylist,
+    },
+  ] = useDeletePlaylistMutation();
   const [deletePlaylistInGenre, { isSuccess }] =
     useDeletePlaylistInGenreMutation();
+
+  if (
+    location.pathname === newPlaylists &&
+    isSuccessDeletePlaylist &&
+    !isErrorDeletePlaylist
+  ) {
+    navigate(`${mediaLibrary}/newplaylists`);
+  }
 
   const deleteMediaItem = () => {
     if (genre) {
@@ -32,10 +63,15 @@ const PlaylistListItem = ({ id, title, icon, genre }) => {
   return (
     <>
       <PlaylistItem>
-        <Link
+        {/* <Link
           key={id}
-          to={`${id}/tracks`}
+          to={
+            location.pathname === mediaLibrary
+              ? `newplaylists/${id}/tracks`
+              : `${id}/tracks`
+          }
           state={{ from: location }}
+          disabled={placeListCardInfo ? true : false}
           style={{
             width: "100%",
             display: "flex",
@@ -44,7 +80,38 @@ const PlaylistListItem = ({ id, title, icon, genre }) => {
         >
           <PlaylistImg src={BASE_URL + "/" + icon} alt={title} />
           <PlaylistItemText>{title}</PlaylistItemText>
-        </Link>
+        </Link> */}
+
+        {!placeListCardInfo ? (
+          <Link
+            key={id}
+            to={
+              location.pathname === mediaLibrary
+                ? `newplaylists/${id}/tracks`
+                : `${id}/tracks`
+            }
+            state={{ from: location }}
+            disabled={placeListCardInfo ? true : false}
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <PlaylistImg src={BASE_URL + "/" + icon} alt={title} />
+            <PlaylistItemText>{title}</PlaylistItemText>
+          </Link>
+        ) : (
+          <>
+            <PlaylistImg src={BASE_URL + "/" + icon} alt={title} />
+            <PlaylistInfoWrapper>
+              <PlaylistItemText>{title}</PlaylistItemText>
+              <PlaylistCountTracks>
+                {countTracks + `${" "}` + "пісень"}
+              </PlaylistCountTracks>
+            </PlaylistInfoWrapper>
+          </>
+        )}
         <PlaylistIconsWrapper>
           <svg width="24" height="24">
             <use href={`${symbol}#icon-pen`}></use>
@@ -53,7 +120,7 @@ const PlaylistListItem = ({ id, title, icon, genre }) => {
           <PlaylistDeleteButton
             type="button"
             onClick={deleteMediaItem}
-            // disabled={isLoading}
+            disabled={isLoading}
           >
             {isLoading ? (
               <svg width="24" height="24" stroke="#888889">
