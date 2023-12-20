@@ -48,14 +48,14 @@ export const playlistsUserApi = createApi({
       }),
       invalidatesTags: ["Playlists"],
     }),
-  //  updateFavoriteStatusApi: builder.mutation({
-  //     query: ({ playlistId, isFavorite }) => ({
-  //       url: `/user/playlist/favorites/${playlistId}`,
-  //          method: "PATCH",
-  //       body: { isFavorite },
-  //     }),
-  //     invalidatesTags: ["Playlists"],
-  //   }),
+   updateFavoriteStatusApi: builder.mutation({
+      query: ({ playlistId }) => ({
+        url: `/user/playlist/favorites/${playlistId}`,
+           method: "PATCH",
+      
+      }),
+      invalidatesTags: ["Playlists"],
+    }),
   }),
 });
 
