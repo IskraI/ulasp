@@ -9,7 +9,7 @@ import {
   MediaImg,
 } from "./MediaList.styled";
 
-const PlayListItem = ({  title, icon, isFavorite: initialFavorite }) => {
+const PlayListItem = ({ playlistId, title, icon, isFavorite: initialFavorite }) => {
 // { _id, title, icon, isFavorite: initialFavorite }
 
     const [isFavorite, setIsFavorite] = useState(initialFavorite);
@@ -17,16 +17,16 @@ const PlayListItem = ({  title, icon, isFavorite: initialFavorite }) => {
     const handleToggleFavorite = () => {
               setIsFavorite((prevIsFavorite) => !prevIsFavorite);
     }
-//     const handleToggleFavorite = async () => {
-//     try {
-//       // Call the API to update the favorite status
-//       await updateFavoriteStatusApi({ _id, isFavorite: !isFavorite });
-//       // Update the local state after a successful API call
-//       setIsFavorite((prevIsFavorite) => !prevIsFavorite);
-//     } catch (error) {
-//       console.error('Error updating favorite status:', error);
-//     }
-//   };
+  //   const handleToggleFavorite = async () => {
+  //   try {
+  //     // Call the API to update the favorite status
+  //     await updateFavoriteStatusApi({playlistId, isFavorite: !isFavorite });
+  //     // Update the local state after a successful API call
+  //     setIsFavorite((prevIsFavorite) => !prevIsFavorite);
+  //   } catch (error) {
+  //     console.error('Error updating favorite status:', error);
+  //   }
+  // };
 
   return (
     <>

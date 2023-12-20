@@ -8,12 +8,15 @@ export const ControlWrapper = styled.div`
   /* margin-top: 145px; */
   margin-bottom: 24px;
 `;
-
+export const TitleContainer = styled.div`
+  margin-bottom: 16px; 
+`;
 export const TitleWrapper = styled.p`
   font-size: 24px;
   line-height: 1.21;
   font-weight: 500;
   color: ${colors.mainFontColor};
+  
 `;
 
 export const MediaList = styled.ul`
@@ -44,6 +47,7 @@ export const MediaItemText = styled.p`
   font-size: 16px;
   line-height: 1.19;
   color: ${colors.mainFontColor};
+
 `;
 
 export const IconsWrapper = styled.div`

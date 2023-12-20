@@ -16,48 +16,53 @@ export const playlistsUserApi = createApi({
   tagTypes: ["Playlists"],
 
   endpoints: (builder) => ({
-    getLatestPlaylists: builder.query({
-      query: () => ({
-        url: "/editor/playlist/latest",
-      }),
-      providesTags: ["Playlists"],
-    }),
-    getPlaylistById: builder.query({
-      query: (id) => ({ url: `/editor/playlist/${id}` }),
-      providesTags: ["Playlists"],
-    }),
-    createPlaylist: builder.mutation({
+      createPlaylistForUser: builder.mutation({
       query: (body) => ({
-        url: "/editor/playlist/create",
+        url: "/user/playlist/create",
         method: "POST",
         body,
       }),
       invalidatesTags: ["Playlists"],
+      }),
+    
+     getPlaylistByIdForUser: builder.query({
+      query: (id) => ({ url: `/user/playlist/${id}` }),
+
+      providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
     }),
    
-    
-    getLatestPlaylistsForUser: builder.query({
-      query: () => ({
-        url: "/user/playlist/latest",
+        getLatestPlaylistsForUser: builder.query({
+       query: (page = "", limit = "") => ({
+        url: `/user/playlist/latest?${page && `page=${page}`} & ${
+          limit && `limit=${limit}`
+        }`,
       }),
-      provideTags: ["Playlists"],
+
+      providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
     }),
 
-//    updateFavoriteStatusApi: builder.mutation({
-//       query: ({ id, isFavorite }) => ({
-//         url: `/user/playlist/toggle-favorite/${id}`,
-//            method: "PATCH",
-//         body: { isFavorite },
-//       }),
-//       invalidatesTags: ["Playlists"],
-//     }),
+        deletePlaylistForUser: builder.mutation({
+      query: (id) => ({
+        url: `/editor/playlist/delete/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Playlists"],
+    }),
+  //  updateFavoriteStatusApi: builder.mutation({
+  //     query: ({ playlistId, isFavorite }) => ({
+  //       url: `/user/playlist/favorites/${playlistId}`,
+  //          method: "PATCH",
+  //       body: { isFavorite },
+  //     }),
+  //     invalidatesTags: ["Playlists"],
+  //   }),
   }),
 });
 
 export const {
-  useGetLatestPlaylistsQuery,
-  useGetLatestPlaylistsForUserQuery,
-  useGetPlaylistByIdQuery,
-    useCreatePlaylistMutation,
+   useGetLatestPlaylistsForUserQuery,
+  useGetPlaylistByIdForUserQuery,
+  useCreatePlaylistForUserMutation,
+    useDeletePlaylistForUserMutation,
    useUpdateFavoriteStatusApiMutation,
 } = playlistsUserApi;
