@@ -18,17 +18,15 @@ export const tracksUserApi = createApi({
   tagTypes: ["Tracks"],
 
   endpoints: (builder) => ({
-    getAllTracks: builder.query({
-      query: () => ({
-        url: "/editor/tracks/latestTracks",
-        provideTags: ["Tracks"],
-      }),
-    }),
+   
     getAllTracksforUser: builder.query({
-      query: () => ({
-        url: "/user/tracks/latestTracks",
-        provideTags: ["Tracks"],
+       query: (page = "", limit = "") => ({
+        url: `/user/tracks/latestTracks?${page && `page=${page}`} & ${
+          limit && `limit=${limit}`
+        }`,
       }),
+     
+      providesTags: (_result, _err, id) => [{ type: "Tracks", id }],
     }),
     // getTracksCount: builder.query({
     //   query: () => ({
@@ -38,4 +36,4 @@ export const tracksUserApi = createApi({
   }),
 });
 
-export const { useGetAllTracksQuery, useGetAllTracksforUserQuery} = tracksUserApi;
+export const {  useGetAllTracksforUserQuery} = tracksUserApi;

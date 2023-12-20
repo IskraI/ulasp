@@ -5,11 +5,13 @@ import {
   TitleWrapper,
   ControlWrapper,
   MediaList,
-} from "../MediaList/MediaList.styled";
+  TitleContainer
+} from "./MediaList.styled";
 // import { MockPlayer } from "../TracksTable/TracksTable.styled";
 import symbol from "../../../assets/symbol.svg";
 
 const LatestPlaylists = ({
+  title,
   displayPlayer,
   display,
   data: playlists,
@@ -19,11 +21,14 @@ const LatestPlaylists = ({
 
   return (
     <>
+       <TitleContainer>
+        <TitleWrapper>{title}</TitleWrapper>
+        </TitleContainer>
       {!isFetching && !error && (
         <>
           {/* <ControlWrapper> */}
             {/* <TitleWrapper>Нові плейлисти</TitleWrapper> */}
-
+            
                 {/* </ControlWrapper> */}
           <MediaList>
             {playlists.map(({ _id, playListName, playListAvatarURL }) => (
