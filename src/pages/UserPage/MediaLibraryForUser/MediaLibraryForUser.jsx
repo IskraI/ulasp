@@ -2,9 +2,9 @@ import Genres from "../../../components/UserMediaComponent/Genres/Genres";
 import LatestPlaylists from "../../../components/UserMediaComponent/PlayLists/PlayLists";
 import NewSongs from "../../../components/UserMediaComponent/NewSongs/NewSongs";
 import Shops from "../../../components/UserMediaComponent/Shops/Shops";
-import { useGetAllGenresForUserQuery } from "../../../redux/genresSlice";
-import { useGetLatestPlaylistsForUserQuery } from "../../../redux/playlistsSlice";
-import { useGetAllTracksforUserQuery } from "../../../redux/tracksSlice";
+import { useGetAllGenresForUserQuery } from "../../../redux/genersUserSlice";
+import { useGetLatestPlaylistsForUserQuery } from "../../../redux/playlistsUserSlice";
+import { useGetAllTracksforUserQuery } from "../../../redux/tracksUserSlice";
 import { useGetAllShopsUserQuery } from "../../../redux/shopsUserSlice";
 import { Loader } from "../../../components/Loader/Loader";
 
@@ -33,7 +33,7 @@ const MediaLibraryForUser = () => {
     isSuccess: isSuccesLatestNewSongs,
     isError: isErrorNewSongs,
   } = useGetAllTracksforUserQuery(`?&limit=${6}`);
-
+ 
   const fetching =
     isFetchingAllGenre &&
     isFetchingLatestPlaylist &&
@@ -85,7 +85,7 @@ const MediaLibraryForUser = () => {
             isFetching={isFetchingLatestPlaylist}
             error={isErrorLatestPlaylist}
                  />
-                           <NewSongs
+             <NewSongs
             data={allTracks}
             isFetching={isFetchingNewSongs}
             error={isErrorNewSongs}

@@ -4,7 +4,7 @@ import { useGetAllTracksforUserQuery } from "../../../redux/tracksUserSlice";
 
 
 const NewTracksUser = () => {
-  const { data: allTracks, isFetching, error } = useGetAllTracksforUserQuery();
+  const { data: allTracks, isFetching, error } = useGetAllTracksforUserQuery(`?&limit=${10}`);
   return (
     <>
       
