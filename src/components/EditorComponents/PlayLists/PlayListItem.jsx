@@ -8,7 +8,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import {
   PlaylistItem,
   PlaylistImg,
+  PlaylistInfoWrapper,
   PlaylistItemText,
+  PlaylistCountTracks,
   PlaylistIconsWrapper,
   PlaylistDeleteButton,
 } from "./PlayLists.styled";
@@ -16,14 +18,21 @@ import {
 import { Link } from "react-router-dom";
 import { Modal } from "../../Modal/Modal";
 
-const PlaylistListItem = ({ id, title, icon, genre, placeListCardInfo }) => {
+const PlaylistListItem = ({
+  id,
+  title,
+  icon,
+  genre,
+  placeListCardInfo,
+  countTracks,
+}) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  console.log(location.pathname);
-
   const mediaLibrary = `/editor/medialibrary`;
   const newPlaylists = `/editor/medialibrary/newplaylists/${id}/tracks`;
+
+  console.log(countTracks);
 
   const [
     deletePlaylist,
@@ -95,7 +104,12 @@ const PlaylistListItem = ({ id, title, icon, genre, placeListCardInfo }) => {
         ) : (
           <>
             <PlaylistImg src={BASE_URL + "/" + icon} alt={title} />
-            <PlaylistItemText>{title}</PlaylistItemText>
+            <PlaylistInfoWrapper>
+              <PlaylistItemText>{title}</PlaylistItemText>
+              <PlaylistCountTracks>
+                {countTracks + `${" "}` + "пісень"}
+              </PlaylistCountTracks>
+            </PlaylistInfoWrapper>
           </>
         )}
         <PlaylistIconsWrapper>

@@ -1,5 +1,6 @@
 import TracksTable from "../../../components/EditorComponents/TracksTable/TracksTable";
 import { useGetAllTracksQuery } from "../../../redux/tracksSlice";
+import Player from "../../../components/Player/Player";
 
 const RowsTitle = [
   "",
@@ -23,14 +24,17 @@ const AllTracksEditor = () => {
     <>
       {isFetchingAllTracks && <p>Загружаемся.....</p>}
       {!isFetchingAllTracks && !errorLoadingAllTracks && (
-        <TracksTable
-          title={" Остання додана музика"}
-          tracks={allTracks}
-          error={errorLoadingAllTracks}
-          isFetching={isFetchingAllTracks}
-          isSuccess={isSuccessAllTracks}
-          rows={RowsTitle}
-        />
+        <>
+          <TracksTable
+            title={" Остання додана музика"}
+            tracks={allTracks}
+            error={errorLoadingAllTracks}
+            isFetching={isFetchingAllTracks}
+            isSuccess={isSuccessAllTracks}
+            rows={RowsTitle}
+          />
+          <Player tracks={allTracks} />
+        </>
       )}
     </>
   );

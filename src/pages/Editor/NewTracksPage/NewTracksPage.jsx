@@ -2,6 +2,7 @@ import TracksTable from "../../../components/EditorComponents/TracksTable/Tracks
 import { useGetAllTracksQuery } from "../../../redux/tracksSlice";
 import symbol from "../../../assets/symbol.svg";
 import AddTracks from "../../../components/EditorComponents/AddTracks/AddTracks";
+import Player from "../../../components/Player/Player";
 const RowsTitle = [
   // "",
   "",
@@ -19,19 +20,27 @@ const NewTracksPage = () => {
     isSuccess,
     error,
   } = useGetAllTracksQuery();
+
+  // if (isSuccess) {
+  //   console.log(allTracks.trackURL);
+  // }
   return (
     <>
-      <AddTracks iconButton={`${symbol}#icon-plus`} textButton={"Музику"} />
       {isSuccess && !error && (
-        <TracksTable
-          // title={" Остання додана музика!!!!!"}
-          tracks={allTracks}
-          error={error}
-          isFetching={isFetching}
-          isSuccess={isSuccess}
-          display="none"
-          rows={RowsTitle}
-        />
+        <>
+          <AddTracks iconButton={`${symbol}#icon-plus`} textButton={"Музику"} />
+
+          <TracksTable
+            // title={" Остання додана музика!!!!!"}
+            tracks={allTracks}
+            error={error}
+            isFetching={isFetching}
+            isSuccess={isSuccess}
+            display="none"
+            rows={RowsTitle}
+          />
+          <Player tracks={allTracks} />
+        </>
       )}
     </>
   );

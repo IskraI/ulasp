@@ -2,6 +2,8 @@ import TracksTable from "../../../components/EditorComponents/TracksTable/Tracks
 import { useGetPlaylistByIdQuery } from "../../../redux/playlistsSlice";
 import PlaylistListItem from "../../../components/EditorComponents/PlayLists/PlayListItem";
 
+import Player from "../../../components/Player/Player";
+
 import { useParams } from "react-router-dom";
 
 const RowsTitle = [
@@ -20,8 +22,8 @@ const TracksPage = () => {
   const { data, isFetching, isSuccess, error } =
     useGetPlaylistByIdQuery(playlistId);
 
-  if (!isFetching) {
-    console.log(data.trackList);
+  if (isSuccess) {
+    console.log("Count", data.totalTracks);
   }
 
   return (
@@ -29,20 +31,21 @@ const TracksPage = () => {
       {isSuccess && !error && (
         <>
           <PlaylistListItem
-            icon={data.playListAvatarURL}
-            title={data.playListName}
+            icon={data.playlist.playListAvatarURL}
+            title={data.playlist.playListName}
             placeListCardInfo={true}
             id={playlistId}
+            countTracks={data.totalTracks}
           />
           <TracksTable
-            title={` Музика плейлисту "${data.playListName}"`}
-            tracks={data.trackList}
+            tracks={data.playlist.trackList}
             error={error}
             isFetching={isFetching}
             isSuccess={isSuccess}
             display="none"
             rows={RowsTitle}
           />
+          <Player tracks={data.playlist.trackList} />
         </>
       )}
     </>
