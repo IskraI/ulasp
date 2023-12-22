@@ -10,20 +10,30 @@ import {
 } from "./MediaList.styled";
 
 
-const PlayListItem = ({  id, title, icon, isFavorite: initialFavorite }) => {
+const PlayListItem = ({ id, title, icon, isFavorite: initialFavorite }) => {
+
 
 // { _id, title, icon, isFavorite: initialFavorite }
-const [toggleFavorite] = useUpdateFavoriteStatusApiMutation();
+const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
     const [isFavorite, setIsFavorite] = useState(initialFavorite);
     
-    // const handleToggleFavorite = () => {
-    //           setIsFavorite((prevIsFavorite) => !prevIsFavorite);
-    // }
-    const handleToggleFavorite = (playlistId) => {
-      toggleFavorite(playlistId)
+    // const handleToggleFavorite = (playlistId) => {
+    //   toggleFavorite(playlistId)
      
-      };
+    //   };
+ 
 
+  const handleToggleFavorite = async () => {
+     console.log('playlistId:', id);
+    try {
+      // Call the API to update the favorite status
+      await toggleFavorite(id);
+      // Update the local state after a successful API call
+      setIsFavorite((prevIsFavorite) => !prevIsFavorite);
+    } catch (error) {
+      console.error('Error updating favorite status:', error);
+    }
+  };
 
   return (
     <>
@@ -36,7 +46,8 @@ const [toggleFavorite] = useUpdateFavoriteStatusApiMutation();
             height="24"
             fill={isFavorite ? "#17161C" : "#1dca57"}
             stroke="#17161C"
-            onClick={()=>handleToggleFavorite(playlistId)}
+            //  onClick={()=>handleToggleFavorite(playlistId)}
+             onClick={handleToggleFavorite}
             style={{ cursor: "pointer" }}
           >
             <use href={`${symbol}#icon-heart-empty`}></use>
