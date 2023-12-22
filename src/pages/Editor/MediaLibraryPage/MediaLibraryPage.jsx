@@ -3,7 +3,7 @@ import LatestPlaylists from "../../../components/EditorComponents/PlayLists/Play
 import NewSongs from "../../../components/EditorComponents/NewSongs/NewSongs";
 import Shops from "../../../components/EditorComponents/Shops/Shops";
 import { useGetAllGenresQuery } from "../../../redux/genresSlice";
-import { useGetLatestPlaylistsQuery } from "../../../redux/playlistsSlice";
+import { useGetLatestPlaylistsQuery} from "../../../redux/playlistsSlice";
 import { useGetAllTracksQuery } from "../../../redux/tracksSlice";
 import { useGetAllShopsQuery } from "../../../redux/shopsSlice";
 import Player from "../../../components/Player/Player";
@@ -38,6 +38,8 @@ const MediaLibraryPage = () => {
     isSuccess: isSuccesLatestNewSongs,
     isError: isErrorNewSongs,
   } = useGetAllTracksQuery(`?&limit=${9}`);
+ 
+
 
   const fetching =
     isFetchingAllGenre &&

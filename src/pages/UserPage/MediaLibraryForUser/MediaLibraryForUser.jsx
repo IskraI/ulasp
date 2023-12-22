@@ -3,7 +3,7 @@ import LatestPlaylists from "../../../components/UserMediaComponent/PlayLists/Pl
 import NewSongs from "../../../components/UserMediaComponent/NewSongs/NewSongs";
 import Shops from "../../../components/UserMediaComponent/Shops/Shops";
 import { useGetAllGenresForUserQuery } from "../../../redux/genersUserSlice";
-import { useGetLatestPlaylistsForUserQuery } from "../../../redux/playlistsUserSlice";
+import { useGetLatestPlaylistsForUserQuery, useFavoritePlaylistForUserQuery } from "../../../redux/playlistsUserSlice";
 import { useGetAllTracksforUserQuery } from "../../../redux/tracksUserSlice";
 import { useGetAllShopsUserQuery } from "../../../redux/shopsUserSlice";
 import { Loader } from "../../../components/Loader/Loader";
@@ -34,6 +34,15 @@ const MediaLibraryForUser = () => {
     isError: isErrorNewSongs,
   } = useGetAllTracksforUserQuery(`?&limit=${6}`);
  
+  const {
+    data: FavoritePlaylist,
+    isFetching: isFetchingFavoritePlaylist,
+    isSuccess: isSuccesLatestFavoritePlaylist,
+    isError: isErrorFavoritePlaylist,
+  } = useFavoritePlaylistForUserQuery();
+  
+console.log('FavoritePlaylist', FavoritePlaylist)
+
   const fetching =
     isFetchingAllGenre &&
     isFetchingLatestPlaylist &&
