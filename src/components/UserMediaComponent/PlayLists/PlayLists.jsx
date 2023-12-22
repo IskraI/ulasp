@@ -31,12 +31,14 @@ const LatestPlaylists = ({
             
                 {/* </ControlWrapper> */}
           <MediaList>
+             {console.log(playlists)}
             {playlists.map(({ _id, playListName, playListAvatarURL }) => (
               <PlayListItem
                 key={_id}
+                id={_id}
                 title={playListName}
                 icon={playListAvatarURL}
-              />
+                              />
             ))}
           </MediaList>
           <MediaNavigationLink link={"newplaylists"} display={display} />

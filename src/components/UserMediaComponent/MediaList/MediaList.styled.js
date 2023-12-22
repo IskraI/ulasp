@@ -23,8 +23,9 @@ export const MediaList = styled.ul`
 `;
 
 export const MediaItem = styled.li`
-  display: flex;
-    align-items: center;
+   display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 310px;
 
   padding: 10px;

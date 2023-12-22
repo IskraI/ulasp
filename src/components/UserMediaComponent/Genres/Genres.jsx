@@ -10,7 +10,7 @@ import {
 import { Button } from "../../Button/Button";
 import symbol from "../../../assets/symbol.svg";
 // import { Modal } from "../../Modal/Modal";
-// import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 // import { useCreateGenreMutation } from "../../../redux/genresSlice";
 
 const Genres = ({
@@ -63,7 +63,7 @@ const Genres = ({
           </ControlWrapper>
           <MediaList>
             {genres.map(({ _id, genre, genreAvatarURL }) => (
-              <MediaListItem key={_id} title={genre} icon={genreAvatarURL} />
+              <MediaListItem key={_id} id={_id} title={genre} icon={genreAvatarURL} />
             ))}
           </MediaList>
           <MediaNavigationLink link={"genres"} display={display} />

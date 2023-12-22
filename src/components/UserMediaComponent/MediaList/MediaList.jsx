@@ -1,29 +1,34 @@
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
-
+import { useLocation } from "react-router-dom";
 import {
   MediaItem,
-  IconsWrapper,
   MediaItemText,
   MediaImg,
 } from "./MediaList.styled";
 
-const MediaListItem = ({ title, icon }) => {
+import { Link } from "react-router-dom";
+
+const MediaListItem = ({ id, title, icon }) => {
+ const location = useLocation();
+
   return (
     <>
       <MediaItem>
+        <Link
+          key={id}
+          to={`/user/medialibrary/genres/${id}/playlists`}
+          state={{ from: location }}
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
         <MediaImg src={BASE_URL + "/" + icon} alt={title} />
-        <MediaItemText>{title}</MediaItemText>
-        {/* <IconsWrapper>
-          <svg width="24" height="24">
-            <use href={`${symbol}#icon-pen`}></use>
-          </svg>
-
-          <svg width="24" height="24">
-            <use href={`${symbol}#icon-del-basket`}></use>
-          </svg>
-        </IconsWrapper> */}
-      </MediaItem>
+          <MediaItemText>{title}</MediaItemText>
+          </Link>
+        </MediaItem>
     </>
   );
 };
