@@ -1,8 +1,6 @@
-import { useGetUsersListQuery } from "../../../redux/dataUsersSlice";
-import UserTable from "../UsersTable/UsersTable";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Modal } from "../../Modal/Modal";
-import { SearchUsersContainer, Input, UsersContainer, Link } from "../SearchUsers/SearchUsers.styled";
+import { SearchInputWrapper, UsersContainer, Link } from "../SearchUsers/SearchUsers.styled";
 import {
   SectionUser,
 } from "../UserForm/UserCreateForm.styled";
@@ -11,7 +9,7 @@ import { Title } from "../AdminCabinetPage/AdminCabinetPage.styled";
 import UserCreateForm from "../UserForm/UserCreateForm";
 import symbol from "../../../assets/symbol.svg";
 import {  Outlet, useLocation  } from "react-router-dom";
-import { SearchInput } from "../SearchUsers/SearchInput";
+
 
 const AdminUsers = () => {
 
@@ -61,7 +59,7 @@ const AdminUsers = () => {
           text={"Додати"}
           ariaLabel={"  Додати користувача"}
         ></Button>
-       {/* <SearchInput onSearchTermChange={handleSearchTermChange} /> */}
+       <SearchInputWrapper />
       </UsersContainer>
       <SectionUser>
       <Link to="allusers" activeclassname={section === 'User' ? 'active' : ''} onClick={() =>  setSection('User')}>

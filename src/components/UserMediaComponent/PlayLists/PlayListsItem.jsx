@@ -9,7 +9,10 @@ import {
   MediaImg,
 } from "./MediaList.styled";
 
+
 const PlayListItem = ({ id, title, icon, isFavorite: initialFavorite }) => {
+
+
 // { _id, title, icon, isFavorite: initialFavorite }
 const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
     const [isFavorite, setIsFavorite] = useState(initialFavorite);

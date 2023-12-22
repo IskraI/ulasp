@@ -211,3 +211,10 @@ background-color: transparent;
 
 `;
 
+export const SearchInputWrapper = styled.div`
+width: 219px;
+height: 40px;
+ outline: none;
+  border: none;
+
+`;
