@@ -36,6 +36,7 @@ const LatestPlaylists = ({
                 key={_id}
                 title={playListName}
                 icon={playListAvatarURL}
+                id={_id}
               />
             ))}
           </MediaList>
