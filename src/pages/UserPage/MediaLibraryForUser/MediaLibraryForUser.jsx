@@ -1,51 +1,69 @@
 import Genres from "../../../components/UserMediaComponent/Genres/Genres";
 import LatestPlaylists from "../../../components/UserMediaComponent/PlayLists/PlayLists";
 import NewSongs from "../../../components/UserMediaComponent/NewSongs/NewSongs";
-import { useGetAllGenresForUserQuery } from "../../../redux/genresSlice";
-import { useGetLatestPlaylistsForUserQuery } from "../../../redux/playlistsSlice";
-import { useGetAllTracksforUserQuery } from "../../../redux/tracksSlice";
-
-import { ERROR_NOT_FOUND } from "../../../constants/constants";
+import Shops from "../../../components/UserMediaComponent/Shops/Shops";
+import { useGetAllGenresForUserQuery } from "../../../redux/genersUserSlice";
+import { useGetLatestPlaylistsForUserQuery } from "../../../redux/playlistsUserSlice";
+import { useGetAllTracksforUserQuery } from "../../../redux/tracksUserSlice";
+import { useGetAllShopsUserQuery } from "../../../redux/shopsUserSlice";
+import { Loader } from "../../../components/Loader/Loader";
 
 const MediaLibraryForUser = () => {
   const {
     data: genres,
     isFetching: isFetchingAllGenre,
-    error: isErrorAllGenre,
-  } = useGetAllGenresForUserQuery();
+    isSuccess: isSuccesAllGenre,
+    isError: isErrorAllGenre,
+  } = useGetAllGenresForUserQuery(`?&limit=${12}`);
+   const {
+     data: shops,
+    isFetching: isFetchingShops,
+    isSuccess: isSuccessShops,
+    isError: isErrorShops,
+  } = useGetAllShopsUserQuery(`?&limit=${12}`);
   const {
-    data: playlists,
+   data: playlists,
     isFetching: isFetchingLatestPlaylist,
-    error: isErrorLatestPlaylist,
-  } = useGetLatestPlaylistsForUserQuery();
+    isSuccess: isSuccesLatestPlaylist,
+    isError: isErrorLatestPlaylist,
+  } = useGetLatestPlaylistsForUserQuery(`?&limit=${12}`);
   const {
     data: allTracks,
     isFetching: isFetchingNewSongs,
-    error: isErrorNewSongs,
-  } = useGetAllTracksforUserQuery();
-
+    isSuccess: isSuccesLatestNewSongs,
+    isError: isErrorNewSongs,
+  } = useGetAllTracksforUserQuery(`?&limit=${6}`);
+ 
   const fetching =
-    !isFetchingAllGenre &&
-    !isFetchingLatestPlaylist &&
-    !isFetchingNewSongs &&
+    isFetchingAllGenre &&
+    isFetchingLatestPlaylist &&
+    isFetchingNewSongs &&
+    isFetchingShops &&
     !isErrorAllGenre &&
     !isErrorLatestPlaylist &&
-    !isErrorNewSongs;
+    !isErrorNewSongs &&
+    !isErrorShops;
 
   const loading =
     isFetchingAllGenre &&
     isFetchingLatestPlaylist &&
     isFetchingNewSongs &&
+    isFetchingShops &&
     !isErrorAllGenre &&
     !isErrorLatestPlaylist &&
-    !isErrorNewSongs;
+    !isErrorNewSongs &&
+    !isErrorShops;
+
+  
+  const success =
+    isSuccesAllGenre && isSuccesLatestPlaylist && isSuccesLatestNewSongs;
+  isSuccessShops;
 
   const error = isErrorAllGenre && isErrorLatestPlaylist && isErrorNewSongs;
   return (
     <>
-      {error && <div>{ERROR_NOT_FOUND}</div>}
-      {loading && <div>Загружаемся.....</div>}
-      {fetching && (
+      {loading && <Loader />}
+      {success && !fetching &&  (
         <>
           <Genres
             displayPlayer={"none"}
@@ -53,19 +71,21 @@ const MediaLibraryForUser = () => {
             isFetching={isFetchingAllGenre}
             error={isErrorAllGenre}
           />
-          <Genres
+          <Shops
             displayPlayer={"none"}
-            data={genres}
-            isFetching={isFetchingAllGenre}
-            error={isErrorAllGenre}
+            data={shops}
+            isFetching={isFetchingShops}
+            isError={isErrorShops}
+            isSuccess={isSuccessShops}
           />
           <LatestPlaylists
+             title={"Нові плейлисти"}
             displayPlayer={"none"}
             data={playlists}
             isFetching={isFetchingLatestPlaylist}
             error={isErrorLatestPlaylist}
-                  />
-                           <NewSongs
+                 />
+             <NewSongs
             data={allTracks}
             isFetching={isFetchingNewSongs}
             error={isErrorNewSongs}

@@ -16,44 +16,22 @@ export const genresUserApi = createApi({
   tagTypes: ["Genres"],
 
   endpoints: (builder) => ({
-    getAllGenres: builder.query({
-      query: () => "/editor/genres/all",
-      providesTags: ["Genres"],
-    }),
-    getGenreById: builder.query({
-      query: (id) => ({ url: `/editor/genres/${id}` }),
-      providesTags: ["Genres"],
+      getGenreByIdforUser: builder.query({
+      query: (id) => ({ url: `/user/genres/${id}` }),
+      providesTags: (_result, _err, id) => [{ type: "Genres", id }],
     }),
     getAllGenresForUser: builder.query({
-      query: () => ({
-        url: "/user/genres/all",
+     query: (page = "", limit = "") => ({
+        url: `/user/genres/all?${page && `page=${page}`} & ${
+          limit && `limit=${limit}`
+        }`,
       }),
-
-      provideTags: ["Genres"],
-    }),
-    createGenre: builder.mutation({
-      query: (body) => ({
-        url: "/editor/genres/create",
-        method: "POST",
-        body,
-      }),
-      invalidatesTags: ["Genres"],
-    }),
-
-    deleteGenre: builder.mutation({
-      query: (id) => ({
-        url: `/editor/genres/delete/${id}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: ["Genres"],
+      providesTags: (_result, _err, id) => [{ type: "Genres", id }],
     }),
   }),
 });
 
 export const {
-  useGetAllGenresQuery,
-  useGetGenreByIdQuery,
-  useCreateGenreMutation,
-  useDeleteGenreMutation,
+  useGetGenreByIdforUserQuery,
   useGetAllGenresForUserQuery,
 } = genresUserApi;

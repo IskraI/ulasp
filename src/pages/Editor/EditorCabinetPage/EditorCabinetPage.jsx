@@ -13,6 +13,7 @@ import TracksTable from "../../../components/EditorComponents/TracksTable/Tracks
 import { EditorText } from "./EditorCabinetPage.styled";
 
 import { Loader } from "../../../components/Loader/Loader";
+import Player from "../../../components/Player/Player";
 
 const RowsTitle = [
   "",
@@ -62,15 +63,18 @@ const EditorCabinetPage = () => {
       </StatsListWrapper>
       {isFetchingAllTracks && <Loader />}
       {!isFetchingAllTracks && !errorLoadingAllTracks && (
-        <TracksTable
-          title={" Остання додана музика"}
-          tracks={allTracks}
-          isLoading={isLoadingAllTracks}
-          error={errorLoadingAllTracks}
-          isFetching={isFetchingAllTracks}
-          isSuccess={isSuccessAllTracks}
-          rows={RowsTitle}
-        />
+        <>
+          <TracksTable
+            title={" Остання додана музика"}
+            tracks={allTracks}
+            isLoading={isLoadingAllTracks}
+            error={errorLoadingAllTracks}
+            isFetching={isFetchingAllTracks}
+            isSuccess={isSuccessAllTracks}
+            rows={RowsTitle}
+          />
+          <Player tracks={allTracks} />
+        </>
       )}
     </>
   );

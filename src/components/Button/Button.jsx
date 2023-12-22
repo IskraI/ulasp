@@ -1,5 +1,5 @@
+/* eslint-disable react/prop-types */
 import { CustomButton } from "./Button.styled";
-import symbol from "../../assets/symbol.svg";
 
 export const Button = ({
   width,

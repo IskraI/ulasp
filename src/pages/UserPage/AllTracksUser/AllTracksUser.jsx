@@ -4,6 +4,7 @@ import { useGetAllTracksforUserQuery  } from "../../../redux/tracksUserSlice";
 import { BtnSort } from "./AllTracksUser.styled";
 import symbol from "../../../assets/symbol.svg";
 import { useState } from "react";
+import NavMusic from "../../../components/UserMediaComponent/NavMusic/NavMusic"
 
 
 
@@ -19,6 +20,10 @@ const AllTracksUser = () => {
     isFetching: isFetchingAllTracks,
     } = useGetAllTracksforUserQuery();
     
+  const links = [
+    { path: "/user/medialibrary/newplaylists", title: "Нові плейлисти" },
+    { path: "/user/medialibrary/newtracks", title: "Нова музика" },
+  ];
 //     const [shuffleTracks, setShuffleTracks] = useState(false);
 
 
@@ -54,15 +59,15 @@ const AllTracksUser = () => {
     
        return (
       <>
-          <TabNavigation /> 
+           <TabNavigation /> 
+           <NavMusic links={links} />
        <BtnSort onClick={handleSortClick}><svg width="24" height="24" >
                 <use href={`${symbol}#icon-sort`}></use>
               </svg></BtnSort>   
       {isFetchingAllTracks && <p>Загружаемся.....</p>}
       {!isFetchingAllTracks && !errorLoadingAllTracks && (
         <TracksTable
-        //   title={" Остання додана музика"}
-          tracks={sortedTracks}
+                  tracks={sortedTracks}
           error={errorLoadingAllTracks}
           isFetching={isFetchingAllTracks}
           rows={RowsTitle}

@@ -15,7 +15,7 @@ export const Overlay = styled.div`
 export const ModalWindow = styled.div`
   width: ${(props) => props.width};
   padding: ${(props) => props.padding};
-  flex-direction:${(props) => props.flexDirection};
+  flex-direction: ${(props) => props.flexDirection};
   border-radius: 15px;
   background: #7f99c0;
   position: relative;
@@ -36,4 +36,10 @@ export const CloseBtn = styled.button`
 export const CloseIconStyled = (component) => styled(component)`
   width: 24px;
   height: 24px;
+`;
+
+export const ModalInfoText = styled.p`
+  padding: 37px 22px;
+  font-size: 16px;
+  line-height: 1.2;
 `;

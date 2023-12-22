@@ -8,7 +8,10 @@ import ControlMediateca from "../ControlMediateca/ControlMediaTeca";
 import symbol from "../../../assets/symbol.svg";
 import { Modal } from "../../../components/Modal/Modal";
 import ModalForm from "../../../components/EditorComponents/ControlMediateca/ModalForm";
+import { ModalInfoText } from "../../Modal/Modal.styled";
 import { useCreateGenreMutation } from "../../../redux/genresSlice";
+
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { useState } from "react";
 
@@ -20,26 +23,62 @@ const Genres = ({
   error,
   isLoadingCreateGenre,
 }) => {
-  const [showModal, setShowModal] = useState(false);
+  const [showModalAdd, setShowModalAdd] = useState(false);
+  const [showModalSuccess, setShowModalSucces] = useState(false);
+  const [showModalError, setShowModalError] = useState(false);
+  // console.log("showModal", showModal);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const [createGenre, { isSuccess, isLoading, isError }] =
-    useCreateGenreMutation();
+  const [
+    createGenre,
+    {
+      data: dataCreateGenre,
+      isSuccess: isSuccessCreateGenre,
+      isError: isErrorCreateGenre,
+      error: errorCreateGenre,
+    },
+  ] = useCreateGenreMutation();
+
+  console.log(errorCreateGenre);
+
+  const newGenreName =
+    dataCreateGenre?.newGenre.genre || "Назва нового жанру не була введена";
+
+  if (
+    (location.pathname === "/editor/medialibrary") & isSuccessCreateGenre &&
+    !isErrorCreateGenre
+  ) {
+    navigate(`${location.pathname}${"/genres"}`, { replace: true });
+  }
 
   const handleSubmitGenre = async (data) => {
     try {
-      closeModal();
+      toogleModal();
       await createGenre(data);
+      isSuccessCreateGenre && !isErrorCreateGenre
+        ? setShowModalSucces(false)
+        : setShowModalSucces(true);
+
+      isErrorCreateGenre ? null : setShowModalError(true);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const closeModal = () => {
-    return setShowModal(false);
+  console.log(isErrorCreateGenre);
+  console.log("showModalError", showModalError);
+
+  const closeModalSuccess = () => {
+    return setShowModalSucces(false);
+  };
+
+  const closeModalError = () => {
+    return setShowModalError(false);
   };
 
   const toogleModal = () => {
-    return setShowModal((prevsetShowModal) => !showModal);
+    return setShowModalAdd((prevsetShowModal) => !showModalAdd);
   };
 
   return (
@@ -68,14 +107,30 @@ const Genres = ({
       <MockPlayer style={{ display: displayPlayer }}>
         Тут будет плеер
       </MockPlayer>
-      {showModal && (
-        <Modal width={"814px"} onClose={toogleModal}>
+      {showModalAdd && (
+        <Modal width={"814px"} onClose={toogleModal} showCloseButton={true}>
           <ModalForm
             onSubmit={handleSubmitGenre}
             idInputFirst={"genre"}
             idInputSecond={"type"}
             placeholderFirst={"Назва жанру*"}
           />
+        </Modal>
+      )}
+      {showModalSuccess && isSuccessCreateGenre && !isErrorCreateGenre && (
+        <Modal width={"394px"} onClose={closeModalSuccess}>
+          <ModalInfoText>
+            Новий жанр &quot;{newGenreName}&quot; був створений
+          </ModalInfoText>
+        </Modal>
+      )}
+      {showModalError && isErrorCreateGenre && (
+        <Modal width={"394px"} onClose={closeModalError}>
+          <ModalInfoText>
+            {errorCreateGenre.status === 409
+              ? errorCreateGenre.data.message
+              : errorCreateGenre.data.message}
+          </ModalInfoText>
         </Modal>
       )}
     </>

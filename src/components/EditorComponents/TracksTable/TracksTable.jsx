@@ -86,7 +86,7 @@ const TracksTable = ({
                 </tbody>
               </TableStyle>
 
-              <MockPlayer>Тут будет плеер</MockPlayer>
+              {/* <MockPlayer>Тут будет плеер</MockPlayer> */}
             </>
           )}
     </>
