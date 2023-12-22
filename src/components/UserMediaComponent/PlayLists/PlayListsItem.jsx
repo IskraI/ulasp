@@ -9,7 +9,7 @@ import {
   MediaImg,
 } from "./MediaList.styled";
 
-const PlayListItem = ({  title, icon, isFavorite: initialFavorite }) => {
+const PlayListItem = ({  id, title, icon, isFavorite: initialFavorite }) => {
 // { _id, title, icon, isFavorite: initialFavorite }
 
     const [isFavorite, setIsFavorite] = useState(initialFavorite);
