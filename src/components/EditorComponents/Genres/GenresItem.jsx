@@ -1,7 +1,12 @@
+/* eslint-disable react/prop-types */
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 import { useDeleteGenreMutation } from "../../../redux/genresSlice";
+import { Modal } from "../../../components/Modal/Modal";
+import { ModalInfoText } from "../../Modal/Modal.styled";
+import { ErrorNotFound } from "../../Errors/Errors";
 import { useLocation } from "react-router-dom";
+import { useState } from "react";
 
 import {
   GenresItem,
@@ -14,11 +19,36 @@ import {
 import { Link } from "react-router-dom";
 
 const GenreListItem = ({ id, title, icon }) => {
+  const [showModalSuccess, setShowModalSucces] = useState(false);
+  const [showModalError, setShowModalError] = useState(false);
+
   const location = useLocation();
-  const [deleteGenre, { isLoading }] = useDeleteGenreMutation();
-  const deleteMediaItem = () => {
-    deleteGenre(id);
+  const [
+    deleteGenre,
+    {
+      isLoading,
+      data: dataDeleteGenre,
+      isSuccess: isSuccessDeleteGenre,
+      isError: isErrorDeleteGenre,
+      error: errorDeleteGenre,
+    },
+  ] = useDeleteGenreMutation();
+
+  const deleteMediaItem = async () => {
+    await deleteGenre(id);
+    setShowModalSucces(true);
+
+    isErrorDeleteGenre ? setShowModalError(true) : null;
   };
+
+  const closeModalSuccess = () => {
+    return setShowModalSucces(false);
+  };
+
+  const closeModalError = () => {
+    return setShowModalError(false);
+  };
+
   return (
     <>
       <GenresItem>
@@ -57,6 +87,18 @@ const GenreListItem = ({ id, title, icon }) => {
           </GenresDeleteButton>
         </GenresIconsWrapper>
       </GenresItem>
+      {showModalSuccess && isSuccessDeleteGenre && !isErrorDeleteGenre && (
+        <Modal width={"394px"} onClose={closeModalSuccess}>
+          <ModalInfoText>Жанр &quot;{title}&quot; був видалений</ModalInfoText>
+        </Modal>
+      )}
+      {showModalError && (
+        <Modal width={"394px"} onClose={closeModalError}>
+          <ModalInfoText>
+            {<ErrorNotFound error={errorDeleteGenre} /> || <ErrorNotFound />}
+          </ModalInfoText>
+        </Modal>
+      )}
     </>
   );
 };

@@ -33,7 +33,11 @@ export const Button = ({
       display={display}
       disabled={disabled}
     >
-      <svg width="24" height="24" style={{ display, marginRight: "8px" }}>
+      <svg
+        width="24"
+        height="24"
+        style={{  display, marginRight: "8px" }}
+      >
         <use href={icon}></use>
       </svg>
       {text}
