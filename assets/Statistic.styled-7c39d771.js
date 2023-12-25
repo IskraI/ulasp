@@ -1,4 +1,4 @@
-import{n as t,c as a}from"./index-be674b0e.js";const e=t.div`
+import{n as t,e as a}from"./index-4bea0cc9.js";const o=t.div`
   display: flex;
   gap: 8px;
   /* margin-left: 111px; */
@@ -17,4 +17,4 @@ import{n as t,c as a}from"./index-be674b0e.js";const e=t.div`
   line-height: calc(26.4 / 22);
 `,i=t(r)`
   margin-right: 68px;
-`;export{e as S,r as a,i as b};
+`;export{o as S,r as a,i as b};
