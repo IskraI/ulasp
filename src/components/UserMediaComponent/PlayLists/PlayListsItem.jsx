@@ -44,10 +44,10 @@ const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
           <svg
             width="24"
             height="24"
-            fill={isFavorite ? "#17161C" : "#1dca57"}
+            fill={isFavorite ? "#17161C" : "none"}
             stroke="#17161C"
-            //  onClick={()=>handleToggleFavorite(playlistId)}
-             onClick={handleToggleFavorite}
+             onClick={()=>handleToggleFavorite(id)}
+            //  onClick={handleToggleFavorite}
             style={{ cursor: "pointer" }}
           >
             <use href={`${symbol}#icon-heart-empty`}></use>

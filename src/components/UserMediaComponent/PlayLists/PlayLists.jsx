@@ -17,9 +17,12 @@ const LatestPlaylists = ({
   data: playlists,
   isFetching,
   error,
+  genre,
+   shopCategoryName,
+
 }) => {
 
-
+  
   return (
     <>
        <TitleContainer>
@@ -38,7 +41,9 @@ const LatestPlaylists = ({
                 key={_id}
                 id={_id}
                 title={playListName}
-              
+              icon={playListAvatarURL}
+                genre={genre}
+                shopCategoryName={shopCategoryName}
               />
 
             ))}

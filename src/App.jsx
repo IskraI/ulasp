@@ -44,6 +44,9 @@ import AllGenresForUser from "./pages/UserPage/AllGenresForUser/AllGenresForUser
 import NewPlaylistsUser from "./pages/UserPage/NewPlaylistsUser/NewPlaylistsUser";
 import NewTracksUser from "./pages/UserPage/NewTracksUser/NewTracksUser";
 import AllTracksUser from "./pages/UserPage/AllTracksUser/AllTracksUser";
+import PlaylistsPageUserInGenre from './pages/UserPage/PlaylistPageUser/PlaylistPageUserInGenre';
+import PlaylistsPageUserInShop from './pages/UserPage/PlaylistPageUser/PlaylistsPageUserInShop';
+
 
 const AdminCabinetPage = lazy(() =>
   import("./components/AdminComponents/AdminCabinetPage/AdminCabinetPage")
@@ -145,7 +148,15 @@ function App() {
                   path="medialibrary/genres"
                   element={<AllGenresForUser display={"none"} />}
                 />
+                <Route
+                  path="medialibrary/genres/:genreId/playlists"
+                  element={<PlaylistsPageUserInGenre/>}
+                />
                 <Route path="medialibrary/shops" element={<ShopsUserPage />} />
+                 <Route
+                  path="medialibrary/shops/:shopId/playlists"
+                  element={<PlaylistsPageUserInShop/>}
+                />
                                <Route
                   path="medialibrary/newplaylists"
                   element={<NewPlaylistsUser display={"none"} />}
