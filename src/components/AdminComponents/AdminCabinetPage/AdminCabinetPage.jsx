@@ -4,8 +4,10 @@ import { Title } from "./AdminCabinetPage.styled";
 import { useState, useEffect, useMemo } from "react";
 import { useGetUsersListQuery } from "../../../redux/dataUsersSlice";
 
+
 const AdminCabinetPage = () => {
   const { data, isLoading } = useGetUsersListQuery();
+
 
   const filteredUsers = useMemo(() => {
     const users = data ? data.allUsers : [];
