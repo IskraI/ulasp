@@ -15,9 +15,9 @@ const AdminUsers = () => {
 
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleSearchTermChange = (value) => {
-    setSearchTerm(value);
-  };
+  // const handleSearchTermChange = (value) => {
+  //   setSearchTerm(value);
+  // };
 
   const [showModal, setShowModal] = useState(false);
   const [section, setSection] = useState('User');

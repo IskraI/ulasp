@@ -22,7 +22,7 @@ const PlaylistsPageUserInGenre = () => {
       {isFetching && !isError && <Loader />}
       {!isError && isSuccess && (
               <>
-              <TabNavigation/>    
+              <TabNavigation />    
               <NavMusic links={links}/>
           <LatestPlaylists
             // title={`Плейлисти жанру "${data.genre}"`}

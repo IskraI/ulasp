@@ -21,6 +21,7 @@ const ShopListItem = ({ id, title, icon }) => {
   // };
   return (
     <>
+    
       <ShopsItem>
         <Link
           key={id}
