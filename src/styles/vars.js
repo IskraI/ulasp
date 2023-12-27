@@ -9,6 +9,7 @@ export const colors = {
   bgHeaderColor: "#3E6DA3",
   inputGrayColor: "rgba(0, 0, 0, 0.4)",
   errorColor: "#870505",
+  backGroundGreyColor: "#CECCC180",
 };
 
 export const transition = {

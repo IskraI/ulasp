@@ -44,10 +44,11 @@ export const genresApi = createApi({
     }),
 
     createPlaylistInGenre: builder.mutation({
-      query: ({ genreId, ...body }) => ({
+      query: ({ genreId, formData }) => ({
         url: `editor/genre/playlist/create/${genreId}`,
         method: "POST",
-        body,
+        body: formData,
+        formData: true,
       }),
       invalidatesTags: ["Genres"],
     }),

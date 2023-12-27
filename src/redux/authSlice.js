@@ -40,7 +40,7 @@ export const authApi = createApi({
         dispatch(setCurrent((await queryFulfilled).data));
       },
       async onQueryError(arg, { dispatch, error, queryFulfilled }) {
-        console.log('error', error)
+        console.log("error", error);
         dispatch(resetUser()); // Сбросить состояние до значения по умолчанию
       },
     }),
@@ -50,7 +50,6 @@ export const authApi = createApi({
         method: "POST",
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-    
         await queryFulfilled;
         dispatch(resetUser());
       },

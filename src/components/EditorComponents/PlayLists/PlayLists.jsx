@@ -26,6 +26,7 @@ const LatestPlaylists = ({
   error,
 }) => {
   const [showModal, setShowModal] = useState(false);
+  const [selectedPlaylistAvatar, setSelectedPlaylistAvatar] = useState(null);
 
   const { genreId } = useParams();
 
@@ -35,29 +36,58 @@ const LatestPlaylists = ({
   const [createPlaylistInGenre, { isSuccess: success }] =
     useCreatePlaylistInGenreMutation();
 
+  const handleChoosePlaylistAvatar = (event) => {
+    let file;
+
+    if (event.target.files[0] !== undefined) {
+      file = event.target.files[0];
+    }
+    if (file) {
+      setSelectedPlaylistAvatar(file);
+    }
+  };
+
   const handleSubmitPlaylist = async (data) => {
+    // try {
+    //   closeModal();
+    //   await createPlaylist(data);
+
+    // }
+    const formData = new FormData();
+
     try {
+      formData.append("playListName", data.playListName),
+        formData.append("type", data.type),
+        formData.append("picsURL", selectedPlaylistAvatar);
       closeModal();
-      await createPlaylist(data);
+      await createPlaylist(formData).unwrap();
+      clearImageCover();
     } catch (error) {
       console.log(error);
     }
   };
 
   const handleSubmitInGenre = async (data) => {
+    const formData = new FormData();
+
     try {
-      const formData = {
-        genreId,
-        ...data,
-      };
+      formData.append("playListName", data.playListName),
+        formData.append("type", data.type),
+        formData.append("picsURL", selectedPlaylistAvatar);
       closeModal();
-      await createPlaylistInGenre(formData);
+      await createPlaylistInGenre({ genreId, formData }).unwrap();
+      clearImageCover();
     } catch (error) {
       console.log(error);
     }
   };
 
+  const clearImageCover = () => {
+    setSelectedPlaylistAvatar(null);
+  };
+
   const closeModal = () => {
+    clearImageCover();
     return setShowModal(false);
   };
 
@@ -96,20 +126,32 @@ const LatestPlaylists = ({
         </PlaylistWrapper>
       )}
       {showModal && (
-        <Modal width={"814px"} onClose={closeModal}>
+        <Modal width={"814px"} onClose={closeModal} showCloseButton>
           {genre ? (
-            <ModalForm
-              onSubmit={handleSubmitInGenre}
-              genre={`${genre}`}
-              idInputFirst={"playListName"}
-              idInputSecond={"type"}
-              placeholderFirst={`Назва плейлисту у жанрі ${genre}*`}
-            />
+            <>
+              <ModalForm
+                onSubmit={handleSubmitInGenre}
+                changePlayListAvatar={handleChoosePlaylistAvatar}
+                img={selectedPlaylistAvatar}
+                clearImageCover={clearImageCover}
+                genre={`${genre}`}
+                idInputImg={"picsURL"}
+                idInputFirst={"playListName"}
+                idInputSecond={"type"}
+                valueInputSecond={"playlist"}
+                placeholderFirst={`Назва плейлисту у жанрі ${genre}*`}
+              />
+            </>
           ) : (
             <ModalForm
               onSubmit={handleSubmitPlaylist}
+              changePlayListAvatar={handleChoosePlaylistAvatar}
+              img={selectedPlaylistAvatar}
+              clearImageCover={clearImageCover}
+              idInputImg={"picsURL"}
               idInputFirst={"playListName"}
               idInputSecond={"type"}
+              valueInputSecond={"playlist"}
               placeholderFirst={"Назва плейлисту*"}
             />
           )}

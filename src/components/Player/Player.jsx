@@ -44,7 +44,8 @@ const Player = ({ display, tracks }) => {
             <TracksArtist>{tracks[currentTrack].artist}</TracksArtist>
             <TrackName>{tracks[currentTrack].trackName}</TrackName>
             <PlayerReact
-              // autoPlay
+              autoPlay={false}
+              autoPlayAfterSrcChange={true}
               src={trackSRC}
               showSkipControls
               onClickNext={handleClickNext}

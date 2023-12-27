@@ -1,7 +1,14 @@
 /* eslint-disable react/prop-types */
 import { Button } from "../../Button/Button";
 import { useForm } from "react-hook-form";
-import { FormControlModal, InputControlModal } from "./ModalForm.styled";
+import {
+  FormControlModal,
+  InputControlModal,
+  TextControlModal,
+  LabelInputControlModal,
+  CoverImage,
+  ClearImage,
+} from "./ModalForm.styled";
 
 const ModalForm = ({
   onSubmit,
@@ -10,6 +17,11 @@ const ModalForm = ({
   placeholderFirst,
   idInputSecond,
   placeholderSecond,
+  valueInputSecond,
+  idInputImg,
+  changePlayListAvatar,
+  img,
+  clearImageCover,
 }) => {
   const {
     control,
@@ -25,22 +37,50 @@ const ModalForm = ({
     mode: "onChange",
   });
 
+  const coverImage = img ? URL.createObjectURL(img) : null;
+
   return (
     <>
       <FormControlModal autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+        <>
+          <LabelInputControlModal htmlFor={idInputImg}>
+            {coverImage ? (
+              <>
+                <CoverImage src={coverImage} alt="" />
+              </>
+            ) : (
+              "Додати обкладинку"
+            )}
+          </LabelInputControlModal>
+
+          <InputControlModal
+            {...register(idInputImg)}
+            type="file"
+            accept="image/*"
+            id={idInputImg}
+            style={{ display: "none" }}
+            onChange={changePlayListAvatar}
+          />
+          {coverImage && (
+            <ClearImage type="button" onClick={clearImageCover}>
+              Видалити
+            </ClearImage>
+          )}
+        </>
+
         <InputControlModal
           {...register(idInputFirst)}
           type="text"
           id={idInputFirst}
           placeholder={placeholderFirst}
         />
-        <p>{genre}</p>
+        {genre && <TextControlModal>{genre}</TextControlModal>}
 
         <InputControlModal
           {...register(idInputSecond)}
           type="hidden"
           id={idInputSecond}
-          value={idInputFirst}
+          value={valueInputSecond}
         />
         <Button
           type="Submit"

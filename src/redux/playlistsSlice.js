@@ -35,6 +35,7 @@ export const playlistsApi = createApi({
         url: "/editor/playlist/create",
         method: "POST",
         body,
+        formData: true,
       }),
       invalidatesTags: ["Playlists"],
     }),
@@ -46,18 +47,11 @@ export const playlistsApi = createApi({
       }),
       invalidatesTags: ["Playlists"],
     }),
-    getLatestPlaylistsForUser: builder.query({
-      query: () => ({
-        url: "/user/playlist/latest",
-      }),
-      provideTags: ["Playlists"],
-    }),
   }),
 });
 
 export const {
   useGetLatestPlaylistsQuery,
-  useGetLatestPlaylistsForUserQuery,
   useGetPlaylistByIdQuery,
   useCreatePlaylistMutation,
   useDeletePlaylistMutation,

@@ -38,3 +38,8 @@ export const CustomButton = styled.button`
     cursor: default;
   }
 `;
+
+export const SvgStyled = styled.svg`
+  fill: none;
+  stroke: black;
+`;

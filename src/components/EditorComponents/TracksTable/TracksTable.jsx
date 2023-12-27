@@ -35,60 +35,57 @@ const TracksTable = ({
         <TracksNotFound>Музика ще не завантажена</TracksNotFound>
       )}
 
-      {isSuccess &&
-        !error &&
-        tracks?.length !==
-          0 && (
-            <>
-              <LatestTracks>{title}</LatestTracks>
-              <TableStyle>
-                <THeadStyle>
-                  <tr>
-                    {rows.map((row, rowindex) => {
-                      return <RowTitle key={rowindex}>{row}</RowTitle>;
-                    })}
-                  </tr>
-                </THeadStyle>
-                <tbody>
-                  {tracks.map(
-                    ({
-                      _id,
-                      trackPictureURL,
-                      trackName,
-                      artist,
-                      trackDuration,
-                      trackGenre,
-                      playList,
-                    }) => {
-                      return (
-                        <TrStyle key={_id}>
-                          <TableCell>
-                            <TrackCover
-                              src={BASE_URL + "/" + trackPictureURL}
-                              alt={trackName}
-                              width={55}
-                            />
-                          </TableCell>
+      {isSuccess && !error && tracks?.length !== 0 && (
+        <>
+          <LatestTracks>{title}</LatestTracks>
+          <TableStyle>
+            <THeadStyle>
+              <tr>
+                {rows.map((row, rowindex) => {
+                  return <RowTitle key={rowindex}>{row}</RowTitle>;
+                })}
+              </tr>
+            </THeadStyle>
+            <tbody>
+              {tracks.map(
+                ({
+                  _id,
+                  trackPictureURL,
+                  trackName,
+                  artist,
+                  trackDuration,
+                  trackGenre,
+                  playList,
+                }) => {
+                  return (
+                    <TrStyle key={_id}>
+                      <TableCell>
+                        <TrackCover
+                          src={BASE_URL + "/" + trackPictureURL}
+                          alt={trackName}
+                          width={55}
+                        />
+                      </TableCell>
 
-                          <TableCell>{trackName}</TableCell>
-                          <TableCell>{artist}</TableCell>
-                          <TableCell>{sToStr(trackDuration)}</TableCell>
-                          <TableCell>{trackGenre}</TableCell>
+                      <TableCell>{trackName}</TableCell>
+                      <TableCell>{artist}</TableCell>
+                      <TableCell>{sToStr(trackDuration)}</TableCell>
+                      <TableCell>{trackGenre}</TableCell>
 
-                          <TableCell style={{ display }}>
-                            {playList?.playListName}
-                          </TableCell>
-                          <TableCell style={{ display }}>***</TableCell>
-                        </TrStyle>
-                      );
-                    }
-                  )}
-                </tbody>
-              </TableStyle>
+                      <TableCell style={{ display }}>
+                        {playList?.playListName}
+                      </TableCell>
+                      <TableCell style={{ display }}>***</TableCell>
+                    </TrStyle>
+                  );
+                }
+              )}
+            </tbody>
+          </TableStyle>
 
-              {/* <MockPlayer>Тут будет плеер</MockPlayer> */}
-            </>
-          )}
+          {/* <MockPlayer>Тут будет плеер</MockPlayer> */}
+        </>
+      )}
     </>
   );
 };

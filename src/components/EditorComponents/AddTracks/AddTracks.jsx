@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { ControlWrapper } from "../MediaList/MediaList.styled";
 import { useUploadTrackMutation } from "../../../redux/tracksSlice";
+import TracksTable from "../TracksTable/TracksTable";
 
 import {
   FormControlAddTrack,
@@ -11,8 +12,15 @@ import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 
 const AddTracks = ({ title, iconButton, textButton, onClick, disabled }) => {
-  const [uploadTrack, { isSuccess, isError: isErrorUploadTrack, error }] =
-    useUploadTrackMutation();
+  const [
+    uploadTrack,
+    {
+      isSuccess: isSuccessUploadTrack,
+      isError: isErrorUploadTrack,
+      isLoading: isLoadingUploadTrack,
+      error,
+    },
+  ] = useUploadTrackMutation();
   const [selectedTracks, setSelectedTracks] = useState([]);
 
   useEffect(() => {
@@ -58,25 +66,33 @@ const AddTracks = ({ title, iconButton, textButton, onClick, disabled }) => {
     }
   };
 
+
   return (
-    <ControlWrapper>
-      <FormControlAddTrack autoComplete="off">
-        <ButtonLabel htmlFor="tracks_input">
-          <svg width="24" height="24" style={{ marginRight: "8px" }}>
-            <use href={iconButton}></use>
-          </svg>
-          Музику
-        </ButtonLabel>
-        <InputControlAddTrack
-          {...register("trackURL")}
-          id="tracks_input"
-          type="file"
-          multiple={true}
-          accept="audio/*"
-          onChange={handleChooseTracks}
-        />
-      </FormControlAddTrack>
-    </ControlWrapper>
+    <>
+      <ControlWrapper>
+        <FormControlAddTrack autoComplete="off">
+          <ButtonLabel htmlFor="tracks_input">
+            <svg width="24" height="24" style={{ marginRight: "8px" }}>
+              <use href={iconButton}></use>
+            </svg>
+            Музику
+          </ButtonLabel>
+          <InputControlAddTrack
+            {...register("trackURL")}
+            id="tracks_input"
+            type="file"
+            multiple={true}
+            accept="audio/*"
+            onChange={handleChooseTracks}
+          />
+        </FormControlAddTrack>
+      </ControlWrapper>
+      <TracksTable
+        isSuccessUploadTrack={isSuccessUploadTrack}
+        isErrorUploadTrack={isErrorUploadTrack}
+        isLoadingUploadTrack={isLoadingUploadTrack}
+      />
+    </>
   );
 };
 
