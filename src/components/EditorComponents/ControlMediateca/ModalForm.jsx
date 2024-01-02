@@ -22,6 +22,7 @@ const ModalForm = ({
   changePlayListAvatar,
   img,
   clearImageCover,
+  cover,
 }) => {
   const {
     control,
@@ -39,34 +40,38 @@ const ModalForm = ({
 
   const coverImage = img ? URL.createObjectURL(img) : null;
 
+
   return (
     <>
       <FormControlModal autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-        <>
-          <LabelInputControlModal htmlFor={idInputImg}>
-            {coverImage ? (
-              <>
-                <CoverImage src={coverImage} alt="" />
-              </>
-            ) : (
-              "Додати обкладинку"
-            )}
-          </LabelInputControlModal>
+        {/* Пропс cover, true если надо инпут с картинкой, false если нет */}
+        {cover && (
+          <>
+            <LabelInputControlModal htmlFor={idInputImg}>
+              {coverImage ? (
+                <>
+                  <CoverImage src={coverImage} alt="" />
+                </>
+              ) : (
+                "Додати обкладинку"
+              )}
+            </LabelInputControlModal>
 
-          <InputControlModal
-            {...register(idInputImg)}
-            type="file"
-            accept="image/*"
-            id={idInputImg}
-            style={{ display: "none" }}
-            onChange={changePlayListAvatar}
-          />
-          {coverImage && (
-            <ClearImage type="button" onClick={clearImageCover}>
-              Видалити
-            </ClearImage>
-          )}
-        </>
+            <InputControlModal
+              {...register(idInputImg)}
+              type="file"
+              accept="image/*"
+              id={idInputImg}
+              style={{ display: "none" }}
+              onChange={changePlayListAvatar}
+            />
+            {coverImage && (
+              <ClearImage type="button" onClick={clearImageCover}>
+                Видалити
+              </ClearImage>
+            )}
+          </>
+        )}
 
         <InputControlModal
           {...register(idInputFirst)}

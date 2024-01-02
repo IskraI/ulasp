@@ -47,36 +47,30 @@ const LatestPlaylists = ({
     }
   };
 
-  const handleSubmitPlaylist = async (data) => {
-    // try {
-    //   closeModal();
-    //   await createPlaylist(data);
-
-    // }
+  const formDataFunction = (data) => {
     const formData = new FormData();
 
+    formData.append("playListName", data.playListName),
+      formData.append("type", data.type),
+      formData.append("picsURL", selectedPlaylistAvatar);
+
+    return formData;
+  };
+
+  const handleSubmitPlaylist = async (data) => {
     try {
-      formData.append("playListName", data.playListName),
-        formData.append("type", data.type),
-        formData.append("picsURL", selectedPlaylistAvatar);
+      await createPlaylist(formDataFunction(data)).unwrap();
       closeModal();
-      await createPlaylist(formData).unwrap();
-      clearImageCover();
     } catch (error) {
       console.log(error);
     }
   };
 
   const handleSubmitInGenre = async (data) => {
-    const formData = new FormData();
-
     try {
-      formData.append("playListName", data.playListName),
-        formData.append("type", data.type),
-        formData.append("picsURL", selectedPlaylistAvatar);
-      closeModal();
+      const formData = formDataFunction(data);
       await createPlaylistInGenre({ genreId, formData }).unwrap();
-      clearImageCover();
+      closeModal();
     } catch (error) {
       console.log(error);
     }
@@ -92,8 +86,9 @@ const LatestPlaylists = ({
   };
 
   const toogleModal = () => {
-    return setShowModal((prevsetShowModal) => !showModal);
+    return setShowModal(() => !showModal);
   };
+
   return (
     <>
       <ControlMediateca
@@ -140,6 +135,7 @@ const LatestPlaylists = ({
                 idInputSecond={"type"}
                 valueInputSecond={"playlist"}
                 placeholderFirst={`Назва плейлисту у жанрі ${genre}*`}
+                cover={true}
               />
             </>
           ) : (
@@ -153,6 +149,7 @@ const LatestPlaylists = ({
               idInputSecond={"type"}
               valueInputSecond={"playlist"}
               placeholderFirst={"Назва плейлисту*"}
+              cover={true}
             />
           )}
         </Modal>

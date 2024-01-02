@@ -32,8 +32,6 @@ const PlaylistListItem = ({
   const mediaLibrary = `/editor/medialibrary`;
   const newPlaylists = `/editor/medialibrary/newplaylists/${id}/tracks`;
 
-  console.log(countTracks);
-
   const [
     deletePlaylist,
     {

@@ -50,24 +50,21 @@ const Genres = ({
         navigate(`${location.pathname}${"/genres"}`, { replace: true });
       }
     }, 2000);
-  }, [isSuccessCreateGenre]);
+  }, [isErrorCreateGenre, isSuccessCreateGenre, location.pathname, navigate]);
 
   const newGenreName =
-    dataCreateGenre?.newGenre.genre || "Назва нового жанру не була введена";
+    dataCreateGenre?.newGenre.genre ?? "Назва нового жанру не була введена";
 
   const handleSubmitGenre = async (data) => {
     try {
       closeModalAdd();
-
-      await createGenre(data);
-
-      !isErrorCreateGenre ? setShowModalSucces(true) : null;
-
-      isErrorCreateGenre ? null : setShowModalError(true);
+      await createGenre(data).unwrap();
+      setShowModalSucces(true);
     } catch (error) {
-      console.log(error);
+      setShowModalError(true);
     }
   };
+
 
   const closeModalAdd = () => {
     return setShowModalAdd(false);
@@ -117,7 +114,9 @@ const Genres = ({
             onSubmit={handleSubmitGenre}
             idInputFirst={"genre"}
             idInputSecond={"type"}
+            valueInputSecond={"genre"}
             placeholderFirst={"Назва жанру*"}
+            cover={false}
           />
         </Modal>
       )}
@@ -131,7 +130,7 @@ const Genres = ({
       {showModalError && isErrorCreateGenre && (
         <Modal width={"394px"} onClose={closeModalError} showCloseButton={true}>
           <ModalInfoText>
-            {<ErrorNotFound error={errorCreateGenre.data?.message} /> || (
+            {<ErrorNotFound error={errorCreateGenre.data?.message} /> ?? (
               <ErrorNotFound />
             )}
           </ModalInfoText>
