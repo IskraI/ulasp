@@ -14,6 +14,7 @@ const ModalForm = ({
   onSubmit,
   genre,
   idInputFirst,
+  marginTopInputFirst,
   placeholderFirst,
   idInputSecond,
   placeholderSecond,
@@ -39,7 +40,6 @@ const ModalForm = ({
   });
 
   const coverImage = img ? URL.createObjectURL(img) : null;
-
 
   return (
     <>
@@ -78,6 +78,7 @@ const ModalForm = ({
           type="text"
           id={idInputFirst}
           placeholder={placeholderFirst}
+          margintop={marginTopInputFirst}
         />
         {genre && <TextControlModal>{genre}</TextControlModal>}
 

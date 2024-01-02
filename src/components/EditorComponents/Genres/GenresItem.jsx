@@ -14,6 +14,7 @@ import {
   GenresItemText,
   GenresIconsWrapper,
   GenresDeleteButton,
+  SvgGenres,
 } from "./GenresItem.styled";
 
 import { Link } from "react-router-dom";
@@ -35,10 +36,12 @@ const GenreListItem = ({ id, title, icon }) => {
   ] = useDeleteGenreMutation();
 
   const deleteMediaItem = async () => {
-    await deleteGenre(id);
-    setShowModalSucces(true);
-
-    isErrorDeleteGenre ? setShowModalError(true) : null;
+    try {
+      await deleteGenre(id).unwrap();
+      setShowModalSucces(true);
+    } catch (error) {
+      setShowModalError(true);
+    }
   };
 
   const closeModalSuccess = () => {
@@ -76,13 +79,13 @@ const GenreListItem = ({ id, title, icon }) => {
             disabled={isLoading}
           >
             {isLoading ? (
-              <svg width="24" height="24" stroke="#888889">
+              <SvgGenres width="24" height="24" stroke="#888889" fill="#888889">
                 <use href={`${symbol}#icon-del-basket`}></use>
-              </svg>
+              </SvgGenres>
             ) : (
-              <svg width="24" height="24">
+              <SvgGenres width="24" height="24">
                 <use href={`${symbol}#icon-del-basket`}></use>
-              </svg>
+              </SvgGenres>
             )}
           </GenresDeleteButton>
         </GenresIconsWrapper>

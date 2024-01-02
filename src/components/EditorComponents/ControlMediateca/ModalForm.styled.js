@@ -14,7 +14,7 @@ export const InputControlModal = styled.input`
   width: 649px;
   height: 64px;
   padding: 8px;
-  margin-top: 64px;
+  margin-top: ${(props) => props.margintop ?? "64px"};
   margin-bottom: 24px;
   border-radius: 10px;
   border: none;

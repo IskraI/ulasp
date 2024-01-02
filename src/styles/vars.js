@@ -18,3 +18,5 @@ export const transition = {
 export const border = {
   boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.60) inset",
 };
+
+export const mainCubicTransition = "cubic-bezier(0.4, 0, 0.2, 1)";

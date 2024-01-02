@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { colors } from "../../../styles/vars";
+import { colors, mainCubicTransition } from "../../../styles/vars";
 
 export const GenresItem = styled.li`
   display: flex;
@@ -33,4 +33,14 @@ export const GenresIconsWrapper = styled.div`
 export const GenresDeleteButton = styled.button`
   background: none;
   border: none;
+`;
+
+export const SvgGenres = styled.svg`
+  fill: #000000;
+  transition: fill 350ms ${mainCubicTransition};
+
+  &:hover {
+    fill: ${colors.accentHoverColor};
+    transition: fill 350ms ${mainCubicTransition};
+  }
 `;
