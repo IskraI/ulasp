@@ -46,7 +46,7 @@ import NewTracksUser from "./pages/UserPage/NewTracksUser/NewTracksUser";
 import AllTracksUser from "./pages/UserPage/AllTracksUser/AllTracksUser";
 import PlaylistsPageUserInGenre from './pages/UserPage/PlaylistPageUser/PlaylistPageUserInGenre';
 import PlaylistsPageUserInShop from './pages/UserPage/PlaylistPageUser/PlaylistsPageUserInShop';
-
+import TracksPageUser from './pages/UserPage/TracksPageUser/TracksPageUser'
 
 const AdminCabinetPage = lazy(() =>
   import("./components/AdminComponents/AdminCabinetPage/AdminCabinetPage")
@@ -152,14 +152,22 @@ function App() {
                   path="medialibrary/genres/:genreId/playlists"
                   element={<PlaylistsPageUserInGenre />}
                 />
+                 <Route
+                  path="medialibrary/genres/:genreId/playlists/:playlistId/tracks"
+                  element={<TracksPageUser display={"none"} />}
+                />
                 <Route path="medialibrary/shops" element={<ShopsUserPage />} />
                 <Route
                   path="medialibrary/shops/:shopId/playlists"
-                  element={<PlaylistsPageUserInShop />}
+                  element={<PlaylistsPageUserInShop/>}
                 />
                 <Route
                   path="medialibrary/newplaylists"
                   element={<NewPlaylistsUser display={"none"} />}
+                />
+                <Route
+                  path="medialibrary/newplaylists/:playlistId/tracks"
+                  element={<TracksPageUser display={"none"} />}
                 />
                 <Route
                   path="medialibrary/newtracks"

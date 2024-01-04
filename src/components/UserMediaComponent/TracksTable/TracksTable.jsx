@@ -76,8 +76,7 @@ const TracksTable = ({ rows, tracks, isLoading, error, display, title }) => {
               )}
             </tbody>
           </TableStyle>
-
-          <MockPlayer>Тут будет плеер</MockPlayer>
+       
         </>
       )}
     </>
