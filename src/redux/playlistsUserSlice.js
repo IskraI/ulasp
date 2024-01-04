@@ -50,13 +50,13 @@ export const playlistsUserApi = createApi({
     }),
 
     favoritePlaylistForUser: builder.query({
-      query: () => ({ url: `/user/favorites/` }),
+      query: () => ({ url: `/user/playlist/favorites/` }),
 
       providesTags: ["PlaylistsFavorite"],
     }),
    updateFavoriteStatusApi: builder.mutation({
       query: (playlistId) => ({
-        url: `/user/favorites/${playlistId}`,
+        url: `/user/playlist/favorites/${playlistId}`,
            method: "PATCH",
       
       }),

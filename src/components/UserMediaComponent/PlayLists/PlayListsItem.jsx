@@ -1,7 +1,7 @@
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
-import { useState } from "react";
-import { useUpdateFavoriteStatusApiMutation } from "../../../redux/playlistsUserSlice";
+import { useState, useEffect } from "react";
+import { useUpdateFavoriteStatusApiMutation, useFavoritePlaylistForUserQuery } from "../../../redux/playlistsUserSlice";
 import {
   MediaItem,
   IconsWrapper,
@@ -9,18 +9,29 @@ import {
   MediaImg,
 } from "./MediaList.styled";
 
+import { useLocation, useNavigate } from "react-router-dom";
 
-const PlayListItem = ({ id, title, icon, isFavorite: initialFavorite }) => {
 
+const PlayListItem = ({ id, title, icon, isFavorite: initialFavorite, genre,
+  placeListCardInfo,
+  countTracks, }) => {
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
 // { _id, title, icon, isFavorite: initialFavorite }
-const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
-    const [isFavorite, setIsFavorite] = useState(initialFavorite);
+  const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
+  const { data: favoriteStatus } = useFavoritePlaylistForUserQuery(id);
+    const [isFavorite, setIsFavorite] = useState(favoriteStatus || false);
     
     // const handleToggleFavorite = (playlistId) => {
     //   toggleFavorite(playlistId)
      
-    //   };
+  //   };
+  
+   const mediaLibrary = `/user/medialibrary`;
+  const newPlaylists = `/user/medialibrary/newplaylists/${id}/tracks`;
+
  
 
   const handleToggleFavorite = async () => {
@@ -34,6 +45,15 @@ const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
       console.error('Error updating favorite status:', error);
     }
   };
+
+  useEffect(() => {
+    // Fetch initial favorite status from the backend when the component mounts
+    if (!favoriteStatus) {
+      // Use your API call to get the favorite status from the backend
+      // For example: fetchFavoriteStatusFromBackend(id).then(response => setIsFavorite(response));
+    }
+  }, [favoriteStatus, id]);
+
 
   return (
     <>

@@ -152,6 +152,10 @@ function App() {
                   path="medialibrary/genres/:genreId/playlists"
                   element={<PlaylistsPageUserInGenre/>}
                 />
+                 <Route
+                  path="medialibrary/genres/:genreId/playlists/:playlistId/tracks"
+                  element={<TracksPage />}
+                />
                 <Route path="medialibrary/shops" element={<ShopsUserPage />} />
                  <Route
                   path="medialibrary/shops/:shopId/playlists"
