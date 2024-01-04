@@ -7,8 +7,12 @@ import {
   IconsWrapper,
   MediaItemText,
   MediaImg,
+  PlaylistCountTracks,
+   PlaylistImg,
+  PlaylistInfoWrapper,
+  PlaylistItemText,
 } from "./MediaList.styled";
-
+import { Link } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 
 
@@ -58,8 +62,34 @@ const PlayListItem = ({ id, title, icon, isFavorite: initialFavorite, genre,
   return (
     <>
       <MediaItem>
+        {!placeListCardInfo ? (
+          <Link
+            key={id}
+            to={
+              location.pathname === mediaLibrary
+                ? `newplaylists/${id}/tracks`
+                : `${id}/tracks`
+            }
+            state={{ from: location }}
+            disabled={placeListCardInfo ? true : false}
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
         <MediaImg src={BASE_URL + "/" + icon} alt={title} />
-        <MediaItemText>{title}</MediaItemText>
+            <MediaItemText>{title}</MediaItemText>
+            </Link>):(<>
+            <PlaylistImg src={BASE_URL + "/" + icon} alt={title} />
+            <PlaylistInfoWrapper>
+              <PlaylistItemText>{title}</PlaylistItemText>
+              <PlaylistCountTracks>
+                {countTracks + `${" "}` + "пісень"}
+              </PlaylistCountTracks>
+            </PlaylistInfoWrapper>
+          </>
+        )}
         <IconsWrapper>
           <svg
             width="24"
