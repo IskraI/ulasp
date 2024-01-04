@@ -23,7 +23,11 @@ export const shopsUserApi = createApi({
       }),
       providesTags: ["Shops"],
     }),
+    getShopByIdforUser: builder.query({
+      query: (id) => ({ url: `/user/shops/${id}` }),
+      providesTags: (_result, _err, id) => [{ type: "Shops", id }],
+    }),
       }),
 });
 
-export const { useGetAllShopsUserQuery } = shopsUserApi;
+export const { useGetAllShopsUserQuery, useGetShopByIdforUserQuery } = shopsUserApi;

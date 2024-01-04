@@ -21,10 +21,11 @@ const ShopListItem = ({ id, title, icon }) => {
   // };
   return (
     <>
+    
       <ShopsItem>
         <Link
           key={id}
-          to={`/editor/medialibrary/genres/${id}/playlists`}
+          to={`/user/medialibrary/shops/${id}/playlists`}
           state={{ from: location }}
           style={{
             width: "100%",

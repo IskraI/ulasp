@@ -25,7 +25,26 @@ export const statisticApi = createApi({
         url: "/editor/tracks/count",
       }),
     }),
+
+    getNewClientsCount:  builder.query({
+      query: () => ({
+        url: "/admin/newclients/count",
+      }),
+    }),
+    getOnlineClientsCount: 
+    builder.query({
+      query: () => ({
+        url: "/admin/onlineclients/count",
+      }),
+    }),
+    getNewClientsByMonthCount:
+    builder.query({
+      query: () => ({
+        url: "/admin/newclientsbymonth/count",
+      }),
+    }),
+
   }),
 });
 
-export const { useGetPlaylistsCountQuery, useGetTracksCountQuery } = statisticApi;
+export const { useGetNewClientsByMonthCountQuery, useGetOnlineClientsCountQuery, useGetPlaylistsCountQuery, useGetTracksCountQuery, useGetNewClientsCountQuery } = statisticApi;

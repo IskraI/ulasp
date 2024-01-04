@@ -22,6 +22,9 @@ export const TabNavigation = () => {
     genres: 'Жанри',
     newplaylists: 'Нові Плейлисти',
     shops: 'Заклади',
+    '656f6d3244807383d8d9c285': 'Rock',
+    
+    playlists: 'Плейлисти'
     // Добавьте другие сегменты и их соответствующие переводы
   };
 
