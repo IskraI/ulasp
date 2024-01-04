@@ -1,26 +1,41 @@
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
-import { useState } from "react";
-import { useUpdateFavoriteStatusApiMutation } from "../../../redux/playlistsUserSlice";
+import { useState, useEffect } from "react";
+import { useUpdateFavoriteStatusApiMutation, useFavoritePlaylistForUserQuery } from "../../../redux/playlistsUserSlice";
 import {
   MediaItem,
   IconsWrapper,
   MediaItemText,
   MediaImg,
+  PlaylistCountTracks,
+   PlaylistImg,
+  PlaylistInfoWrapper,
+  PlaylistItemText,
 } from "./MediaList.styled";
+import { Link } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
-const PlayListItem = ({ id, title, icon, isFavorite: initialFavorite }) => {
+const PlayListItem = ({ id, title, icon, isFavorite: initialFavorite, genre,
+  placeListCardInfo,
+  countTracks, }) => {
 
+  const location = useLocation();
+  const navigate = useNavigate();
 
 // { _id, title, icon, isFavorite: initialFavorite }
-const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
-    const [isFavorite, setIsFavorite] = useState(initialFavorite);
+  const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
+  const { data: favoriteStatus } = useFavoritePlaylistForUserQuery(id);
+    const [isFavorite, setIsFavorite] = useState(favoriteStatus || false);
     
     // const handleToggleFavorite = (playlistId) => {
     //   toggleFavorite(playlistId)
      
-    //   };
+  //   };
+  
+   const mediaLibrary = `/user/medialibrary`;
+  const newPlaylists = `/user/medialibrary/newplaylists/${id}/tracks`;
+
  
 
   const handleToggleFavorite = async () => {
@@ -35,11 +50,46 @@ const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
     }
   };
 
+  useEffect(() => {
+    // Fetch initial favorite status from the backend when the component mounts
+    if (!favoriteStatus) {
+      // Use your API call to get the favorite status from the backend
+      // For example: fetchFavoriteStatusFromBackend(id).then(response => setIsFavorite(response));
+    }
+  }, [favoriteStatus, id]);
+
+
   return (
     <>
       <MediaItem>
+        {!placeListCardInfo ? (
+          <Link
+            key={id}
+            to={
+              location.pathname === mediaLibrary
+                ? `newplaylists/${id}/tracks`
+                : `${id}/tracks`
+            }
+            state={{ from: location }}
+            disabled={placeListCardInfo ? true : false}
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
         <MediaImg src={BASE_URL + "/" + icon} alt={title} />
-        <MediaItemText>{title}</MediaItemText>
+            <MediaItemText>{title}</MediaItemText>
+            </Link>):(<>
+            <PlaylistImg src={BASE_URL + "/" + icon} alt={title} />
+            <PlaylistInfoWrapper>
+              <PlaylistItemText>{title}</PlaylistItemText>
+              <PlaylistCountTracks>
+                {countTracks + `${" "}` + "пісень"}
+              </PlaylistCountTracks>
+            </PlaylistInfoWrapper>
+          </>
+        )}
         <IconsWrapper>
           <svg
             width="24"
