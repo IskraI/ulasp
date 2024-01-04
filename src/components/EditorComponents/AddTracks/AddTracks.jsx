@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { ControlWrapper } from "../MediaList/MediaList.styled";
 import { useUploadTrackMutation } from "../../../redux/tracksSlice";
+import { useUploadTracksInPlaylistMutation } from "../../../redux/playlistsSlice";
 import TracksTable from "../TracksTable/TracksTable";
 
 import {
@@ -9,9 +10,16 @@ import {
   ButtonLabel,
 } from "./AddTrack.styled";
 import { useForm } from "react-hook-form";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
-const AddTracks = ({ title, iconButton, textButton, onClick, disabled }) => {
+const AddTracks = ({
+  title,
+  iconButton,
+  textButton,
+  onClick,
+  disabled,
+  playlistId,
+}) => {
   const [
     uploadTrack,
     {
@@ -21,11 +29,11 @@ const AddTracks = ({ title, iconButton, textButton, onClick, disabled }) => {
       error,
     },
   ] = useUploadTrackMutation();
+
+  const [uploadTrackInPlaylist, { all }] = useUploadTracksInPlaylistMutation();
   const [selectedTracks, setSelectedTracks] = useState([]);
 
-  useEffect(() => {
-    handleSubmitTracks();
-  }, [selectedTracks]);
+  console.log("selectedTracks", selectedTracks);
 
   const {
     control,
@@ -45,27 +53,42 @@ const AddTracks = ({ title, iconButton, textButton, onClick, disabled }) => {
     setSelectedTracks([...event.target.files]);
   };
 
-  const handleSubmitTracks = async () => {
+  const handleSubmitTracks = useCallback(async () => {
     resetField("trackURL");
     const formData = new FormData();
 
     if (!selectedTracks) {
       return;
     }
-
     for (let track of selectedTracks) {
+      // const req = new XMLHttpRequest();
+      // console.log(req);
       formData.append("trackURL", track);
-      await uploadTrack(formData)
-        .unwrap()
-        .then(() => {
-          formData.delete("trackURL");
-          console.log("Your profile has been updated", "success");
-        })
-        .catch((error) => console.log("ERROR 1", error))
-        .finally(() => formData.delete("trackURL"));
+      playlistId
+        ? await uploadTrackInPlaylist({ playlistId, formData })
+        : await uploadTrack(formData)
+            .unwrap()
+            .then(() => {
+              formData.delete("trackURL");
+              console.log("Your profile has been updated", "success");
+            })
+            .catch((error) => console.log("ERROR 1", error))
+            .finally(() => {
+              formData.delete("trackURL");
+              setSelectedTracks([]);
+            });
     }
-  };
+  }, [
+    playlistId,
+    resetField,
+    selectedTracks,
+    uploadTrack,
+    uploadTrackInPlaylist,
+  ]);
 
+  useEffect(() => {
+    handleSubmitTracks();
+  }, [handleSubmitTracks, selectedTracks]);
 
   return (
     <>

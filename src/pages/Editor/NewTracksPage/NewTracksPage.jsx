@@ -31,7 +31,7 @@ const NewTracksPage = () => {
           <AddTracks iconButton={`${symbol}#icon-plus`} textButton={"Музику"} />
 
           <TracksTable
-            // title={" Остання додана музика!!!!!"}
+            title={" Остання додана музика"}
             tracks={allTracks}
             error={error}
             isFetching={isFetching}

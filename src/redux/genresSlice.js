@@ -61,15 +61,12 @@ export const genresApi = createApi({
       invalidatesTags: ["Genres"],
     }),
     updateGenreById: builder.mutation({
-      query: ({ id, formData }) => (
-        console.log(formData),
-        {
-          url: `/editor/genres/update/${id}`,
-          method: "PATCH",
-          body: formData,
-          formData: true,
-        }
-      ),
+      query: ({ id, formData }) => ({
+        url: `/editor/genres/update/${id}`,
+        method: "PATCH",
+        body: formData,
+        formData: true,
+      }),
       invalidatesTags: ["Genres"],
     }),
 

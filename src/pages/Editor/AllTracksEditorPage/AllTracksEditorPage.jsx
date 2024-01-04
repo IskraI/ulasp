@@ -1,6 +1,8 @@
 import TracksTable from "../../../components/EditorComponents/TracksTable/TracksTable";
 import { useGetAllTracksQuery } from "../../../redux/tracksSlice";
 import Player from "../../../components/Player/Player";
+import AddTracks from "../../../components/EditorComponents/AddTracks/AddTracks";
+import symbol from "../../../assets/symbol.svg";
 
 const RowsTitle = [
   "",
@@ -22,11 +24,13 @@ const AllTracksEditor = () => {
 
   return (
     <>
-      {isFetchingAllTracks && <p>Загружаемся.....</p>}
-      {!isFetchingAllTracks && !errorLoadingAllTracks && (
+      {!isSuccessAllTracks && <p>Загружаемся.....</p>}
+      {isSuccessAllTracks && !errorLoadingAllTracks && (
         <>
+          <AddTracks iconButton={`${symbol}#icon-plus`} textButton={"Музику"} />
+
           <TracksTable
-            title={" Остання додана музика"}
+            // title={" Остання додана музика"}
             tracks={allTracks}
             error={errorLoadingAllTracks}
             isFetching={isFetchingAllTracks}

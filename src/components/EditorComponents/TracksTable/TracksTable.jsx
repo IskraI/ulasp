@@ -8,9 +8,10 @@ import {
   TrStyle,
   LatestTracks,
   TracksNotFound,
-  MockPlayer,
 } from "../TracksTable/TracksTable.styled";
 import { BASE_URL, ERROR_NOT_FOUND } from "../../../constants/constants";
+
+import { useDeleteTrackMutation } from "../../../redux/tracksSlice";
 
 const TracksTable = ({
   rows,
@@ -21,6 +22,8 @@ const TracksTable = ({
   display,
   title,
 }) => {
+  const [deleteTrack, { all }] = useDeleteTrackMutation();
+
   const sToStr = (sec) => {
     sec = Math.round(sec);
     let m = Math.trunc(sec / 60) + "";
@@ -75,15 +78,21 @@ const TracksTable = ({
                       <TableCell style={{ display }}>
                         {playList?.playListName}
                       </TableCell>
-                      <TableCell style={{ display }}>***</TableCell>
+                      {/* <TableCell style={{ display }}>***</TableCell> */}
+                      <TableCell style={{ display }}>
+                        <button
+                          type="buton"
+                          onClick={() => deleteTrack(_id).unwrap()}
+                        >
+                          X
+                        </button>
+                      </TableCell>
                     </TrStyle>
                   );
                 }
               )}
             </tbody>
           </TableStyle>
-
-          {/* <MockPlayer>Тут будет плеер</MockPlayer> */}
         </>
       )}
     </>

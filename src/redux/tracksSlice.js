@@ -34,17 +34,18 @@ export const tracksApi = createApi({
       }),
       invalidatesTags: ["Tracks"],
     }),
-    getAllTracksforUser: builder.query({
-      query: () => ({
-        url: "/user/tracks/latestTracks",
+    deleteTrack: builder.mutation({
+      query: (id) => ({
+        url: `/editor/tracks/delete/${id}`,
+        method: "DELETE",
       }),
-      provideTags: ["Tracks"],
+      invalidatesTags: ["Tracks"],
     }),
   }),
 });
 
 export const {
   useGetAllTracksQuery,
-  useGetAllTracksforUserQuery,
   useUploadTrackMutation,
+  useDeleteTrackMutation,
 } = tracksApi;

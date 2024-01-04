@@ -150,18 +150,18 @@ function App() {
                 />
                 <Route
                   path="medialibrary/genres/:genreId/playlists"
-                  element={<PlaylistsPageUserInGenre/>}
+                  element={<PlaylistsPageUserInGenre />}
                 />
                 <Route path="medialibrary/shops" element={<ShopsUserPage />} />
-                 <Route
+                <Route
                   path="medialibrary/shops/:shopId/playlists"
-                  element={<PlaylistsPageUserInShop/>}
+                  element={<PlaylistsPageUserInShop />}
                 />
-                               <Route
+                <Route
                   path="medialibrary/newplaylists"
                   element={<NewPlaylistsUser display={"none"} />}
                 />
-                                <Route
+                <Route
                   path="medialibrary/newtracks"
                   element={<AllTracksUser display={"none"} />}
                 />
@@ -169,7 +169,7 @@ function App() {
                 <Route path="*" element={<ErrorPage />} />
               </Route>
             )}
-          
+
             {user.adminRole && (
               <Route
                 path="/admin"
@@ -226,11 +226,11 @@ function App() {
                 />
                 <Route
                   path="medialibrary/newtracks"
-                  element={<AllTracksEditor display={"none"} />}
+                  element={<NewTracksPage display={"none"} />}
                 />
 
                 <Route path="shops" element={<AllGenresPage />} />
-                <Route path="allmusic" element={<NewTracksPage />} />
+                <Route path="allmusic" element={<AllTracksEditor />} />
                 <Route path="*" element={<ErrorPage />} />
               </Route>
             )}

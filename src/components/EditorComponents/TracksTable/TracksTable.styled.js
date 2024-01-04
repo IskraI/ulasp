@@ -20,10 +20,7 @@ export const RowTitle = styled.th`
   line-height: 1.21;
   text-align: left;
   gap: 20px;
-  padding-top: 8px;
-  padding-bottom: 18px;
-  padding-right: 30px;
-  padding-left: 10px;
+  padding: 8px 10px 18px 10px;
 
   &:nth-of-type(1) {
     width: 5%;
@@ -35,17 +32,17 @@ export const RowTitle = styled.th`
     width: 15%;
   }
   &:nth-of-type(4) {
-    width: 10%;
+    width: 15%;
   }
-  &:nth-of-type(5) {
+  /* &:nth-of-type(5) {
     width: 10%;
-  }
-  &:nth-of-type(6) {
+  } */
+  /* &:nth-of-type(6) {
     width: 10%;
-  }
-  &:nth-of-type(7) {
+  } */
+  /* &:nth-of-type(7) {
     width: 5%;
-  }
+  } */
 `;
 
 export const TrStyle = styled.tr`
@@ -62,10 +59,7 @@ export const TrStyle = styled.tr`
 `;
 
 export const TableCell = styled.td`
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 10px;
-  /* padding-right: 30px; */
+  padding: 8px 0px 8px 10px;
 
   border: solid 1px transparent;
   border-style: none solid;
@@ -78,6 +72,8 @@ export const TableCell = styled.td`
   &:last-child {
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
+    text-align: right;
+    padding-right: 10px;
   }
 `;
 

@@ -47,6 +47,18 @@ export const playlistsApi = createApi({
       }),
       invalidatesTags: ["Playlists"],
     }),
+
+    uploadTracksInPlaylist: builder.mutation({
+      query: ({ playlistId, formData }) => (
+        {
+          url: `/editor/tracks/upload/${playlistId}`,
+          method: "POST",
+          body: formData,
+          formData: true,
+        }
+      ),
+      invalidatesTags: ["Playlists"],
+    }),
   }),
 });
 
@@ -55,4 +67,5 @@ export const {
   useGetPlaylistByIdQuery,
   useCreatePlaylistMutation,
   useDeletePlaylistMutation,
+  useUploadTracksInPlaylistMutation,
 } = playlistsApi;

@@ -1,6 +1,8 @@
 import TracksTable from "../../../components/EditorComponents/TracksTable/TracksTable";
 import { useGetPlaylistByIdQuery } from "../../../redux/playlistsSlice";
 import PlaylistListItem from "../../../components/EditorComponents/PlayLists/PlayListItem";
+import AddTracks from "../../../components/EditorComponents/AddTracks/AddTracks";
+import symbol from "../../../assets/symbol.svg";
 
 import Player from "../../../components/Player/Player";
 
@@ -23,13 +25,19 @@ const TracksPage = () => {
     useGetPlaylistByIdQuery(playlistId);
 
   if (isSuccess) {
-    console.log("Count", data.totalTracks);
+    // console.log("Count", data.totalTracks);
+    // console.log("data", data);
   }
 
   return (
     <>
       {isSuccess && !error && (
         <>
+          <AddTracks
+            iconButton={`${symbol}#icon-plus`}
+            textButton={"Музику"}
+            playlistId={playlistId}
+          />
           <PlaylistListItem
             icon={data.playlist.playListAvatarURL}
             title={data.playlist.playListName}
