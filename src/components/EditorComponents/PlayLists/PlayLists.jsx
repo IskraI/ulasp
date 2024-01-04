@@ -28,6 +28,8 @@ const LatestPlaylists = ({
   const [showModal, setShowModal] = useState(false);
   const [selectedPlaylistAvatar, setSelectedPlaylistAvatar] = useState(null);
 
+  console.log("selectedPlaylistAvatar", selectedPlaylistAvatar);
+
   const { genreId } = useParams();
 
   const [createPlaylist, { isSuccess, isLoading, isError }] =
@@ -37,6 +39,7 @@ const LatestPlaylists = ({
     useCreatePlaylistInGenreMutation();
 
   const handleChoosePlaylistAvatar = (event) => {
+    console.log("event", event);
     let file;
 
     if (event.target.files[0] !== undefined) {
@@ -44,11 +47,14 @@ const LatestPlaylists = ({
     }
     if (file) {
       setSelectedPlaylistAvatar(file);
+      console.log("file", file);
     }
   };
 
   const formDataFunction = (data) => {
     const formData = new FormData();
+
+    console.log("formData", formData);
 
     formData.append("playListName", data.playListName),
       formData.append("type", data.type),

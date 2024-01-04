@@ -41,6 +41,8 @@ const ModalForm = ({
 
   const coverImage = img ? URL.createObjectURL(img) : null;
 
+  // console.log("coverImage", coverImage);
+
   return (
     <>
       <FormControlModal autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
@@ -62,6 +64,7 @@ const ModalForm = ({
               type="file"
               accept="image/*"
               id={idInputImg}
+              value="" //значение пустая строка для кавера плейлиста
               style={{ display: "none" }}
               onChange={changePlayListAvatar}
             />

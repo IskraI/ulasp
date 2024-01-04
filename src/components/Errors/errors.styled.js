@@ -5,8 +5,8 @@ export const ErrorWrapper = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 24px 10px;
+  padding: 24px 8px;
   color: ${colors.errorColor};
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
 `;

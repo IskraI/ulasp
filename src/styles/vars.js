@@ -12,6 +12,7 @@ export const colors = {
   backGroundGreyColor: "#CECCC180",
 };
 
+
 export const transition = {
   duration: "300ms ease-out",
 };

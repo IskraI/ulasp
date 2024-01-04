@@ -60,6 +60,18 @@ export const genresApi = createApi({
       }),
       invalidatesTags: ["Genres"],
     }),
+    updateGenreById: builder.mutation({
+      query: ({ id, formData }) => (
+        console.log(formData),
+        {
+          url: `/editor/genres/update/${id}`,
+          method: "PATCH",
+          body: formData,
+          formData: true,
+        }
+      ),
+      invalidatesTags: ["Genres"],
+    }),
 
     deletePlaylistInGenre: builder.mutation({
       query: (id) => ({
@@ -75,6 +87,7 @@ export const {
   useGetAllGenresQuery,
   useGetGenreByIdQuery,
   useCreateGenreMutation,
+  useUpdateGenreByIdMutation,
   useDeleteGenreMutation,
   useGetAllGenresForUserQuery,
   useCreatePlaylistInGenreMutation,
