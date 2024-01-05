@@ -5,7 +5,7 @@ import { BtnSort } from "./AllTracksUser.styled";
 import symbol from "../../../assets/symbol.svg";
 import { useState } from "react";
 import NavMusic from "../../../components/UserMediaComponent/NavMusic/NavMusic"
-
+import Player from "../../../components/Player/Player";
 
 
 const RowsTitle = ["", "Назва пісні", "Виконавець", "Тривалість", "Жанр", ""];
@@ -65,14 +65,18 @@ const AllTracksUser = () => {
                 <use href={`${symbol}#icon-sort`}></use>
               </svg></BtnSort>   
       {isFetchingAllTracks && <p>Загружаемся.....</p>}
-      {!isFetchingAllTracks && !errorLoadingAllTracks && (
+           {!isFetchingAllTracks && !errorLoadingAllTracks && (
+             <>
         <TracksTable
                   tracks={sortedTracks}
           error={errorLoadingAllTracks}
           isFetching={isFetchingAllTracks}
           rows={RowsTitle}
-        />
-      )}
+             />
+               <Player tracks={sortedTracks} />
+               </>
+           )}
+           
     </>
   );
 };
