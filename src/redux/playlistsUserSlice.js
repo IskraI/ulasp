@@ -50,7 +50,7 @@ export const playlistsUserApi = createApi({
     }),
 
     favoritePlaylistForUser: builder.query({
-      query: () => ({ url: `/user/playlist/favorites/` }),
+      query: () => ({ url: `/user/playlist/favorites` }),
 
       providesTags: ["PlaylistsFavorite"],
     }),
