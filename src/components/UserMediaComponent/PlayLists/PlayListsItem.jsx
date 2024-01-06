@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 
 
-const PlayListItem = ({ id, title, icon, isFavorite: initialFavorite, genre,
+const PlayListItem = ({ id, title, icon, genre, favoriteStatus,
   placeListCardInfo,
   countTracks, }) => {
 
@@ -25,9 +25,9 @@ const PlayListItem = ({ id, title, icon, isFavorite: initialFavorite, genre,
 
 // { _id, title, icon, isFavorite: initialFavorite }
   const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
-  const { data: favoriteStatus } = useFavoritePlaylistForUserQuery(id);
+  // const { data: favoriteStatus } = useFavoritePlaylistForUserQuery(id);
+  //   const [isFavorite, setIsFavorite] = useState(favoriteStatus || false);
     const [isFavorite, setIsFavorite] = useState(favoriteStatus || false);
-    
     // const handleToggleFavorite = (playlistId) => {
     //   toggleFavorite(playlistId)
      
