@@ -29,19 +29,21 @@ const MediaLibraryForUser = () => {
   } = useGetLatestPlaylistsForUserQuery(`?&limit=${12}`);
   const {
     data: allTracks,
+   
     isFetching: isFetchingNewSongs,
     isSuccess: isSuccesLatestNewSongs,
     isError: isErrorNewSongs,
   } = useGetAllTracksforUserQuery(`?&limit=${6}`);
  
   const {
-    data: FavoritePlaylist,
+    data: favoritePlaylist,
+    isLoading: isLoadingFavoritePlaylist,
     isFetching: isFetchingFavoritePlaylist,
     isSuccess: isSuccesLatestFavoritePlaylist,
     isError: isErrorFavoritePlaylist,
   } = useFavoritePlaylistForUserQuery();
   
-console.log('FavoritePlaylist', FavoritePlaylist)
+console.log('FavoritePlaylist medialibrary', favoritePlaylist)
 
   const fetching =
     isFetchingAllGenre &&
@@ -87,13 +89,14 @@ console.log('FavoritePlaylist', FavoritePlaylist)
             isError={isErrorShops}
             isSuccess={isSuccessShops}
           />
-          <LatestPlaylists
+          {!isLoadingFavoritePlaylist&& (<LatestPlaylists
              title={"Нові плейлисти"}
             displayPlayer={"none"}
             data={playlists}
+            dataFavorite={favoritePlaylist}
             isFetching={isFetchingLatestPlaylist}
             error={isErrorLatestPlaylist}
-                 />
+                 />)}
              <NewSongs
             data={allTracks}
             isFetching={isFetchingNewSongs}
