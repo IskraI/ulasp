@@ -35,7 +35,9 @@ const MediaLibraryForUser = () => {
     isError: isErrorNewSongs,
   } = useGetAllTracksforUserQuery(`?&limit=${6}`);
  
-  const {
+
+ const {
+
     data: favoritePlaylist,
     isLoading: isLoadingFavoritePlaylist,
     isFetching: isFetchingFavoritePlaylist,
@@ -89,7 +91,9 @@ console.log('FavoritePlaylist medialibrary', favoritePlaylist)
             isError={isErrorShops}
             isSuccess={isSuccessShops}
           />
+
           {!isLoadingFavoritePlaylist&& (<LatestPlaylists
+
              title={"Нові плейлисти"}
             displayPlayer={"none"}
             data={playlists}

@@ -25,14 +25,14 @@ const PlayListItem = ({ id, title, icon, genre, favoriteStatus,
 
 // { _id, title, icon, isFavorite: initialFavorite }
   const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
+
   // const { data: dataFavorites } = useFavoritePlaylistForUserQuery();
  
   // console.log('favoriteStatus item', favoriteStatus)
 
- 
+
 
     const [isFavorite, setIsFavorite] = useState(favoriteStatus || false);
-    
     // const handleToggleFavorite = (playlistId) => {
     //   toggleFavorite(playlistId)
      
