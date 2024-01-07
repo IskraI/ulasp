@@ -127,7 +127,7 @@ const LatestPlaylists = ({
         </PlaylistWrapper>
       )}
       {showModal && (
-        <Modal width={"814px"} onClose={closeModal} showCloseButton>
+        <Modal width={"814px"} onClose={closeModal} showCloseButton={true}>
           {genre ? (
             <>
               <ModalForm

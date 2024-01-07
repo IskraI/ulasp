@@ -64,6 +64,7 @@ const TracksPage = () => {
             <PlayListControl
               isPublished={data.playlist.published}
               countTracks={data.totalTracks}
+              playlistName={data.playlist.playListName}
             />
           </div>
           <TracksTable
