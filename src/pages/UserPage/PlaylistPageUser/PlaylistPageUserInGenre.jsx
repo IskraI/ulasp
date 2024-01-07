@@ -5,6 +5,7 @@ import LatestPlaylists from "../../../components/UserMediaComponent/PlayLists/Pl
 import { Loader } from "../../../components/Loader/Loader";
 import NavMusic from "../../../components/UserMediaComponent/NavMusic/NavMusic";
 import TabNavigation from "../../../components/TabNavigation/TabNavigation";
+import DropDownGeners from "../../../components/DropDownGeners/DropDownGeners";
 
 const PlaylistsPageUserInGenre = () => {
   const { genreId } = useParams();
@@ -23,7 +24,8 @@ const PlaylistsPageUserInGenre = () => {
       {!isError && isSuccess && (
               <>
               <TabNavigation />    
-              <NavMusic links={links}/>
+          <NavMusic links={links} />
+          <DropDownGeners currentGenreId={genreId}/>
           <LatestPlaylists
             // title={`Плейлисти жанру "${data.genre}"`}
             genre={data.genre}

@@ -8,7 +8,7 @@ import {
   LatestTracks,
   TracksNotFound,
   MockPlayer,
-} from "../TracksTable/TracksTable.styled";
+} from "./TracksTable.styled";
 import { BASE_URL, ERROR_NOT_FOUND } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 

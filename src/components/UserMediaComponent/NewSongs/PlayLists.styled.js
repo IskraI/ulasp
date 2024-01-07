@@ -1,10 +1,21 @@
 import styled from "@emotion/styled";
 import { colors } from "../../../styles/vars";
+import { keyframes } from "@emotion/react";
 
 
 export const PlaylistWrapper = styled.section`
   /* display: flex; */
 `;
+
+const marqueeAnimation = keyframes`
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+`;
+
 
 export const PlaylistList = styled.ul`
   display: flex;
@@ -42,6 +53,7 @@ export const PlaylistItemText = styled.p`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  animation: ${marqueeAnimation} 8s linear infinite;
 `;
 export const PlaylistItemText2 = styled.p`
   font-size: 16px;
