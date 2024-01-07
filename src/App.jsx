@@ -44,9 +44,9 @@ import AllGenresForUser from "./pages/UserPage/AllGenresForUser/AllGenresForUser
 import NewPlaylistsUser from "./pages/UserPage/NewPlaylistsUser/NewPlaylistsUser";
 import NewTracksUser from "./pages/UserPage/NewTracksUser/NewTracksUser";
 import AllTracksUser from "./pages/UserPage/AllTracksUser/AllTracksUser";
-import PlaylistsPageUserInGenre from './pages/UserPage/PlaylistPageUser/PlaylistPageUserInGenre';
-import PlaylistsPageUserInShop from './pages/UserPage/PlaylistPageUser/PlaylistsPageUserInShop';
-import TracksPageUser from './pages/UserPage/TracksPageUser/TracksPageUser'
+import PlaylistsPageUserInGenre from "./pages/UserPage/PlaylistPageUser/PlaylistPageUserInGenre";
+import PlaylistsPageUserInShop from "./pages/UserPage/PlaylistPageUser/PlaylistsPageUserInShop";
+import TracksPageUser from "./pages/UserPage/TracksPageUser/TracksPageUser";
 
 const AdminCabinetPage = lazy(() =>
   import("./components/AdminComponents/AdminCabinetPage/AdminCabinetPage")
@@ -76,7 +76,7 @@ function App() {
   // console.log("user.userRole", user.userRole);
   // console.log("user.isLoggedIn", user.isLoggedIn);
 
-  const skipAdmin = !user.token && !user.isLoggedIn || user.userRole;
+  const skipAdmin = (!user.token && !user.isLoggedIn) || user.userRole;
   // console.log("skipAdmin", skipAdmin);
 
   const skipClient =
@@ -84,8 +84,7 @@ function App() {
 
   // console.log("skipClient", skipClient);
   const { data, isLoading, isError, error } = useCurrentUserQuery("", {
-    skip: skipAdmin, 
-  
+    skip: skipAdmin,
   }); //если пользователь клиент, то скип = тру и єтот запрос пропустится
 
   const {
@@ -113,7 +112,7 @@ function App() {
   //       </Route>
   //     </Routes>
   //   );
-  // } 
+  // }
 
   if (isMobile) {
     return (
@@ -152,14 +151,18 @@ function App() {
                   path="medialibrary/genres/:genreId/playlists"
                   element={<PlaylistsPageUserInGenre />}
                 />
-                 <Route
+                <Route
                   path="medialibrary/genres/:genreId/playlists/:playlistId/tracks"
                   element={<TracksPageUser display={"none"} />}
                 />
                 <Route path="medialibrary/shops" element={<ShopsUserPage />} />
                 <Route
                   path="medialibrary/shops/:shopId/playlists"
-                  element={<PlaylistsPageUserInShop/>}
+                  element={<PlaylistsPageUserInShop />}
+                />
+                <Route
+                  path="medialibrary/shops/:shopId/playlists/:playlistId/tracks"
+                  element={<TracksPageUser display={"none"} />}
                 />
                 <Route
                   path="medialibrary/newplaylists"

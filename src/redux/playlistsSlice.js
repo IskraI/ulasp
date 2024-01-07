@@ -49,14 +49,27 @@ export const playlistsApi = createApi({
     }),
 
     uploadTracksInPlaylist: builder.mutation({
-      query: ({ playlistId, formData }) => (
-        {
-          url: `/editor/tracks/upload/${playlistId}`,
-          method: "POST",
-          body: formData,
-          formData: true,
-        }
-      ),
+      query: ({ playlistId, formData }) => ({
+        url: `/editor/tracks/upload/${playlistId}`,
+        method: "POST",
+        body: formData,
+        formData: true,
+      }),
+      invalidatesTags: ["Playlists"],
+    }),
+    deleteTrackInPlaylist: builder.mutation({
+      query: (trackId) => ({
+        url: `/editor/tracks/delete/${trackId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Playlists"],
+    }),
+    updatePlaylist: builder.mutation({
+      query: ({ playlistId, body }) => ({
+        url: `/editor/playlist/update/${playlistId}`,
+        method: "PATCH",
+        body,
+      }),
       invalidatesTags: ["Playlists"],
     }),
   }),
@@ -68,4 +81,6 @@ export const {
   useCreatePlaylistMutation,
   useDeletePlaylistMutation,
   useUploadTracksInPlaylistMutation,
+  useDeleteTrackInPlaylistMutation,
+  useUpdatePlaylistMutation,
 } = playlistsApi;

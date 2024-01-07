@@ -1,6 +1,10 @@
 import styled from "@emotion/styled";
 import { colors } from "../../../styles/vars";
 
+export const TracksTableWrapper = styled.div`
+  margin-top: ${(props) => props.marginTop};
+`;
+
 export const TableStyle = styled.table`
   margin-bottom: 34px;
   text-align: left;
@@ -108,4 +112,26 @@ export const MockPlayer = styled.div`
   align-items: center;
   font-size: 30px;
   color: yellowgreen;
+`;
+
+export const PopUpTracksTable = styled.div`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: red;
+  padding: 6px;
+  width: 100%;
+  height: 100%;
+  border: 12px solid red;
+  top: -10px;
+  right: 67px;
+  z-index: 10;
+`;
+
+export const PopUpButton = styled.button`
+  width: 150px;
+  padding: 4px;
+  border: 0;
 `;

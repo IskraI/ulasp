@@ -7,6 +7,8 @@ export const Button = ({
   margintop,
   marginright,
   marginleft,
+  color,
+  background,
   padding,
   onClick,
   type,
@@ -22,6 +24,9 @@ export const Button = ({
     <CustomButton
       type={type}
       width={width}
+      height={height}
+      color={color}
+      background={background}
       aria-label={ariaLabel}
       marginbottom={marginbottom}
       margintop={margintop}

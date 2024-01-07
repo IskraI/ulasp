@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { colors } from "../../../styles/vars";
+import { Link } from "react-router-dom";
 
 export const PlaylistWrapper = styled.section`
   /* display: flex; */
@@ -24,9 +25,25 @@ export const PlaylistItem = styled.li`
   background-color: ${colors.activeBtnColor};
 `;
 
+export const LinkToTracks = styled(Link)`
+  width: 100%;
+  display: flex;
+  align-items: center;
+`;
+
+export const PlaylistCardInfo = styled.div`
+  display: flex;
+  align-items: center;
+  width: 310px;
+  padding: 10px;
+  border: 1px solid ${colors.accentHoverColor};
+  border-radius: 10px;
+  background-color: ${colors.activeBtnColor};
+`;
 export const PlaylistImg = styled.img`
   border-radius: 10px;
-  margin-right: auto;
+  /* margin-right: auto; */
+  margin-right: ${(props) => props.marginRight ?? "auto"};
 `;
 
 export const PlaylistInfoWrapper = styled.div`

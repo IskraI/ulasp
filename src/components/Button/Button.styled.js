@@ -9,11 +9,12 @@ export const CustomButton = styled.button`
   border: 1px solid #17161c;
   font-family: inherit;
   width: ${(props) => props.width};
+  height: ${(props) => props.height};
   font-size: ${(props) => props.fontsize};
   font-weight: 400;
-  color: #17161c;
+  color: ${(props) => props.color ?? "#17161c"};
   outline: none;
-  background: rgba(164, 188, 212, 0.3);
+  background: ${(props) => props.background ?? "rgba(164, 188, 212, 0.3)"};
   margin-top: ${(props) => props.margintop};
   margin-bottom: ${(props) => props.marginbottom};
   margin-left: ${(props) => props.marginleft};

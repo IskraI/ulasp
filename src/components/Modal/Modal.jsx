@@ -21,7 +21,7 @@ export const Modal = ({
   children,
   onClose,
   flexDirection,
-  }) => {
+}) => {
   useEffect(() => {
     const handleKeydown = (e) => {
       if (e.code === "Escape") onClose();
@@ -48,9 +48,12 @@ export const Modal = ({
 
   return createPortal(
     // <Overlay onClick={handleBackdropClick} style={overlayStyle}>
-        <Overlay  style={overlayStyle}>
-  
-      <ModalWindow width={width} padding={padding} flexDirection={flexDirection}>
+    <Overlay style={overlayStyle}>
+      <ModalWindow
+        width={width}
+        padding={padding}
+        flexDirection={flexDirection}
+      >
         <CloseBtn onClick={onClose} style={closeButtonStyle}>
           <CloseIcon />
         </CloseBtn>

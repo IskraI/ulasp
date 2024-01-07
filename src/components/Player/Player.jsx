@@ -14,7 +14,6 @@ const Player = ({ display, tracks }) => {
 
   const trackSRC = BASE_URL + "/" + tracks[currentTrack]?.trackURL;
 
-  console.log(tracks);
   const handleClickNext = () => {
     setTrackIndex((currentTrack) =>
       currentTrack < tracks.length - 1 ? currentTrack + 1 : 0

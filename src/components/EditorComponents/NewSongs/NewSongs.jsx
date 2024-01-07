@@ -24,7 +24,7 @@ const NewSongs = ({ data: allTracks, isFetching, isSuccess, error }) => {
             }
           />
           <TracksTable
-            title={" Остання додана музика"}
+            showTitle={false}
             tracks={allTracks}
             error={error}
             isFetching={isFetching}

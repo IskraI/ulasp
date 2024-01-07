@@ -65,7 +65,8 @@ const EditorCabinetPage = () => {
       {!isFetchingAllTracks && !errorLoadingAllTracks && (
         <>
           <TracksTable
-            title={" Остання додана музика"}
+            title={"Остання додана музика"}
+            showTitle={true}
             tracks={allTracks}
             isLoading={isLoadingAllTracks}
             error={errorLoadingAllTracks}

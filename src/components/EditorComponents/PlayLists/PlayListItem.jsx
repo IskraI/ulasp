@@ -13,9 +13,10 @@ import {
   PlaylistCountTracks,
   PlaylistIconsWrapper,
   PlaylistDeleteButton,
+  PlaylistCardInfo,
+  LinkToTracks,
 } from "./PlayLists.styled";
 
-import { Link } from "react-router-dom";
 import { Modal } from "../../Modal/Modal";
 
 const PlaylistListItem = ({
@@ -58,30 +59,16 @@ const PlaylistListItem = ({
 
     deletePlaylist(id);
   };
+
+  const PropsPlayListItem = {
+    marginRight: placeListCardInfo ? "16px" : "auto",
+  };
+
   return (
     <>
-      <PlaylistItem>
-        {/* <Link
-          key={id}
-          to={
-            location.pathname === mediaLibrary
-              ? `newplaylists/${id}/tracks`
-              : `${id}/tracks`
-          }
-          state={{ from: location }}
-          disabled={placeListCardInfo ? true : false}
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <PlaylistImg src={BASE_URL + "/" + icon} alt={title} />
-          <PlaylistItemText>{title}</PlaylistItemText>
-        </Link> */}
-
-        {!placeListCardInfo ? (
-          <Link
+      {!placeListCardInfo ? (
+        <PlaylistItem>
+          <LinkToTracks
             key={id}
             to={
               location.pathname === mediaLibrary
@@ -90,48 +77,73 @@ const PlaylistListItem = ({
             }
             state={{ from: location }}
             disabled={placeListCardInfo ? true : false}
-            style={{
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-            }}
           >
-            <PlaylistImg src={BASE_URL + "/" + icon} alt={title} />
+            <PlaylistImg
+              marginRight={PropsPlayListItem.marginRight}
+              src={BASE_URL + "/" + icon}
+              alt={title}
+            />
             <PlaylistItemText>{title}</PlaylistItemText>
-          </Link>
-        ) : (
-          <>
-            <PlaylistImg src={BASE_URL + "/" + icon} alt={title} />
-            <PlaylistInfoWrapper>
-              <PlaylistItemText>{title}</PlaylistItemText>
-              <PlaylistCountTracks>
-                {countTracks + `${" "}` + "пісень"}
-              </PlaylistCountTracks>
-            </PlaylistInfoWrapper>
-          </>
-        )}
-        <PlaylistIconsWrapper>
-          <svg width="24" height="24">
-            <use href={`${symbol}#icon-pen`}></use>
-          </svg>
+          </LinkToTracks>
+          <PlaylistIconsWrapper>
+            <svg width="24" height="24">
+              <use href={`${symbol}#icon-pen`}></use>
+            </svg>
 
-          <PlaylistDeleteButton
-            type="button"
-            onClick={deleteMediaItem}
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <svg width="24" height="24" stroke="#888889">
-                <use href={`${symbol}#icon-del-basket`}></use>
-              </svg>
-            ) : (
-              <svg width="24" height="24">
-                <use href={`${symbol}#icon-del-basket`}></use>
-              </svg>
-            )}
-          </PlaylistDeleteButton>
-        </PlaylistIconsWrapper>
-      </PlaylistItem>
+            <PlaylistDeleteButton
+              type="button"
+              onClick={deleteMediaItem}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <svg width="24" height="24" stroke="#888889">
+                  <use href={`${symbol}#icon-del-basket`}></use>
+                </svg>
+              ) : (
+                <svg width="24" height="24">
+                  <use href={`${symbol}#icon-del-basket`}></use>
+                </svg>
+              )}
+            </PlaylistDeleteButton>
+          </PlaylistIconsWrapper>
+        </PlaylistItem>
+      ) : (
+        <PlaylistCardInfo>
+          <PlaylistImg
+            marginRight={PropsPlayListItem.marginRight}
+            src={BASE_URL + "/" + icon}
+            alt={title}
+          />
+          <PlaylistInfoWrapper>
+            <PlaylistItemText>{title}</PlaylistItemText>
+            <PlaylistCountTracks>
+              {countTracks + `${" "}` + "пісень"}
+            </PlaylistCountTracks>
+          </PlaylistInfoWrapper>
+          <PlaylistIconsWrapper>
+            <svg width="24" height="24">
+              <use href={`${symbol}#icon-pen`}></use>
+            </svg>
+
+            <PlaylistDeleteButton
+              type="button"
+              onClick={deleteMediaItem}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <svg width="24" height="24" stroke="#888889">
+                  <use href={`${symbol}#icon-del-basket`}></use>
+                </svg>
+              ) : (
+                <svg width="24" height="24">
+                  <use href={`${symbol}#icon-del-basket`}></use>
+                </svg>
+              )}
+            </PlaylistDeleteButton>
+          </PlaylistIconsWrapper>
+        </PlaylistCardInfo>
+      )}
+
       {/* {data && (
         <Modal width={"814px"}>
           <p>{data.message}</p>
