@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { getUserState } from "../redux/userSelectors";
 import { useCurrentUserQuery } from "../redux/authSlice";
+import { Loader } from "./Loader/Loader";
 
 import { Navigate } from "react-router-dom";
 
@@ -13,7 +14,7 @@ const PrivateRoute = ({ component: Component, redirectTo = "/adminlogin" }) => {
   });
 
   console.log("зашли в приват",);
-  if (isLoading) return <>Loading....</>;
+  if (isLoading) return <Loader />;
   console.log("user.isLoading", isLoading);
   if (!user.isLoggedIn || !user.token) {
     // console.log("Выход из учетной записи");

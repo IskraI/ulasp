@@ -47,23 +47,24 @@ const EditorCabinetPage = () => {
 
   return (
     <>
+      {isFetchingAllTracks && !isSuccessAllTracks && <Loader />}
+
       <EditorText> Кабінет редактора</EditorText>
 
-      <StatsListWrapper>
-        <StatItemEditor>
-          {!isFetchingTracksCount && !isError && tracksCount.countTracks}
-          <br /> Доданої музики
-        </StatItemEditor>
-        <StatItemEditor>
-          {!isLoadingPlaylists &&
-            !errorPlaylistCount &&
-            playlistCount.countPlaylists}
-          <br /> Створених плейлистів
-        </StatItemEditor>
-      </StatsListWrapper>
-      {isFetchingAllTracks && <Loader />}
-      {!isFetchingAllTracks && !errorLoadingAllTracks && (
+      {isSuccessAllTracks && !errorLoadingAllTracks && (
         <>
+          <StatsListWrapper>
+            <StatItemEditor>
+              {!isFetchingTracksCount && !isError && tracksCount.countTracks}
+              <br /> Доданої музики
+            </StatItemEditor>
+            <StatItemEditor>
+              {!isLoadingPlaylists &&
+                !errorPlaylistCount &&
+                playlistCount.countPlaylists}
+              <br /> Створених плейлистів
+            </StatItemEditor>
+          </StatsListWrapper>
           <TracksTable
             title={"Остання додана музика"}
             showTitle={true}

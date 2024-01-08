@@ -3,6 +3,7 @@ import { Suspense } from "react";
 
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+import { Loader } from "../Loader/Loader";
 
 import { ContainerWrraper } from "./SharedLayout.styled";
 
@@ -11,17 +12,15 @@ import { ContainerWrraper } from "./SharedLayout.styled";
 export const SharedLayout = ({avatarURL}) => {
   return (
     <>
-
-         <Header avatarURL = {avatarURL}/>
+      <Header avatarURL={avatarURL} />
       <ContainerWrraper>
         <main>
-          <Suspense fallback={"Loader"}>
+          <Suspense fallback={<Loader />}>
             <Outlet />
           </Suspense>
         </main>
       </ContainerWrraper>
       <Footer />
-
     </>
   );
 };
