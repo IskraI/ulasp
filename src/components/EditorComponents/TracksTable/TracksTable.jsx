@@ -15,6 +15,7 @@ import { BASE_URL, ERROR_NOT_FOUND } from "../../../constants/constants";
 import { tracksTableProps } from "./TracksTableProps";
 
 import { useDeleteTrackMutation } from "../../../redux/tracksSlice";
+import { sToStr } from "../../../helpers/helpers";
 
 import { useState } from "react";
 
@@ -35,12 +36,7 @@ const TracksTable = ({
 
   const [isCheked, setIsCheked] = useState(false);
 
-  const sToStr = (sec) => {
-    sec = Math.round(sec);
-    let m = Math.trunc(sec / 60) + "";
-    sec = (sec % 60) + "";
-    return m.padStart(2, 0) + ":" + sec.padStart(2, 0);
-  };
+
 
   return (
     <>

@@ -3,7 +3,6 @@ import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 import { useDeletePlaylistMutation } from "../../../redux/playlistsSlice";
 import { useDeletePlaylistInGenreMutation } from "../../../redux/genresSlice";
-import { useLocation, useNavigate } from "react-router-dom";
 
 import {
   PlaylistItem,
@@ -18,6 +17,9 @@ import {
 } from "./PlayLists.styled";
 
 import { Modal } from "../../Modal/Modal";
+import { getNoun } from "../../../helpers/helpers";
+
+import { useLocation, useNavigate } from "react-router-dom";
 
 const PlaylistListItem = ({
   id,
@@ -29,6 +31,8 @@ const PlaylistListItem = ({
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const tracksCount = getNoun(countTracks, "пісня", "пісні", "пісень");
 
   const mediaLibrary = `/editor/medialibrary`;
   const newPlaylists = `/editor/medialibrary/newplaylists/${id}/tracks`;
@@ -117,7 +121,8 @@ const PlaylistListItem = ({
           <PlaylistInfoWrapper>
             <PlaylistItemText>{title}</PlaylistItemText>
             <PlaylistCountTracks>
-              {countTracks + `${" "}` + "пісень"}
+              {/* {countTracks + `${" "}` + "пісень"} */}
+              {countTracks + `${" "}` + tracksCount}
             </PlaylistCountTracks>
           </PlaylistInfoWrapper>
           <PlaylistIconsWrapper>

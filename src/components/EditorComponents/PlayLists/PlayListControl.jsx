@@ -3,6 +3,7 @@ import { Button } from "../../Button/Button";
 import { Modal } from "../../Modal/Modal";
 import { ModalInfoText } from "../../Modal/Modal.styled";
 import { useUpdatePlaylistMutation } from "../../../redux/playlistsSlice";
+import { LoaderButton } from "../../Loader/Loader";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
@@ -12,14 +13,23 @@ const PlayListControl = ({ isPublished, countTracks, playlistName }) => {
 
   const { playlistId } = useParams();
 
-  const [updatePlaylist, { isSuccess, isLoading }] =
+  const [updatePlaylist, { isSuccess, isLoading, isUninitialized }] =
     useUpdatePlaylistMutation();
 
   useEffect(() => {
     if (isSuccess) {
       setIsShowModal(false);
     }
-  }, [isSuccess]);
+    isCountTracksNull();
+    async function isCountTracksNull() {
+      if (!countTracks && isPublished) {
+        await updatePlaylist({
+          playlistId,
+          body: { published: "false" },
+        }).unwrap();
+      }
+    }
+  }, [countTracks, isPublished, isSuccess, playlistId, updatePlaylist]);
 
   const handleSubmit = async () => {
     const body = Object.assign({ published: isPublished ? "false" : "true" });
@@ -32,12 +42,22 @@ const PlayListControl = ({ isPublished, countTracks, playlistName }) => {
         }
       });
   };
+  const LoaderBtn =
+    isPublished && isLoading && !isSuccess ? (
+      <LoaderButton />
+    ) : !isPublished && isLoading && !isSuccess ? (
+      <LoaderButton />
+    ) : isPublished ? (
+      `Опублікований`
+    ) : (
+      `Опублікувати`
+    );
 
   return (
     <>
       <Button
         type={"button"}
-        text={isPublished ? "Опублікований" : "Опублікувати"}
+        text={LoaderBtn}
         color={isPublished ? "#D74A4A" : null}
         background={isPublished ? null : " #fff3bf"}
         disabled={countTracks ? false : true}
