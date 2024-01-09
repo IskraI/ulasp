@@ -25,7 +25,6 @@ const DropDownGeners = ({ currentGenreId }) => {
       return sortedArr.concat(remainingArr);
     };
 
-    console.log('datasort', datasort(genres, genres._id, currentGenreId ));
 
    useEffect(() => {
    
@@ -61,7 +60,7 @@ const DropDownGeners = ({ currentGenreId }) => {
         <StyledDropDown>
             <Select id="genreSelect" value={selectedGenre} onChange={(e) => setSelectedGenre(e.target.value)}>
               {genres && datasort(genres, genres._id, currentGenreId).map(genre => (
-              <Option key={genre.id} value={genre.id}>
+              <Option key={genre._id} value={genre._id}>
                 {genre.genre}
               </Option>
             ))}
