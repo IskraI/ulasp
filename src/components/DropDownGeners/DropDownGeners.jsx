@@ -37,6 +37,10 @@ const DropDownGenres = ({ currentGenreId }) => {
       }
     }
   }, [genres, error, currentGenreId]);
+  
+  if (isLoading) {
+    return <Loader/>;
+  }
 
   const handleChange = (e) => {
     const selectedGenreId = e.target.value;
