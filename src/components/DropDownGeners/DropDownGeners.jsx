@@ -7,7 +7,25 @@ import  {StyledDropDown, Select, Option} from  './DropDownGeners.styled'
 const DropDownGeners = ({ currentGenreId }) => {
   const { data: genres, error, isLoading } = useGetAllGenresForUserQuery();
     const [selectedGenre, setSelectedGenre] = useState('');
+ 
+    const datasort=(genres, _id, currentGenreId) => {
+      const sortedArr = [];
+      const remainingArr = [];
     
+      genres.forEach((item) => {
+       
+        if (item._id === currentGenreId) {
+  
+          sortedArr.push(item);
+        } else {
+          remainingArr.push(item);
+        }
+      });
+    
+      return sortedArr.concat(remainingArr);
+    };
+
+    console.log('datasort', datasort(genres, genres._id, currentGenreId ));
 
    useEffect(() => {
    
@@ -32,6 +50,9 @@ const DropDownGeners = ({ currentGenreId }) => {
     return <Loader/>;
   }
 
+  console.log('currentGenreId', currentGenreId)
+
+
   return (
     <div>
       {error ? (
@@ -39,7 +60,7 @@ const DropDownGeners = ({ currentGenreId }) => {
       ) : (
         <StyledDropDown>
             <Select id="genreSelect" value={selectedGenre} onChange={(e) => setSelectedGenre(e.target.value)}>
-              {genres && genres.map(genre => (
+              {genres && datasort(genres, genres._id, currentGenreId).map(genre => (
               <Option key={genre.id} value={genre.id}>
                 {genre.genre}
               </Option>

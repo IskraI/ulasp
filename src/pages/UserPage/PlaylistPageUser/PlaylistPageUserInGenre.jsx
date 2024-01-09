@@ -18,6 +18,8 @@ const PlaylistsPageUserInGenre = () => {
     { path: `/user/medialibrary/genres/${genreId}/tracks`, title: "Пісні" },
   ];
 
+  console.log('genreId', genreId);
+  
   return (
     <>
       {isFetching && !isError && <Loader />}
