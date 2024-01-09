@@ -3,6 +3,7 @@ import { useGetAllGenresForUserQuery } from "../../redux/genersUserSlice";
 import { Loader } from "../Loader/Loader";
 import { StyledDropDown, Select, Option } from "./DropDownGeners.styled";
 import { useNavigate } from 'react-router-dom';
+import symbol from '../../assets/symbol.svg';
 
 const DropDownGenres = ({ currentGenreId }) => {
   const navigate = useNavigate();
@@ -56,16 +57,16 @@ const DropDownGenres = ({ currentGenreId }) => {
           <Select
             id="genreSelect"
             value={selectedGenre}
-            onChange={handleChange}
-          >
-            {genres &&
+              onChange={handleChange}
+                          >
+                        {genres &&
               datasort(genres, currentGenreId).map((genre) => (
                 <Option key={genre._id} value={genre._id}>
                   {genre.genre}
                 </Option>
               ))}
-          </Select>
-        </StyledDropDown>
+                         </Select>
+                    </StyledDropDown>
       )}
     </div>
   );

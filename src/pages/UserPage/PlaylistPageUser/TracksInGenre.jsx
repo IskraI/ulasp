@@ -1,12 +1,12 @@
 import TabNavigation from "../../../components/TabNavigation/TabNavigation";
 import TracksTable from "../../../components/UserMediaComponent/TracksTable/TracksTable";
 import { useGetAllTracksforUserQuery  } from "../../../redux/tracksUserSlice";
-import { BtnSort } from "./AllTracksUser.styled";
+import { BtnSort } from "../AllTracksUser/AllTracksUser.styled";
 import symbol from "../../../assets/symbol.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavMusic from "../../../components/UserMediaComponent/NavMusic/NavMusic"
 import { useParams } from "react-router-dom";
-
+import Player from '../../../components/Player/Player';
 
 const RowsTitle = ["", "Назва пісні", "Виконавець", "Тривалість", "Жанр", ""];
 
@@ -38,8 +38,9 @@ const { genreId } = useParams();
         const titleB = (b.trackName || "").toUpperCase();
         return sortAlphabetically ? titleA.localeCompare(titleB) : 0;
       })
-        : [];
-    
+    : [];
+  
+      
        return (
       <>
            <TabNavigation /> 
@@ -48,13 +49,16 @@ const { genreId } = useParams();
                 <use href={`${symbol}#icon-sort`}></use>
               </svg></BtnSort>   
       {isFetchingAllTracks && <p>Загружаемся.....</p>}
-      {!isFetchingAllTracks && !errorLoadingAllTracks && (
+           {!isFetchingAllTracks && !errorLoadingAllTracks && (
+             <>
         <TracksTable
                   tracks={sortedTracks}
           error={errorLoadingAllTracks}
           isFetching={isFetchingAllTracks}
           rows={RowsTitle}
-        />
+             />
+              <Player tracks={sortedTracks} />
+             </>
       )}
     </>
   );
