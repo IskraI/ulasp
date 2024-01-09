@@ -1,56 +1,47 @@
-import  { useEffect, useState } from 'react';
-import { useGetAllGenresForUserQuery } from '../../redux/genersUserSlice';
-import { Loader } from '../Loader/Loader';
-import  {StyledDropDown, Select, Option} from  './DropDownGeners.styled'
+import { useEffect, useState } from "react";
+import { useGetAllGenresForUserQuery } from "../../redux/genersUserSlice";
+import { Loader } from "../Loader/Loader";
+import { StyledDropDown, Select, Option } from "./DropDownGeners.styled";
+import { useNavigate } from 'react-router-dom';
 
-
-const DropDownGeners = ({ currentGenreId }) => {
+const DropDownGenres = ({ currentGenreId }) => {
+  const navigate = useNavigate();
+  const [selectedGenre, setSelectedGenre] = useState("");
   const { data: genres, error, isLoading } = useGetAllGenresForUserQuery();
-    const [selectedGenre, setSelectedGenre] = useState('');
- 
-    const datasort=(genres, _id, currentGenreId) => {
-      const sortedArr = [];
-      const remainingArr = [];
-    
-      genres.forEach((item) => {
-       
-        if (item._id === currentGenreId) {
-  
-          sortedArr.push(item);
-        } else {
-          remainingArr.push(item);
-        }
-      });
-    
-      return sortedArr.concat(remainingArr);
-    };
 
+  const datasort = (genres, currentGenreId) => {
+    const sortedArr = [];
+    const remainingArr = [];
 
-   useEffect(() => {
-   
+    genres.forEach((item) => {
+      if (item._id === currentGenreId) {
+        sortedArr.push(item);
+      } else {
+        remainingArr.push(item);
+      }
+    });
+
+    return sortedArr.concat(remainingArr);
+  };
+
+  useEffect(() => {
     if (error) {
-      console.error('Ошибка при получении жанров:', error);
+      console.error("Ошибка при получении жанров:", error);
     }
-   
+
     if (genres) {
-      console.log('Список жанров:', genres);
+      const userGenre = genres.find((genre) => genre._id === currentGenreId);
 
-     
-      const userGenre = genres.find(genre => genre.id === currentGenreId);
-
-    
       if (userGenre) {
-        setSelectedGenre(userGenre.id);
+        setSelectedGenre(userGenre._id);
       }
     }
-  }, [genres, error,currentGenreId]); 
+  }, [genres, error, currentGenreId]);
 
-  if (isLoading) {
-    return <Loader/>;
-  }
-
-  console.log('currentGenreId', currentGenreId)
-
+  const handleChange = (e) => {
+    const selectedGenreId = e.target.value;
+      navigate(`/user/medialibrary/genres/${selectedGenreId}/playlists`);
+  };
 
   return (
     <div>
@@ -58,12 +49,17 @@ const DropDownGeners = ({ currentGenreId }) => {
         <div>Произошла ошибка при загрузке жанров</div>
       ) : (
         <StyledDropDown>
-            <Select id="genreSelect" value={selectedGenre} onChange={(e) => setSelectedGenre(e.target.value)}>
-              {genres && datasort(genres, genres._id, currentGenreId).map(genre => (
-              <Option key={genre._id} value={genre._id}>
-                {genre.genre}
-              </Option>
-            ))}
+          <Select
+            id="genreSelect"
+            value={selectedGenre}
+            onChange={handleChange}
+          >
+            {genres &&
+              datasort(genres, currentGenreId).map((genre) => (
+                <Option key={genre._id} value={genre._id}>
+                  {genre.genre}
+                </Option>
+              ))}
           </Select>
         </StyledDropDown>
       )}
@@ -71,4 +67,4 @@ const DropDownGeners = ({ currentGenreId }) => {
   );
 };
 
-export default DropDownGeners;
+export default DropDownGenres;
