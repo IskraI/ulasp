@@ -7,7 +7,7 @@ import {
   MediaList,
   TitleContainer,
 } from "./MediaList.styled";
-import { useFavoritePlaylistForUserQuery } from "../../../redux/playlistsUserSlice";
+import { useFavoritePlaylistForUserQuery, useAddPlaylistForUserQuery } from "../../../redux/playlistsUserSlice";
 // import { MockPlayer } from "../TracksTable/TracksTable.styled";
 import symbol from "../../../assets/symbol.svg";
 
@@ -25,7 +25,12 @@ const LatestPlaylists = ({
   const {
     data: dataFavorite,
     isLoading: isLoadingFavoritePlaylist,
-     } = useFavoritePlaylistForUserQuery();
+  } = useFavoritePlaylistForUserQuery();
+  
+  const {
+    data: dataAdd,
+    isLoading: isLoadingAddPlaylist,
+  } = useAddPlaylistForUserQuery();
 
 // console.log('dataFavorite playlist', dataFavorite )
   return (
@@ -33,7 +38,7 @@ const LatestPlaylists = ({
       <TitleContainer>
         <TitleWrapper>{title}</TitleWrapper>
       </TitleContainer>
-      {!isFetching && !error && !isLoadingFavoritePlaylist && (
+      {!isFetching && !error && !isLoadingFavoritePlaylist && !isLoadingAddPlaylist && (
         <>
           {/* <ControlWrapper> */}
           {/* <TitleWrapper>Нові плейлисти</TitleWrapper> */}
@@ -52,6 +57,7 @@ const LatestPlaylists = ({
                   key={_id}
                   id={_id}
                   favoriteStatus={dataFavorite.favorites.some((item) => item._id === _id)}
+                  addStatus={dataAdd.add.some((item) => item._id === _id)}
                   title={playListName}
                   icon={playListAvatarURL}
                   genre={genre}
