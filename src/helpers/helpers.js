@@ -1,6 +1,5 @@
 export function getNoun(number, one, two, five) {
   let n = Math.abs(number);
-  console.log(n);
   n %= 100;
   if (n >= 5 && n <= 20) {
     return five;

@@ -11,8 +11,9 @@ export const TableStyle = styled.table`
   font-size: 18px;
   table-layout: fixed;
   width: 100%;
-  border-collapse: collapse;
-  /* border-collapse: separate; */
+  /* border-collapse: collapse; */
+  border-collapse: separate;
+  border-spacing: 0 2px;
 `;
 
 export const THeadStyle = styled.thead``;
@@ -38,18 +39,19 @@ export const RowTitle = styled.th`
   &:nth-of-type(4) {
     width: 15%;
   }
-  /* &:nth-of-type(5) {
+  &:nth-of-type(5) {
     width: 10%;
-  } */
-  /* &:nth-of-type(6) {
+  }
+  &:nth-of-type(6) {
     width: 10%;
-  } */
-  /* &:nth-of-type(7) {
+  }
+  &:nth-of-type(7) {
     width: 5%;
-  } */
+  }
 `;
 
 export const TrStyle = styled.tr`
+  /* outline: 1px solid red; */
   &:nth-of-type(even) {
     background-color: rgba(234, 234, 234, 0.32);
   }
@@ -68,12 +70,12 @@ export const TableCell = styled.td`
   border: solid 1px transparent;
   border-style: none solid;
 
-  &:first-child {
+  &:first-of-type {
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
   }
 
-  &:last-child {
+  &:last-of-type {
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     text-align: right;
@@ -86,7 +88,8 @@ export const TrackCover = styled.img`
   margin: 0 auto;
 `;
 
-export const LatestTracks = styled.p`
+export const TracksTitle = styled.p`
+  display: ${(props) => props.showTitle};
   font-size: 24px;
   font-weight: 500;
   line-height: 1.21;

@@ -8,20 +8,12 @@ import symbol from "../../../assets/symbol.svg";
 import Player from "../../../components/Player/Player";
 
 import { useParams } from "react-router-dom";
-import { useLayoutEffect } from "react";
-
-const RowsTitle = [
-  // "",
-  "",
-  "Назва пісні",
-  "Виконавець",
-  "Тривалість",
-  "Жанр",
-  "",
-];
+import { useLayoutEffect, useRef, useState, useId } from "react";
 
 const TracksPage = () => {
-  // console.log(window.scrollY);
+  const id = useId();
+  const BaseInputRef = useRef(null);
+  const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
 
   const { playlistId } = useParams();
 
@@ -32,6 +24,34 @@ const TracksPage = () => {
     // console.log("Count", data.totalTracks);
     // console.log("data", data);
   }
+
+  const rows = () => {
+    const RowsTitle = [
+      <input
+        key={id}
+        type="checkbox"
+        id="mainInput"
+        ref={BaseInputRef}
+        style={{ width: "24px", height: "24px", marginRight: "24px" }}
+        onClick={() => {
+          if (BaseInputRef.current.checked) {
+            setCheckedMainCheckBox(true);
+          } else {
+            setCheckedMainCheckBox(false);
+          }
+        }}
+      />,
+
+      "",
+      "Назва пісні",
+      "Виконавець",
+      "Тривалість",
+      "Жанр",
+      "",
+    ];
+
+    return RowsTitle;
+  };
 
   useLayoutEffect(() => {
     if (window.scrollY !== 0) {
@@ -68,13 +88,18 @@ const TracksPage = () => {
             />
           </div>
           <TracksTable
+            title={""}
+            showTitle={false}
+            marginTopWrapper={"24px"}
+            isInPlayList={true}
+            checkBox={true}
+            isCheckedAll={checkedMainCheckBox}
             tracks={data.playlist.trackList}
             error={error}
             isFetching={isFetching}
             isSuccess={isSuccess}
             display="none"
-            rows={RowsTitle}
-            marginTopWrapper={"24px"}
+            rows={rows()}
           />
           <Player tracks={data.playlist.trackList} />
         </>

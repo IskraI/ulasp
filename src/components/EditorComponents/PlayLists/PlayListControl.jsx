@@ -13,7 +13,7 @@ const PlayListControl = ({ isPublished, countTracks, playlistName }) => {
 
   const { playlistId } = useParams();
 
-  const [updatePlaylist, { isSuccess, isLoading, isUninitialized }] =
+  const [updatePlaylist, { isSuccess, isLoading }] =
     useUpdatePlaylistMutation();
 
   useEffect(() => {

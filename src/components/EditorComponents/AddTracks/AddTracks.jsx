@@ -2,8 +2,7 @@
 import { ControlWrapper } from "../MediaList/MediaList.styled";
 import { useUploadTrackMutation } from "../../../redux/tracksSlice";
 import { useUploadTracksInPlaylistMutation } from "../../../redux/playlistsSlice";
-import TracksTable from "../TracksTable/TracksTable";
-import PlayListControl from "../PlayLists/PlayListControl";
+
 
 import {
   FormControlAddTrack,

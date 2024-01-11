@@ -7,18 +7,12 @@ import {
   TableStyle,
   THeadStyle,
   TrStyle,
-  LatestTracks,
+  TracksTitle,
   TracksNotFound,
 } from "../TracksTable/TracksTable.styled";
 import TrackItem from "./TrackItem";
-import { BASE_URL, ERROR_NOT_FOUND } from "../../../constants/constants";
-import { tracksTableProps } from "./TracksTableProps";
-
-import { useDeleteTrackMutation } from "../../../redux/tracksSlice";
-import { sToStr } from "../../../helpers/helpers";
-
-import { useState } from "react";
-
+import { ERROR_NOT_FOUND } from "../../../constants/constants";
+import { useEffect, useRef, useState } from "react";
 const TracksTable = ({
   rows,
   tracks,
@@ -29,14 +23,26 @@ const TracksTable = ({
   title,
   showTitle,
   marginTopWrapper,
+  checkBox,
+  isInPlayList,
+  isCheckedAll,
 }) => {
-  const resultProps = tracksTableProps(showTitle, marginTopWrapper);
+  const tracksTableProps = {
+    showTitle: showTitle ? "block" : "none",
+    marginTop: marginTopWrapper ? `${marginTopWrapper}` : "auto",
+  };
 
-  const [deleteTrack, { all }] = useDeleteTrackMutation();
+  const [widthP, setWidthP] = useState(null);
 
-  const [isCheked, setIsCheked] = useState(false);
+  const rowTitleRef = useRef(null);
 
+  useEffect(() => {
+    // console.log(rowTitleRef.current.offsetParent.offsetWidth);
 
+    // rowTitleRef.current.offsetParent.offsetWidth =
+    // const widthRow = rowTitleRef.current.offsetWidth + "500";
+    // setWidthP(widthRow);
+  }, []);
 
   return (
     <>
@@ -47,13 +53,25 @@ const TracksTable = ({
 
       {isSuccess && !error && tracks?.length !== 0 && (
         <>
-          <TracksTableWrapper style={resultProps[1]}>
-            <LatestTracks style={resultProps[0]}>{title}</LatestTracks>
+          <TracksTableWrapper marginTop={tracksTableProps.marginTop}>
+            <TracksTitle showTitle={tracksTableProps.showTitle}>
+              {title}
+            </TracksTitle>
             <TableStyle>
               <THeadStyle>
                 <tr>
                   {rows.map((row, rowindex) => {
-                    return <RowTitle key={rowindex}>{row}</RowTitle>;
+                    return (
+                      <RowTitle
+                        key={rowindex}
+                        // style={{
+                        //   width: "100px",
+                        // }}
+                      >
+                        {row}
+                        {/* <p ref={rowTitleRef}>{row}</p> */}
+                      </RowTitle>
+                    );
                   })}
                 </tr>
               </THeadStyle>
@@ -69,52 +87,21 @@ const TracksTable = ({
                     playList,
                   }) => {
                     return (
-                      <TrStyle key={_id}>
-                        <TableCell>
-                          <TrackCover
-                            src={BASE_URL + "/" + trackPictureURL}
-                            alt={trackName}
-                            width={55}
-                          />
-                        </TableCell>
-                        <TableCell>{trackName}</TableCell>
-                        <TableCell>{artist}</TableCell>
-                        <TableCell>{sToStr(trackDuration)}</TableCell>
-                        <TableCell>{trackGenre}</TableCell>
-                        <TableCell
-                          style={{ display }}
-                          onClick={() => setIsCheked(() => !isCheked)}
-                        >
-                          {playList?.playListName}
-                        </TableCell>
-                        {/* <TableCell style={{ display }}>***</TableCell> */}
-                        <TableCell style={{ display }}>
-                          <button
-                            type="buton"
-                            onClick={() => deleteTrack(_id).unwrap()}
-                          >
-                            X
-                          </button>
-                        </TableCell>
-                        {/* <TableCell style={{ display }}>
-                        <button
-                          type="buton"
-                          onClick={() => setShowPopUp(true)}
-                          style={{ position: "relative" }}
-                        >
-                          ***
-                          {showPopUp && (
-                            <PopUpTracksTable>1. 2. 3.</PopUpTracksTable>
-                          )}
-                        </button>
-                      </TableCell> */}
-                        <TrackItem
-                          idTrack={_id}
-                          disButtonPopUp={true}
-                          isCheked={isCheked}
-                          // deleteTrack={() => deleteTrack()}
-                        />
-                      </TrStyle>
+                      <TrackItem
+                        key={_id}
+                        isCheckedAll={isCheckedAll}
+                        checkBox={checkBox}
+                        idTrack={_id}
+                        disButtonPopUp={true}
+                        trackPictureURL={trackPictureURL}
+                        trackName={trackName}
+                        artist={artist}
+                        trackDuration={trackDuration}
+                        trackGenre={trackGenre}
+                        playList={playList?.playListName}
+                        display={display}
+                        isInPlayList={isInPlayList}
+                      />
                     );
                   }
                 )}

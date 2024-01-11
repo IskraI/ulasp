@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   TableCell,
   RowTitle,
@@ -5,133 +6,205 @@ import {
   TableStyle,
   THeadStyle,
   TrStyle,
-  LatestTracks,
   TracksNotFound,
   PopUpTracksTable,
   PopUpButton,
 } from "../TracksTable/TracksTable.styled";
-
+import { sToStr } from "../../../helpers/helpers";
+import { BASE_URL } from "../../../constants/constants";
+import { WithOutGenre } from "../../Errors/Errors";
 import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsSlice";
-import { useMemo, useState, useEffect } from "react";
+import { useDeleteTrackMutation } from "../../../redux/tracksSlice";
+import { useMemo, useState, useEffect, useRef } from "react";
 
-const TrackItem = ({ idTrack, disButtonPopUp, isCheked }) => {
+const arr = [];
+
+const TrackItem = ({
+  idTrack,
+  trackPictureURL,
+  trackName,
+  artist,
+  trackDuration,
+  trackGenre,
+  playList,
+  checkBox,
+  display,
+  isInPlayList,
+  isCheckedAll,
+}) => {
   const [showPopUp, setShowPopUp] = useState(false);
   const [id, setId] = useState(null);
+  const [isChecked, setIsChecked] = useState(false);
+  const [trackId, setTrackId] = useState([]);
 
-  //   let YYYY;
+  const ref = useRef(null);
+
+  // console.log("REF", ref);
+
+  // console.log("tableCellRef", tableCellRef);
+
+  const [
+    deleteTrack,
+    { data: dataDeleteTrack, isSuccess: isSuccessDeleteTrack },
+  ] = useDeleteTrackMutation();
+  const [
+    deleteTrackInPlaylist,
+    {
+      data: dataDeleteTrackInPlaylist,
+      isSuccess: isSuccessDeleteTrackInPlaylist,
+    },
+  ] = useDeleteTrackInPlaylistMutation();
 
   useEffect(() => {
-    if (id === null) {
-      return;
+    if (isCheckedAll && ref?.current !== null) {
+      setIsChecked(true);
+      ref.current.checked = true;
+      // arr.splice(0, arr.length);
+      arr.push(idTrack);
+      // console.log(arr);
+    }
+    if (!isCheckedAll && ref?.current !== null) {
+      setIsChecked(false);
+      ref.current.checked = false;
+      arr.splice(0, arr.length);
+      // console.log(arr);
+    }
+    if (isSuccessDeleteTrack || isSuccessDeleteTrackInPlaylist) {
+      setShowPopUp(false);
+    }
+  }, [
+    idTrack,
+    isCheckedAll,
+    isSuccessDeleteTrack,
+    isSuccessDeleteTrackInPlaylist,
+  ]);
+
+  useEffect(() => {
+    if (isChecked === false) {
+      setShowPopUp(false);
     }
 
-    if (id !== idTrack) {
-      const YYYY = false;
-      //   console.log(YYYY);
-    }
-  }, [id, idTrack]);
-
-  const test = useMemo(() => {
-    // console.log(id);
-    // console.log(idTrack);
-    if (id === null) {
-      //   console.log("id === null");
-
-      return false;
-    }
-
-    if (id == idTrack) {
-      //   console.log("id !==");
-
-      return true;
-    }
-
-    if (!showPopUp) {
-      //   console.log("PopUp false");
-      return false;
-    }
-    // return false;
-  }, [id, idTrack, showPopUp]);
-
-  //   console.log("test", test);
-
-  //   const tracksState = [
-  //     { id: "6596ca80943eb1e7960d763f", visible: false },
-  //     { id: "6582f41e0769413f9060a492", visible: true },
-  //   ];
-
-  //   const tracksState = { id: "6596ca80943eb1e7960d763f", visible: false };
-
-  //   console.log(showPopUp.id === id);
-  //   console.log("showPopUp", showPopUp);
-  //   console.log("id", id);
-
-  const [deleteTrack, {all}] = useDeleteTrackInPlaylistMutation();
+    // tableCellRef.current.children.map((child) => console.log(child));
+    // console.log("tableCellRefWidth", tableCellRef.current.clientWidth);
+  }, [isChecked]);
 
   const PopUpToogle = () => {
-    // setShowPopUp((prevShow) => !showPopUp[0].visible);
-    // setShowPopUp((prevShow) => ({
-    //   ...prevShow,
-
-    //   id: idTrack,
-    //   visible: !prevShow.visible,
-    // }));
-    setId(idTrack);
     setShowPopUp((prev) => !showPopUp);
-    // if (setShowPopUp !== showPopUp) {
-    //   //   console.log(false);
-    //   setShowPopUp((prevShow) => ({
-    //     ...prevShow,
-
-    //     id: idTrack,
-    //     visible: !prevShow.visible,
-    //   }));
-    // }
-
-    // if (showPopUp.id !== setId(idTrack)) {
-    //   setShowPopUp((prevShow) => ({
-    //     ...prevShow,
-
-    //     id: idTrack,
-    //     visible: !prevShow.visible,
-    //   }));
-    // }
-
-    // if (id !== setId) {
-    //   setShowPopUp(false);
-    // }
   };
 
-  //   const visibleButtons = id !== idTrack ?? id === null ?? !showPopUp;
+  const handleClickCheckBox = () => {
+    setIsChecked((prev) => !isChecked);
 
-  //   console.log("visibleButtons", visibleButtons);
+    // setId(idTrack);
 
-  //   console.log("func ", test());
+    setTrackId(idTrack);
+
+    console.log("Кликнули");
+
+    // if (arr.includes(idTrack)) {
+    //   console.log("arr", arr);
+
+    //   const indexTrack = arr.indexOf(idTrack);
+    //   console.log(indexTrack);
+    //   arr.splice(indexTrack);
+    //   console.log("arr", arr);
+
+    //   // console.log("Замечательно входит");
+    // } else {
+    //   arr.push(idTrack);
+    // }
+
+    if (arr.includes(idTrack)) {
+      console.log("arr", arr);
+
+      const indexTrack = arr.indexOf(idTrack);
+      console.log(indexTrack);
+      let knife = arr.splice(0, indexTrack);
+      // arr.slice(0, indexTrack);
+      console.log("arr", arr);
+      console.log("knife", knife);
+
+      // knife.length === 1 ? knife.splice(0, arr.length) : null;
+      // console.log("knife", knife);
+
+      // console.log("Замечательно входит");
+    } else {
+      console.log("PUSH");
+      arr.push(idTrack);
+      console.log("arr", arr);
+    }
+
+    // console.log("arr", arr);
+  };
 
   return (
-    <TableCell>
-      <div style={{ position: "relative" }}>
-        <button
-          type="buton"
-          // disabled={isCheked ? false : disButtonPopUp}
-          onClick={() => PopUpToogle()}
-        >
-          ***
-        </button>
-        {showPopUp && (
-          <PopUpTracksTable>
-            <PopUpButton
-              type="button"
-              onClick={() => deleteTrack(idTrack).unwrap()}
-            >
-              Видалити з медіатеки
-            </PopUpButton>
-            <PopUpButton type="button">Додати до плейлисту</PopUpButton>
-            <PopUpButton type="button">Перенести до плейлисту</PopUpButton>
-          </PopUpTracksTable>
+    <>
+      <TrStyle
+        key={idTrack}
+        style={{
+          background: isChecked ? "#FFF3BF" : null,
+        }}
+      >
+        {checkBox && (
+          <TableCell>
+            <input
+              type="checkbox"
+              name=""
+              id="checkTrack"
+              ref={ref}
+              onClick={handleClickCheckBox}
+            />
+          </TableCell>
         )}
-      </div>
-    </TableCell>
+        <TableCell>
+          <TrackCover
+            src={BASE_URL + "/" + trackPictureURL}
+            alt={trackName}
+            width={55}
+          />
+        </TableCell>
+        <TableCell>{trackName}</TableCell>
+        <TableCell>{artist}</TableCell>
+        <TableCell>{sToStr(trackDuration)}</TableCell>
+        <TableCell>
+          {trackGenre ? trackGenre.genre : <WithOutGenre />}
+        </TableCell>
+        <TableCell style={{ display }}>{playList}</TableCell>
+        {/* <TableCell style={{ display }}>***</TableCell> */}
+        <TableCell style={{ display }}>
+          <button type="buton" onClick={() => deleteTrack(idTrack).unwrap()}>
+            X
+          </button>
+        </TableCell>
+        <TableCell>
+          <div style={{ position: "relative" }}>
+            <button
+              type="buton"
+              // disabled={isChecked ? false : true}
+              onClick={() => PopUpToogle()}
+            >
+              ***
+            </button>
+            {showPopUp && (
+              <PopUpTracksTable>
+                <PopUpButton
+                  type="button"
+                  onClick={
+                    isInPlayList
+                      ? () => deleteTrackInPlaylist(idTrack).unwrap()
+                      : () => deleteTrack(idTrack).unwrap()
+                  }
+                >
+                  Видалити з медіатеки
+                </PopUpButton>
+                <PopUpButton type="button">Додати до плейлисту</PopUpButton>
+                <PopUpButton type="button">Перенести до плейлисту</PopUpButton>
+              </PopUpTracksTable>
+            )}
+          </div>
+        </TableCell>
+      </TrStyle>
+    </>
   );
 };
 

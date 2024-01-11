@@ -38,6 +38,7 @@ const NewTracksPage = () => {
             isSuccess={isSuccess}
             display="none"
             rows={RowsTitle}
+            isInPlayList={false}
           />
           <Player tracks={allTracks} />
         </>

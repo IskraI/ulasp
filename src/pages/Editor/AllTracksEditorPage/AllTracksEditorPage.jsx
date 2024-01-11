@@ -36,6 +36,7 @@ const AllTracksEditor = () => {
             isFetching={isFetchingAllTracks}
             isSuccess={isSuccessAllTracks}
             rows={RowsTitle}
+            isInPlayList={false}
           />
           <Player tracks={allTracks} />
         </>
