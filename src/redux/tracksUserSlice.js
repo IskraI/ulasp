@@ -31,7 +31,7 @@ export const tracksUserApi = createApi({
 
      getTracksByGenreId: builder.query({
       query: (genreId) => ({
-        url: `/genre/${genreId}/tracks`,
+        url: `/user/genre/${genreId}/tracks`,
       }),
       providesTags: (_result, _error, genreId) => [{ type: "Tracks", genreId }],
     }),
