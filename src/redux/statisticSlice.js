@@ -26,25 +26,34 @@ export const statisticApi = createApi({
       }),
     }),
 
-    getNewClientsCount:  builder.query({
+    getNewClientsCount: builder.query({
       query: () => ({
         url: "/admin/newclients/count",
       }),
     }),
-    getOnlineClientsCount: 
-    builder.query({
+    getClientsCount: builder.query({
+      query: () => ({
+        url: "/admin/clients/count",
+      }),
+    }),
+    getOnlineClientsCount: builder.query({
       query: () => ({
         url: "/admin/onlineclients/count",
       }),
     }),
-    getNewClientsByMonthCount:
-    builder.query({
+    getNewClientsByMonthCount: builder.query({
       query: () => ({
         url: "/admin/newclientsbymonth/count",
       }),
     }),
-
   }),
 });
 
-export const { useGetNewClientsByMonthCountQuery, useGetOnlineClientsCountQuery, useGetPlaylistsCountQuery, useGetTracksCountQuery, useGetNewClientsCountQuery } = statisticApi;
+export const {
+  useGetNewClientsByMonthCountQuery,
+  useGetOnlineClientsCountQuery,
+  useGetPlaylistsCountQuery,
+  useGetTracksCountQuery,
+  useGetNewClientsCountQuery,
+  useGetClientsCountQuery,
+} = statisticApi;

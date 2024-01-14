@@ -3,7 +3,7 @@ import {
   useGetNewClientsCountQuery,
   useGetTracksCountQuery,
   useGetOnlineClientsCountQuery,
-  useGetNewClientsByMonthCountQuery
+  useGetNewClientsByMonthCountQuery, useGetClientsCountQuery
 } from "../../redux/statisticSlice";
 import { useState, useEffect, useMemo } from "react";
 
@@ -31,6 +31,14 @@ export const Statistic = () => {
     error: isErrorNewClientsByMonthCount,
     isFetching: isFetchingNewClientsByMonthCount,
   } = useGetNewClientsByMonthCountQuery();
+
+  const {
+    data: clientsCount,
+    error: isErrorClientsCount,
+    isFetching: isFetchingClientsCount,
+  } = useGetClientsCountQuery();
+  
+
   useEffect(() => {
     refetchOnlineClients(); 
     refetchNewClientsCount();
