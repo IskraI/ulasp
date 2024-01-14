@@ -63,7 +63,7 @@ const LatestPlaylists = ({
                   genre={genre}
                   shopCategoryName={shopCategoryName}
                 />
-              );
+            );
             })}
           </MediaList>
           <MediaNavigationLink link={"newplaylists"} display={display} />
@@ -71,7 +71,7 @@ const LatestPlaylists = ({
             Тут будет плеер
           </MockPlayer> */}
         </>
-      )}
+        )}
     </>
   );
 };
