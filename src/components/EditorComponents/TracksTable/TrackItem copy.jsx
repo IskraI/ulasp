@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import {
   TableCell,
+  RowTitle,
   TrackCover,
   TableStyle,
   THeadStyle,
@@ -12,9 +13,10 @@ import {
 import { sToStr } from "../../../helpers/helpers";
 import { BASE_URL } from "../../../constants/constants";
 import { WithOutGenre } from "../../Errors/Errors";
+import { ProgressBarTracksTable } from "../../Loader/Loader";
 import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsSlice";
 import { useDeleteTrackMutation } from "../../../redux/tracksSlice";
-import { useState, useEffect, useRef } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 
 const arr = [];
 
@@ -30,8 +32,10 @@ const TrackItem = ({
   display,
   isInPlayList,
   isCheckedAll,
-  showPlayList,
-  showData,
+  isErrorUpload,
+  isSuccessUpload,
+  isLoadingUpload,
+  errorUpload,
 }) => {
   const [showPopUp, setShowPopUp] = useState(false);
   const [id, setId] = useState(null);
@@ -39,15 +43,14 @@ const TrackItem = ({
   const [trackId, setTrackId] = useState([]);
 
   const ref = useRef(null);
-  // console.log("showData", showData);
 
   // console.log("REF", ref);
 
-  // console.log("countThInThead", countThInThead);
+  // console.log("tableCellRef", tableCellRef);
 
-  // console.log("isSuccessUpload", isSuccessUpload);
+  console.log("isSuccessUpload", isSuccessUpload);
 
-  // console.log("isLoadingUpload", isLoadingUpload);
+  console.log("isLoadingUpload", isLoadingUpload);
 
   const [
     deleteTrack,
@@ -145,42 +148,51 @@ const TrackItem = ({
 
   return (
     <>
+      {!isLoadingUpload && !isSuccessUpload && (
+        <TrStyle>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus,
+          fuga? Fugiat neque dicta quidem cumque possimus, magnam, in temporibus
+          odio doloremque quaerat ipsam voluptate saepe nostrum
+        </TrStyle>
+      )}
       <TrStyle
         key={idTrack}
         style={{
           background: isChecked ? "#FFF3BF" : null,
         }}
       >
-        <TableCell showData={showData[0]}>
-          <input
-            type="checkbox"
-            name=""
-            id="checkTrack"
-            ref={ref}
-            onClick={handleClickCheckBox}
-          />
-        </TableCell>
-
-        <TableCell showData={showData[1]}>
-          <button type="buton" onClick={() => deleteTrack(idTrack).unwrap()}>
-            X
-          </button>
-        </TableCell>
-        <TableCell showData={showData[2]}>
+        {checkBox && (
+          <TableCell>
+            <input
+              type="checkbox"
+              name=""
+              id="checkTrack"
+              ref={ref}
+              onClick={handleClickCheckBox}
+            />
+          </TableCell>
+        )}
+        <TableCell>
           <TrackCover
             src={BASE_URL + "/" + trackPictureURL}
             alt={trackName}
             width={55}
           />
         </TableCell>
-        <TableCell showData={showData[3]}>{trackName}</TableCell>
-        <TableCell showData={showData[4]}>{artist}</TableCell>
-        <TableCell showData={showData[5]}>{sToStr(trackDuration)}</TableCell>
-        <TableCell showData={showData[6]}>
+        <TableCell>{trackName}</TableCell>
+        <TableCell>{artist}</TableCell>
+        <TableCell>{sToStr(trackDuration)}</TableCell>
+        <TableCell>
           {trackGenre ? trackGenre.genre : <WithOutGenre />}
         </TableCell>
-        <TableCell showData={showData[7]}>{playList}</TableCell>
-        <TableCell showData={showData[8]}>
+        <TableCell style={{ display }}>{playList}</TableCell>
+        {/* <TableCell style={{ display }}>***</TableCell> */}
+        <TableCell style={{ display }}>
+          <button type="buton" onClick={() => deleteTrack(idTrack).unwrap()}>
+            X
+          </button>
+        </TableCell>
+        <TableCell>
           <div style={{ position: "relative" }}>
             <button
               type="buton"

@@ -2,7 +2,7 @@
 import {
   TracksTableWrapper,
   TableCell,
-  ThTitle,
+  RowTitle,
   TrackCover,
   TableStyle,
   THeadStyle,
@@ -12,8 +12,6 @@ import {
 } from "../TracksTable/TracksTable.styled";
 import TrackItem from "./TrackItem";
 import { ERROR_NOT_FOUND } from "../../../constants/constants";
-import { ProgressBarTracksTable } from "../../Loader/Loader";
-import { ErrorNotFound } from "../../Errors/Errors";
 import { useEffect, useRef, useState } from "react";
 const TracksTable = ({
   rows,
@@ -28,18 +26,14 @@ const TracksTable = ({
   checkBox,
   isInPlayList,
   isCheckedAll,
-  dataUpload,
   isErrorUpload,
   isSuccessUpload,
   isLoadingUpload,
   errorUpload,
-  isUninitialized,
-  showData,
 }) => {
   const tracksTableProps = {
-    showTitle: showTitle ? "table-caption" : "none",
+    showTitle: showTitle ? "block" : "none",
     marginTop: marginTopWrapper ? `${marginTopWrapper}` : "auto",
-    showData: rows.map((rows) => (rows.showData ? true : false)),
   };
 
   const [widthP, setWidthP] = useState(null);
@@ -70,42 +64,11 @@ const TracksTable = ({
               <THeadStyle>
                 <tr>
                   {rows.map((row, rowindex) => {
-                    return (
-                      <ThTitle
-                        key={rowindex}
-                        widthTh={row.titleSize}
-                        index={rowindex + 1}
-                        showData={row.showData}
-                      >
-                        {row.title}
-                      </ThTitle>
-                    );
+                    return <RowTitle key={rowindex}>{row}</RowTitle>;
                   })}
                 </tr>
               </THeadStyle>
               <tbody>
-                {isLoadingUpload && (
-                  <TrStyle>
-                    <TableCell
-                      showData={true}
-                      colSpan={rows.length}
-                      style={{ textAlign: "center" }}
-                    >
-                      <ProgressBarTracksTable />
-                    </TableCell>
-                  </TrStyle>
-                )}
-                {isErrorUpload && (
-                  <TrStyle>
-                    <TableCell
-                      showData={true}
-                      colSpan={rows.length}
-                      style={{ textAlign: "center" }}
-                    >
-                      <ErrorNotFound error={errorUpload?.data.message} />
-                    </TableCell>
-                  </TrStyle>
-                )}
                 {tracks.map(
                   ({
                     _id,
@@ -122,7 +85,6 @@ const TracksTable = ({
                         isCheckedAll={isCheckedAll}
                         checkBox={checkBox}
                         idTrack={_id}
-                        countThInThead={rows.length}
                         disButtonPopUp={true}
                         trackPictureURL={trackPictureURL}
                         trackName={trackName}
@@ -130,15 +92,12 @@ const TracksTable = ({
                         trackDuration={trackDuration}
                         trackGenre={trackGenre}
                         playList={playList?.playListName}
-                        showPlayList={true}
                         display={display}
                         isInPlayList={isInPlayList}
                         isErrorUpload={isErrorUpload}
                         isSuccessUpload={isSuccessUpload}
                         isLoadingUpload={isLoadingUpload}
                         errorUpload={errorUpload}
-                        isUninitialized={isUninitialized}
-                        showData={tracksTableProps.showData}
                       />
                     );
                   }
@@ -153,47 +112,3 @@ const TracksTable = ({
 };
 
 export default TracksTable;
-
-const RowsTitle = [
-  {
-    title: "",
-    titleSize: "2%",
-    showData: true,
-  },
-  {
-    title: "",
-    titleSize: "10%",
-    showData: true,
-  },
-  {
-    title: "Назва пісні",
-    titleSize: "20%",
-    showData: true,
-  },
-  {
-    title: "Виконавець",
-    titleSize: "15%",
-    showData: true,
-  },
-  {
-    title: "Тривалість",
-    titleSize: "12%",
-    showData: true,
-  },
-  {
-    title: "Жанр",
-    titleSize: "10%",
-    showData: true,
-  },
-  {
-    title: "Плейлист",
-    titleSize: "15%",
-    showData: true,
-  },
-
-  {
-    title: "",
-    titleSize: "5%",
-    showData: true,
-  },
-];

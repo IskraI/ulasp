@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 import { ControlWrapper } from "../MediaList/MediaList.styled";
-import { useUploadTrackMutation } from "../../../redux/tracksSlice";
-import { useUploadTracksInPlaylistMutation } from "../../../redux/playlistsSlice";
-
+// import { useUploadTrackMutation } from "../../../redux/tracksSlice";
+// import { useUploadTracksInPlaylistMutation } from "../../../redux/playlistsSlice";
 
 import {
   FormControlAddTrack,
@@ -19,24 +18,28 @@ const AddTracks = ({
   onClick,
   disabled,
   playlistId,
-}) => {
-  const [
-    uploadTrack,
-    {
-      isSuccess: isSuccessUploadTrack,
-      isError: isErrorUploadTrack,
-      isLoading: isLoadingUploadTrack,
-      error,
-    },
-  ] = useUploadTrackMutation();
+ uploadTrack,
+  uploadTrackInPlaylist,
 
-  const [uploadTrackInPlaylist, { isUninitialized, isSuccess, isLoading, reset }] =
-    useUploadTracksInPlaylistMutation();
+}) => {
+  // const [
+  //   uploadTrack,
+  //   {
+  //     isSuccess: isSuccessUploadTrack,
+  //     isError: isErrorUploadTrack,
+  //     isLoading: isLoadingUploadTrack,
+  //     error,
+  //   },
+  // ] = useUploadTrackMutation();
+
+  // const [uploadTrackInPlaylist, { isUninitialized, isSuccess, isLoading, reset }] =
+  //   useUploadTracksInPlaylistMutation();
   const [selectedTracks, setSelectedTracks] = useState([]);
 
+  // console.log("uploadTrack", uploadTrack);
 
-  console.log("selectedTracks", selectedTracks);
-console.log("uploadTrackInPlaylist", isSuccess);
+  //   console.log("selectedTracks", selectedTracks);
+  // console.log("uploadTrackInPlaylist", isSuccess);
   const {
     control,
     register,
@@ -75,7 +78,7 @@ console.log("uploadTrackInPlaylist", isSuccess);
         await uploadTrackInPlaylist({ playlistId, formData })
           .unwrap()
           .then(() => {
-            formData.delete("trackURL");
+            // formData.delete("trackURL");
           })
           .catch((error) => console.log("ERROR 1", error))
           .finally(() => {

@@ -3,6 +3,8 @@ import { BASE_URL } from "../constants/constants";
 
 export const tracksApi = createApi({
   reducerPath: "tracksApi",
+  forceRefetch: true,
+  refetchOnFocus: true,
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
@@ -13,7 +15,7 @@ export const tracksApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Tracks"],
+  tagTypes: ["Tracks", "Playlists"],
 
   endpoints: (builder) => ({
     getAllTracks: builder.query({
@@ -23,7 +25,10 @@ export const tracksApi = createApi({
         }`,
       }),
       // provideTags: ["Tracks"],
-      providesTags: (_result, _err, id) => [{ type: "Tracks", id }],
+      providesTags: (_result, _err, id) => [
+        { type: "Tracks", id },
+        { type: "Playlists", id },
+      ],
     }),
     uploadTrack: builder.mutation({
       query: (body) => ({

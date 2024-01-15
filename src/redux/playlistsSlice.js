@@ -13,7 +13,7 @@ export const playlistsApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Playlists"],
+  tagTypes: ["Playlists", "Tracks"],
 
   endpoints: (builder) => ({
     getLatestPlaylists: builder.query({
@@ -28,7 +28,7 @@ export const playlistsApi = createApi({
     getPlaylistById: builder.query({
       query: (id) => ({ url: `/editor/playlist/${id}` }),
 
-      providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
+      providesTags: (_result, _err, id) => [{ type: "Playlists", id, _result }],
     }),
     createPlaylist: builder.mutation({
       query: (body) => ({
@@ -37,7 +37,7 @@ export const playlistsApi = createApi({
         body,
         formData: true,
       }),
-      invalidatesTags: ["Playlists"],
+      invalidatesTags: ["Playlists", "Tracks"],
     }),
 
     deletePlaylist: builder.mutation({
@@ -55,6 +55,9 @@ export const playlistsApi = createApi({
         body: formData,
         formData: true,
       }),
+      async onQueryStarted(arg) {
+        console.log(arg);
+      },
       invalidatesTags: ["Playlists"],
     }),
     deleteTrackInPlaylist: builder.mutation({
@@ -62,7 +65,7 @@ export const playlistsApi = createApi({
         url: `/editor/tracks/delete/${trackId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Playlists"],
+      invalidatesTags: ["Playlists", "Tracks"],
     }),
     updatePlaylist: builder.mutation({
       query: ({ playlistId, body }) => ({

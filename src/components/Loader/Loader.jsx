@@ -1,4 +1,4 @@
-import { Grid, Oval } from "react-loader-spinner";
+import { Grid, Oval, ProgressBar } from "react-loader-spinner";
 
 export const Loader = () => {
   return (
@@ -31,4 +31,8 @@ export const LoaderButton = () => {
       wrapperClass=""
     />
   );
+};
+
+export const ProgressBarTracksTable = () => {
+  return <ProgressBar visible={true} width="80" wrapperStyle={{}} />;
 };
