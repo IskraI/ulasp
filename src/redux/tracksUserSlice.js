@@ -28,6 +28,13 @@ export const tracksUserApi = createApi({
      
       providesTags: (_result, _err, id) => [{ type: "Tracks", id }],
     }),
+
+     getTracksByGenreId: builder.query({
+      query: (genreId) => ({
+        url: `/user/genre/${genreId}/tracks`,
+      }),
+      providesTags: (_result, _error, genreId) => [{ type: "Tracks", genreId }],
+    }),
     // getTracksCount: builder.query({
     //   query: () => ({
     //     url: "/editor/tracks/count",
@@ -36,4 +43,4 @@ export const tracksUserApi = createApi({
   }),
 });
 
-export const {  useGetAllTracksforUserQuery} = tracksUserApi;
+export const {  useGetAllTracksforUserQuery, useGetTracksByGenreIdQuery} = tracksUserApi;

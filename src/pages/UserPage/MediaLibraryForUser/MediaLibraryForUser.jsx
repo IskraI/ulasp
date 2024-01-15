@@ -3,7 +3,7 @@ import LatestPlaylists from "../../../components/UserMediaComponent/PlayLists/Pl
 import NewSongs from "../../../components/UserMediaComponent/NewSongs/NewSongs";
 import Shops from "../../../components/UserMediaComponent/Shops/Shops";
 import { useGetAllGenresForUserQuery } from "../../../redux/genersUserSlice";
-import { useGetLatestPlaylistsForUserQuery, useFavoritePlaylistForUserQuery } from "../../../redux/playlistsUserSlice";
+import { useGetLatestPlaylistsForUserQuery, useFavoritePlaylistForUserQuery, useAddPlaylistForUserQuery } from "../../../redux/playlistsUserSlice";
 import { useGetAllTracksforUserQuery } from "../../../redux/tracksUserSlice";
 import { useGetAllShopsUserQuery } from "../../../redux/shopsUserSlice";
 import { Loader } from "../../../components/Loader/Loader";
@@ -44,8 +44,14 @@ const MediaLibraryForUser = () => {
     isSuccess: isSuccesLatestFavoritePlaylist,
     isError: isErrorFavoritePlaylist,
   } = useFavoritePlaylistForUserQuery();
+
+  const {
+    data: dataAdd,
+    isLoading: isLoadingAddPlaylist,
+  } = useAddPlaylistForUserQuery();
   
-console.log('FavoritePlaylist medialibrary', favoritePlaylist)
+console.log('dataAdd playlist', dataAdd )
+  console.log('dataFavorite playlist', favoritePlaylist)
 
   const fetching =
     isFetchingAllGenre &&
@@ -92,12 +98,13 @@ console.log('FavoritePlaylist medialibrary', favoritePlaylist)
             isSuccess={isSuccessShops}
           />
 
-          {!isLoadingFavoritePlaylist&& (<LatestPlaylists
+          {!isLoadingFavoritePlaylist&&!isLoadingAddPlaylist&& (<LatestPlaylists
 
              title={"Нові плейлисти"}
             displayPlayer={"none"}
             data={playlists}
             dataFavorite={favoritePlaylist}
+            dataAdd={dataAdd}
             isFetching={isFetchingLatestPlaylist}
             error={isErrorLatestPlaylist}
                  />)}

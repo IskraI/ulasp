@@ -1,24 +1,28 @@
 import TabNavigation from "../../../components/TabNavigation/TabNavigation";
 import TracksTable from "../../../components/UserMediaComponent/TracksTable/TracksTable";
-import { useGetAllTracksforUserQuery  } from "../../../redux/tracksUserSlice";
+import { useGetAllTracksforUserQuery, useGetTracksByGenreIdQuery  } from "../../../redux/tracksUserSlice";
 import { BtnSort } from "../AllTracksUser/AllTracksUser.styled";
 import symbol from "../../../assets/symbol.svg";
 import { useState, useEffect } from "react";
 import NavMusic from "../../../components/UserMediaComponent/NavMusic/NavMusic"
 import { useParams } from "react-router-dom";
 import Player from '../../../components/Player/Player';
+import  DropDownGenres  from "../../../components/DropDownGeners/DropDownGeners";
 
 const RowsTitle = ["", "Назва пісні", "Виконавець", "Тривалість", "Жанр", ""];
 
 const AllTracksUser = () => {
 const { genreId } = useParams();
 
-  const {
-    data: allTracks,
+  // const {
+  //   data: allTracks,
 
-    error: errorLoadingAllTracks,
-    isFetching: isFetchingAllTracks,
-    } = useGetAllTracksforUserQuery();
+  //   error: errorLoadingAllTracks,
+  //   isFetching: isFetchingAllTracks,
+  // } = useGetAllTracksforUserQuery();
+  
+  const { data: allTracks, error: errorLoadingAllTracks,
+    isFetching: isFetchingAllTracks,} = useGetTracksByGenreIdQuery(genreId);
     
   const links = [
     { path: `/user/medialibrary/genres/${genreId}/playlists`, title: "Плейлисти" },
@@ -45,6 +49,7 @@ const { genreId } = useParams();
        return (
       <>
            <TabNavigation /> 
+           <DropDownGenres currentGenreId={genreId}/>
            <NavMusic links={links} />
        <BtnSort onClick={handleSortClick}><svg width="24" height="24" >
                 <use href={`${symbol}#icon-sort`}></use>

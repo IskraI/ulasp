@@ -31,7 +31,7 @@ const LatestPlaylists = ({
     data: dataAdd,
     isLoading: isLoadingAddPlaylist,
   } = useAddPlaylistForUserQuery();
- 
+
   return (
     <>
       <TitleContainer>
@@ -52,7 +52,9 @@ const LatestPlaylists = ({
               // );
 
               return (<>
-                {!isLoadingAddPlaylist && (<PlayListItem
+
+                {!isLoadingAddPlaylist && ( <PlayListItem
+
                   key={_id}
                   id={_id}
                   favoriteStatus={dataFavorite.favorites.some((item) => item._id === _id)}
@@ -61,10 +63,11 @@ const LatestPlaylists = ({
                   icon={playListAvatarURL}
                   genre={genre}
                   shopCategoryName={shopCategoryName}
-                />
-              ) }
-              </>
-              )
+
+                />) }</>
+               
+            );
+
             })}
 
           </MediaList>
@@ -73,7 +76,7 @@ const LatestPlaylists = ({
             Тут будет плеер
           </MockPlayer> */}
         </>
-      )}
+        )}
     </>
   );
 };

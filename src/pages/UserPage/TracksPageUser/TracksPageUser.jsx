@@ -2,6 +2,7 @@ import TracksTable from "../../../components/UserMediaComponent/TracksTable/Trac
 import { useGetPlaylistByIdForUserQuery } from "../../../redux/playlistsUserSlice";
 import PlaylistListItem from "../../../components/UserMediaComponent/PlayLists/PlayListsItem";
 import { BtnSort } from "../AllTracksUser/AllTracksUser.styled";
+
 import symbol from "../../../assets/symbol.svg";
 import Player from "../../../components/Player/Player";
 import { useState, useEffect } from "react";
@@ -52,7 +53,7 @@ const TracksPage = () => {
 
   return (
     <>
-      {isSuccess && !error && (
+         {isSuccess && !error && (
         <>
           <PlaylistListItem
             icon={data.playlist.playListAvatarURL}
