@@ -1,13 +1,13 @@
 import TabNavigation from "../../../components/TabNavigation/TabNavigation";
 import TracksTable from "../../../components/UserMediaComponent/TracksTable/TracksTable";
-import { useGetAllTracksforUserQuery, useGetTracksByGenreIdQuery  } from "../../../redux/tracksUserSlice";
+import {  useGetTracksByGenreIdQuery  } from "../../../redux/tracksUserSlice";
 import { BtnSort } from "../AllTracksUser/AllTracksUser.styled";
 import symbol from "../../../assets/symbol.svg";
 import { useState, useEffect } from "react";
 import NavMusic from "../../../components/UserMediaComponent/NavMusic/NavMusic"
 import { useParams } from "react-router-dom";
 import Player from '../../../components/Player/Player';
-import  DropDownGenres  from "../../../components/DropDownGeners/DropDownGeners";
+import  DropDownTracksInGenres  from "../../../components/DropDownGeners/DropDownTracksInGener";
 
 const RowsTitle = ["", "Назва пісні", "Виконавець", "Тривалість", "Жанр", ""];
 
@@ -48,7 +48,7 @@ const { genreId } = useParams();
        return (
       <>
            <TabNavigation /> 
-           <DropDownGenres currentGenreId={genreId}/>
+           <DropDownTracksInGenres currentGenreId={genreId}/>
            <NavMusic links={links} />
        <BtnSort onClick={handleSortClick}><svg width="24" height="24" >
                 <use href={`${symbol}#icon-sort`}></use>
@@ -62,7 +62,7 @@ const { genreId } = useParams();
           isFetching={isFetchingAllTracks}
           rows={RowsTitle}
              />
-              <Player tracks={sortedTracks} />
+              <Player tracks={allTracks} />
              </>
       )}
     </>

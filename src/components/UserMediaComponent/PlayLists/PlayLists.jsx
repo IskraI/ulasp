@@ -32,8 +32,8 @@ const LatestPlaylists = ({
     isLoading: isLoadingAddPlaylist,
   } = useAddPlaylistForUserQuery();
 
-console.log('dataAdd playlist', dataAdd.add )
-console.log('dataFavorite playlist', dataFavorite.favorites)
+// console.log('dataAdd playlist', dataAdd.add )
+// console.log('dataFavorite playlist', dataFavorite.favorites)
 
   return (
     <>
@@ -55,6 +55,7 @@ console.log('dataFavorite playlist', dataFavorite.favorites)
               // );
 
               return (<>
+                <div key={_id}>
                 {!isLoadingAddPlaylist && ( <PlayListItem
                   key={_id}
                   id={_id}
@@ -64,16 +65,17 @@ console.log('dataFavorite playlist', dataFavorite.favorites)
                   icon={playListAvatarURL}
                   genre={genre}
                   shopCategoryName={shopCategoryName}
-                />) }</>
+
+
+                />)}
+                </div>
+              </>
                
             );
             })}
           </MediaList>
           <MediaNavigationLink link={"newplaylists"} display={display} />
-          {/* <MockPlayer style={{ display: displayPlayer }}>
-            Тут будет плеер
-          </MockPlayer> */}
-        </>
+                  </>
         )}
     </>
   );
