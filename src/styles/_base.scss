@@ -37,14 +37,11 @@ body {
 
   animation: rotateBackground 500ms linear 1ms;
 }
-main {
-  //  width: 1440px;
-  margin-top: 80px;
-  // height: calc(100vh - (80px + 68px));
-}
 
 main {
   flex-grow: 1;
+  min-height: calc(100vh - 148px);
+  margin-top: 80px;
 
   @media screen and (min-width: 1921px) {
     min-height: calc(100vh - 148px);

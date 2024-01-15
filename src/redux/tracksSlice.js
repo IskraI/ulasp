@@ -3,6 +3,8 @@ import { BASE_URL } from "../constants/constants";
 
 export const tracksApi = createApi({
   reducerPath: "tracksApi",
+  forceRefetch: true,
+  refetchOnFocus: true,
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
@@ -13,7 +15,7 @@ export const tracksApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Tracks"],
+  tagTypes: ["Tracks", "Playlists"],
 
   endpoints: (builder) => ({
     getAllTracks: builder.query({
@@ -23,7 +25,10 @@ export const tracksApi = createApi({
         }`,
       }),
       // provideTags: ["Tracks"],
-      providesTags: (_result, _err, id) => [{ type: "Tracks", id }],
+      providesTags: (_result, _err, id) => [
+        { type: "Tracks", id },
+        { type: "Playlists", id },
+      ],
     }),
     uploadTrack: builder.mutation({
       query: (body) => ({
@@ -34,17 +39,18 @@ export const tracksApi = createApi({
       }),
       invalidatesTags: ["Tracks"],
     }),
-    getAllTracksforUser: builder.query({
-      query: () => ({
-        url: "/user/tracks/latestTracks",
+    deleteTrack: builder.mutation({
+      query: (id) => ({
+        url: `/editor/tracks/delete/${id}`,
+        method: "DELETE",
       }),
-      provideTags: ["Tracks"],
+      invalidatesTags: ["Tracks"],
     }),
   }),
 });
 
 export const {
   useGetAllTracksQuery,
-  useGetAllTracksforUserQuery,
   useUploadTrackMutation,
+  useDeleteTrackMutation,
 } = tracksApi;

@@ -5,7 +5,63 @@ import ControlMediateca from "../ControlMediateca/ControlMediaTeca";
 import symbol from "../../../assets/symbol.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const RowsTitle = ["", "", "", "", ""];
+const RowsTitle = [
+  {
+    title: "",
+    type: "input",
+    titleSize: "2%",
+    showData: false,
+  },
+  {
+    title: "",
+    type: "button",
+    titleSize: "2%",
+    showData: false,
+  },
+  {
+    title: "",
+    type: "image",
+    titleSize: "5%",
+    showData: true,
+  },
+  {
+    title: "",
+    type: "text",
+    titleSize: "20%",
+    showData: true,
+  },
+  {
+    title: "",
+    type: "text",
+    titleSize: "15%",
+    showData: true,
+  },
+  {
+    title: "",
+    type: "text",
+    titleSize: "12%",
+    showData: true,
+  },
+  {
+    title: "",
+    type: "text",
+    titleSize: "10%",
+    showData: true,
+  },
+  {
+    title: "",
+    type: "text",
+    titleSize: "15%",
+    showData: false,
+  },
+
+  {
+    title: "",
+    type: "button",
+    titleSize: "5%",
+    showData: false,
+  },
+];
 
 const NewSongs = ({ data: allTracks, isFetching, isSuccess, error }) => {
   const navigate = useNavigate();
@@ -24,7 +80,7 @@ const NewSongs = ({ data: allTracks, isFetching, isSuccess, error }) => {
             }
           />
           <TracksTable
-            title={" Остання додана музика"}
+            showTitle={false}
             tracks={allTracks}
             error={error}
             isFetching={isFetching}

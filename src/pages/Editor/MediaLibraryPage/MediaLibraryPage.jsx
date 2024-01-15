@@ -67,10 +67,10 @@ const MediaLibraryPage = () => {
 
   const error = isErrorAllGenre && isErrorLatestPlaylist && isErrorNewSongs;
 
-  console.log("Data", shops);
-  console.log("Fetching", isFetchingShops);
-  console.log("Success", success);
-  console.log("Error", isErrorShops);
+  // console.log("Data", shops);
+  // console.log("Fetching", isFetchingShops);
+  // console.log("Success", success);
+  // console.log("Error", isErrorShops);
   return (
     <>
       {/* {error && <div>{ERROR_NOT_FOUND}</div>} */}

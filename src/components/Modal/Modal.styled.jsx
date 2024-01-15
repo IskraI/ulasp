@@ -39,7 +39,8 @@ export const CloseIconStyled = (component) => styled(component)`
 `;
 
 export const ModalInfoText = styled.p`
-  padding: 37px 22px;
+  margin-top: 34px;
+  padding: 38px 22px;
   font-size: 16px;
   line-height: 1.2;
 `;

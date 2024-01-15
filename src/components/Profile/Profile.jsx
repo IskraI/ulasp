@@ -27,7 +27,6 @@ export const Profile = () => {
     useUpdateClientAvatarMutation();
 
   const handleFormSubmit = () => {
- 
     const formData = new FormData();
 
     if (!selectedImage) {
@@ -35,6 +34,8 @@ export const Profile = () => {
     }
 
     formData.append("avatarURL", selectedImage);
+
+    console.log(formData);
 
     if (userRole) {
       dispatchClient(formData)
@@ -66,12 +67,11 @@ export const Profile = () => {
     }
   };
 
-  const defaultAvatarSrc = "../avatar.jpg";
-
   const avatarSrc = selectedImage
-    ? URL.createObjectURL(selectedImage):avatarURL?
-     `${BASE_URL}/${avatarURL}` : defaultAvatarSrc;
-  
+    ? URL.createObjectURL(selectedImage)
+    : avatarURL
+    ? `${BASE_URL}/${avatarURL}`
+    : "";
 
   return (
     <>

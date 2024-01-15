@@ -14,7 +14,6 @@ const Player = ({ display, tracks }) => {
 
   const trackSRC = BASE_URL + "/" + tracks[currentTrack]?.trackURL;
 
-  console.log(tracks);
   const handleClickNext = () => {
     setTrackIndex((currentTrack) =>
       currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
@@ -30,7 +29,6 @@ const Player = ({ display, tracks }) => {
   };
 
   const handleEnd = () => {
-    console.log("end");
     setTrackIndex((currentTrack) =>
       currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
     );
@@ -39,12 +37,13 @@ const Player = ({ display, tracks }) => {
   return (
     <>
       <PlayerWrapper style={{ display }}>
-        {tracks.length && (
+        {tracks.length !== 0 && (
           <>
             <TracksArtist>{tracks[currentTrack].artist}</TracksArtist>
             <TrackName>{tracks[currentTrack].trackName}</TrackName>
             <PlayerReact
-              // autoPlay
+              autoPlay={false}
+              autoPlayAfterSrcChange={false}
               src={trackSRC}
               showSkipControls
               onClickNext={handleClickNext}

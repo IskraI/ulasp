@@ -5,7 +5,7 @@ export const ControlWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 26px;
+  /* margin-top: 26px; */
   margin-bottom: 24px;
 `;
 

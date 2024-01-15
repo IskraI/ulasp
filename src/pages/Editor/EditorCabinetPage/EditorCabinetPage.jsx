@@ -16,13 +16,61 @@ import { Loader } from "../../../components/Loader/Loader";
 import Player from "../../../components/Player/Player";
 
 const RowsTitle = [
-  "",
-  "Назва пісні",
-  "Виконавець",
-  "Тривалість",
-  "Жанр",
-  "Плейлист",
-  "",
+  {
+    title: "",
+    type: "input",
+    titleSize: "2%",
+    showData: false,
+  },
+  {
+    title: "",
+    type: "button",
+    titleSize: "2%",
+    showData: false,
+  },
+  {
+    title: "",
+    type: "image",
+    titleSize: "5%",
+    showData: true,
+  },
+  {
+    title: "Назва пісні",
+    type: "text",
+    titleSize: "20%",
+    showData: true,
+  },
+  {
+    title: "Виконавець",
+    type: "text",
+    titleSize: "15%",
+    showData: true,
+  },
+  {
+    title: "Тривалість",
+    type: "text",
+    titleSize: "12%",
+    showData: true,
+  },
+  {
+    title: "Жанр",
+    type: "text",
+    titleSize: "10%",
+    showData: true,
+  },
+  {
+    title: "Плейлист",
+    type: "text",
+    titleSize: "15%",
+    showData: false,
+  },
+
+  {
+    title: "",
+    type: "button",
+    titleSize: "5%",
+    showData: true,
+  },
 ];
 
 const EditorCabinetPage = () => {
@@ -47,31 +95,34 @@ const EditorCabinetPage = () => {
 
   return (
     <>
+      {isFetchingAllTracks && !isSuccessAllTracks && <Loader />}
+
       <EditorText> Кабінет редактора</EditorText>
 
-      <StatsListWrapper>
-        <StatItemEditor>
-          {!isFetchingTracksCount && !isError && tracksCount.countTracks}
-          <br /> Доданої музики
-        </StatItemEditor>
-        <StatItemEditor>
-          {!isLoadingPlaylists &&
-            !errorPlaylistCount &&
-            playlistCount.countPlaylists}
-          <br /> Створених плейлистів
-        </StatItemEditor>
-      </StatsListWrapper>
-      {isFetchingAllTracks && <Loader />}
-      {!isFetchingAllTracks && !errorLoadingAllTracks && (
+      {isSuccessAllTracks && !errorLoadingAllTracks && (
         <>
+          <StatsListWrapper>
+            <StatItemEditor>
+              {!isFetchingTracksCount && !isError && tracksCount.countTracks}
+              <br /> Доданої музики
+            </StatItemEditor>
+            <StatItemEditor>
+              {!isLoadingPlaylists &&
+                !errorPlaylistCount &&
+                playlistCount.countPlaylists}
+              <br /> Створених плейлистів
+            </StatItemEditor>
+          </StatsListWrapper>
           <TracksTable
-            title={" Остання додана музика"}
+            title={"Остання додана музика"}
+            showTitle={true}
             tracks={allTracks}
             isLoading={isLoadingAllTracks}
             error={errorLoadingAllTracks}
             isFetching={isFetchingAllTracks}
             isSuccess={isSuccessAllTracks}
             rows={RowsTitle}
+            isInPlayList={false}
           />
           <Player tracks={allTracks} />
         </>

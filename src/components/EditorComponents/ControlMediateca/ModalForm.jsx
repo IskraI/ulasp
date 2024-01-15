@@ -1,15 +1,29 @@
 /* eslint-disable react/prop-types */
 import { Button } from "../../Button/Button";
 import { useForm } from "react-hook-form";
-import { FormControlModal, InputControlModal } from "./ModalForm.styled";
+import {
+  FormControlModal,
+  InputControlModal,
+  TextControlModal,
+  LabelInputControlModal,
+  CoverImage,
+  ClearImage,
+} from "./ModalForm.styled";
 
 const ModalForm = ({
   onSubmit,
   genre,
   idInputFirst,
+  marginTopInputFirst,
   placeholderFirst,
   idInputSecond,
   placeholderSecond,
+  valueInputSecond,
+  idInputImg,
+  changePlayListAvatar,
+  img,
+  clearImageCover,
+  cover,
 }) => {
   const {
     control,
@@ -25,22 +39,57 @@ const ModalForm = ({
     mode: "onChange",
   });
 
+  const coverImage = img ? URL.createObjectURL(img) : null;
+
+  // console.log("coverImage", coverImage);
+
   return (
     <>
       <FormControlModal autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+        {/* Пропс cover, true если надо инпут с картинкой, false если нет */}
+        {cover && (
+          <>
+            <LabelInputControlModal htmlFor={idInputImg}>
+              {coverImage ? (
+                <>
+                  <CoverImage src={coverImage} alt="" />
+                </>
+              ) : (
+                "Додати обкладинку"
+              )}
+            </LabelInputControlModal>
+
+            <InputControlModal
+              {...register(idInputImg)}
+              type="file"
+              accept="image/*"
+              id={idInputImg}
+              value="" //значение пустая строка для кавера плейлиста
+              style={{ display: "none" }}
+              onChange={changePlayListAvatar}
+            />
+            {coverImage && (
+              <ClearImage type="button" onClick={clearImageCover}>
+                Видалити
+              </ClearImage>
+            )}
+          </>
+        )}
+
         <InputControlModal
           {...register(idInputFirst)}
           type="text"
           id={idInputFirst}
           placeholder={placeholderFirst}
+          margintop={marginTopInputFirst}
         />
-        <p>{genre}</p>
+        {genre && <TextControlModal>{genre}</TextControlModal>}
 
         <InputControlModal
           {...register(idInputSecond)}
           type="hidden"
           id={idInputSecond}
-          value={idInputFirst}
+          value={valueInputSecond}
         />
         <Button
           type="Submit"

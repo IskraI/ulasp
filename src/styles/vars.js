@@ -9,7 +9,9 @@ export const colors = {
   bgHeaderColor: "#3E6DA3",
   inputGrayColor: "rgba(0, 0, 0, 0.4)",
   errorColor: "#870505",
+  backGroundGreyColor: "#CECCC180",
 };
+
 
 export const transition = {
   duration: "300ms ease-out",
@@ -17,3 +19,5 @@ export const transition = {
 export const border = {
   boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.60) inset",
 };
+
+export const mainCubicTransition = "cubic-bezier(0.4, 0, 0.2, 1)";

@@ -13,7 +13,7 @@ export const playlistsApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Playlists"],
+  tagTypes: ["Playlists", "Tracks"],
 
   endpoints: (builder) => ({
     getLatestPlaylists: builder.query({
@@ -28,15 +28,16 @@ export const playlistsApi = createApi({
     getPlaylistById: builder.query({
       query: (id) => ({ url: `/editor/playlist/${id}` }),
 
-      providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
+      providesTags: (_result, _err, id) => [{ type: "Playlists", id, _result }],
     }),
     createPlaylist: builder.mutation({
       query: (body) => ({
         url: "/editor/playlist/create",
         method: "POST",
         body,
+        formData: true,
       }),
-      invalidatesTags: ["Playlists"],
+      invalidatesTags: ["Playlists", "Tracks"],
     }),
 
     deletePlaylist: builder.mutation({
@@ -46,19 +47,43 @@ export const playlistsApi = createApi({
       }),
       invalidatesTags: ["Playlists"],
     }),
-    getLatestPlaylistsForUser: builder.query({
-      query: () => ({
-        url: "/user/playlist/latest",
+
+    uploadTracksInPlaylist: builder.mutation({
+      query: ({ playlistId, formData }) => ({
+        url: `/editor/tracks/upload/${playlistId}`,
+        method: "POST",
+        body: formData,
+        formData: true,
       }),
-      provideTags: ["Playlists"],
+      async onQueryStarted(arg) {
+        console.log(arg);
+      },
+      invalidatesTags: ["Playlists"],
+    }),
+    deleteTrackInPlaylist: builder.mutation({
+      query: (trackId) => ({
+        url: `/editor/tracks/delete/${trackId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Playlists", "Tracks"],
+    }),
+    updatePlaylist: builder.mutation({
+      query: ({ playlistId, body }) => ({
+        url: `/editor/playlist/update/${playlistId}`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["Playlists"],
     }),
   }),
 });
 
 export const {
   useGetLatestPlaylistsQuery,
-  useGetLatestPlaylistsForUserQuery,
   useGetPlaylistByIdQuery,
   useCreatePlaylistMutation,
   useDeletePlaylistMutation,
+  useUploadTracksInPlaylistMutation,
+  useDeleteTrackInPlaylistMutation,
+  useUpdatePlaylistMutation,
 } = playlistsApi;

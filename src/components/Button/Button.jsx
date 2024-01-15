@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { CustomButton } from "./Button.styled";
+import { CustomButton, SvgStyled } from "./Button.styled";
 
 export const Button = ({
   width,
@@ -7,6 +7,8 @@ export const Button = ({
   margintop,
   marginright,
   marginleft,
+  color,
+  background,
   padding,
   onClick,
   type,
@@ -22,6 +24,9 @@ export const Button = ({
     <CustomButton
       type={type}
       width={width}
+      height={height}
+      color={color}
+      background={background}
       aria-label={ariaLabel}
       marginbottom={marginbottom}
       margintop={margintop}
@@ -33,9 +38,9 @@ export const Button = ({
       display={display}
       disabled={disabled}
     >
-      <svg width="24" height="24" style={{ display, marginRight: "8px" }}>
+      <SvgStyled width="24" height="24" style={{ display, marginRight: "8px" }}>
         <use href={icon}></use>
-      </svg>
+      </SvgStyled>
       {text}
     </CustomButton>
   );

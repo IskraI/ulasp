@@ -5,17 +5,14 @@ import {
   PageSection,
   PageSubpage,
 } from "../../pages/AdminPage/AdminPage.styled";
+import { Loader } from "../../components/Loader/Loader";
 
-
-
-const AdminPage = ({user}) => {
-
- 
+const AdminPage = ({ user }) => {
   return (
     <PageSection>
-      <SiteBarNav user = {user}/>
+      <SiteBarNav user={user} />
       <PageSubpage>
-        <Suspense fallback={"Loader"}>
+        <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
       </PageSubpage>
