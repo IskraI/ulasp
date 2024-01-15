@@ -31,12 +31,7 @@ const LatestPlaylists = ({
     data: dataAdd,
     isLoading: isLoadingAddPlaylist,
   } = useAddPlaylistForUserQuery();
-  const dataadd = (isLoadingAddPlaylist) => {
-console.log('isLoadingAddPlaylist', isLoadingAddPlaylist)
-!isLoadingAddPlaylist ? console.log(' dataAdd', dataAdd ): console.log('ytpfuhepbkjcm')
-  }
-  dataadd();
-  
+ 
   return (
     <>
       <TitleContainer>

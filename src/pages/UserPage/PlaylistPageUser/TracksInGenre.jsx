@@ -29,6 +29,7 @@ const { genreId } = useParams();
      const [sortAlphabetically, setSortAlphabetically] = useState(false);
 
   const handleSortClick = () => {
+    
     setSortAlphabetically(!sortAlphabetically);
     };
     
