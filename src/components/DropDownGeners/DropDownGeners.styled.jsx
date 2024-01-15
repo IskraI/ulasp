@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import { colors } from "../../styles/vars";
 import symbol from '../../assets/symbol.svg';
 
-
 export const Select = styled.select`
    color:${colors.mainFontColor} ;
 font-size: 16px;
@@ -11,13 +10,13 @@ background-color: transparent;
  background-image: url(${symbol}#icon-check); 
   background-repeat: no-repeat; 
   background-position: right 10px center; 
- appearance: none;
+ /* appearance: none;
   -webkit-appearance: none;
-  -moz-appearance: none;
+  -moz-appearance: none; */
 
-&::-ms-expand {
+/* &::-ms-expand {
     display: none;
-  }
+  } */
 
   &:focus {
     outline: none;

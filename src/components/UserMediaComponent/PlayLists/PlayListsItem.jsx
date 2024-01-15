@@ -1,7 +1,7 @@
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 import { useState, useEffect } from "react";
-import { useUpdateFavoriteStatusApiMutation, useFavoritePlaylistForUserQuery } from "../../../redux/playlistsUserSlice";
+import { useUpdateFavoriteStatusApiMutation, useUpdateAddStatusApiMutation } from "../../../redux/playlistsUserSlice";
 import {
   MediaItem,
   IconsWrapper,
@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 
 
-const PlayListItem = ({ id, title, icon, genre, favoriteStatus,
+const PlayListItem = ({ id, title, icon, genre, favoriteStatus, addStatus,
   placeListCardInfo,
   countTracks, }) => {
 
@@ -25,6 +25,7 @@ const PlayListItem = ({ id, title, icon, genre, favoriteStatus,
 
 // { _id, title, icon, isFavorite: initialFavorite }
   const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
+  const [toggleAdd] = useUpdateAddStatusApiMutation(id);
 
   // const { data: dataFavorites } = useFavoritePlaylistForUserQuery();
  
@@ -32,7 +33,9 @@ const PlayListItem = ({ id, title, icon, genre, favoriteStatus,
 
 
 
-    const [isFavorite, setIsFavorite] = useState(favoriteStatus || false);
+  const [isFavorite, setIsFavorite] = useState(favoriteStatus || false);
+  
+  const [isAdd, setIsAdd] = useState(addStatus || false);
     // const handleToggleFavorite = (playlistId) => {
     //   toggleFavorite(playlistId)
      
@@ -55,13 +58,25 @@ const PlayListItem = ({ id, title, icon, genre, favoriteStatus,
     }
   };
 
-  useEffect(() => {
-    // Fetch initial favorite status from the backend when the component mounts
-    if (!favoriteStatus) {
-      // Use your API call to get the favorite status from the backend
-      // For example: fetchFavoriteStatusFromBackend(id).then(response => setIsFavorite(response));
+  const handleToggleAdd = async () => {
+     console.log('playlistId:', id);
+    try {
+      // Call the API to update the favorite status
+      await toggleAdd(id);
+      // Update the local state after a successful API call
+      setIsAdd((prevIsAdd) => !prevIsAdd);
+    } catch (error) {
+      console.error('Error updating add status:', error);
     }
-  }, [favoriteStatus, id]);
+  };
+
+  // useEffect(() => {
+  //   // Fetch initial favorite status from the backend when the component mounts
+  //   if (!favoriteStatus) {
+  //     // Use your API call to get the favorite status from the backend
+  //     // For example: fetchFavoriteStatusFromBackend(id).then(response => setIsFavorite(response));
+  //   }
+  // }, [favoriteStatus, id]);
 
 // console.log('isFavorite', isFavorite)
   return (
@@ -108,10 +123,34 @@ const PlayListItem = ({ id, title, icon, genre, favoriteStatus,
             <use href={`${symbol}#icon-heart-empty`}></use>
           </svg>
 
-          <svg width="24" height="24">
-            <use href={`${symbol}#icon-check`}></use>
-          </svg>
-        </IconsWrapper>
+          
+      {!isAdd ? (
+    <svg
+      width="24"
+      height="24"
+      onClick={async () => {
+                await handleToggleAdd();
+                setIsAdd(true);
+      }}
+      style={{ cursor: "pointer" }}
+    >
+      <use href={`${symbol}#icon-plus`}></use>
+    </svg>
+  ) : (
+    <svg
+      width="24"
+      height="24"
+      onClick={async () => {
+                await handleToggleAdd();
+                setIsAdd(false);
+      }}
+      style={{ cursor: "pointer" }}
+    >
+      <use href={`${symbol}#icon-check`}></use>
+    </svg>
+  )}
+
+         </IconsWrapper>
       </MediaItem>
     </>
   );

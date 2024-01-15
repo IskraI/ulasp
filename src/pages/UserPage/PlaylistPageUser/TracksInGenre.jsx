@@ -1,24 +1,28 @@
 import TabNavigation from "../../../components/TabNavigation/TabNavigation";
 import TracksTable from "../../../components/UserMediaComponent/TracksTable/TracksTable";
-import { useGetAllTracksforUserQuery  } from "../../../redux/tracksUserSlice";
-import { BtnSort } from "./AllTracksUser.styled";
+import {  useGetTracksByGenreIdQuery  } from "../../../redux/tracksUserSlice";
+import { BtnSort } from "../AllTracksUser/AllTracksUser.styled";
 import symbol from "../../../assets/symbol.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavMusic from "../../../components/UserMediaComponent/NavMusic/NavMusic"
 import { useParams } from "react-router-dom";
-
+import Player from '../../../components/Player/Player';
+import  DropDownTracksInGenres  from "../../../components/DropDownGeners/DropDownTracksInGener";
 
 const RowsTitle = ["", "Назва пісні", "Виконавець", "Тривалість", "Жанр", ""];
 
 const AllTracksUser = () => {
 const { genreId } = useParams();
 
-  const {
-    data: allTracks,
+  // const {
+  //   data: allTracks,
 
-    error: errorLoadingAllTracks,
-    isFetching: isFetchingAllTracks,
-    } = useGetAllTracksforUserQuery();
+  //   error: errorLoadingAllTracks,
+  //   isFetching: isFetchingAllTracks,
+  // } = useGetAllTracksforUserQuery();
+  
+  const { data: allTracks, error: errorLoadingAllTracks,
+    isFetching: isFetchingAllTracks,} = useGetTracksByGenreIdQuery(genreId);
     
   const links = [
     { path: `/user/medialibrary/genres/${genreId}/playlists`, title: "Плейлисти" },
@@ -29,6 +33,7 @@ const { genreId } = useParams();
      const [sortAlphabetically, setSortAlphabetically] = useState(false);
 
   const handleSortClick = () => {
+    
     setSortAlphabetically(!sortAlphabetically);
     };
     
@@ -38,23 +43,28 @@ const { genreId } = useParams();
         const titleB = (b.trackName || "").toUpperCase();
         return sortAlphabetically ? titleA.localeCompare(titleB) : 0;
       })
-        : [];
-    
+    : [];
+  
+      
        return (
       <>
            <TabNavigation /> 
+           <DropDownTracksInGenres currentGenreId={genreId}/>
            <NavMusic links={links} />
        <BtnSort onClick={handleSortClick}><svg width="24" height="24" >
                 <use href={`${symbol}#icon-sort`}></use>
               </svg></BtnSort>   
       {isFetchingAllTracks && <p>Загружаемся.....</p>}
-      {!isFetchingAllTracks && !errorLoadingAllTracks && (
+           {!isFetchingAllTracks && !errorLoadingAllTracks && (
+             <>
         <TracksTable
                   tracks={sortedTracks}
           error={errorLoadingAllTracks}
           isFetching={isFetchingAllTracks}
           rows={RowsTitle}
-        />
+             />
+              <Player tracks={allTracks} />
+             </>
       )}
     </>
   );

@@ -33,6 +33,7 @@ import PlaylistsPageInGenre from "./pages/Editor/PlaylistsPage/PlaylistsPageInGe
 import TracksPage from "./pages/Editor/TracksPage/TracksPage";
 import ShopsPage from "./pages/Editor/ShopsPage/ShopPage";
 import ShopsUserPage from "./pages/UserPage/ShopsUserPage/ShopUserPage";
+import TracksInGenre from "./pages/UserPage/PlaylistPageUser/TracksInGenre";
 import { useSelector } from "react-redux";
 import { useCurrentUserQuery } from "../src/redux/authSlice";
 import { useCurrentClientQuery } from "../src/redux/authClientSlice";
@@ -152,6 +153,11 @@ function App() {
                   element={<PlaylistsPageUserInGenre />}
                 />
                 <Route
+                  path="medialibrary/genres/:genreId/tracks"
+                  element={<TracksInGenre/>}
+                />
+                 <Route
+
                   path="medialibrary/genres/:genreId/playlists/:playlistId/tracks"
                   element={<TracksPageUser display={"none"} />}
                 />

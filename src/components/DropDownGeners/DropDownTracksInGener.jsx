@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { useGetAllGenresForUserQuery } from "../../redux/genersUserSlice";
+import { useGetTracksByGenreIdQuery } from "../../redux/tracksUserSlice";
 import { Loader } from "../Loader/Loader";
 import { StyledDropDown, Select, Option } from "./DropDownGeners.styled";
 import { useNavigate } from 'react-router-dom';
 import symbol from '../../assets/symbol.svg';
 
-const DropDownGenres = ({ currentGenreId }) => {
+const DropDownTracksInGenres = ({ currentGenreId }) => {
   const navigate = useNavigate();
   const [selectedGenre, setSelectedGenre] = useState("");
   const { data: genres, error, isLoading } = useGetAllGenresForUserQuery();
+  const { data: tracksData, error: tracksError, isLoading: tracksLoading } = useGetTracksByGenreIdQuery(currentGenreId);
 
   const datasort = (genres, currentGenreId) => {
     const sortedArr = [];
@@ -45,7 +47,7 @@ const DropDownGenres = ({ currentGenreId }) => {
 
   const handleChange = (e) => {
     const selectedGenreId = e.target.value;
-      navigate(`/user/medialibrary/genres/${selectedGenreId}/playlists`);
+      navigate(`/user/medialibrary/genres/${selectedGenreId}/tracks`);
   };
 
   return (
@@ -67,9 +69,20 @@ const DropDownGenres = ({ currentGenreId }) => {
               ))}
                          </Select>
                     </StyledDropDown>
-      )}
+          )}
+           {/* {tracksLoading && <Loader />} 
+      {tracksError && <div>Error loading tracks: {tracksError}</div>} 
+      {tracksData && (
+        <div>
+            {tracksData.map((track) => (
+            <div key={track._id}>
+                {track.name}
+            </div>
+          ))}
+        </div>
+      )} */}
     </div>
   );
 };
 
-export default DropDownGenres;
+export default DropDownTracksInGenres;
