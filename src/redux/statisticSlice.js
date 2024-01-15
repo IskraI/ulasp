@@ -25,6 +25,11 @@ export const statisticApi = createApi({
         url: "/editor/tracks/count",
       }),
     }),
+    getTracksCountAdmin: builder.query({
+      query: () => ({
+        url: "/admin/tracks/count",
+      }),
+    }),
 
     getNewClientsCount: builder.query({
       query: () => ({
@@ -33,7 +38,7 @@ export const statisticApi = createApi({
     }),
     getClientsCount: builder.query({
       query: () => ({
-        url: "/admin/clients/count",
+        url: "/admin/users/count",
       }),
     }),
     getOnlineClientsCount: builder.query({
@@ -56,4 +61,5 @@ export const {
   useGetTracksCountQuery,
   useGetNewClientsCountQuery,
   useGetClientsCountQuery,
+  useGetTracksCountAdminQuery,
 } = statisticApi;
