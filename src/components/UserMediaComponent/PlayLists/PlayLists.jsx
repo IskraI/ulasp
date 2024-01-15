@@ -32,8 +32,10 @@ const LatestPlaylists = ({
     isLoading: isLoadingAddPlaylist,
   } = useAddPlaylistForUserQuery();
 
+
 // console.log('dataAdd playlist', dataAdd.add )
 // console.log('dataFavorite playlist', dataFavorite.favorites)
+
 
   return (
     <>
@@ -47,7 +49,7 @@ const LatestPlaylists = ({
 
           {/* </ControlWrapper> */}
           <MediaList>
-            {console.log(playlists)}
+           
             {playlists.map(({ _id, playListName, playListAvatarURL }) => {
               // console.log(
               //   "dataFavorite.favorites.includes(_id)",
@@ -55,8 +57,13 @@ const LatestPlaylists = ({
               // );
 
               return (<>
+
                 <div key={_id}>
+
+
+
                 {!isLoadingAddPlaylist && ( <PlayListItem
+
                   key={_id}
                   id={_id}
                   favoriteStatus={dataFavorite.favorites.some((item) => item._id === _id)}
@@ -67,12 +74,16 @@ const LatestPlaylists = ({
                   shopCategoryName={shopCategoryName}
 
 
+
                 />)}
                 </div>
               </>
+
                
             );
+
             })}
+
           </MediaList>
           <MediaNavigationLink link={"newplaylists"} display={display} />
                   </>
