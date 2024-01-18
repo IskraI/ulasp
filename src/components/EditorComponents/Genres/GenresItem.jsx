@@ -63,7 +63,7 @@ const GenreListItem = ({ id, title, icon }) => {
   // console.log("error", errorUpdateGenre);
   // console.log("isLoading", isLoadingUpdateGenre);
 
-  console.log("isErrorDeleteGenre", isSuccessDeleteGenre);
+  // console.log("isErrorDeleteGenre", isSuccessDeleteGenre);
 
   useEffect(() => {
     if (isEditing) {

@@ -74,7 +74,7 @@ const Shops = ({
       )}
       {/* <Player display={displayPlayer} /> */}
       {showModal && (
-        <Modal width={"814px"} onClose={toogleModal}>
+        <Modal width={"814px"} onClose={toogleModal} showCloseButton={true}>
           <ModalForm
             onSubmit={handleSubmitShop}
             idInputFirst={"shopCategoryName"}

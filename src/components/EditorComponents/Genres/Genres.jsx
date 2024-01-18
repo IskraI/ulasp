@@ -55,7 +55,10 @@ const Genres = ({
   const newGenreName =
     dataCreateGenre?.newGenre.genre ?? "Назва нового жанру не була введена";
 
-  const handleSubmitGenre = async (data) => {
+  const handleSubmitGenre = async (data, e) => {
+    console.log(data);
+    console.log(e);
+
     try {
       closeModalAdd();
       await createGenre(data).unwrap();
@@ -64,7 +67,6 @@ const Genres = ({
       setShowModalError(true);
     }
   };
-
 
   const closeModalAdd = () => {
     return setShowModalAdd(false);
@@ -90,7 +92,7 @@ const Genres = ({
         textButton={"Жанр"}
         onClick={toogleModal}
       />
-      {!error && !isLoadingCreateGenre && (
+      {!error && (
         <GenresWrapper>
           <GenresList>
             {genres.map(({ _id, genre, genreAvatarURL }) => (

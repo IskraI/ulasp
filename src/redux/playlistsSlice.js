@@ -3,6 +3,8 @@ import { BASE_URL } from "../constants/constants";
 
 export const playlistsApi = createApi({
   reducerPath: "playlistsApi",
+  forceRefetch: true,
+  refetchOnFocus: true,
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
@@ -23,12 +25,18 @@ export const playlistsApi = createApi({
         }`,
       }),
 
-      providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
+      providesTags: (_result, _err, id) => [
+        { type: "Playlists", id },
+        { type: "Tracks" },
+      ],
     }),
     getPlaylistById: builder.query({
       query: (id) => ({ url: `/editor/playlist/${id}` }),
 
-      providesTags: (_result, _err, id) => [{ type: "Playlists", id, _result }],
+      providesTags: (_result, _err, id) => [
+        { type: "Playlists", id },
+        { type: "Tracks" },
+      ],
     }),
     createPlaylist: builder.mutation({
       query: (body) => ({
@@ -37,7 +45,7 @@ export const playlistsApi = createApi({
         body,
         formData: true,
       }),
-      invalidatesTags: ["Playlists", "Tracks"],
+      invalidatesTags: ["Playlists"],
     }),
 
     deletePlaylist: builder.mutation({
@@ -49,14 +57,17 @@ export const playlistsApi = createApi({
     }),
 
     uploadTracksInPlaylist: builder.mutation({
-      query: ({ playlistId, formData }) => ({
-        url: `/editor/tracks/upload/${playlistId}`,
-        method: "POST",
-        body: formData,
-        formData: true,
-      }),
+      query: ({ playlistId, formData }) => (
+        console.log(formData.get("trackURL")),
+        {
+          url: `/editor/tracks/upload/${playlistId}`,
+          method: "POST",
+          body: formData,
+          formData: true,
+        }
+      ),
       async onQueryStarted(arg) {
-        console.log(arg);
+        console.log(arg.formData.get("trackURL"));
       },
       invalidatesTags: ["Playlists"],
     }),

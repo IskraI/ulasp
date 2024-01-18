@@ -98,13 +98,13 @@ export const propUserNav = [
     menu: [ {
       id: "navMyPlaylists",
       title: "Мої плейлисти",
-      navigation: "myplaylists",
+      navigation: "cabinet/myplaylists",
       picture: `${symbol}#icon-playlist`,
     },
     {
       id: "navMessages",
       title: "Повідомлення",
-      navigation: "messages",
+      navigation: "cabinet/messages",
       picture: `${symbol}#icon-mail`,
     },]
     

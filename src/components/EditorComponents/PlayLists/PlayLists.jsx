@@ -111,7 +111,6 @@ const LatestPlaylists = ({
           <PlaylistList>
             {playlists.map(({ _id, playListName, playListAvatarURL }) => (
               <PlaylistListItem
-                countTracks={"1"}
                 key={_id}
                 id={_id}
                 title={playListName}

@@ -12,7 +12,7 @@ const AllGenresPage = () => {
 
   return (
     <>
-      {isFetchingAllGenre && !isErrorAllGenre && <Loader />}
+      {!isSuccess && !isErrorAllGenre && <Loader />}
       {isSuccess && !isErrorAllGenre && (
         <Genres
           displayPlayer={"flex"}

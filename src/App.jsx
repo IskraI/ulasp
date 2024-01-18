@@ -124,6 +124,7 @@ function App() {
   } else {
     return (
       <>
+
         <Routes>
           <Route element={<SharedLayout avatarURL={user.avatarURL} />}>
             <Route path="/" element={<PublicRoute component={WelcomePage} />} />
@@ -142,7 +143,7 @@ function App() {
               >
                 <Route index element={<UserCabinetPage />} />
                 <Route path="cabinet" element={<UserCabinetPage />} />
-                <Route path="messages" element={<MessagesUser />} />
+                <Route path="cabinet/messages" element={<MessagesUser />} />
                 <Route path="medialibrary" element={<MediaLibraryForUser />} />
                 <Route
                   path="medialibrary/genres"
@@ -154,10 +155,9 @@ function App() {
                 />
                 <Route
                   path="medialibrary/genres/:genreId/tracks"
-                  element={<TracksInGenre/>}
+                  element={<TracksInGenre />}
                 />
-                 <Route
-
+                <Route
                   path="medialibrary/genres/:genreId/playlists/:playlistId/tracks"
                   element={<TracksPageUser display={"none"} />}
                 />
@@ -182,7 +182,10 @@ function App() {
                   path="medialibrary/newtracks"
                   element={<AllTracksUser display={"none"} />}
                 />
-                <Route path="myplaylists" element={<MyPlaylistsUser />} />
+                <Route
+                  path="cabinet/myplaylists"
+                  element={<MyPlaylistsUser />}
+                />
                 <Route path="*" element={<ErrorPage />} />
               </Route>
             )}

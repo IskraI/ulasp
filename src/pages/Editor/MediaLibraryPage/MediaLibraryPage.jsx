@@ -37,7 +37,10 @@ const MediaLibraryPage = () => {
     isFetching: isFetchingNewSongs,
     isSuccess: isSuccesLatestNewSongs,
     isError: isErrorNewSongs,
-  } = useGetAllTracksQuery(`?&limit=${9}`);
+  } = useGetAllTracksQuery(`?&limit=${9}`, {
+    forceRefetch: true,
+    refetchOnFocus: true,
+  });
  
 
 
@@ -101,12 +104,12 @@ const MediaLibraryPage = () => {
           />
 
           <NewSongs
-            data={allTracks}
+            data={allTracks.latestTracks}
             isFetching={isFetchingNewSongs}
             error={isErrorNewSongs}
             isSuccess={isSuccesLatestNewSongs}
           />
-          <Player tracks={allTracks} />
+          <Player tracks={allTracks.latestTracks} />
         </>
       )}
     </>

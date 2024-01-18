@@ -15,16 +15,6 @@ export const statisticApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getPlaylistsCount: builder.query({
-      query: () => ({
-        url: "/editor/playlist/count",
-      }),
-    }),
-    getTracksCount: builder.query({
-      query: () => ({
-        url: "/editor/tracks/count",
-      }),
-    }),
     getTracksCountAdmin: builder.query({
       query: () => ({
         url: "/admin/tracks/count",
@@ -57,8 +47,6 @@ export const statisticApi = createApi({
 export const {
   useGetNewClientsByMonthCountQuery,
   useGetOnlineClientsCountQuery,
-  useGetPlaylistsCountQuery,
-  useGetTracksCountQuery,
   useGetNewClientsCountQuery,
   useGetClientsCountQuery,
   useGetTracksCountAdminQuery,

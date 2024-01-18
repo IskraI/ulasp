@@ -38,9 +38,25 @@ export const CloseIconStyled = (component) => styled(component)`
   height: 24px;
 `;
 
+export const ButtonsModalWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 24px;
+  margin-right: 24px;
+  margin-bottom: 24px;
+`;
+
 export const ModalInfoText = styled.p`
   margin-top: 34px;
   padding: 38px 22px;
   font-size: 16px;
   line-height: 1.2;
+  margin-bottom: ${(props) => props.marginBottom};
+`;
+
+export const ModalInfoTextBold = styled.span`
+  font-size: 18px;
+  font-weight: 600;
+  margin-left: 4px;
+  margin-right: 4px;
 `;

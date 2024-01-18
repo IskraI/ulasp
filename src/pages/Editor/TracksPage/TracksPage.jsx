@@ -6,11 +6,10 @@ import symbol from "../../../assets/symbol.svg";
 
 import Player from "../../../components/Player/Player";
 import { useGetPlaylistByIdQuery } from "../../../redux/playlistsSlice";
-import { useUploadTrackMutation } from "../../../redux/tracksSlice";
 import { useUploadTracksInPlaylistMutation } from "../../../redux/playlistsSlice";
 import { ErrorNotFound, Error500 } from "../../../components/Errors/Errors";
 import { useParams } from "react-router-dom";
-import { useLayoutEffect, useRef, useState, useId } from "react";
+import { useRef, useState, useId } from "react";
 import { Loader } from "../../../components/Loader/Loader";
 
 const TracksPage = () => {
@@ -20,18 +19,21 @@ const TracksPage = () => {
 
   const { playlistId } = useParams();
 
-  const { data, isFetching, isSuccess, error } =
-    useGetPlaylistByIdQuery(playlistId);
+  const {
+    data,
+    isFetching: isFetchingPlaylistById,
+    isSuccess,
+    isLoading,
+    error,
+  } = useGetPlaylistByIdQuery(playlistId, {
+    forceRefetch: true,
+    refetchOnFocus: true,
+  });
 
-  const [
-    uploadTrack,
-    {
-      isSuccess: isSuccessUploadTrack,
-      isError: isErrorUploadTrack,
-      isLoading: isLoadingUploadTrack,
-      error: errorUploadTrack,
-    },
-  ] = useUploadTrackMutation();
+  // console.log("data", data);
+  // console.log("isFetching", isFetching);
+  // console.log("isSuccess", isSuccess);
+  // console.log("isLoading", isLoading);
 
   const [
     uploadTrackInPlaylist,
@@ -41,7 +43,7 @@ const TracksPage = () => {
       isError: isErrorUploadTrackInPlaylist,
       isLoading: isLoadingUploadTrackInPlaylist,
       error: errorUploadTrackInPlaylist,
-      isUninitialized,
+      isUninitialized: isUninitializedUploadTrackInPlaylist,
     },
   ] = useUploadTracksInPlaylistMutation();
 
@@ -49,9 +51,9 @@ const TracksPage = () => {
     // console.log("Count", data.totalTracks);
     // console.log("data", data);
   }
-  console.log("isLoading", isLoadingUploadTrackInPlaylist, Date.now());
-  console.log("isError", isErrorUploadTrackInPlaylist, Date.now());
-  console.log("error", errorUploadTrackInPlaylist, Date.now());
+  // console.log("isLoading", isLoadingUploadTrackInPlaylist, Date.now());
+  // console.log("isError", isErrorUploadTrackInPlaylist, Date.now());
+  // console.log("error", errorUploadTrackInPlaylist, Date.now());
 
   const rows = () => {
     const RowsTitle = [
@@ -116,7 +118,7 @@ const TracksPage = () => {
       {
         title: "Плейлист",
         type: "text",
-        titleSize: "15%",
+        titleSize: "0%",
         showData: false,
       },
 
@@ -131,15 +133,9 @@ const TracksPage = () => {
     return RowsTitle;
   };
 
-  useLayoutEffect(() => {
-    if (window.scrollY !== 0) {
-      window.scrollTo(0, 0);
-    }
-  }, []);
-
   return (
     <>
-      {error?.status === 500 && <Error500 />}
+      {error?.status === "500" && <Error500 />}
       {error && <ErrorNotFound />}
       {!isSuccess && !error && <Loader />}
       {isSuccess && !error && (
@@ -167,6 +163,8 @@ const TracksPage = () => {
               isPublished={data.playlist.published}
               countTracks={data.totalTracks}
               playlistName={data.playlist.playListName}
+              isFetchingPlaylistById={isFetchingPlaylistById}
+              isLoadingUploadTrackInPlaylist={isLoadingUploadTrackInPlaylist}
             />
           </div>
           <TracksTable
@@ -178,14 +176,14 @@ const TracksPage = () => {
             isCheckedAll={checkedMainCheckBox}
             tracks={data.playlist.trackList}
             error={error}
-            isFetching={isFetching}
+            isFetching={isFetchingPlaylistById}
             isSuccess={isSuccess}
             dataUpload={dataUploadTrackInPlaylist}
             isErrorUpload={isErrorUploadTrackInPlaylist}
             isSuccessUpload={isSuccessUploadTrackInPlaylist}
             isLoadingUpload={isLoadingUploadTrackInPlaylist}
             errorUpload={errorUploadTrackInPlaylist}
-            isUninitialized={isUninitialized}
+            isUninitialized={isUninitializedUploadTrackInPlaylist}
             display="none"
             rows={rows()}
           />

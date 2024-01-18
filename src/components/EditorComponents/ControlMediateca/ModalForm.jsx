@@ -9,6 +9,7 @@ import {
   CoverImage,
   ClearImage,
 } from "./ModalForm.styled";
+import { useState } from "react";
 
 const ModalForm = ({
   onSubmit,
@@ -33,6 +34,7 @@ const ModalForm = ({
     clearErrors,
     reset,
     getValues,
+    setValue,
     getFieldState,
     formState: { errors, isValid, dirtyFields },
   } = useForm({
@@ -42,6 +44,17 @@ const ModalForm = ({
   const coverImage = img ? URL.createObjectURL(img) : null;
 
   // console.log("coverImage", coverImage);
+
+  const [valueInputFirst, setValueInputFirst] = useState("");
+
+  const handleChange = (e) => {
+    // e.preventDefault();
+    // e.stopPropagation();
+    const value = e.currentTarget.value.trim();
+    setValueInputFirst(value);
+    // setValue(idInputFirst, value);
+    // console.log(getValues(idInputFirst));
+  };
 
   return (
     <>
@@ -80,6 +93,8 @@ const ModalForm = ({
           {...register(idInputFirst)}
           type="text"
           id={idInputFirst}
+          // value={valueInputFirst}
+          // onChange={handleChange}
           placeholder={placeholderFirst}
           margintop={marginTopInputFirst}
         />
@@ -100,6 +115,7 @@ const ModalForm = ({
           padding="8px"
           marginleft={"auto"}
           marginbottom={"28px"}
+          // disabled={valueInputFirst === "" ? true : false}
         />
       </FormControlModal>
     </>

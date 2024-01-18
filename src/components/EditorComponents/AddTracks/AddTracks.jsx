@@ -18,9 +18,8 @@ const AddTracks = ({
   onClick,
   disabled,
   playlistId,
- uploadTrack,
+  uploadTrack,
   uploadTrackInPlaylist,
-
 }) => {
   // const [
   //   uploadTrack,
@@ -74,6 +73,8 @@ const AddTracks = ({
     for (let track of selectedTracks) {
       formData.append("trackURL", track);
 
+ 
+
       if (playlistId !== undefined) {
         await uploadTrackInPlaylist({ playlistId, formData })
           .unwrap()
@@ -90,7 +91,7 @@ const AddTracks = ({
         await uploadTrack(formData)
           .unwrap()
           .then(() => {
-            formData.delete("trackURL");
+            // formData.delete("trackURL");
           })
           .catch((error) => console.log("ERROR 1", error))
           .finally(() => {

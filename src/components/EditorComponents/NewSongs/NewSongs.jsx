@@ -9,19 +9,31 @@ const RowsTitle = [
   {
     title: "",
     type: "input",
-    titleSize: "2%",
+    titleSize: "1%",
     showData: false,
   },
   {
     title: "",
     type: "button",
-    titleSize: "2%",
+    titleSize: "0%",
     showData: false,
   },
   {
     title: "",
     type: "image",
-    titleSize: "5%",
+    titleSize: "20%",
+    showData: true,
+  },
+  {
+    title: "",
+    type: "text",
+    titleSize: "20%",
+    showData: true,
+  },
+  {
+    title: "",
+    type: "text",
+    titleSize: "20%",
     showData: true,
   },
   {
@@ -39,26 +51,14 @@ const RowsTitle = [
   {
     title: "",
     type: "text",
-    titleSize: "12%",
-    showData: true,
-  },
-  {
-    title: "",
-    type: "text",
-    titleSize: "10%",
-    showData: true,
-  },
-  {
-    title: "",
-    type: "text",
-    titleSize: "15%",
+    titleSize: "0%",
     showData: false,
   },
 
   {
     title: "",
     type: "button",
-    titleSize: "5%",
+    titleSize: "1%",
     showData: false,
   },
 ];

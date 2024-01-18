@@ -121,7 +121,6 @@ const PlaylistListItem = ({
           <PlaylistInfoWrapper>
             <PlaylistItemText>{title}</PlaylistItemText>
             <PlaylistCountTracks>
-              {/* {countTracks + `${" "}` + "пісень"} */}
               {countTracks + `${" "}` + tracksCount}
             </PlaylistCountTracks>
           </PlaylistInfoWrapper>

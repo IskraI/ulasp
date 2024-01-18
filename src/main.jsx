@@ -9,6 +9,8 @@ import { persistor, store } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
+import ScrollToTop from "./helpers/scrollToTop.jsx";
+
 setupListeners(store.dispatch);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -16,6 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter basename="/ulasp/">
+          <ScrollToTop />
           <App />
         </BrowserRouter>
       </PersistGate>

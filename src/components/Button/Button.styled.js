@@ -41,6 +41,6 @@ export const CustomButton = styled.button`
 `;
 
 export const SvgStyled = styled.svg`
-  fill: none;
-  stroke: black;
+  fill: ${(props) => props.fillColor ?? "none"};
+  stroke: ${(props) => props.strokeColor ?? "black"};
 `;
