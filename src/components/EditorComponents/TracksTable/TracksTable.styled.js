@@ -81,6 +81,16 @@ export const TableCell = styled.td`
   /* display: ${(props) => (props.showData ? null : "none")}; */
   opacity: ${(props) => (props.showData ? 1 : 0)};
 
+  /* position: ${(props) => (props.showData ? "" : "absolute")}; */
+  width: ${(props) => (props.showData ? "" : "1px")};
+  height: ${(props) => (props.showData ? "" : "1px")};
+  margin: ${(props) => (props.showData ? "" : "-1px")};
+  border: ${(props) => (props.showData ? "" : 0)};
+  padding: ${(props) => (props.showData ? "" : 0)};
+
+  white-space: ${(props) => (props.showData ? "" : "nowrap")};
+  overflow: ${(props) => (props.showData ? "" : "hidden")};
+
   /* border: solid 1px transparent;
   border-style: none solid; */
 
@@ -97,6 +107,10 @@ export const TableCell = styled.td`
   }
 
   white-space: break-spaces;
+`;
+
+export const InfoBlock = styled.p`
+  display: ${(props) => (props.showData ? "" : "none")};
 `;
 
 export const TrackCover = styled.img`

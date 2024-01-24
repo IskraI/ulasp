@@ -20,6 +20,14 @@ export const InputControlModal = styled.input`
   border: none;
   font-size: 20px;
   background-color: rgba(234, 234, 234, 0.32);
+
+  &:active {
+    outline: 2px solid ${colors.accentHoverColor};
+  }
+
+  &:focus {
+    outline: 2px solid ${colors.accentHoverColor};
+  }
 `;
 
 export const TextControlModal = styled.p`

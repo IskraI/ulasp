@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { setupListeners } from "@reduxjs/toolkit/query";
 import { authApi } from "./authSlice";
 import { userReducer } from "./userSlice";
 import { authClientApi } from "./authClientSlice";
@@ -24,9 +25,6 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-
-
-
 
 const persistConfig = {
   key: "user",
@@ -71,5 +69,7 @@ export const store = configureStore({
       .concat(playlistsUserApi.middleware)
       .concat(shopsUserApi.middleware),
 });
+
+setupListeners(store.dispatch);
 
 export const persistor = persistStore(store);

@@ -49,11 +49,8 @@ const TracksPage = () => {
 
   if (isSuccess) {
     // console.log("Count", data.totalTracks);
-    // console.log("data", data);
+    // console.log("data", data.playlist._id);
   }
-  // console.log("isLoading", isLoadingUploadTrackInPlaylist, Date.now());
-  // console.log("isError", isErrorUploadTrackInPlaylist, Date.now());
-  // console.log("error", errorUploadTrackInPlaylist, Date.now());
 
   const rows = () => {
     const RowsTitle = [
@@ -172,6 +169,8 @@ const TracksPage = () => {
             showTitle={false}
             marginTopWrapper={"24px"}
             isInPlayList={true}
+            playListId={data.playlist._id}
+            playListGenre={data.playlist.playlistGenre}
             checkBox={true}
             isCheckedAll={checkedMainCheckBox}
             tracks={data.playlist.trackList}

@@ -10,6 +10,7 @@ import {
   PopUpButton,
   DotsButton,
   PopUpTracksTableWrapper,
+  InfoBlock,
 } from "../TracksTable/TracksTable.styled";
 import { SvgStyled } from "../../Button/Button.styled";
 import { sToStr } from "../../../helpers/helpers";
@@ -18,7 +19,7 @@ import { WithOutGenre } from "../../Errors/Errors";
 import symbol from "../../../assets/symbol.svg";
 import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsSlice";
 import { useDeleteTrackMutation } from "../../../redux/tracksSlice";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useId } from "react";
 
 const arr = [];
 
@@ -28,11 +29,12 @@ const TrackItem = ({
   trackName,
   artist,
   trackDuration,
-  trackGenre,
-  playList,
+  playListGenre,
+  playLists,
   checkBox,
   display,
   isInPlayList,
+  playListId,
   isCheckedAll,
   showPlayList,
   showData,
@@ -42,8 +44,12 @@ const TrackItem = ({
   const [isChecked, setIsChecked] = useState(false);
   const [trackId, setTrackId] = useState([]);
 
+  const idUse = useId();
+
   const ref = useRef(null);
   const dotsButtonRef = useRef(null);
+
+  // console.log(playList.trackList);
 
   // console.log("showData", showData);
 
@@ -159,6 +165,17 @@ const TrackItem = ({
     };
   }, []);
 
+  const makeUniq = (array) => {
+    const filteredGenre = {};
+    const genre = array.flatMap((playlist) => playlist.playlistGenre);
+    const uniqGenre = genre.filter(
+      ({ genre }) => !filteredGenre[genre] && (filteredGenre[genre] = 1)
+    );
+    return uniqGenre;
+  };
+
+  const oneGenre = !isInPlayList ? playLists[0]?.playlistGenre[0]?.genre : null;
+
   return (
     <>
       <TrStyle
@@ -176,7 +193,6 @@ const TrackItem = ({
             onClick={handleClickCheckBox}
           />
         </TableCell>
-
         <TableCell showData={showData[1] || false}>
           <button
             type="buton"
@@ -201,10 +217,59 @@ const TrackItem = ({
         <TableCell showData={showData[5] || false}>
           {sToStr(trackDuration)}
         </TableCell>
-        <TableCell showData={showData[6] || false}>
-          {trackGenre ? trackGenre.genre : <WithOutGenre />}
-        </TableCell>
-        <TableCell showData={showData[7] || false}>{playList}</TableCell>
+        {!isInPlayList ? (
+          <TableCell showData={showData[6] || false}>
+            {makeUniq(playLists).length > 1 ? (
+              makeUniq(playLists)
+                .slice(0, 3)
+                .map(({ _id, genre }) => (
+                  <InfoBlock showData={showData[6]} key={_id}>
+                    {genre}
+                  </InfoBlock>
+                ))
+            ) : makeUniq(playLists).length !== 0 ? (
+              <InfoBlock showData={showData[6]}>{oneGenre}</InfoBlock>
+            ) : (
+              <WithOutGenre />
+            )}
+            {makeUniq(playLists)?.length > 3 && (
+              <InfoBlock showData={showData[6]}>та інші</InfoBlock>
+            )}
+          </TableCell>
+        ) : (
+          <TableCell showData={showData[6] || false}>
+            {playListGenre.length !== 0 ? (
+              playListGenre.map(({ _id, genre }) => (
+                <InfoBlock showData={showData[6]} key={_id}>
+                  {genre}
+                </InfoBlock>
+              ))
+            ) : (
+              <WithOutGenre />
+            )}
+          </TableCell>
+        )}
+
+        {!isInPlayList ? (
+          <TableCell showData={showData[7] || false}>
+            {playLists.length > 1 ? (
+              playLists.slice(0, 3).map(({ _id, playListName }) => (
+                <InfoBlock showData={showData[7]} key={_id}>
+                  {playListName}
+                </InfoBlock>
+              ))
+            ) : (
+              <InfoBlock showData={showData[7]}>
+                {playLists[0]?.playListName}
+              </InfoBlock>
+            )}
+            {playLists.length > 3 && (
+              <InfoBlock showData={showData[7]}>та інші</InfoBlock>
+            )}
+          </TableCell>
+        ) : (
+          <TableCell showData={false}></TableCell>
+        )}
         <TableCell showData={showData[8] || false}>
           {showPopUp && (
             <PopUpTracksTableWrapper>
@@ -213,7 +278,11 @@ const TrackItem = ({
                   type="button"
                   onClick={
                     isInPlayList
-                      ? () => deleteTrackInPlaylist(idTrack).unwrap()
+                      ? () =>
+                          deleteTrackInPlaylist({
+                            playListId,
+                            idTrack,
+                          }).unwrap()
                       : () => deleteTrack(idTrack).unwrap()
                   }
                 >

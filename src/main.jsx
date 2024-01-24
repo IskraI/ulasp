@@ -7,11 +7,11 @@ import App from "./App.jsx";
 import { Provider } from "react-redux";
 import { persistor, store } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
-import { setupListeners } from "@reduxjs/toolkit/query";
+
 
 import ScrollToTop from "./helpers/scrollToTop.jsx";
 
-setupListeners(store.dispatch);
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

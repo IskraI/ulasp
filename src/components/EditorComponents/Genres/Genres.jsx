@@ -8,7 +8,7 @@ import ControlMediateca from "../ControlMediateca/ControlMediaTeca";
 import symbol from "../../../assets/symbol.svg";
 import { Modal } from "../../../components/Modal/Modal";
 import ModalForm from "../../../components/EditorComponents/ControlMediateca/ModalForm";
-import { ModalInfoText } from "../../Modal/Modal.styled";
+import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
 import { useCreateGenreMutation } from "../../../redux/genresSlice";
 import { ErrorNotFound } from "../../Errors/Errors";
 
@@ -25,7 +25,7 @@ const Genres = ({
   isLoadingCreateGenre,
 }) => {
   const [showModalAdd, setShowModalAdd] = useState(false);
-  const [showModalSuccess, setShowModalSucces] = useState(false);
+  const [showModalSuccess, setShowModalSucces] = useState(true);
   const [showModalError, setShowModalError] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -124,8 +124,10 @@ const Genres = ({
       )}
       {showModalSuccess && isSuccessCreateGenre && !isErrorCreateGenre && (
         <Modal width={"394px"} onClose={closeModalSuccess}>
-          <ModalInfoText>
-            Новий жанр &quot;{newGenreName}&quot; був створений
+          <ModalInfoText marginBottom={"34px"}>
+            Новий жанр
+            <ModalInfoTextBold>&quot;{newGenreName}&quot;</ModalInfoTextBold>був
+            створений
           </ModalInfoText>
         </Modal>
       )}
