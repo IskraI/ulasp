@@ -20,6 +20,7 @@ const AllGenresPage = () => {
           data={genres}
           isFetching={isFetchingAllGenre}
           error={isErrorAllGenre}
+          showNavigationLink={false}
         />
       )}
     </>

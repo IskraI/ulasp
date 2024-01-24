@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { GenresWrapper } from "./Genres.styled";
 import GenreListItem from "./GenresItem";
-import { MockPlayer } from "../TracksTable/TracksTable.styled";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 import { GenresList } from "./Genres.styled";
 import ControlMediateca from "../ControlMediateca/ControlMediaTeca";
@@ -23,6 +22,7 @@ const Genres = ({
   isFetching,
   error,
   isLoadingCreateGenre,
+  showNavigationLink
 }) => {
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [showModalSuccess, setShowModalSucces] = useState(true);
@@ -104,12 +104,13 @@ const Genres = ({
               />
             ))}
           </GenresList>
-          <MediaNavigationLink link={"genres"} display={display} />
+          <MediaNavigationLink
+            link={"genres"}
+            showNavigationLink={showNavigationLink}
+          />
         </GenresWrapper>
       )}
-      <MockPlayer style={{ display: displayPlayer }}>
-        Тут будет плеер
-      </MockPlayer>
+
       {showModalAdd && (
         <Modal width={"814px"} onClose={toogleModal} showCloseButton={true}>
           <ModalForm

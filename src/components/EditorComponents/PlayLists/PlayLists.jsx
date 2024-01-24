@@ -18,12 +18,11 @@ import { useParams } from "react-router-dom";
 
 const LatestPlaylists = ({
   title,
-  displayPlayer,
-  display,
   data: playlists,
   genre,
   isFetching,
   error,
+  showNavigationLink
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedPlaylistAvatar, setSelectedPlaylistAvatar] = useState(null);
@@ -119,10 +118,10 @@ const LatestPlaylists = ({
               />
             ))}
           </PlaylistList>
-          <MediaNavigationLink link={"newplaylists"} display={display} />
-          <MockPlayer style={{ display: displayPlayer }}>
-            Тут будет плеер
-          </MockPlayer>
+          <MediaNavigationLink
+            link={"newplaylists"}
+            showNavigationLink={showNavigationLink}
+          />
         </PlaylistWrapper>
       )}
       {showModal && (

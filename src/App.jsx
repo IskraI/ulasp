@@ -124,7 +124,6 @@ function App() {
   } else {
     return (
       <>
-
         <Routes>
           <Route element={<SharedLayout avatarURL={user.avatarURL} />}>
             <Route path="/" element={<PublicRoute component={WelcomePage} />} />
@@ -222,11 +221,8 @@ function App() {
                 <Route path="cabinet" element={<EditorCabinetPage />} />
 
                 <Route path="medialibrary" element={<MediaLibraryPage />} />
-                <Route
-                  path="medialibrary/genres"
-                  element={<AllGenresPage display={"none"} />}
-                />
-                <Route path="medialibrary/shops" element={<ShopsPage />} />
+                <Route path="medialibrary/genres" element={<AllGenresPage />} />
+
                 <Route
                   path="medialibrary/genres/:genreId/playlists"
                   element={<PlaylistsPageInGenre />}
@@ -235,18 +231,19 @@ function App() {
                   path="medialibrary/genres/:genreId/playlists/:playlistId/tracks"
                   element={<TracksPage />}
                 />
-
+                <Route path="medialibrary/shops" element={<ShopsPage />} />
+                <Route path="medialibrary/shops/:shopId" element={<ShopsPage />} />
                 <Route
                   path="medialibrary/newplaylists"
-                  element={<NewPlaylistsPage display={"none"} />}
+                  element={<NewPlaylistsPage />}
                 />
                 <Route
                   path="medialibrary/newplaylists/:playlistId/tracks"
-                  element={<TracksPage display={"none"} />}
+                  element={<TracksPage />}
                 />
                 <Route
                   path="medialibrary/newtracks"
-                  element={<NewTracksPage display={"none"} />}
+                  element={<NewTracksPage />}
                 />
 
                 <Route path="shops" element={<AllGenresPage />} />

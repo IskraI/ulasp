@@ -14,11 +14,10 @@ const NewPlaylistsPage = () => {
       {isSuccess && !isErrorLatestPlaylist && (
         <LatestPlaylists
           title={"Нові плейлисти"}
-          displayPlayer={"none"}
-          display={"none"}
           data={playlists}
           isFetching={isFetchingLatestPlaylist}
           error={isErrorLatestPlaylist}
+          showNavigationLink={false}
         />
       )}
     </>

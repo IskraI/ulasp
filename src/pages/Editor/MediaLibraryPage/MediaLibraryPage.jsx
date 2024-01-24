@@ -3,7 +3,7 @@ import LatestPlaylists from "../../../components/EditorComponents/PlayLists/Play
 import NewSongs from "../../../components/EditorComponents/NewSongs/NewSongs";
 import Shops from "../../../components/EditorComponents/Shops/Shops";
 import { useGetAllGenresQuery } from "../../../redux/genresSlice";
-import { useGetLatestPlaylistsQuery} from "../../../redux/playlistsSlice";
+import { useGetLatestPlaylistsQuery } from "../../../redux/playlistsSlice";
 import { useGetAllTracksQuery } from "../../../redux/tracksSlice";
 import { useGetAllShopsQuery } from "../../../redux/shopsSlice";
 import Player from "../../../components/Player/Player";
@@ -41,8 +41,6 @@ const MediaLibraryPage = () => {
     forceRefetch: true,
     refetchOnFocus: true,
   });
- 
-
 
   const fetching =
     isFetchingAllGenre &&
@@ -85,6 +83,7 @@ const MediaLibraryPage = () => {
             data={genres}
             isFetching={isFetchingAllGenre}
             error={isErrorAllGenre}
+            showNavigationLink={true}
           />
 
           <Shops
@@ -93,14 +92,15 @@ const MediaLibraryPage = () => {
             isFetching={isFetchingShops}
             isError={isErrorShops}
             isSuccess={isSuccessShops}
+            showNavigationLink={true}
           />
 
           <LatestPlaylists
             title={"Нові плейлисти"}
-            displayPlayer={"none"}
             data={playlists}
             isFetching={isFetchingLatestPlaylist}
             error={isErrorLatestPlaylist}
+            showNavigationLink={true}
           />
 
           <NewSongs
@@ -108,6 +108,7 @@ const MediaLibraryPage = () => {
             isFetching={isFetchingNewSongs}
             error={isErrorNewSongs}
             isSuccess={isSuccesLatestNewSongs}
+            showNavigationLink={true}
           />
           <Player tracks={allTracks.latestTracks} />
         </>

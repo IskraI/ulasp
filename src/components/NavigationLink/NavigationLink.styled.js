@@ -3,7 +3,7 @@ import { colors } from "../../styles/vars";
 import { NavLink } from "react-router-dom";
 
 export const NavigationLink = styled(NavLink)`
-  display: flex;
+  display: ${(props) => (props.showNavigationLink ? "flex" : "none")};
   justify-content: flex-end;
   color: ${colors.mainFontColor};
   font-size: 18px;
