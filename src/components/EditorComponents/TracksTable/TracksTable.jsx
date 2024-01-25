@@ -114,7 +114,6 @@ const TracksTable = ({
                     trackName,
                     artist,
                     trackDuration,
-                    trackGenre,
                     playList,
                   }) => {
                     return (
@@ -130,7 +129,6 @@ const TracksTable = ({
                         artist={artist}
                         trackDuration={trackDuration}
                         playListGenre={playListGenre}
-                        // playList={playList?.playListName}
                         playLists={playList}
                         showPlayList={true}
                         display={display}
