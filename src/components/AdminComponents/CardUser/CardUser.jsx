@@ -55,7 +55,7 @@ const CardUser = () => {
           type="button"
           padding="8px 63px"
           height="48px"
-          display="block"
+          display="none"
           text={
             <>
               <svg
@@ -73,7 +73,7 @@ const CardUser = () => {
         <Button
           type="button"
           padding="8px 45px"
-          display="block"
+          display="none"
           height="48px"
           text="Відправити посилання"
           marginleft="50px"
@@ -81,7 +81,7 @@ const CardUser = () => {
         <Button
           type="button"
           padding="8px 30px"
-          display="block"
+          display="none"
           height="48px"
           text={user && user.status === true ? "Заблокувати" : "Розблокувати"}
           marginleft={"auto"}
@@ -90,7 +90,7 @@ const CardUser = () => {
       </ButtonContainer>
       <Button
         type="button"
-        display="block"
+        display="none"
         padding="8px 27px"
         height="48px"
         marginleft={"auto"}
@@ -125,14 +125,14 @@ const CardUser = () => {
               type="button"
               padding ="8px 24px"
       height="48px"
-          display="block"
+      display="none"
             text="Назад"
             onClick={handleCloseModal}
                                   />
         <Button
               type="button"
         padding="8px 30px"
-        display="block"
+        display="none"
       height="48px"
            text={user && user.status === true ? "Заблокувати" : "Розблокувати" }
               marginleft='31px' 

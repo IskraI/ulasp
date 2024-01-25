@@ -27,14 +27,20 @@ const UserFieldCard = ({
   isValid,
   errors,
   register,
-  isEditing
+  isEditing,
+  handleEditActivation, handleCloseEdit
 }) => {
+
+  
+  console.log('isEditing', isEditing)
 
 console.log('activeSectionCard', activeSectionCard)
   return (
     <Fieldform>
       <RegisterLeftBlock>
         <RegisterNameFieldCard
+     isEditing={isEditing}
+     handleEditActivation ={handleEditActivation}
           handleTypeOfAccess={handleTypeOfAccess}
           register={register}
           errors={errors}
@@ -45,6 +51,7 @@ console.log('activeSectionCard', activeSectionCard)
           readOnly={!isEditing}
           user={user}
                  control={control}
+                 handleCloseEdit={handleCloseEdit}
         />
 
         {activeSectionCard === "User" && (
