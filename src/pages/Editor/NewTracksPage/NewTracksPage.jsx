@@ -1,5 +1,8 @@
 import TracksTable from "../../../components/EditorComponents/TracksTable/TracksTable";
-import { useGetAllTracksQuery } from "../../../redux/tracksSlice";
+import {
+  useGetAllTracksQuery,
+  useUploadTrackMutation,
+} from "../../../redux/tracksSlice";
 import symbol from "../../../assets/symbol.svg";
 import AddTracks from "../../../components/EditorComponents/AddTracks/AddTracks";
 import Player from "../../../components/Player/Player";
@@ -30,14 +33,14 @@ const NewTracksPage = () => {
           />
         ),
         type: "checkbox",
-        titleSize: "2%",
+        titleSize: "1%",
         showData: true,
       },
 
       {
         title: "",
         type: "button",
-        titleSize: "2%",
+        titleSize: "1%",
         showData: false,
       },
       {
@@ -73,7 +76,7 @@ const NewTracksPage = () => {
       {
         title: "Плейлист",
         type: "text",
-        titleSize: "15%",
+        titleSize: "0%",
         showData: false,
       },
 
@@ -93,7 +96,17 @@ const NewTracksPage = () => {
     isFetching,
     isSuccess,
     error,
-  } = useGetAllTracksQuery();
+  } = useGetAllTracksQuery({ forceRefetch: true, refetchOnFocus: true });
+
+  const [
+    uploadTrack,
+    {
+      isSuccess: isSuccessUploadTrack,
+      isError: isErrorUploadTrack,
+      isLoading: isLoadingUploadTrack,
+      error: errorUploadTrack,
+    },
+  ] = useUploadTrackMutation();
 
   // if (isSuccess) {
   //   console.log(allTracks.trackURL);
@@ -102,11 +115,15 @@ const NewTracksPage = () => {
     <>
       {isSuccess && !error && (
         <>
-          <AddTracks iconButton={`${symbol}#icon-plus`} textButton={"Музику"} />
+          <AddTracks
+            iconButton={`${symbol}#icon-plus`}
+            textButton={"Музику"}
+            uploadTrack={uploadTrack}
+          />
 
           <TracksTable
             title={" Остання додана музика"}
-            tracks={allTracks}
+            tracks={allTracks.latestTracks}
             error={error}
             isFetching={isFetching}
             isSuccess={isSuccess}
@@ -115,7 +132,7 @@ const NewTracksPage = () => {
             rows={rows()}
             isInPlayList={false}
           />
-          <Player tracks={allTracks} />
+          <Player tracks={allTracks.latestTracks} />
         </>
       )}
     </>

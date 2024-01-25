@@ -27,6 +27,8 @@ const TracksTable = ({
   marginTopWrapper,
   checkBox,
   isInPlayList,
+  playListId,
+  playListGenre,
   isCheckedAll,
   dataUpload,
   isErrorUpload,
@@ -34,7 +36,6 @@ const TracksTable = ({
   isLoadingUpload,
   errorUpload,
   isUninitialized,
-  showData,
 }) => {
   const tracksTableProps = {
     showTitle: showTitle ? "table-caption" : "none",
@@ -113,7 +114,6 @@ const TracksTable = ({
                     trackName,
                     artist,
                     trackDuration,
-                    trackGenre,
                     playList,
                   }) => {
                     return (
@@ -128,11 +128,12 @@ const TracksTable = ({
                         trackName={trackName}
                         artist={artist}
                         trackDuration={trackDuration}
-                        trackGenre={trackGenre}
-                        playList={playList?.playListName}
+                        playListGenre={playListGenre}
+                        playLists={playList}
                         showPlayList={true}
                         display={display}
                         isInPlayList={isInPlayList}
+                        playListId={playListId}
                         isErrorUpload={isErrorUpload}
                         isSuccessUpload={isSuccessUpload}
                         isLoadingUpload={isLoadingUpload}

@@ -95,7 +95,7 @@ export const NavigationLink = styled(NavLink)`
     background-position: right center; */
 
     svg {
-      // fill: #FFF3BF;
+      /* fill: #fff3bf; */
       stroke: #fff3bf;
     }
   }
@@ -146,4 +146,9 @@ export const SubMenuLink = styled(NavLink)`
 
 export const CustomSVG = styled.svg`
   /* Add styles for your custom SVG here */
+`;
+
+export const SvgStyled = styled.svg`
+  fill: ${(props) => props.fillColor ?? "black"};
+  stroke: ${(props) => props.strokeColor ?? "none"};
 `;

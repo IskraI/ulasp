@@ -1,14 +1,13 @@
 /* eslint-disable react/prop-types */
 import { GenresWrapper } from "./Genres.styled";
 import GenreListItem from "./GenresItem";
-import { MockPlayer } from "../TracksTable/TracksTable.styled";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 import { GenresList } from "./Genres.styled";
 import ControlMediateca from "../ControlMediateca/ControlMediaTeca";
 import symbol from "../../../assets/symbol.svg";
 import { Modal } from "../../../components/Modal/Modal";
 import ModalForm from "../../../components/EditorComponents/ControlMediateca/ModalForm";
-import { ModalInfoText } from "../../Modal/Modal.styled";
+import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
 import { useCreateGenreMutation } from "../../../redux/genresSlice";
 import { ErrorNotFound } from "../../Errors/Errors";
 
@@ -23,9 +22,10 @@ const Genres = ({
   isFetching,
   error,
   isLoadingCreateGenre,
+  showNavigationLink
 }) => {
   const [showModalAdd, setShowModalAdd] = useState(false);
-  const [showModalSuccess, setShowModalSucces] = useState(false);
+  const [showModalSuccess, setShowModalSucces] = useState(true);
   const [showModalError, setShowModalError] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -55,7 +55,10 @@ const Genres = ({
   const newGenreName =
     dataCreateGenre?.newGenre.genre ?? "Назва нового жанру не була введена";
 
-  const handleSubmitGenre = async (data) => {
+  const handleSubmitGenre = async (data, e) => {
+    console.log(data);
+    console.log(e);
+
     try {
       closeModalAdd();
       await createGenre(data).unwrap();
@@ -64,7 +67,6 @@ const Genres = ({
       setShowModalError(true);
     }
   };
-
 
   const closeModalAdd = () => {
     return setShowModalAdd(false);
@@ -90,7 +92,7 @@ const Genres = ({
         textButton={"Жанр"}
         onClick={toogleModal}
       />
-      {!error && !isLoadingCreateGenre && (
+      {!error && (
         <GenresWrapper>
           <GenresList>
             {genres.map(({ _id, genre, genreAvatarURL }) => (
@@ -102,12 +104,13 @@ const Genres = ({
               />
             ))}
           </GenresList>
-          <MediaNavigationLink link={"genres"} display={display} />
+          <MediaNavigationLink
+            link={"genres"}
+            showNavigationLink={showNavigationLink}
+          />
         </GenresWrapper>
       )}
-      <MockPlayer style={{ display: displayPlayer }}>
-        Тут будет плеер
-      </MockPlayer>
+
       {showModalAdd && (
         <Modal width={"814px"} onClose={toogleModal} showCloseButton={true}>
           <ModalForm
@@ -122,8 +125,10 @@ const Genres = ({
       )}
       {showModalSuccess && isSuccessCreateGenre && !isErrorCreateGenre && (
         <Modal width={"394px"} onClose={closeModalSuccess}>
-          <ModalInfoText>
-            Новий жанр &quot;{newGenreName}&quot; був створений
+          <ModalInfoText marginBottom={"34px"}>
+            Новий жанр
+            <ModalInfoTextBold>&quot;{newGenreName}&quot;</ModalInfoTextBold>був
+            створений
           </ModalInfoText>
         </Modal>
       )}

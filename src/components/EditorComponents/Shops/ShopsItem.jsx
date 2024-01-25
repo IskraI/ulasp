@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 import { useDeleteShopMutation } from "../../../redux/shopsSlice";
@@ -24,7 +25,7 @@ const ShopListItem = ({ id, title, icon }) => {
       <ShopsItem>
         <Link
           key={id}
-          to={`/editor/medialibrary/genres/${id}/playlists`}
+          to={`/editor/medialibrary/shops/${id}`}
           state={{ from: location }}
           style={{
             width: "100%",

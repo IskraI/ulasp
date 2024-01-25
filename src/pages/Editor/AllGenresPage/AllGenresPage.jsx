@@ -12,7 +12,7 @@ const AllGenresPage = () => {
 
   return (
     <>
-      {isFetchingAllGenre && !isErrorAllGenre && <Loader />}
+      {!isSuccess && !isErrorAllGenre && <Loader />}
       {isSuccess && !isErrorAllGenre && (
         <Genres
           displayPlayer={"flex"}
@@ -20,6 +20,7 @@ const AllGenresPage = () => {
           data={genres}
           isFetching={isFetchingAllGenre}
           error={isErrorAllGenre}
+          showNavigationLink={false}
         />
       )}
     </>

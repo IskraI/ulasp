@@ -1,7 +1,11 @@
 /* eslint-disable react/prop-types */
 import { Button } from "../../Button/Button";
 import { Modal } from "../../Modal/Modal";
-import { ModalInfoText } from "../../Modal/Modal.styled";
+import {
+  ModalInfoText,
+  ModalInfoTextBold,
+  ButtonsModalWrapper,
+} from "../../Modal/Modal.styled";
 import { useUpdatePlaylistMutation } from "../../../redux/playlistsSlice";
 import { LoaderButton } from "../../Loader/Loader";
 import { useParams } from "react-router-dom";
@@ -43,15 +47,46 @@ const PlayListControl = ({ isPublished, countTracks, playlistName }) => {
       });
   };
   const LoaderBtn =
-    isPublished && isLoading && !isSuccess ? (
-      <LoaderButton />
-    ) : !isPublished && isLoading && !isSuccess ? (
-      <LoaderButton />
-    ) : isPublished ? (
+    isPublished && isLoading ? (
+      <>
+        <p style={{ marginRight: "4px" }}>Деактивація</p>
+        <LoaderButton />
+      </>
+    ) : !isPublished && isLoading ? (
+      <>
+        <p style={{ marginRight: "4px" }}>Публікуємо</p>
+        <LoaderButton />
+      </>
+    ) : isPublished && !isLoading ? (
       `Опублікований`
     ) : (
       `Опублікувати`
     );
+
+  // const loaderBtn = useMemo(() => {
+  //   if (isPublished && isLoading) {
+  //     return (
+  //       <>
+  //         <p style={{ marginRight: "4px" }}>Деактивація</p>
+  //         <LoaderButton />
+  //       </>
+  //     );
+  //   }
+
+  //   if (!isPublished && isLoading) {
+  //     return (
+  //       <>
+  //         <p style={{ marginRight: "4px" }}>Публікуємо</p>
+  //         <LoaderButton />
+  //       </>
+  //     );
+  //   }
+  //   if (isPublished && !isLoading) {
+  //     return `Опублікований`;
+  //   } else {
+  //     return `Опублікувати`;
+  //   }
+  // }, [isPublished, isLoading]);
 
   return (
     <>
@@ -69,6 +104,7 @@ const PlayListControl = ({ isPublished, countTracks, playlistName }) => {
         height={"32px"}
         onClick={isPublished ? handleSubmit : () => setIsShowModal(true)}
       />
+
       {isShowModal && (
         <Modal
           width={"567px"}
@@ -77,18 +113,10 @@ const PlayListControl = ({ isPublished, countTracks, playlistName }) => {
           flexDirection={"column"}
         >
           <ModalInfoText>
-            Чи дійсно ви хочете опублікувати плейлист &quot;{playlistName}
-            &quot; ?
+            Чи дійсно ви хочете опублікувати плейлист
+            <ModalInfoTextBold>&quot;{playlistName}&quot;</ModalInfoTextBold> ?
           </ModalInfoText>
-          <div
-            style={{
-              display: "flex",
-              gap: "24px",
-              marginBottom: "24px",
-              marginRight: "24px",
-              justifyContent: "flex-end",
-            }}
-          >
+          <ButtonsModalWrapper>
             <Button
               type={"button"}
               text={"Ні"}
@@ -104,7 +132,7 @@ const PlayListControl = ({ isPublished, countTracks, playlistName }) => {
               padding={"12px 26px"}
               onClick={handleSubmit}
             />
-          </div>
+          </ButtonsModalWrapper>
         </Modal>
       )}
       {isShowModalInfo && (
@@ -112,11 +140,11 @@ const PlayListControl = ({ isPublished, countTracks, playlistName }) => {
           width={"567px"}
           onClose={() => setIsShowModalInfo(false)}
           showCloseButton={true}
-          flexDirection={"column"}
         >
-          <ModalInfoText>
-            Плейлист &quot;{playlistName}
-            &quot; опублікований
+          <ModalInfoText marginBottom={"20px"}>
+            Плейлист
+            <ModalInfoTextBold>&quot;{playlistName}&quot;</ModalInfoTextBold>
+            опублікований
           </ModalInfoText>
         </Modal>
       )}

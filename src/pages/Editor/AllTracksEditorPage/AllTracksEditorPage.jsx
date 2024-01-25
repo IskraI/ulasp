@@ -1,8 +1,9 @@
 import TracksTable from "../../../components/EditorComponents/TracksTable/TracksTable";
-import { useGetAllTracksQuery } from "../../../redux/tracksSlice";
+import { useGetAllTracksQuery, useUploadTrackMutation } from "../../../redux/tracksSlice";
 import Player from "../../../components/Player/Player";
 import AddTracks from "../../../components/EditorComponents/AddTracks/AddTracks";
 import symbol from "../../../assets/symbol.svg";
+import { Loader } from "../../../components/Loader/Loader";
 import { useRef, useState, useId } from "react";
 
 const AllTracksEditor = () => {
@@ -38,7 +39,7 @@ const AllTracksEditor = () => {
         title: "",
         type: "button",
         titleSize: "2%",
-        showData: false,
+        showData: true,
       },
       {
         title: "",
@@ -74,13 +75,13 @@ const AllTracksEditor = () => {
         title: "Плейлист",
         type: "text",
         titleSize: "15%",
-        showData: false,
+        showData: true,
       },
 
       {
         title: "",
         type: "button",
-        titleSize: "5%",
+        titleSize: "8%",
         showData: true,
       },
     ];
@@ -96,16 +97,30 @@ const AllTracksEditor = () => {
     isSuccess: isSuccessAllTracks,
   } = useGetAllTracksQuery({ forceRefetch: true, refetchOnFocus: true });
 
+    const [
+      uploadTrack,
+      {
+        isSuccess: isSuccessUploadTrack,
+        isError: isErrorUploadTrack,
+        isLoading: isLoadingUploadTrack,
+        error: errorUploadTrack,
+      },
+    ] = useUploadTrackMutation();
+
   return (
     <>
-      {!isSuccessAllTracks && <p>Загружаемся.....</p>}
+      {!isSuccessAllTracks && <Loader />}
       {isSuccessAllTracks && !errorLoadingAllTracks && (
         <>
-          <AddTracks iconButton={`${symbol}#icon-plus`} textButton={"Музику"} />
+          <AddTracks
+            iconButton={`${symbol}#icon-plus`}
+            textButton={"Музику"}
+            uploadTrack={uploadTrack}
+          />
 
           <TracksTable
             // title={" Остання додана музика"}
-            tracks={allTracks}
+            tracks={allTracks.latestTracks}
             error={errorLoadingAllTracks}
             isFetching={isFetchingAllTracks}
             isSuccess={isSuccessAllTracks}
@@ -113,7 +128,7 @@ const AllTracksEditor = () => {
             isCheckedAll={checkedMainCheckBox}
             isInPlayList={false}
           />
-          <Player tracks={allTracks} />
+          <Player tracks={allTracks.latestTracks} />
         </>
       )}
     </>

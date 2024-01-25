@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import { NavigationLink } from "./NavigationLink.styled";
 
-const MediaNavigationLink = ({ link, display }) => {
+const MediaNavigationLink = ({ link, showNavigationLink }) => {
   return (
-    <NavigationLink to={link} style={{ display }}>
+    <NavigationLink to={link} showNavigationLink={showNavigationLink}>
       Дивитись всі
     </NavigationLink>
   );

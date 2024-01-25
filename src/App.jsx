@@ -32,6 +32,7 @@ import NewTracksPage from "./pages/Editor/NewTracksPage/NewTracksPage";
 import PlaylistsPageInGenre from "./pages/Editor/PlaylistsPage/PlaylistsPageInGenre";
 import TracksPage from "./pages/Editor/TracksPage/TracksPage";
 import ShopsPage from "./pages/Editor/ShopsPage/ShopPage";
+import ShopsItemPage from "./pages/Editor/ShopsPage/ShopsItemPage";
 import ShopsUserPage from "./pages/UserPage/ShopsUserPage/ShopUserPage";
 import TracksInGenre from "./pages/UserPage/PlaylistPageUser/TracksInGenre";
 import { useSelector } from "react-redux";
@@ -142,7 +143,7 @@ function App() {
               >
                 <Route index element={<UserCabinetPage />} />
                 <Route path="cabinet" element={<UserCabinetPage />} />
-                <Route path="messages" element={<MessagesUser />} />
+                <Route path="cabinet/messages" element={<MessagesUser />} />
                 <Route path="medialibrary" element={<MediaLibraryForUser />} />
                 <Route
                   path="medialibrary/genres"
@@ -154,10 +155,9 @@ function App() {
                 />
                 <Route
                   path="medialibrary/genres/:genreId/tracks"
-                  element={<TracksInGenre/>}
+                  element={<TracksInGenre />}
                 />
-                 <Route
-
+                <Route
                   path="medialibrary/genres/:genreId/playlists/:playlistId/tracks"
                   element={<TracksPageUser display={"none"} />}
                 />
@@ -182,7 +182,10 @@ function App() {
                   path="medialibrary/newtracks"
                   element={<AllTracksUser display={"none"} />}
                 />
-                <Route path="myplaylists" element={<MyPlaylistsUser />} />
+                <Route
+                  path="cabinet/myplaylists"
+                  element={<MyPlaylistsUser />}
+                />
                 <Route path="*" element={<ErrorPage />} />
               </Route>
             )}
@@ -219,11 +222,8 @@ function App() {
                 <Route path="cabinet" element={<EditorCabinetPage />} />
 
                 <Route path="medialibrary" element={<MediaLibraryPage />} />
-                <Route
-                  path="medialibrary/genres"
-                  element={<AllGenresPage display={"none"} />}
-                />
-                <Route path="medialibrary/shops" element={<ShopsPage />} />
+                <Route path="medialibrary/genres" element={<AllGenresPage />} />
+
                 <Route
                   path="medialibrary/genres/:genreId/playlists"
                   element={<PlaylistsPageInGenre />}
@@ -232,18 +232,22 @@ function App() {
                   path="medialibrary/genres/:genreId/playlists/:playlistId/tracks"
                   element={<TracksPage />}
                 />
-
+                <Route path="medialibrary/shops" element={<ShopsPage />} />
+                <Route
+                  path="medialibrary/shops/:shopId"
+                  element={<ShopsItemPage />}
+                />
                 <Route
                   path="medialibrary/newplaylists"
-                  element={<NewPlaylistsPage display={"none"} />}
+                  element={<NewPlaylistsPage />}
                 />
                 <Route
                   path="medialibrary/newplaylists/:playlistId/tracks"
-                  element={<TracksPage display={"none"} />}
+                  element={<TracksPage />}
                 />
                 <Route
                   path="medialibrary/newtracks"
-                  element={<NewTracksPage display={"none"} />}
+                  element={<NewTracksPage />}
                 />
 
                 <Route path="shops" element={<AllGenresPage />} />

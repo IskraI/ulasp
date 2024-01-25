@@ -60,7 +60,6 @@ export const propAdminNav = [
     title: "Кабінет",
     navigation: "cabinet",
     picture: `${symbol}#icon-cabinet`,
-
   },
   {
     id: "navMessages",
@@ -95,28 +94,28 @@ export const propUserNav = [
     title: "Кабінет",
     navigation: "cabinet",
     picture: `${symbol}#icon-cabinet`,
-    menu: [ {
-      id: "navMyPlaylists",
-      title: "Мої плейлисти",
-      navigation: "myplaylists",
-      picture: `${symbol}#icon-playlist`,
-    },
-    {
-      id: "navMessages",
-      title: "Повідомлення",
-      navigation: "messages",
-      picture: `${symbol}#icon-mail`,
-    },]
-    
+    menu: [
+      {
+        id: "navMyPlaylists",
+        title: "Мої плейлисти",
+        navigation: "cabinet/myplaylists",
+        picture: `${symbol}#icon-playlist`,
+      },
+      {
+        id: "navMessages",
+        title: "Повідомлення",
+        navigation: "cabinet/messages",
+        picture: `${symbol}#icon-mail`,
+      },
+    ],
   },
- 
 
   {
     id: "navMedia",
     title: "Медіатека",
     navigation: "medialibrary",
     picture: `${symbol}#icon-rmediaTec`,
-     menu: [
+    menu: [
       {
         id: "genres",
         title: "Жанри",

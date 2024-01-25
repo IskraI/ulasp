@@ -6,7 +6,7 @@ import {
   useUpdateGenreByIdMutation,
 } from "../../../redux/genresSlice";
 import { Modal } from "../../../components/Modal/Modal";
-import { ModalInfoText } from "../../Modal/Modal.styled";
+import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
 import { ErrorNotFound } from "../../Errors/Errors";
 import { useLocation } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
@@ -63,7 +63,7 @@ const GenreListItem = ({ id, title, icon }) => {
   // console.log("error", errorUpdateGenre);
   // console.log("isLoading", isLoadingUpdateGenre);
 
-  console.log("isErrorDeleteGenre", isSuccessDeleteGenre);
+  // console.log("isErrorDeleteGenre", isSuccessDeleteGenre);
 
   useEffect(() => {
     if (isEditing) {
@@ -248,12 +248,15 @@ const GenreListItem = ({ id, title, icon }) => {
 
       {showModalSuccess && isSuccessDeleteGenre && !isErrorDeleteGenre && (
         <Modal width={"394px"} onClose={closeModalSuccess}>
-          <ModalInfoText>Жанр &quot;{title}&quot; був видалений</ModalInfoText>
+          <ModalInfoText marginBottom={"34px"}>
+            Жанр <ModalInfoTextBold>&quot;{title}&quot;</ModalInfoTextBold> був
+            видалений
+          </ModalInfoText>
         </Modal>
       )}
       {showModalError && (
         <Modal width={"394px"} onClose={closeModalError} showCloseButton={true}>
-          <ModalInfoText>
+          <ModalInfoText marginBottom={"34px"}>
             {isErrorDeleteGenre &&
               (<ErrorNotFound error={errorDeleteGenre.data.message} /> ?? (
                 <ErrorNotFound />

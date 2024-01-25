@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import { Button } from "../../Button/Button";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
+import { useEffect } from "react";
+
 import {
   FormControlModal,
   InputControlModal,
@@ -33,15 +35,29 @@ const ModalForm = ({
     clearErrors,
     reset,
     getValues,
+    setValue,
     getFieldState,
+    setFocus,
     formState: { errors, isValid, dirtyFields },
   } = useForm({
     mode: "onChange",
   });
 
+  useEffect(() => {
+    setFocus(idInputFirst);
+  }, [idInputFirst, setFocus]);
+
   const coverImage = img ? URL.createObjectURL(img) : null;
 
   // console.log("coverImage", coverImage);
+
+  const idInputFirstValue = useWatch({
+    control,
+    name: idInputFirst,
+    defaultValue: "",
+  });
+
+  const inputFirstValue = idInputFirstValue.trim();
 
   return (
     <>
@@ -80,6 +96,7 @@ const ModalForm = ({
           {...register(idInputFirst)}
           type="text"
           id={idInputFirst}
+          setValue={setValue}
           placeholder={placeholderFirst}
           margintop={marginTopInputFirst}
         />
@@ -91,6 +108,7 @@ const ModalForm = ({
           id={idInputSecond}
           value={valueInputSecond}
         />
+
         <Button
           type="Submit"
           text={"Створити"}
@@ -100,6 +118,7 @@ const ModalForm = ({
           padding="8px"
           marginleft={"auto"}
           marginbottom={"28px"}
+          disabled={inputFirstValue === "" ? true : false}
         />
       </FormControlModal>
     </>

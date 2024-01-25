@@ -1,8 +1,5 @@
 /* eslint-disable react/prop-types */
 import { ControlWrapper } from "../MediaList/MediaList.styled";
-// import { useUploadTrackMutation } from "../../../redux/tracksSlice";
-// import { useUploadTracksInPlaylistMutation } from "../../../redux/playlistsSlice";
-
 import {
   FormControlAddTrack,
   InputControlAddTrack,
@@ -18,22 +15,9 @@ const AddTracks = ({
   onClick,
   disabled,
   playlistId,
- uploadTrack,
+  uploadTrack,
   uploadTrackInPlaylist,
-
 }) => {
-  // const [
-  //   uploadTrack,
-  //   {
-  //     isSuccess: isSuccessUploadTrack,
-  //     isError: isErrorUploadTrack,
-  //     isLoading: isLoadingUploadTrack,
-  //     error,
-  //   },
-  // ] = useUploadTrackMutation();
-
-  // const [uploadTrackInPlaylist, { isUninitialized, isSuccess, isLoading, reset }] =
-  //   useUploadTracksInPlaylistMutation();
   const [selectedTracks, setSelectedTracks] = useState([]);
 
   // console.log("uploadTrack", uploadTrack);
@@ -90,7 +74,7 @@ const AddTracks = ({
         await uploadTrack(formData)
           .unwrap()
           .then(() => {
-            formData.delete("trackURL");
+            // formData.delete("trackURL");
           })
           .catch((error) => console.log("ERROR 1", error))
           .finally(() => {

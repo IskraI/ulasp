@@ -14,8 +14,8 @@ import { Loader } from "../../Loader/Loader";
 import { useState } from "react";
 
 const Shops = ({
-  display,
-  displayPlayer,
+  showNavigationLink,
+
   data: shops,
   isFetching,
   isError,
@@ -49,13 +49,10 @@ const Shops = ({
       <ControlMediateca
         title={"Плейлисти по типу закладу"}
         iconButton={`${symbol}#icon-plus`}
-        textButton={"Заклад"}
+        textButton={"Тип закладу"}
         onClick={toogleModal}
         disabled={isError}
       />
-      {isError && <ErrorNotFound />}
-      {isFetching && !isSuccess && !isError && <Loader />}
-      {!isError && isSuccess && !shops && <div>Заклади ще не додані</div>}
 
       {!isError && isSuccess && (
         <ShopsWrapper>
@@ -69,12 +66,14 @@ const Shops = ({
               />
             ))}
           </ShopsList>
-          <MediaNavigationLink link={"shops"} display={display} />
+          <MediaNavigationLink
+            link={"shops"}
+            showNavigationLink={showNavigationLink}
+          />
         </ShopsWrapper>
       )}
-      {/* <Player display={displayPlayer} /> */}
       {showModal && (
-        <Modal width={"814px"} onClose={toogleModal}>
+        <Modal width={"814px"} onClose={toogleModal} showCloseButton={true}>
           <ModalForm
             onSubmit={handleSubmitShop}
             idInputFirst={"shopCategoryName"}

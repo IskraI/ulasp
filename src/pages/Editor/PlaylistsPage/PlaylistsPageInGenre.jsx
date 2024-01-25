@@ -15,7 +15,6 @@ const PlaylistsPageInGenre = () => {
       {isFetching && !isError && <Loader />}
       {!isError && isSuccess && (
         <>
-
           <LatestPlaylists
             title={`Плейлисти жанру "${data.genre}"`}
             genre={data.genre}
@@ -23,6 +22,7 @@ const PlaylistsPageInGenre = () => {
             displayPlayer={"none"}
             data={data.playList}
             isFetching={isFetching}
+            showNavigationLink={false}
           />
         </>
       )}

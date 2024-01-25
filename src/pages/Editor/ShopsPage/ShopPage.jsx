@@ -1,21 +1,38 @@
 import Shops from "../../../components/EditorComponents/Shops/Shops";
 import { Loader } from "../../../components/Loader/Loader";
+import { Error500, ErrorNotFound } from "../../../components/Errors/Errors";
 
 import { useGetAllShopsQuery } from "../../../redux/shopsSlice";
 
 const ShopsPage = () => {
-  const { data: shops, isFetching, isError, isSuccess } = useGetAllShopsQuery();
+  const {
+    data: shops,
+    isFetching: isFetchingAllShops,
+    isError: isErrorAllShops,
+    error: errorAllShops,
+    isSuccess: isSuccessAllShops,
+  } = useGetAllShopsQuery();
 
   return (
     <>
-      <Shops
-        display={"none"}
-        displayPlayer={"none"}
-        data={shops}
-        isFetching={isFetching}
-        isError={isError}
-        isSuccess={isSuccess}
-      />
+      {isFetchingAllShops && !isSuccessAllShops && <Loader />}
+      {errorAllShops?.status === "500" && <Error500 />}
+      {errorAllShops && <ErrorNotFound />}
+      {isFetchingAllShops && !isSuccessAllShops && !isErrorAllShops && (
+        <Loader />
+      )}
+      {!isErrorAllShops && isSuccessAllShops && !shops && (
+        <div>Заклади ще не додані</div>
+      )}
+      {isSuccessAllShops && !isErrorAllShops && (
+        <Shops
+          showNavigationLink={false}
+          data={shops}
+          isFetching={isFetchingAllShops}
+          isError={isErrorAllShops}
+          isSuccess={isSuccessAllShops}
+        />
+      )}
     </>
   );
 };

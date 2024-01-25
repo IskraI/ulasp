@@ -3,10 +3,6 @@ import {
   StatItemEditor,
 } from "../../../components/Statistic/Statistic.styled";
 
-import {
-  useGetPlaylistsCountQuery,
-  useGetTracksCountQuery,
-} from "../../../redux/statisticSlice";
 import { useGetAllTracksQuery } from "../../../redux/tracksSlice";
 
 import TracksTable from "../../../components/EditorComponents/TracksTable/TracksTable";
@@ -14,24 +10,25 @@ import { EditorText } from "./EditorCabinetPage.styled";
 
 import { Loader } from "../../../components/Loader/Loader";
 import Player from "../../../components/Player/Player";
+import { Error500, ErrorNotFound } from "../../../components/Errors/Errors";
 
 const RowsTitle = [
   {
     title: "",
     type: "input",
-    titleSize: "2%",
+    titleSize: "1%",
     showData: false,
   },
   {
     title: "",
     type: "button",
-    titleSize: "2%",
+    titleSize: "0%",
     showData: false,
   },
   {
     title: "",
     type: "image",
-    titleSize: "5%",
+    titleSize: "10%",
     showData: true,
   },
   {
@@ -62,7 +59,7 @@ const RowsTitle = [
     title: "Плейлист",
     type: "text",
     titleSize: "15%",
-    showData: false,
+    showData: true,
   },
 
   {
@@ -75,48 +72,36 @@ const RowsTitle = [
 
 const EditorCabinetPage = () => {
   const {
-    data: playlistCount,
-    error: errorPlaylistCount,
-    isLoading: isLoadingPlaylists,
-  } = useGetPlaylistsCountQuery();
-
-  const {
-    data: tracksCount,
-    error: isError,
-    isFetching: isFetchingTracksCount,
-  } = useGetTracksCountQuery();
-  const {
     data: allTracks,
     isLoading: isLoadingAllTracks,
     error: errorLoadingAllTracks,
     isFetching: isFetchingAllTracks,
     isSuccess: isSuccessAllTracks,
-  } = useGetAllTracksQuery();
+  } = useGetAllTracksQuery({ forceRefetch: true, refetchOnFocus: true });
 
   return (
     <>
       {isFetchingAllTracks && !isSuccessAllTracks && <Loader />}
-
-      <EditorText> Кабінет редактора</EditorText>
+      {errorLoadingAllTracks?.status === "500" && <Error500 />}
+      {errorLoadingAllTracks && <ErrorNotFound />}
 
       {isSuccessAllTracks && !errorLoadingAllTracks && (
         <>
+          <EditorText> Кабінет редактора</EditorText>
           <StatsListWrapper>
             <StatItemEditor>
-              {!isFetchingTracksCount && !isError && tracksCount.countTracks}
+              {allTracks.totalTracks}
               <br /> Доданої музики
             </StatItemEditor>
             <StatItemEditor>
-              {!isLoadingPlaylists &&
-                !errorPlaylistCount &&
-                playlistCount.countPlaylists}
+              {allTracks.totalPlaylists}
               <br /> Створених плейлистів
             </StatItemEditor>
           </StatsListWrapper>
           <TracksTable
             title={"Остання додана музика"}
             showTitle={true}
-            tracks={allTracks}
+            tracks={allTracks.latestTracks}
             isLoading={isLoadingAllTracks}
             error={errorLoadingAllTracks}
             isFetching={isFetchingAllTracks}
@@ -124,7 +109,7 @@ const EditorCabinetPage = () => {
             rows={RowsTitle}
             isInPlayList={false}
           />
-          <Player tracks={allTracks} />
+          <Player tracks={allTracks.latestTracks} />
         </>
       )}
     </>
