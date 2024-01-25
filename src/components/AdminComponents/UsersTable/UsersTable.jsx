@@ -16,7 +16,6 @@ function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 const UsersTable = ({ users, visibleColumns, switchAccess }) => {
-
   const [hoveredRow, setHoveredRow] = useState(null);
 
   const handleRowHover = (index) => {
@@ -67,8 +66,7 @@ const UsersTable = ({ users, visibleColumns, switchAccess }) => {
             return (
               <TableRow
                 key={index}
-                className={index === hoveredRow ? 'hovered' : ''}
-   
+                className={index === hoveredRow ? "hovered" : ""}
               >
                 {visibleColumns.map((column, columnIndex, array) => (
                   <TableCell
@@ -88,11 +86,19 @@ const UsersTable = ({ users, visibleColumns, switchAccess }) => {
                       )
                     ) : column.type === "nameLink" ? (
                       user.name ? (
-                        <Link to={`/admin/users/carduser/${user._id}`}>
+                        <Link
+                          to={`/admin/users/carduser/${user._id}`}
+                          onMouseEnter={() => handleRowHover(index)}
+                          onMouseLeave={() => handleRowHover(null)}
+                        >
                           {user.name}
                         </Link>
                       ) : (
-                        <Link to={`/admin/users/carduser/${user._id}`}>
+                        <Link
+                          to={`/admin/users/carduser/${user._id}`}
+                          onMouseEnter={() => handleRowHover(index)}
+                          onMouseLeave={() => handleRowHover(null)}
+                        >
                           {`${capitalize(user.firstName)} ${capitalize(
                             user.lastName
                           )}`}
@@ -107,7 +113,11 @@ const UsersTable = ({ users, visibleColumns, switchAccess }) => {
                         картка
                       </Link>
                     ) : column.type === "nameLinkEditor" ? (
-                      <Link to={`/admin/users/cardeditor/${user._id}`}>
+                      <Link
+                        to={`/admin/users/cardeditor/${user._id}`}
+                        onMouseEnter={() => handleRowHover(index)}
+                        onMouseLeave={() => handleRowHover(null)}
+                      >
                         {`${user.firstName} ${user.lastName}`}
                       </Link>
                     ) : column.key === "access" ? (

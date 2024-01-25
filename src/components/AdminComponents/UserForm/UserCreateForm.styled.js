@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { colors,mainCubicTransition } from "../../../styles/vars";
 
 export const InputStyle = styled.input`
   position: relative;
@@ -83,7 +84,7 @@ export const RegisterField = styled.div`
 `;
 export const RegisterInput = styled.input`
   background-color: rgba(234, 234, 234, 0.32);
-  width: 100%;
+  /* width: 100%; */
   padding-left: 8px;
   display: flex;
   align-items: center;
@@ -197,7 +198,8 @@ export const RegisterNameBlock = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 10px 8px 10px;
+  padding: 8px;
+  gap: 4px;
   width: 558px;
   /* gap: 16px; */
   border: 0.25px solid rgba(23, 22, 28, 0.5);
@@ -373,4 +375,40 @@ line-height: normal;
   }
 
  
+`;
+
+export const IconsWrapperUserEdit = styled.div`
+  display: flex;
+
+`;
+
+export const IconsButtonUserEdit = styled.button`
+  background: none;
+  border: none;
+
+  &:disabled {
+    svg {
+      fill: ${colors.bBgModal};
+    }
+  }
+`;
+export const IconsButtonUserSave = styled.button`
+  background: none;
+  border: none;
+
+  &:disabled {
+    svg {
+      fill: ${colors.bBgModal};
+    }
+  }
+`;
+
+export const IconsSvgUserEdit = styled.svg`
+  fill: #000000;
+  transition: fill 350ms ${mainCubicTransition};
+
+  &:hover {
+    fill: ${colors.accentHoverColor};
+    transition: fill 350ms ${mainCubicTransition};
+  }
 `;
