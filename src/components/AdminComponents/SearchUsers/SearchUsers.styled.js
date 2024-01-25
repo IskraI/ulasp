@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { colors } from "../../../styles/vars";
+import { colors, transition } from "../../../styles/vars";
 
 import { NavLink } from "react-router-dom";
 
@@ -59,13 +59,9 @@ export const Input = styled.input`
 
 export const Table = styled.table`
   table-layout: fixed; 
-  /* width: 100%; */
-  /* border-collapse: collapse; */
-  /* margin-left: 127px; */
+
   display: flex;
   flex-direction: column;
-  /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); // Здесь можно настроить ширину колонок
-  gap: 8px;   */ 
 margin-right: 20px;
   width: 100%;
   border-collapse: collapse;
@@ -94,8 +90,10 @@ td:last-child{
   tbody {
     tr:nth-of-type(odd) {
       background-color: rgba(234, 234, 234, 0.32);
-     
-      
+      transition: ${transition.duration};
+      &.hovered {
+    background-color:  ${colors.accentHoverColor}; 
+  } 
     }
   }`;
 
@@ -158,8 +156,12 @@ export const TableRow = styled.tr`
 display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: ${transition.duration};
 
-
+  &.hovered {
+    background-color:  ${colors.accentHoverColor}; 
+  
+  }   
   
 `;
 
@@ -167,20 +169,12 @@ export const TableCell = styled.td`
 padding: 8px;
   text-align: left;
   flex: ${(props) => (props.isFirstColumn ? '0 0 20%' : props.isLastColumn ? '0 0 10%':'1')};
-       
- 
+
 `;
 
 export const TitleTab = styled.h3`
   color: ${colors.mainFontColor};
-  /* font-size: 22px; */
-  /* margin-top: 43px; */
-  /* margin-left: 111px; */
-  /* line-height: calc(26.4 / 22);
-  font-weight: 400;
-  line-height: 1.28; */
-
-  
+ 
 font-size: 22px;
 font-weight: 400;
 

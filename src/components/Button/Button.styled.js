@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { colors } from "../../styles/vars";
+import { colors, transition } from "../../styles/vars";
 
 export const CustomButton = styled.button`
   display: flex;
@@ -20,7 +20,8 @@ export const CustomButton = styled.button`
   margin-left: ${(props) => props.marginleft};
   margin-right: ${(props) => props.marginright};
   padding: ${(props) => props.padding};
-
+  transition: ${transition.duration};
+  
   &:hover,
   :focus {
     background: #fff3bf;

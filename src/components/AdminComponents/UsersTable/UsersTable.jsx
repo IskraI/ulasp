@@ -9,13 +9,19 @@ import {
 import { Button } from "../../Button/Button";
 import { useUnblockUserByIdMutation } from "../../../redux/dataUsersSlice";
 import { useNavigate, useParams } from "react-router-dom";
+import React, { useState } from "react";
 import { ButtonSwitch } from "../ButtonSwitch/ButtonSwitch";
 
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 const UsersTable = ({ users, visibleColumns, switchAccess }) => {
- 
+
+  const [hoveredRow, setHoveredRow] = useState(null);
+
+  const handleRowHover = (index) => {
+    setHoveredRow(index);
+  };
   const formatDate = (dateString) => {
     const originalDate = new Date("2023-11-10T14:58:20.594Z");
 
@@ -59,7 +65,11 @@ const UsersTable = ({ users, visibleColumns, switchAccess }) => {
         <tbody>
           {users.map((user, index) => {
             return (
-              <TableRow key={index}>
+              <TableRow
+                key={index}
+                className={index === hoveredRow ? 'hovered' : ''}
+   
+              >
                 {visibleColumns.map((column, columnIndex, array) => (
                   <TableCell
                     key={column.key}
@@ -89,7 +99,11 @@ const UsersTable = ({ users, visibleColumns, switchAccess }) => {
                         </Link>
                       )
                     ) : column.type === "link" ? (
-                      <Link to={`/admin/users/carduser/${user._id}`}>
+                      <Link
+                        to={`/admin/users/carduser/${user._id}`}
+                        onMouseEnter={() => handleRowHover(index)}
+                        onMouseLeave={() => handleRowHover(null)}
+                      >
                         картка
                       </Link>
                     ) : column.type === "nameLinkEditor" ? (
@@ -100,7 +114,7 @@ const UsersTable = ({ users, visibleColumns, switchAccess }) => {
                       <ButtonSwitch
                         isTrue={user[column.key]}
                         idUser={user._id}
-                                             />
+                      />
                     ) : column.key === "status" ? (
                       <>
                         {user[column.key] === true ? "Відкрито" : "Заблоковано"}
