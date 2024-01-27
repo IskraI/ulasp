@@ -5,7 +5,7 @@ import { BtnSort } from "../AllTracksUser/AllTracksUser.styled";
 
 import symbol from "../../../assets/symbol.svg";
 import Player from "../../../components/Player/Player";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect, useRef,  useId  } from "react";
 import { useParams } from "react-router-dom";
 
 // const RowsTitle = [
@@ -55,19 +55,19 @@ const TracksPage = () => {
         ),
         type: "checkbox",
         titleSize: "2%",
-        showData: true,
+        showData: false,
       },
 
       {
         title: "",
         type: "button",
         titleSize: "2%",
-        showData: true,
+        showData: false,
       },
       {
         title: "",
         type: "image",
-        titleSize: "10%",
+        titleSize: "5%",
         showData: true,
       },
       {
@@ -135,6 +135,12 @@ const TracksPage = () => {
     }
   };
 
+   useLayoutEffect(() => {
+    if (window.scrollY !== 0) {
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
   return (
     <>
          {isSuccess && !error && (
@@ -154,7 +160,7 @@ const TracksPage = () => {
             showTitle={false}
             marginTopWrapper={"24px"}
             isInPlayList={true}
-            // checkBox={true}
+            // checkBox={false}
             // isCheckedAll={checkedMainCheckBox}
             tracks={sortedTracks}
             error={error}

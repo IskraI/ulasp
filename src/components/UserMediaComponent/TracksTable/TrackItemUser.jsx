@@ -12,9 +12,10 @@ import {
 import { sToStr } from "../../../helpers/helpers";
 import { BASE_URL } from "../../../constants/constants";
 import { WithOutGenre } from "../../Errors/Errors";
-import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsSlice";
-import { useDeleteTrackMutation } from "../../../redux/tracksSlice";
+import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsUserSlice";
+import { useDeleteTrackMutation } from "../../../redux/tracksUserSlice";
 import { useState, useEffect, useRef } from "react";
+import symbol from "../../../assets/symbol.svg";
 
 const arr = [];
 
@@ -166,7 +167,11 @@ const TrackItem = ({
             X
           </button>
         </TableCell>
-        <TableCell showData={showData[2]}>
+        <TableCell showData={showData[2]}
+         style={{
+    borderTopLeftRadius: "8px", 
+    borderBottomLeftRadius: "8px",
+     }}>
           <TrackCover
             src={BASE_URL + "/" + trackPictureURL}
             alt={trackName}
@@ -184,10 +189,13 @@ const TrackItem = ({
           <div style={{ position: "relative" }}>
             <button
               type="buton"
+              style={{ color: "transparent" , background: "transparent", border: "none"}}
               // disabled={isChecked ? false : true}
               onClick={() => PopUpToogle()}
             >
-              ***
+             <svg width="24" height="24" stroke="#888889">
+                <use href={`${symbol}#icon-dots`}></use>
+              </svg>
             </button>
             {showPopUp && (
               <PopUpTracksTable>

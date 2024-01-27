@@ -77,6 +77,14 @@ export const playlistsUserApi = createApi({
       }),
       invalidatesTags: ["PlaylistsAdd"],
    }),
+
+    deleteTrackInPlaylist: builder.mutation({
+      query: (trackId) => ({
+        url: `/user/tracks/delete/${trackId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Playlists", "Tracks"],
+    }),
   }),
 });
 
@@ -88,5 +96,6 @@ export const {
    useUpdateFavoriteStatusApiMutation,
   useFavoritePlaylistForUserQuery,
   useAddPlaylistForUserQuery,
-   useUpdateAddStatusApiMutation,
+  useUpdateAddStatusApiMutation,
+   useDeleteTrackInPlaylistMutation,
 } = playlistsUserApi;

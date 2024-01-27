@@ -34,13 +34,17 @@ export const tracksUserApi = createApi({
         url: `user/genre/${genreId}/tracks`,
       }),
       providesTags: (_result, _error, genreId) => [{ type: "Tracks", genreId }],
+     }),
+     
+      deleteTrack: builder.mutation({
+      query: (id) => ({
+        url: `/user/tracks/delete/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Tracks"],
     }),
-    // getTracksCount: builder.query({
-    //   query: () => ({
-    //     url: "/editor/tracks/count",
-    //   }),
-    // }),
+    
   }),
 });
 
-export const {  useGetAllTracksforUserQuery, useGetTracksByGenreIdQuery} = tracksUserApi;
+export const {  useGetAllTracksforUserQuery, useGetTracksByGenreIdQuery, useDeleteTrackMutation } = tracksUserApi;
