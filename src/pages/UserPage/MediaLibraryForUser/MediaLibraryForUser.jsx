@@ -89,13 +89,15 @@ console.log('dataAdd playlist', dataAdd )
             data={genres}
             isFetching={isFetchingAllGenre}
             error={isErrorAllGenre}
-          />
+             showNavigationLink={true}
+                    />
           <Shops
             displayPlayer={"none"}
             data={shops}
             isFetching={isFetchingShops}
             isError={isErrorShops}
             isSuccess={isSuccessShops}
+             showNavigationLink={true}
           />
 
           {!isLoadingFavoritePlaylist&&!isLoadingAddPlaylist&& (<LatestPlaylists
@@ -107,11 +109,13 @@ console.log('dataAdd playlist', dataAdd )
             dataAdd={dataAdd}
             isFetching={isFetchingLatestPlaylist}
             error={isErrorLatestPlaylist}
+             showNavigationLink={true}
                  />)}
              <NewSongs
             data={allTracks}
             isFetching={isFetchingNewSongs}
             error={isErrorNewSongs}
+             showNavigationLink={true}
           />
         </>
       )}

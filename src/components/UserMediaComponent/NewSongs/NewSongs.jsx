@@ -5,7 +5,7 @@ import { Tracks } from "./NewSongs.styled";
 import TracksItem from "./TrackItem";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 
-const NewSongs = ({ data: allTracks, isFetching, error, display, }) => {
+const NewSongs = ({ data: allTracks, isFetching, error,showNavigationLink,  }) => {
   return (
     <>
       {!isFetching && !error && (
@@ -30,7 +30,7 @@ const NewSongs = ({ data: allTracks, isFetching, error, display, }) => {
             ))}
         
           </Tracks>
-          <MediaNavigationLink link={"newtracks"} display={display} />
+          <MediaNavigationLink link={"newtracks"} showNavigationLink={showNavigationLink} />
          
         </>
       )}

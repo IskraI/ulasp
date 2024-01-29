@@ -14,7 +14,7 @@ import symbol from "../../../assets/symbol.svg";
 const LatestPlaylists = ({
   title,
   displayPlayer,
-  display,
+ showNavigationLink,
   data: playlists,
  
   isFetching,
@@ -85,7 +85,7 @@ const LatestPlaylists = ({
             })}
 
           </MediaList>
-          <MediaNavigationLink link={"newplaylists"} display={display} />
+          <MediaNavigationLink link={"newplaylists"} showNavigationLink={showNavigationLink} />
                   </>
         )}
     </>

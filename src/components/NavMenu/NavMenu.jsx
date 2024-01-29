@@ -17,10 +17,12 @@ import {
   SubMenuLink,
   SvgStyled,
 } from "./NavMenu.styled";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 
 export const NavMenu = () => {
   const user = useSelector(getUserState);
+  // const navigate = useNavigate();
 
   const [activeMenu, setActiveMenu] = useState(null);
 
@@ -30,7 +32,14 @@ export const NavMenu = () => {
     ? propAdminNav
     : user.editorRole
     ? propEditorNav
-    : propUserNav;
+      : propUserNav;
+  
+  //  useEffect(() => {
+   
+  //   if (user.userRole) {
+  //     navigate("user/cabinet");
+  //   }
+  // }, [navigate, user.userRole]);
 
   return (
     <Nav>

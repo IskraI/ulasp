@@ -160,6 +160,8 @@ const TracksPage = () => {
             showTitle={false}
             marginTopWrapper={"24px"}
             isInPlayList={true}
+            playListId={data.playlist._id}
+            playListGenre={data.playlist.playlistGenre}
             // checkBox={false}
             // isCheckedAll={checkedMainCheckBox}
             tracks={sortedTracks}

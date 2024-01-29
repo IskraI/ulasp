@@ -19,6 +19,7 @@ const Genres = ({
   data: genres,
   isFetching,
   error,
+   showNavigationLink
 }) => {
   // const [createGenre, { isSuccess }] = useCreateGenreMutation();
   // const [showModal, setShowModal] = useState(false);
@@ -66,7 +67,8 @@ const Genres = ({
               <MediaListItem key={_id} id={_id} title={genre} icon={genreAvatarURL} />
             ))}
           </MediaList>
-          <MediaNavigationLink link={"genres"} display={display} />
+          <MediaNavigationLink  link={"genres"}
+            showNavigationLink={showNavigationLink} />
         </GenresWrapper>
       )}
       {/* <MockPlayer style={{ display: displayPlayer }}>

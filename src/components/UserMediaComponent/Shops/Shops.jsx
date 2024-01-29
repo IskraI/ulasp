@@ -14,7 +14,7 @@ import { Loader } from "../../Loader/Loader";
 import { useState } from "react";
 
 const Shops = ({
-  display,
+  showNavigationLink,
   displayPlayer,
   data: shops,
   isFetching,
@@ -70,7 +70,7 @@ const Shops = ({
               />
             ))}
           </ShopsList>
-          <MediaNavigationLink link={"shops"} display={display} />
+          <MediaNavigationLink link={"shops"} showNavigationLink={showNavigationLink} />
         </ShopsWrapper>
       )}
       {/* <Player display={displayPlayer} /> */}

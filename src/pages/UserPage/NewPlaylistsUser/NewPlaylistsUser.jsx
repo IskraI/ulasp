@@ -28,7 +28,8 @@ const NewPlaylistsUser = () => {
           display={"none"}
       data={playlists}
       isFetching={isFetchingLatestPlaylist}
-      error={isErrorLatestPlaylist}
+          error={isErrorLatestPlaylist}
+           showNavigationLink={false}
             />
             </>
   );
