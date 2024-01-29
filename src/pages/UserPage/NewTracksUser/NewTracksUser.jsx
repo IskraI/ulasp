@@ -13,7 +13,8 @@ const NewTracksUser = () => {
           data={allTracks}
           error={error}
           isFetching={isFetching}
-           display={"none"}
+          display={"none"}
+           showNavigationLink={false}
           
                  />
       )}

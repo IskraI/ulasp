@@ -19,7 +19,8 @@ const AllGenresForUser = () => {
                    display={"none"}
                   data={genres}
                   isFetching={isFetchingAllGenre}
-                  error={isErrorAllGenre}
+          error={isErrorAllGenre}
+           showNavigationLink={false}
               />
           )}
     </>
