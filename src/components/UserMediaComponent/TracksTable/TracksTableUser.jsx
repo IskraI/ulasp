@@ -27,6 +27,8 @@ const TracksTable = ({
   marginTopWrapper,
   checkBox,
   isInPlayList,
+  playListId,
+  playListGenre,
   isCheckedAll,
   dataUpload,
   isErrorUpload,
@@ -113,7 +115,6 @@ const TracksTable = ({
                     trackName,
                     artist,
                     trackDuration,
-                    trackGenre,
                     playList,
                   }) => {
                     return (
@@ -128,11 +129,12 @@ const TracksTable = ({
                         trackName={trackName}
                         artist={artist}
                         trackDuration={trackDuration}
-                        trackGenre={trackGenre}
-                        playList={playList?.playListName}
+                        playListGenre={playListGenre}
+                        playLists={playList}
                         showPlayList={true}
                         display={display}
                         isInPlayList={isInPlayList}
+                        playListId={playListId}
                         isErrorUpload={isErrorUpload}
                         isSuccessUpload={isSuccessUpload}
                         isLoadingUpload={isLoadingUpload}
@@ -154,46 +156,3 @@ const TracksTable = ({
 
 export default TracksTable;
 
-const RowsTitle = [
-  {
-    title: "",
-    titleSize: "2%",
-    showData: true,
-  },
-  {
-    title: "",
-    titleSize: "10%",
-    showData: true,
-  },
-  {
-    title: "Назва пісні",
-    titleSize: "20%",
-    showData: true,
-  },
-  {
-    title: "Виконавець",
-    titleSize: "15%",
-    showData: true,
-  },
-  {
-    title: "Тривалість",
-    titleSize: "12%",
-    showData: true,
-  },
-  {
-    title: "Жанр",
-    titleSize: "10%",
-    showData: true,
-  },
-  {
-    title: "Плейлист",
-    titleSize: "15%",
-    showData: true,
-  },
-
-  {
-    title: "",
-    titleSize: "5%",
-    showData: true,
-  },
-];

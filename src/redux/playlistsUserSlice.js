@@ -28,7 +28,8 @@ export const playlistsUserApi = createApi({
      getPlaylistByIdForUser: builder.query({
       query: (id) => ({ url: `/user/playlist/${id}` }),
 
-      providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
+       providesTags: (_result, _err, id) => [{ type: "Playlists", id },
+        { type: "Tracks" },],
     }),
    
         getLatestPlaylistsForUser: builder.query({
