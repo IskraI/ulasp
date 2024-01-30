@@ -2,22 +2,12 @@ import TracksTable from "../../../components/UserMediaComponent/TracksTable/Trac
 import { useGetPlaylistByIdForUserQuery } from "../../../redux/playlistsUserSlice";
 import PlaylistListItem from "../../../components/UserMediaComponent/PlayLists/PlayListsItem";
 import { BtnSort } from "../AllTracksUser/AllTracksUser.styled";
-
+import { ErrorNotFound, Error500 } from "../../../components/Errors/Errors";
 import symbol from "../../../assets/symbol.svg";
 import Player from "../../../components/Player/Player";
 import { useState, useEffect, useLayoutEffect, useRef,  useId  } from "react";
 import { useParams } from "react-router-dom";
-
-// const RowsTitle = [
-//   // "",
-//   "",
-//   "Назва пісні",
-//   "Виконавець",
-//   "Тривалість",
-//   "Жанр",
-//   "",
-// ];
-
+import { Loader } from "../../../components/Loader/Loader";
 
 
 const TracksPage = () => {
@@ -27,12 +17,10 @@ const TracksPage = () => {
 
   const { playlistId } = useParams();
 
-  const { data, isFetching, isSuccess, error } =
+  const { data,isFetching: isFetchingPlaylistById, isSuccess, error } =
     useGetPlaylistByIdForUserQuery(playlistId);
 
-  if (isSuccess) {
-    console.log("Count", data.totalTracks);
-  }
+ console.log('data', data)
 
   const rows = () => {
     const RowsTitle = [
@@ -143,6 +131,9 @@ const TracksPage = () => {
 
   return (
     <>
+      {error?.status === "500" && <Error500 />}
+      {error && <ErrorNotFound />}
+      {!isSuccess && !error && <Loader />}
          {isSuccess && !error && (
         <>
           <PlaylistListItem
@@ -162,15 +153,12 @@ const TracksPage = () => {
             isInPlayList={true}
             playListId={data.playlist._id}
             playListGenre={data.playlist.playlistGenre}
-            // checkBox={false}
-            // isCheckedAll={checkedMainCheckBox}
             tracks={sortedTracks}
             error={error}
-            isFetching={isFetching}
+            isFetching={isFetchingPlaylistById}
             isSuccess={isSuccess}
             display="none"
-            // rows={RowsTitle}
-             rows={rows()}
+            rows={rows()}
           />
           <Player tracks={sortedTracks} />
         </>

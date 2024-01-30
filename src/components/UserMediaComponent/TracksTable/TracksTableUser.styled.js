@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { colors } from "../../../styles/vars";
+import { colors, transition, mainCubicTransition } from "../../../styles/vars";
 
 export const TracksTableWrapper = styled.div`
   margin-top: ${(props) => props.marginTop};
@@ -37,7 +37,8 @@ export const ThTitle = styled.th`
   text-align: left;
   gap: 20px;
   padding: 8px 10px 18px 10px;
-  display: ${(props) => (props.showData ? null : "none")};
+  /* display: ${(props) => (props.showData ? null : "none")}; */
+  opacity: ${(props) => (props.showData ? 1 : 0)};
 
   /* outline: 1px solid green; */
 
@@ -77,7 +78,19 @@ export const TrStyle = styled.tr`
 
 export const TableCell = styled.td`
   padding: 8px 0px 8px 10px;
-  display: ${(props) => (props.showData ? null : "none")};
+  /* display: ${(props) => (props.showData ? null : "none")}; */
+  opacity: ${(props) => (props.showData ? 1 : 0)};
+
+  /* position: ${(props) => (props.showData ? "" : "absolute")}; */
+  width: ${(props) => (props.showData ? "" : "1px")};
+  height: ${(props) => (props.showData ? "" : "1px")};
+  margin: ${(props) => (props.showData ? "" : "-1px")};
+  border: ${(props) => (props.showData ? "" : 0)};
+  padding: ${(props) => (props.showData ? "" : 0)};
+
+  white-space: ${(props) => (props.showData ? "" : "nowrap")};
+  overflow: ${(props) => (props.showData ? "" : "hidden")};
+
   /* border: solid 1px transparent;
   border-style: none solid; */
 
@@ -94,6 +107,10 @@ export const TableCell = styled.td`
   }
 
   white-space: break-spaces;
+`;
+
+export const InfoBlock = styled.p`
+  display: ${(props) => (props.showData ? "" : "none")};
 `;
 
 export const TrackCover = styled.img`
@@ -120,24 +137,50 @@ export const MockPlayer = styled.div`
   color: yellowgreen;
 `;
 
+export const DotsButton = styled.button`
+  background: none;
+  border: none;
+  outline: none;
+  width: 50px;
+`;
+
+export const PopUpTracksTableWrapper = styled.div`
+  position: relative;
+`;
+
 export const PopUpTracksTable = styled.div`
   position: absolute;
+  z-index: 10;
+  bottom: -30px;
+  right: 35px;
+  margin: 20px auto;
+  /* outline: 1px solid red; */
+  width: 200px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: red;
-  padding: 6px;
-  width: 100%;
-  height: 100%;
-  border: 12px solid red;
-  top: -10px;
-  right: 67px;
-  z-index: 10;
+  background-color: #a4bcd4;
+  border-radius: 10px;
+  filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.3));
 `;
 
 export const PopUpButton = styled.button`
-  width: 150px;
-  padding: 4px;
-  border: 0;
+  padding: 12px 4px;
+
+  cursor: pointer;
+  font-size: 14px;
+  background: none;
+  border: none;
+  outline: none;
+
+  &:hover {
+    background: #fff3bf;
+    border-radius: 10px;
+    font-weight: 600;
+    transform: translateY(-5px);
+    transition: transform 250ms ${mainCubicTransition};
+  }
+
+  &:not(:last-of-type) {
+    margin-bottom: 4px;
+  }
 `;

@@ -26,7 +26,8 @@ export const tracksUserApi = createApi({
         }`,
       }),
      
-      providesTags: (_result, _err, id) => [{ type: "Tracks", id }],
+      providesTags: (_result, _err, id) => [{ type: "Tracks", id },
+        { type: "Playlists", id },],
     }),
 
      getTracksByGenreId: builder.query({

@@ -42,7 +42,7 @@ export const SignInClient = () => {
     dispatch(credentials)
       .unwrap()
       .then(() => {
-        navigate("/user");
+        navigate("/user/cabinet");
 
         reset();
       })
