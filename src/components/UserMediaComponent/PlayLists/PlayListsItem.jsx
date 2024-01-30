@@ -80,7 +80,7 @@ const PlayListItem = ({ id, title, icon, genre, favoriteStatus, addStatus,
 
 // console.log('isFavorite', isFavorite)
   return (
-    <>
+   
       <MediaItem>
         {!placeListCardInfo ? (
           <Link
@@ -152,7 +152,7 @@ const PlayListItem = ({ id, title, icon, genre, favoriteStatus, addStatus,
 
          </IconsWrapper>
       </MediaItem>
-    </>
+    
   );
 };
 

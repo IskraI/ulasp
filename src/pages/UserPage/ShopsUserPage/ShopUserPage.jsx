@@ -17,6 +17,7 @@ const ShopsPage = () => {
         isFetching={isFetching}
         isError={isError}
         isSuccess={isSuccess}
+        showNavigationLink={false}
       />
     </>
   );
