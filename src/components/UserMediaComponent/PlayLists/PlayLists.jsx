@@ -56,30 +56,19 @@ const LatestPlaylists = ({
               //   dataFavorite.favorites.some((item) => item._id === _id)
               // );
 
-              return (<>
+              return (
 
-                <div key={_id}>
-
-
-
-                {!isLoadingAddPlaylist && ( <PlayListItem
-
-                  key={_id}
-                  id={_id}
-                  favoriteStatus={dataFavorite.favorites.some((item) => item._id === _id)}
-                  addStatus={dataAdd.add.some((item) => item._id === _id)}
-                  title={playListName}
-                  icon={playListAvatarURL}
-                  genre={genre}
-                  shopCategoryName={shopCategoryName}
-
-
-
-                />)}
-                </div>
-              </>
-
-               
+                    <PlayListItem
+                      key={_id}
+                      id={_id}
+                      favoriteStatus={dataFavorite.favorites.some((item) => item._id === _id)}
+                      addStatus={dataAdd.add.some((item) => item._id === _id)}
+                      title={playListName}
+                      icon={playListAvatarURL}
+                      genre={genre}
+                      shopCategoryName={shopCategoryName}
+                    />
+                                     
             );
 
             })}

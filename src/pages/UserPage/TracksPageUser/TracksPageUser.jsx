@@ -154,7 +154,7 @@ const TracksPage = () => {
             playListId={data.playlist._id}
             playListGenre={data.playlist.playlistGenre}
             tracks={sortedTracks}
-            error={error}
+             error={error}
             isFetching={isFetchingPlaylistById}
             isSuccess={isSuccess}
             display="none"
