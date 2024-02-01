@@ -1,18 +1,21 @@
 import TabNavigation from "../../../components/TabNavigation/TabNavigation";
-import TracksTable from "../../../components/UserMediaComponent/TracksTable/TracksTable";
+import TracksTable from "../../../components/UserMediaComponent/TracksTable/TracksTableUser";
 import { useGetAllTracksforUserQuery  } from "../../../redux/tracksUserSlice";
 import { BtnSort } from "./AllTracksUser.styled";
 import symbol from "../../../assets/symbol.svg";
-import { useState } from "react";
+import { useState, useId, useRef } from "react";
 import NavMusic from "../../../components/UserMediaComponent/NavMusic/NavMusic"
 import Player from "../../../components/Player/Player";
 import { Loader } from "../../../components/Loader/Loader";
 
 
-const RowsTitle = ["", "Назва пісні", "Виконавець", "Тривалість", "Жанр", ""];
+// const RowsTitle = ["", "Назва пісні", "Виконавець", "Тривалість", "Жанр", ""];
 
 const AllTracksUser = () => {
-
+  const id = useId();
+  
+  const BaseInputRef = useRef(null);
+  const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
 
   const {
     data: allTracks,
@@ -43,7 +46,84 @@ const AllTracksUser = () => {
 //   };
 
 //   const shuffledTracks = shuffleTracks ? shuffleArray([...allTracks]) : allTracks;
+console.log('allTracks', allTracks)
+   const rows = () => {
+    const RowsTitle = [
+      {
+        title: (
+          <input
+            key={id}
+            type="checkbox"
+            id="mainInput"
+            ref={BaseInputRef}
+            style={{ width: "24px", height: "24px", marginRight: "24px" }}
+            onClick={() => {
+              if (BaseInputRef.current.checked) {
+                setCheckedMainCheckBox(true);
+              } else {
+                setCheckedMainCheckBox(false);
+              }
+            }}
+          />
+        ),
+        type: "checkbox",
+        titleSize: "2%",
+        showData: false,
+      },
 
+      {
+        title: "",
+        type: "button",
+        titleSize: "2%",
+        showData: false,
+      },
+      {
+        title: "",
+        type: "image",
+        titleSize: "5%",
+        showData: true,
+      },
+      {
+        title: "Назва пісні",
+        type: "text",
+        titleSize: "20%",
+        showData: true,
+      },
+      {
+        title: "Виконавець",
+        type: "text",
+        titleSize: "15%",
+        showData: true,
+      },
+      {
+        title: "Тривалість",
+        type: "text",
+        titleSize: "12%",
+        showData: true,
+      },
+      {
+        title: "Жанр",
+        type: "text",
+        titleSize: "10%",
+        showData: true,
+      },
+      {
+        title: "Плейлист",
+        type: "text",
+        titleSize: "15%",
+        showData: false,
+      },
+
+      {
+        title: "",
+        type: "button",
+        titleSize: "5%",
+        showData: true,
+      },
+    ];
+
+    return RowsTitle;
+  };
      const [sortAlphabetically, setSortAlphabetically] = useState(false);
 
   const handleSortClick = () => {
@@ -68,11 +148,18 @@ const AllTracksUser = () => {
       {isFetchingAllTracks && <Loader/>}
            {!isFetchingAllTracks && !errorLoadingAllTracks && (
              <>
-        <TracksTable
+               <TracksTable
+                  title={"In playlist"}
+            showTitle={false}
+            marginTopWrapper={"24px"}
+            isInPlayList={true}
+            // playListId={allTracks.playlist._id}
+            // playListGenre={allTracks.playlist.playlistGenre}
                   tracks={sortedTracks}
           error={errorLoadingAllTracks}
           isFetching={isFetchingAllTracks}
-          rows={RowsTitle}
+           display="none"
+            rows={rows()}
              />
                <Player tracks={sortedTracks} />
                </>

@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 import { getUserState } from "../../redux/userSelectors";
 import { AdminWriteForm } from "../../components/Form/AdminWriteForm";
 import { ActForm } from "../../components/Form/ActForm";
-import { ReportForm } from "../../components/Form/ReportForm";
+// import { ReportForm } from "../../components/Form/ReportForm";
 const UserCabinetPage = () => {
   const user = useSelector(getUserState);
   console.log("User", user);
@@ -35,7 +35,7 @@ const UserCabinetPage = () => {
         <AdminWriteForm />
         <ActForm />
       </FormContainer>
-      <ReportForm />
+      {/* <ReportForm /> */}
     </>
   );
 };
