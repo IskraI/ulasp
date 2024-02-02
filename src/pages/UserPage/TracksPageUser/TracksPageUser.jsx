@@ -20,7 +20,7 @@ const TracksPage = () => {
   const { data,isFetching: isFetchingPlaylistById, isSuccess, error } =
     useGetPlaylistByIdForUserQuery(playlistId);
 
- console.log('data', data)
+//  console.log('data', data)
 
   const rows = () => {
     const RowsTitle = [
@@ -152,7 +152,7 @@ const TracksPage = () => {
             marginTopWrapper={"24px"}
             isInPlayList={true}
             playListId={data.playlist._id}
-            playListGenre={data.playlist.playlistGenre}
+            // playListGenre={data.playlist.playlistGenre}
             tracks={sortedTracks}
              error={error}
             isFetching={isFetchingPlaylistById}
