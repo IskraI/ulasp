@@ -54,7 +54,8 @@ const TracksTable = ({
     // const widthRow = rowTitleRef.current.offsetWidth + "500";
     // setWidthP(widthRow);
   }, []);
-
+// console.log('tracks пропс пришел в тейблюзер', tracks)
+// console.log('data.playlist.playlistGenre  пропс пришел в тейблюзер', playListGenre)
   return (
     <>
       {error && <TracksNotFound>{ERROR_NOT_FOUND}</TracksNotFound>}
@@ -64,6 +65,7 @@ const TracksTable = ({
 
       {isSuccess && !error && tracks?.length !== 0 && (
         <>
+       
           <TracksTableWrapper marginTop={tracksTableProps.marginTop}>
             <TableStyle>
               <TracksTitle showTitle={tracksTableProps.showTitle}>
@@ -115,9 +117,13 @@ const TracksTable = ({
                     trackName,
                     artist,
                     trackDuration,
-                    playList,
+                    playList                    
+
                   }) => {
+                      
+                                      
                     return (
+                                   
                       <TrackItem
                         key={_id}
                         isCheckedAll={isCheckedAll}
@@ -129,7 +135,7 @@ const TracksTable = ({
                         trackName={trackName}
                         artist={artist}
                         trackDuration={trackDuration}
-                        playListGenre={playListGenre}
+                        playListGenre={ playListGenre}
                         playLists={playList}
                         showPlayList={true}
                         display={display}
@@ -142,7 +148,7 @@ const TracksTable = ({
                         isUninitialized={isUninitialized}
                         showData={tracksTableProps.showData}
                       />
-                    );
+                                         );
                   }
                 )}
               </tbody>

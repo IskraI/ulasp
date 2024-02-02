@@ -24,7 +24,7 @@ const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
   // } = useGetAllTracksforUserQuery();
   
   const { data: allTracks, error: errorLoadingAllTracks,
-    isFetching: isFetchingAllTracks,} = useGetTracksByGenreIdQuery(genreId);
+    isFetching: isFetchingAllTracks, isSuccess} = useGetTracksByGenreIdQuery(genreId);
     
   const links = [
     { path: `/user/medialibrary/genres/${genreId}/playlists`, title: "Плейлисти" },
@@ -124,7 +124,7 @@ const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
       })
     : [];
   
-      
+      console.log('allTracks', allTracks)
        return (
       <>
            <TabNavigation /> 
@@ -140,12 +140,13 @@ const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
                   title={"In playlist"}
             showTitle={false}
             marginTopWrapper={"24px"}
-            isInPlayList={true}
+            isInPlayList={false}
             // playListId={allTracks.playlist._id}
             // playListGenre={allTracks.playlist.playlistGenre}
                   tracks={sortedTracks}
           error={errorLoadingAllTracks}
           isFetching={isFetchingAllTracks}
+          isSuccess = {isSuccess}
            display="none"
             rows={rows()}
              />
