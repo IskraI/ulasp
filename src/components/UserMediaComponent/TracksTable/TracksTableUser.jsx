@@ -55,7 +55,7 @@ const TracksTable = ({
     // setWidthP(widthRow);
   }, []);
 // console.log('tracks пропс пришел в тейблюзер', tracks)
-// console.log('data.playlist.playlistGenre  пропс пришел в тейблюзер', playListGenre)
+// console.log('data.playlist.playlistGenre  пропс пришел в тейблюзер', playlistGenre)
   return (
     <>
       {error && <TracksNotFound>{ERROR_NOT_FOUND}</TracksNotFound>}
@@ -120,7 +120,8 @@ const TracksTable = ({
                     playList                    
 
                   }) => {
-                      
+                    // console.log('playList fron track map', playList)
+        
                                       
                     return (
                                    
@@ -135,11 +136,11 @@ const TracksTable = ({
                         trackName={trackName}
                         artist={artist}
                         trackDuration={trackDuration}
-                        playListGenre={ playListGenre}
+                        playListGenre={ playList.playListGenre}
                         playLists={playList}
                         showPlayList={true}
                         display={display}
-                        isInPlayList={isInPlayList}
+                        isInPlayList={false}
                         playListId={playListId}
                         isErrorUpload={isErrorUpload}
                         isSuccessUpload={isSuccessUpload}
