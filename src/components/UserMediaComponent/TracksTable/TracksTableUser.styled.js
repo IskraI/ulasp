@@ -122,7 +122,7 @@ export const TracksNotFound = styled.p`
   align-self: center;
   margin-top: 40px;
   font-size: 28px;
-  color: grey;
+  color:  #535250;
 `;
 
 export const MockPlayer = styled.div`

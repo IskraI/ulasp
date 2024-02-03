@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-
+import { ErrorText } from "./PageUserCommon.styled";
 import {  useGetGenreByIdforUserQuery } from "../../../redux/genersUserSlice";
 import LatestPlaylists from "../../../components/UserMediaComponent/PlayLists/PlayLists";
 import { Loader } from "../../../components/Loader/Loader";
@@ -28,14 +28,18 @@ const PlaylistsPageUserInGenre = () => {
               <TabNavigation />    
           <NavMusic links={links} />
           <DropDownGeners currentGenreId={genreId}/>
-          <LatestPlaylists
-            // title={`Плейлисти жанру "${data.genre}"`}
-            genre={data.genre}
-            display={"none"}
-            displayPlayer={"none"}
-            data={data.playList}
-            isFetching={isFetching}
-          />
+           {data.playList.length > 0 ? (
+            <LatestPlaylists
+              // title={`Плейлисти жанру "${data.genre}"`}
+              genre={data.genre}
+              display={"none"}
+              displayPlayer={"none"}
+              data={data.playList}
+              isFetching={isFetching}
+            />
+          ) : (
+            <ErrorText>В цьому жанрі ще немає плейлістів</ErrorText>
+          )}
         </>
       )}
     </>

@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { colors } from "../../../styles/vars";
+import { colors, mainCubicTransition } from "../../../styles/vars";
 
 export const ControlWrapper = styled.div`
   display: flex;
@@ -28,8 +28,9 @@ export const MediaList = styled.ul`
 `;
 
 export const MediaItem = styled.li`
+position: relative;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   width: 310px;
 
@@ -37,6 +38,14 @@ export const MediaItem = styled.li`
   border: 1px solid ${colors.accentHoverColor};
   border-radius: 10px;
   background-color: ${colors.activeBtnColor};
+
+  &:hover{
+ background: #fff3bf;
+    border-radius: 10px;
+    font-weight: 600;
+    transform: translateY(-5px);
+    transition: transform 250ms ${mainCubicTransition};
+  }
 `;
 
 export const MediaImg = styled.img`
@@ -44,6 +53,10 @@ export const MediaImg = styled.img`
 `;
 
 export const MediaItemText = styled.p`
+position:absolute;
+top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-size: 16px;
   line-height: 1.19;
   color: ${colors.mainFontColor};
@@ -69,6 +82,7 @@ export const PlaylistList = styled.ul`
 
 export const PlaylistItem = styled.li`
   display: flex;
+  position: relative;
   justify-content: space-between;
   align-items: center;
   width: 310px;

@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-
+import { ErrorText } from "./PageUserCommon.styled";
 import {  useGetShopByIdforUserQuery} from "../../../redux/shopsUserSlice";
 import LatestPlaylists from "../../../components/UserMediaComponent/PlayLists/PlayLists";
 import { Loader } from "../../../components/Loader/Loader";
@@ -18,7 +18,8 @@ const PlaylistsPageUserInGenre = () => {
       {isFetching && !isError && <Loader />}
       {!isError && isSuccess && (
               <>
-              <TabNavigation/>    
+          <TabNavigation />  
+           {data.playList.length > 0 ? (
               <LatestPlaylists
             title={'Плейлисти'}
             shopCategoryName={data.shopCategoryName}
@@ -26,7 +27,10 @@ const PlaylistsPageUserInGenre = () => {
             displayPlayer={"none"}
             data={data.playList}
             isFetching={isFetching}
-          />
+            />
+            ) : (
+            <ErrorText>В цьому закладі ще немає плейлістів</ErrorText>
+          )}
         </>
       )}
     </>
