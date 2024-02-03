@@ -124,7 +124,7 @@ const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
       })
     : [];
   
-      // console.log('allTracks', allTracks)
+      console.log('allTracks', allTracks)
        return (
       <>
            <TabNavigation /> 
