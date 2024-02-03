@@ -33,8 +33,8 @@ export const tracksUserApi = createApi({
       query: (genreId) => ({
         url: `user/genre/${genreId}/tracks`,
       }),
-      invalidatesTags: ["Tracks"],
-      // providesTags: (_result, _error, genreId) => [{ type: "Tracks", genreId }],
+      // invalidatesTags: ["Tracks"],
+      providesTags: (_result, _error, genreId) => [{ type: "Tracks", genreId }],
     }),
 
     deleteTrack: builder.mutation({
