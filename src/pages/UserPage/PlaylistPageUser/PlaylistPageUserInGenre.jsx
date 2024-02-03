@@ -39,7 +39,7 @@ const PlaylistsPageUserInGenre = () => {
               isFetching={isFetching}
             />
           ) : (
-            <ErrorText>В цьому жанрі ще не має плейлістів</ErrorText>
+            <ErrorText>В цьому жанрі ще немає плейлістів</ErrorText>
           )}
         </>
       )}
