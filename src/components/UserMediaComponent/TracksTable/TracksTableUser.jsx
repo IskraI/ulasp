@@ -54,7 +54,7 @@ const TracksTable = ({
     // const widthRow = rowTitleRef.current.offsetWidth + "500";
     // setWidthP(widthRow);
   }, []);
-console.log('tracks пропс пришел в тейблюзер', tracks)
+
 // console.log('data.playlist.playlistGenre  пропс пришел в тейблюзер', playlistGenre)
   return (
     <>
@@ -117,10 +117,11 @@ console.log('tracks пропс пришел в тейблюзер', tracks)
                     trackName,
                     artist,
                     trackDuration,
-                    playList                    
+                    playList,
+                                       
 
                   }) => {
-                    // console.log('playList fron track map', playList)
+                    console.log('playList fron track map', playListGenre)
         
                                       
                     return (
@@ -136,11 +137,11 @@ console.log('tracks пропс пришел в тейблюзер', tracks)
                         trackName={trackName}
                         artist={artist}
                         trackDuration={trackDuration}
-                        playListGenre={ playList.playListGenre}
+                        playListGenre={ playListGenre}
                         playLists={playList}
                         showPlayList={true}
                         display={display}
-                        isInPlayList={false}
+                        isInPlayList={isInPlayList}
                         playListId={playListId}
                         isErrorUpload={isErrorUpload}
                         isSuccessUpload={isSuccessUpload}

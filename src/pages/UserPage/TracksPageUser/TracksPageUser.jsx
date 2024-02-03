@@ -20,7 +20,7 @@ const TracksPage = () => {
   const { data,isFetching: isFetchingPlaylistById, isSuccess, error } =
     useGetPlaylistByIdForUserQuery(playlistId);
 
-//  console.log('data', data)
+
 
   const rows = () => {
     const RowsTitle = [
@@ -129,6 +129,8 @@ const TracksPage = () => {
     }
   }, []);
 
+  console.log('data PlaylistById', data)
+
   return (
     <>
       {error?.status === "500" && <Error500 />}
@@ -147,12 +149,13 @@ const TracksPage = () => {
                 <use href={`${symbol}#icon-sort`}></use>
               </svg></BtnSort>  
           <TracksTable
+          
             title={"In playlist"}
             showTitle={false}
             marginTopWrapper={"24px"}
             isInPlayList={true}
             playListId={data.playlist._id}
-            // playListGenre={data.playlist.playlistGenre}
+            playListGenre={data.playlist.playlistGenre}
             tracks={sortedTracks}
              error={error}
             isFetching={isFetchingPlaylistById}

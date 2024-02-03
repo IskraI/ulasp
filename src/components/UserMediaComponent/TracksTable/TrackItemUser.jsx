@@ -46,7 +46,7 @@ const TrackItem = ({
   const ref = useRef(null);
   const dotsButtonRef = useRef(null);
 
-  // console.log(playList.trackList);
+  console.log("TrackItem playListGenre", playListGenre);
 
   // console.log("showData", showData);
 
@@ -171,7 +171,9 @@ const TrackItem = ({
     return uniqGenre;
   };
 
-  const oneGenre = !isInPlayList ? playLists[0]?.playlistGenre[0]?.genre : null;
+
+
+  const oneGenre = !isInPlayList ? playLists[0]?.playlistGenre[0]?.genre : [];
 
   return (
     <>

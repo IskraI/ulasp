@@ -19,7 +19,6 @@ const PlaylistsPageUserInGenre = () => {
   ];
 
   console.log('genreId', genreId);
-  console.log("data", data)
 
   return (
     <>
