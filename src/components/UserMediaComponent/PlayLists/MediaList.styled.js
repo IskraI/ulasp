@@ -28,8 +28,9 @@ export const MediaList = styled.ul`
 `;
 
 export const MediaItem = styled.li`
+position: relative;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   width: 310px;
 
@@ -44,6 +45,10 @@ export const MediaImg = styled.img`
 `;
 
 export const MediaItemText = styled.p`
+position:absolute;
+top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-size: 16px;
   line-height: 1.19;
   color: ${colors.mainFontColor};
@@ -69,6 +74,7 @@ export const PlaylistList = styled.ul`
 
 export const PlaylistItem = styled.li`
   display: flex;
+  position: relative;
   justify-content: space-between;
   align-items: center;
   width: 310px;
