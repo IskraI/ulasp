@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { colors } from "../../../styles/vars";
+import { colors, mainCubicTransition } from "../../../styles/vars";
 import { keyframes } from "@emotion/react";
 
 
@@ -37,6 +37,14 @@ max-height: 58px;
   border: 1px solid ${colors.accentHoverColor};
   border-radius: 10px;
   background-color: ${colors.activeBtnColor};
+
+  &:hover{
+ background: #fff3bf;
+    border-radius: 10px;
+    font-weight: 600;
+    transform: translateY(-5px);
+    transition: transform 250ms ${mainCubicTransition};
+  }
 `;
 
 export const PlaylistImg = styled.img`
