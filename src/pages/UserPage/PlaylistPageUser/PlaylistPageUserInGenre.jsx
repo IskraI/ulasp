@@ -19,8 +19,7 @@ const PlaylistsPageUserInGenre = () => {
   ];
 
   console.log('genreId', genreId);
-  // console.log('data PlaylistsPageUserInGenre', data);
-  
+
   return (
     <>
       {isFetching && !isError && <Loader />}
