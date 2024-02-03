@@ -54,7 +54,7 @@ const TracksTable = ({
     // const widthRow = rowTitleRef.current.offsetWidth + "500";
     // setWidthP(widthRow);
   }, []);
-// console.log('tracks пропс пришел в тейблюзер', tracks)
+console.log('tracks пропс пришел в тейблюзер', tracks)
 // console.log('data.playlist.playlistGenre  пропс пришел в тейблюзер', playlistGenre)
   return (
     <>
