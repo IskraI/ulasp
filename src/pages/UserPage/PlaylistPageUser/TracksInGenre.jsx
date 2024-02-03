@@ -102,7 +102,7 @@ const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
         title: "",
         type: "button",
         titleSize: "5%",
-        showData: true,
+        showData: false,
       },
     ];
 
