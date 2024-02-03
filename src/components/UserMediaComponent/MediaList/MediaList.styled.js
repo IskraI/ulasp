@@ -23,6 +23,7 @@ export const MediaList = styled.ul`
 `;
 
 export const MediaItem = styled.li`
+position: relative;
    display: flex;
   justify-content: space-between;
   align-items: center;
@@ -35,16 +36,20 @@ export const MediaItem = styled.li`
 `;
 
 export const MediaImg = styled.img`
+
   border-radius: 10px;
   margin-right: 10px;
 `;
 
 export const MediaItemText = styled.p`
- flex: 1;
- text-align: center;
+position:absolute;
+top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-size: 16px;
   line-height: 1.19;
   color: ${colors.mainFontColor};
+
 `;
 
 export const IconsWrapper = styled.div`
