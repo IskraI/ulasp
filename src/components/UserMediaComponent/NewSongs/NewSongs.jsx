@@ -5,33 +5,36 @@ import { Tracks } from "./NewSongs.styled";
 import TracksItem from "./TrackItem";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 
-const NewSongs = ({ data: allTracks, isFetching, error,showNavigationLink,  }) => {
+const NewSongs = ({
+  data: allTracks,
+  isFetching,
+  error,
+  showNavigationLink,
+}) => {
+  // console.log("NewSongs allTracks", allTracks);
+
   return (
     <>
       {!isFetching && !error && (
         <>
           <ControlWrapper>
             <TitleWrapper>Нові пісні</TitleWrapper>
-
-            </ControlWrapper>
+          </ControlWrapper>
           <Tracks>
-            {allTracks.map(({_id,
-                  trackPictureURL,
-                  trackName,
-                  artist,                 
-                  }) => (
+            {allTracks.map(({ _id, trackPictureURL, trackName, artist }) => (
               <TracksItem
                 key={_id}
-                 id={_id}
+                id={_id}
                 title={trackName}
                 artist={artist}
                 icon={trackPictureURL}
               />
             ))}
-        
           </Tracks>
-          <MediaNavigationLink link={"newtracks"} showNavigationLink={showNavigationLink} />
-         
+          <MediaNavigationLink
+            link={"newtracks"}
+            showNavigationLink={showNavigationLink}
+          />
         </>
       )}
     </>

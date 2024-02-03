@@ -2,8 +2,8 @@
 import {
   TableCell,
   TrackCover,
-   TrStyle,
-   PopUpTracksTable,
+  TrStyle,
+  PopUpTracksTable,
   PopUpButton,
   DotsButton,
   PopUpTracksTableWrapper,
@@ -15,7 +15,7 @@ import { BASE_URL } from "../../../constants/constants";
 import { WithOutGenre } from "../../Errors/Errors";
 import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsUserSlice";
 import { useDeleteTrackMutation } from "../../../redux/tracksUserSlice";
-import { useState, useEffect, useRef,useId } from "react";
+import { useState, useEffect, useRef, useId } from "react";
 import symbol from "../../../assets/symbol.svg";
 
 const arr = [];
@@ -46,7 +46,7 @@ const TrackItem = ({
   const ref = useRef(null);
   const dotsButtonRef = useRef(null);
 
-  console.log("TrackItem playListGenre", playListGenre);
+  // console.log("TrackItem playListGenre", playListGenre);
 
   // console.log("showData", showData);
 
@@ -170,8 +170,6 @@ const TrackItem = ({
     );
     return uniqGenre;
   };
-
-
 
   const oneGenre = !isInPlayList ? playLists[0]?.playlistGenre[0]?.genre : [];
 
