@@ -1,6 +1,11 @@
+import { ErrorText, Title } from "./Messages.styled";
 const Messages = () => {
-    return <>Messages</>;
-  };
-  
-  export default Messages;
-  
+  return (
+    <>
+      <Title>Повідомлення</Title>
+      <ErrorText>Сторінка в розробці</ErrorText>;
+    </>
+  );
+};
+
+export default Messages;
