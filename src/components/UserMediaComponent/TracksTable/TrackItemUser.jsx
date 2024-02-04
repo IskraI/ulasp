@@ -268,7 +268,7 @@ const TrackItem = ({
           <TableCell showData={false}></TableCell>
         )}
         <TableCell showData={showData[8] || false}>
-          {/* {showPopUp && (
+          {showPopUp && (
             <PopUpTracksTableWrapper>
               <PopUpTracksTable>
                 <PopUpButton
@@ -289,8 +289,8 @@ const TrackItem = ({
                 <PopUpButton type="button">Перенести до плейлисту</PopUpButton>
               </PopUpTracksTable>
             </PopUpTracksTableWrapper>
-          )} */}
-          {/* <DotsButton
+          )}
+          <DotsButton
             ref={dotsButtonRef}
             type="button"
             onClick={PopUpToogle}
@@ -299,7 +299,7 @@ const TrackItem = ({
             <SvgStyled width="24" height="24" fillColor="black">
               <use href={`${symbol}#icon-more-dots`}></use>
             </SvgStyled>
-          </DotsButton> */}
+          </DotsButton>
         </TableCell>
       </TrStyle>
     </>
