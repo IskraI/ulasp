@@ -116,7 +116,7 @@ const AllTracksUser = () => {
         title: "",
         type: "button",
         titleSize: "5%",
-        showData: false,
+        showData: true,
       },
     ];
 
