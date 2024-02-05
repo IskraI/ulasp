@@ -19,6 +19,7 @@ export const Button = ({
   fontsize = "20px",
   display,
   disabled,
+  showIcon,
 }) => {
   return (
     <CustomButton
@@ -38,7 +39,12 @@ export const Button = ({
       display={display}
       disabled={disabled}
     >
-      <SvgStyled width="24" height="24" style={{ display, marginRight: "8px" }}>
+      <SvgStyled
+        width="24"
+        height="24"
+        showIcon={showIcon}
+        style={{ marginRight: "8px" }}
+      >
         <use href={icon}></use>
       </SvgStyled>
       {text}

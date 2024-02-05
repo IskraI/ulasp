@@ -299,7 +299,7 @@ const TrackItem = ({
             onClick={PopUpToogle}
             // disabled={isChecked ? false : true}
           >
-            <SvgStyled width="24" height="24" fillColor="black">
+            <SvgStyled showIcon={true} width="24" height="24" fillColor="black">
               <use href={`${symbol}#icon-more-dots`}></use>
             </SvgStyled>
           </DotsButton>

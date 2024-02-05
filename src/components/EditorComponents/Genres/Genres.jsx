@@ -22,7 +22,7 @@ const Genres = ({
   isFetching,
   error,
   isLoadingCreateGenre,
-  showNavigationLink
+  showNavigationLink,
 }) => {
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [showModalSuccess, setShowModalSucces] = useState(true);
@@ -124,7 +124,11 @@ const Genres = ({
         </Modal>
       )}
       {showModalSuccess && isSuccessCreateGenre && !isErrorCreateGenre && (
-        <Modal width={"394px"} onClose={closeModalSuccess}>
+        <Modal
+          width={"394px"}
+          onClose={closeModalSuccess}
+          showCloseButton={true}
+        >
           <ModalInfoText marginBottom={"34px"}>
             Новий жанр
             <ModalInfoTextBold>&quot;{newGenreName}&quot;</ModalInfoTextBold>був
@@ -135,9 +139,11 @@ const Genres = ({
       {showModalError && isErrorCreateGenre && (
         <Modal width={"394px"} onClose={closeModalError} showCloseButton={true}>
           <ModalInfoText>
-            {<ErrorNotFound error={errorCreateGenre.data?.message} /> ?? (
-              <ErrorNotFound />
-            )}
+            {(
+              <ErrorNotFound
+                error={`Жанр ${errorCreateGenre.data.object} вже використовується`}
+              />
+            ) ?? <ErrorNotFound />}
           </ModalInfoText>
         </Modal>
       )}

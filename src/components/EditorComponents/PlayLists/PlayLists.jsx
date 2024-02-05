@@ -1,20 +1,18 @@
 /* eslint-disable react/prop-types */
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 import ControlMediateca from "../ControlMediateca/ControlMediaTeca";
 import ModalForm from "../ControlMediateca/ModalForm";
 import PlaylistListItem from "./PlayListItem";
 import { Modal } from "../../Modal/Modal";
-
-import { MockPlayer } from "../TracksTable/TracksTable.styled";
 import symbol from "../../../assets/symbol.svg";
 
-import { PlaylistWrapper, PlaylistList } from "./PlayLists.styled";
 import { useCreatePlaylistMutation } from "../../../redux/playlistsSlice";
 import { useCreatePlaylistInGenreMutation } from "../../../redux/genresSlice";
 
-import { useState } from "react";
-
-import { useParams } from "react-router-dom";
+import { PlaylistWrapper, PlaylistList } from "./PlayLists.styled";
 
 const LatestPlaylists = ({
   title,
@@ -22,20 +20,21 @@ const LatestPlaylists = ({
   genre,
   isFetching,
   error,
-  showNavigationLink
+  showNavigationLink,
+  subCategory,
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedPlaylistAvatar, setSelectedPlaylistAvatar] = useState(null);
 
-  console.log("selectedPlaylistAvatar", selectedPlaylistAvatar);
-
-  const { genreId } = useParams();
+  const { genreId, shopSubCategoryId } = useParams();
 
   const [createPlaylist, { isSuccess, isLoading, isError }] =
     useCreatePlaylistMutation();
 
   const [createPlaylistInGenre, { isSuccess: success }] =
     useCreatePlaylistInGenreMutation();
+
+
 
   const handleChoosePlaylistAvatar = (event) => {
     console.log("event", event);
@@ -52,8 +51,6 @@ const LatestPlaylists = ({
 
   const formDataFunction = (data) => {
     const formData = new FormData();
-
-    console.log("formData", formData);
 
     formData.append("playListName", data.playListName),
       formData.append("type", data.type),
@@ -80,6 +77,19 @@ const LatestPlaylists = ({
       console.log(error);
     }
   };
+
+  // const handleSubmitInSubCategoryShop = async (data) => {
+  //   try {
+  //     const formData = formDataFunction(data);
+  //     await createPlaylistInSubCategoryShop({
+  //       shopSubCategoryId,
+  //       formData,
+  //     }).unwrap();
+  //     closeModal();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const clearImageCover = () => {
     setSelectedPlaylistAvatar(null);
@@ -115,6 +125,7 @@ const LatestPlaylists = ({
                 title={playListName}
                 icon={playListAvatarURL}
                 genre={genre}
+                subCategory={true}
               />
             ))}
           </PlaylistList>
@@ -144,8 +155,25 @@ const LatestPlaylists = ({
               />
             </>
           ) : (
+            !subCategory && (
+              <ModalForm
+                onSubmit={handleSubmitPlaylist}
+                changePlayListAvatar={handleChoosePlaylistAvatar}
+                img={selectedPlaylistAvatar}
+                clearImageCover={clearImageCover}
+                idInputImg={"picsURL"}
+                idInputFirst={"playListName"}
+                marginTopInputFirst="24px"
+                idInputSecond={"type"}
+                valueInputSecond={"playlist"}
+                placeholderFirst={"Назва плейлисту*"}
+                cover={true}
+              />
+            )
+          )}
+          {/* {subCategory && (
             <ModalForm
-              onSubmit={handleSubmitPlaylist}
+              onSubmit={handleSubmitInSubCategoryShop}
               changePlayListAvatar={handleChoosePlaylistAvatar}
               img={selectedPlaylistAvatar}
               clearImageCover={clearImageCover}
@@ -157,7 +185,7 @@ const LatestPlaylists = ({
               placeholderFirst={"Назва плейлисту*"}
               cover={true}
             />
-          )}
+          )} */}
         </Modal>
       )}
     </>

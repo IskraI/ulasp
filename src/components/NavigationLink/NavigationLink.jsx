@@ -2,8 +2,15 @@
 import { NavigationLink } from "./NavigationLink.styled";
 
 const MediaNavigationLink = ({ link, showNavigationLink }) => {
+  const MediaNavigationLinkProps = {
+    showNavigationLink: showNavigationLink ? "flex" : "none",
+  };
+
   return (
-    <NavigationLink to={link} showNavigationLink={showNavigationLink}>
+    <NavigationLink
+      to={link}
+      shownavigationlink={MediaNavigationLinkProps.showNavigationLink}
+    >
       Дивитись всі
     </NavigationLink>
   );

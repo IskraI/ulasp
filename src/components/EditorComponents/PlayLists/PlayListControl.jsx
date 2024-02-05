@@ -96,7 +96,7 @@ const PlayListControl = ({ isPublished, countTracks, playlistName }) => {
         color={isPublished ? "#D74A4A" : null}
         background={isPublished ? null : " #fff3bf"}
         disabled={countTracks ? false : true}
-        display={"none"}
+        showIcon={false}
         marginleft={"24px"}
         padding={"6px 24px"}
         fontsize={"16px"}
@@ -128,7 +128,7 @@ const PlayListControl = ({ isPublished, countTracks, playlistName }) => {
             <Button
               type={"button"}
               text={"Так"}
-              display={"none"}
+              showIcon={false}
               padding={"12px 26px"}
               onClick={handleSubmit}
             />

@@ -33,6 +33,8 @@ import PlaylistsPageInGenre from "./pages/Editor/PlaylistsPage/PlaylistsPageInGe
 import TracksPage from "./pages/Editor/TracksPage/TracksPage";
 import ShopsPage from "./pages/Editor/ShopsPage/ShopPage";
 import ShopsItemPage from "./pages/Editor/ShopsPage/ShopsItemPage";
+import ShopSubCategoryPage from "./pages/Editor/ShopsPage/ShopSubCategoryPage";
+import PlaylistInShopSubCategoryPage from "./pages/Editor/ShopsPage/PlaylistInShopSubCategoryPage";
 import ShopsUserPage from "./pages/UserPage/ShopsUserPage/ShopUserPage";
 import TracksInGenre from "./pages/UserPage/PlaylistPageUser/TracksInGenre";
 import { useSelector } from "react-redux";
@@ -237,6 +239,23 @@ function App() {
                   path="medialibrary/shops/:shopId"
                   element={<ShopsItemPage />}
                 />
+                <Route
+                  path="medialibrary/shops/:shopId/:shopItemId"
+                  element={<ShopSubCategoryPage />}
+                />
+                <Route
+                  path="medialibrary/shops/:shopId/:shopItemId/:shopSubCategoryId"
+                  element={<PlaylistInShopSubCategoryPage />}
+                />
+                <Route
+                  path="medialibrary/shops/:shopId/:shopItemId/:shopSubCategoryId/:playlistId/tracks"
+                  element={<TracksPage />}
+                />
+                <Route
+                  path="medialibrary/shops/:shopId/:shopItemId/:playlistId/tracks"
+                  element={<TracksPage />}
+                />
+
                 <Route
                   path="medialibrary/newplaylists"
                   element={<NewPlaylistsPage />}

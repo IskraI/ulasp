@@ -71,4 +71,10 @@ export const PlaylistIconsWrapper = styled.div`
 export const PlaylistDeleteButton = styled.button`
   background: none;
   border: none;
+
+  &:disabled {
+    svg {
+      fill: ${colors.bBgModal};
+    }
+  }
 `;

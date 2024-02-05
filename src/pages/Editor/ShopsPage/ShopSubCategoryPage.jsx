@@ -1,22 +1,25 @@
-import { useParams } from "react-router-dom";
+/* eslint-disable react/prop-types */
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 import ControlMediateca from "../../../components/EditorComponents/ControlMediateca/ControlMediaTeca";
 import MediaListItem from "../../../components/EditorComponents/MediaList/MediaList";
 import { Loader } from "../../../components/Loader/Loader";
+import { Modal } from "../../../components/Modal/Modal";
+import ModalForm from "../../../components/EditorComponents/ControlMediateca/ModalForm";
+import symbol from "../../../assets/symbol.svg";
+import Playlists from "../../../components/EditorComponents/PlayLists/PlayListsShop";
+import { formDataFunction } from "../../../helpers/helpers";
+
 import {
   Error500,
   ErrorNotFound,
   NoData,
 } from "../../../components/Errors/Errors";
-import symbol from "../../../assets/symbol.svg";
-import { Modal } from "../../../components/Modal/Modal";
-import ModalForm from "../../../components/EditorComponents/ControlMediateca/ModalForm";
-import Playlists from "../../../components/EditorComponents/PlayLists/PlayListsShop";
-import { formDataFunction } from "../../../helpers/helpers";
+
 import {
-  useGetShopByIdQuery,
-  useCreateShopCategoryMutation,
+  useGetShopCategoryByIdQuery,
+  useCreateShopSubCategoryMutation,
   useCreatePlayListInShopLibraryMutation,
 } from "../../../redux/shopsSlice";
 
@@ -26,35 +29,34 @@ import {
   ModalInfoTextBold,
 } from "../../../components/Modal/Modal.styled";
 
-const ShopsItemPage = () => {
-  const valueMediaLibrary = "shop";
+const ShopSubCategoryPage = () => {
+  const valueMediaLibrary = "shopItem";
+
+  const { shopItemId: idShopLibrary } = useParams();
 
   const [showModal, setShowModal] = useState(false);
-  const [showModalSuccessCreate, setShowModalSuccessCreate] = useState(false);
-
+  const [showModalSuccess, setShowModalSuccess] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
   const [selectedPlaylistAvatar, setSelectedPlaylistAvatar] = useState(null);
 
-  const { shopId: idShopLibrary } = useParams();
-
   const {
-    data: shopItem,
-    isFetching: isFetchingShopItem,
-    isError: isErrorShopItem,
-    error: errorShopItem,
-    isSuccess: isSuccessShopItem,
-  } = useGetShopByIdQuery(idShopLibrary);
+    data: shopCategory,
+    isFetching: isFetchingShopCategory,
+    isError: isErrorShopCategory,
+    error: errorShopCategory,
+    isSuccess: isSuccessShopCategory,
+  } = useGetShopCategoryByIdQuery(idShopLibrary);
 
   const [
-    createShopCategory,
+    createShopSubCategory,
     {
-      data: dataCreateShopCategory,
-      isSuccess: isSuccessCreateShopCategory,
-      isLoading: isLoadingCreateShopCategory,
-      isError: isErrorCreateShopCategory,
-      error: errorCreateShopCategory,
+      data: dataCreateShopSubCategory,
+      isSuccess: isSuccessCreateSubCategory,
+      isLoading: isLoadingCreateSubCategory,
+      isError: isErrorCreateSubCategory,
+      error: errorCreateSubCategory,
     },
-  ] = useCreateShopCategoryMutation();
+  ] = useCreateShopSubCategoryMutation();
 
   const [
     createPlayListInShopLibrary,
@@ -70,8 +72,9 @@ const ShopsItemPage = () => {
   const handleSubmitShop = async (data) => {
     try {
       closeModal();
-      await createShopCategory({ shopId, data }).unwrap();
-      setShowModalSuccessCreate(true);
+      await createShopSubCategory({ idShopLibrary, data })
+        .unwrap()
+        .then(setShowModalSuccess(true));
     } catch (error) {
       setShowModalError(true);
       console.log(error);
@@ -100,22 +103,6 @@ const ShopsItemPage = () => {
     }
   };
 
-  const closeModal = () => {
-    return setShowModal(false);
-  };
-
-  const closeModalError = () => {
-    return setShowModalError(false);
-  };
-
-  const closeModalSuccessCreate = () => {
-    return setShowModalSuccessCreate(false);
-  };
-
-  const toogleModal = () => {
-    return setShowModal(!showModal);
-  };
-
   const closeModalCreatePlaylist = () => {
     if (isLoadingCreatePlaylist) {
       return true;
@@ -125,44 +112,61 @@ const ShopsItemPage = () => {
     }
     return false;
   };
+
+  const closeModal = () => {
+    return setShowModal(false);
+  };
+
+  const toogleModal = () => {
+    return setShowModal(!showModal);
+  };
+
+  const closeModalSuccess = () => {
+    return setShowModalSuccess(false);
+  };
+
+  const closeModalError = () => {
+    return setShowModalError(false);
+  };
   const newPlaylistName =
     dataCreatePlaylist?.playListName ??
     "Назва нового плейлиста не була введена";
-  const newCategory =
-    dataCreateShopCategory?.shopItem?.shopItemName ??
+
+  const newSubCategory =
+    dataCreateShopSubCategory?.shopSubCategory?.shopSubTypeName ??
     "Назва нової категорії не була введена";
 
-  console.log(shopItem?.allPlaylistsInShopCategory);
+  console.log(shopCategory?.allPlaylistsInShopCategory);
+
   return (
     <>
-      {isFetchingShopItem && !isSuccessShopItem && <Loader />}
-      {errorShopItem?.status === "500" && <Error500 />}
-      {errorShopItem && <ErrorNotFound />}
-      {isSuccessShopItem && !isErrorShopItem && (
+      {isFetchingShopCategory && !isSuccessShopCategory && <Loader />}
+      {errorShopCategory?.status === "500" && <Error500 />}
+      {errorShopCategory && <ErrorNotFound />}
+      {isSuccessShopCategory && !isErrorShopCategory && (
         <>
           <ControlMediateca
-            title={shopItem.shop.shopCategoryName}
+            title={shopCategory.shop.shopItemName}
             iconButton={`${symbol}#icon-plus`}
-            textButton={"Категорія"}
+            textButton={"Підкатегорія"}
             onClick={toogleModal}
-            disabled={isErrorShopItem}
+            disabled={isErrorShopCategory}
           />
 
-          {shopItem.shop.shopChildItems.length === 0 ? (
-            <NoData text={"На данний час, ще не додано жодної категорії."} />
+          {shopCategory.shop.shopChildSubType.length === 0 ? (
+            <NoData text={"На данний час, ще не додано жодної підкатегорії."} />
           ) : (
             <ShopsList>
-              {shopItem.shop.shopChildItems.map(
-                ({ _id, shopItemName, shopItemAvatarURL }) => (
+              {shopCategory.shop.shopChildSubType.map(
+                ({ _id, shopSubTypeName, shopSubTypeAvatarURL }) => (
                   <MediaListItem
                     key={_id}
                     id={_id}
-                    title={shopItemName}
-                    icon={shopItemAvatarURL}
-                    typeMediaLibrary={"shopItem"}
-                    fieldForUpdate={"shopItemName"}
+                    title={shopSubTypeName}
+                    icon={shopSubTypeAvatarURL}
+                    typeMediaLibrary={"subCategoryShop"}
+                    fieldForUpdate={"shopSubTypeName"}
                     typeCover={"shop"}
-
                     // linkToPage={linkToPage}
                   />
                 )
@@ -170,9 +174,9 @@ const ShopsItemPage = () => {
             </ShopsList>
           )}
           <Playlists
-            title={`Плейлисти категорії "${shopItem.shop.shopCategoryName}"`}
-            data={shopItem.allPlaylistsInShopCategory}
-            // isFetching={isFetchingShopCategory}
+            title={`Плейлисти категорії "${shopCategory.shop.shopItemName}"`}
+            data={shopCategory.allPlaylistsInShopCategory}
+            isFetching={isFetchingShopCategory}
             showNavigationLink={false}
             handleCreatePlaylist={handleSubmitPlayListInShopLibrary}
             onChangePlaylistAvatar={handleAvatarChange}
@@ -185,49 +189,52 @@ const ShopsItemPage = () => {
             errorCreatePlaylist={errorCreatePlaylist}
             newPlaylistName={newPlaylistName}
           />
+          {/* parts Modal for create Shop SubType   */}
           {showModal && (
             <Modal width={"814px"} onClose={toogleModal} showCloseButton={true}>
               <ModalForm
                 onSubmit={handleSubmitShop}
-                idInputFirst={"shopItemName"}
+                idInputFirst={"shopSubTypeName"}
                 idInputSecond={"type"}
                 valueInputSecond={"shop"}
-                placeholderFirst={"Категорія закладу*"}
+                placeholderFirst={"Підкатегорія закладу*"}
                 cover={false}
               />
             </Modal>
           )}
-          {showModalSuccessCreate &&
-            isSuccessCreateShopCategory &&
-            !isErrorCreateShopCategory && (
+          {showModalSuccess &&
+            isSuccessCreateSubCategory &&
+            !isErrorCreateSubCategory && (
               <Modal
                 width={"394px"}
-                onClose={closeModalSuccessCreate}
+                onClose={closeModalSuccess}
                 showCloseButton={true}
               >
                 <ModalInfoText marginBottom={"34px"}>
-                  Категорія
+                  Підкатегорія
                   <ModalInfoTextBold>
-                    &quot;{newCategory}&quot;
+                    &quot;{newSubCategory}&quot;
                   </ModalInfoTextBold>
                   була створена
                 </ModalInfoText>
               </Modal>
             )}
-          {showModalError && isErrorCreateShopCategory && (
+          {showModalError && isErrorCreateSubCategory && (
             <Modal
               width={"494px"}
               onClose={closeModalError}
               showCloseButton={true}
             >
-              <ModalInfoText>
-                {errorCreateShopCategory.data.code === "4091" &&
-                  ((
-                    <ErrorNotFound
-                      error={`Категорія ${errorCreateShopCategory?.data.object} вже використовується`}
-                    />
-                  ) ?? <ErrorNotFound />)}
-              </ModalInfoText>
+              {isErrorCreateSubCategory && (
+                <ModalInfoText>
+                  {errorCreateSubCategory?.data.code === "4091" &&
+                    ((
+                      <ErrorNotFound
+                        error={`Підкатегорія ${errorCreateSubCategory?.data.object} вже використовується`}
+                      />
+                    ) ?? <ErrorNotFound />)}
+                </ModalInfoText>
+              )}
             </Modal>
           )}
         </>
@@ -236,4 +243,4 @@ const ShopsItemPage = () => {
   );
 };
 
-export default ShopsItemPage;
+export default ShopSubCategoryPage;
