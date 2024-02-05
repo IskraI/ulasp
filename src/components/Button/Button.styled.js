@@ -21,7 +21,7 @@ export const CustomButton = styled.button`
   margin-right: ${(props) => props.marginright};
   padding: ${(props) => props.padding};
   transition: ${transition.duration};
-  
+
   &:hover,
   :focus {
     background: #fff3bf;
@@ -44,4 +44,5 @@ export const CustomButton = styled.button`
 export const SvgStyled = styled.svg`
   fill: ${(props) => props.fillColor ?? "none"};
   stroke: ${(props) => props.strokeColor ?? "black"};
+  display: ${(props) => (props.showIcon ? "block" : "none")};
 `;

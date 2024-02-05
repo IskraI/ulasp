@@ -8,12 +8,21 @@ import { ErrorWrapper, ErrorText } from "./errors.styled";
 
 import error500 from "../../assets/error500.png";
 
-export const ErrorNotFound = ({ error }) => {
-  return <ErrorWrapper>{error || ERROR_NOT_FOUND}</ErrorWrapper>;
+export const ErrorNotFound = ({ error, children }) => {
+  return (
+    <ErrorWrapper>
+      <ErrorText>{error || ERROR_NOT_FOUND}</ErrorText>
+      {children}
+    </ErrorWrapper>
+  );
 };
 
 export const WithOutGenre = () => {
   return <p style={{ fontWeight: "500", fontSize: "16px" }}>без жанру</p>;
+};
+
+export const NoData = ({ text }) => {
+  return <ErrorWrapper>{text}</ErrorWrapper>;
 };
 
 export const Error500 = () => {

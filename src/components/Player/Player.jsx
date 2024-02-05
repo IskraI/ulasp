@@ -9,10 +9,12 @@ import { BASE_URL } from "../../constants/constants";
 
 import { useState } from "react";
 
-const Player = ({ display, tracks }) => {
+const Player = ({ display, tracks = [] }) => {
   const [currentTrack, setTrackIndex] = useState(0);
 
   const trackSRC = BASE_URL + "/" + tracks[currentTrack]?.trackURL;
+
+  // console.log(trackSRC);
 
   const handleClickNext = () => {
     setTrackIndex((currentTrack) =>
@@ -39,8 +41,8 @@ const Player = ({ display, tracks }) => {
       <PlayerWrapper style={{ display }}>
         {tracks.length !== 0 && (
           <>
-            <TracksArtist>{tracks[currentTrack].artist}</TracksArtist>
-            <TrackName>{tracks[currentTrack].trackName}</TrackName>
+            <TracksArtist>{tracks[currentTrack]?.artist}</TracksArtist>
+            <TrackName>{tracks[currentTrack]?.trackName}</TrackName>
             <PlayerReact
               autoPlay={false}
               autoPlayAfterSrcChange={false}

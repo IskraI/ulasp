@@ -46,11 +46,14 @@ export const ButtonsModalWrapper = styled.div`
   margin-bottom: 24px;
 `;
 
-export const ModalInfoText = styled.p`
-  margin-top: 34px;
-  padding: 38px 22px;
+export const ModalInfoText = styled.div`
   font-size: 16px;
   line-height: 1.2;
+  padding-top: ${(props) => props.paddingTop || "38px"};
+  padding-bottom: ${(props) => props.paddingBottom || "38px"};
+  padding-left: 22px;
+  padding-right: 22px;
+  margin-top: ${(props) => props.marginTop || "34px"};
   margin-bottom: ${(props) => props.marginBottom};
 `;
 

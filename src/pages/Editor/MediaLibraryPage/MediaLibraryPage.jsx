@@ -1,7 +1,7 @@
 import Genres from "../../../components/EditorComponents/Genres/Genres";
 import LatestPlaylists from "../../../components/EditorComponents/PlayLists/PlayLists";
 import NewSongs from "../../../components/EditorComponents/NewSongs/NewSongs";
-import Shops from "../../../components/EditorComponents/Shops/Shops";
+import ShopsPage from "../ShopsPage/ShopPage";
 import { useGetAllGenresQuery } from "../../../redux/genresSlice";
 import { useGetLatestPlaylistsQuery } from "../../../redux/playlistsSlice";
 import { useGetAllTracksQuery } from "../../../redux/tracksSlice";
@@ -86,15 +86,7 @@ const MediaLibraryPage = () => {
             showNavigationLink={true}
           />
 
-          <Shops
-            displayPlayer={"none"}
-            data={shops}
-            isFetching={isFetchingShops}
-            isError={isErrorShops}
-            isSuccess={isSuccessShops}
-            showNavigationLink={true}
-          />
-
+          <ShopsPage showNavigationLink={true} limit={"12"} />
           <LatestPlaylists
             title={"Нові плейлисти"}
             data={playlists}
@@ -102,7 +94,6 @@ const MediaLibraryPage = () => {
             error={isErrorLatestPlaylist}
             showNavigationLink={true}
           />
-
           <NewSongs
             data={allTracks.latestTracks}
             isFetching={isFetchingNewSongs}

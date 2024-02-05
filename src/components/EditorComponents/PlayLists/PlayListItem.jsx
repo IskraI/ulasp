@@ -3,6 +3,7 @@ import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 import { useDeletePlaylistMutation } from "../../../redux/playlistsSlice";
 import { useDeletePlaylistInGenreMutation } from "../../../redux/genresSlice";
+import { useDeletePlaylistInShopMutation } from "../../../redux/shopsSlice";
 
 import {
   PlaylistItem,
@@ -28,6 +29,7 @@ const PlaylistListItem = ({
   genre,
   placeListCardInfo,
   countTracks,
+  subCategory,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -45,8 +47,11 @@ const PlaylistListItem = ({
       isError: isErrorDeletePlaylist,
     },
   ] = useDeletePlaylistMutation();
+
   const [deletePlaylistInGenre, { isSuccess }] =
     useDeletePlaylistInGenreMutation();
+
+  const [deletePlaylistInShop] = useDeletePlaylistInShopMutation();
 
   if (
     location.pathname === newPlaylists &&
@@ -59,6 +64,10 @@ const PlaylistListItem = ({
   const deleteMediaItem = () => {
     if (genre) {
       deletePlaylistInGenre(id);
+    }
+
+    if (subCategory) {
+      deletePlaylistInShop(id);
     }
 
     deletePlaylist(id);
@@ -132,7 +141,8 @@ const PlaylistListItem = ({
             <PlaylistDeleteButton
               type="button"
               onClick={deleteMediaItem}
-              disabled={isLoading}
+              // disabled={isLoading}
+              disabled={true}
             >
               {isLoading ? (
                 <svg width="24" height="24" stroke="#888889">

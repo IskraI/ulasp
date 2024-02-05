@@ -1,7 +1,8 @@
+/* eslint-disable react/display-name */
 /* eslint-disable react/prop-types */
 import { Button } from "../../Button/Button";
 import { useForm, useWatch } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, memo } from "react";
 
 import {
   FormControlModal,
@@ -12,34 +13,21 @@ import {
   ClearImage,
 } from "./ModalForm.styled";
 
-const ModalForm = ({
+const ModalForm = memo(function ModalForm({
   onSubmit,
   genre,
   idInputFirst,
   marginTopInputFirst,
   placeholderFirst,
   idInputSecond,
-  placeholderSecond,
   valueInputSecond,
   idInputImg,
   changePlayListAvatar,
   img,
   clearImageCover,
   cover,
-}) => {
-  const {
-    control,
-    register,
-    handleSubmit,
-    setError,
-    clearErrors,
-    reset,
-    getValues,
-    setValue,
-    getFieldState,
-    setFocus,
-    formState: { errors, isValid, dirtyFields },
-  } = useForm({
+}) {
+  const { control, register, handleSubmit, setValue, setFocus } = useForm({
     mode: "onChange",
   });
 
@@ -113,7 +101,7 @@ const ModalForm = ({
           type="Submit"
           text={"Створити"}
           width="198px"
-          display="none"
+          showIcon={false}
           fontsize="24px"
           padding="8px"
           marginleft={"auto"}
@@ -123,6 +111,6 @@ const ModalForm = ({
       </FormControlModal>
     </>
   );
-};
+});
 
 export default ModalForm;
