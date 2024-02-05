@@ -93,7 +93,9 @@ button {
   fill: none;
   stroke: black;
 }
-
+.modal-open {
+  overflow: hidden;
+}
 // .footer {
 //   margin-top: auto;
 // }

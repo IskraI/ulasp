@@ -5,7 +5,11 @@ import symbol from "../../../assets/symbol.svg";
 import { useState } from "react";
 import { Modal } from "../../Modal/Modal";
 import { useParams } from "react-router-dom";
-import { useGetUserByIdQuery,  useDelUserByIdMutation, useUnblockUserByIdMutation } from "../../../redux/dataUsersSlice";
+import {
+  useGetUserByIdQuery,
+  useDelUserByIdMutation,
+  useUnblockUserByIdMutation,
+} from "../../../redux/dataUsersSlice";
 import {
   ButtonContainer,
   TextModal,
@@ -16,20 +20,23 @@ import { useNavigate } from "react-router-dom";
 const CardUser = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-     const { data: user, error, isLoading } = useGetUserByIdQuery(id);
+  const { data: user, error, isLoading } = useGetUserByIdQuery(id);
   const [dispatchDel, { isLoading: isLoadingDel }] = useDelUserByIdMutation();
-  const [dispatchUnblock, { isLoading: isLoadingUnblock }] = useUnblockUserByIdMutation(); 
+  const [dispatchUnblock, { isLoading: isLoadingUnblock }] =
+    useUnblockUserByIdMutation();
   const [activeModal, setActiveModal] = useState(null);
   const handleShowModal = (modalContent) => {
     setActiveModal(modalContent);
+    document.body.className += "modal-open";
   };
 
   const handleCloseModal = () => {
     setActiveModal(null);
+    document.body.className = document.body.className.replace("modal-open", "");
   };
 
   const handleDeleteUser = async () => {
-    dispatchDel({ id: id})
+    dispatchDel({ id: id })
       .unwrap()
       .then(() => {
         navigate("/admin/users");
@@ -37,15 +44,15 @@ const CardUser = () => {
       .catch((error) => console.log(error.data.message));
   };
 
-   const handleUnblockUser = async () => {
+  const handleUnblockUser = async () => {
     dispatchUnblock(id)
       .unwrap()
       .then(() => {
-        navigate("/admin/users");
+        setActiveModal(null);
       })
       .catch((error) => console.log(error.data.message));
   };
-  
+
   return (
     <>
       <TabNavigation />
@@ -85,7 +92,7 @@ const CardUser = () => {
           height="48px"
           text={user && user.status === true ? "Заблокувати" : "Розблокувати"}
           marginleft={"auto"}
-          onClick={() => handleShowModal('unBlock')}
+          onClick={() => handleShowModal("unBlock")}
         />
       </ButtonContainer>
       <Button
@@ -110,70 +117,73 @@ const CardUser = () => {
         }
         onClick={() => handleShowModal("delUser")}
       />
- {activeModal === 'unBlock' && (
-      <Modal
-        width={"664px"}
+      {activeModal === "unBlock" && (
+        <Modal
+          width={"664px"}
           padding={"138px 138px 74px"}
-           onClose={handleCloseModal}
+          onClose={handleCloseModal}
           showCloseButton={true}
-          flexDirection="column"      
+          flexDirection="column"
         >
-        <TextModal>Користувач  - {`${user.firstName} ${user.lastName}`} <br/>
-          заблокован!</TextModal>
-        <ModalBtnContainer>
-        <Button
+          <TextModal>
+            {user.status === true
+              ? `Підтвердіть заблоковування користувача - ${user.firstName} ${user.lastName}`
+              : `Підтвердіть розблоковування користувача - ${user.firstName} ${user.lastName}`}
+          </TextModal>
+          <ModalBtnContainer>
+            <Button
               type="button"
-              padding ="8px 24px"
-      height="48px"
-      display="none"
-            text="Назад"
-            onClick={handleCloseModal}
-                                  />
-        <Button
+              padding="8px 24px"
+              height="48px"
+              display="none"
+              text="Назад"
+              onClick={handleCloseModal}
+            />
+            <Button
               type="button"
-        padding="8px 30px"
-        display="none"
-      height="48px"
-           text={user && user.status === true ? "Заблокувати" : "Розблокувати" }
-              marginleft='31px' 
+              padding="8px 30px"
+              display="none"
+              height="48px"
+              text={
+                user && user.status === true ? "Заблокувати" : "Розблокувати"
+              }
+              marginleft="31px"
               onClick={handleUnblockUser}
-          />
-          </ModalBtnContainer>
-        </Modal>
-    )}
-    
-     {activeModal === 'delUser' && (
-      <Modal
-        width={"664px"}
-          padding={"138px 138px 74px"}
-           onClose={handleCloseModal}
-          showCloseButton={true}
-          flexDirection="column"      
-        >
-          <TextModal>Ви впевнені, що хочете
-видалити користувача?</TextModal>
-        <ModalBtnContainer>
-        <Button
-              type="button"
-              padding ="8px 37px"
-      height="48px"
-          display="block"
-            text="Так"
-onClick={handleDeleteUser}
-                                  />
-        <Button
-              type="button"
-        padding="8px 44px"
-        display="block"
-      height="48px"
-          text="Ні"
-            marginleft='31px' 
-            onClick={handleCloseModal}
-          />
+            />
           </ModalBtnContainer>
         </Modal>
       )}
 
+      {activeModal === "delUser" && (
+        <Modal
+          width={"664px"}
+          padding={"138px 138px 74px"}
+          onClose={handleCloseModal}
+          showCloseButton={true}
+          flexDirection="column"
+        >
+          <TextModal>Ви впевнені, що хочете видалити користувача?</TextModal>
+          <ModalBtnContainer>
+            <Button
+              type="button"
+              padding="8px 37px"
+              height="48px"
+              text="Так"
+              display="none"
+              onClick={handleDeleteUser}
+            />
+            <Button
+              type="button"
+              padding="8px 44px"
+              height="48px"
+              text="Ні"
+              display="none"
+              marginleft="31px"
+              onClick={handleCloseModal}
+            />
+          </ModalBtnContainer>
+        </Modal>
+      )}
     </>
   );
 };

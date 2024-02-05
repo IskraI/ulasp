@@ -7,7 +7,10 @@ import {
   Details,
 } from "../SearchUsers/SearchUsers.styled";
 import { Button } from "../../Button/Button";
-import { useUnblockUserByIdMutation } from "../../../redux/dataUsersSlice";
+import {
+  useUnblockUserByIdMutation,
+  useAccessUserUpdateByIdMutation,
+} from "../../../redux/dataUsersSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useState } from "react";
 import { ButtonSwitch } from "../ButtonSwitch/ButtonSwitch";
@@ -33,7 +36,8 @@ const UsersTable = ({ users, visibleColumns, switchAccess }) => {
   const navigate = useNavigate();
   const [dispatchUnblock, { isLoading: isLoadingUnblock }] =
     useUnblockUserByIdMutation();
-
+  const [dispatchAccess, { isLoading: isLoadingAccess }] =
+    useAccessUserUpdateByIdMutation();
   const handleSend = async (id) => {
     console.log("ID:", id);
     dispatchUnblock(id)
@@ -41,7 +45,13 @@ const UsersTable = ({ users, visibleColumns, switchAccess }) => {
       .then(() => {
         navigate("/admin/users");
       })
-      .catch((error) => console.log(error.data.message));
+      .catch((error) => alert(error.data.message));
+    dispatchAccess(id)
+      .unwrap()
+      .then(() => {
+        navigate("/admin/users");
+      })
+      .catch((error) => alert(error.data.message));
   };
 
   return (

@@ -8,9 +8,7 @@ export const phoneNumberUaRegexp = /^\+?3?8?(0\d{2}\d{3}\d{2}\d{2})$/;
 export const passportUaRegexp = /^([А-ЯЇІЄ]{2}\d{6})$/;
 export const nameCompanyRegexp = /^([а-яА-ЯїЇіІєЄ'ʼ-])/;
 
-
 export const UserFopSchema = yup.object().shape({
-
   firstName: yup
     .string()
     .required("Обов'язкове поле!")
@@ -23,13 +21,13 @@ export const UserFopSchema = yup.object().shape({
 
   contractNumber: yup
     .string()
-    .min(6, "Must be between 6 and 16 characters!")
-    .max(16, "Must be between 6 and 16 characters!")
+    .min(6, "Повинно бути від 6 до 16 знаків!")
+    .max(16, "Повинно бути від 6 до 16 знаків!")
     .required("Обов'язкове поле!"),
   taxCode: yup
     .string()
-    .min(10, "Must be  10 characters!")
-    .max(10, "Must be  10 characters!")
+    .min(10, "Повинно бути 10 цифр!")
+    .max(10, "Повинно бути 10 цифр!")
     .required("Обов'язкове поле!")
     .matches(onlyNumberRegexp, "Повинно бути 10 цифр!"),
   dayOfBirthday: yup
@@ -57,43 +55,41 @@ export const UserFopSchema = yup.object().shape({
 
   contactFaceTaxCode: yup
     .string()
-    .min(10, "Must be  10 characters!")
-    .max(10, "Must be  10 characters!")
+    .min(10, "Повинно бути 10 цифр!")
+    .max(10, "Повинно бути 10 цифр!")
     .required("Обов'язкове поле!")
     .matches(onlyNumberRegexp, "Повинно бути 10 цифр!"),
 
-    contactFaceTelNumber: yup
+  contactFaceTelNumber: yup
     .string()
     .required("Обов'язкове поле!")
     .matches(phoneNumberUaRegexp, "У форматі 0503332211 або +380503332211"),
 
-    contactFaceEmail: yup
+  contactFaceEmail: yup
     .string()
     .required("Обов'язкове поле!")
     .matches(emailRegexp, "Невірний формат email"),
-    comment:yup
-    .string(),
+  comment: yup.string(),
 });
 
 export const UserCompanySchema = yup.object().shape({
-  name:  yup
-  .string()
-  .required("Обов'язкове поле!")
-  .matches(nameCompanyRegexp, "Назва компанії українською мовою"),
-  
+  name: yup
+    .string()
+    .required("Обов'язкове поле!")
+    .matches(nameCompanyRegexp, "Назва компанії українською мовою"),
 
   contractNumber: yup
     .string()
-    .min(6, "Must be between 6 and 16 characters!")
-    .max(16, "Must be between 6 and 16 characters!")
+    .min(6, "Повинно бути від 6 до 16 знаків!")
+    .max(16, "Повинно бути від 6 до 16 знаків!")
     .required("Обов'язкове поле!"),
   taxCode: yup
     .string()
-    .min(10, "Повинно від 8 до 10 цифр!")
+    .min(8, "Повинно від 8 до 10 цифр!")
     .max(10, "Повинно від 8 до 10 цифр!")
     .required("Обов'язкове поле!")
     .matches(onlyNumberRegexp, "Помилка"),
-  
+
   telNumber: yup
     .string()
     .required("Обов'язкове поле!")
@@ -120,23 +116,19 @@ export const UserCompanySchema = yup.object().shape({
     .required("Обов'язкове поле!")
     .matches(onlyNumberRegexp, "10 цифр"),
 
-    contactFaceTelNumber: yup
+  contactFaceTelNumber: yup
     .string()
     .required("Обов'язкове поле!")
     .matches(phoneNumberUaRegexp, "У форматі 0503332211 або +380503332211"),
 
-    contactFaceEmail: yup
+  contactFaceEmail: yup
     .string()
     .required("Обов'язкове поле!")
     .matches(emailRegexp, "Невірний формат email"),
-    comment:yup
-    .string(),
+  comment: yup.string(),
 });
 
-
-
 export const MusicEditorSchema = yup.object().shape({
-  
   firstName: yup
     .string()
     .required("Обов'язкове поле!")
@@ -148,7 +140,7 @@ export const MusicEditorSchema = yup.object().shape({
 
   fatherName: yup.string().matches(nameRegexp, "По-батькові українською"),
 
-    taxCode: yup
+  taxCode: yup
     .string()
     .min(10, "Повинно бути 10 цифр!")
     .max(10, "Повинно бути 10 цифр!")
@@ -166,16 +158,10 @@ export const MusicEditorSchema = yup.object().shape({
     .string()
     .required("Обов'язкове поле!")
     .matches(emailRegexp, "Невірний формат email"),
-     comment:yup
-    .string(),
-    login: yup
-    .string()
-    .required("Обов'язкове поле!"),
-    // .matches(emailRegexp, "латинські літери"),
-    
-    password: yup
-    .string()
-    .required("Обов'язкове поле!"),
-    // .matches(emailRegexp, "пароль"),
-   
+  comment: yup.string(),
+  login: yup.string().required("Обов'язкове поле!"),
+  // .matches(emailRegexp, "латинські літери"),
+
+  password: yup.string().required("Обов'язкове поле!"),
+  // .matches(emailRegexp, "пароль"),
 });

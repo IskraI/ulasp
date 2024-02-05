@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { colors } from "../../../styles/vars";
+import { colors, transition } from "../../../styles/vars";
 
 export const ButtonCustomSwitch = styled.button`
   display: flex;
@@ -10,7 +10,8 @@ export const ButtonCustomSwitch = styled.button`
   height: 23px;
   /* padding: 2px 10px; */
 
-  background-color: ${(props) => (props.isTrue ? "#FFF3BF" : "#8CACD7")};
+  background-color: ${(props) =>
+    props.isTrue ? `${colors.accentHoverColor}` : `${colors.activeBtnColor}`};
   color: rgba(23, 22, 28, 1);
   text-transform: uppercase;
   font-family: Hind;
@@ -19,19 +20,28 @@ export const ButtonCustomSwitch = styled.button`
   line-height: 12px;
   letter-spacing: 0.1em;
   text-align: left;
-
   font-style: normal;
-
   box-shadow: none;
-  padding: 0px;
+  padding: 2px;
   border-radius: 10px;
-  border: 0.4px solid rgba(23, 22, 28, 1);
-
+  border: 0.4px solid rgba(23, 22, 28, 0.4);
+  transition: ${transition.duration};
   /* margin-bottom: 20px; */
   &:hover {
     background-color: ${(props) =>
-      props.isTrue ? "rgba(255, 243, 191, 0.60)" : " rgb(140, 172, 215, 0.50)"};
+      props.isTrue ? `${colors.btnColor}` : `${colors.accentHoverColor}`};
   }
+`;
+export const Circle = styled.circle`
+  fill: ${(props) =>
+    props.isTrue
+      ? props.isHovered
+        ? `${colors.accentHoverColor}`
+        : `${colors.activeBtnColor}`
+      : props.isHovered
+      ? `${colors.activeBtnColor}`
+      : `${colors.accentHoverColor}`};
+  transition: fill ${transition.duration};
 `;
 export const ContentButton = styled.div`
   display: flex;
