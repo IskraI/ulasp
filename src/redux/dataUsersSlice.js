@@ -19,7 +19,7 @@ export const dataUsersApi = createApi({
   }),
   tagTypes: ["dataUsers", "dataAdmins", "dataUser"],
   endpoints: (builder) => ({
-      getUsersList: builder.query({
+    getUsersList: builder.query({
       query: (admin = false) => {
         const url = admin ? "admin/" : "admin/users";
         return { url };
@@ -28,8 +28,8 @@ export const dataUsersApi = createApi({
     }),
 
     delUserById: builder.mutation({
-      query: ({id, admin = false}) => ({
-        url:  admin ?  `admin/${id}`:`admin/users/${id}`,
+      query: ({ id, admin = false }) => ({
+        url: admin ? `admin/${id}` : `admin/users/${id}`,
         method: "DELETE",
       }),
       async onQueryError(arg, { dispatch, error, queryFulfilled }) {
@@ -46,12 +46,12 @@ export const dataUsersApi = createApi({
       }),
       invalidatesTags: ["dataUsers", "dataUser"],
     }),
-    accessUserUpdateById:builder.mutation({
+    accessUserUpdateById: builder.mutation({
       query: (id) => ({
         url: `admin/users/access/${id}`,
         method: "PATCH",
       }),
-          invalidatesTags: ["dataUsers", "dataUser"],
+      invalidatesTags: ["dataUsers", "dataUser"],
     }),
 
     getAdminById: builder.query({
@@ -66,7 +66,7 @@ export const dataUsersApi = createApi({
         dispatch(resetUser()); // Сбросить состояние до значения по умолчанию
       },
     }),
-   
+
     createFopUser: builder.mutation({
       query: (body) => ({
         url: "/admin/create-fop",
@@ -92,49 +92,42 @@ export const dataUsersApi = createApi({
       invalidatesTags: ["dataUsers"],
     }),
     updateEditorUser: builder.mutation({
-      query: ( {id, ...body}) => ({
-
-
+      query: ({ id, ...body }) => ({
         url: `/admin/${id}`,
         method: "PATCH",
         body,
-       
       }),
-          
+
       invalidatesTags: ["dataUsers", "dataUser"],
     }),
 
     updateFopUser: builder.mutation({
-      query: ( {id, ...body}) => ({
-
-
+      query: ({ id, ...body }) => ({
         url: `admin/users/${id}`,
         method: "PATCH",
         body,
-       
       }),
-      
+
       invalidatesTags: ["dataUsers", "dataUser"],
     }),
     updateCompanyUser: builder.mutation({
-      query: ( {id, ...body}) => ({
-
-
+      query: ({ id, ...body }) => ({
         url: `admin/users/${id}`,
         method: "PATCH",
         body,
-       
       }),
-     
+
       invalidatesTags: ["dataUsers", "dataUser"],
     }),
 
-
-    onQueryCompleted: (data) => {
-      // Add logic here to close the modal
-      // For example, dispatch an action to update the modal state in your store.
-    },
-    invalidatesTags: ["dataUsers"],
+    getUserByIdTrackCount: builder.query({
+      query: (id) => ({ url: `admin/users/${id}/trackcount` }),
+      providesTags: ["dataUser"],
+    }),
+    getUserByIdPlaylistCount: builder.query({
+      query: (id) => ({ url: `admin/users/${id}/playlistcount` }),
+      providesTags: ["dataUser"],
+    }),
   }),
 });
 
@@ -151,6 +144,6 @@ export const {
   useUpdateFopUserMutation,
   useUpdateCompanyUserMutation,
   useAccessUserUpdateByIdMutation,
-  
-  
+  useGetUserByIdTrackCountQuery,
+  useGetUserByIdPlaylistCountQuery,
 } = dataUsersApi;

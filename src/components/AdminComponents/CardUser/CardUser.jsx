@@ -9,6 +9,8 @@ import {
   useGetUserByIdQuery,
   useDelUserByIdMutation,
   useUnblockUserByIdMutation,
+  useGetUserByIdTrackCountQuery,
+  useGetUserByIdPlaylistCountQuery,
 } from "../../../redux/dataUsersSlice";
 import {
   ButtonContainer,
@@ -21,18 +23,28 @@ const CardUser = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { data: user, error, isLoading } = useGetUserByIdQuery(id);
+  const {
+    data: playlistCount,
+    error: errorPlaylistCount,
+    isLoading: isLoadingPlaylistCount,
+  } = useGetUserByIdPlaylistCountQuery(id);
+  const {
+    data: songsCount,
+    error: errorSongsCount,
+    isLoading: isLoadingSongsCount,
+  } = useGetUserByIdTrackCountQuery(id);
   const [dispatchDel, { isLoading: isLoadingDel }] = useDelUserByIdMutation();
   const [dispatchUnblock, { isLoading: isLoadingUnblock }] =
     useUnblockUserByIdMutation();
   const [activeModal, setActiveModal] = useState(null);
   const handleShowModal = (modalContent) => {
     setActiveModal(modalContent);
-    document.body.className += "modal-open";
+    document.body.classList.add("modal-open");
   };
 
   const handleCloseModal = () => {
     setActiveModal(null);
-    document.body.className = document.body.className.replace("modal-open", "");
+    document.body.classList.remove("modal-open");
   };
 
   const handleDeleteUser = async () => {
@@ -56,7 +68,13 @@ const CardUser = () => {
   return (
     <>
       <TabNavigation />
-      {!isLoading && <UserCardForm user={user} />}
+      {!isLoading && (
+        <UserCardForm
+          user={user}
+          playlistCount={playlistCount}
+          songsCount={songsCount}
+        />
+      )}
       <ButtonContainer>
         <Button
           type="button"
@@ -127,8 +145,8 @@ const CardUser = () => {
         >
           <TextModal>
             {user.status === true
-              ? `Підтвердіть заблоковування користувача - ${user.firstName} ${user.lastName}`
-              : `Підтвердіть розблоковування користувача - ${user.firstName} ${user.lastName}`}
+              ? `Підтвердіть заблокування користувача - ${user.firstName} ${user.lastName}`
+              : `Підтвердіть розблокування користувача - ${user.firstName} ${user.lastName}`}
           </TextModal>
           <ModalBtnContainer>
             <Button
