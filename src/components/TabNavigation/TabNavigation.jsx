@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { PathText, BackLink, PathContainer } from "./TabNavigation.styled";
 import symbol from "../../assets/symbol.svg";
 import { genreDictionary } from "../../constants/dictionaryGenres";
-export const TabNavigation = () => {
+export const TabNavigation = ({ pathtext = true }) => {
   const location = useLocation();
   const currentPath = location.pathname;
   const pathSegments = currentPath
@@ -15,7 +15,7 @@ export const TabNavigation = () => {
   const startIndex = pathSegments[0] === "admin" ? 1 : 0;
   // Маппинг для перевода сегментов пути на украинский
 
-  const commonMapping  = {
+  const commonMapping = {
     users: "Користувачі",
     carduser: "Картка користувача",
     medialibrary: "Медіатека",
@@ -24,16 +24,15 @@ export const TabNavigation = () => {
     genres: "Жанри",
     newplaylists: "Нові Плейлисти",
     shops: "Заклади",
-     
 
     playlists: "Плейлисти",
     // Добавьте другие сегменты и их соответствующие переводы
   };
   const segmentToUkrainianMapping = { ...commonMapping };
-for (const genre of genreDictionary) {
-  const { id, translation } = genre;
-  segmentToUkrainianMapping[id] = translation;
-}
+  for (const genre of genreDictionary) {
+    const { id, translation } = genre;
+    segmentToUkrainianMapping[id] = translation;
+  }
 
   //   const getTranslatedPath = () => {
   //     if (startIndex !== -1 && startIndex < pathSegments.length - 1) {
@@ -143,7 +142,7 @@ for (const genre of genreDictionary) {
           ></use>
         </svg>
       </BackLink>
-      <PathText>{getTranslatedPath()}</PathText>
+      {pathtext && <PathText>{getTranslatedPath()}</PathText>}
     </PathContainer>
   );
 };

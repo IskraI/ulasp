@@ -17,6 +17,7 @@ import PrivateUserRoute from "./components/PrivateUserRoute";
 import Messages from "./components/AdminComponents/Messages/Messages";
 import MessagesUser from "./components/MessagesUser/MessagesUser";
 import MyPlaylistsUser from "./components/MyPlaylistsUser/MyPlaylistsUser";
+import AnalyticUser from "./components/AdminComponents/AnalyticUser/AnalyticUser";
 // import AdminUsers from "./components/AdminUsers/AdminUsers";
 
 import OnlineUsers from "./components/AdminComponents/OnlineUsers/OnlineUsers";
@@ -198,16 +199,17 @@ function App() {
                 <Route index element={<AdminCabinetPage />} />
                 <Route path="cabinet" element={<AdminCabinetPage />} />
                 <Route path="messages" element={<Messages />} />
-
                 <Route path="users" element={<AdminUsers />}>
                   <Route index element={<Navigate to="allusers" />} />
                   <Route path="allusers" element={<ListUsers />} />
                   <Route path="editors" element={<ListEditors />} />
                 </Route>
                 <Route path="users/carduser/:id" element={<CardUser />} />
-
+                <Route
+                  path="users/carduser/:id/data"
+                  element={<AnalyticUser />}
+                />
                 <Route path="users/cardeditor/:id" element={<CardEditor />} />
-
                 <Route path="online" element={<OnlineUsers />} />
                 <Route path="analytics" element={<Analytics />} />
                 <Route path="*" element={<ErrorPage />} />

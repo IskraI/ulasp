@@ -16,7 +16,7 @@ import ContactFaceFieldCard from "./ContactFaceFieldCard";
 import RegisterNameFieldCard from "./RegisterNameFieldCard";
 import CommonFieldCard from "../UserFieldForm/CommonFieldsCard";
 import { Button } from "../../../Button/Button";
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller } from "react-hook-form";
 const UserFieldCard = ({
   user,
   control,
@@ -28,19 +28,19 @@ const UserFieldCard = ({
   errors,
   register,
   isEditing,
-  handleEditActivation, handleCloseEdit
+  handleEditActivation,
+  handleCloseEdit,
+  playlistCount,
 }) => {
+  console.log("isEditing", isEditing);
 
-  
-  console.log('isEditing', isEditing)
-
-console.log('activeSectionCard', activeSectionCard)
+  console.log("activeSectionCard", activeSectionCard);
   return (
     <Fieldform>
       <RegisterLeftBlock>
         <RegisterNameFieldCard
-     isEditing={isEditing}
-     handleEditActivation ={handleEditActivation}
+          isEditing={isEditing}
+          handleEditActivation={handleEditActivation}
           handleTypeOfAccess={handleTypeOfAccess}
           register={register}
           errors={errors}
@@ -50,8 +50,8 @@ console.log('activeSectionCard', activeSectionCard)
           activeSectionCard={activeSectionCard}
           readOnly={!isEditing}
           user={user}
-                 control={control}
-                 handleCloseEdit={handleCloseEdit}
+          control={control}
+          handleCloseEdit={handleCloseEdit}
         />
 
         {activeSectionCard === "User" && (
@@ -98,9 +98,8 @@ console.log('activeSectionCard', activeSectionCard)
                     value={field.value}
                     onChange={(e) => field.onChange(e.target.value)}
                   />
-                  )}
-                  />
-          
+                )}
+              />
             </RegisterField>
             <RegisterField>
               <RegisterLabel>Остання оплата* </RegisterLabel>
@@ -116,15 +115,15 @@ console.log('activeSectionCard', activeSectionCard)
                     value={field.value}
                     onChange={(e) => field.onChange(e.target.value)}
                   />
-                  )}
-                  />
-            
+                )}
+              />
             </RegisterField>
             <RegisterField>
               <RegisterLabel>Кількість доданих плейлистів </RegisterLabel>
               <RegisterInput
                 type="text"
-                placeholder="з бека запрос"
+                placeholder="загружається"
+                defaultValue={playlistCount}
                 readOnly={true}
               />
             </RegisterField>
@@ -132,7 +131,7 @@ console.log('activeSectionCard', activeSectionCard)
               <RegisterLabel>Кількість доданих пісень </RegisterLabel>
               <RegisterInput
                 type="text"
-                placeholder="з бека запрос"
+                placeholder="в розробці"
                 readOnly={true}
               />
             </RegisterField>
@@ -190,21 +189,20 @@ console.log('activeSectionCard', activeSectionCard)
         <RegisterCommentField>
           <Commentlabel>Примітка </Commentlabel>
           <Controller
-                name="comment"
-                control={control}
-                defaultValue={user.comment}
-                render={({ field }) => (
-                  <CommentTextarea
-                    type="text"
-                    placeholder="Примітка"
-                    readOnly={!isEditing}
-                    value={field.value}
-                    height= "178px"
-                    onChange={(e) => field.onChange(e.target.value)}
-                  />
-                  )}
-                  />
-          
+            name="comment"
+            control={control}
+            defaultValue={user.comment}
+            render={({ field }) => (
+              <CommentTextarea
+                type="text"
+                placeholder="Примітка"
+                readOnly={!isEditing}
+                value={field.value}
+                height="178px"
+                onChange={(e) => field.onChange(e.target.value)}
+              />
+            )}
+          />
         </RegisterCommentField>
         {/* <
        Button
