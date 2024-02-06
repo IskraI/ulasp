@@ -23,8 +23,7 @@ import { Title } from "../AdminCabinetPage/AdminCabinetPage.styled";
 
 import UserFieldCard from "../UserForm/UserFieldForm/UserFieldCard";
 
-
-const UserCardForm = ({ user }) => {
+const UserCardForm = ({ user, playlistCount, tracksCount }) => {
   const { userFop, access, status, editorRole, adminRole, _id: id } = user;
   const activeSectionCard = adminRole || editorRole ? "Editor" : "User"; //user or editor
 
@@ -59,7 +58,6 @@ const UserCardForm = ({ user }) => {
   };
 
   const onFormSubmit = (data) => {
- 
     if (typeOfUser === "fop") {
       const formData = {
         ...data,
@@ -97,7 +95,7 @@ const UserCardForm = ({ user }) => {
 
   const handleCloseEdit = () => {
     setIsEditing(false);
-    reset( {user})
+    reset({ user });
   };
   const handleTypeOfAccess = () => {
     setTypeOfAccess(typeOfAccess === true ? false : true);
@@ -128,6 +126,7 @@ const UserCardForm = ({ user }) => {
           handleEditActivation={handleEditActivation}
           isEditing={isEditing}
           handleCloseEdit={handleCloseEdit}
+          playlistCount={playlistCount}
         />
       </form>
 

@@ -1,7 +1,7 @@
 //typeOfUser - fop , tov
 //activeSection createuser, create editor, carduser, cardeditor
 import {
-   RegisterField,
+  RegisterField,
   RegisterLabel,
   RegisterInput,
   RegisterRigthBlock,
@@ -9,14 +9,15 @@ import {
   Fieldform,
   RegisterLeftBlock,
   RegisterCommentField,
-  CommentTextarea,Tooltip
+  CommentTextarea,
+  Tooltip,
 } from "../UserCreateForm.styled";
 import ContactFaceField from "./ContactFaceField";
 import RegisterNameFieldForm from "./RegisterNameFieldForm";
 import CommonFieldForm from "./CommonFields";
 import { Button } from "../../../Button/Button";
 const UserFieldForm = ({
-   control,
+  control,
   handleTypeOfStatus,
   activeSection,
   typeOfStatus,
@@ -24,9 +25,8 @@ const UserFieldForm = ({
   isValid,
   errors,
   register,
-  dirtyFields
+  dirtyFields,
 }) => {
-
   return (
     <Fieldform>
       <RegisterLeftBlock>
@@ -50,17 +50,18 @@ const UserFieldForm = ({
                 placeholder="№ договору"
                 aria-describedby="contractNumberTooltip"
                 className={`${errors.contractNumber ? "invalid" : ""}${
-                  !errors.contractNumber && dirtyFields.contractNumber ? "valid" : ""
+                  !errors.contractNumber && dirtyFields.contractNumber
+                    ? "valid"
+                    : ""
                 }`}
-                     
                 {...register("contractNumber")}
               />
-               <Tooltip
-              id="contractNumberTooltip"
-              className={`${errors.contractNumber ? "visible" : ""}`}
-            >
-                    {errors.contractNumber && errors.contractNumber.message}
-            </Tooltip>
+              <Tooltip
+                id="contractNumberTooltip"
+                className={`${errors.contractNumber ? "visible" : ""}`}
+              >
+                {errors.contractNumber && errors.contractNumber.message}
+              </Tooltip>
             </RegisterField>
 
             <CommonFieldForm
@@ -71,7 +72,6 @@ const UserFieldForm = ({
               errors={errors}
               readOnly="false"
               dirtyFields={dirtyFields}
-            
             />
 
             <RegisterField>
@@ -81,16 +81,18 @@ const UserFieldForm = ({
                 placeholder="Надання доступу до"
                 aria-describedby="dateOfAccessTooltip"
                 className={`${errors.dateOfAccess ? "invalid" : ""}${
-                  !errors.dateOfAccess && dirtyFields.dateOfAccess ? "valid" : ""
+                  !errors.dateOfAccess && dirtyFields.dateOfAccess
+                    ? "valid"
+                    : ""
                 }`}
                 {...register("dateOfAccess")}
               />
-               <Tooltip
-              id="dateOfAccessTooltip"
-              className={`${errors.dateOfAccess ? "visible" : ""}`}
-            >
-                    {errors.dateOfAccess && errors.dateOfAccess.message}
-            </Tooltip>
+              <Tooltip
+                id="dateOfAccessTooltip"
+                className={`${errors.dateOfAccess ? "visible" : ""}`}
+              >
+                {errors.dateOfAccess && errors.dateOfAccess.message}
+              </Tooltip>
             </RegisterField>
             <RegisterField>
               <RegisterLabel>Остання оплата* </RegisterLabel>
@@ -103,12 +105,12 @@ const UserFieldForm = ({
                 }`}
                 {...register("lastPay")}
               />
-                <Tooltip
-              id="lastPayTooltip"
-              className={`${errors.lastPay ? "visible" : ""}`}
-            >
-                    {errors.lastPay && errors.lastPay.message}
-            </Tooltip>
+              <Tooltip
+                id="lastPayTooltip"
+                className={`${errors.lastPay ? "visible" : ""}`}
+              >
+                {errors.lastPay && errors.lastPay.message}
+              </Tooltip>
             </RegisterField>
 
             <ContactFaceField
@@ -119,38 +121,40 @@ const UserFieldForm = ({
               isValid={isValid}
               dirtyFields={dirtyFields}
             />
-            
           </>
         )}
 
-        {activeSection === "MusicEditor" && (<>
-          <CommonFieldForm
-            typeOfUser={"fop"}
-            register={register}
-            control={control}
-            isValid={isValid}
-            errors={errors}
-            readOnly="false"
-            dirtyFields={dirtyFields}
-          />
- <RegisterField>
-             
-             <RegisterInput
-               type="text"
-               placeholder="Логін"
-               valid={`${errors.login ? 'invalid' : ""}${!errors.login && dirtyFields.login?'valid':""}`}
-               {...register("login")}
-             />
-           </RegisterField>
-           <RegisterField>
-            
-             <RegisterInput
-               type="text"
-               placeholder="Пароль"
-               valid={`${errors.password ? 'invalid' : ""}${!errors.password && dirtyFields.password?'valid':""}`}
-               {...register("password")}
-             />
-           </RegisterField>
+        {activeSection === "MusicEditor" && (
+          <>
+            <CommonFieldForm
+              typeOfUser={"fop"}
+              register={register}
+              control={control}
+              isValid={isValid}
+              errors={errors}
+              readOnly="false"
+              dirtyFields={dirtyFields}
+            />
+            <RegisterField>
+              <RegisterInput
+                type="text"
+                placeholder="Логін"
+                valid={`${errors.login ? "invalid" : ""}${
+                  !errors.login && dirtyFields.login ? "valid" : ""
+                }`}
+                {...register("login")}
+              />
+            </RegisterField>
+            <RegisterField>
+              <RegisterInput
+                type="text"
+                placeholder="Пароль"
+                valid={`${errors.password ? "invalid" : ""}${
+                  !errors.password && dirtyFields.password ? "valid" : ""
+                }`}
+                {...register("password")}
+              />
+            </RegisterField>
           </>
         )}
       </RegisterLeftBlock>
@@ -160,15 +164,15 @@ const UserFieldForm = ({
           <CommentTextarea
             type="text"
             placeholder="Примітка"
-        
             {...register("comment")}
           />
         </RegisterCommentField>
         <Button
           type="submit"
           padding="8px"
-          text="Додати" 
-          // disabled={!isValid}
+          text="Додати"
+          disabled={!isValid}
+          display={"none"}
         />
       </RegisterRigthBlock>
     </Fieldform>

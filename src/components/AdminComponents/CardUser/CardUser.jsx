@@ -29,10 +29,11 @@ const CardUser = () => {
     isLoading: isLoadingPlaylistCount,
   } = useGetUserByIdPlaylistCountQuery(id);
   const {
-    data: songsCount,
+    data: tracksCount,
     error: errorSongsCount,
     isLoading: isLoadingSongsCount,
   } = useGetUserByIdTrackCountQuery(id);
+
   const [dispatchDel, { isLoading: isLoadingDel }] = useDelUserByIdMutation();
   const [dispatchUnblock, { isLoading: isLoadingUnblock }] =
     useUnblockUserByIdMutation();
@@ -55,6 +56,9 @@ const CardUser = () => {
       })
       .catch((error) => console.log(error.data.message));
   };
+  const handleSendEmail = async () => {
+    alert("send email");
+  };
 
   const handleUnblockUser = async () => {
     dispatchUnblock(id)
@@ -68,11 +72,11 @@ const CardUser = () => {
   return (
     <>
       <TabNavigation />
-      {!isLoading && (
+      {!isLoading && !isLoadingSongsCount && (
         <UserCardForm
           user={user}
           playlistCount={playlistCount}
-          songsCount={songsCount}
+          tracksCount={tracksCount}
         />
       )}
       <ButtonContainer>
@@ -81,6 +85,7 @@ const CardUser = () => {
           padding="8px 63px"
           height="48px"
           display="none"
+          onClick={() => navigate(`/admin/users/carduser/${user._id}/data`)}
           text={
             <>
               <svg
@@ -102,6 +107,7 @@ const CardUser = () => {
           height="48px"
           text="Відправити посилання"
           marginleft="50px"
+          onClick={() => handleSendEmail()}
         />
         <Button
           type="button"

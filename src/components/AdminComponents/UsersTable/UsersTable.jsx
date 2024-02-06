@@ -39,7 +39,7 @@ const UsersTable = ({ users, visibleColumns, switchAccess }) => {
   const [dispatchAccess, { isLoading: isLoadingAccess }] =
     useAccessUserUpdateByIdMutation();
   const handleSend = async (id) => {
-    console.log("ID:", id);
+    // console.log("ID:", id);
     dispatchUnblock(id)
       .unwrap()
       .then(() => {
@@ -53,7 +53,7 @@ const UsersTable = ({ users, visibleColumns, switchAccess }) => {
       })
       .catch((error) => alert(error.data.message));
   };
-
+  console.log("users", users);
   return (
     <>
       <Table>
@@ -130,6 +130,12 @@ const UsersTable = ({ users, visibleColumns, switchAccess }) => {
                       >
                         {`${user.firstName} ${user.lastName}`}
                       </Link>
+                    ) : column.type === "typeEditor" ? (
+                      <>
+                        {user.editorRole
+                          ? "Музичний редактор"
+                          : "Адміністратор"}{" "}
+                      </>
                     ) : column.key === "access" ? (
                       <ButtonSwitch
                         isTrue={user[column.key]}
@@ -146,7 +152,6 @@ const UsersTable = ({ users, visibleColumns, switchAccess }) => {
                         padding="8px"
                         fontsize="14px"
                         onClick={() => handleSend(user._id)}
-                        display="none"
                       ></Button>
                     ) : (
                       user[column.key]
