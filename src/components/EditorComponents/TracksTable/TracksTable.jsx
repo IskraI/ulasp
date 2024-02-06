@@ -1,4 +1,7 @@
 /* eslint-disable react/prop-types */
+import { useDispatch, useSelector } from "react-redux";
+import symbol from "../../../assets/symbol.svg";
+
 import {
   TracksTableWrapper,
   TableCell,
@@ -14,7 +17,10 @@ import TrackItem from "./TrackItem";
 import { ERROR_NOT_FOUND } from "../../../constants/constants";
 import { ProgressBarTracksTable } from "../../Loader/Loader";
 import { ErrorNotFound } from "../../Errors/Errors";
-import { useEffect, useRef, useState } from "react";
+import { Button } from "../../Button/Button";
+
+import { setSrcPlayer, stopPlay } from "../../../redux/playerSlice";
+import { getPlayerState } from "../../../redux/playerSelectors";
 const TracksTable = ({
   rows,
   tracks,
@@ -37,22 +43,32 @@ const TracksTable = ({
   errorUpload,
   isUninitialized,
 }) => {
+  const dispatch = useDispatch();
+  const playerState = useSelector(getPlayerState);
   const tracksTableProps = {
     showTitle: showTitle ? "table-caption" : "none",
     marginTop: marginTopWrapper ? `${marginTopWrapper}` : "auto",
     showData: rows.map((rows) => (rows.showData ? true : false)),
   };
 
-  const [widthP, setWidthP] = useState(null);
+  const isLoadedTracks = playerState.isLoaded;
 
-  const rowTitleRef = useRef(null);
+  const playMusic = () => {
+    const trackURL = tracks.map((track) => {
+      const newObject = {
+        trackURL: track.trackURL,
+        artist: track.artist,
+        trackName: track.trackName,
+      };
+      return newObject;
+    });
 
-  useEffect(() => {
-    // console.log(rowTitleRef.current.offsetParent.offsetWidth);
-    // rowTitleRef.current.offsetParent.offsetWidth =
-    // const widthRow = rowTitleRef.current.offsetWidth + "500";
-    // setWidthP(widthRow);
-  }, []);
+    dispatch(setSrcPlayer(trackURL));
+  };
+
+  const stopMusic = () => {
+    dispatch(stopPlay());
+  };
 
   return (
     <>
@@ -63,6 +79,22 @@ const TracksTable = ({
 
       {isSuccess && !error && tracks?.length !== 0 && (
         <>
+          <Button
+            onClick={() => (!isLoadedTracks ? playMusic() : stopMusic())}
+            type={"button"}
+            width={"250px"}
+            height={"50px"}
+            padding={"16px"}
+            margintop={"12px"}
+            text={isLoadedTracks ? "Зупинити" : "Грати музику"}
+            showIcon={"true"}
+            // icon={`${symbol}#icon-play`}
+            icon={
+              isLoadedTracks
+                ? `${symbol}#icon-stop-play`
+                : `${symbol}#icon-play`
+            }
+          />
           <TracksTableWrapper marginTop={tracksTableProps.marginTop}>
             <TableStyle>
               <TracksTitle showTitle={tracksTableProps.showTitle}>
@@ -115,6 +147,7 @@ const TracksTable = ({
                     artist,
                     trackDuration,
                     playList,
+                    trackURL,
                   }) => {
                     return (
                       <TrackItem
@@ -124,13 +157,13 @@ const TracksTable = ({
                         idTrack={_id}
                         countThInThead={rows.length}
                         disButtonPopUp={true}
+                        trackURL={trackURL}
                         trackPictureURL={trackPictureURL}
                         trackName={trackName}
                         artist={artist}
                         trackDuration={trackDuration}
                         playListGenre={playListGenre}
                         playLists={playList}
-                        showPlayList={true}
                         display={display}
                         isInPlayList={isInPlayList}
                         playListId={playListId}
@@ -154,47 +187,3 @@ const TracksTable = ({
 };
 
 export default TracksTable;
-
-const RowsTitle = [
-  {
-    title: "",
-    titleSize: "2%",
-    showData: true,
-  },
-  {
-    title: "",
-    titleSize: "10%",
-    showData: true,
-  },
-  {
-    title: "Назва пісні",
-    titleSize: "20%",
-    showData: true,
-  },
-  {
-    title: "Виконавець",
-    titleSize: "15%",
-    showData: true,
-  },
-  {
-    title: "Тривалість",
-    titleSize: "12%",
-    showData: true,
-  },
-  {
-    title: "Жанр",
-    titleSize: "10%",
-    showData: true,
-  },
-  {
-    title: "Плейлист",
-    titleSize: "15%",
-    showData: true,
-  },
-
-  {
-    title: "",
-    titleSize: "5%",
-    showData: true,
-  },
-];

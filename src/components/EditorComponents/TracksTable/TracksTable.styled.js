@@ -125,18 +125,6 @@ export const TracksNotFound = styled.p`
   color: grey;
 `;
 
-export const MockPlayer = styled.div`
-  margin-top: auto;
-  display: flex;
-  width: 100%;
-  height: 86px;
-  border: 1px solid black;
-  justify-content: center;
-  align-items: center;
-  font-size: 30px;
-  color: yellowgreen;
-`;
-
 export const DotsButton = styled.button`
   background: none;
   border: none;
@@ -183,4 +171,14 @@ export const PopUpButton = styled.button`
   &:not(:last-of-type) {
     margin-bottom: 4px;
   }
+`;
+
+export const PlayButton = styled.button`
+  padding: 12px 4px;
+
+  cursor: pointer;
+  font-size: 14px;
+  background: none;
+  border: none;
+  outline: none;
 `;

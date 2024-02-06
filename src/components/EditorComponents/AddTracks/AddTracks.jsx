@@ -94,7 +94,7 @@ const AddTracks = ({
             <svg width="24" height="24" style={{ marginRight: "8px" }}>
               <use href={iconButton}></use>
             </svg>
-            Музику
+            {textButton}
           </ButtonLabel>
           <InputControlAddTrack
             {...register("trackURL")}

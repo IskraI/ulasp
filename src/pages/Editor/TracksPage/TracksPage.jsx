@@ -54,33 +54,39 @@ const TracksPage = () => {
 
   const rows = () => {
     const RowsTitle = [
+      // {
+      //   title: (
+      //     <input
+      //       key={id}
+      //       type="checkbox"
+      //       id="mainInput"
+      //       ref={BaseInputRef}
+      //       style={{ width: "24px", height: "24px", marginRight: "24px" }}
+      //       onClick={() => {
+      //         if (BaseInputRef.current.checked) {
+      //           setCheckedMainCheckBox(true);
+      //         } else {
+      //           setCheckedMainCheckBox(false);
+      //         }
+      //       }}
+      //     />
+      //   ),
+      //   type: "checkbox",
+      //   titleSize: "2%",
+      //   showData: true,
+      // },
       {
-        title: (
-          <input
-            key={id}
-            type="checkbox"
-            id="mainInput"
-            ref={BaseInputRef}
-            style={{ width: "24px", height: "24px", marginRight: "24px" }}
-            onClick={() => {
-              if (BaseInputRef.current.checked) {
-                setCheckedMainCheckBox(true);
-              } else {
-                setCheckedMainCheckBox(false);
-              }
-            }}
-          />
-        ),
-        type: "checkbox",
-        titleSize: "2%",
-        showData: true,
+        title: "",
+        type: "button",
+        titleSize: "1%",
+        showData: false,
       },
 
       {
         title: "",
         type: "button",
-        titleSize: "2%",
-        showData: true,
+        titleSize: "1%",
+        showData: false,
       },
       {
         title: "",
@@ -186,7 +192,7 @@ const TracksPage = () => {
             display="none"
             rows={rows()}
           />
-          <Player tracks={data.playlist.trackList} />
+          {/* <Player tracks={data.playlist.trackList} /> */}
         </>
       )}
     </>

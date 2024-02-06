@@ -1,10 +1,14 @@
+import { useRef, useState, useId } from "react";
+
 import TracksTable from "../../../components/EditorComponents/TracksTable/TracksTable";
-import { useGetAllTracksQuery, useUploadTrackMutation } from "../../../redux/tracksSlice";
+import {
+  useGetAllTracksQuery,
+  useUploadTrackMutation,
+} from "../../../redux/tracksSlice";
 import Player from "../../../components/Player/Player";
 import AddTracks from "../../../components/EditorComponents/AddTracks/AddTracks";
 import symbol from "../../../assets/symbol.svg";
 import { Loader } from "../../../components/Loader/Loader";
-import { useRef, useState, useId } from "react";
 
 const AllTracksEditor = () => {
   const id = useId();
@@ -13,34 +17,41 @@ const AllTracksEditor = () => {
 
   const rows = () => {
     const RowsTitle = [
+      // {
+      //   title: (
+      //     <input
+      //       key={id}
+      //       type="checkbox"
+      //       id="mainInput"
+      //       ref={BaseInputRef}
+      //       style={{ width: "24px", height: "24px", marginRight: "24px" }}
+      //       onClick={() => {
+      //         if (BaseInputRef.current.checked) {
+      //           setCheckedMainCheckBox(true);
+      //         } else {
+      //           setCheckedMainCheckBox(false);
+      //         }
+      //       }}
+      //     />
+      //   ),
+      //   type: "checkbox",
+      //   titleSize: "2%",
+      //   showData: true,
+      // },
       {
-        title: (
-          <input
-            key={id}
-            type="checkbox"
-            id="mainInput"
-            ref={BaseInputRef}
-            style={{ width: "24px", height: "24px", marginRight: "24px" }}
-            onClick={() => {
-              if (BaseInputRef.current.checked) {
-                setCheckedMainCheckBox(true);
-              } else {
-                setCheckedMainCheckBox(false);
-              }
-            }}
-          />
-        ),
-        type: "checkbox",
-        titleSize: "2%",
-        showData: true,
+        title: "",
+        type: "button",
+        titleSize: "1%",
+        showData: false,
       },
 
       {
         title: "",
         type: "button",
-        titleSize: "2%",
+        titleSize: "4%",
         showData: true,
       },
+
       {
         title: "",
         type: "image",
@@ -97,15 +108,15 @@ const AllTracksEditor = () => {
     isSuccess: isSuccessAllTracks,
   } = useGetAllTracksQuery({ forceRefetch: true, refetchOnFocus: true });
 
-    const [
-      uploadTrack,
-      {
-        isSuccess: isSuccessUploadTrack,
-        isError: isErrorUploadTrack,
-        isLoading: isLoadingUploadTrack,
-        error: errorUploadTrack,
-      },
-    ] = useUploadTrackMutation();
+  const [
+    uploadTrack,
+    {
+      isSuccess: isSuccessUploadTrack,
+      isError: isErrorUploadTrack,
+      isLoading: isLoadingUploadTrack,
+      error: errorUploadTrack,
+    },
+  ] = useUploadTrackMutation();
 
   return (
     <>
@@ -128,7 +139,7 @@ const AllTracksEditor = () => {
             isCheckedAll={checkedMainCheckBox}
             isInPlayList={false}
           />
-          <Player tracks={allTracks.latestTracks} />
+          {/* <Player tracks={allTracks.latestTracks} /> */}
         </>
       )}
     </>

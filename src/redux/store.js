@@ -14,6 +14,7 @@ import { shopsUserApi } from "./shopsUserSlice";
 import { tracksUserApi } from "./tracksUserSlice";
 import { genresUserApi } from "./genersUserSlice";
 import { playlistsUserApi } from "./playlistsUserSlice";
+import { playerSlice } from "./playerSlice";
 
 import {
   persistStore,
@@ -49,6 +50,7 @@ export const store = configureStore({
     [playlistsUserApi.reducerPath]: playlistsUserApi.reducer,
     [shopsUserApi.reducerPath]: shopsUserApi.reducer,
     user: persistReducer(persistConfig, userReducer),
+    player: playerSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

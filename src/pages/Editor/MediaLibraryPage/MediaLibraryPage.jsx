@@ -101,7 +101,7 @@ const MediaLibraryPage = () => {
             isSuccess={isSuccesLatestNewSongs}
             showNavigationLink={true}
           />
-          <Player tracks={allTracks.latestTracks} />
+          {/* <Player tracks={allTracks.latestTracks} /> */}
         </>
       )}
     </>
