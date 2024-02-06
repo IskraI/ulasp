@@ -109,7 +109,7 @@ const EditorCabinetPage = () => {
             rows={RowsTitle}
             isInPlayList={false}
           />
-          <Player tracks={allTracks.latestTracks} />
+          {/* <Player tracks={allTracks.latestTracks} /> */}
         </>
       )}
     </>

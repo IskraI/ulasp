@@ -15,28 +15,34 @@ const NewTracksPage = () => {
 
   const rows = () => {
     const RowsTitle = [
-      {
-        title: (
-          <input
-            key={id}
-            type="checkbox"
-            id="mainInput"
-            ref={BaseInputRef}
-            style={{ width: "24px", height: "24px", marginRight: "24px" }}
-            onClick={() => {
-              if (BaseInputRef.current.checked) {
-                setCheckedMainCheckBox(true);
-              } else {
-                setCheckedMainCheckBox(false);
-              }
-            }}
-          />
-        ),
-        type: "checkbox",
-        titleSize: "1%",
-        showData: true,
-      },
+      // {
+      //   title: (
+      //     <input
+      //       key={id}
+      //       type="checkbox"
+      //       id="mainInput"
+      //       ref={BaseInputRef}
+      //       style={{ width: "24px", height: "24px", marginRight: "24px" }}
+      //       onClick={() => {
+      //         if (BaseInputRef.current.checked) {
+      //           setCheckedMainCheckBox(true);
+      //         } else {
+      //           setCheckedMainCheckBox(false);
+      //         }
+      //       }}
+      //     />
+      //   ),
+      //   type: "checkbox",
+      //   titleSize: "1%",
+      //   showData: true,
+      // },
 
+      {
+        title: "",
+        type: "button",
+        titleSize: "1%",
+        showData: false,
+      },
       {
         title: "",
         type: "button",
@@ -132,7 +138,7 @@ const NewTracksPage = () => {
             rows={rows()}
             isInPlayList={false}
           />
-          <Player tracks={allTracks.latestTracks} />
+          {/* <Player tracks={allTracks.latestTracks} /> */}
         </>
       )}
     </>

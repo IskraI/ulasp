@@ -207,7 +207,7 @@
   position: relative;
   width: 100%;
   height: 4px;
-  background: #020108;
+  background: #02010845;
   border-radius: 2px;
 }
 
@@ -235,7 +235,8 @@
   height: 100%;
   position: absolute;
   z-index: 2;
-  background-color: #868686;
+  /* background-color: #868686; */
+  background: #020108;
   border-radius: 2px;
 }
 

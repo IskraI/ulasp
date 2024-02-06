@@ -12,9 +12,15 @@ import { useState } from "react";
 const Player = ({ display, tracks = [] }) => {
   const [currentTrack, setTrackIndex] = useState(0);
 
+  // console.log(tracks);
+
   const trackSRC = BASE_URL + "/" + tracks[currentTrack]?.trackURL;
 
-  // console.log(trackSRC);
+  const reduxTrackSRC = BASE_URL + "/" + tracks[currentTrack];
+
+  // console.log(tracks[currentTrack]?.trackURL === undefined);
+
+  // console.log(reduxTrackSRC);
 
   const handleClickNext = () => {
     setTrackIndex((currentTrack) =>
@@ -36,24 +42,32 @@ const Player = ({ display, tracks = [] }) => {
     );
   };
 
+  const noData = tracks[currentTrack]?.trackURL === undefined;
+
   return (
     <>
       <PlayerWrapper style={{ display }}>
-        {tracks.length !== 0 && (
-          <>
-            <TracksArtist>{tracks[currentTrack]?.artist}</TracksArtist>
-            <TrackName>{tracks[currentTrack]?.trackName}</TrackName>
-            <PlayerReact
-              autoPlay={false}
-              autoPlayAfterSrcChange={false}
-              src={trackSRC}
-              showSkipControls
-              onClickNext={handleClickNext}
-              onClickPrevious={handleClickPrevious}
-              onEnded={handleEnd}
-            />
-          </>
-        )}
+        {/* {tracks.length !== 0 && ( */}
+        <>
+          <TracksArtist>
+            {noData ? "Невизначений" : tracks[currentTrack]?.artist}
+          </TracksArtist>
+          <TrackName>
+            {noData ? "Невизначений" : tracks[currentTrack]?.trackName}
+          </TrackName>
+          <PlayerReact
+            autoPlay={false}
+            autoPlayAfterSrcChange={true}
+            volume={0.2}
+            src={noData ? reduxTrackSRC : trackSRC}
+            showSkipControls
+            showFilledVolume={true}
+            onClickNext={handleClickNext}
+            onClickPrevious={handleClickPrevious}
+            onEnded={handleEnd}
+          />
+        </>
+        {/* )} */}
       </PlayerWrapper>
     </>
   );
