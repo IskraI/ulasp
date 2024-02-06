@@ -1,4 +1,18 @@
 /* eslint-disable react/prop-types */
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect, useRef, useId } from "react";
+
+import { SvgStyled } from "../../Button/Button.styled";
+import { sToStr } from "../../../helpers/helpers";
+import { BASE_URL } from "../../../constants/constants";
+import { WithOutGenre } from "../../Errors/Errors";
+import symbol from "../../../assets/symbol.svg";
+
+import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsSlice";
+import { useDeleteTrackMutation } from "../../../redux/tracksSlice";
+import { setSrcPlayer, stopPlay } from "../../../redux/playerSlice";
+import { getPlayerState } from "../../../redux/playerSelectors";
+
 import {
   TableCell,
   TrackCover,
@@ -11,21 +25,14 @@ import {
   DotsButton,
   PopUpTracksTableWrapper,
   InfoBlock,
+  PlayButton,
 } from "../TracksTable/TracksTable.styled";
-import { SvgStyled } from "../../Button/Button.styled";
-import { sToStr } from "../../../helpers/helpers";
-import { BASE_URL } from "../../../constants/constants";
-import { WithOutGenre } from "../../Errors/Errors";
-import symbol from "../../../assets/symbol.svg";
-import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsSlice";
-import { useDeleteTrackMutation } from "../../../redux/tracksSlice";
-import { useState, useEffect, useRef, useId } from "react";
-
 const arr = [];
 
 const TrackItem = ({
   idTrack,
   trackPictureURL,
+  trackURL,
   trackName,
   artist,
   trackDuration,
@@ -36,10 +43,13 @@ const TrackItem = ({
   isInPlayList,
   playListId,
   isCheckedAll,
-  showPlayList,
   showData,
 }) => {
+  const dispatch = useDispatch();
+  const playerState = useSelector(getPlayerState);
   const [showPopUp, setShowPopUp] = useState(false);
+  const [isPlayingTrack, setIsPlayingTrack] = useState(false);
+
   const [id, setId] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
   const [trackId, setTrackId] = useState([]);
@@ -48,6 +58,7 @@ const TrackItem = ({
 
   const ref = useRef(null);
   const dotsButtonRef = useRef(null);
+  const playBtnRef = useRef(null);
 
   // console.log(playList.trackList);
 
@@ -73,95 +84,110 @@ const TrackItem = ({
     },
   ] = useDeleteTrackInPlaylistMutation();
 
-  useEffect(() => {
-    if (isCheckedAll && ref?.current !== null) {
-      setIsChecked(true);
-      ref.current.checked = true;
-      // arr.splice(0, arr.length);
-      arr.push(idTrack);
-      // console.log(arr);
-    }
-    if (!isCheckedAll && ref?.current !== null) {
-      setIsChecked(false);
-      ref.current.checked = false;
-      arr.splice(0, arr.length);
-      // console.log(arr);
-    }
-    if (isSuccessDeleteTrack || isSuccessDeleteTrackInPlaylist) {
-      setShowPopUp(false);
-    }
-  }, [
-    idTrack,
-    isCheckedAll,
-    isSuccessDeleteTrack,
-    isSuccessDeleteTrackInPlaylist,
-  ]);
+  // useEffect(() => {
+  //   if (isCheckedAll && ref?.current !== null) {
+  //     setIsChecked(true);
+  //     ref.current.checked = true;
+  //     // arr.splice(0, arr.length);
+  //     arr.push(idTrack);
+  //     // console.log(arr);
+  //   }
+  //   if (!isCheckedAll && ref?.current !== null) {
+  //     setIsChecked(false);
+  //     ref.current.checked = false;
+  //     arr.splice(0, arr.length);
+  //     // console.log(arr);
+  //   }
+  //   if (isSuccessDeleteTrack || isSuccessDeleteTrackInPlaylist) {
+  //     setShowPopUp(false);
+  //   }
+  // }, [
+  //   idTrack,
+  //   isCheckedAll,
+  //   isSuccessDeleteTrack,
+  //   isSuccessDeleteTrackInPlaylist,
+  // ]);
 
-  useEffect(() => {
-    if (isChecked === false) {
-      setShowPopUp(false);
-    }
-  }, [isChecked]);
+  // useEffect(() => {
+  //   if (isChecked === false) {
+  //     setShowPopUp(false);
+  //   }
+  // }, [isChecked]);
 
   const PopUpToogle = () => {
     setShowPopUp(!showPopUp);
   };
 
-  const handleClickCheckBox = () => {
-    setIsChecked(!isChecked);
+  // const handleClickCheckBox = () => {
+  //   setIsChecked(!isChecked);
 
-    // setId(idTrack);
+  //   // setId(idTrack);
 
-    setTrackId(idTrack);
+  //   setTrackId(idTrack);
 
-    console.log("Кликнули");
+  //   console.log("Кликнули");
 
-    // if (arr.includes(idTrack)) {
-    //   console.log("arr", arr);
+  //   // if (arr.includes(idTrack)) {
+  //   //   console.log("arr", arr);
 
-    //   const indexTrack = arr.indexOf(idTrack);
-    //   console.log(indexTrack);
-    //   arr.splice(indexTrack);
-    //   console.log("arr", arr);
+  //   //   const indexTrack = arr.indexOf(idTrack);
+  //   //   console.log(indexTrack);
+  //   //   arr.splice(indexTrack);
+  //   //   console.log("arr", arr);
 
-    //   // console.log("Замечательно входит");
-    // } else {
-    //   arr.push(idTrack);
-    // }
+  //   //   // console.log("Замечательно входит");
+  //   // } else {
+  //   //   arr.push(idTrack);
+  //   // }
 
-    if (arr.includes(idTrack)) {
-      console.log("arr", arr);
+  //   if (arr.includes(idTrack)) {
+  //     console.log("arr", arr);
 
-      const indexTrack = arr.indexOf(idTrack);
-      console.log(indexTrack);
-      let knife = arr.splice(0, indexTrack);
-      // arr.slice(0, indexTrack);
-      console.log("arr", arr);
-      console.log("knife", knife);
+  //     const indexTrack = arr.indexOf(idTrack);
+  //     console.log(indexTrack);
+  //     let knife = arr.splice(0, indexTrack);
+  //     // arr.slice(0, indexTrack);
+  //     console.log("arr", arr);
+  //     console.log("knife", knife);
 
-      // knife.length === 1 ? knife.splice(0, arr.length) : null;
-      // console.log("knife", knife);
+  //     // knife.length === 1 ? knife.splice(0, arr.length) : null;
+  //     // console.log("knife", knife);
 
-      // console.log("Замечательно входит");
-    } else {
-      console.log("PUSH");
-      arr.push(idTrack);
-      console.log("arr", arr);
-    }
+  //     // console.log("Замечательно входит");
+  //   } else {
+  //     console.log("PUSH");
+  //     arr.push(idTrack);
+  //     console.log("arr", arr);
+  //   }
 
-    // console.log("arr", arr);
-  };
+  //   // console.log("arr", arr);
+  // };
 
-  const handleClick = (e) => {
+  const handleClickDotsButton = (e) => {
+    console.log(e.target);
+
     if (dotsButtonRef.current && !dotsButtonRef.current.contains(e.target)) {
       setShowPopUp(false);
     }
   };
 
+  const handleClickPlayButton = (e) => {
+    console.log(e.target);
+
+    if (playBtnRef.current && !playBtnRef.current.contains(e.target)) {
+      console.log("ПОПАЛИ");
+      // setIsPlayingTrack(false);
+      // stopMusic();
+      // PlayButtonToogle();
+    }
+    !isLoadedTracks ? playMusic() : stopMusic();
+    PlayButtonToogle();
+  };
+
   useEffect(() => {
-    document.addEventListener("click", handleClick);
+    document.addEventListener("click", handleClickDotsButton);
     return () => {
-      document.removeEventListener("click", handleClick);
+      document.removeEventListener("click", handleClickDotsButton);
     };
   }, []);
 
@@ -175,6 +201,26 @@ const TrackItem = ({
   };
 
   const oneGenre = !isInPlayList ? playLists[0]?.playlistGenre[0]?.genre : null;
+  const isLoadedTracks = playerState.isLoaded;
+  const playMusic = () => {
+    dispatch(
+      setSrcPlayer([
+        {
+          trackURL: trackURL,
+          artist: artist,
+          trackName: trackName,
+        },
+      ])
+    );
+  };
+
+  const stopMusic = () => {
+    dispatch(stopPlay());
+  };
+
+  const PlayButtonToogle = () => {
+    setIsPlayingTrack(!isPlayingTrack);
+  };
 
   return (
     <>
@@ -190,11 +236,11 @@ const TrackItem = ({
             name=""
             id="checkTrack"
             ref={ref}
-            onClick={handleClickCheckBox}
+            // onClick={handleClickCheckBox}
           />
         </TableCell>
         <TableCell showData={showData[1] || false}>
-          <button
+          {/* <button
             type="buton"
             onClick={
               isInPlayList
@@ -203,7 +249,28 @@ const TrackItem = ({
             }
           >
             X
-          </button>
+          </button> */}
+
+          <PlayButton
+            ref={playBtnRef}
+            type="button"
+            // onClick={() => {
+            //   !isLoadedTracks ? playMusic() : stopMusic();
+            //   PlayButtonToogle();
+            //   () => handleClickPlayButton;
+            // }}
+            onClick={handleClickPlayButton}
+          >
+            <svg width="16" height="16">
+              <use
+                href={
+                  isPlayingTrack
+                    ? `${symbol}#icon-stop-play`
+                    : `${symbol}#icon-play`
+                }
+              ></use>
+            </svg>
+          </PlayButton>
         </TableCell>
         <TableCell showData={showData[2] || false}>
           <TrackCover

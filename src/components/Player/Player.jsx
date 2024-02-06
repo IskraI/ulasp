@@ -9,18 +9,20 @@ import { BASE_URL } from "../../constants/constants";
 
 import { useState } from "react";
 
-const Player = ({ display, tracks = [] }) => {
+const Player = ({ tracks = [] }) => {
   const [currentTrack, setTrackIndex] = useState(0);
 
-  // console.log(tracks);
+  console.log(tracks);
 
   const trackSRC = BASE_URL + "/" + tracks[currentTrack]?.trackURL;
 
   const reduxTrackSRC = BASE_URL + "/" + tracks[currentTrack];
 
+  const reduxOneTrackSRC = BASE_URL + "/" + tracks;
+
   // console.log(tracks[currentTrack]?.trackURL === undefined);
 
-  // console.log(reduxTrackSRC);
+  console.log(reduxOneTrackSRC);
 
   const handleClickNext = () => {
     setTrackIndex((currentTrack) =>
@@ -46,7 +48,7 @@ const Player = ({ display, tracks = [] }) => {
 
   return (
     <>
-      <PlayerWrapper style={{ display }}>
+      <PlayerWrapper>
         {/* {tracks.length !== 0 && ( */}
         <>
           <TracksArtist>

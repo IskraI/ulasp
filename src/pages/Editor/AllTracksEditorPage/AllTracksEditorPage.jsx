@@ -11,7 +11,6 @@ import symbol from "../../../assets/symbol.svg";
 import { Loader } from "../../../components/Loader/Loader";
 
 const AllTracksEditor = () => {
-
   const id = useId();
   const BaseInputRef = useRef(null);
   const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
@@ -49,8 +48,8 @@ const AllTracksEditor = () => {
       {
         title: "",
         type: "button",
-        titleSize: "1%",
-        showData: false,
+        titleSize: "4%",
+        showData: true,
       },
 
       {
@@ -119,8 +118,6 @@ const AllTracksEditor = () => {
     },
   ] = useUploadTrackMutation();
 
-
-
   return (
     <>
       {!isSuccessAllTracks && <Loader />}
@@ -131,7 +128,7 @@ const AllTracksEditor = () => {
             textButton={"Музику"}
             uploadTrack={uploadTrack}
           />
-  
+
           <TracksTable
             // title={" Остання додана музика"}
             tracks={allTracks.latestTracks}

@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from "react-redux";
-import { setSrcPlayer, stopPlay } from "../../../redux/playerSlice";
 import symbol from "../../../assets/symbol.svg";
 
 import {
@@ -19,6 +18,8 @@ import { ERROR_NOT_FOUND } from "../../../constants/constants";
 import { ProgressBarTracksTable } from "../../Loader/Loader";
 import { ErrorNotFound } from "../../Errors/Errors";
 import { Button } from "../../Button/Button";
+
+import { setSrcPlayer, stopPlay } from "../../../redux/playerSlice";
 import { getPlayerState } from "../../../redux/playerSelectors";
 const TracksTable = ({
   rows,
@@ -146,6 +147,7 @@ const TracksTable = ({
                     artist,
                     trackDuration,
                     playList,
+                    trackURL,
                   }) => {
                     return (
                       <TrackItem
@@ -155,13 +157,13 @@ const TracksTable = ({
                         idTrack={_id}
                         countThInThead={rows.length}
                         disButtonPopUp={true}
+                        trackURL={trackURL}
                         trackPictureURL={trackPictureURL}
                         trackName={trackName}
                         artist={artist}
                         trackDuration={trackDuration}
                         playListGenre={playListGenre}
                         playLists={playList}
-                        showPlayList={true}
                         display={display}
                         isInPlayList={isInPlayList}
                         playListId={playListId}
