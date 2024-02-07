@@ -6,7 +6,7 @@ export const ShopsItem = styled.li`
   justify-content: space-between;
   align-items: center;
   width: 310px;
-
+ position: relative;
   padding: 10px;
   border: 1px solid ${colors.accentHoverColor};
   border-radius: 10px;
@@ -32,6 +32,12 @@ export const ShopsItemText = styled.p`
   line-height: 1.19;
   color: ${colors.mainFontColor};
   margin-right: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);    
+ 
+
 `;
 
 export const ShopsIconsWrapper = styled.div`
