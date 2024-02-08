@@ -26,7 +26,7 @@
 // export default ShopsPage;
 
 
-import MediaListItem from "../../../components/EditorComponents/MediaList/MediaList";
+import MediaListItem from "../../../components/UserMediaComponent/MediaList/MediaList";
 import MediaNavigationLink from "../../../components/NavigationLink/NavigationLink";
 import { Loader } from "../../../components/Loader/Loader";
 import {

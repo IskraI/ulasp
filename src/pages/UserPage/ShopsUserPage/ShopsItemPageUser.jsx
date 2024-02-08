@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 
 // import ControlMediateca from "../../../components/EditorComponents/ControlMediateca/ControlMediaTeca";
-import MediaListItem from "../../../components/EditorComponents/MediaList/MediaList";
+import MediaListItem from "../../../components/UserMediaComponent/MediaList/MediaList";
 import { Loader } from "../../../components/Loader/Loader";
 import {
   Error500,
