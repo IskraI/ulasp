@@ -54,7 +54,7 @@ const TracksTable = ({
   const isLoadedTracks = playerState.isLoaded;
 
   const playMusic = () => {
-    const trackURL = tracks.map((track, index) => {
+    const trackURL = tracks.map((track) => {
       const newObject = {
         id: track._id,
         trackURL: track.trackURL,

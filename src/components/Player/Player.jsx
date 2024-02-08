@@ -1,4 +1,7 @@
 /* eslint-disable react/prop-types */
+import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { setCurrentIndex } from "../../redux/playerSlice";
 import {
   PlayerWrapper,
   PlayerReact,
@@ -7,18 +10,21 @@ import {
 } from "./Player.styled";
 import { BASE_URL } from "../../constants/constants";
 
-import { useState } from "react";
-
 const Player = ({ tracks = [] }) => {
   const [currentTrack, setTrackIndex] = useState(0);
-
-  console.log(tracks);
+  const dispatch = useDispatch();
 
   const trackSRC = BASE_URL + "/" + tracks[currentTrack]?.trackURL;
 
   const reduxTrackSRC = BASE_URL + "/" + tracks[currentTrack];
 
-  // console.log(tracks[currentTrack]?.trackURL === undefined);
+  useEffect(() => {
+    dispatch(setCurrentIndex(currentTrack));
+
+    if (tracks[currentTrack] === undefined) {
+      setTrackIndex(0);
+    }
+  }, [currentTrack, dispatch, tracks]);
 
   const handleClickNext = () => {
     setTrackIndex((currentTrack) =>
@@ -58,7 +64,7 @@ const Player = ({ tracks = [] }) => {
             autoPlayAfterSrcChange={true}
             volume={0.2}
             src={noData ? reduxTrackSRC : trackSRC}
-            showSkipControls
+            showSkipControls={tracks?.length > 1 ? true : false}
             showFilledVolume={true}
             onClickNext={handleClickNext}
             onClickPrevious={handleClickPrevious}
