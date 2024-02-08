@@ -11,13 +11,14 @@ import {
   RegisterLeftBlock,
   RegisterCommentField,
   CommentTextarea,
-} from "../UserCreateForm.styled";
-import ContactFaceFieldCard from "./ContactFaceFieldCard";
-import RegisterNameFieldCard from "./RegisterNameFieldCard";
-import CommonFieldCard from "../UserFieldForm/CommonFieldsCard";
-import { Button } from "../../../Button/Button";
+  Tooltip,
+} from "../UserForm/UserCreateForm.styled";
+import ContactFaceFieldCard from "../UserForm/UserFieldForm/ContactFaceFieldCard";
+import RegisterNameFieldCard from "../UserForm/UserFieldForm/RegisterNameFieldCard";
+import CommonFieldCard from "../UserForm/UserFieldForm/CommonFieldsCard";
+import { Button } from "../../Button/Button";
 import { useForm, Controller } from "react-hook-form";
-const UserFieldCard = ({
+const CardUserField = ({
   user,
   control,
   handleTypeOfAccess,
@@ -31,6 +32,7 @@ const UserFieldCard = ({
   handleEditActivation,
   handleCloseEdit,
   playlistCount,
+  dirtyFields,
 }) => {
   console.log("isEditing", isEditing);
 
@@ -56,8 +58,30 @@ const UserFieldCard = ({
 
         {activeSectionCard === "User" && (
           <>
+            {/* <RegisterField>
+              <RegisterLabel>№ договору</RegisterLabel>
+              <RegisterInput
+                type="text"
+                defaultValue={user?.contractNumber}
+                readOnly={!isEditing}
+                placeholder="№ договору"
+                aria-describedby="contractNumberTooltip"
+                className={`${errors.contractNumber ? "invalid" : ""}${
+                  isEditing ? (!errors.contractNumber ? "valid" : "") : ""
+                }`}
+                {...register("contractNumber")}
+              />
+              <Tooltip
+                id="contractNumberTooltip"
+                className={`${errors.contractNumber ? "visible" : ""}`}
+              >
+                {errors.contractNumber && errors.contractNumber.message}
+              </Tooltip>
+            </RegisterField> */}
+
             <RegisterField>
               <RegisterLabel>№ договору</RegisterLabel>
+
               <Controller
                 name="contractNumber"
                 control={control}
@@ -140,7 +164,7 @@ const UserFieldCard = ({
               control={control}
               register={register}
               errors={errors}
-              margintop={"36px"}
+              margintop={"16px"}
               readOnly={!isEditing}
               user={user}
             />
@@ -217,4 +241,4 @@ const UserFieldCard = ({
   );
 };
 
-export default UserFieldCard;
+export default CardUserField;

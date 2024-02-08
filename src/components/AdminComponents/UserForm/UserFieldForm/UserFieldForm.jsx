@@ -172,7 +172,7 @@ const UserFieldForm = ({
           padding="8px"
           text="Додати"
           disabled={!isValid}
-          display={"none"}
+          showIcon={false}
         />
       </RegisterRigthBlock>
     </Fieldform>

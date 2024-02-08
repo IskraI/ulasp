@@ -1,5 +1,5 @@
 import TabNavigation from "../../TabNavigation/TabNavigation";
-import UserCardForm from "./CardUserForm";
+import CardUserForm from "./CardUserForm";
 import { Button } from "../../Button/Button";
 import symbol from "../../../assets/symbol.svg";
 import { useState } from "react";
@@ -65,6 +65,7 @@ const CardUser = () => {
       .unwrap()
       .then(() => {
         setActiveModal(null);
+        document.body.classList.remove("modal-open");
       })
       .catch((error) => console.log(error.data.message));
   };
@@ -73,7 +74,7 @@ const CardUser = () => {
     <>
       <TabNavigation />
       {!isLoading && !isLoadingSongsCount && (
-        <UserCardForm
+        <CardUserForm
           user={user}
           playlistCount={playlistCount}
           tracksCount={tracksCount}
