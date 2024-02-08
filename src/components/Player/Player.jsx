@@ -18,11 +18,7 @@ const Player = ({ tracks = [] }) => {
 
   const reduxTrackSRC = BASE_URL + "/" + tracks[currentTrack];
 
-  const reduxOneTrackSRC = BASE_URL + "/" + tracks;
-
   // console.log(tracks[currentTrack]?.trackURL === undefined);
-
-  console.log(reduxOneTrackSRC);
 
   const handleClickNext = () => {
     setTrackIndex((currentTrack) =>

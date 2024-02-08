@@ -54,8 +54,9 @@ const TracksTable = ({
   const isLoadedTracks = playerState.isLoaded;
 
   const playMusic = () => {
-    const trackURL = tracks.map((track) => {
+    const trackURL = tracks.map((track, index) => {
       const newObject = {
+        id: track._id,
         trackURL: track.trackURL,
         artist: track.artist,
         trackName: track.trackName,
@@ -67,7 +68,7 @@ const TracksTable = ({
   };
 
   const stopMusic = () => {
-    dispatch(stopPlay());
+    dispatch(stopPlay([]));
   };
 
   return (
@@ -140,18 +141,22 @@ const TracksTable = ({
                   </TrStyle>
                 )}
                 {tracks.map(
-                  ({
-                    _id,
-                    trackPictureURL,
-                    trackName,
-                    artist,
-                    trackDuration,
-                    playList,
-                    trackURL,
-                  }) => {
+                  (
+                    {
+                      _id,
+                      trackPictureURL,
+                      trackName,
+                      artist,
+                      trackDuration,
+                      playList,
+                      trackURL,
+                    },
+                    index
+                  ) => {
                     return (
                       <TrackItem
                         key={_id}
+                        index={index}
                         isCheckedAll={isCheckedAll}
                         checkBox={checkBox}
                         idTrack={_id}

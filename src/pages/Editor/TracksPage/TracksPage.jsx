@@ -4,7 +4,6 @@ import PlayListControl from "../../../components/EditorComponents/PlayLists/Play
 import AddTracks from "../../../components/EditorComponents/AddTracks/AddTracks";
 import symbol from "../../../assets/symbol.svg";
 
-import Player from "../../../components/Player/Player";
 import { useGetPlaylistByIdQuery } from "../../../redux/playlistsSlice";
 import { useUploadTracksInPlaylistMutation } from "../../../redux/playlistsSlice";
 import { ErrorNotFound, Error500 } from "../../../components/Errors/Errors";
@@ -86,7 +85,7 @@ const TracksPage = () => {
         title: "",
         type: "button",
         titleSize: "1%",
-        showData: false,
+        showData: true,
       },
       {
         title: "",
