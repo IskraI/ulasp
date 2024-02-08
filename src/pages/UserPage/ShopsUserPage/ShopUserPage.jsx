@@ -26,7 +26,7 @@
 // export default ShopsPage;
 
 
-import MediaListItem from "../../../components/UserMediaComponent/MediaList/MediaList";
+import MediaListItemShop from "../../../components/UserMediaComponent/MediaList/MediaListShop";
 import MediaNavigationLink from "../../../components/NavigationLink/NavigationLink";
 import { Loader } from "../../../components/Loader/Loader";
 import {
@@ -34,14 +34,14 @@ import {
   ErrorNotFound,
   NoData,
 } from "../../../components/Errors/Errors";
-// import ControlMediateca from "../../../components/EditorComponents/ControlMediateca/ControlMediaTeca";
+import ControlMediateca from "../../../components/UserMediaComponent/ControlMediatecaUser/ControlMediatecaUser";
 
 import {
   useGetAllShopsUserQuery,
   } from "../../../redux/shopsUserSlice";
 
 import { ShopsWrapper, ShopsList } from "./Shops.styled";
-
+import symbol from "../../../assets/symbol.svg";
 
 const ShopsPage = ({ showNavigationLink, limit }) => {
  
@@ -70,17 +70,13 @@ const ShopsPage = ({ showNavigationLink, limit }) => {
       )}
       {isSuccessAllShops && !isErrorAllShops && (
         <>
-          {/* <ControlMediateca
+          <ControlMediateca
             title={"Плейлисти по типу закладу"}
-            iconButton={`${symbol}#icon-plus`}
-            textButton={"Тип закладу"}
-            onClick={toogleModal}
-            disabled={isErrorAllShops}
-          /> */}
+                      />
           <ShopsWrapper>
             <ShopsList>
               {shops.map(({ _id, shopCategoryName, shopAvatarURL }) => (
-                <MediaListItem
+                <MediaListItemShop
                   key={_id}
                   id={_id}
                   title={shopCategoryName}

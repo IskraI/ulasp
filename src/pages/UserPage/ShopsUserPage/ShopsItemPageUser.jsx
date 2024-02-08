@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 
-// import ControlMediateca from "../../../components/EditorComponents/ControlMediateca/ControlMediaTeca";
-import MediaListItem from "../../../components/UserMediaComponent/MediaList/MediaList";
+import ControlMediateca from "../../../components/UserMediaComponent/ControlMediatecaUser/ControlMediatecaUser";
+import MediaListItemShop from "../../../components/UserMediaComponent/MediaList/MediaListShop";
 import { Loader } from "../../../components/Loader/Loader";
 import {
   Error500,
@@ -10,7 +10,7 @@ import {
   NoData,
 } from "../../../components/Errors/Errors";
 import symbol from "../../../assets/symbol.svg";
-import Playlists from "../../../components/EditorComponents/PlayLists/PlayListsShop";
+import Playlists from "../../../components/UserMediaComponent/PlayLists/PlayListsShop";
 import { formDataFunction } from "../../../helpers/helpers";
 import {
   useGetShopByIdforUserQuery,
@@ -43,13 +43,9 @@ const ShopsItemPage = () => {
       {errorShopItem && <ErrorNotFound />}
       {isSuccessShopItem && !isErrorShopItem && (
         <>
-          {/* <ControlMediateca
+          <ControlMediateca
             title={shopItem.shop.shopCategoryName}
-            iconButton={`${symbol}#icon-plus`}
-            textButton={"Категорія"}
-            onClick={toogleModal}
-            disabled={isErrorShopItem}
-          /> */}
+                      />
 
           {shopItem.shop.shopChildItems.length === 0 ? (
             <NoData text={"На данний час, ще не додано жодної категорії."} />
@@ -57,7 +53,7 @@ const ShopsItemPage = () => {
             <ShopsList>
               {shopItem.shop.shopChildItems.map(
                 ({ _id, shopItemName, shopItemAvatarURL }) => (
-                  <MediaListItem
+                  <MediaListItemShop
                     key={_id}
                     id={_id}
                     title={shopItemName}

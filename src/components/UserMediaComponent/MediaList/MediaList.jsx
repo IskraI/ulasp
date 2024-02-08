@@ -9,40 +9,30 @@ import {
 
 import { Link } from "react-router-dom";
 
-const MediaListItem = ({ id: idMediaItem, title, icon, linkToPage, typeMediaLibrary, }) => {
+const MediaListItem = ({ id, title, icon }) => {
  const location = useLocation();
 
-  const selectLinkToPage = (linkToPage) => {
-    // console.log(location.pathname.split("/").includes(linkToPage));
-
-    if (location.pathname.split("/").includes(linkToPage)) {
-      return location.pathname + "/" + idMediaItem;
-    }
-
-    const link = linkToPage
-      ? location.pathname + "/" + linkToPage + "/" + idMediaItem
-      : location.pathname + "/" + idMediaItem;
-
-    return link;
-  };
-  
   return (
     <>
       <MediaItem>
         <Link
-          key={idMediaItem}
-          to={selectLinkToPage(linkToPage)}
-          state={{ from: location.pathname }}
+          key={id}
+          to={`/user/medialibrary/genres/${id}/playlists`}
+          state={{ from: location }}
           style={{
            width: "100%",
       display: "flex",
-           alignItems: "center",
-           textAlign: "center",
+      // flexDirection: "column", 
+      alignItems: "center",
+      // justifyContent: "center",
+      textAlign: "center",
           }}
         >
         <MediaImg src={BASE_URL + "/" + icon} alt={title} />
-             <MediaItemText>{title}</MediaItemText>
-            </Link>
+           {/* <div style={{ flex: 1 }}>  */}
+    <MediaItemText>{title}</MediaItemText>
+  {/* </div> */}
+          </Link>
         </MediaItem>
     </>
   );

@@ -33,7 +33,7 @@ export const shopsUserApi = createApi({
       providesTags: (_result, _err, id) => [{ type: "ShopItem", id }],
     }),
  getSubShopCategoryByIdUser: builder.query({
-      query: (id) => ({ url: `/editor/shops/shopitem/subcategory/${id}` }),
+      query: (id) => ({ url: `/user/shops/shopitem/subcategory/${id}` }),
 
       providesTags: (_result, _err, id) => [{ type: "SubShopItem", id }],
     }),

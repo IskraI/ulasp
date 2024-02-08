@@ -1,6 +1,10 @@
 import styled from "@emotion/styled";
 import { colors } from "../../../styles/vars";
 
+export const TracksTableWrapper = styled.div`
+  margin-top: ${(props) => props.marginTop};
+`;
+
 export const TableStyle = styled.table`
   margin-bottom: 34px;
   text-align: left;

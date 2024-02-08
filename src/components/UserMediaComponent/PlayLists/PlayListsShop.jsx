@@ -8,8 +8,8 @@ import symbol from "../../../assets/symbol.svg";
 import { ErrorNotFound } from "../../Errors/Errors";
 
 import { PlaylistWrapper, PlaylistList } from "./PlayLists.styled";
-import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
-import { LoaderButton } from "../../Loader/Loader";
+// import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
+// import { LoaderButton } from "../../Loader/Loader";
 import { PlaylistItem } from "./PlayLists.styled";
 
 const Playlists = ({
