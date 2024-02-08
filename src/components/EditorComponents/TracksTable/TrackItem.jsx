@@ -44,15 +44,18 @@ const TrackItem = ({
   playListId,
   isCheckedAll,
   showData,
+  index,
 }) => {
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
   const [showPopUp, setShowPopUp] = useState(false);
   const [isPlayingTrack, setIsPlayingTrack] = useState(false);
 
+  // console.log(playerState.src[index]);
+
   const [id, setId] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
-  const [trackId, setTrackId] = useState([]);
+  // const [prevTrackId, setPrevTrackId] = useState();
 
   const idUse = useId();
 
@@ -60,17 +63,7 @@ const TrackItem = ({
   const dotsButtonRef = useRef(null);
   const playBtnRef = useRef(null);
 
-  // console.log(playList.trackList);
-
-  // console.log("showData", showData);
-
-  // console.log("REF", ref);
-
-  // console.log("countThInThead", countThInThead);
-
-  // console.log("isSuccessUpload", isSuccessUpload);
-
-  // console.log("isLoadingUpload", isLoadingUpload);
+  const isLoadedTrack = playerState.isLoaded;
 
   const [
     deleteTrack,
@@ -164,24 +157,22 @@ const TrackItem = ({
   // };
 
   const handleClickDotsButton = (e) => {
-    console.log(e.target);
-
     if (dotsButtonRef.current && !dotsButtonRef.current.contains(e.target)) {
       setShowPopUp(false);
     }
   };
 
-  const handleClickPlayButton = (e) => {
-    console.log(e.target);
+  const PlayButtonToogle = () => {
+    if (isPlayingTrack) {
+      stopMusic();
 
-    if (playBtnRef.current && !playBtnRef.current.contains(e.target)) {
-      console.log("ПОПАЛИ");
-      // setIsPlayingTrack(false);
-      // stopMusic();
-      // PlayButtonToogle();
+      setIsPlayingTrack(!isPlayingTrack);
+    } else {
+      setIsPlayingTrack(false);
+
+      playMusic();
+      setIsPlayingTrack(!isPlayingTrack);
     }
-    !isLoadedTracks ? playMusic() : stopMusic();
-    PlayButtonToogle();
   };
 
   useEffect(() => {
@@ -190,6 +181,33 @@ const TrackItem = ({
       document.removeEventListener("click", handleClickDotsButton);
     };
   }, []);
+
+  useEffect(() => {
+    if (idTrack === playerState?.src[0]?.id) {
+      setIsPlayingTrack(true);
+    } else {
+      setIsPlayingTrack(false);
+    }
+  }, [idTrack, index, playerState?.src]);
+
+  const playMusic = () => {
+    dispatch(
+      setSrcPlayer([
+        {
+          id: idTrack,
+          trackURL: trackURL,
+          artist: artist,
+          trackName: trackName,
+        },
+      ])
+    );
+    setIsPlayingTrack(isLoadedTrack);
+  };
+
+  const stopMusic = () => {
+    dispatch(stopPlay([]));
+    setIsPlayingTrack(isLoadedTrack);
+  };
 
   const makeUniq = (array) => {
     const filteredGenre = {};
@@ -201,26 +219,6 @@ const TrackItem = ({
   };
 
   const oneGenre = !isInPlayList ? playLists[0]?.playlistGenre[0]?.genre : null;
-  const isLoadedTracks = playerState.isLoaded;
-  const playMusic = () => {
-    dispatch(
-      setSrcPlayer([
-        {
-          trackURL: trackURL,
-          artist: artist,
-          trackName: trackName,
-        },
-      ])
-    );
-  };
-
-  const stopMusic = () => {
-    dispatch(stopPlay());
-  };
-
-  const PlayButtonToogle = () => {
-    setIsPlayingTrack(!isPlayingTrack);
-  };
 
   return (
     <>
@@ -253,13 +251,10 @@ const TrackItem = ({
 
           <PlayButton
             ref={playBtnRef}
+            data-idtrack={idTrack}
             type="button"
-            // onClick={() => {
-            //   !isLoadedTracks ? playMusic() : stopMusic();
-            //   PlayButtonToogle();
-            //   () => handleClickPlayButton;
-            // }}
-            onClick={handleClickPlayButton}
+            id="playBtn"
+            onClick={() => PlayButtonToogle(idTrack)}
           >
             <svg width="16" height="16">
               <use

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   src: [],
+  prevIdTrack: null,
   isLoaded: false,
 };
 
