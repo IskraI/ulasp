@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { resetUser, setUser,setAvatar, setCurrent } from "./userSlice";
-
-const BASE_URL = `http://localhost:8000`;
+import { resetUser, setUser, setAvatar, setCurrent } from "./userSlice";
+import { BASE_URL } from "../constants/constants";
 
 export const authClientApi = createApi({
   reducerPath: "authClientApi",
@@ -17,7 +16,6 @@ export const authClientApi = createApi({
     },
   }),
   tagTypes: ["authClient"],
- 
 
   endpoints: (builder) => ({
     signInClient: builder.mutation({

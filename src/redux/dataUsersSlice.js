@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { resetUser, setUser, setAdmin, setCurrent } from "./userSlice";
-const BASE_URL = `http://localhost:8000`;
+
+import { BASE_URL } from "../constants/constants";
 
 export const dataUsersApi = createApi({
   reducerPath: "dataUsersApi",
