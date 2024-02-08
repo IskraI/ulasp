@@ -10,7 +10,11 @@ import symbol from "../../../assets/symbol.svg";
 
 import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsSlice";
 import { useDeleteTrackMutation } from "../../../redux/tracksSlice";
-import { setSrcPlayer, stopPlay } from "../../../redux/playerSlice";
+import {
+  setSrcPlayer,
+  stopPlay,
+  setCurrentIndex,
+} from "../../../redux/playerSlice";
 import { getPlayerState } from "../../../redux/playerSelectors";
 
 import {
@@ -55,7 +59,6 @@ const TrackItem = ({
 
   const [id, setId] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
-  // const [prevTrackId, setPrevTrackId] = useState();
 
   const idUse = useId();
 
@@ -64,6 +67,7 @@ const TrackItem = ({
   const playBtnRef = useRef(null);
 
   const isLoadedTrack = playerState.isLoaded;
+  const currentTrackIndex = playerState.indexTrack;
 
   const [
     deleteTrack,
@@ -165,13 +169,8 @@ const TrackItem = ({
   const PlayButtonToogle = () => {
     if (isPlayingTrack) {
       stopMusic();
-
-      setIsPlayingTrack(!isPlayingTrack);
     } else {
-      setIsPlayingTrack(false);
-
       playMusic();
-      setIsPlayingTrack(!isPlayingTrack);
     }
   };
 
@@ -183,14 +182,15 @@ const TrackItem = ({
   }, []);
 
   useEffect(() => {
-    if (idTrack === playerState?.src[0]?.id) {
+    if (idTrack === playerState?.src[currentTrackIndex]?.id) {
       setIsPlayingTrack(true);
     } else {
       setIsPlayingTrack(false);
     }
-  }, [idTrack, index, playerState?.src]);
+  }, [currentTrackIndex, idTrack, playerState?.src]);
 
   const playMusic = () => {
+    dispatch(stopPlay([]));
     dispatch(
       setSrcPlayer([
         {
@@ -201,6 +201,7 @@ const TrackItem = ({
         },
       ])
     );
+    dispatch(setCurrentIndex(0));
     setIsPlayingTrack(isLoadedTrack);
   };
 
