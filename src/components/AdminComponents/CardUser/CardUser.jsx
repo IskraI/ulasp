@@ -2,7 +2,7 @@ import TabNavigation from "../../TabNavigation/TabNavigation";
 import CardUserForm from "./CardUserForm";
 import { Button } from "../../Button/Button";
 import symbol from "../../../assets/symbol.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Modal } from "../../Modal/Modal";
 import { useParams } from "react-router-dom";
 import {
@@ -11,6 +11,7 @@ import {
   useUnblockUserByIdMutation,
   useGetUserByIdTrackCountQuery,
   useGetUserByIdPlaylistCountQuery,
+  useSendMailUserByIdMutation,
 } from "../../../redux/dataUsersSlice";
 import {
   ButtonContainer,
@@ -33,10 +34,23 @@ const CardUser = () => {
     error: errorSongsCount,
     isLoading: isLoadingSongsCount,
   } = useGetUserByIdTrackCountQuery(id);
-
+  const [dispatchSendMail, { isLoading: isLoadingSendMail }] =
+    useSendMailUserByIdMutation();
   const [dispatchDel, { isLoading: isLoadingDel }] = useDelUserByIdMutation();
   const [dispatchUnblock, { isLoading: isLoadingUnblock }] =
     useUnblockUserByIdMutation();
+
+  const [disableSendMail, setDisableSendMail] = useState(
+    user?.status && user?.access
+  );
+  useEffect(() => {
+    // Вычисляем новое значение disableSendMail
+    const updatedDisableSendMail = user?.status && user?.access;
+
+    // Устанавливаем новое значение disableSendMail
+    setDisableSendMail(updatedDisableSendMail);
+  }, [user?.status, user?.access]);
+
   const [activeModal, setActiveModal] = useState(null);
   const handleShowModal = (modalContent) => {
     setActiveModal(modalContent);
@@ -44,20 +58,26 @@ const CardUser = () => {
   };
 
   const handleCloseModal = () => {
-    setActiveModal(null);
     document.body.classList.remove("modal-open");
+    setActiveModal(null);
   };
 
   const handleDeleteUser = async () => {
     dispatchDel({ id: id })
       .unwrap()
       .then(() => {
+        document.body.classList.remove("modal-open");
         navigate("/admin/users");
       })
       .catch((error) => console.log(error.data.message));
   };
   const handleSendEmail = async () => {
-    alert("send email");
+    await dispatchSendMail(id)
+      .unwrap()
+      .then(() => {
+        alert("send email");
+      })
+      .catch((error) => alert(error.data.message));
   };
 
   const handleUnblockUser = async () => {
@@ -65,6 +85,9 @@ const CardUser = () => {
       .unwrap()
       .then(() => {
         setActiveModal(null);
+        const updatedDisableSendMail = user.status && user.access;
+        console.log("user.status handleUnblockUser ", user.status);
+        setDisableSendMail(updatedDisableSendMail);
         document.body.classList.remove("modal-open");
       })
       .catch((error) => console.log(error.data.message));
@@ -108,6 +131,7 @@ const CardUser = () => {
           height="48px"
           text="Відправити посилання"
           marginleft="50px"
+          disabled={!disableSendMail}
           onClick={() => handleSendEmail()}
         />
         <Button

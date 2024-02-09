@@ -10,6 +10,7 @@ import { Button } from "../../Button/Button";
 import {
   useUnblockUserByIdMutation,
   useAccessUserUpdateByIdMutation,
+  useSendMailUserByIdMutation,
 } from "../../../redux/dataUsersSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useState } from "react";
@@ -38,23 +39,27 @@ const UsersTable = ({ users, visibleColumns, switchAccess }) => {
     useUnblockUserByIdMutation();
   const [dispatchAccess, { isLoading: isLoadingAccess }] =
     useAccessUserUpdateByIdMutation();
+  const [dispatchSendMail, { isLoading: isLoadingSendMail }] =
+    useSendMailUserByIdMutation();
   const handleSend = async (id) => {
-    // console.log("ID:", id);
+    // console.log("меняем доступ и отправляем письмо");
+    try {
+      const [unblockResult, accessResult] = await Promise.all([
+        dispatchUnblock(id).unwrap(),
+        dispatchAccess(id).unwrap(),
+      ]);
 
-    dispatchUnblock(id)
-      .unwrap()
-      .then(() => {
-        navigate("/admin/users");
-      })
-      .catch((error) => alert(error.data.message));
-    dispatchAccess(id)
-      .unwrap()
-      .then(() => {
-        navigate("/admin/users");
-      })
-      .catch((error) => alert(error.data.message));
+      // Если обе операции успешны, выполнить отправку письма
+      await dispatchSendMail(id);
+
+      // Перейти на страницу пользователей
+      navigate("/admin/users");
+    } catch (error) {
+      alert(error.data.message);
+    }
   };
-  console.log("users", users);
+
+  // console.log("users", users);
   return (
     <>
       <Table>

@@ -9,12 +9,13 @@ export const ButtonCustomSwitch = styled.button`
   width: 66px;
   height: 23px;
   /* padding: 2px 10px; */
-
-  background-color: ${(props) =>
-    props.isTrue ? `${colors.accentHoverColor}` : `${colors.activeBtnColor}`};
-  color: rgba(23, 22, 28, 1);
   text-transform: uppercase;
   font-family: Hind;
+  background-color: ${(props) =>
+    props.isTrue ? `${colors.accentHoverColor}` : `${colors.activeBtnColor}`};
+  pointer-events: ${(props) => (props.form ? `none` : `auto`)};
+  color: rgba(23, 22, 28, 1);
+
   font-size: 10px;
   font-weight: 400;
   line-height: 12px;

@@ -108,21 +108,24 @@ function App() {
 
   //если пользователь админ или редаткор, то скип = тру и єтот запрос пропустится
 
-  // if (isError&&user.editorRole) {
-  //   return(
-  //     <Routes>
-  //       <Route
-  //         element={<SharedLayout avatarURL={user.avatarURL}/>}
-  //       >
-  //         {/* Render the AdminLoginPage when there is an error and the user has an editor role */}
-  //         <Route
-  //           path="/"
-  //           element={<PublicRoute component={AdminLoginPage} />}
-  //         />
-  //       </Route>
-  //     </Routes>
-  //   );
-  // }
+  if (error?.data.message === "Not authorized") {
+    console.log("error", error.data.message === "Not authorized");
+
+    return (
+      <Routes>
+        <Route element={<SharedLayout avatarURL={user.avatarURL} />}>
+          <Route path="/" element={<PublicRoute component={WelcomePage} />} />
+
+          <Route path="/signin" element={<PublicRoute component={Login} />} />
+
+          <Route
+            path="/adminlogin"
+            element={<PublicRoute component={AdminLoginPage} />}
+          />
+        </Route>
+      </Routes>
+    );
+  }
 
   if (isMobile) {
     return (

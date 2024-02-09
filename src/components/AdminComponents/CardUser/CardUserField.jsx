@@ -33,6 +33,7 @@ const CardUserField = ({
   handleCloseEdit,
   playlistCount,
   dirtyFields,
+  access,
 }) => {
   console.log("isEditing", isEditing);
 
@@ -54,6 +55,7 @@ const CardUserField = ({
           user={user}
           control={control}
           handleCloseEdit={handleCloseEdit}
+          access={access}
         />
 
         {activeSectionCard === "User" && (

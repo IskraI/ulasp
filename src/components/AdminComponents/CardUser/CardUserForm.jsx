@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import {
   useUpdateCompanyUserMutation,
   useUpdateFopUserMutation,
+  useAccessUserUpdateByIdMutation,
 } from "../../../redux/dataUsersSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -32,26 +33,14 @@ const CardUserForm = ({ user, playlistCount, tracksCount }) => {
     useUpdateFopUserMutation(); //ф-я для отправки формы юзера фоп
   const [dispatchCompanyUpdate, { isLoading: isLoadingCompany }] = //ф-я для отправки формы юзера тов
     useUpdateCompanyUserMutation();
-
+  const [dispatchAccess, { isLoading: isLoadingAccess }] =
+    useAccessUserUpdateByIdMutation(); //изменение access on/off
   const navigate = useNavigate();
   //создание формы - юзформ
-  // const {
-  //   control,
-  //   register,
-  //   handleSubmit,
-  //   setError,
-  //   clearErrors,
-  //   reset,
 
-  //   formState: { errors, isValid, dirtyFields },
-  // } = useForm({
-  //   mode: "onChange",
-  //   // defaultValues: { name: '', email: '', password: '' },
-  //   // resolver: activeSectionCard === 'User' ? yupResolver(UserSchema) : yupResolver(MusicEditorSchema)
-  // });
   let resolverShema =
     typeOfUser === "fop" ? UserFopCardSchema : UserCompanySchema;
-  console.log("resolverShema", resolverShema);
+
   const {
     control,
     register,
@@ -72,7 +61,7 @@ const CardUserForm = ({ user, playlistCount, tracksCount }) => {
   };
 
   const onFormSubmit = (data) => {
-    console.log("formData сработала");
+    // console.log("formData сработала");
     if (typeOfUser === "fop") {
       const formData = {
         ...data,
@@ -80,7 +69,7 @@ const CardUserForm = ({ user, playlistCount, tracksCount }) => {
         id,
         userFop: typeOfUser,
       };
-      console.log("formData", formData);
+      // console.log("formData", formData);
 
       dispatchFopUpdate(formData)
         .unwrap()
@@ -129,6 +118,7 @@ const CardUserForm = ({ user, playlistCount, tracksCount }) => {
 
       <form onSubmit={handleSubmit(onFormSubmit)}>
         <CardUserField
+        
           user={user}
           control={control}
           handleTypeOfAccess={handleTypeOfAccess}
@@ -142,11 +132,9 @@ const CardUserForm = ({ user, playlistCount, tracksCount }) => {
           isEditing={isEditing}
           handleCloseEdit={handleCloseEdit}
           playlistCount={playlistCount}
+          access={access}
         />
       </form>
-
-      {/* <UserCreateForm style={{ marginTop: "24px" }} typeOfPage="card" user={user} activeSectionCard ={activeSectionCard} typeOfStatus={typeOfStatus} typeOfUser = {typeOfUser}/> */}
-      {/* </UserCreateModal> */}
     </>
   );
 };

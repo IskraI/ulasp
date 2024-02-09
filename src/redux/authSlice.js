@@ -29,6 +29,9 @@ export const authApi = createApi({
         dispatch(resetUser());
         dispatch(setAdmin((await queryFulfilled).data));
       },
+      async onQueryError(arg, { dispatch, error, queryFulfilled }) {
+        console.log("error", error);
+      },
       invalidatesTags: ["auth"],
     }),
 

@@ -35,10 +35,17 @@ export const dataUsersApi = createApi({
         url: admin ? `admin/${id}` : `admin/users/${id}`,
         method: "DELETE",
       }),
-      async onQueryError(arg, { dispatch, error, queryFulfilled }) {
-        console.error("Query failed", error);
-        dispatch(resetUser()); //?????? Сбросить состояние до значения по умолчанию
-      },
+      // async onQueryError(arg, { dispatch, error, queryFulfilled }) {
+      //   console.error("Query failed", error);
+      //   dispatch(resetUser()); //?????? Сбросить состояние до значения по умолчанию
+      // },
+      invalidatesTags: ["dataUsers", "dataUser"],
+    }),
+    sendMailUserById: builder.mutation({
+      query: (id) => ({
+        url: `admin/users/${id}/accessemail`,
+        method: "POST",
+      }),
       invalidatesTags: ["dataUsers", "dataUser"],
     }),
 
@@ -64,10 +71,10 @@ export const dataUsersApi = createApi({
     getUserById: builder.query({
       query: (id) => ({ url: `admin/users/${id}` }),
       providesTags: ["dataUser"],
-      async onQueryError(arg, { dispatch, error, queryFulfilled }) {
-        console.error("Query failed", error);
-        dispatch(resetUser()); // Сбросить состояние до значения по умолчанию
-      },
+      // async onQueryError(arg, { dispatch, error, queryFulfilled }) {
+      //   console.error("Query failed", error);
+      //   dispatch(resetUser()); // Сбросить состояние до значения по умолчанию
+      // },
     }),
 
     createFopUser: builder.mutation({
@@ -135,6 +142,7 @@ export const dataUsersApi = createApi({
 });
 
 export const {
+  useSendMailUserByIdMutation,
   useGetAdminByIdQuery,
   useGetUsersListQuery,
   useDelUserByIdMutation,
