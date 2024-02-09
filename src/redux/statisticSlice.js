@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASE_URL } from "../constants/constants";
-// const BASE_URL = `http://localhost:8000`;
+
+import { BASE_URL} from "../constants/constants"
+
+
 
 export const statisticApi = createApi({
   reducerPath: "statisticApi",

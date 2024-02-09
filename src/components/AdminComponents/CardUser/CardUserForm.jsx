@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-
-import { UserFopSchema, MusicEditorSchema } from "../UserForm/UserSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   useUpdateCompanyUserMutation,
@@ -11,8 +9,6 @@ import { useNavigate } from "react-router-dom";
 
 import UserCreateForm from "../UserForm/UserCreateForm";
 import { useForm, Controller } from "react-hook-form";
-// import { UserSchema, MusicEditorSchema } from "./UserFopSchema";
-// import { yupResolver } from "@hookform/resolvers/yup";
 
 import {
   SectionUserButton,
@@ -20,10 +16,11 @@ import {
   UserCreateModal,
 } from "../UserForm/UserCreateForm.styled";
 import { Title } from "../AdminCabinetPage/AdminCabinetPage.styled";
+import { UserFopCardSchema, UserCompanySchema } from "../UserForm/UserSchema";
 
-import UserFieldCard from "../UserForm/UserFieldForm/UserFieldCard";
+import CardUserField from "./CardUserField";
 
-const UserCardForm = ({ user, playlistCount, tracksCount }) => {
+const CardUserForm = ({ user, playlistCount, tracksCount }) => {
   const { userFop, access, status, editorRole, adminRole, _id: id } = user;
   const activeSectionCard = adminRole || editorRole ? "Editor" : "User"; //user or editor
 
@@ -38,6 +35,23 @@ const UserCardForm = ({ user, playlistCount, tracksCount }) => {
 
   const navigate = useNavigate();
   //создание формы - юзформ
+  // const {
+  //   control,
+  //   register,
+  //   handleSubmit,
+  //   setError,
+  //   clearErrors,
+  //   reset,
+
+  //   formState: { errors, isValid, dirtyFields },
+  // } = useForm({
+  //   mode: "onChange",
+  //   // defaultValues: { name: '', email: '', password: '' },
+  //   // resolver: activeSectionCard === 'User' ? yupResolver(UserSchema) : yupResolver(MusicEditorSchema)
+  // });
+  let resolverShema =
+    typeOfUser === "fop" ? UserFopCardSchema : UserCompanySchema;
+  console.log("resolverShema", resolverShema);
   const {
     control,
     register,
@@ -49,7 +63,7 @@ const UserCardForm = ({ user, playlistCount, tracksCount }) => {
   } = useForm({
     mode: "onChange",
     // defaultValues: { name: '', email: '', password: '' },
-    // resolver: activeSectionCard === 'User' ? yupResolver(UserSchema) : yupResolver(MusicEditorSchema)
+    resolver: yupResolver(resolverShema),
   });
 
   const handleEditActivation = () => {
@@ -58,6 +72,7 @@ const UserCardForm = ({ user, playlistCount, tracksCount }) => {
   };
 
   const onFormSubmit = (data) => {
+    console.log("formData сработала");
     if (typeOfUser === "fop") {
       const formData = {
         ...data,
@@ -113,7 +128,7 @@ const UserCardForm = ({ user, playlistCount, tracksCount }) => {
       </Title>
 
       <form onSubmit={handleSubmit(onFormSubmit)}>
-        <UserFieldCard
+        <CardUserField
           user={user}
           control={control}
           handleTypeOfAccess={handleTypeOfAccess}
@@ -136,4 +151,4 @@ const UserCardForm = ({ user, playlistCount, tracksCount }) => {
   );
 };
 
-export default UserCardForm;
+export default CardUserForm;

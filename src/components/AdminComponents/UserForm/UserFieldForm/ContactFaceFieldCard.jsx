@@ -2,34 +2,42 @@ import {
   RegisterField,
   RegisterLabel,
   RegisterInput,
-  RegisterContactField,Tooltip
+  RegisterContactField,
+  Tooltip,
 } from "../UserCreateForm.styled";
-import InputMask from 'react-input-mask';
-import { Controller } from 'react-hook-form';
+import InputMask from "react-input-mask";
+import { Controller } from "react-hook-form";
 
-
-const ContactFaceFieldCard = ({ user, register, errors, margintop, control, dirtyFields, readOnly }) => {
-  
+const ContactFaceFieldCard = ({
+  user,
+  register,
+  errors,
+  margintop,
+  control,
+  dirtyFields,
+  readOnly,
+  card,
+}) => {
   return (
     <RegisterContactField margintop={margintop}>
       <RegisterField>
         <RegisterLabel>Контактна особа* </RegisterLabel>
         <Controller
-                name="contactFace"
-                control={control}
-                defaultValue={user.contactFace}
-                render={({ field }) => (
-                  <RegisterInput
-                    type="text"
-                    placeholder="Контактна особа"
-                    readOnly={readOnly}
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.target.value)}
-                  />
-                  )}
-                  />
-     
+          name="contactFace"
+          control={control}
+          defaultValue={user.contactFace}
+          render={({ field }) => (
+            <RegisterInput
+              type="text"
+              placeholder="Контактна особа"
+              readOnly={readOnly}
+              value={field.value}
+              onChange={(e) => field.onChange(e.target.value)}
+            />
+          )}
+        />
       </RegisterField>
+      {/*     
       <RegisterField>
         <RegisterLabel>Ідентифікаційний номер* </RegisterLabel>
         <Controller
@@ -48,48 +56,41 @@ const ContactFaceFieldCard = ({ user, register, errors, margintop, control, dirt
                   />
       
    
-      </RegisterField>
+      </RegisterField> */}
       <RegisterField>
-      <RegisterLabel>Номер телефону* </RegisterLabel>
-      <Controller
-                name="contactFaceTelNumber"
-                control={control}
-                defaultValue={user.contactFaceTelNumber}
-                render={({ field }) => (
-                  <RegisterInput
-                    type="text"
-                    placeholder="Номер телефону"
-                    readOnly={readOnly}
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.target.value)}
-                  />
-                  )}
-                  />
-     
-
-      
-
+        <RegisterLabel>Номер телефону* </RegisterLabel>
+        <Controller
+          name="contactFaceTelNumber"
+          control={control}
+          defaultValue={user.contactFaceTelNumber}
+          render={({ field }) => (
+            <RegisterInput
+              type="text"
+              placeholder="Номер телефону"
+              readOnly={readOnly}
+              value={field.value}
+              onChange={(e) => field.onChange(e.target.value)}
+            />
+          )}
+        />
       </RegisterField>
 
-      
       <RegisterField>
         <RegisterLabel>E-mail </RegisterLabel>
         <Controller
-                name="contactFaceEmail"
-                control={control}
-                defaultValue={user.contactFaceEmail}
-                render={({ field }) => (
-                  <RegisterInput
-                    type="text"
-                    placeholder="E-mail"
-                    readOnly={readOnly}
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.target.value)}
-                  />
-                  )}
-                  />
-     
-        
+          name="contactFaceEmail"
+          control={control}
+          defaultValue={user.contactFaceEmail}
+          render={({ field }) => (
+            <RegisterInput
+              type="text"
+              placeholder="E-mail"
+              readOnly={readOnly}
+              value={field.value}
+              onChange={(e) => field.onChange(e.target.value)}
+            />
+          )}
+        />
       </RegisterField>
     </RegisterContactField>
   );

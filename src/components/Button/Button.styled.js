@@ -6,7 +6,7 @@ export const CustomButton = styled.button`
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  border: 1px solid #17161c;
+  border: ${(props) => props.border || "1px solid #17161c"};
   font-family: inherit;
   width: ${(props) => props.width};
   height: ${(props) => props.height};

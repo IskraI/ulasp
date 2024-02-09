@@ -11,8 +11,8 @@ import { useUpdateClientAvatarMutation } from "../../redux/authClientSlice/";
 import { useUpdateAdminAvatarMutation } from "../../redux/authSlice/";
 import { useEffect, useRef, useState } from "react";
 import FileUpload from "../FIleUpload/FIleUpload";
+import { BASE_URL}  from "../../constants/constants"
 
-const BASE_URL = `http://localhost:8000`;
 
 import { memo } from "react";
 

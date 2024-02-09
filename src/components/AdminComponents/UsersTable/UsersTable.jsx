@@ -40,6 +40,7 @@ const UsersTable = ({ users, visibleColumns, switchAccess }) => {
     useAccessUserUpdateByIdMutation();
   const handleSend = async (id) => {
     // console.log("ID:", id);
+
     dispatchUnblock(id)
       .unwrap()
       .then(() => {
@@ -147,6 +148,7 @@ const UsersTable = ({ users, visibleColumns, switchAccess }) => {
                       </>
                     ) : column.key === "sendEmail" ? (
                       <Button
+                        border={"1px solid rgb(23 22 28 / 50%) "}
                         type="button"
                         text="Відправити"
                         padding="8px"

@@ -120,7 +120,7 @@ const PlayListControl = ({ isPublished, countTracks, playlistName }) => {
             <Button
               type={"button"}
               text={"Ні"}
-              display={"none"}
+              showIcon={false}
               padding={"12px 26px"}
               onClick={() => setIsShowModal(false)}
             />

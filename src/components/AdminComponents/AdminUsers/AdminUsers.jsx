@@ -1,37 +1,37 @@
 import { useState, useEffect } from "react";
 import { Modal } from "../../Modal/Modal";
-import { SearchInputWrapper, UsersContainer, Link } from "../SearchUsers/SearchUsers.styled";
 import {
-  SectionUser,
-} from "../UserForm/UserCreateForm.styled";
+  SearchInputWrapper,
+  UsersContainer,
+  Link,
+} from "../SearchUsers/SearchUsers.styled";
+import { SectionUser } from "../UserForm/UserCreateForm.styled";
 import { Button } from "../../Button/Button";
 import { Title } from "../AdminCabinetPage/AdminCabinetPage.styled";
 import UserCreateForm from "../UserForm/UserCreateForm";
 import symbol from "../../../assets/symbol.svg";
-import {  Outlet, useLocation  } from "react-router-dom";
-
+import { Outlet, useLocation } from "react-router-dom";
 
 const AdminUsers = () => {
-
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   // const handleSearchTermChange = (value) => {
   //   setSearchTerm(value);
   // };
 
   const [showModal, setShowModal] = useState(false);
-  const [section, setSection] = useState('User');
+  const [section, setSection] = useState("User");
   const location = useLocation();
 
   useEffect(() => {
     // Извлекаем часть пути из текущего URL
-    const path = location.pathname.split('/').pop();
+    const path = location.pathname.split("/").pop();
 
     // Устанавливаем начальное значение section в зависимости от части пути
-    if (path === 'allusers') {
-      setSection('User');
-    } else if (path === 'editors') {
-      setSection('MusicEditor');
+    if (path === "allusers") {
+      setSection("User");
+    } else if (path === "editors") {
+      setSection("MusicEditor");
     }
   }, [location.pathname]);
 
@@ -43,37 +43,43 @@ const AdminUsers = () => {
     setShowModal(false);
   };
 
-
   return (
     <>
       <UsersContainer>
         <Title>Користувачі</Title>
 
         <Button
-         icon={`${symbol}#icon-plus`}
+          showIcon={true}
+          icon={`${symbol}#icon-plus`}
           type="button"
           padding={"12px 46px"}
           onClick={handleShowModal}
-          marginright =  {"24px" }
+          marginright={"24px"}
           marginleft={"auto"}
           text={"Додати"}
-          ariaLabel={"  Додати користувача"}
+          ariaLabel={"Додати користувача"}
         ></Button>
-       <SearchInputWrapper />
+        <SearchInputWrapper />
       </UsersContainer>
       <SectionUser>
-      <Link to="allusers" activeclassname={section === 'User' ? 'active' : ''} onClick={() =>  setSection('User')}>
+        <Link
+          to="allusers"
+          activeclassname={section === "User" ? "active" : ""}
+          onClick={() => setSection("User")}
+        >
           Усі користувачі
         </Link>
-        <Link to="editors" activeclassname={section === 'MusicEditor' ? 'active' : ''} onClick={() => { setSection('MusicEditor') }}>
+        <Link
+          to="editors"
+          activeclassname={section === "MusicEditor" ? "active" : ""}
+          onClick={() => {
+            setSection("MusicEditor");
+          }}
+        >
           Музичні редактори та адміністратори
         </Link>
-
-     
       </SectionUser>
-      <Outlet searchTerm={searchTerm}/>
-      
-     
+      <Outlet searchTerm={searchTerm} />
 
       {showModal && (
         <Modal
@@ -82,7 +88,7 @@ const AdminUsers = () => {
           onClose={handleCloseModal}
           showCloseButton={true}
         >
-          <UserCreateForm onCloseModal={handleCloseModal}  section={section}/>
+          <UserCreateForm onCloseModal={handleCloseModal} section={section} />
         </Modal>
       )}
     </>

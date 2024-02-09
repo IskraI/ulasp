@@ -165,3 +165,67 @@ export const MusicEditorSchema = yup.object().shape({
   password: yup.string().required("Обов'язкове поле!"),
   // .matches(emailRegexp, "пароль"),
 });
+
+export const UserFopCardSchema = yup.object().shape({
+  firstName: yup
+    .string()
+    .required("Обов'язкове поле!")
+    .matches(nameRegexp, "Ім'я українською"),
+  lastName: yup
+    .string()
+    .required("Обов'язкове поле!")
+    .matches(nameRegexp, "Прізвище українською"),
+  fatherName: yup.string().matches(nameRegexp, "По-батькові українською"),
+
+  contractNumber: yup
+    .string()
+    .min(6, "Повинно бути від 6 до 16 знаків!")
+    .max(16, "Повинно бути від 6 до 16 знаків!")
+    .required("Обов'язкове поле!"),
+  taxCode: yup
+    .string()
+    .min(10, "Повинно бути 10 цифр!")
+    .max(10, "Повинно бути 10 цифр!")
+    .required("Обов'язкове поле!")
+    .matches(onlyNumberRegexp, "Повинно бути 10 цифр!"),
+  dayOfBirthday: yup
+    .string()
+    // .required("Must be filled!")
+    .matches(regularDateRegexp, "У форматі дд.мм.рррр"),
+  telNumber: yup
+    .string()
+    .required("Обов'язкове поле!")
+    .matches(phoneNumberUaRegexp, "У форматі 0503332211 або +380503332211"),
+  email: yup
+    .string()
+    .required("Обов'язкове поле!")
+    .matches(emailRegexp, "Невірний формат email"),
+  dateOfAccess: yup
+    .string()
+    .required("Обов'язкове поле!")
+    .matches(regularDateRegexp, "TУ форматі дд.мм.рррр"),
+  lastPay: yup
+    .string()
+    .required("Обов'язкове поле!")
+    .matches(regularDateRegexp, "У форматі дд.мм.рррр"),
+
+  contactFace: yup.string().required("Обов'язкове поле!"),
+
+  contactFaceTaxCode: yup
+    .string()
+    .min(10, "Повинно бути 10 цифр!")
+    .max(10, "Повинно бути 10 цифр!")
+    // .required("Обов'язкове поле!")
+    .matches(onlyNumberRegexp, "Повинно бути 10 цифр!"),
+
+  contactFaceTelNumber: yup
+    .string()
+    .required("Обов'язкове поле!")
+    .matches(phoneNumberUaRegexp, "У форматі 0503332211 або +380503332211"),
+
+  contactFaceEmail: yup
+    .string()
+    .required("Обов'язкове поле!")
+    .matches(emailRegexp, "Невірний формат email"),
+  comment: yup.string(),
+});

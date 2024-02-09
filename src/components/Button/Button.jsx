@@ -20,6 +20,7 @@ export const Button = ({
   display,
   disabled,
   showIcon,
+  border,
 }) => {
   return (
     <CustomButton
@@ -38,6 +39,7 @@ export const Button = ({
       fontsize={fontsize}
       display={display}
       disabled={disabled}
+      border={border}
     >
       <SvgStyled
         width="24"

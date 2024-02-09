@@ -28,7 +28,7 @@ const RegisterNameFieldCard = ({
   isEditing,
   control,
   handleEditActivation,
-  handleCloseEdit
+  handleCloseEdit,
 }) => {
   return (
     <RegisterNameBlock>
@@ -56,7 +56,7 @@ const RegisterNameFieldCard = ({
               <use href={`${symbol}#icon-check-in`}></use>
             </IconsSvgUserEdit>
           </IconsButtonUserSave>
-          <IconsButtonUserEdit type="button" onClick={()=>handleCloseEdit()} >
+          <IconsButtonUserEdit type="button" onClick={() => handleCloseEdit()}>
             <IconsSvgUserEdit width="24" height="24">
               <use href={`${symbol}#icon-close`}></use>
             </IconsSvgUserEdit>

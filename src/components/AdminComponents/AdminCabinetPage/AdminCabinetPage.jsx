@@ -4,15 +4,16 @@ import { Title } from "./AdminCabinetPage.styled";
 import { useState, useEffect, useMemo } from "react";
 import { useGetUsersListQuery } from "../../../redux/dataUsersSlice";
 
-
 const AdminCabinetPage = () => {
   const { data, isLoading } = useGetUsersListQuery();
 
-
+  //чекають на підтвердження ті у кого статус- status та доступ - access false
   const filteredUsers = useMemo(() => {
     const users = data ? data.allUsers : [];
     if (users) {
-      return users.filter((user) => user.status === false);
+      return users.filter(
+        (user) => user.status === false && user.access === false
+      );
     }
     return [];
   }, [data]);

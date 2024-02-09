@@ -14,7 +14,7 @@ import { shopsUserApi } from "./shopsUserSlice";
 import { tracksUserApi } from "./tracksUserSlice";
 import { genresUserApi } from "./genersUserSlice";
 import { playlistsUserApi } from "./playlistsUserSlice";
-import { playerSlice } from "./playerSlice";
+import { playerReducer } from "./playerSlice";
 
 import {
   persistStore,
@@ -34,6 +34,12 @@ const persistConfig = {
   // whitelist: ["token","adminRole", "userRole", "editorRole", "isLoggedIn"],
 };
 
+const playerPersistConfig = {
+  key: "player",
+  storage,
+  whitelist: ["prevIdTrack"],
+};
+
 export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
@@ -50,7 +56,8 @@ export const store = configureStore({
     [playlistsUserApi.reducerPath]: playlistsUserApi.reducer,
     [shopsUserApi.reducerPath]: shopsUserApi.reducer,
     user: persistReducer(persistConfig, userReducer),
-    player: playerSlice.reducer,
+    // player: persistReducer(playerPersistConfig, playerReducer),
+    player: playerReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
