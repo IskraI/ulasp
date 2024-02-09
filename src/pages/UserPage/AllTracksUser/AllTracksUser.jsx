@@ -48,23 +48,8 @@ const AllTracksUser = () => {
   const rows = () => {
     const RowsTitle = [
       {
-        title: (
-          <input
-            key={id}
-            type="checkbox"
-            id="mainInput"
-            ref={BaseInputRef}
-            style={{ width: "24px", height: "24px", marginRight: "24px" }}
-            onClick={() => {
-              if (BaseInputRef.current.checked) {
-                setCheckedMainCheckBox(true);
-              } else {
-                setCheckedMainCheckBox(false);
-              }
-            }}
-          />
-        ),
-        type: "checkbox",
+        title: "",
+        type: "none",
         titleSize: "2%",
         showData: false,
       },
@@ -73,7 +58,7 @@ const AllTracksUser = () => {
         title: "",
         type: "button",
         titleSize: "2%",
-        showData: false,
+        showData: true,
       },
       {
         title: "",

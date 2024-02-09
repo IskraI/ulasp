@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from "react-redux";
 import symbol from "../../../assets/symbol.svg";
 import {
@@ -43,22 +44,19 @@ const TracksTable = ({
   isUninitialized,
   showData,
 }) => {
- const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
   const tracksTableProps = {
     showTitle: showTitle ? "table-caption" : "none",
     marginTop: marginTopWrapper ? `${marginTopWrapper}` : "auto",
     showData: rows.map((rows) => (rows.showData ? true : false)),
   };
-const isLoadedTracks = playerState.isLoaded;
-
-  const [widthP, setWidthP] = useState(null);
-
-  const rowTitleRef = useRef(null);
+  const isLoadedTracks = playerState.isLoaded;
 
   const playMusic = () => {
     const trackURL = tracks.map((track) => {
       const newObject = {
+        id: track._id,
         trackURL: track.trackURL,
         artist: track.artist,
         trackName: track.trackName,
@@ -70,15 +68,8 @@ const isLoadedTracks = playerState.isLoaded;
   };
 
   const stopMusic = () => {
-    dispatch(stopPlay());
+    dispatch(stopPlay([]));
   };
-
-  useEffect(() => {
-    // console.log(rowTitleRef.current.offsetParent.offsetWidth);
-    // rowTitleRef.current.offsetParent.offsetWidth =
-    // const widthRow = rowTitleRef.current.offsetWidth + "500";
-    // setWidthP(widthRow);
-  }, []);
 
   // console.log("new songs пропс пришел в тейблюзер", tracks);
   return (
@@ -90,7 +81,7 @@ const isLoadedTracks = playerState.isLoaded;
 
       {isSuccess && !error && tracks?.length !== 0 && (
         <>
-           <Button
+          <Button
             onClick={() => (!isLoadedTracks ? playMusic() : stopMusic())}
             type={"button"}
             width={"250px"}
@@ -99,7 +90,6 @@ const isLoadedTracks = playerState.isLoaded;
             margintop={"12px"}
             text={isLoadedTracks ? "Зупинити" : "Грати музику"}
             showIcon={"true"}
-            // icon={`${symbol}#icon-play`}
             icon={
               isLoadedTracks
                 ? `${symbol}#icon-stop-play`
@@ -158,6 +148,7 @@ const isLoadedTracks = playerState.isLoaded;
                     artist,
                     trackDuration,
                     playList,
+                    trackURL,
                   }) => {
                     return (
                       <TrackItem
@@ -167,6 +158,7 @@ const isLoadedTracks = playerState.isLoaded;
                         idTrack={_id}
                         countThInThead={rows.length}
                         disButtonPopUp={true}
+                        trackURL={trackURL}
                         trackPictureURL={trackPictureURL}
                         trackName={trackName}
                         artist={artist}

@@ -47,7 +47,7 @@ const NewTracksPage = () => {
         title: "",
         type: "button",
         titleSize: "1%",
-        showData: false,
+        showData: true,
       },
       {
         title: "",

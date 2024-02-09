@@ -3,6 +3,7 @@ import AudioPlayer from "react-h5-audio-player";
 import "./player.css";
 export const PlayerWrapper = styled.div`
   margin-top: auto;
+  padding: 12px;
   display: flex;
   flex-direction: column;
   width: 100%;

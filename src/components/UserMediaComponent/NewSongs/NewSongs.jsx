@@ -21,15 +21,18 @@ const NewSongs = ({
             <TitleWrapper>Нові пісні</TitleWrapper>
           </ControlWrapper>
           <Tracks>
-            {allTracks.map(({ _id, trackPictureURL, trackName, artist }) => (
-              <TracksItem
-                key={_id}
-                id={_id}
-                title={trackName}
-                artist={artist}
-                icon={trackPictureURL}
-              />
-            ))}
+            {allTracks.map(
+              ({ _id, trackPictureURL, trackName, artist, trackURL }) => (
+                <TracksItem
+                  key={_id}
+                  id={_id}
+                  title={trackName}
+                  artist={artist}
+                  icon={trackPictureURL}
+                  trackURL={trackURL}
+                />
+              )
+            )}
           </Tracks>
           <MediaNavigationLink
             link={"newtracks"}

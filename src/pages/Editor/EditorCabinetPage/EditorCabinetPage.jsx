@@ -9,7 +9,6 @@ import TracksTable from "../../../components/EditorComponents/TracksTable/Tracks
 import { EditorText } from "./EditorCabinetPage.styled";
 
 import { Loader } from "../../../components/Loader/Loader";
-import Player from "../../../components/Player/Player";
 import { Error500, ErrorNotFound } from "../../../components/Errors/Errors";
 
 const RowsTitle = [
@@ -22,8 +21,8 @@ const RowsTitle = [
   {
     title: "",
     type: "button",
-    titleSize: "0%",
-    showData: false,
+    titleSize: "2%",
+    showData: true,
   },
   {
     title: "",

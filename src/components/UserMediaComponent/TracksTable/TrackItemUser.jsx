@@ -1,24 +1,26 @@
 /* eslint-disable react/prop-types */
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect, useRef, useId } from "react";
+
 import {
   TableCell,
   TrackCover,
   TrStyle,
-  PopUpTracksTable,
-  PopUpButton,
-  DotsButton,
-  PopUpTracksTableWrapper,
   InfoBlock,
+  PlayButton,
 } from "../TracksTable/TracksTableUser.styled";
-import { SvgStyled } from "../../Button/Button.styled";
 import { sToStr } from "../../../helpers/helpers";
 import { BASE_URL } from "../../../constants/constants";
 import { WithOutGenre } from "../../Errors/Errors";
-import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsUserSlice";
-import { useDeleteTrackMutation } from "../../../redux/tracksUserSlice";
-import { useState, useEffect, useRef, useId } from "react";
+
 import symbol from "../../../assets/symbol.svg";
 
-const arr = [];
+import {
+  setSrcPlayer,
+  stopPlay,
+  setCurrentIndex,
+} from "../../../redux/playerSlice";
+import { getPlayerState } from "../../../redux/playerSelectors";
 
 const TrackItem = ({
   idTrack,
@@ -28,6 +30,7 @@ const TrackItem = ({
   trackDuration,
   playListGenre,
   playLists,
+  trackURL,
   checkBox,
   display,
   isInPlayList,
@@ -36,131 +39,15 @@ const TrackItem = ({
   showPlayList,
   showData,
 }) => {
-  const [showPopUp, setShowPopUp] = useState(false);
-  const [id, setId] = useState(null);
-  const [isChecked, setIsChecked] = useState(false);
-  const [trackId, setTrackId] = useState([]);
+  const dispatch = useDispatch();
+  const playerState = useSelector(getPlayerState);
+  const [isPlayingTrack, setIsPlayingTrack] = useState(false);
 
-  const idUse = useId();
+  const playBtnRef = useRef(null);
 
-  const ref = useRef(null);
-  const dotsButtonRef = useRef(null);
-
-  // console.log("TrackItem playListGenre", playListGenre);
-
-  // console.log("showData", showData);
-
-  // console.log("REF", ref);
-
-  // console.log("countThInThead", countThInThead);
-
-  // console.log("isSuccessUpload", isSuccessUpload);
-
-  // console.log("isLoadingUpload", isLoadingUpload);
-
-  const [
-    deleteTrack,
-    { data: dataDeleteTrack, isSuccess: isSuccessDeleteTrack },
-  ] = useDeleteTrackMutation();
-  const [
-    deleteTrackInPlaylist,
-    {
-      data: dataDeleteTrackInPlaylist,
-      isSuccess: isSuccessDeleteTrackInPlaylist,
-    },
-  ] = useDeleteTrackInPlaylistMutation();
-
-  useEffect(() => {
-    if (isCheckedAll && ref?.current !== null) {
-      setIsChecked(true);
-      ref.current.checked = true;
-      // arr.splice(0, arr.length);
-      arr.push(idTrack);
-      // console.log(arr);
-    }
-    if (!isCheckedAll && ref?.current !== null) {
-      setIsChecked(false);
-      ref.current.checked = false;
-      arr.splice(0, arr.length);
-      // console.log(arr);
-    }
-    if (isSuccessDeleteTrack || isSuccessDeleteTrackInPlaylist) {
-      setShowPopUp(false);
-    }
-  }, [
-    idTrack,
-    isCheckedAll,
-    isSuccessDeleteTrack,
-    isSuccessDeleteTrackInPlaylist,
-  ]);
-
-  useEffect(() => {
-    if (isChecked === false) {
-      setShowPopUp(false);
-    }
-  }, [isChecked]);
-
-  const PopUpToogle = () => {
-    setShowPopUp(!showPopUp);
-  };
-
-  const handleClickCheckBox = () => {
-    setIsChecked(!isChecked);
-
-    // setId(idTrack);
-
-    setTrackId(idTrack);
-
-    console.log("Кликнули");
-
-    // if (arr.includes(idTrack)) {
-    //   console.log("arr", arr);
-
-    //   const indexTrack = arr.indexOf(idTrack);
-    //   console.log(indexTrack);
-    //   arr.splice(indexTrack);
-    //   console.log("arr", arr);
-
-    //   // console.log("Замечательно входит");
-    // } else {
-    //   arr.push(idTrack);
-    // }
-
-    if (arr.includes(idTrack)) {
-      console.log("arr", arr);
-
-      const indexTrack = arr.indexOf(idTrack);
-      console.log(indexTrack);
-      let knife = arr.splice(0, indexTrack);
-      // arr.slice(0, indexTrack);
-      console.log("arr", arr);
-      console.log("knife", knife);
-
-      // knife.length === 1 ? knife.splice(0, arr.length) : null;
-      // console.log("knife", knife);
-
-      // console.log("Замечательно входит");
-    } else {
-      console.log("PUSH");
-      arr.push(idTrack);
-      console.log("arr", arr);
-    }
-
-    // console.log("arr", arr);
-  };
-
-  const handleClick = (e) => {
-    if (dotsButtonRef.current && !dotsButtonRef.current.contains(e.target)) {
-      setShowPopUp(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("click", handleClick);
-    return () => {
-      document.removeEventListener("click", handleClick);
-    };
-  }, []);
+  const isLoadedTrack = playerState.isLoaded;
+  const currentTrackIndex = playerState.indexTrack;
+  const oneGenre = !isInPlayList ? playLists[0]?.playlistGenre[0]?.genre : [];
 
   const makeUniq = (array) => {
     const filteredGenre = {};
@@ -171,36 +58,65 @@ const TrackItem = ({
     return uniqGenre;
   };
 
-  const oneGenre = !isInPlayList ? playLists[0]?.playlistGenre[0]?.genre : [];
+  useEffect(() => {
+    if (idTrack === playerState?.src[currentTrackIndex]?.id) {
+      setIsPlayingTrack(true);
+    } else {
+      setIsPlayingTrack(false);
+    }
+  }, [currentTrackIndex, idTrack, playerState?.src]);
+
+  const PlayButtonToogle = () => {
+    if (isPlayingTrack) {
+      stopMusic();
+    } else {
+      playMusic();
+    }
+  };
+
+  const playMusic = () => {
+    dispatch(stopPlay([]));
+    dispatch(
+      setSrcPlayer([
+        {
+          id: idTrack,
+          trackURL: trackURL,
+          artist: artist,
+          trackName: trackName,
+        },
+      ])
+    );
+    dispatch(setCurrentIndex(0));
+    setIsPlayingTrack(isLoadedTrack);
+  };
+
+  const stopMusic = () => {
+    dispatch(stopPlay([]));
+    setIsPlayingTrack(isLoadedTrack);
+  };
 
   return (
     <>
-      <TrStyle
-        key={idTrack}
-        style={{
-          background: isChecked ? "#FFF3BF" : null,
-        }}
-      >
-        <TableCell showData={showData[0]}>
-          <input
-            type="checkbox"
-            name=""
-            id="checkTrack"
-            ref={ref}
-            onClick={handleClickCheckBox}
-          />
-        </TableCell>
+      <TrStyle key={idTrack}>
+        <TableCell showData={showData[0]}></TableCell>
         <TableCell showData={showData[1] || false}>
-          <button
-            type="buton"
-            onClick={
-              isInPlayList
-                ? () => deleteTrackInPlaylist(idTrack).unwrap()
-                : () => deleteTrack(idTrack).unwrap()
-            }
+          <PlayButton
+            ref={playBtnRef}
+            data-idtrack={idTrack}
+            type="button"
+            id="playBtn"
+            onClick={() => PlayButtonToogle(idTrack)}
           >
-            X
-          </button>
+            <svg width="16" height="16">
+              <use
+                href={
+                  isPlayingTrack
+                    ? `${symbol}#icon-stop-play`
+                    : `${symbol}#icon-play`
+                }
+              ></use>
+            </svg>
+          </PlayButton>
         </TableCell>
         <TableCell showData={showData[2] || false}>
           <TrackCover
@@ -267,40 +183,7 @@ const TrackItem = ({
         ) : (
           <TableCell showData={false}></TableCell>
         )}
-        <TableCell showData={showData[8] || false}>
-          {showPopUp && (
-            <PopUpTracksTableWrapper>
-              <PopUpTracksTable>
-                <PopUpButton
-                  type="button"
-                  onClick={
-                    isInPlayList
-                      ? () =>
-                          deleteTrackInPlaylist({
-                            playListId,
-                            idTrack,
-                          }).unwrap()
-                      : () => deleteTrack(idTrack).unwrap()
-                  }
-                >
-                  Видалити з медіатеки
-                </PopUpButton>
-                <PopUpButton type="button">Додати до плейлисту</PopUpButton>
-                <PopUpButton type="button">Перенести до плейлисту</PopUpButton>
-              </PopUpTracksTable>
-            </PopUpTracksTableWrapper>
-          )}
-          <DotsButton
-            ref={dotsButtonRef}
-            type="button"
-            onClick={PopUpToogle}
-            // disabled={isChecked ? false : true}
-          >
-            <SvgStyled width="24" height="24" fillColor="black">
-              <use href={`${symbol}#icon-more-dots`}></use>
-            </SvgStyled>
-          </DotsButton>
-        </TableCell>
+        <TableCell showData={showData[8] || false}></TableCell>
       </TrStyle>
     </>
   );
