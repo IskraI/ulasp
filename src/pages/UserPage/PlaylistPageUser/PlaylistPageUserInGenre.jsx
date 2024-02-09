@@ -25,7 +25,7 @@ const PlaylistsPageUserInGenre = () => {
       {isFetching && !isError && <Loader />}
       {!isError && isSuccess && (
               <>
-              <TabNavigation />    
+              {/* <TabNavigation />     */}
           <NavMusic links={links} />
           <DropDownGeners currentGenreId={genreId}/>
            {data.playList.length > 0 ? (

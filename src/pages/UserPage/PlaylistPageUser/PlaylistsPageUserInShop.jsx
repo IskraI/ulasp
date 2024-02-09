@@ -18,7 +18,7 @@ const PlaylistsPageUserInGenre = () => {
       {isFetching && !isError && <Loader />}
       {!isError && isSuccess && (
               <>
-          <TabNavigation />  
+          {/* <TabNavigation />   */}
            {data.playList.length > 0 ? (
               <LatestPlaylists
             title={'Плейлисти'}

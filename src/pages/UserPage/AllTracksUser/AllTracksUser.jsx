@@ -138,13 +138,13 @@ const AllTracksUser = () => {
 
   return (
     <>
-      <TabNavigation />
+      {/* <TabNavigation /> */}
       <NavMusic links={links} />
-      <BtnSort onClick={handleSortClick}>
+      {/* <BtnSort onClick={handleSortClick}>
         <svg width="24" height="24">
           <use href={`${symbol}#icon-sort`}></use>
         </svg>
-      </BtnSort>
+      </BtnSort> */}
       {isFetchingAllTracks && <Loader />}
       {!isFetchingAllTracks && !errorLoadingAllTracks && (
         <>
@@ -153,14 +153,14 @@ const AllTracksUser = () => {
             showTitle={false}
             marginTopWrapper={"24px"}
             isInPlayList={false}
-            tracks={sortedTracks}
+            tracks={allTracks}
             error={errorLoadingAllTracks}
             isFetching={isFetchingAllTracks}
             isSuccess={isSuccess}
             display="none"
             rows={rows()}
           />
-          <Player tracks={sortedTracks} />
+          {/* <Player tracks={sortedTracks} /> */}
         </>
       )}
     </>

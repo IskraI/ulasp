@@ -132,7 +132,7 @@ const AllTracksUser = () => {
 
   return (
     <>
-      <TabNavigation />
+      {/* <TabNavigation /> */}
       <DropDownTracksInGenres currentGenreId={genreId} />
       <NavMusic links={links} />
       <BtnSort onClick={handleSortClick}>
@@ -151,14 +151,14 @@ const AllTracksUser = () => {
             isInPlayList={true}
             // playListId={allTracks.playlist._id}
             playListGenre={allTracks.playlistGenre}
-            tracks={sortedTracks}
+            tracks={allTracks.tracks}
             error={errorLoadingAllTracks}
             isFetching={isFetchingAllTracks}
             isSuccess={isSuccess}
             display="none"
             rows={rows()}
           />
-          <Player tracks={allTracks.tracks} />
+          {/* <Player tracks={allTracks.tracks} /> */}
         </>
       )}
     </>
