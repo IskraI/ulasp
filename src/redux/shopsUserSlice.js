@@ -27,7 +27,18 @@ export const shopsUserApi = createApi({
       query: (id) => ({ url: `/user/shops/${id}` }),
       providesTags: (_result, _err, id) => [{ type: "Shops", id }],
     }),
+    getShopCategoryByIdUser: builder.query({
+      query: (id) => ({ url: `/user/shops/shopitem/${id}` }),
+
+      providesTags: (_result, _err, id) => [{ type: "ShopItem", id }],
+    }),
+ getSubShopCategoryByIdUser: builder.query({
+      query: (id) => ({ url: `/user/shops/shopitem/subcategory/${id}` }),
+
+      providesTags: (_result, _err, id) => [{ type: "SubShopItem", id }],
+    }),
+
       }),
 });
 
-export const { useGetAllShopsUserQuery, useGetShopByIdforUserQuery } = shopsUserApi;
+export const { useGetAllShopsUserQuery, useGetShopByIdforUserQuery, useGetShopCategoryByIdUserQuery, useGetSubShopCategoryByIdUserQuery } = shopsUserApi;

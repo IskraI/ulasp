@@ -124,3 +124,13 @@ export const PlaylistDeleteButton = styled.button`
   background: none;
   border: none;
 `;
+
+export const SvgMedia = styled.svg`
+  fill: #000000;
+  transition: fill 350ms ${mainCubicTransition};
+
+  &:hover {
+    fill: ${colors.accentHoverColor};
+    transition: fill 350ms ${mainCubicTransition};
+  }
+`;

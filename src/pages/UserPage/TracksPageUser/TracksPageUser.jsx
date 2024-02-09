@@ -156,14 +156,14 @@ const TracksPage = () => {
             isInPlayList={true}
             playListId={data.playlist._id}
             playListGenre={data.playlist.playlistGenre}
-            tracks={sortedTracks}
+             tracks={isSorted ? sortedTracks : data.playlist.trackList}
              error={error}
             isFetching={isFetchingPlaylistById}
             isSuccess={isSuccess}
             display="none"
             rows={rows()}
           />
-          <Player tracks={sortedTracks} />
+          {/* <Player tracks={sortedTracks} /> */}
         </>
       )}
     </>

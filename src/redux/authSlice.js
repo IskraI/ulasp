@@ -3,6 +3,7 @@ import { resetUser, setAvatar, setAdmin, setCurrent } from "./userSlice";
 
 import { BASE_URL } from "../constants/constants";
 
+
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({

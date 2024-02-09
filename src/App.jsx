@@ -52,6 +52,11 @@ import AllTracksUser from "./pages/UserPage/AllTracksUser/AllTracksUser";
 import PlaylistsPageUserInGenre from "./pages/UserPage/PlaylistPageUser/PlaylistPageUserInGenre";
 import PlaylistsPageUserInShop from "./pages/UserPage/PlaylistPageUser/PlaylistsPageUserInShop";
 import TracksPageUser from "./pages/UserPage/TracksPageUser/TracksPageUser";
+import ShopsItemPageUser from "./pages/UserPage/ShopsUserPage/ShopsItemPageUser";
+import ShopSubCategoryPageUser from "./pages/UserPage/ShopsUserPage/ShopSubCategoryPageUser";
+import PlaylistInShopSubCategoryPageUser from "./pages/UserPage/ShopsUserPage/PlaylistInShopSubCategoryPageUser";
+
+
 
 const AdminCabinetPage = lazy(() =>
   import("./components/AdminComponents/AdminCabinetPage/AdminCabinetPage")
@@ -165,14 +170,34 @@ function App() {
                   element={<TracksPageUser display={"none"} />}
                 />
                 <Route path="medialibrary/shops" element={<ShopsUserPage />} />
+               <Route
+                  path="medialibrary/shops/:shopId"
+                  element={<ShopsItemPageUser />}
+                />
                 <Route
+                  path="medialibrary/shops/:shopId/:shopItemId"
+                  element={<ShopSubCategoryPageUser />}
+                />
+                <Route
+                  path="medialibrary/shops/:shopId/:shopItemId/:shopSubCategoryId"
+                  element={<PlaylistInShopSubCategoryPageUser />}
+                />
+                 <Route
+                  path="medialibrary/shops/:shopId/:shopItemId/:shopSubCategoryId/:playlistId/tracks"
+                  element={<TracksPageUser />}
+                />
+                 <Route
+                  path="medialibrary/shops/:shopId/:shopItemId/:playlistId/tracks"
+                  element={<TracksPageUser />}
+                />
+                {/* <Route
                   path="medialibrary/shops/:shopId/playlists"
                   element={<PlaylistsPageUserInShop />}
-                />
-                <Route
+                /> */}
+                {/* <Route
                   path="medialibrary/shops/:shopId/playlists/:playlistId/tracks"
                   element={<TracksPageUser display={"none"} />}
-                />
+                /> */}
                 <Route
                   path="medialibrary/newplaylists"
                   element={<NewPlaylistsUser display={"none"} />}
