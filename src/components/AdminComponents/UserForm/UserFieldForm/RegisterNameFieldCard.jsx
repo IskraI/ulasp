@@ -142,6 +142,7 @@ const RegisterNameFieldCard = ({
           )}
 
           <ButtonSwitch
+            form={true}
             type="button"
             isTrue={typeOfAccess}
             onClick={() => handleTypeOfAccess()}
@@ -159,6 +160,7 @@ const RegisterNameFieldCard = ({
             <RegisterNameField>{` ${user.name} `}</RegisterNameField>
           )}
           <ButtonSwitch
+            form={true}
             type="button"
             isTrue={typeOfAccess}
             onClick={() => console.log("edite card")}

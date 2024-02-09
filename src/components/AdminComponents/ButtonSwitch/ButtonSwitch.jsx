@@ -16,7 +16,7 @@ export const ButtonSwitch = ({
   form = false,
 }) => {
   const [typeOfAccess, setTypeOfAccess] = useState(isTrue);
-  console.log("form", form);
+
   const [isHovered, setIsHovered] = useState(false);
   const [dispatchAccess, { isLoading: isLoadingAccess }] =
     useAccessUserUpdateByIdMutation();
@@ -98,18 +98,18 @@ export const ButtonSwitch = ({
         <>
           {isTrue ? (
             <ButtonCustomSwitch
-              type={type}
-              isTrue={isTrue}
-              onClick={onClick}
+              form={form}
+              type="button"
+              isTrue={typeOfAccess}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
+              onClick={() => handleSwitchAccess(idUser)}
             >
-              On
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="13"
-                height="13"
-                viewBox="0 0 13 13"
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
                 fill="none"
               >
                 <Circle
@@ -120,20 +120,23 @@ export const ButtonSwitch = ({
                   isHovered={isHovered}
                 />
               </svg>
+              On
             </ButtonCustomSwitch>
           ) : (
             <ButtonCustomSwitch
-              type={type}
-              isTrue={isTrue}
-              onClick={onClick}
+              form={form}
+              type="button"
+              isTrue={typeOfAccess}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
+              onClick={() => handleSwitchAccess(idUser)}
             >
+              Off
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="13"
-                height="13"
-                viewBox="0 0 13 13"
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
                 fill="none"
               >
                 <Circle
@@ -144,7 +147,6 @@ export const ButtonSwitch = ({
                   isHovered={isHovered}
                 />
               </svg>
-              <Text>Off</Text>
             </ButtonCustomSwitch>
           )}
         </>
