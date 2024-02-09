@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import { colors, mainCubicTransition } from "../../../styles/vars";
 import { keyframes } from "@emotion/react";
 
-
 export const PlaylistWrapper = styled.section`
   /* display: flex; */
 `;
@@ -16,7 +15,6 @@ const marqueeAnimation = keyframes`
   }
 `;
 
-
 export const PlaylistList = styled.ul`
   display: flex;
   flex-wrap: wrap;
@@ -25,21 +23,29 @@ export const PlaylistList = styled.ul`
 `;
 
 export const PlaylistItem = styled.li`
- position: relative;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   width: 310px;
-max-height: 58px;
- overflow: hidden;
+  max-height: 58px;
+  overflow: hidden;
   padding: 10px;
   border: 1px solid ${colors.accentHoverColor};
   border-radius: 10px;
   background-color: ${colors.activeBtnColor};
 
-  &:hover{
- background: #fff3bf;
+  &:hover {
+    background: #fff3bf;
+    border-radius: 10px;
+    font-weight: 600;
+    transform: translateY(-5px);
+    transition: transform 250ms ${mainCubicTransition};
+  }
+
+  &:focus {
+    background: #fff3bf;
     border-radius: 10px;
     font-weight: 600;
     transform: translateY(-5px);
@@ -50,7 +56,6 @@ max-height: 58px;
 export const PlaylistImg = styled.img`
   border-radius: 10px;
   margin-right: 8px;
-
 `;
 
 export const PlaylistItemText = styled.p`
@@ -74,9 +79,9 @@ export const PlaylistItemText2 = styled.p`
 `;
 
 export const PlaylistIconsWrapper = styled.div`
-position: absolute;
-  top: 15px; 
-  right: 10px; 
+  position: absolute;
+  top: 15px;
+  right: 10px;
   display: flex;
   gap: 4px;
 `;
@@ -87,11 +92,10 @@ export const PlaylistDeleteButton = styled.button`
 `;
 
 export const TextWrapper = styled.div`
-flex: 1; 
+  flex: 1;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   justify-content: center;
   overflow: hidden;
-  max-width: calc(100% - 100px); 
+  max-width: calc(100% - 100px);
 `;
-

@@ -122,7 +122,7 @@ export const TracksNotFound = styled.p`
   align-self: center;
   margin-top: 40px;
   font-size: 28px;
-  color:  #535250;
+  color: #535250;
 `;
 
 export const MockPlayer = styled.div`
@@ -183,4 +183,14 @@ export const PopUpButton = styled.button`
   &:not(:last-of-type) {
     margin-bottom: 4px;
   }
+`;
+
+export const PlayButton = styled.button`
+  padding: 12px 4px;
+
+  cursor: pointer;
+  font-size: 14px;
+  background: none;
+  border: none;
+  outline: none;
 `;

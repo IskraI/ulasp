@@ -15,25 +15,25 @@ const RowsTitle = [
   {
     title: "",
     type: "button",
-    titleSize: "0%",
-    showData: false,
+    titleSize: "2%",
+    showData: true,
   },
   {
     title: "",
     type: "image",
-    titleSize: "20%",
+    titleSize: "10%",
     showData: true,
   },
   {
     title: "",
     type: "text",
-    titleSize: "20%",
+    titleSize: "25%",
     showData: true,
   },
   {
     title: "",
     type: "text",
-    titleSize: "20%",
+    titleSize: "25%",
     showData: true,
   },
   {
