@@ -13,7 +13,7 @@ export const ButtonSwitch = ({
   type,
   idUser,
   onClick,
-  form = false,
+  form = "false",
 }) => {
   const [typeOfAccess, setTypeOfAccess] = useState(isTrue);
 
