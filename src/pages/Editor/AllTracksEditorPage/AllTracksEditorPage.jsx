@@ -138,8 +138,10 @@ const AllTracksEditor = () => {
             rows={rows()}
             isCheckedAll={checkedMainCheckBox}
             isInPlayList={false}
+            isLoadingUpload={isLoadingUploadTrack}
+            isSuccessUpload={isSuccessUploadTrack}
+            errorUpload={errorUploadTrack}
           />
-          {/* <Player tracks={allTracks.latestTracks} /> */}
         </>
       )}
     </>
