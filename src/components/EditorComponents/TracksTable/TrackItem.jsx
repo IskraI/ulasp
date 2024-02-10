@@ -351,8 +351,12 @@ const TrackItem = ({
                 >
                   Видалити з медіатеки
                 </PopUpButton>
-                <PopUpButton type="button">Додати до плейлисту</PopUpButton>
-                <PopUpButton type="button">Перенести до плейлисту</PopUpButton>
+                <PopUpButton disabled={true} type="button">
+                  Додати до плейлисту
+                </PopUpButton>
+                <PopUpButton disabled={true} type="button">
+                  Перенести до плейлисту
+                </PopUpButton>
               </PopUpTracksTable>
             </PopUpTracksTableWrapper>
           )}
