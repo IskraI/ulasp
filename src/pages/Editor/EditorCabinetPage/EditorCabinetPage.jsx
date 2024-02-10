@@ -99,6 +99,7 @@ const EditorCabinetPage = () => {
           </StatsListWrapper>
           <TracksTable
             title={"Остання додана музика"}
+            marginTopWrapper={"24px"}
             showTitle={true}
             tracks={allTracks.latestTracks}
             isLoading={isLoadingAllTracks}
@@ -108,7 +109,6 @@ const EditorCabinetPage = () => {
             rows={RowsTitle}
             isInPlayList={false}
           />
-          {/* <Player tracks={allTracks.latestTracks} /> */}
         </>
       )}
     </>

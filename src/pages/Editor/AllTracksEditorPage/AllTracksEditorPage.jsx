@@ -131,6 +131,7 @@ const AllTracksEditor = () => {
 
           <TracksTable
             // title={" Остання додана музика"}
+            marginTopWrapper={"24px"}
             tracks={allTracks.latestTracks}
             error={errorLoadingAllTracks}
             isFetching={isFetchingAllTracks}
