@@ -4,7 +4,7 @@ import { SearchUsers } from "../SearchUsers/SearchUsers";
 
 const ListEditors = ({ searchTerm }) => {
   const { data, isLoading } = useGetUsersListQuery(true);
-  console.log("data", data);
+  // console.log("data", data);
   const visibleColumns = [
     { key: "firstName", label: "Ім’я", type: "nameLinkEditor" },
     { key: "login", label: "Логін", type: "string" },

@@ -3,7 +3,6 @@ import { resetUser, setAvatar, setAdmin, setCurrent } from "./userSlice";
 
 import { BASE_URL } from "../constants/constants";
 
-
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
@@ -30,6 +29,7 @@ export const authApi = createApi({
         dispatch(setAdmin((await queryFulfilled).data));
       },
       async onQueryError(arg, { dispatch, error, queryFulfilled }) {
+        // allert;
         console.log("error", error);
       },
       invalidatesTags: ["auth"],

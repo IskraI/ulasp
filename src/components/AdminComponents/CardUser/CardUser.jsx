@@ -86,7 +86,7 @@ const CardUser = () => {
       .then(() => {
         setActiveModal(null);
         const updatedDisableSendMail = user.status && user.access;
-        console.log("user.status handleUnblockUser ", user.status);
+        // console.log("user.status handleUnblockUser ", user.status);
         setDisableSendMail(updatedDisableSendMail);
         document.body.classList.remove("modal-open");
       })
@@ -146,7 +146,7 @@ const CardUser = () => {
       </ButtonContainer>
       <Button
         type="button"
-        display="none"
+        // display="none"
         padding="8px 27px"
         height="48px"
         marginleft={"auto"}
@@ -184,14 +184,14 @@ const CardUser = () => {
               type="button"
               padding="8px 24px"
               height="48px"
-              display="none"
+              showIcon={false}
               text="Назад"
               onClick={handleCloseModal}
             />
             <Button
               type="button"
               padding="8px 30px"
-              display="none"
+              showIcon={false}
               height="48px"
               text={
                 user && user.status === true ? "Заблокувати" : "Розблокувати"
@@ -218,7 +218,7 @@ const CardUser = () => {
               padding="8px 37px"
               height="48px"
               text="Так"
-              display="none"
+              showIcon={false}
               onClick={handleDeleteUser}
             />
             <Button
@@ -226,7 +226,7 @@ const CardUser = () => {
               padding="8px 44px"
               height="48px"
               text="Ні"
-              display="none"
+              showIcon={false}
               marginleft="31px"
               onClick={handleCloseModal}
             />

@@ -1,20 +1,14 @@
-import { useEffect, } from "react";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { SERVER_ERROR, ERROR_NOT_FOUND } from "../../constants/constants";
+import { WelcomeSection } from "../WelcomePage/WelcomPage.styled";
 
-import {
- 
-  WelcomeSection,
-} from "../WelcomePage/WelcomPage.styled";
-
-const ErrorPage = () => {
-
-
-  
-
+const ErrorPage = ({ error }) => {
+  const location = useLocation();
+  const errorMessage = location.state.errorMessage;
   return (
     <WelcomeSection>
-     ААААААА, не туда
-
- 
+      {errorMessage === "FETCH_ERROR" ? SERVER_ERROR : ERROR_NOT_FOUND}
     </WelcomeSection>
   );
 };
