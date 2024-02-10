@@ -61,7 +61,7 @@ const CardUserForm = ({ user, playlistCount, tracksCount }) => {
   };
 
   const onFormSubmit = (data) => {
-    // console.log("formData сработала");
+    console.log("formData сработала", data);
     if (typeOfUser === "fop") {
       const formData = {
         ...data,
@@ -105,7 +105,7 @@ const CardUserForm = ({ user, playlistCount, tracksCount }) => {
     setTypeOfAccess(typeOfAccess === true ? false : true);
   };
 
-  console.log("typeOfAccess", typeOfAccess);
+  // console.log("typeOfAccess", typeOfAccess);
   return (
     <>
       {/* <UserCreateModal> */}
@@ -118,7 +118,6 @@ const CardUserForm = ({ user, playlistCount, tracksCount }) => {
 
       <form onSubmit={handleSubmit(onFormSubmit)}>
         <CardUserField
-        
           user={user}
           control={control}
           handleTypeOfAccess={handleTypeOfAccess}

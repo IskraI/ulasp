@@ -4,7 +4,7 @@ import { AdminAndEditorSchema } from "./Schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { VscError } from "react-icons/vsc";
 import { useNavigate } from "react-router-dom";
-
+import ErrorPage from "../../pages/ErrorPage/ErrorPage";
 import {
   StyledButton,
   StyledError,
@@ -20,7 +20,7 @@ import { useSigninMutation } from "../../redux/authSlice";
 
 export const SignInAdminAndEditor = () => {
   const navigate = useNavigate();
-  const [dispatch] = useSigninMutation();
+  const [dispatch, error, isFetching] = useSigninMutation();
   const {
     register,
     handleSubmit,
@@ -33,17 +33,22 @@ export const SignInAdminAndEditor = () => {
   });
 
   const onSubmit = ({ login, password }) => {
-    console.log("login", login);
-    console.log("password", password);
+    // console.log("login", login);
+    // console.log("password", password);
     dispatch({ login, password })
       .unwrap()
       .then((res) => {
-        console.log("res", res);
+        // console.log("res", res);
         res.admin && navigate("/admin/cabinet");
         res.editor && navigate("/editor/cabinet"); //добавил /cabinet
         reset();
       })
-      .catch((e) => console.log(e.data.message));
+      .catch((e) => {
+        // console.log(e.data?.message || e);
+        if (e?.status === "FETCH_ERROR") {
+          navigate("/error", { state: { errorMessage: e?.status } });
+        }
+      });
   };
 
   return (

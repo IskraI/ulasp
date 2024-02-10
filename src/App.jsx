@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { isMobile } from "react-device-detect";
 import "./App.css";
 
@@ -56,8 +57,6 @@ import ShopsItemPageUser from "./pages/UserPage/ShopsUserPage/ShopsItemPageUser"
 import ShopSubCategoryPageUser from "./pages/UserPage/ShopsUserPage/ShopSubCategoryPageUser";
 import PlaylistInShopSubCategoryPageUser from "./pages/UserPage/ShopsUserPage/PlaylistInShopSubCategoryPageUser";
 
-
-
 const AdminCabinetPage = lazy(() =>
   import("./components/AdminComponents/AdminCabinetPage/AdminCabinetPage")
 );
@@ -79,6 +78,7 @@ const AdminUsers = lazy(() =>
 
 function App() {
   const user = useSelector(getUserState);
+  const navigate = useNavigate();
   // console.log("App user", user);
   // console.log("user.token", user.token);
   // console.log(" user.editorRole", user.editorRole);
@@ -109,22 +109,25 @@ function App() {
   //если пользователь админ или редаткор, то скип = тру и єтот запрос пропустится
 
   if (error?.data.message === "Not authorized") {
-    console.log("error", error.data.message === "Not authorized");
+    // console.log(" user.adminRole ", user.adminRole);
+    user.adminRole || user.editorRole
+      ? navigate("/adminlogin")
+      : navigate("/signin");
 
-    return (
-      <Routes>
-        <Route element={<SharedLayout avatarURL={user.avatarURL} />}>
-          <Route path="/" element={<PublicRoute component={WelcomePage} />} />
+    // return (
+    //   <Routes>
+    //     <Route element={<SharedLayout avatarURL={user.avatarURL} />}>
+    //       <Route path="/" element={<PublicRoute component={WelcomePage} />} />
 
-          <Route path="/signin" element={<PublicRoute component={Login} />} />
+    //       <Route path="/signin" element={<PublicRoute component={Login} />} />
 
-          <Route
-            path="/adminlogin"
-            element={<PublicRoute component={AdminLoginPage} />}
-          />
-        </Route>
-      </Routes>
-    );
+    //       <Route
+    //         path="/adminlogin"
+    //         element={<PublicRoute component={AdminLoginPage} />}
+    //       />
+    //     </Route>
+    //   </Routes>
+    // );
   }
 
   if (isMobile) {
@@ -145,6 +148,10 @@ function App() {
             <Route
               path="/adminlogin"
               element={<PublicRoute component={AdminLoginPage} />}
+            />
+            <Route
+              path="/error"
+              element={<PublicRoute component={ErrorPage} />}
             />
 
             {user.userRole && (
@@ -173,7 +180,7 @@ function App() {
                   element={<TracksPageUser display={"none"} />}
                 />
                 <Route path="medialibrary/shops" element={<ShopsUserPage />} />
-               <Route
+                <Route
                   path="medialibrary/shops/:shopId"
                   element={<ShopsItemPageUser />}
                 />
@@ -185,11 +192,11 @@ function App() {
                   path="medialibrary/shops/:shopId/:shopItemId/:shopSubCategoryId"
                   element={<PlaylistInShopSubCategoryPageUser />}
                 />
-                 <Route
+                <Route
                   path="medialibrary/shops/:shopId/:shopItemId/:shopSubCategoryId/:playlistId/tracks"
                   element={<TracksPageUser />}
                 />
-                 <Route
+                <Route
                   path="medialibrary/shops/:shopId/:shopItemId/:playlistId/tracks"
                   element={<TracksPageUser />}
                 />

@@ -21,12 +21,20 @@ import UserFieldCard from "../CardUser/CardUserField";
 import { Button } from "../../Button/Button";
 
 const EditorCardForm = ({ user }) => {
+  const [isEditing, setIsEditing] = useState(false);
   const { access, status, editorRole, adminRole, _id: id } = user;
   const activeSectionCard = adminRole || editorRole ? "MusicEditor" : "User"; //user or editor
 
+  const handleEditActivation = () => {
+    // You can perform additional actions if needed before allowing editing
+    setIsEditing((prevIsEditing) => !prevIsEditing);
+  };
+  const handleCloseEdit = () => {
+    setIsEditing(false);
+    reset({ user });
+  };
   //   const typeOfStatus = status; //on/off
 
-  const [isEditing, setIsEditing] = useState(false);
   const [typeOfAccess, setTypeOfAccess] = useState(access); //on/off статус он или офф
 
   const [dispatchEditorUpdate, { isLoading: isLoadingEditor }] = //ф-я для отправки формы юзера тов
@@ -48,13 +56,10 @@ const EditorCardForm = ({ user }) => {
     // resolver: activeSectionCard === 'User' ? yupResolver(UserSchema) : yupResolver(MusicEditorSchema)
   });
 
-  const handleEditActivation = () => {
-    // You can perform additional actions if needed before allowing editing
-    setIsEditing(true);
-  };
-
   const onFormSubmit = (data) => {
     if (editorRole === true) {
+      console.log("data", data);
+
       const formData = { id, login: user.login, ...data };
       console.log("formData", formData);
       dispatchEditorUpdate(formData)
@@ -62,7 +67,7 @@ const EditorCardForm = ({ user }) => {
         .then(() => {
           setIsEditing(false);
         })
-        .catch((error) => console.log(error.data));
+        .catch((error) => error?.data?.message && alert(error?.data?.message));
     }
   };
   const handleTypeOfAccess = () => {
@@ -76,7 +81,7 @@ const EditorCardForm = ({ user }) => {
       </Title>
 
       <form onSubmit={handleSubmit(onFormSubmit)}>
-        {!isEditing ? (
+        {/* {!isEditing ? (
           <Button
             type="button"
             onClick={() => handleEditActivation()}
@@ -89,7 +94,7 @@ const EditorCardForm = ({ user }) => {
             // text="Зберегти"
             // disabled={!isValid}
           />
-        )}
+        )} */}
 
         <UserFieldCard
           user={user}
@@ -102,6 +107,7 @@ const EditorCardForm = ({ user }) => {
           activeSectionCard={activeSectionCard}
           handleEditActivation={handleEditActivation}
           isEditing={isEditing}
+          handleCloseEdit={handleCloseEdit}
         />
       </form>
     </>

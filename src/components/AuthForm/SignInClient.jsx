@@ -46,7 +46,7 @@ export const SignInClient = () => {
 
         reset();
       })
-      .catch((e) => console.log(e.data.message));
+      .catch((e) => console.log(e.data?.message || e));
   };
 
   return (

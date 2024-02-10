@@ -35,9 +35,9 @@ const CardUserField = ({
   dirtyFields,
   access,
 }) => {
-  console.log("isEditing", isEditing);
+  // console.log("isEditing", isEditing);
 
-  console.log("activeSectionCard", activeSectionCard);
+  // console.log("activeSectionCard", activeSectionCard);
   return (
     <Fieldform>
       <RegisterLeftBlock>

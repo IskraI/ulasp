@@ -67,15 +67,20 @@ const UserCreateForm = ({ onCloseModal, section }) => {
   //отправка данных формы в зависимости от фоп или тов или редактор
   const onFormSubmit = (data) => {
     if (activeSection === "MusicEditor") {
-      const formData = { ...data, editorRole: true, status: false };
-      //  console.log('formData', formData);
+      const formData = { ...data, editorRole: true, status: true };
+      // console.log("formData", formData);
       dispatchEditor(formData)
         .unwrap()
         .then(() => {
           navigate("/admin/users/editors");
           onCloseModal();
         })
-        .catch((error) => alert(error.data));
+        .catch(
+          (error) =>
+            // console.log(error.data.message)
+            error?.data?.message && alert(error.data.message)
+        );
+      return;
     }
 
     if (typeOfUser === "fop") {
