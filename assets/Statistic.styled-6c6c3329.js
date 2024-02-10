@@ -1,4 +1,4 @@
-import{n as t,f as a}from"./index-fd978f6a.js";const e=t.div`
+import{n as t,f as a}from"./index-60df5e9d.js";const e=t.div`
   display: flex;
   gap: 8px;
   /* margin-left: 111px; */
