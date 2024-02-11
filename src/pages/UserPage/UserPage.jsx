@@ -8,7 +8,8 @@ import { PageSection, PageSubpage } from "../AdminPage/AdminPage.styled";
 import Player from "../../components/Player/Player";
 
 const UserPage = () => {
- const playerState = useSelector(getPlayerState);
+  const playerState = useSelector(getPlayerState);
+  console.log("playerState.isFirstPlay", playerState.isFirstPlay);
 
   return (
     <PageSection>
@@ -17,7 +18,7 @@ const UserPage = () => {
         <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
-        <Player tracks={playerState.src} />
+        <Player tracks={playerState.src} isFirst={playerState.isFirstPlay} />
       </PageSubpage>
     </PageSection>
   );
