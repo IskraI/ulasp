@@ -10,3 +10,10 @@ export const GenresList = styled.ul`
   gap: 24px;
   margin-bottom: 50px;
 `;
+
+export const GenresNotFound = styled.p`
+  align-self: center;
+  margin-top: 40px;
+  font-size: 28px;
+  color: grey;
+`;

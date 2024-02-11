@@ -5,7 +5,6 @@ import {
   useGetAllTracksQuery,
   useUploadTrackMutation,
 } from "../../../redux/tracksSlice";
-import Player from "../../../components/Player/Player";
 import AddTracks from "../../../components/EditorComponents/AddTracks/AddTracks";
 import symbol from "../../../assets/symbol.svg";
 import { Loader } from "../../../components/Loader/Loader";

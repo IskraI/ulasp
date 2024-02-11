@@ -31,6 +31,4 @@ export const PlayerReact = styled(AudioPlayer)`
   padding-top: 0;
   width: 100%;
   height: 80%;
-
-  /* border: 1px solid red; */
 `;
