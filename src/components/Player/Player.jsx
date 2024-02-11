@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+
 import {
   setCurrentIndex,
   stopPlay,
   updateIsFirstPlay,
 } from "../../redux/playerSlice";
 import { useUpdateListenCountTrackByIdMutation } from "../../redux/tracksUserSlice";
+
 import {
   PlayerWrapper,
   PlayerReact,
@@ -77,6 +79,7 @@ const Player = ({ tracks = [], isFirst }) => {
   const handleEnd = () => {
     console.log("Песня завершила проигрывание.");
     dispatch(updateIsFirstPlay(true));
+
     setTrackIndex((currentTrack) =>
       currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
     );
