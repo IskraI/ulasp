@@ -21,8 +21,8 @@ export const WithOutGenre = () => {
   return <p style={{ fontWeight: "500", fontSize: "16px" }}>без жанру</p>;
 };
 
-export const NoData = ({ text }) => {
-  return <ErrorWrapper>{text}</ErrorWrapper>;
+export const NoData = ({ text, textColor }) => {
+  return <ErrorWrapper textColor={textColor}>{text}</ErrorWrapper>;
 };
 
 export const Error500 = () => {

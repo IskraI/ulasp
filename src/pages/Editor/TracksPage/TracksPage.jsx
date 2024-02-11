@@ -29,11 +29,6 @@ const TracksPage = () => {
     refetchOnFocus: true,
   });
 
-  // console.log("data", data);
-  // console.log("isFetching", isFetching);
-  // console.log("isSuccess", isSuccess);
-  // console.log("isLoading", isLoading);
-
   const [
     uploadTrackInPlaylist,
     {
@@ -45,11 +40,6 @@ const TracksPage = () => {
       isUninitialized: isUninitializedUploadTrackInPlaylist,
     },
   ] = useUploadTracksInPlaylistMutation();
-
-  if (isSuccess) {
-    // console.log("Count", data.totalTracks);
-    // console.log("data", data.playlist._id);
-  }
 
   const rows = () => {
     const RowsTitle = [
@@ -188,10 +178,8 @@ const TracksPage = () => {
             isLoadingUpload={isLoadingUploadTrackInPlaylist}
             errorUpload={errorUploadTrackInPlaylist}
             isUninitialized={isUninitializedUploadTrackInPlaylist}
-            display="none"
             rows={rows()}
           />
-          {/* <Player tracks={data.playlist.trackList} /> */}
         </>
       )}
     </>

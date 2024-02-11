@@ -41,6 +41,8 @@ const ShopsPage = ({ showNavigationLink, limit }) => {
     isSuccess: isSuccessAllShops,
   } = useGetAllShopsQuery(`?&limit=${limit ? 12 : ""}`);
 
+  console.log(shops);
+
   const [
     createShop,
     {
@@ -82,8 +84,6 @@ const ShopsPage = ({ showNavigationLink, limit }) => {
 
   const linkToPage = "shops";
 
-  console.log(dataCreateShop);
-
   const newShop =
     dataCreateShop?.newShop?.shopCategoryName ??
     "Назва нової категорії не була введена";
@@ -96,9 +96,7 @@ const ShopsPage = ({ showNavigationLink, limit }) => {
       {isFetchingAllShops && !isSuccessAllShops && !isErrorAllShops && (
         <Loader />
       )}
-      {!isErrorAllShops && isSuccessAllShops && !shops && (
-        <NoData text={"Заклади ще не додані"} />
-      )}
+
       {isSuccessAllShops && !isErrorAllShops && (
         <>
           <ControlMediateca
@@ -108,6 +106,12 @@ const ShopsPage = ({ showNavigationLink, limit }) => {
             onClick={toogleModal}
             disabled={isErrorAllShops}
           />
+          {errorAllShops && (
+            <ErrorNotFound error={errorAllShops?.data?.message} />
+          )}
+          {!isErrorAllShops && isSuccessAllShops && shops?.length === 0 && (
+            <NoData text={"Заклади ще не додані"} textColor={"grey"} />
+          )}
           <ShopsWrapper>
             <ShopsList>
               {shops.map(({ _id, shopCategoryName, shopAvatarURL }) => (

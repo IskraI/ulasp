@@ -1,4 +1,8 @@
-export const BASE_URL = "http://localhost:3000";
+//для локального сервера
+export const BASE_URL = "http://localhost:8000";
+
+//для сервера  ULASP
+// export const BASE_URL = "http://157.90.34.24:3000";
 
 export const ERROR_NOT_FOUND =
   " Упс... Щось пішло не так, зверніться до адміністратора";

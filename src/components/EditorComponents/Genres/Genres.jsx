@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { GenresWrapper } from "./Genres.styled";
+import { GenresWrapper, GenresNotFound } from "./Genres.styled";
 import GenreListItem from "./GenresItem";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 import { GenresList } from "./Genres.styled";
@@ -9,17 +9,16 @@ import { Modal } from "../../../components/Modal/Modal";
 import ModalForm from "../../../components/EditorComponents/ControlMediateca/ModalForm";
 import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
 import { useCreateGenreMutation } from "../../../redux/genresSlice";
-import { ErrorNotFound } from "../../Errors/Errors";
+import { ErrorNotFound, NoData } from "../../Errors/Errors";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 
 const Genres = ({
-  display,
-  displayPlayer,
   data: genres,
   isFetching,
+  isLoading,
   error,
   isLoadingCreateGenre,
   showNavigationLink,
@@ -92,6 +91,9 @@ const Genres = ({
         textButton={"Жанр"}
         onClick={toogleModal}
       />
+      {genres?.length === 0 && !isLoading && !error && (
+        <NoData text={"Жанри ще не додані"} textColor={"grey"} />
+      )}
       {!error && (
         <GenresWrapper>
           <GenresList>

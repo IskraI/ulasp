@@ -13,6 +13,7 @@ const MediaLibraryPage = () => {
   const {
     data: genres,
     isFetching: isFetchingAllGenre,
+    isLoading: isLoadingAllGenre,
     isSuccess: isSuccesAllGenre,
     isError: isErrorAllGenre,
   } = useGetAllGenresQuery(`?&limit=${12}`);
@@ -20,13 +21,16 @@ const MediaLibraryPage = () => {
   const {
     data: shops,
     isFetching: isFetchingShops,
+    isLoading: isLoadingShops,
     isSuccess: isSuccessShops,
     isError: isErrorShops,
+    error: errorShops,
   } = useGetAllShopsQuery(`?&limit=${12}`);
 
   const {
     data: playlists,
     isFetching: isFetchingLatestPlaylist,
+    isLoading: isLoadingLatestPlaylist,
     isSuccess: isSuccesLatestPlaylist,
     isError: isErrorLatestPlaylist,
   } = useGetLatestPlaylistsQuery(`?&limit=${12}`);
@@ -71,6 +75,8 @@ const MediaLibraryPage = () => {
   // console.log("Fetching", isFetchingShops);
   // console.log("Success", success);
   // console.log("Error", isErrorShops);
+
+  console.log(shops);
   return (
     <>
       {/* {error && <div>{ERROR_NOT_FOUND}</div>} */}
@@ -78,18 +84,19 @@ const MediaLibraryPage = () => {
       {success && !fetching && (
         <>
           <Genres
-            displayPlayer={"none"}
             data={genres}
             isFetching={isFetchingAllGenre}
+            isLoading={isLoadingAllGenre}
             error={isErrorAllGenre}
             showNavigationLink={true}
           />
 
-          <ShopsPage showNavigationLink={true} limit={"12"} />
+          <ShopsPage limit={"12"} showNavigationLink={true} />
           <LatestPlaylists
             title={"Нові плейлисти"}
             data={playlists}
             isFetching={isFetchingLatestPlaylist}
+            isLoading={isLoadingLatestPlaylist}
             error={isErrorLatestPlaylist}
             showNavigationLink={true}
           />
@@ -100,7 +107,6 @@ const MediaLibraryPage = () => {
             isSuccess={isSuccesLatestNewSongs}
             showNavigationLink={true}
           />
-          {/* <Player tracks={allTracks.latestTracks} /> */}
         </>
       )}
     </>

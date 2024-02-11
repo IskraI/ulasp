@@ -15,8 +15,6 @@ const AllGenresPage = () => {
       {!isSuccess && !isErrorAllGenre && <Loader />}
       {isSuccess && !isErrorAllGenre && (
         <Genres
-          displayPlayer={"flex"}
-          display={"none"}
           data={genres}
           isFetching={isFetchingAllGenre}
           error={isErrorAllGenre}

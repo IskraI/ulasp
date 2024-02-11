@@ -16,7 +16,7 @@ import {
 import TrackItem from "./TrackItem";
 import { ERROR_NOT_FOUND } from "../../../constants/constants";
 import { ProgressBarTracksTable } from "../../Loader/Loader";
-import { ErrorNotFound } from "../../Errors/Errors";
+import { ErrorNotFound, NoData } from "../../Errors/Errors";
 import { Button } from "../../Button/Button";
 
 import { setSrcPlayer, stopPlay } from "../../../redux/playerSlice";
@@ -73,9 +73,9 @@ const TracksTable = ({
 
   return (
     <>
-      {error && <TracksNotFound>{ERROR_NOT_FOUND}</TracksNotFound>}
+      {error && <ErrorNotFound error={error?.data?.message} />}
       {tracks?.length === 0 && !isLoading && !error && (
-        <TracksNotFound>Музика ще не завантажена</TracksNotFound>
+        <NoData text={"Музика ще не завантажена"} textColor={"grey"} />
       )}
 
       {isSuccess && !error && tracks?.length !== 0 && (

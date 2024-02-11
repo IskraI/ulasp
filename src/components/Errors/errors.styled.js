@@ -8,9 +8,10 @@ export const ErrorWrapper = styled.div`
   align-items: center;
   gap: 12px;
   padding: 24px 8px;
-  color: ${colors.mainFontColor};
-  font-size: 18px;
-  font-weight: 700;
+  color: ${(props) =>
+    props.textColor ? props.textColor : colors.mainFontColor};
+  font-size: 28px;
+  font-weight: 500;
 `;
 
 export const ErrorText = styled.p`

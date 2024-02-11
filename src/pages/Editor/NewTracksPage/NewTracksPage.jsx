@@ -5,7 +5,6 @@ import {
 } from "../../../redux/tracksSlice";
 import symbol from "../../../assets/symbol.svg";
 import AddTracks from "../../../components/EditorComponents/AddTracks/AddTracks";
-import Player from "../../../components/Player/Player";
 import { useRef, useState, useId } from "react";
 
 const NewTracksPage = () => {
@@ -114,9 +113,6 @@ const NewTracksPage = () => {
     },
   ] = useUploadTrackMutation();
 
-  // if (isSuccess) {
-  //   console.log(allTracks.trackURL);
-  // }
   return (
     <>
       {isSuccess && !error && (
@@ -129,16 +125,15 @@ const NewTracksPage = () => {
 
           <TracksTable
             title={" Остання додана музика"}
+            marginTopWrapper={"24px"}
             tracks={allTracks.latestTracks}
             error={error}
             isFetching={isFetching}
             isSuccess={isSuccess}
-            display="none"
             isCheckedAll={checkedMainCheckBox}
             rows={rows()}
             isInPlayList={false}
           />
-          {/* <Player tracks={allTracks.latestTracks} /> */}
         </>
       )}
     </>

@@ -8,6 +8,7 @@ import ModalForm from "../ControlMediateca/ModalForm";
 import PlaylistListItem from "./PlayListItem";
 import { Modal } from "../../Modal/Modal";
 import symbol from "../../../assets/symbol.svg";
+import { ErrorNotFound, NoData } from "../../Errors/Errors";
 
 import { useCreatePlaylistMutation } from "../../../redux/playlistsSlice";
 import { useCreatePlaylistInGenreMutation } from "../../../redux/genresSlice";
@@ -19,6 +20,7 @@ const LatestPlaylists = ({
   data: playlists,
   genre,
   isFetching,
+  isLoading,
   error,
   showNavigationLink,
   subCategory,
@@ -28,13 +30,13 @@ const LatestPlaylists = ({
 
   const { genreId, shopSubCategoryId } = useParams();
 
-  const [createPlaylist, { isSuccess, isLoading, isError }] =
-    useCreatePlaylistMutation();
+  const [
+    createPlaylist,
+    { isSuccess, isLoading: isLoadingCreatePlaylist, isError },
+  ] = useCreatePlaylistMutation();
 
   const [createPlaylistInGenre, { isSuccess: success }] =
     useCreatePlaylistInGenreMutation();
-
-
 
   const handleChoosePlaylistAvatar = (event) => {
     console.log("event", event);
@@ -104,6 +106,8 @@ const LatestPlaylists = ({
     return setShowModal(() => !showModal);
   };
 
+  console.log("showNavigationLink", showNavigationLink);
+
   return (
     <>
       <ControlMediateca
@@ -112,10 +116,12 @@ const LatestPlaylists = ({
         textButton={"Плейлист"}
         onClick={toogleModal}
       />
-      {!isFetching && !error && !playlists.length && (
-        <p>Плейлисти ще не додані</p>
+      {error && <ErrorNotFound error={error?.data?.message} />}
+      {!isFetching && !error && playlists?.length === 0 && (
+        <NoData text={"Плейлисти ще не додані"} textColor={"grey"} />
       )}
-      {!error && playlists.length !== 0 && (
+
+      {!error && (
         <PlaylistWrapper>
           <PlaylistList>
             {playlists.map(({ _id, playListName, playListAvatarURL }) => (
