@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { setCurrentIndex } from "../../redux/playerSlice";
 import {
   PlayerWrapper,
@@ -13,6 +13,12 @@ import { BASE_URL } from "../../constants/constants";
 const Player = ({ tracks = [] }) => {
   const [currentTrack, setTrackIndex] = useState(0);
   const dispatch = useDispatch();
+  // const [isPlaying, setIsPlaying] = useState(false);
+
+  // const handlePlay = useCallback((trackId) => {
+  //   setIsPlaying(true);
+  //   console.log(`Песня с ID ${trackId} начала проигрываться.`);
+  // }, []);
 
   const trackSRC = BASE_URL + "/" + tracks[currentTrack]?.trackURL;
 
@@ -41,6 +47,7 @@ const Player = ({ tracks = [] }) => {
   };
 
   const handleEnd = () => {
+    console.log("Песня завершила проигрывание.");
     setTrackIndex((currentTrack) =>
       currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
     );
@@ -69,6 +76,7 @@ const Player = ({ tracks = [] }) => {
             onClickNext={handleClickNext}
             onClickPrevious={handleClickPrevious}
             onEnded={handleEnd}
+            // onPlay={() => handlePlay(tracks[currentTrack]?.id)}
           />
         </>
         {/* )} */}
