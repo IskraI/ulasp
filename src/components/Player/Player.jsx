@@ -25,7 +25,7 @@ const Player = ({ tracks = [], isFirst }) => {
   // const [isLoadStarted, setIsLoadStarted] = useState(false);
 
   const [dispatchListenCountTrack] = useUpdateListenCountTrackByIdMutation();
-  console.log("isFirstPlay", isFirst);
+  // console.log("isFirstPlay", isFirst);
   const handlePlayLoadStart = async (track) => {
     if (isFirst) {
       console.log(

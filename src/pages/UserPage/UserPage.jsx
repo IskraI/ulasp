@@ -9,7 +9,6 @@ import Player from "../../components/Player/Player";
 
 const UserPage = () => {
   const playerState = useSelector(getPlayerState);
-  console.log("playerState.isFirstPlay", playerState.isFirstPlay);
 
   return (
     <PageSection>
