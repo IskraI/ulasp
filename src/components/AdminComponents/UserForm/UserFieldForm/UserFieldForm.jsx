@@ -29,8 +29,8 @@ const UserFieldForm = ({
   register,
   dirtyFields,
 }) => {
-  console.log("errors", errors);
-  console.log("isValid", isValid);
+  // console.log("errors", errors);
+  // console.log("isValid", isValid);
 
   return (
     <Fieldform>
