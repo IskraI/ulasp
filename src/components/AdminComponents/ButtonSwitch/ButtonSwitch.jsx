@@ -13,7 +13,7 @@ export const ButtonSwitch = ({
   type,
   idUser,
   onClick,
-  form = "false",
+  // form = "false",
 }) => {
   const [typeOfAccess, setTypeOfAccess] = useState(isTrue);
 
@@ -34,123 +34,123 @@ export const ButtonSwitch = ({
 
   return (
     <>
-      {!form && (
-        <>
-          {isLoadingAccess && (
-            <ButtonCustomSwitch type="button">Loading</ButtonCustomSwitch>
-          )}
+      {/* {!form && ( */}
+      <>
+        {isLoadingAccess && (
+          <ButtonCustomSwitch type="button">Loading</ButtonCustomSwitch>
+        )}
 
-          {!isLoadingAccess && typeOfAccess && (
-            <ButtonCustomSwitch
-              type="button"
-              isTrue={typeOfAccess}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              onClick={() => handleSwitchAccess(idUser)}
+        {!isLoadingAccess && typeOfAccess && (
+          <ButtonCustomSwitch
+            type="button"
+            isTrue={typeOfAccess}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onClick={() => handleSwitchAccess(idUser)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-              >
-                <Circle
-                  cx="6"
-                  cy="6"
-                  r="6"
-                  isTrue={typeOfAccess}
-                  isHovered={isHovered}
-                />
-              </svg>
-              On
-            </ButtonCustomSwitch>
-          )}
-          {!isLoadingAccess && !typeOfAccess && (
-            <ButtonCustomSwitch
-              type="button"
-              isTrue={typeOfAccess}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              onClick={() => handleSwitchAccess(idUser)}
+              <Circle
+                cx="6"
+                cy="6"
+                r="6"
+                isTrue={typeOfAccess}
+                isHovered={isHovered}
+              />
+            </svg>
+            On
+          </ButtonCustomSwitch>
+        )}
+        {!isLoadingAccess && !typeOfAccess && (
+          <ButtonCustomSwitch
+            type="button"
+            isTrue={typeOfAccess}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onClick={() => handleSwitchAccess(idUser)}
+          >
+            Off
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
             >
-              Off
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-              >
-                <Circle
-                  cx="6"
-                  cy="6"
-                  r="6"
-                  isTrue={typeOfAccess}
-                  isHovered={isHovered}
-                />
-              </svg>
-            </ButtonCustomSwitch>
-          )}
-        </>
-      )}
-      {form && (
-        <>
-          {isTrue ? (
-            <ButtonCustomSwitch
-              form={form}
-              type="button"
-              isTrue={typeOfAccess}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              onClick={() => handleSwitchAccess(idUser)}
+              <Circle
+                cx="6"
+                cy="6"
+                r="6"
+                isTrue={typeOfAccess}
+                isHovered={isHovered}
+              />
+            </svg>
+          </ButtonCustomSwitch>
+        )}
+      </>
+      {/* )} */}
+      {/* {form && ( */}
+      {/* <>
+        {isTrue ? (
+          <ButtonCustomSwitch
+            // form={form}
+            type="button"
+            isTrue={typeOfAccess}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onClick={() => handleSwitchAccess(idUser)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-              >
-                <Circle
-                  cx="6"
-                  cy="6"
-                  r="6"
-                  isTrue={typeOfAccess}
-                  isHovered={isHovered}
-                />
-              </svg>
-              On
-            </ButtonCustomSwitch>
-          ) : (
-            <ButtonCustomSwitch
-              form={form}
-              type="button"
-              isTrue={typeOfAccess}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              onClick={() => handleSwitchAccess(idUser)}
+              <Circle
+                cx="6"
+                cy="6"
+                r="6"
+                isTrue={typeOfAccess}
+                isHovered={isHovered}
+              />
+            </svg>
+            On
+          </ButtonCustomSwitch>
+        ) : (
+          <ButtonCustomSwitch
+            // form={form}
+            type="button"
+            isTrue={typeOfAccess}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onClick={() => handleSwitchAccess(idUser)}
+          >
+            Off
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
             >
-              Off
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-              >
-                <Circle
-                  cx="6"
-                  cy="6"
-                  r="6"
-                  isTrue={typeOfAccess}
-                  isHovered={isHovered}
-                />
-              </svg>
-            </ButtonCustomSwitch>
-          )}
-        </>
-      )}
+              <Circle
+                cx="6"
+                cy="6"
+                r="6"
+                isTrue={typeOfAccess}
+                isHovered={isHovered}
+              />
+            </svg>
+          </ButtonCustomSwitch>
+        )}
+      </> */}
+      {/* )} */}
     </>
   );
 };

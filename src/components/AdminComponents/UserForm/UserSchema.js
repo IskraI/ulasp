@@ -21,8 +21,9 @@ export const UserFopSchema = yup.object().shape({
 
   contractNumber: yup
     .string()
-    .min(6, "Повинно бути від 6 до 16 знаків!")
-    .max(16, "Повинно бути від 6 до 16 знаків!")
+    .min(6, "Повинно бути від 6 до 16 цифр!")
+    .max(16, "Повинно бути від 6 до 16 цифр!")
+    .matches(onlyNumberRegexp, "Повинно бути від 6 до 16 цифр!")
     .required("Обов'язкове поле!"),
   taxCode: yup
     .string()
@@ -44,12 +45,22 @@ export const UserFopSchema = yup.object().shape({
     .matches(emailRegexp, "Невірний формат email"),
   dateOfAccess: yup
     .string()
-    .required("Обов'язкове поле!")
-    .matches(regularDateRegexp, "TУ форматі дд.мм.рррр"),
+    .nullable()
+    .test("is-empty-or-valid", "У форматі дд.мм.рррр", (value) => {
+      if (!value) return true; // Вернуть true если значение пустое или null
+      return regularDateRegexp.test(value); // Здесь должна быть ваша логика валидации
+    }),
+  // .required("Обов'язкове поле!")
+  // .matches(regularDateRegexp, "TУ форматі дд.мм.рррр"),
   lastPay: yup
     .string()
-    .required("Обов'язкове поле!")
-    .matches(regularDateRegexp, "У форматі дд.мм.рррр"),
+    .nullable()
+    .test("is-empty-or-valid", "У форматі дд.мм.рррр", (value) => {
+      if (!value) return true; // Вернуть true если значение пустое или null
+      return regularDateRegexp.test(value); // Здесь должна быть ваша логика валидации
+    }),
+  // .required("Обов'язкове поле!")
+  // .matches(regularDateRegexp, "У форматі дд.мм.рррр"),
 
   contactFace: yup.string().required("Обов'язкове поле!"),
 
@@ -80,8 +91,9 @@ export const UserCompanySchema = yup.object().shape({
 
   contractNumber: yup
     .string()
-    .min(6, "Повинно бути від 6 до 16 знаків!")
-    .max(16, "Повинно бути від 6 до 16 знаків!")
+    .min(6, "Повинно бути від 6 до 16 цифр!")
+    .max(16, "Повинно бути від 6 до 16 цифр!")
+    .matches(onlyNumberRegexp, "Повинно бути від 6 до 16 цифр!")
     .required("Обов'язкове поле!"),
   taxCode: yup
     .string()
@@ -181,6 +193,7 @@ export const UserFopCardSchema = yup.object().shape({
     .string()
     .min(6, "Повинно бути від 6 до 16 знаків!")
     .max(16, "Повинно бути від 6 до 16 знаків!")
+    .matches(onlyNumberRegexp, "Повинно бути від 6 до 16 цифр!")
     .required("Обов'язкове поле!"),
   taxCode: yup
     .string()
@@ -202,12 +215,22 @@ export const UserFopCardSchema = yup.object().shape({
     .matches(emailRegexp, "Невірний формат email"),
   dateOfAccess: yup
     .string()
-    .required("Обов'язкове поле!")
-    .matches(regularDateRegexp, "TУ форматі дд.мм.рррр"),
+    // .required("Обов'язкове поле!")
+    .nullable()
+    .test("is-empty-or-valid", "У форматі дд.мм.рррр", (value) => {
+      if (!value) return true; // Вернуть true если значение пустое или null
+      return regularDateRegexp.test(value); // Здесь должна быть ваша логика валидации
+    }),
+  // .matches(regularDateRegexp, "TУ форматі дд.мм.рррр"),
   lastPay: yup
     .string()
-    .required("Обов'язкове поле!")
-    .matches(regularDateRegexp, "У форматі дд.мм.рррр"),
+    // .required("Обов'язкове поле!")
+    .nullable()
+    .test("is-empty-or-valid", "У форматі дд.мм.рррр", (value) => {
+      if (!value) return true; // Вернуть true если значение пустое или null
+      return regularDateRegexp.test(value); // Здесь должна быть ваша логика валидации
+    }),
+  // .matches(regularDateRegexp, "У форматі дд.мм.рррр"),
 
   contactFace: yup.string().required("Обов'язкове поле!"),
 

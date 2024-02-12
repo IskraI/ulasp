@@ -30,6 +30,7 @@ const RegisterNameFieldCard = ({
   handleEditActivation,
   handleCloseEdit,
 }) => {
+  console.log("user", user);
   return (
     <RegisterNameBlock>
       {!isEditing ? (
@@ -142,7 +143,8 @@ const RegisterNameFieldCard = ({
           )}
 
           <ButtonSwitch
-            form={true}
+            // form={true}
+            idUser={user._id}
             type="button"
             isTrue={typeOfAccess}
             onClick={() => handleTypeOfAccess()}
@@ -160,8 +162,9 @@ const RegisterNameFieldCard = ({
             <RegisterNameField>{` ${user.name} `}</RegisterNameField>
           )}
           <ButtonSwitch
-            form={true}
+            // form={true}
             type="button"
+            idUser={user._id}
             isTrue={typeOfAccess}
             onClick={() => console.log("edite card")}
           />
