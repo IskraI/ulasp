@@ -27,6 +27,12 @@ const UserFieldForm = ({
   register,
   dirtyFields,
 }) => {
+  console.log("errors", errors);
+  console.log("isValid", isValid);
+  console.log(
+    "dirtyFields.dateOfAccess && errors.dateOfAccess",
+    dirtyFields.dateOfAccess && errors.dateOfAccess
+  );
   return (
     <Fieldform>
       <RegisterLeftBlock>
@@ -171,7 +177,9 @@ const UserFieldForm = ({
           type="submit"
           padding="8px"
           text="Додати"
-          disabled={!isValid}
+          disabled={
+            !isValid || (dirtyFields.dateOfAccess && errors.dateOfAccess)
+          }
           showIcon={false}
         />
       </RegisterRigthBlock>

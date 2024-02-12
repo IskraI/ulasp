@@ -19,6 +19,7 @@ import { BASE_URL } from "../../constants/constants";
 
 const Player = ({ tracks = [], isFirst }) => {
   const [currentTrack, setTrackIndex] = useState(0);
+
   // const [isFirstPlay, setIsFirstPlay] = useState(isFirst);
   const dispatch = useDispatch();
   // const [isLoadStarted, setIsLoadStarted] = useState(false);
