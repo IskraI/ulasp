@@ -1,4 +1,4 @@
-import{n,f as t,g as a,j as o,h,i as g}from"./index-929b089d.js";import"./Statistic.styled-5aeb55da.js";n.p`
+import{n,f as t,g as a,j as o,h,i as g}from"./index-e6065daa.js";import"./Statistic.styled-9ffdb98c.js";n.p`
   font-size: 24px;
   font-weight: 500;
   line-height: 1.21;
