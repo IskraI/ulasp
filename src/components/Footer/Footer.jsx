@@ -20,7 +20,7 @@ const Footer = () => {
      <Content>
      <ContactAdress>Громадська спілка <br />
 “Українська ліга авторських та суміжних прав” 02002<br />
-         м. Київ, вул. Андрія Аболмасова, 52 поверх</ContactAdress>
+         м. Київ, вул. Андрія Аболмасова 5, 2 поверх</ContactAdress>
        </Content>
     </PageFooter>
   );
