@@ -62,8 +62,8 @@ export const shopsApi = createApi({
       providesTags: (_result, _err, id) => [{ type: "ShopItem", id }],
     }),
     createShopCategory: builder.mutation({
-      query: ({ shopId: id, data }) => ({
-        url: `/editor/shop/shopitem/create/${id}`,
+      query: ({ idShopLibrary, data }) => ({
+        url: `/editor/shop/shopitem/create/${idShopLibrary}`,
         method: "POST",
         body: data,
       }),
