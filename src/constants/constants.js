@@ -1,10 +1,10 @@
 import defaultAvatar from "../images/default_avatar.png";
 
 //для локального сервера
-export const BASE_URL = "http://localhost:8000";
+// export const BASE_URL = "http://localhost:8000";
 
 //для сервера  ULASP
-// export const BASE_URL = "http://157.90.34.24:3000";
+export const BASE_URL = "http://157.90.34.24:3000";
 
 export const defaultAvatarSrc = defaultAvatar;
 
