@@ -10,20 +10,13 @@ import symbol from "../../../assets/symbol.svg";
 
 import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsSlice";
 import { useDeleteTrackMutation } from "../../../redux/tracksSlice";
-import {
-  setSrcPlayer,
-  stopPlay,
-  setCurrentIndex,
-} from "../../../redux/playerSlice";
+import { stopPlay, setCurrentIndex } from "../../../redux/playerSlice";
 import { getPlayerState } from "../../../redux/playerSelectors";
 
 import {
   TableCell,
   TrackCover,
-  TableStyle,
-  THeadStyle,
   TrStyle,
-  TracksNotFound,
   PopUpTracksTable,
   PopUpButton,
   DotsButton,
@@ -55,8 +48,6 @@ const TrackItem = ({
   const [showPopUp, setShowPopUp] = useState(false);
   const [isPlayingTrack, setIsPlayingTrack] = useState(false);
   const [isPausedTrack, setIsPausedTrack] = useState(false);
-
-  // console.log(playerState.src[index]);
 
   const [id, setId] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
