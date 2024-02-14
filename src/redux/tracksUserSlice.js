@@ -44,6 +44,13 @@ export const tracksUserApi = createApi({
       }),
       invalidatesTags: ["Tracks"],
     }),
+    updateListenCountTrackById: builder.mutation({
+      query: (id) => ({
+        url: `user/tracks/countlisten/${id}`,
+        method: "POST",
+      }),
+      invalidatesTags: ["ListenCountTrack"],
+    }),
   }),
 });
 
@@ -51,4 +58,5 @@ export const {
   useGetAllTracksforUserQuery,
   useGetTracksByGenreIdQuery,
   useDeleteTrackMutation,
+  useUpdateListenCountTrackByIdMutation,
 } = tracksUserApi;

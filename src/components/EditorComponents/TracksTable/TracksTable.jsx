@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import symbol from "../../../assets/symbol.svg";
 
 import {
@@ -21,7 +22,7 @@ import { Button } from "../../Button/Button";
 
 import { setSrcPlayer, stopPlay } from "../../../redux/playerSlice";
 import { getPlayerState } from "../../../redux/playerSelectors";
-import { useEffect } from "react";
+
 const TracksTable = ({
   rows,
   tracks,

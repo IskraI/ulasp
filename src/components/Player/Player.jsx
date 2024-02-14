@@ -144,8 +144,7 @@ const Player = ({ tracks = [], isFirst }) => {
           </TrackName>
 
           <PlayerReact
-            onPause={(e) => {
-              console.log(e);
+            onPause={() => {
               dispatch(pause());
             }}
             onPlay={() => {
@@ -154,7 +153,6 @@ const Player = ({ tracks = [], isFirst }) => {
               }
               handlePlayLoadStart(tracks[currentTrack]?.id);
             }}
-            onPlaying={(e) => console.log(e)}
             ref={playerRef}
             autoPlay={false}
             //может быть ошибка проигрывания после паузы и переключения трека на следующий
