@@ -17,7 +17,10 @@ import {
   UserCreateModal,
 } from "../UserForm/UserCreateForm.styled";
 import { Title } from "../AdminCabinetPage/AdminCabinetPage.styled";
-import { UserFopCardSchema, UserCompanySchema } from "../UserForm/UserSchema";
+import {
+  UserFopCardSchema,
+  UserCompanyCardSchema,
+} from "../UserForm/UserSchema";
 
 import CardUserField from "./CardUserField";
 
@@ -39,7 +42,7 @@ const CardUserForm = ({ user, playlistCount, tracksCount }) => {
   //создание формы - юзформ
 
   let resolverShema =
-    typeOfUser === "fop" ? UserFopCardSchema : UserCompanySchema;
+    typeOfUser === "fop" ? UserFopCardSchema : UserCompanyCardSchema;
 
   const {
     control,

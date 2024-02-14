@@ -6,6 +6,8 @@ const initialState = {
   isLoaded: false,
   isPlaying: false,
   isPaused: false,
+  isFirstPlay: true,
+
 };
 
 export const playerSlice = createSlice({
@@ -39,6 +41,7 @@ export const playerSlice = createSlice({
       reducer(state, action) {
         state = {
           ...state,
+
           indexTrack: action.payload,
           isPlaying: false,
         };
@@ -51,6 +54,11 @@ export const playerSlice = createSlice({
           ...state,
           isPlaying: false,
           isPaused: true,
+
+          src: action.payload,
+          isLoaded: false,
+          isFirstPlay: true,
+
         };
         return state;
       },
@@ -67,7 +75,7 @@ export const playerSlice = createSlice({
   },
 });
 
-export const { setSrcPlayer, stopPlay, pause, setCurrentIndex, updateIsFirstPlay } =
-  playerSlice.actions;
+
+export const { setSrcPlayer, stopPlay, pause, setCurrentIndex, updateIsFirstPlay } = playerSlice.actions;
 
 export const playerReducer = playerSlice.reducer;

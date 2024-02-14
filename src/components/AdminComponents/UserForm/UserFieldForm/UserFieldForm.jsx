@@ -11,6 +11,8 @@ import {
   RegisterCommentField,
   CommentTextarea,
   Tooltip,
+  RegisterLoginForm,
+  RegisterLoginInput,
 } from "../UserCreateForm.styled";
 import ContactFaceField from "./ContactFaceField";
 import RegisterNameFieldForm from "./RegisterNameFieldForm";
@@ -27,6 +29,9 @@ const UserFieldForm = ({
   register,
   dirtyFields,
 }) => {
+  // console.log("errors", errors);
+  // console.log("isValid", isValid);
+
   return (
     <Fieldform>
       <RegisterLeftBlock>
@@ -135,26 +140,25 @@ const UserFieldForm = ({
               readOnly="false"
               dirtyFields={dirtyFields}
             />
-            <RegisterField>
-              <RegisterInput
+            <RegisterLoginForm>
+              <RegisterLoginInput
                 type="text"
                 placeholder="Логін"
-                valid={`${errors.login ? "invalid" : ""}${
+                className={`${errors.login ? "invalid" : ""}${
                   !errors.login && dirtyFields.login ? "valid" : ""
                 }`}
                 {...register("login")}
               />
-            </RegisterField>
-            <RegisterField>
-              <RegisterInput
+
+              <RegisterLoginInput
                 type="text"
                 placeholder="Пароль"
-                valid={`${errors.password ? "invalid" : ""}${
+                className={`${errors.password ? "invalid" : ""}${
                   !errors.password && dirtyFields.password ? "valid" : ""
                 }`}
                 {...register("password")}
               />
-            </RegisterField>
+            </RegisterLoginForm>
           </>
         )}
       </RegisterLeftBlock>
@@ -171,7 +175,9 @@ const UserFieldForm = ({
           type="submit"
           padding="8px"
           text="Додати"
-          disabled={!isValid}
+          disabled={
+            !isValid || (dirtyFields.dateOfAccess && errors.dateOfAccess)
+          }
           showIcon={false}
         />
       </RegisterRigthBlock>

@@ -52,6 +52,7 @@ const UserCreateForm = ({ onCloseModal, section }) => {
     setError,
     clearErrors,
     reset,
+    setValue,
     formState: { errors, isValid, dirtyFields },
   } = useForm({
     mode: "onChange",
@@ -66,6 +67,9 @@ const UserCreateForm = ({ onCloseModal, section }) => {
 
   //отправка данных формы в зависимости от фоп или тов или редактор
   const onFormSubmit = (data) => {
+    // Object.keys(data).forEach((key) => {
+    //   setValue(key, data[key].trim());
+    // });
     if (activeSection === "MusicEditor") {
       const formData = { ...data, editorRole: true, status: true };
       // console.log("formData", formData);

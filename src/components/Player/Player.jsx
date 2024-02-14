@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 import {
@@ -12,6 +13,7 @@ import { getPlayerState } from "../../redux/playerSelectors";
 
 import { BASE_URL } from "../../constants/constants";
 
+
 import {
   PlayerWrapper,
   PlayerReact,
@@ -20,6 +22,7 @@ import {
 } from "./Player.styled";
 
 const Player = ({ tracks = [], isFirst }) => {
+
   const playerRef = useRef();
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
@@ -115,6 +118,7 @@ const Player = ({ tracks = [], isFirst }) => {
     console.log("Песня завершила проигрывание.");
     dispatch(updateIsFirstPlay(true));
     setIsEndOfPlaylist(true);
+
     setTrackIndex((currentTrack) =>
       currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
     );
@@ -166,6 +170,7 @@ const Player = ({ tracks = [], isFirst }) => {
             onClickNext={handleClickNext}
             onClickPrevious={handleClickPrevious}
             onEnded={handleEnd}
+            // onLoadStart={() => handlePlayLoadStart(tracks[currentTrack]?.id)}
           />
         </>
       </PlayerWrapper>

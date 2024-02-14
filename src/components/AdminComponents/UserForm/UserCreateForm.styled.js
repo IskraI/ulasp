@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { colors,mainCubicTransition } from "../../../styles/vars";
+import { colors, mainCubicTransition } from "../../../styles/vars";
 
 export const InputStyle = styled.input`
   position: relative;
@@ -39,11 +39,10 @@ export const SectionUser = styled.div`
   justify-content: left;
   gap: 48px;
   font-family: Inter;
-font-size: 16px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 `;
 export const Fieldform = styled.div`
   display: flex;
@@ -92,16 +91,16 @@ export const RegisterInput = styled.input`
   /* outline: none; */
   border: 0.25px solid rgba(23, 22, 28, 0.5);
   font-family: Inter;
-font-size: 16px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
   &.invalid {
-  outline: 1px solid red
- }
- &.valid {
-  outline: 1px solid green
- }
+    outline: 1px solid red;
+  }
+  &.valid {
+    outline: 1px solid green;
+  }
 
   &.invalid:hover + span {
     display: block;
@@ -111,10 +110,9 @@ line-height: normal;
     left: 75%;
     transform: translateX(-50%);
     width: 50%;
-  
+
     /* Дополнительные стили для видимой подсказки при ховере */
   }
-  
 `;
 export const RegisterLabel = styled.label`
   border: 0.25px solid rgba(23, 22, 28, 0.5);
@@ -220,10 +218,10 @@ export const RegisterNameField = styled.div`
   flex-direction: column;
   position: relative;
   font-family: Inter;
-font-size: 16px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 `;
 
 export const RegisterNameLabel = styled.label`
@@ -239,7 +237,6 @@ export const RegisterNameLabel = styled.label`
   line-height: 18px;
 `;
 export const RegisterNameInput = styled.input`
-
   display: flex;
   background-color: inherit;
   width: ${(props) => props.width || "133px"};
@@ -251,17 +248,17 @@ export const RegisterNameInput = styled.input`
   border: 1px solid rgba(0, 0, 0, 0.4);
   outline: none;
   font-family: Inter;
-font-size: 16px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-  
- &.invalid {
-  outline: 1px solid red
- }
- &.valid {
-  outline: 1px solid green
- }
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  &.invalid {
+    outline: 1px solid red;
+  }
+  &.valid {
+    outline: 1px solid green;
+  }
 
   &.invalid:hover + span {
     display: block;
@@ -272,8 +269,6 @@ line-height: normal;
     transform: translateX(-50%);
     width: 75%;
   }
-
- 
 `;
 export const ButtonCompany = styled.button`
   display: flex;
@@ -295,11 +290,10 @@ export const ButtonCompany = styled.button`
   margin-bottom: 20px;
 `;
 
-
 export const Tooltip = styled.span`
   display: none;
   position: absolute;
-  background-color: #8CACD7; 
+  background-color: #8cacd7;
   color: rgba(23, 22, 28, 1);
 
   padding: 4px;
@@ -307,7 +301,7 @@ export const Tooltip = styled.span`
   border-radius: 4px;
   font-size: 14px;
 
-  &.hover  {
+  &.hover {
     display: block;
     /* Ваши стили для видимой подсказки */
   }
@@ -316,39 +310,35 @@ export const LoginForm = styled.form`
   display: flex;
   margin-top: 90px;
   flex-direction: column;
-width: 277px;
+  width: 277px;
   gap: 16px;
-
 `;
-
 
 export const LoginField = styled.div`
-display: flex;
-flex-direction: column;
- 
-
+  display: flex;
+  flex-direction: column;
 `;
-export const LoginLabel= styled.label`
-display: flex;
-flex-direction: column;
-border: none;
+export const LoginLabel = styled.label`
+  display: flex;
+  flex-direction: column;
+  border: none;
 
-color: rgba(0, 0, 0, 0.4);
-font-family: Inter;
-font-size: 14px;
-font-style: normal;
-font-weight: 400;
-line-height: 18px;
+  color: rgba(0, 0, 0, 0.4);
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
 `;
 export const LoginInput = styled.input`
-font-family: Inter;
-font-size: 20px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
   display: flex;
   background-color: inherit;
-  width:100%;
+  width: 100%;
   height: 40px;
   padding: 4px 8px;
   align-items: center;
@@ -356,13 +346,13 @@ line-height: normal;
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.4);
   outline: none;
-  
- &.invalid {
-  outline: 1px solid red
- }
- &.valid {
-  outline: 1px solid green
- }
+
+  &.invalid {
+    outline: 1px solid red;
+  }
+  &.valid {
+    outline: 1px solid green;
+  }
 
   &.invalid:hover + span {
     display: block;
@@ -373,13 +363,10 @@ line-height: normal;
     transform: translateX(-50%);
     width: 75%;
   }
-
- 
 `;
 
 export const IconsWrapperUserEdit = styled.div`
   display: flex;
-
 `;
 
 export const IconsButtonUserEdit = styled.button`
@@ -410,5 +397,38 @@ export const IconsSvgUserEdit = styled.svg`
   &:hover {
     fill: ${colors.accentHoverColor};
     transition: fill 350ms ${mainCubicTransition};
+  }
+`;
+
+// раздел логин/пароль на форме создания редактора
+export const RegisterLoginForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 66px;
+  gap: 16px;
+  width: 277px;
+`;
+export const RegisterLoginInput = styled.input`
+  display: flex;
+  background-color: rgba(234, 234, 234, 0.32);
+  width: 277px;
+
+  padding: 8px;
+  align-items: center;
+  gap: 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  outline: none;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  &.invalid {
+    outline: 1px solid red;
+  }
+  &.valid {
+    outline: 1px solid green;
   }
 `;
