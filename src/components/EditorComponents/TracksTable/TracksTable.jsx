@@ -21,6 +21,7 @@ import { Button } from "../../Button/Button";
 
 import { setSrcPlayer, stopPlay } from "../../../redux/playerSlice";
 import { getPlayerState } from "../../../redux/playerSelectors";
+import { useEffect } from "react";
 const TracksTable = ({
   rows,
   tracks,
@@ -53,7 +54,7 @@ const TracksTable = ({
 
   const isLoadedTracks = playerState.isLoaded;
 
-  const playMusic = () => {
+  useEffect(() => {
     const trackURL = tracks.map((track) => {
       const newObject = {
         id: track._id,
@@ -63,9 +64,22 @@ const TracksTable = ({
       };
       return newObject;
     });
-
     dispatch(setSrcPlayer(trackURL));
-  };
+  }, [dispatch, tracks]);
+
+  // const playMusic = () => {
+  //   const trackURL = tracks.map((track) => {
+  //     const newObject = {
+  //       id: track._id,
+  //       trackURL: track.trackURL,
+  //       artist: track.artist,
+  //       trackName: track.trackName,
+  //     };
+  //     return newObject;
+  //   });
+
+  //   dispatch(setSrcPlayer(trackURL));
+  // };
 
   const stopMusic = () => {
     dispatch(stopPlay([]));
@@ -80,7 +94,7 @@ const TracksTable = ({
 
       {isSuccess && !error && tracks?.length !== 0 && (
         <>
-          <Button
+          {/* <Button
             onClick={() => (!isLoadedTracks ? playMusic() : stopMusic())}
             type={"button"}
             width={"250px"}
@@ -95,7 +109,7 @@ const TracksTable = ({
                 ? `${symbol}#icon-stop-play`
                 : `${symbol}#icon-play`
             }
-          />
+          /> */}
           <TracksTableWrapper marginTop={tracksTableProps.marginTop}>
             <TableStyle>
               <TracksTitle showTitle={tracksTableProps.showTitle}>
