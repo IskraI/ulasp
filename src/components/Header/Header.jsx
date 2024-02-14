@@ -1,11 +1,10 @@
-// import { BASE_URL } from  "./constants/constants.js"
+/* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import { PageHeader, PageLogo, AvatarHeader } from "./Header.styled";
 import pageLogoPath from "../../images/logo.png";
-import { BASE_URL } from "../../constants/constants";
+import { BASE_URL, defaultAvatarSrc } from "../../constants/constants";
 
 const Header = ({ avatarURL }) => {
-  const defaultAvatarSrc = "../avatar.jpg";
   const avatarSrc = avatarURL ? `${BASE_URL}/${avatarURL}` : defaultAvatarSrc;
 
   return (

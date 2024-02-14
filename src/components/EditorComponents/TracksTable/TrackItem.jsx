@@ -10,20 +10,13 @@ import symbol from "../../../assets/symbol.svg";
 
 import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsSlice";
 import { useDeleteTrackMutation } from "../../../redux/tracksSlice";
-import {
-  setSrcPlayer,
-  stopPlay,
-  setCurrentIndex,
-} from "../../../redux/playerSlice";
+import { stopPlay, setCurrentIndex } from "../../../redux/playerSlice";
 import { getPlayerState } from "../../../redux/playerSelectors";
 
 import {
   TableCell,
   TrackCover,
-  TableStyle,
-  THeadStyle,
   TrStyle,
-  TracksNotFound,
   PopUpTracksTable,
   PopUpButton,
   DotsButton,
@@ -54,8 +47,7 @@ const TrackItem = ({
   const playerState = useSelector(getPlayerState);
   const [showPopUp, setShowPopUp] = useState(false);
   const [isPlayingTrack, setIsPlayingTrack] = useState(false);
-
-  // console.log(playerState.src[index]);
+  const [isPausedTrack, setIsPausedTrack] = useState(false);
 
   const [id, setId] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
@@ -68,6 +60,8 @@ const TrackItem = ({
 
   const isLoadedTrack = playerState.isLoaded;
   const currentTrackIndex = playerState.indexTrack;
+  const isPlaying = playerState.isPlaying;
+  const isPaused = playerState.isPaused;
 
   const [
     deleteTrack,
@@ -182,32 +176,45 @@ const TrackItem = ({
   }, []);
 
   useEffect(() => {
-    if (idTrack === playerState?.src[currentTrackIndex]?.id) {
+    if (isPlaying && idTrack === playerState?.src[currentTrackIndex]?.id) {
       setIsPlayingTrack(true);
     } else {
       setIsPlayingTrack(false);
     }
-  }, [currentTrackIndex, idTrack, playerState?.src]);
+  }, [
+    currentTrackIndex,
+    dispatch,
+    idTrack,
+    isPaused,
+    isPlaying,
+    playerState?.src,
+  ]);
+
+  useEffect(() => {
+    if (isPaused && idTrack === playerState?.src[currentTrackIndex]?.id) {
+      setIsPausedTrack(true);
+    } else {
+      setIsPausedTrack(false);
+    }
+  }, [
+    currentTrackIndex,
+    dispatch,
+    idTrack,
+    isPaused,
+    isPlaying,
+    playerState?.src,
+  ]);
 
   const playMusic = () => {
-    dispatch(stopPlay([]));
-    dispatch(
-      setSrcPlayer([
-        {
-          id: idTrack,
-          trackURL: trackURL,
-          artist: artist,
-          trackName: trackName,
-        },
-      ])
-    );
-    dispatch(setCurrentIndex(0));
+    dispatch(setCurrentIndex(index));
     setIsPlayingTrack(isLoadedTrack);
+    setIsPausedTrack(isPaused);
   };
 
   const stopMusic = () => {
-    dispatch(stopPlay([]));
+    dispatch(stopPlay(currentTrackIndex));
     setIsPlayingTrack(isLoadedTrack);
+    setIsPausedTrack(isPaused);
   };
 
   const makeUniq = (array) => {
@@ -257,11 +264,13 @@ const TrackItem = ({
             id="playBtn"
             onClick={() => PlayButtonToogle(idTrack)}
           >
-            <svg width="16" height="16">
+            <svg width="22" height="22">
               <use
                 href={
                   isPlayingTrack
                     ? `${symbol}#icon-stop-play`
+                    : isPausedTrack
+                    ? `${symbol}#icon-pause`
                     : `${symbol}#icon-play`
                 }
               ></use>

@@ -1,25 +1,19 @@
 /* eslint-disable react/prop-types */
-import { useDispatch, useSelector } from "react-redux";
-import symbol from "../../../assets/symbol.svg";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+
+import TrackItem from "./TrackItemUser";
+import { ErrorNotFound, NoData } from "../../Errors/Errors";
+
+import { setSrcPlayer } from "../../../redux/playerSlice";
+
 import {
   TracksTableWrapper,
-  TableCell,
   ThTitle,
-  TrackCover,
   TableStyle,
   THeadStyle,
-  TrStyle,
   TracksTitle,
-  TracksNotFound,
 } from "../TracksTable/TracksTableUser.styled";
-import { Button } from "../../Button/Button";
-import TrackItem from "./TrackItemUser";
-import { ERROR_NOT_FOUND } from "../../../constants/constants";
-import { ProgressBarTracksTable } from "../../Loader/Loader";
-import { ErrorNotFound } from "../../Errors/Errors";
-import { useEffect, useRef, useState } from "react";
-import { setSrcPlayer, stopPlay } from "../../../redux/playerSlice";
-import { getPlayerState } from "../../../redux/playerSelectors";
 
 const TracksTable = ({
   rows,
@@ -42,18 +36,15 @@ const TracksTable = ({
   isLoadingUpload,
   errorUpload,
   isUninitialized,
-  showData,
 }) => {
   const dispatch = useDispatch();
-  const playerState = useSelector(getPlayerState);
   const tracksTableProps = {
     showTitle: showTitle ? "table-caption" : "none",
     marginTop: marginTopWrapper ? `${marginTopWrapper}` : "auto",
     showData: rows.map((rows) => (rows.showData ? true : false)),
   };
-  const isLoadedTracks = playerState.isLoaded;
 
-  const playMusic = () => {
+  useEffect(() => {
     const trackURL = tracks.map((track) => {
       const newObject = {
         id: track._id,
@@ -63,39 +54,19 @@ const TracksTable = ({
       };
       return newObject;
     });
-
     dispatch(setSrcPlayer(trackURL));
-  };
-
-  const stopMusic = () => {
-    dispatch(stopPlay([]));
-  };
+  }, [dispatch, tracks]);
 
   // console.log("new songs пропс пришел в тейблюзер", tracks);
   return (
     <>
-      {error && <TracksNotFound>{ERROR_NOT_FOUND}</TracksNotFound>}
+      {error && <ErrorNotFound error={error?.data?.message} />}
       {tracks?.length === 0 && !isLoading && !error && (
-        <TracksNotFound>Музика ще не завантажена</TracksNotFound>
+        <NoData text={"Музика ще не завантажена"} textColor={"grey"} />
       )}
 
       {isSuccess && !error && tracks?.length !== 0 && (
         <>
-          <Button
-            onClick={() => (!isLoadedTracks ? playMusic() : stopMusic())}
-            type={"button"}
-            width={"250px"}
-            height={"50px"}
-            padding={"16px"}
-            margintop={"12px"}
-            text={isLoadedTracks ? "Зупинити" : "Грати музику"}
-            showIcon={"true"}
-            icon={
-              isLoadedTracks
-                ? `${symbol}#icon-stop-play`
-                : `${symbol}#icon-play`
-            }
-          />
           <TracksTableWrapper marginTop={tracksTableProps.marginTop}>
             <TableStyle>
               <TracksTitle showTitle={tracksTableProps.showTitle}>
@@ -118,41 +89,23 @@ const TracksTable = ({
                 </tr>
               </THeadStyle>
               <tbody>
-                {isLoadingUpload && (
-                  <TrStyle>
-                    <TableCell
-                      showData={true}
-                      colSpan={rows.length}
-                      style={{ textAlign: "center" }}
-                    >
-                      <ProgressBarTracksTable />
-                    </TableCell>
-                  </TrStyle>
-                )}
-                {isErrorUpload && (
-                  <TrStyle>
-                    <TableCell
-                      showData={true}
-                      colSpan={rows.length}
-                      style={{ textAlign: "center" }}
-                    >
-                      <ErrorNotFound error={errorUpload?.data.message} />
-                    </TableCell>
-                  </TrStyle>
-                )}
                 {tracks.map(
-                  ({
-                    _id,
-                    trackPictureURL,
-                    trackName,
-                    artist,
-                    trackDuration,
-                    playList,
-                    trackURL,
-                  }) => {
+                  (
+                    {
+                      _id,
+                      trackPictureURL,
+                      trackName,
+                      artist,
+                      trackDuration,
+                      playList,
+                      trackURL,
+                    },
+                    index
+                  ) => {
                     return (
                       <TrackItem
                         key={_id}
+                        index={index}
                         isCheckedAll={isCheckedAll}
                         checkBox={checkBox}
                         idTrack={_id}

@@ -1,13 +1,18 @@
 /* eslint-disable react/prop-types */
-import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
 
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState, useRef } from "react";
 import {
   setCurrentIndex,
-  stopPlay,
+  pause,
   updateIsFirstPlay,
 } from "../../redux/playerSlice";
 import { useUpdateListenCountTrackByIdMutation } from "../../redux/tracksUserSlice";
+
+import { getPlayerState } from "../../redux/playerSelectors";
+
+import { BASE_URL } from "../../constants/constants";
+
 
 import {
   PlayerWrapper,
@@ -15,13 +20,24 @@ import {
   TracksArtist,
   TrackName,
 } from "./Player.styled";
-import { BASE_URL } from "../../constants/constants";
 
 const Player = ({ tracks = [], isFirst }) => {
-  const [currentTrack, setTrackIndex] = useState(0);
+
+  const playerRef = useRef();
+  const dispatch = useDispatch();
+  const playerState = useSelector(getPlayerState);
+  const currentTrackIndex = playerState.indexTrack;
+  const isPlaying = playerState.isPlaying;
+  const isPaused = playerState.isPaused;
+
+  const [currentTrack, setTrackIndex] = useState();
+  const [isPressedNext, setIsPressedNext] = useState(false);
+  const [isPressedPrev, setIsPressedPrev] = useState(false);
+  const [isEndOfPlaylist, setIsEndOfPlaylist] = useState(false);
+  const [currentTrackArtist, setCurrentTrackArtist] = useState("Невизначений");
+  const [currentTrackName, setCurrentTrackName] = useState("Невизначений");
 
   // const [isFirstPlay, setIsFirstPlay] = useState(isFirst);
-  const dispatch = useDispatch();
   // const [isLoadStarted, setIsLoadStarted] = useState(false);
 
   const [dispatchListenCountTrack] = useUpdateListenCountTrackByIdMutation();
@@ -49,20 +65,40 @@ const Player = ({ tracks = [], isFirst }) => {
     }
   };
 
+  const noData = tracks[currentTrack]?.trackURL === undefined;
   const trackSRC = BASE_URL + "/" + tracks[currentTrack]?.trackURL;
-
-  const reduxTrackSRC = BASE_URL + "/" + tracks[currentTrack];
+  // console.log("Локальный стейт плеера", currentTrack);
+  // console.log("Глобальный стейт плеера", currentTrackIndex);
 
   useEffect(() => {
-    dispatch(setCurrentIndex(currentTrack));
-
-    if (tracks[currentTrack] === undefined) {
-      setTrackIndex(0);
+    if (isPlaying || isPaused) {
+      setTrackIndex(currentTrackIndex);
+      setCurrentTrackArtist(tracks[currentTrack]?.artist);
+      setCurrentTrackName(tracks[currentTrack]?.trackName);
+    } else {
+      setTrackIndex();
     }
-  }, [currentTrack, dispatch, tracks]);
+  }, [currentTrack, currentTrackIndex, dispatch, isPaused, isPlaying, tracks]);
+
+  useEffect(() => {
+    // console.log("playerRef", playerRef?.current);
+    if (isEndOfPlaylist || isPressedPrev || isPressedNext) {
+      dispatch(setCurrentIndex(currentTrack));
+      setIsPressedNext(false);
+      setIsPressedPrev(false);
+      setIsEndOfPlaylist(false);
+    }
+  }, [currentTrack, dispatch, isEndOfPlaylist, isPressedNext, isPressedPrev]);
+
+  useEffect(() => {
+    if (!isPaused && playerRef.current.audio.current.currentTime !== 0) {
+      playerRef.current.audio.current.play();
+    }
+  }, [isPaused]);
 
   const handleClickNext = () => {
     dispatch(updateIsFirstPlay(true));
+    setIsPressedNext(true);
     setTrackIndex((currentTrack) =>
       currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
     );
@@ -70,6 +106,7 @@ const Player = ({ tracks = [], isFirst }) => {
 
   const handleClickPrevious = () => {
     dispatch(updateIsFirstPlay(true));
+    setIsPressedPrev(true);
     setTrackIndex((currentTrack) =>
       currentTrack > tracks.length - 1 || currentTrack === 0
         ? tracks.length - 1
@@ -80,40 +117,62 @@ const Player = ({ tracks = [], isFirst }) => {
   const handleEnd = () => {
     console.log("Песня завершила проигрывание.");
     dispatch(updateIsFirstPlay(true));
+    setIsEndOfPlaylist(true);
 
     setTrackIndex((currentTrack) =>
       currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
     );
   };
 
-  const noData = tracks[currentTrack]?.trackURL === undefined;
-
   return (
     <>
       <PlayerWrapper>
-        {/* {tracks.length !== 0 && ( */}
         <>
           <TracksArtist>
-            {noData ? "Невизначений" : tracks[currentTrack]?.artist}
+            {isPlaying
+              ? currentTrackArtist
+              : isPaused
+              ? currentTrackArtist
+              : noData
+              ? currentTrackArtist
+              : currentTrackArtist}
           </TracksArtist>
           <TrackName>
-            {noData ? "Невизначений" : tracks[currentTrack]?.trackName}
+            {isPlaying
+              ? currentTrackName
+              : isPaused
+              ? currentTrackName
+              : noData
+              ? currentTrackName
+              : currentTrackName}
           </TrackName>
+
           <PlayerReact
+            onPause={() => {
+              dispatch(pause());
+            }}
+            onPlay={() => {
+              if (!isPlaying) {
+                dispatch(setCurrentIndex(currentTrackIndex));
+              }
+              handlePlayLoadStart(tracks[currentTrack]?.id);
+            }}
+            ref={playerRef}
             autoPlay={false}
-            autoPlayAfterSrcChange={true}
+            //может быть ошибка проигрывания после паузы и переключения трека на следующий
+            // autoPlayAfterSrcChange={isPlaying ? true : false}
+            autoPlayAfterSrcChange={isPlaying ? true : isPaused ? true : false}
             volume={0.2}
-            src={noData ? reduxTrackSRC : trackSRC}
+            preload={"none"}
+            src={trackSRC}
             showSkipControls={tracks?.length > 1 ? true : false}
             showFilledVolume={true}
             onClickNext={handleClickNext}
             onClickPrevious={handleClickPrevious}
             onEnded={handleEnd}
             // onLoadStart={() => handlePlayLoadStart(tracks[currentTrack]?.id)}
-            onPlay={() => handlePlayLoadStart(tracks[currentTrack]?.id)}
           />
         </>
-        {/* )} */}
       </PlayerWrapper>
     </>
   );

@@ -1,26 +1,23 @@
 /* eslint-disable react/prop-types */
-import { useDispatch, useSelector } from "react-redux";
-import symbol from "../../../assets/symbol.svg";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+
+import TrackItem from "./TrackItem";
+import { ProgressBarTracksTable } from "../../Loader/Loader";
+import { ErrorNotFound, NoData } from "../../Errors/Errors";
+
+import { setSrcPlayer } from "../../../redux/playerSlice";
 
 import {
   TracksTableWrapper,
   TableCell,
   ThTitle,
-  TrackCover,
   TableStyle,
   THeadStyle,
   TrStyle,
   TracksTitle,
-  TracksNotFound,
 } from "../TracksTable/TracksTable.styled";
-import TrackItem from "./TrackItem";
-import { ERROR_NOT_FOUND } from "../../../constants/constants";
-import { ProgressBarTracksTable } from "../../Loader/Loader";
-import { ErrorNotFound, NoData } from "../../Errors/Errors";
-import { Button } from "../../Button/Button";
 
-import { setSrcPlayer, stopPlay } from "../../../redux/playerSlice";
-import { getPlayerState } from "../../../redux/playerSelectors";
 const TracksTable = ({
   rows,
   tracks,
@@ -44,16 +41,13 @@ const TracksTable = ({
   isUninitialized,
 }) => {
   const dispatch = useDispatch();
-  const playerState = useSelector(getPlayerState);
   const tracksTableProps = {
     showTitle: showTitle ? "table-caption" : "none",
     marginTop: marginTopWrapper ? `${marginTopWrapper}` : "auto",
     showData: rows.map((rows) => (rows.showData ? true : false)),
   };
 
-  const isLoadedTracks = playerState.isLoaded;
-
-  const playMusic = () => {
+  useEffect(() => {
     const trackURL = tracks.map((track) => {
       const newObject = {
         id: track._id,
@@ -63,13 +57,8 @@ const TracksTable = ({
       };
       return newObject;
     });
-
     dispatch(setSrcPlayer(trackURL));
-  };
-
-  const stopMusic = () => {
-    dispatch(stopPlay([]));
-  };
+  }, [dispatch, tracks]);
 
   return (
     <>
@@ -80,22 +69,6 @@ const TracksTable = ({
 
       {isSuccess && !error && tracks?.length !== 0 && (
         <>
-          <Button
-            onClick={() => (!isLoadedTracks ? playMusic() : stopMusic())}
-            type={"button"}
-            width={"250px"}
-            height={"50px"}
-            padding={"16px"}
-            margintop={"12px"}
-            text={isLoadedTracks ? "Зупинити" : "Грати музику"}
-            showIcon={"true"}
-            // icon={`${symbol}#icon-play`}
-            icon={
-              isLoadedTracks
-                ? `${symbol}#icon-stop-play`
-                : `${symbol}#icon-play`
-            }
-          />
           <TracksTableWrapper marginTop={tracksTableProps.marginTop}>
             <TableStyle>
               <TracksTitle showTitle={tracksTableProps.showTitle}>

@@ -37,6 +37,9 @@ const ShopsItemPage = () => {
 
   const { shopId: idShopLibrary } = useParams();
 
+
+  console.log(idShopLibrary);
+
   const {
     data: shopItem,
     isFetching: isFetchingShopItem,
@@ -70,7 +73,7 @@ const ShopsItemPage = () => {
   const handleSubmitShop = async (data) => {
     try {
       closeModal();
-      await createShopCategory({ shopId, data }).unwrap();
+      await createShopCategory({ idShopLibrary, data }).unwrap();
       setShowModalSuccessCreate(true);
     } catch (error) {
       setShowModalError(true);

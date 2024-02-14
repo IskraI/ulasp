@@ -174,7 +174,7 @@ export const PopUpButton = styled.button`
 `;
 
 export const PlayButton = styled.button`
-  padding: 12px 4px;
+  padding: 4px 4px;
 
   cursor: pointer;
   font-size: 14px;
