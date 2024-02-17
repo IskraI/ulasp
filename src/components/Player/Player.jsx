@@ -6,13 +6,14 @@ import {
   setCurrentIndex,
   pause,
   updateIsFirstPlay,
+  stopPlay,
+  setDefaultState,
 } from "../../redux/playerSlice";
 import { useUpdateListenCountTrackByIdMutation } from "../../redux/tracksUserSlice";
 
 import { getPlayerState } from "../../redux/playerSelectors";
 
 import { BASE_URL } from "../../constants/constants";
-
 
 import {
   PlayerWrapper,
@@ -22,13 +23,13 @@ import {
 } from "./Player.styled";
 
 const Player = ({ tracks = [], isFirst }) => {
-
   const playerRef = useRef();
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
   const currentTrackIndex = playerState.indexTrack;
   const isPlaying = playerState.isPlaying;
   const isPaused = playerState.isPaused;
+  const isLastTrack = playerState.isLastTrack;
 
   const [currentTrack, setTrackIndex] = useState();
   const [isPressedNext, setIsPressedNext] = useState(false);
@@ -81,7 +82,6 @@ const Player = ({ tracks = [], isFirst }) => {
   }, [currentTrack, currentTrackIndex, dispatch, isPaused, isPlaying, tracks]);
 
   useEffect(() => {
-    // console.log("playerRef", playerRef?.current);
     if (isEndOfPlaylist || isPressedPrev || isPressedNext) {
       dispatch(setCurrentIndex(currentTrack));
       setIsPressedNext(false);
@@ -122,8 +122,10 @@ const Player = ({ tracks = [], isFirst }) => {
     setTrackIndex((currentTrack) =>
       currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
     );
+    // if (isLastTrack) {
+    //   dispatch(setDefaultState());
+    // }
   };
-
   return (
     <>
       <PlayerWrapper>

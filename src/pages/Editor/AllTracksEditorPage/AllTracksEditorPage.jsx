@@ -1,9 +1,10 @@
-import { useRef, useState, useId } from "react";
+import { useRef, useState, useId, useCallback } from "react";
 
 import TracksTable from "../../../components/EditorComponents/TracksTable/TracksTable";
 import {
   useGetAllTracksQuery,
   useUploadTrackMutation,
+  usePrefetch,
 } from "../../../redux/tracksSlice";
 import AddTracks from "../../../components/EditorComponents/AddTracks/AddTracks";
 import symbol from "../../../assets/symbol.svg";
@@ -13,6 +14,11 @@ const AllTracksEditor = () => {
   const id = useId();
   const BaseInputRef = useRef(null);
   const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
+  // const page = currentPage;
+  // const limit = pageSize;
 
   const rows = () => {
     const RowsTitle = [
@@ -101,11 +107,18 @@ const AllTracksEditor = () => {
 
   const {
     data: allTracks,
-
     error: errorLoadingAllTracks,
     isFetching: isFetchingAllTracks,
     isSuccess: isSuccessAllTracks,
-  } = useGetAllTracksQuery({ forceRefetch: true, refetchOnFocus: true });
+    isLoading: isLoadingAllTracks,
+  } = useGetAllTracksQuery({
+    page: currentPage,
+    limit: pageSize,
+    // forceRefetch: true,
+    // refetchOnFocus: true,
+  });
+
+  console.log(isLoadingAllTracks);
 
   const [
     uploadTrack,
@@ -117,6 +130,24 @@ const AllTracksEditor = () => {
     },
   ] = useUploadTrackMutation();
 
+  const onPageChange = (page) => {
+    console.log("4 Step - setCurrentPage in mutation", page);
+    setCurrentPage(page);
+    return page;
+  };
+
+  // const onPageSizeChange = (size) => {
+  //   setPageSize(size);
+
+  //   return pageSize;
+  // };
+
+  // const prefetchPage = usePrefetch("getAllTracks");
+
+  // const prefetchNext = useCallback(() => {
+  //   prefetchPage({ page: 2, limit: 10 });
+  // }, [prefetchPage]);
+
   return (
     <>
       {!isSuccessAllTracks && <Loader />}
@@ -127,20 +158,26 @@ const AllTracksEditor = () => {
             textButton={"Музику"}
             uploadTrack={uploadTrack}
           />
+          {/* <button onClick={() => prefetchNext()}>PpPPPPPPPP</button> */}
 
           <TracksTable
             // title={" Остання додана музика"}
             marginTopWrapper={"24px"}
             tracks={allTracks.latestTracks}
+            totalTracks={allTracks.totalTracks}
             error={errorLoadingAllTracks}
             isFetching={isFetchingAllTracks}
             isSuccess={isSuccessAllTracks}
+            isLoading={isLoadingAllTracks}
             rows={rows()}
             isCheckedAll={checkedMainCheckBox}
             isInPlayList={false}
             isLoadingUpload={isLoadingUploadTrack}
             isSuccessUpload={isSuccessUploadTrack}
             errorUpload={errorUploadTrack}
+            onChangeCurrentPage={onPageChange}
+            // onChangeSizePage={onPageSizeChange}
+            currentPage={currentPage}
           />
         </>
       )}

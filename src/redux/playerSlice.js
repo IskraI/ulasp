@@ -1,13 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  futureSrc: [],
   src: [],
   indexTrack: 0,
   isLoaded: false,
   isPlaying: false,
   isPaused: false,
   isFirstPlay: true,
-
+  isLastTrack: false,
 };
 
 export const playerSlice = createSlice({
@@ -19,13 +20,36 @@ export const playerSlice = createSlice({
       reducer(state, action) {
         state = {
           ...state,
-          src: action.payload,
+          futureSrc: action.payload,
           isLoaded: true,
-          isPlaying: false,
+          isPlaying: state.isPlaying ? true : false,
         };
         return state;
       },
     },
+    setDefaultPreloadSrc: {
+      reducer(state) {
+        state = {
+          ...state,
+          futureSrc: [],
+          isLoaded: false,
+          isPlaying: true,
+        };
+        return state;
+      },
+    },
+    setSrcPlaying: {
+      reducer(state, action) {
+        state = {
+          ...state,
+          src: state.futureSrc,
+          isLoaded: true,
+          isPlaying: true,
+        };
+        return state;
+      },
+    },
+
     setCurrentIndex: {
       reducer(state, action) {
         state = {
@@ -54,11 +78,8 @@ export const playerSlice = createSlice({
           ...state,
           isPlaying: false,
           isPaused: true,
-
-          src: action.payload,
-          isLoaded: false,
-          isFirstPlay: true,
-
+          isLoaded: true,
+          isFirstPlay: false,
         };
         return state;
       },
@@ -72,10 +93,37 @@ export const playerSlice = createSlice({
         return state;
       },
     },
+    setLastTrack: {
+      reducer(state) {
+        state = {
+          ...state,
+          isLastTrack: true,
+          src: [],
+        };
+        return state;
+      },
+    },
+    setDefaultState: {
+      reducer(state) {
+        state = {
+          ...initialState,
+        };
+        return state;
+      },
+    },
   },
 });
 
-
-export const { setSrcPlayer, stopPlay, pause, setCurrentIndex, updateIsFirstPlay } = playerSlice.actions;
+export const {
+  setSrcPlayer,
+  setSrcPlaying,
+  stopPlay,
+  pause,
+  setCurrentIndex,
+  updateIsFirstPlay,
+  setLastTrack,
+  setDefaultState,
+  setDefaultPreloadSrc,
+} = playerSlice.actions;
 
 export const playerReducer = playerSlice.reducer;

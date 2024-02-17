@@ -3,14 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect, useRef, useId } from "react";
 
 import { SvgStyled } from "../../Button/Button.styled";
-import { sToStr } from "../../../helpers/helpers";
+import { sToStr, compareArray } from "../../../helpers/helpers";
 import { BASE_URL } from "../../../constants/constants";
 import { WithOutGenre } from "../../Errors/Errors";
 import symbol from "../../../assets/symbol.svg";
 
 import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsSlice";
 import { useDeleteTrackMutation } from "../../../redux/tracksSlice";
-import { stopPlay, setCurrentIndex } from "../../../redux/playerSlice";
+import {
+  stopPlay,
+  setCurrentIndex,
+  setSrcPlaying,
+  setDefaultPreloadSrc,
+} from "../../../redux/playerSlice";
 import { getPlayerState } from "../../../redux/playerSelectors";
 
 import {
@@ -62,6 +67,8 @@ const TrackItem = ({
   const currentTrackIndex = playerState.indexTrack;
   const isPlaying = playerState.isPlaying;
   const isPaused = playerState.isPaused;
+  const futurePlayerSRC = playerState.futureSrc;
+  const playerSRC = playerState.src;
 
   const [
     deleteTrack,
@@ -181,14 +188,7 @@ const TrackItem = ({
     } else {
       setIsPlayingTrack(false);
     }
-  }, [
-    currentTrackIndex,
-    dispatch,
-    idTrack,
-    isPaused,
-    isPlaying,
-    playerState?.src,
-  ]);
+  }, [currentTrackIndex, idTrack, isPlaying, playerState?.src]);
 
   useEffect(() => {
     if (isPaused && idTrack === playerState?.src[currentTrackIndex]?.id) {
@@ -196,24 +196,24 @@ const TrackItem = ({
     } else {
       setIsPausedTrack(false);
     }
-  }, [
-    currentTrackIndex,
-    dispatch,
-    idTrack,
-    isPaused,
-    isPlaying,
-    playerState?.src,
-  ]);
+  }, [currentTrackIndex, idTrack, isPaused, playerState?.src]);
 
   const playMusic = () => {
+    const comparedPlayerSRC = compareArray(futurePlayerSRC, playerSRC);
+
+    if (!comparedPlayerSRC && futurePlayerSRC.length !== 0) {
+      dispatch(setSrcPlaying());
+      dispatch(setDefaultPreloadSrc());
+    }
     dispatch(setCurrentIndex(index));
-    setIsPlayingTrack(isLoadedTrack);
+    setIsPlayingTrack(isPlaying);
     setIsPausedTrack(isPaused);
+    // dispatch(setDefaultPreloadSrc());
   };
 
   const stopMusic = () => {
     dispatch(stopPlay(currentTrackIndex));
-    setIsPlayingTrack(isLoadedTrack);
+    setIsPlayingTrack(isPlaying);
     setIsPausedTrack(isPaused);
   };
 

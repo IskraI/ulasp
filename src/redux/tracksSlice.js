@@ -19,9 +19,9 @@ export const tracksApi = createApi({
 
   endpoints: (builder) => ({
     getAllTracks: builder.query({
-      query: (page = "", limit = "") => ({
-        url: `/editor/tracks/latestTracks?${page && `page=${page}`} & ${
-          limit && `limit=${limit}`
+      query: ({ page = "", limit = "" }) => ({
+        url: `/editor/tracks/latestTracks?${page && `page=${page}`} ${
+          limit && `&limit=${limit}`
         }`,
       }),
       // provideTags: ["Tracks"],
@@ -53,4 +53,5 @@ export const {
   useGetAllTracksQuery,
   useUploadTrackMutation,
   useDeleteTrackMutation,
+  usePrefetch,
 } = tracksApi;
