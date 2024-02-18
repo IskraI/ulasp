@@ -25,6 +25,16 @@ export const playlistsUserApi = createApi({
       invalidatesTags: ["Playlists"],
       }),
     
+     getCreatePlaylistsForUser: builder.query({
+       query: (page = "", limit = "") => ({
+        url: `/user/userPlaylist/all?${page && `page=${page}`} & ${
+          limit && `limit=${limit}`
+        }`,
+      }),
+
+      providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
+    }),
+    
      getPlaylistByIdForUser: builder.query({
       query: (id) => ({ url: `/user/playlist/${id}` }),
 
@@ -93,6 +103,7 @@ export const {
    useGetLatestPlaylistsForUserQuery,
   useGetPlaylistByIdForUserQuery,
   useCreatePlaylistForUserMutation,
+  useGetCreatePlaylistsForUserQuery,
     useDeletePlaylistForUserMutation,
    useUpdateFavoriteStatusApiMutation,
   useFavoritePlaylistForUserQuery,
