@@ -1,9 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { resetUser, setUser, setAdmin, setCurrent } from "./userSlice";
 
-
 import { BASE_URL } from "../constants/constants";
-
 
 export const dataUsersApi = createApi({
   reducerPath: "dataUsersApi",
@@ -27,7 +25,7 @@ export const dataUsersApi = createApi({
         const url = admin ? "admin/" : "admin/users";
         return { url };
       },
-      providesTags: ["dataUsers"],
+      providesTags: ["dataUsers", "dataUser"],
     }),
 
     delUserById: builder.mutation({
@@ -138,8 +136,6 @@ export const dataUsersApi = createApi({
       query: (id) => ({ url: `admin/users/${id}/playlistcount` }),
       providesTags: ["dataUser"],
     }),
-
-    
   }),
 });
 

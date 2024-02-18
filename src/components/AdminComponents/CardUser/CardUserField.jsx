@@ -37,7 +37,7 @@ const CardUserField = ({
 }) => {
   // console.log("isEditing", isEditing);
 
-  // console.log("activeSectionCard", activeSectionCard);
+  // console.log("errors.contractNumber", errors.contractNumber);
   return (
     <Fieldform>
       <RegisterLeftBlock>
@@ -60,27 +60,6 @@ const CardUserField = ({
 
         {activeSectionCard === "User" && (
           <>
-            {/* <RegisterField>
-              <RegisterLabel>№ договору</RegisterLabel>
-              <RegisterInput
-                type="text"
-                defaultValue={user?.contractNumber}
-                readOnly={!isEditing}
-                placeholder="№ договору"
-                aria-describedby="contractNumberTooltip"
-                className={`${errors.contractNumber ? "invalid" : ""}${
-                  isEditing ? (!errors.contractNumber ? "valid" : "") : ""
-                }`}
-                {...register("contractNumber")}
-              />
-              <Tooltip
-                id="contractNumberTooltip"
-                className={`${errors.contractNumber ? "visible" : ""}`}
-              >
-                {errors.contractNumber && errors.contractNumber.message}
-              </Tooltip>
-            </RegisterField> */}
-
             <RegisterField>
               <RegisterLabel>№ договору</RegisterLabel>
 
@@ -89,13 +68,27 @@ const CardUserField = ({
                 control={control}
                 defaultValue={user.contractNumber}
                 render={({ field }) => (
-                  <RegisterInput
-                    type="text"
-                    placeholder="№ договору"
-                    readOnly={!isEditing}
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.target.value)}
-                  />
+                  <>
+                    <RegisterInput
+                      type="text"
+                      placeholder="№ договора"
+                      readOnly={!isEditing}
+                      value={field.value}
+                      onChange={(e) => field.onChange(e.target.value)}
+                      className={
+                        isEditing
+                          ? `${errors.contractNumber ? "invalid" : "valid"}`
+                          : ""
+                      }
+                    />
+                    {errors.contractNumber && (
+                      <Tooltip
+                        className={`${errors.contractNumber ? "visible" : ""}`}
+                      >
+                        {errors.contractNumber.message}
+                      </Tooltip>
+                    )}
+                  </>
                 )}
               />
             </RegisterField>
@@ -117,13 +110,27 @@ const CardUserField = ({
                 control={control}
                 defaultValue={user.dateOfAccess}
                 render={({ field }) => (
-                  <RegisterInput
-                    type="text"
-                    placeholder="Надання доступу до"
-                    readOnly={!isEditing}
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.target.value)}
-                  />
+                  <>
+                    <RegisterInput
+                      type="text"
+                      placeholder="Надання доступу до"
+                      readOnly={!isEditing}
+                      value={field.value}
+                      onChange={(e) => field.onChange(e.target.value)}
+                      className={
+                        isEditing
+                          ? `${errors.dateOfAccess ? "invalid" : "valid"}`
+                          : ""
+                      }
+                    />
+                    {errors && errors.dateOfAccess && (
+                      <Tooltip
+                        className={`${errors.dateOfAccess ? "visible" : ""}`}
+                      >
+                        {errors.dateOfAccess.message}
+                      </Tooltip>
+                    )}
+                  </>
                 )}
               />
             </RegisterField>

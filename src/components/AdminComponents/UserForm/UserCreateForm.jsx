@@ -89,7 +89,7 @@ const UserCreateForm = ({ onCloseModal, section }) => {
 
     if (typeOfUser === "fop") {
       const formData = { ...data, access: typeOfAccess, userFop: typeOfUser };
-      // console.log(formData);
+      console.log(formData);
       dispatchFop(formData)
         .unwrap()
         .then(() => {
