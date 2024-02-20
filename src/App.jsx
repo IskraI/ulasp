@@ -18,6 +18,7 @@ import PrivateUserRoute from "./components/PrivateUserRoute";
 import Messages from "./components/AdminComponents/Messages/Messages";
 import MessagesUser from "./components/MessagesUser/MessagesUser";
 import MyPlaylistsUser from "./components/MyPlaylistsUser/MyPlaylistsUser";
+import MyPlaylists from "./pages/UserPage/MyPlaylists/MyPlaylists";
 import AnalyticUser from "./components/AdminComponents/AnalyticUser/AnalyticUser";
 // import AdminUsers from "./components/AdminUsers/AdminUsers";
 
@@ -222,7 +223,7 @@ function App() {
                 />
                 <Route
                   path="cabinet/myplaylists"
-                  element={<MyPlaylistsUser />}
+                  element={<MyPlaylists />}
                 />
                 <Route path="*" element={<ErrorPage />} />
               </Route>

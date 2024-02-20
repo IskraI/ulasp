@@ -11,12 +11,12 @@ import {
    PlaylistImg,
   PlaylistInfoWrapper,
   PlaylistItemText,
-} from "./MediaList.styled";
+} from "../../UserMediaComponent/PlayLists/MediaList.styled";
 import { Link } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 
 
-const PlayListItem = ({ id, title, icon, genre, favoriteStatus, addStatus,
+const CreatePlayListItem = ({ id, title, icon, favoriteStatus, addStatus,
   placeListCardInfo,
   countTracks, }) => {
 
@@ -25,7 +25,7 @@ const PlayListItem = ({ id, title, icon, genre, favoriteStatus, addStatus,
 
 // { _id, title, icon, isFavorite: initialFavorite }
   const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
-  const [toggleAdd] = useUpdateAddStatusApiMutation(id);
+//   const [toggleAdd] = useUpdateAddStatusApiMutation(id);
 
   // const { data: dataFavorites } = useFavoritePlaylistForUserQuery();
  
@@ -35,14 +35,14 @@ const PlayListItem = ({ id, title, icon, genre, favoriteStatus, addStatus,
 
   const [isFavorite, setIsFavorite] = useState(favoriteStatus || false);
   
-  const [isAdd, setIsAdd] = useState(addStatus || false);
+//   const [isAdd, setIsAdd] = useState(addStatus || false);
     // const handleToggleFavorite = (playlistId) => {
     //   toggleFavorite(playlistId)
      
   //   };
   
-   const cabinet = `/user/cabinet/myplaylists/createplaylists`;
-  const newPlaylists = `/user/medialibrary/newplaylists/${id}/tracks`;
+   const cabinet = `/user/cabinet/myplaylists`;
+//   const newPlaylists = `/user/medialibrary/newplaylists/${id}/tracks`;
 
  
 
@@ -58,17 +58,17 @@ const PlayListItem = ({ id, title, icon, genre, favoriteStatus, addStatus,
     }
   };
 
-  const handleToggleAdd = async () => {
-     console.log('playlistId:', id);
-    try {
-      // Call the API to update the favorite status
-      await toggleAdd(id);
-      // Update the local state after a successful API call
-      setIsAdd((prevIsAdd) => !prevIsAdd);
-    } catch (error) {
-      console.error('Error updating add status:', error);
-    }
-  };
+//   const handleToggleAdd = async () => {
+//      console.log('playlistId:', id);
+//     try {
+//       // Call the API to update the favorite status
+//       await toggleAdd(id);
+//       // Update the local state after a successful API call
+//       setIsAdd((prevIsAdd) => !prevIsAdd);
+//     } catch (error) {
+//       console.error('Error updating add status:', error);
+//     }
+//   };
 
   // useEffect(() => {
   //   // Fetch initial favorite status from the backend when the component mounts
@@ -87,7 +87,7 @@ const PlayListItem = ({ id, title, icon, genre, favoriteStatus, addStatus,
             key={id}
             to={
               location.pathname === cabinet
-                ? `myplaylists/createplaylists/${id}/tracks`
+                ? `createlaylists/${id}/tracks`
                 : `${id}/tracks`
             }
             state={{ from: location }}
@@ -124,7 +124,7 @@ const PlayListItem = ({ id, title, icon, genre, favoriteStatus, addStatus,
           </svg>
 
           
-      {!isAdd ? (
+      {/* {!isAdd ? (
     <svg
       width="24"
       height="24"
@@ -148,7 +148,7 @@ const PlayListItem = ({ id, title, icon, genre, favoriteStatus, addStatus,
     >
       <use href={`${symbol}#icon-check`}></use>
     </svg>
-  )}
+  )} */}
 
          </IconsWrapper>
       </MediaItem>
@@ -156,4 +156,4 @@ const PlayListItem = ({ id, title, icon, genre, favoriteStatus, addStatus,
   );
 };
 
-export default PlayListItem;
+export default CreatePlayListItem;
