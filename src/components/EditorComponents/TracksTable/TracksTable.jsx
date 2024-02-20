@@ -98,8 +98,21 @@ const TracksTable = ({
     playerState.indexTrack,
     currentPageSize
   );
-  const lastTrackInPage = playerState.indexTrack === tracks.length - 1 + skip;
 
+  const indexOfLastTrackInPage =
+    currentPageSize > tracks.length
+      ? tracks.length - 1 + skip
+      : currentPageForTrackPlaying * currentPageSize - 1;
+
+  const lastTrackInPage = playerState.indexTrack === indexOfLastTrackInPage;
+
+  // console.log(
+  //   "Длинна реса меньше, чем количество елементов на странице",
+  //   currentPageSize > tracks.length
+  // );
+  // console.log(currentPageSize);
+  // console.log(tracks.length);
+  // console.log("tracks.length - 1 + skip ==>", tracks.length - 1 + skip);
   // console.log("indexTrack ===>", playerState.indexTrack);
   // console.log("lastIndex ===>", lastTrackInPage);
 
@@ -217,9 +230,21 @@ const TracksTable = ({
     }
     //если нет страниц и это последний трек
     if (!anyMorePages && lastTrackInPage) {
-      dispatch(
-        setLastTrack({ isLastTrack: true, isLastPage: true, nextPage: 1 })
-      );
+      currentPageForTrackPlaying === currentPage
+        ? dispatch(
+            setLastTrack({
+              isLastTrack: true,
+              isLastPage: true,
+              nextPage: 1,
+            })
+          )
+        : dispatch(
+            setLastTrack({
+              isLastTrack: true,
+              isLastPage: true,
+              nextPage: currentPageForTrackPlaying + 1,
+            })
+          );
       console.log("Это конец");
     }
   }, [
