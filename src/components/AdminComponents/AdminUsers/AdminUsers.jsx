@@ -13,7 +13,7 @@ import symbol from "../../../assets/symbol.svg";
 import { Outlet, useLocation } from "react-router-dom";
 
 const AdminUsers = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  // const [searchTerm, setSearchTerm] = useState("");
 
   // const handleSearchTermChange = (value) => {
   //   setSearchTerm(value);
@@ -37,9 +37,11 @@ const AdminUsers = () => {
 
   const handleShowModal = () => {
     setShowModal(true);
+    // document.body.classList.add("modal-open");
   };
 
   const handleCloseModal = () => {
+    // document.body.classList.remove("modal-open");
     setShowModal(false);
   };
 
@@ -79,7 +81,7 @@ const AdminUsers = () => {
           Музичні редактори та адміністратори
         </Link>
       </SectionUser>
-      <Outlet searchTerm={searchTerm} />
+      <Outlet />
 
       {showModal && (
         <Modal

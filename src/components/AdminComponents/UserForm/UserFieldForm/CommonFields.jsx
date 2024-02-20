@@ -36,26 +36,24 @@ const CommonFieldForm = ({
         </Tooltip>
       </RegisterField>
 
-      {typeOfUser === "fop" && (
-        <RegisterField>
-          <RegisterLabel>Дата народження</RegisterLabel>
-          <RegisterInput
-            type="text"
-            placeholder="Дата народження"
-            aria-describedby="dayOfBirthdayTooltip"
-            className={`${errors.dayOfBirthday ? "invalid" : ""}${
-              !errors.dayOfBirthday && dirtyFields.dayOfBirthday ? "valid" : ""
-            }`}
-            {...register("dayOfBirthday")}
-          />
-          <Tooltip
-            id="dayOfBirthdayTooltip"
-            className={`${errors.dayOfBirthday ? "visible" : ""}`}
-          >
-            {errors.dayOfBirthday && errors.dayOfBirthday.message}
-          </Tooltip>
-        </RegisterField>
-      )}
+      <RegisterField>
+        <RegisterLabel>Назва закладу</RegisterLabel>
+        <RegisterInput
+          type="text"
+          placeholder="Назва закладу"
+          aria-describedby="institutionTooltip"
+          className={`${errors.institution ? "invalid" : ""}${
+            !errors.institution && dirtyFields.institution ? "valid" : ""
+          }`}
+          {...register("institution")}
+        />
+        <Tooltip
+          id="institutionTooltip"
+          className={`${errors.institution ? "visible" : ""}`}
+        >
+          {errors.institution && errors.institution.message}
+        </Tooltip>
+      </RegisterField>
 
       <RegisterField>
         <RegisterLabel>Номер телефону*</RegisterLabel>
