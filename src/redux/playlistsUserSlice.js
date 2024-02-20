@@ -18,7 +18,7 @@ export const playlistsUserApi = createApi({
   endpoints: (builder) => ({
       createPlaylistForUser: builder.mutation({
       query: (body) => ({
-        url: "/user/playlist/create",
+        url: "/user/userPlaylist/create",
         method: "POST",
         body,
       }),
@@ -75,9 +75,12 @@ export const playlistsUserApi = createApi({
    }),
    
    addPlaylistForUser: builder.query({
-      query: () => ({ url: `/user/playlist/add` }),
+      query: (page = "", limit = "") => ({ url: `/user/playlist/add?${page && `page=${page}`} & ${
+          limit && `limit=${limit}`
+        }`, }),
 
-      providesTags: ["PlaylistsAdd"],
+    //  providesTags: ["PlaylistsAdd"],
+       providesTags: (_result, _err, id) => [{ type: "PlaylistsAdd", id }],
    }),
    
    updateAddStatusApi: builder.mutation({
