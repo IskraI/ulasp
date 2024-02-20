@@ -109,11 +109,7 @@ const CardUser = () => {
           padding="8px 63px"
           height="48px"
           display="none"
-          onClick={() =>
-            navigate(`/admin/users/carduser/${user._id}/data`, {
-              state: { user },
-            })
-          }
+          onClick={() => navigate(`/admin/users/carduser/${user._id}/data`)}
           text={
             <>
               <svg

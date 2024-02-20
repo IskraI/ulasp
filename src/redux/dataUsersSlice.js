@@ -18,14 +18,14 @@ export const dataUsersApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["dataUsers", "dataAdmins", "dataUser", "access"],
+  tagTypes: ["dataUsers", "dataAdmins", "dataUser", "reportUser"],
   endpoints: (builder) => ({
     getUsersList: builder.query({
       query: (admin = false) => {
         const url = admin ? "admin/" : "admin/users";
         return { url };
       },
-      providesTags: ["dataUsers", "dataUser"],
+      providesTags: ["dataUsers"],
     }),
 
     delUserById: builder.mutation({
@@ -60,7 +60,7 @@ export const dataUsersApi = createApi({
         method: "PATCH",
       }),
 
-      invalidatesTags: ["dataUsers"],
+      invalidatesTags: ["dataUsers", "dataUser"],
     }),
 
     getAdminById: builder.query({
@@ -74,6 +74,14 @@ export const dataUsersApi = createApi({
       //   console.error("Query failed", error);
       //   dispatch(resetUser()); // Сбросить состояние до значения по умолчанию
       // },
+    }),
+    countListensByUserById: builder.mutation({
+      query: (userData) => ({
+        url: `admin/users/countlistens`,
+        method: "POST",
+        body: userData, // Здесь передается объект userData с данными из формы
+      }),
+      providesTags: ["reportUser"], // При успешном выполнении инвалидирует тег "reportUser"
     }),
 
     createFopUser: builder.mutation({
@@ -156,4 +164,5 @@ export const {
   useAccessUserUpdateByIdMutation,
   useGetUserByIdTrackCountQuery,
   useGetUserByIdPlaylistCountQuery,
+  useCountListensByUserByIdMutation,
 } = dataUsersApi;
