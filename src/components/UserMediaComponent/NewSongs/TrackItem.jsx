@@ -18,7 +18,7 @@ import {
 import { Link } from "react-router-dom";
 
 import {
-  setSrcPlayer,
+  setPreloadSrcPlayer,
   stopPlay,
   setCurrentIndex,
 } from "../../../redux/playerSlice";
@@ -59,7 +59,7 @@ const TrackItem = ({ id, title, icon, artist, trackURL, isLoading }) => {
   const playMusic = () => {
     dispatch(stopPlay([]));
     dispatch(
-      setSrcPlayer([
+      setPreloadSrcPlayer([
         {
           id,
           trackURL,

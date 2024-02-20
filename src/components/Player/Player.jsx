@@ -1,15 +1,19 @@
 /* eslint-disable react/prop-types */
 
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import {
+  setPreloadSrcPlayer,
   setCurrentIndex,
   pause,
   updateIsFirstPlay,
   stopPlay,
   setDefaultState,
+  setNextPage,
+  setSrcPlaying,
 } from "../../redux/playerSlice";
 import { useUpdateListenCountTrackByIdMutation } from "../../redux/tracksUserSlice";
+import { usePrefetch } from "../../redux/tracksSlice";
 
 import { getPlayerState } from "../../redux/playerSelectors";
 
@@ -30,6 +34,10 @@ const Player = ({ tracks = [], isFirst }) => {
   const isPlaying = playerState.isPlaying;
   const isPaused = playerState.isPaused;
   const isLastTrack = playerState.isLastTrack;
+  const isLastPage = playerState.isLastPage;
+  const currentPage = playerState.currentPage;
+  const nextPage = playerState.nextPage;
+  const currentPageSize = playerState.pageSize;
 
   const [currentTrack, setTrackIndex] = useState();
   const [isPressedNext, setIsPressedNext] = useState(false);
@@ -102,6 +110,12 @@ const Player = ({ tracks = [], isFirst }) => {
     setTrackIndex((currentTrack) =>
       currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
     );
+
+    if (isLastTrack) {
+      dispatch(setNextPage({ currentPage: nextPage }));
+
+      console.log("wead");
+    }
   };
 
   const handleClickPrevious = () => {
@@ -114,6 +128,11 @@ const Player = ({ tracks = [], isFirst }) => {
     );
   };
 
+  const prefetchPage = usePrefetch("getAllTracks");
+
+  const prefetchNext = useCallback(() => {
+    prefetchPage({ page: nextPage, limit: currentPageSize });
+  }, [currentPageSize, nextPage, prefetchPage]);
   const handleEnd = () => {
     console.log("Песня завершила проигрывание.");
     dispatch(updateIsFirstPlay(true));
@@ -122,10 +141,12 @@ const Player = ({ tracks = [], isFirst }) => {
     setTrackIndex((currentTrack) =>
       currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
     );
-    // if (isLastTrack) {
-    //   dispatch(setDefaultState());
-    // }
+
+    if (isLastTrack) {
+      dispatch(setNextPage({ currentPage: nextPage }));
+    }
   };
+
   return (
     <>
       <PlayerWrapper>
@@ -151,13 +172,27 @@ const Player = ({ tracks = [], isFirst }) => {
 
           <PlayerReact
             onPause={() => {
-              dispatch(pause());
+              if (isPlaying && !isPaused) {
+                dispatch(pause());
+              }
             }}
             onPlay={() => {
               if (!isPlaying) {
-                dispatch(setCurrentIndex(currentTrackIndex));
+                // dispatch(setCurrentIndex(currentTrackIndex));
+                dispatch(pause());
               }
               handlePlayLoadStart(tracks[currentTrack]?.id);
+            }}
+            onListen={() => {
+              if (
+                Math.ceil(playerRef.current.audio.current.duration * 0.95) ===
+                  Math.ceil(playerRef.current.audio.current.currentTime) &&
+                isLastTrack
+              ) {
+                prefetchNext();
+              } else {
+                return;
+              }
             }}
             ref={playerRef}
             autoPlay={false}
@@ -169,7 +204,9 @@ const Player = ({ tracks = [], isFirst }) => {
             src={trackSRC}
             showSkipControls={tracks?.length > 1 ? true : false}
             showFilledVolume={true}
-            onClickNext={handleClickNext}
+            onClickNext={() => {
+              handleClickNext();
+            }}
             onClickPrevious={handleClickPrevious}
             onEnded={handleEnd}
             // onLoadStart={() => handlePlayLoadStart(tracks[currentTrack]?.id)}

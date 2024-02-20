@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import TrackItem from "./TrackItemUser";
 import { ErrorNotFound, NoData } from "../../Errors/Errors";
 
-import { setSrcPlayer } from "../../../redux/playerSlice";
+import { setPreloadSrcPlayer } from "../../../redux/playerSlice";
 
 import {
   TracksTableWrapper,
@@ -54,7 +54,7 @@ const TracksTable = ({
       };
       return newObject;
     });
-    dispatch(setSrcPlayer(trackURL));
+    dispatch(setPreloadSrcPlayer(trackURL));
   }, [dispatch, tracks]);
 
   // console.log("new songs пропс пришел в тейблюзер", tracks);

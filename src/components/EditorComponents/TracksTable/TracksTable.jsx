@@ -1,21 +1,28 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, useCallback } from "react";
+import { useLocation } from "react-router-dom";
 
 import Pagination from "rc-pagination";
 import Select from "rc-select";
 
 import localeUA from "../../../constants/paginationLocaleUA.js";
+import { compareArray, findPage } from "../../../helpers/helpers.js";
 
 import TrackItem from "./TrackItem";
 import { Loader, ProgressBarTracksTable } from "../../Loader/Loader";
 import { ErrorNotFound, NoData } from "../../Errors/Errors";
 
-import { usePrefetch } from "../../../redux/tracksSlice.js";
 import {
-  setSrcPlayer,
+  useGetAllTracksQuery,
+  usePrefetch,
+} from "../../../redux/tracksSlice.js";
+import {
+  setPreloadSrcPlayer,
   setLastTrack,
   setDefaultPreloadSrc,
+  setNextPage,
+  setSrcPlaying,
 } from "../../../redux/playerSlice";
 import { getPlayerState } from "../../../redux/playerSelectors.js";
 
@@ -58,48 +65,184 @@ const TracksTable = ({
   onChangeCurrentPage,
   onChangeSizePage,
   currentPage: currPage,
+  pageSize: currentPageSize,
+  totalPages,
 }) => {
+  const {
+    data: allTracks,
+    error: errorLoadingAllTracks,
+    isFetching: isFetchingAllTracks,
+    isSuccess: isSuccessAllTracks,
+    isLoading: isLoadingAllTracks,
+  } = useGetAllTracksQuery({ page: "", limit: "" });
+
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
   const [currentPage, setCurrentPage] = useState(currPage);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(currentPageSize);
   const tracksTableProps = {
     showTitle: showTitle ? "table-caption" : "none",
     marginTop: marginTopWrapper ? `${marginTopWrapper}` : "auto",
     showData: rows.map((rows) => (rows.showData ? true : false)),
   };
 
+  const skip = (currentPage - 1) * pageSize;
+
+  const preloadPlayerSRC = playerState.preloadSrc;
+  const playerSRC = playerState.src;
   const isPlaying = playerState.isPlaying;
-  useEffect(() => {
-    if (isSuccess) {
-      const trackURL = tracks.map((track) => {
-        const newObject = {
-          id: track._id,
-          trackURL: track.trackURL,
-          artist: track.artist,
-          trackName: track.trackName,
-        };
-        return newObject;
-      });
-      dispatch(setSrcPlayer(trackURL));
-    }
-  }, [dispatch, isSuccess, tracks]);
+  const currentPageGlobalState = playerState.currentPage;
+  const anyMorePages = totalPages > currentPage;
+
+  const currentPageForTrackPlaying = findPage(
+    playerState.indexTrack,
+    currentPageSize
+  );
+  const lastTrackInPage = playerState.indexTrack === tracks.length - 1 + skip;
+
+  // console.log("indexTrack ===>", playerState.indexTrack);
+  // console.log("lastIndex ===>", lastTrackInPage);
+
+  const location = useLocation();
+
+  const onChangePage = useCallback(
+    (page) => {
+      console.log(page);
+      setCurrentPage(page);
+      onChangeCurrentPage(page);
+      dispatch(
+        setNextPage({
+          currentPage: page,
+        })
+      );
+    },
+    [dispatch, onChangeCurrentPage]
+  );
+
+  // console.log("location ===>", location);
 
   useEffect(() => {
-    if (currentPage) {
-      onChangeCurrentPage(currentPage);
+    console.log("currentPageLocal", currentPage);
+    // console.log("pageSize", pageSize);
+    console.log("currentPageGlobal", currentPageGlobalState);
+    // console.log(isFetching);
+    // console.log(isLoading);
+    // console.log(isSuccess);
+    if (isSuccessAllTracks) {
+      if (currentPage === 1 && !isFetching) {
+        console.log("В прелоад");
+        const trackURL = allTracks.latestTracks.map((track) => {
+          const newObject = {
+            id: track._id,
+            trackURL: track.trackURL,
+            artist: track.artist,
+            trackName: track.trackName,
+          };
+          return newObject;
+        });
+
+        dispatch(
+          setPreloadSrcPlayer({
+            preloadSrc: trackURL,
+            currentPage: currentPage,
+            pageSize: currentPageSize,
+            location: location.pathname,
+          })
+        );
+      }
     }
 
-    if (currentPage !== currPage) {
-      dispatch(setDefaultPreloadSrc());
+    if (currentPage !== currentPageGlobalState && !isFetching) {
+      if (pageSize !== pageSize) {
+        console.log("Здесь установилось значение");
+        onChangePage(currentPage);
+      } else {
+        console.log("Здесь установилось глобальное значение");
+
+        onChangePage(currentPageGlobalState);
+      }
+
+      // if (preloadPlayerSRC.length === 0) {
+      //   onChangePage(currentPage);
+      // }
+
+      // dispatch(setSrcPlaying({ indexTrack: 0 }));
     }
-  }, [currPage, currentPage, dispatch, onChangeCurrentPage]);
+  }, [
+    currentPage,
+    currentPageGlobalState,
+    dispatch,
+    isFetching,
+    isSuccessAllTracks,
+    onChangePage,
+    pageSize,
+  ]);
 
-  const ttt = playerState.indexTrack === playerState.src.length - 1;
+  useEffect(() => {
+    if (!isFetching) {
+      // console.log("Попали 181 строка");
+      // dispatch(setSrcPlaying({ indexTrack: 0 }));
+    }
+  }, [dispatch, isFetching]);
 
-  console.log(ttt);
+  useEffect(() => {
+    const compareSRC = compareArray(preloadPlayerSRC, playerSRC);
 
-  console.log(playerState.src.length);
+    if (!compareSRC) {
+      // dispatch(setSrcPlaying({ indexTrack: 0 }));
+    }
+  }, [dispatch, playerSRC, preloadPlayerSRC]);
+
+  useEffect(() => {
+    //если страницы есть и это последний трек
+    if (anyMorePages && lastTrackInPage) {
+      // onChangeCurrentPage(currentPage + 1);
+      dispatch(
+        setLastTrack({
+          isLastTrack: true,
+          isLastPage: false,
+          nextPage: currentPageForTrackPlaying + 1,
+        })
+      );
+    }
+    //если страниц нет и это не последний трек
+    if (!anyMorePages && !lastTrackInPage) {
+      // dispatch(
+      //   setLastTrack({
+      //     isLastTrack: false,
+      //     isLastPage: true,
+      //     nextPage: 1,
+      //   })
+      // );
+    }
+    //если нет страниц и это последний трек
+    if (!anyMorePages && lastTrackInPage) {
+      dispatch(
+        setLastTrack({ isLastTrack: true, isLastPage: true, nextPage: 1 })
+      );
+      console.log("Это конец");
+    }
+  }, [
+    anyMorePages,
+    currentPage,
+    currentPageForTrackPlaying,
+    dispatch,
+    lastTrackInPage,
+  ]);
+
+  // const lastTrackInPlaylist = totalTracks ===
+
+  //Последний трек в плейлисте
+  //Current page = 1
+  //Elements on page = 10
+  //first element on page 2 = 10
+
+  // console.log("Текущая страница", currentPage);
+  // console.log("Количество елементов на странице", pageSize);
+  // console.log("Это последний трек в массиве?", lastTrackInPage);
+  // console.log("У нас есть еще страницы", anyMorePages);
+
+  // console.log("Длинна сорса в плеере", playerState.src.length);
 
   // useEffect(() => {
   //   // const countPages = totalTracks % pageSize === 0;
@@ -155,9 +298,9 @@ const TracksTable = ({
       {tracks?.length === 0 && !isLoading && !error && (
         <NoData text={"Музика ще не завантажена"} textColor={"grey"} />
       )}
-      {/* {isFetching && <Loader />} */}
+      {isFetching && <Loader />}
 
-      {!error && isSuccess && (
+      {!error && isSuccess && !isFetching && (
         <>
           <TracksTableWrapper marginTop={tracksTableProps.marginTop}>
             <TableStyle>
@@ -241,6 +384,7 @@ const TracksTable = ({
                         errorUpload={errorUpload}
                         isUninitialized={isUninitialized}
                         showData={tracksTableProps.showData}
+                        countOfSkip={skip}
                       />
                     );
                   }
@@ -256,9 +400,11 @@ const TracksTable = ({
               total={totalTracks}
               // selectComponentClass={Select}
               showSizeChanger={false}
-              defaultPageSize={10}
+              defaultPageSize={currentPageSize}
+              pageSize={pageSize}
               // onShowSizeChange={onPageSizeChange}
-              onChange={setCurrentPage}
+
+              onChange={(page) => onChangePage(page)}
               locale={localeUA}
             />
           )}

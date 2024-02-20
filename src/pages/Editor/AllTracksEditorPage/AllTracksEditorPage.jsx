@@ -15,7 +15,7 @@ const AllTracksEditor = () => {
   const BaseInputRef = useRef(null);
   const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(3);
 
   // const page = currentPage;
   // const limit = pageSize;
@@ -118,7 +118,7 @@ const AllTracksEditor = () => {
     // refetchOnFocus: true,
   });
 
-  console.log(isLoadingAllTracks);
+  // console.log(isLoadingAllTracks);
 
   const [
     uploadTrack,
@@ -133,20 +133,19 @@ const AllTracksEditor = () => {
   const onPageChange = (page) => {
     console.log("4 Step - setCurrentPage in mutation", page);
     setCurrentPage(page);
-    return page;
   };
 
-  // const onPageSizeChange = (size) => {
-  //   setPageSize(size);
+  const onPageSizeChange = (size) => {
+    setPageSize(size);
 
-  //   return pageSize;
-  // };
+    return pageSize;
+  };
 
-  // const prefetchPage = usePrefetch("getAllTracks");
+  const prefetchPage = usePrefetch("getAllTracks");
 
-  // const prefetchNext = useCallback(() => {
-  //   prefetchPage({ page: 2, limit: 10 });
-  // }, [prefetchPage]);
+  const prefetchNext = useCallback(() => {
+    prefetchPage({ page: 2, limit: 10 });
+  }, [prefetchPage]);
 
   return (
     <>
@@ -176,8 +175,10 @@ const AllTracksEditor = () => {
             isSuccessUpload={isSuccessUploadTrack}
             errorUpload={errorUploadTrack}
             onChangeCurrentPage={onPageChange}
-            // onChangeSizePage={onPageSizeChange}
+            onChangeSizePage={onPageSizeChange}
             currentPage={currentPage}
+            pageSize={pageSize}
+            totalPages={allTracks.totalPages}
           />
         </>
       )}

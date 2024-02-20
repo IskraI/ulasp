@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  futureSrc: [],
+  preloadSrc: [],
   src: [],
   indexTrack: 0,
   isLoaded: false,
@@ -9,6 +9,11 @@ const initialState = {
   isPaused: false,
   isFirstPlay: true,
   isLastTrack: false,
+  isLastPage: false,
+  currentPage: 1,
+  nextPage: null,
+  pageSize: null,
+  location: null,
 };
 
 export const playerSlice = createSlice({
@@ -16,13 +21,18 @@ export const playerSlice = createSlice({
   initialState,
 
   reducers: {
-    setSrcPlayer: {
+    setPreloadSrcPlayer: {
       reducer(state, action) {
         state = {
           ...state,
-          futureSrc: action.payload,
+          preloadSrc: action.payload.preloadSrc,
           isLoaded: true,
           isPlaying: state.isPlaying ? true : false,
+
+          currentPage: action.payload.currentPage,
+          isLastTrack: false,
+          isLastPage: false,
+          pageSize: action.payload.pageSize,
         };
         return state;
       },
@@ -31,7 +41,7 @@ export const playerSlice = createSlice({
       reducer(state) {
         state = {
           ...state,
-          futureSrc: [],
+          preloadSrc: [],
           isLoaded: false,
           isPlaying: true,
         };
@@ -40,11 +50,18 @@ export const playerSlice = createSlice({
     },
     setSrcPlaying: {
       reducer(state, action) {
+        console.log(action);
         state = {
           ...state,
-          src: state.futureSrc,
+          src: state.preloadSrc,
+          // indexTrack: action.payload.indexTrack,
+          preloadSrc: [],
+          indexTrack: action?.payload
+            ? action.payload.indexTrack
+            : state.indexTrack,
           isLoaded: true,
           isPlaying: true,
+          // location: action.payload.location,
         };
         return state;
       },
@@ -57,6 +74,8 @@ export const playerSlice = createSlice({
           indexTrack: action.payload,
           isPlaying: true,
           isPaused: false,
+          nextPage: null,
+          isLastTrack: false,
         };
         return state;
       },
@@ -76,8 +95,8 @@ export const playerSlice = createSlice({
       reducer(state) {
         state = {
           ...state,
-          isPlaying: false,
-          isPaused: true,
+          isPlaying: state.isPlaying ? false : true,
+          isPaused: state.isPaused ? false : true,
           isLoaded: true,
           isFirstPlay: false,
         };
@@ -94,11 +113,12 @@ export const playerSlice = createSlice({
       },
     },
     setLastTrack: {
-      reducer(state) {
+      reducer(state, action) {
+        console.log(action.payload);
         state = {
           ...state,
-          isLastTrack: true,
-          src: [],
+          // isLastPage, isLastTrack
+          ...action.payload,
         };
         return state;
       },
@@ -111,11 +131,23 @@ export const playerSlice = createSlice({
         return state;
       },
     },
+    setNextPage: {
+      reducer(state, action) {
+        console.log(action);
+        state = {
+          ...state,
+          preloadSrc: [],
+          src: state.src.length === 0 ? state.preloadSrc : state.src,
+          currentPage: action.payload.currentPage,
+        };
+        return state;
+      },
+    },
   },
 });
 
 export const {
-  setSrcPlayer,
+  setPreloadSrcPlayer,
   setSrcPlaying,
   stopPlay,
   pause,
@@ -124,6 +156,7 @@ export const {
   setLastTrack,
   setDefaultState,
   setDefaultPreloadSrc,
+  setNextPage,
 } = playerSlice.actions;
 
 export const playerReducer = playerSlice.reducer;

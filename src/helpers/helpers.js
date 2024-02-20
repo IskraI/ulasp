@@ -67,3 +67,7 @@ export const formDataFunction = (
 export const compareArray = function (a1, a2) {
   return a1.length == a2.length && a1.every((v, i) => v === a2[i]);
 };
+
+export function findPage(index, itemsPerPage) {
+  return Math.ceil((index + 1) / itemsPerPage);
+}

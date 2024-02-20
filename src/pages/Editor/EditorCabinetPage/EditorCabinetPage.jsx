@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   StatsListWrapper,
   StatItemEditor,
@@ -70,13 +71,33 @@ const RowsTitle = [
 ];
 
 const EditorCabinetPage = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
   const {
     data: allTracks,
-    isLoading: isLoadingAllTracks,
     error: errorLoadingAllTracks,
     isFetching: isFetchingAllTracks,
     isSuccess: isSuccessAllTracks,
-  } = useGetAllTracksQuery({ forceRefetch: true, refetchOnFocus: true });
+    isLoading: isLoadingAllTracks,
+  } = useGetAllTracksQuery({
+    page: currentPage,
+    limit: pageSize,
+    // forceRefetch: true,
+    // refetchOnFocus: true,
+  });
+
+  const onPageChange = (page) => {
+    console.log("4 Step - setCurrentPage in mutation", page);
+    setCurrentPage(page);
+  };
+
+  const onPageSizeChange = (size) => {
+    console.log(size);
+    setPageSize(size);
+
+    return pageSize;
+  };
 
   return (
     <>
@@ -102,12 +123,17 @@ const EditorCabinetPage = () => {
             marginTopWrapper={"24px"}
             showTitle={true}
             tracks={allTracks.latestTracks}
+            totalTracks={allTracks.totalTracks}
             isLoading={isLoadingAllTracks}
             error={errorLoadingAllTracks}
             isFetching={isFetchingAllTracks}
             isSuccess={isSuccessAllTracks}
             rows={RowsTitle}
             isInPlayList={false}
+            onChangeCurrentPage={onPageChange}
+            onChangeSizePage={onPageSizeChange}
+            currentPage={currentPage}
+            pageSize={pageSize}
           />
         </>
       )}
