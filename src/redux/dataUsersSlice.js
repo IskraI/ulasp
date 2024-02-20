@@ -18,7 +18,7 @@ export const dataUsersApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["dataUsers", "dataAdmins", "dataUser"],
+  tagTypes: ["dataUsers", "dataAdmins", "dataUser", "access"],
   endpoints: (builder) => ({
     getUsersList: builder.query({
       query: (admin = false) => {
@@ -59,7 +59,8 @@ export const dataUsersApi = createApi({
         url: `admin/users/access/${id}`,
         method: "PATCH",
       }),
-      invalidatesTags: ["dataUsers", "dataUser"],
+
+      invalidatesTags: ["dataUsers"],
     }),
 
     getAdminById: builder.query({

@@ -93,8 +93,8 @@ const UserCreateForm = ({ onCloseModal, section }) => {
       dispatchFop(formData)
         .unwrap()
         .then(() => {
-          navigate("/admin/users/allusers");
           onCloseModal();
+          navigate("/admin/users/allusers");
         })
         .catch((error) => alert(error.data.message));
     }
