@@ -123,6 +123,7 @@ const EditorCabinetPage = () => {
             marginTopWrapper={"24px"}
             showTitle={true}
             tracks={allTracks.latestTracks}
+            tracksSRC={allTracks.tracksSRC}
             totalTracks={allTracks.totalTracks}
             isLoading={isLoadingAllTracks}
             error={errorLoadingAllTracks}

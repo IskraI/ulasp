@@ -56,6 +56,9 @@ const TrackItem = ({
   const [isPlayingTrack, setIsPlayingTrack] = useState(false);
   const [isPausedTrack, setIsPausedTrack] = useState(false);
 
+  // console.log("isPlayingTrack", isPlayingTrack);
+  // console.log("trackID", idTrack);
+
   const [id, setId] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
 

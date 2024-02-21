@@ -10,7 +10,6 @@ import AddTracks from "../../../components/EditorComponents/AddTracks/AddTracks"
 import symbol from "../../../assets/symbol.svg";
 import { Loader } from "../../../components/Loader/Loader";
 
-
 const AllTracksEditor = () => {
   const id = useId();
   const BaseInputRef = useRef(null);
@@ -119,6 +118,10 @@ const AllTracksEditor = () => {
     // refetchOnFocus: true,
   });
 
+  if (isSuccessAllTracks) {
+    console.log(allTracks);
+  }
+
   // console.log(isLoadingAllTracks);
 
   const [
@@ -149,7 +152,6 @@ const AllTracksEditor = () => {
 
   return (
     <>
-
       {!isSuccessAllTracks && <Loader />}
       {isSuccessAllTracks && !errorLoadingAllTracks && (
         <>
@@ -163,6 +165,7 @@ const AllTracksEditor = () => {
             // title={" Остання додана музика"}
             marginTopWrapper={"24px"}
             tracks={allTracks.latestTracks}
+            tracksSRC={allTracks.tracksSRC}
             totalTracks={allTracks.totalTracks}
             error={errorLoadingAllTracks}
             isFetching={isFetchingAllTracks}

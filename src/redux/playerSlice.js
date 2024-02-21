@@ -33,6 +33,7 @@ export const playerSlice = createSlice({
           isLastTrack: false,
           isLastPage: false,
           pageSize: action.payload.pageSize,
+          location: action.payload.location,
         };
         return state;
       },
@@ -61,7 +62,6 @@ export const playerSlice = createSlice({
             : state.indexTrack,
           isLoaded: true,
           isPlaying: true,
-          // location: action.payload.location,
         };
         return state;
       },

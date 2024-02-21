@@ -8,16 +8,11 @@ import Select from "rc-select";
 
 import localeUA from "../../../constants/paginationLocaleUA.js";
 import { compareArray, findPage } from "../../../helpers/helpers.js";
-import ScrollToTop from "../../../helpers/scrollToTop";
 
 import TrackItem from "./TrackItem";
 import { Loader, ProgressBarTracksTable } from "../../Loader/Loader";
 import { ErrorNotFound, NoData } from "../../Errors/Errors";
 
-import {
-  useGetAllTracksQuery,
-  usePrefetch,
-} from "../../../redux/tracksSlice.js";
 import {
   setPreloadSrcPlayer,
   setLastTrack,
@@ -43,6 +38,7 @@ import "../../../styles/rc-select.css";
 const TracksTable = ({
   rows,
   tracks,
+  tracksSRC,
   totalTracks,
   isLoading,
   isSuccess,
@@ -69,14 +65,6 @@ const TracksTable = ({
   pageSize: currentPageSize,
   totalPages,
 }) => {
-  const {
-    data: allTracks,
-    error: errorLoadingAllTracks,
-    isFetching: isFetchingAllTracks,
-    isSuccess: isSuccessAllTracks,
-    isLoading: isLoadingAllTracks,
-  } = useGetAllTracksQuery({ page: "", limit: "" });
-
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
   const [currentPage, setCurrentPage] = useState(currPage);
@@ -144,34 +132,31 @@ const TracksTable = ({
     onChangeSizePage(size);
   };
   useEffect(() => {
-    // console.log("currentPageLocal", currentPage);
-    // console.log("currentPageGlobal", currentPageGlobalState);
-
-    if (isSuccessAllTracks) {
-      if (currentPage === 1 && !isFetching) {
-        // console.log("В прелоад");
-        const trackURL = allTracks.latestTracks.map((track) => {
-          const newObject = {
-            id: track._id,
-            trackURL: track.trackURL,
-            artist: track.artist,
-            trackName: track.trackName,
-          };
-          return newObject;
-        });
-
-        dispatch(
-          setPreloadSrcPlayer({
-            preloadSrc: trackURL,
-            currentPage: currentPage,
-            pageSize: currentPageSize,
-          })
-        );
-      }
+    console.log("currentPageLocal", currentPage);
+    console.log("currentPageGlobal", currentPageGlobalState);
+    if (currentPage === 1 && !isFetching) {
+      // console.log("В прелоад");
+      const trackURL = tracksSRC.map((track) => {
+        const transformTrackObject = {
+          id: track._id,
+          trackURL: track.trackURL,
+          artist: track.artist,
+          trackName: track.trackName,
+        };
+        return transformTrackObject;
+      });
+      dispatch(
+        setPreloadSrcPlayer({
+          preloadSrc: trackURL,
+          currentPage: currentPage,
+          pageSize: currentPageSize,
+          location: location.pathname,
+        })
+      );
     }
 
     if (currentPage !== currentPageGlobalState && !isFetching) {
-      if (pageSize !== pageSize) {
+      if (location.pathname !== playerState.location) {
         console.log("Здесь установилось значение");
         onChangePage(currentPage);
       } else {
@@ -185,10 +170,12 @@ const TracksTable = ({
     currentPageGlobalState,
     dispatch,
     isFetching,
-    isSuccessAllTracks,
     onChangePage,
     pageSize,
     currentPageSize,
+    tracksSRC,
+    location,
+    playerState.location,
   ]);
 
   useEffect(() => {
@@ -300,7 +287,7 @@ const TracksTable = ({
       )}
       {isFetching && <Loader />}
 
-      {!error && isSuccess && !isFetching && (
+      {!error && isSuccess && !isFetching && tracks?.length !== 0 && (
         <>
           <TracksTableWrapper marginTop={tracksTableProps.marginTop}>
             <TableStyle>
@@ -392,7 +379,7 @@ const TracksTable = ({
               </tbody>
             </TableStyle>
           </TracksTableWrapper>
-          {isSuccess && totalTracks > 9 && (
+          {isSuccess && totalTracks > currentPageSize && (
             <Pagination
               style={{ marginTop: "auto", marginBottom: "24px" }}
               defaultCurrent={1}

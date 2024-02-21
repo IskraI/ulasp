@@ -19,8 +19,6 @@ import { getPlayerState } from "../../redux/playerSelectors";
 
 import { BASE_URL } from "../../constants/constants";
 
-
-
 import {
   PlayerWrapper,
   PlayerReact,
@@ -60,7 +58,6 @@ const Player = ({ tracks = [], isFirst }) => {
   const [dispatchListenCountTrack] = useUpdateListenCountTrackByIdMutation();
   // console.log("isFirstPlay", isFirst);
   const handlePlayLoadStart = async (track) => {
-    console.log("");
     if (isFirst) {
       console.log(
         `handlePlayLoadStart Песня с ${track} ID начала проигрываться. Отправим dispatchListenCountTrack`
@@ -154,7 +151,6 @@ const Player = ({ tracks = [], isFirst }) => {
   return (
     <>
       <PlayerWrapper>
-
         <>
           <TracksArtist>
             {isPlaying
@@ -185,6 +181,19 @@ const Player = ({ tracks = [], isFirst }) => {
               if (!isPlaying) {
                 dispatch(pause());
               }
+              // if (!isPlaying && playerState.src.length === 0) {
+              //   dispatch(
+              //     setSrcPlaying({
+              //       indexTrack: 0,
+              //     })
+              //   );
+              // } else {
+              //   dispatch(
+              //     setCurrentIndex(
+              //       currentTrack + (currentPage - 1) * currentPageSize
+              //     )
+              //   );
+              // }
               handlePlayLoadStart(tracks[currentTrack]?.id);
             }}
             onListen={() => {
