@@ -3,6 +3,7 @@ import {
   StatsListWrapper,
   StatItemEditor,
 } from "../../../components/Statistic/Statistic.styled";
+import FreeDiskSpace from "../../../components/EditorComponents/FreeDiskSpace/FreeDiskSpace";
 
 import { useGetAllTracksQuery } from "../../../redux/tracksSlice";
 
@@ -117,6 +118,7 @@ const EditorCabinetPage = () => {
               {allTracks.totalPlaylists}
               <br /> Створених плейлистів
             </StatItemEditor>
+            <FreeDiskSpace />
           </StatsListWrapper>
           <TracksTable
             title={"Остання додана музика"}

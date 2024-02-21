@@ -95,22 +95,10 @@ const TracksTable = ({
 
   const lastTrackInPage = playerState.indexTrack === indexOfLastTrackInPage;
 
-  // console.log(
-  //   "Длинна реса меньше, чем количество елементов на странице",
-  //   currentPageSize > tracks.length
-  // );
-  // console.log(currentPageSize);
-  // console.log(tracks.length);
-  // console.log("tracks.length - 1 + skip ==>", tracks.length - 1 + skip);
-  // console.log("indexTrack ===>", playerState.indexTrack);
-  // console.log("lastIndex ===>", lastTrackInPage);
-
   const location = useLocation();
 
   const onChangePage = useCallback(
     (page) => {
-      // console.log(page);
-
       setCurrentPage(page);
       onChangeCurrentPage(page);
       dispatch(
@@ -216,54 +204,6 @@ const TracksTable = ({
     dispatch,
     lastTrackInPage,
   ]);
-
-  // const lastTrackInPlaylist = totalTracks ===
-
-  //Последний трек в плейлисте
-  //Current page = 1
-  //Elements on page = 10
-  //first element on page 2 = 10
-
-  // console.log("Текущая страница", currentPage);
-  // console.log("Количество елементов на странице", pageSize);
-  // console.log("Это последний трек в массиве?", lastTrackInPage);
-  // console.log("У нас есть еще страницы", anyMorePages);
-
-  // console.log("Длинна сорса в плеере", playerState.src.length);
-
-  // useEffect(() => {
-  //   // const countPages = totalTracks % pageSize === 0;
-  //   const countPages = Math.ceil(totalTracks / pageSize);
-
-  //   //Есть ли у нас еще страницы?
-  //   const anyMorePages = countPages > currentPage;
-  //   console.log(!anyMorePages);
-  //   //Если нет, сообщаем в стейт, что это последний трек в плейлисте
-  //   if (!anyMorePages) {
-  //     dispatch(setLastTrack());
-  //   } else {
-  //     // alert("Это не конец");
-  //   }
-
-  //   //Если есть страницы, делаем префетч для слудующей порции данных
-  //   //записываем в будущий сорс новую порцию данных
-
-  //   // let i = 0;
-  //   // if (countPages > i) {
-  //   //   while (i < countPages) {
-  //   //     i++;
-  //   //   }
-  //   // }
-
-  //   // if (
-  //   //   playerState.indexTrack === playerState.src.length - 1 &&
-  //   //   countPages > currentPage
-  //   // ) {
-  //   //   onChangeCurrentPage(currentPage + 1);
-  //   // }
-
-  //   // console.log(countPages);
-  // }, [currentPage, dispatch, pageSize, totalTracks]);
 
   // const onPageChange = (page) => {
   //   console.log("page", page);
