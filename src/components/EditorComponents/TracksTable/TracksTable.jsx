@@ -69,6 +69,7 @@ const TracksTable = ({
   const playerState = useSelector(getPlayerState);
   const [currentPage, setCurrentPage] = useState(currPage);
   const [pageSize, setPageSize] = useState(currentPageSize);
+
   const tracksTableProps = {
     showTitle: showTitle ? "table-caption" : "none",
     marginTop: marginTopWrapper ? `${marginTopWrapper}` : "auto",
@@ -142,9 +143,14 @@ const TracksTable = ({
         })
       );
     }
-
+    console.log(pageSize !== currentPageSize);
+    console.log(pageSize);
+    // console.log(pageSize((prev) => console.log(prev)));
     if (currentPage !== currentPageGlobalState && !isFetching) {
-      if (location.pathname !== playerState.location) {
+      if (
+        location.pathname !== playerState.location ||
+        pageSize !== currentPageSize
+      ) {
         console.log("Здесь установилось значение");
         onChangePage(currentPage);
       } else {
@@ -325,6 +331,7 @@ const TracksTable = ({
               defaultCurrent={1}
               current={currentPage}
               total={totalTracks}
+              showLessItems
               selectComponentClass={Select}
               showSizeChanger={false}
               defaultPageSize={currentPageSize}
