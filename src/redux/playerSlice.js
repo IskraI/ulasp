@@ -73,9 +73,11 @@ export const playerSlice = createSlice({
           ...state,
           indexTrack: action.payload,
           isPlaying: true,
-          isPaused: false,
-          nextPage: null,
-          isLastTrack: false,
+          isPaused: state.isPaused ? false : state.isPaused,
+          nextPage: state.isPaused ? state.nextPage : null,
+          isLastTrack: state.isPaused ? state.isLastTrack : false,
+          isLastPage: state.isPaused ? state.isLastTrack : false,
+          isFirstPlay: state.isPaused ? false : true,
         };
         return state;
       },

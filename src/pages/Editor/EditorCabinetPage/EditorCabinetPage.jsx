@@ -134,6 +134,7 @@ const EditorCabinetPage = () => {
             onChangeSizePage={onPageSizeChange}
             currentPage={currentPage}
             pageSize={pageSize}
+            totalPages={allTracks.totalPages}
           />
         </>
       )}

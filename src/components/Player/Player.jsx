@@ -19,6 +19,8 @@ import { getPlayerState } from "../../redux/playerSelectors";
 
 import { BASE_URL } from "../../constants/constants";
 
+
+
 import {
   PlayerWrapper,
   PlayerReact,
@@ -46,12 +48,19 @@ const Player = ({ tracks = [], isFirst }) => {
   const [currentTrackArtist, setCurrentTrackArtist] = useState("Невизначений");
   const [currentTrackName, setCurrentTrackName] = useState("Невизначений");
 
+  const prefetchPage = usePrefetch("getAllTracks");
+
+  const prefetchNext = useCallback(() => {
+    prefetchPage({ page: nextPage, limit: currentPageSize });
+  }, [currentPageSize, nextPage, prefetchPage]);
+
   // const [isFirstPlay, setIsFirstPlay] = useState(isFirst);
   // const [isLoadStarted, setIsLoadStarted] = useState(false);
 
   const [dispatchListenCountTrack] = useUpdateListenCountTrackByIdMutation();
   // console.log("isFirstPlay", isFirst);
   const handlePlayLoadStart = async (track) => {
+    console.log("");
     if (isFirst) {
       console.log(
         `handlePlayLoadStart Песня с ${track} ID начала проигрываться. Отправим dispatchListenCountTrack`
@@ -128,11 +137,6 @@ const Player = ({ tracks = [], isFirst }) => {
     );
   };
 
-  const prefetchPage = usePrefetch("getAllTracks");
-
-  const prefetchNext = useCallback(() => {
-    prefetchPage({ page: nextPage, limit: currentPageSize });
-  }, [currentPageSize, nextPage, prefetchPage]);
   const handleEnd = () => {
     console.log("Песня завершила проигрывание.");
     dispatch(updateIsFirstPlay(true));
@@ -150,6 +154,7 @@ const Player = ({ tracks = [], isFirst }) => {
   return (
     <>
       <PlayerWrapper>
+
         <>
           <TracksArtist>
             {isPlaying
@@ -178,7 +183,6 @@ const Player = ({ tracks = [], isFirst }) => {
             }}
             onPlay={() => {
               if (!isPlaying) {
-                // dispatch(setCurrentIndex(currentTrackIndex));
                 dispatch(pause());
               }
               handlePlayLoadStart(tracks[currentTrack]?.id);

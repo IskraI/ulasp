@@ -15,7 +15,7 @@ export const tracksApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Tracks", "Playlists"],
+  tagTypes: ["Tracks"],
 
   endpoints: (builder) => ({
     getAllTracks: builder.query({
@@ -25,10 +25,7 @@ export const tracksApi = createApi({
         }`,
       }),
       // provideTags: ["Tracks"],
-      providesTags: (_result, _err, id) => [
-        { type: "Tracks", id },
-        { type: "Playlists", id },
-      ],
+      providesTags: (_result, _err, id) => [{ type: "Tracks", id }],
     }),
     uploadTrack: builder.mutation({
       query: (body) => ({

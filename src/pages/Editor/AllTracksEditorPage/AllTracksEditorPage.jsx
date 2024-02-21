@@ -10,6 +10,7 @@ import AddTracks from "../../../components/EditorComponents/AddTracks/AddTracks"
 import symbol from "../../../assets/symbol.svg";
 import { Loader } from "../../../components/Loader/Loader";
 
+
 const AllTracksEditor = () => {
   const id = useId();
   const BaseInputRef = useRef(null);
@@ -136,9 +137,8 @@ const AllTracksEditor = () => {
   };
 
   const onPageSizeChange = (size) => {
+    console.log(size);
     setPageSize(size);
-
-    return pageSize;
   };
 
   const prefetchPage = usePrefetch("getAllTracks");
@@ -149,6 +149,7 @@ const AllTracksEditor = () => {
 
   return (
     <>
+
       {!isSuccessAllTracks && <Loader />}
       {isSuccessAllTracks && !errorLoadingAllTracks && (
         <>
@@ -158,7 +159,6 @@ const AllTracksEditor = () => {
             uploadTrack={uploadTrack}
           />
           {/* <button onClick={() => prefetchNext()}>PpPPPPPPPP</button> */}
-
           <TracksTable
             // title={" Остання додана музика"}
             marginTopWrapper={"24px"}

@@ -8,6 +8,7 @@ import Select from "rc-select";
 
 import localeUA from "../../../constants/paginationLocaleUA.js";
 import { compareArray, findPage } from "../../../helpers/helpers.js";
+import ScrollToTop from "../../../helpers/scrollToTop";
 
 import TrackItem from "./TrackItem";
 import { Loader, ProgressBarTracksTable } from "../../Loader/Loader";
@@ -120,7 +121,8 @@ const TracksTable = ({
 
   const onChangePage = useCallback(
     (page) => {
-      console.log(page);
+      // console.log(page);
+
       setCurrentPage(page);
       onChangeCurrentPage(page);
       dispatch(
@@ -128,22 +130,26 @@ const TracksTable = ({
           currentPage: page,
         })
       );
+      window.scrollTo({
+        top: 0,
+        behavior: "instant",
+      });
     },
     [dispatch, onChangeCurrentPage]
   );
 
-  // console.log("location ===>", location);
-
+  const onPageSizeChange = (size) => {
+    console.log(size);
+    setPageSize(size);
+    onChangeSizePage(size);
+  };
   useEffect(() => {
-    console.log("currentPageLocal", currentPage);
-    // console.log("pageSize", pageSize);
-    console.log("currentPageGlobal", currentPageGlobalState);
-    // console.log(isFetching);
-    // console.log(isLoading);
-    // console.log(isSuccess);
+    // console.log("currentPageLocal", currentPage);
+    // console.log("currentPageGlobal", currentPageGlobalState);
+
     if (isSuccessAllTracks) {
       if (currentPage === 1 && !isFetching) {
-        console.log("В прелоад");
+        // console.log("В прелоад");
         const trackURL = allTracks.latestTracks.map((track) => {
           const newObject = {
             id: track._id,
@@ -159,7 +165,6 @@ const TracksTable = ({
             preloadSrc: trackURL,
             currentPage: currentPage,
             pageSize: currentPageSize,
-            location: location.pathname,
           })
         );
       }
@@ -174,12 +179,6 @@ const TracksTable = ({
 
         onChangePage(currentPageGlobalState);
       }
-
-      // if (preloadPlayerSRC.length === 0) {
-      //   onChangePage(currentPage);
-      // }
-
-      // dispatch(setSrcPlaying({ indexTrack: 0 }));
     }
   }, [
     currentPage,
@@ -189,27 +188,12 @@ const TracksTable = ({
     isSuccessAllTracks,
     onChangePage,
     pageSize,
+    currentPageSize,
   ]);
-
-  useEffect(() => {
-    if (!isFetching) {
-      // console.log("Попали 181 строка");
-      // dispatch(setSrcPlaying({ indexTrack: 0 }));
-    }
-  }, [dispatch, isFetching]);
-
-  useEffect(() => {
-    const compareSRC = compareArray(preloadPlayerSRC, playerSRC);
-
-    if (!compareSRC) {
-      // dispatch(setSrcPlaying({ indexTrack: 0 }));
-    }
-  }, [dispatch, playerSRC, preloadPlayerSRC]);
 
   useEffect(() => {
     //если страницы есть и это последний трек
     if (anyMorePages && lastTrackInPage) {
-      // onChangeCurrentPage(currentPage + 1);
       dispatch(
         setLastTrack({
           isLastTrack: true,
@@ -218,16 +202,7 @@ const TracksTable = ({
         })
       );
     }
-    //если страниц нет и это не последний трек
-    if (!anyMorePages && !lastTrackInPage) {
-      // dispatch(
-      //   setLastTrack({
-      //     isLastTrack: false,
-      //     isLastPage: true,
-      //     nextPage: 1,
-      //   })
-      // );
-    }
+
     //если нет страниц и это последний трек
     if (!anyMorePages && lastTrackInPage) {
       currentPageForTrackPlaying === currentPage
@@ -423,12 +398,12 @@ const TracksTable = ({
               defaultCurrent={1}
               current={currentPage}
               total={totalTracks}
-              // selectComponentClass={Select}
+              selectComponentClass={Select}
               showSizeChanger={false}
               defaultPageSize={currentPageSize}
               pageSize={pageSize}
               // onShowSizeChange={onPageSizeChange}
-
+              onChangeSizePage={onPageSizeChange}
               onChange={(page) => onChangePage(page)}
               locale={localeUA}
             />
