@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom";
+import React, { useState } from "react";
 import {
   ErrorText,
   Title,
@@ -12,7 +13,9 @@ import { useForm } from "react-hook-form";
 import { Button } from "../../Button/Button";
 import { useCountListensByUserByIdMutation } from "../../../redux/dataUsersSlice";
 import { useParams } from "react-router-dom";
+import ReportUserTable from "./ReportUserTable";
 const ReportUser = () => {
+  const [responseData, setResponseData] = useState();
   const { id } = useParams();
   console.log("userId :>> ", id);
   const [
@@ -36,6 +39,7 @@ const ReportUser = () => {
       .unwrap()
       .then((responseData) => {
         console.log("responseData :>> ", responseData);
+        setResponseData(responseData);
       })
       .catch(
         (error) =>
@@ -82,7 +86,7 @@ const ReportUser = () => {
           showIcon={false}
         />
       </ReportForm>
-      <ErrorText>Сторінка в розробці</ErrorText>;
+      {responseData && <ReportUserTable data={responseData} />}
     </>
   );
 };

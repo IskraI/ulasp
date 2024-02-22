@@ -75,6 +75,7 @@ const MyPlaylists = () => {
 
   const error =
     isSuccesCreatePlaylists && isErrorLatestPlaylist && isErrorNewSongs;
+
   return (
     <>
       {loading && <Loader />}
