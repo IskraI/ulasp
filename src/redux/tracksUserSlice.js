@@ -17,22 +17,24 @@ export const tracksUserApi = createApi({
 
   endpoints: (builder) => ({
     getAllTracksforUser: builder.query({
-      query: (page = "", limit = "") => ({
-        url: `/user/tracks/latestTracks?${page && `page=${page}`} & ${
-          limit && `limit=${limit}`
+      query: ({ page = "", limit = "" }) => ({
+        url: `/user/tracks/latestTracks?${page && `page=${page}`} ${
+          limit && `&limit=${limit}`
         }`,
       }),
 
-      providesTags: (_result, _err, id) => [
-        { type: "Tracks", id },
-        { type: "Playlists", id },
-      ],
+      providesTags: (_result, _err, id) => [{ type: "Tracks", id }],
     }),
 
     getTracksByGenreId: builder.query({
-      query: (genreId) => ({
-        url: `user/genre/${genreId}/tracks`,
-      }),
+      query: ({ genreId, page = "", limit = "" }) => (
+        console.log(genreId, page, limit),
+        {
+          url: `user/genre/${genreId}/tracks?${page && `page=${page}`} ${
+            limit && `&limit=${limit}`
+          }`,
+        }
+      ),
       // invalidatesTags: ["Tracks"],
       providesTags: (_result, _error, genreId) => [{ type: "Tracks", genreId }],
     }),

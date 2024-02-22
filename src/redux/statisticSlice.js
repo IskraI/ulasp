@@ -1,8 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { BASE_URL} from "../constants/constants"
-
-
+import { BASE_URL } from "../constants/constants";
 
 export const statisticApi = createApi({
   reducerPath: "statisticApi",
@@ -43,6 +41,11 @@ export const statisticApi = createApi({
         url: "/admin/newclientsbymonth/count",
       }),
     }),
+    getFreeSpaceOnDisk: builder.query({
+      query: () => ({
+        url: "/editor/freeDiskSpace",
+      }),
+    }),
   }),
 });
 
@@ -52,4 +55,5 @@ export const {
   useGetNewClientsCountQuery,
   useGetClientsCountQuery,
   useGetTracksCountAdminQuery,
+  useGetFreeSpaceOnDiskQuery,
 } = statisticApi;

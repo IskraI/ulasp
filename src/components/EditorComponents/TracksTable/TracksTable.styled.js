@@ -3,6 +3,8 @@ import { colors, transition, mainCubicTransition } from "../../../styles/vars";
 
 export const TracksTableWrapper = styled.div`
   margin-top: ${(props) => props.marginTop};
+  display: flex;
+  flex-direction: column;
 `;
 
 export const TableStyle = styled.table`

@@ -67,6 +67,8 @@ const NewSongs = ({ data: allTracks, isFetching, isSuccess, error }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  console.log(allTracks);
+
   return (
     <>
       {isSuccess && !error && (
@@ -85,7 +87,6 @@ const NewSongs = ({ data: allTracks, isFetching, isSuccess, error }) => {
             error={error}
             isFetching={isFetching}
             isSuccess={isSuccess}
-            display="none"
             rows={RowsTitle}
           />
         </>

@@ -3,25 +3,35 @@ import TracksTable from "../../../components/UserMediaComponent/TracksTable/Trac
 import { useGetAllTracksforUserQuery } from "../../../redux/tracksUserSlice";
 import { BtnSort } from "./AllTracksUser.styled";
 import symbol from "../../../assets/symbol.svg";
-import { useState, useId, useRef } from "react";
+import { useState } from "react";
 import NavMusic from "../../../components/UserMediaComponent/NavMusic/NavMusic";
-import Player from "../../../components/Player/Player";
 import { Loader } from "../../../components/Loader/Loader";
 
 // const RowsTitle = ["", "Назва пісні", "Виконавець", "Тривалість", "Жанр", ""];
 
 const AllTracksUser = () => {
-  const id = useId();
-
-  const BaseInputRef = useRef(null);
-  const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   const {
     data: allTracks,
     isSuccess,
     error: errorLoadingAllTracks,
     isFetching: isFetchingAllTracks,
-  } = useGetAllTracksforUserQuery();
+  } = useGetAllTracksforUserQuery({
+    page: currentPage,
+    limit: pageSize,
+  });
+
+  const onPageChange = (page) => {
+    console.log("4 Step - setCurrentPage in mutation", page);
+    setCurrentPage(page);
+  };
+
+  const onPageSizeChange = (size) => {
+    console.log(size);
+    setPageSize(size);
+  };
 
   const links = [
     { path: "/user/medialibrary/newplaylists", title: "Нові плейлисти" },
@@ -63,19 +73,19 @@ const AllTracksUser = () => {
       {
         title: "",
         type: "image",
-        titleSize: "5%",
+        titleSize: "10%",
         showData: true,
       },
       {
         title: "Назва пісні",
         type: "text",
-        titleSize: "20%",
+        titleSize: "25%",
         showData: true,
       },
       {
         title: "Виконавець",
         type: "text",
-        titleSize: "15%",
+        titleSize: "25%",
         showData: true,
       },
       {
@@ -93,14 +103,14 @@ const AllTracksUser = () => {
       {
         title: "Плейлист",
         type: "text",
-        titleSize: "15%",
+        titleSize: "0%",
         showData: false,
       },
 
       {
         title: "",
         type: "button",
-        titleSize: "5%",
+        titleSize: "1%",
         showData: false,
       },
     ];
@@ -113,13 +123,13 @@ const AllTracksUser = () => {
     setSortAlphabetically(!sortAlphabetically);
   };
 
-  const sortedTracks = allTracks
-    ? [...allTracks].sort((a, b) => {
-        const titleA = (a.trackName || "").toUpperCase();
-        const titleB = (b.trackName || "").toUpperCase();
-        return sortAlphabetically ? titleA.localeCompare(titleB) : 0;
-      })
-    : [];
+  // const sortedTracks = allTracks
+  //   ? [...allTracks].sort((a, b) => {
+  //       const titleA = (a.trackName || "").toUpperCase();
+  //       const titleB = (b.trackName || "").toUpperCase();
+  //       return sortAlphabetically ? titleA.localeCompare(titleB) : 0;
+  //     })
+  //   : [];
 
   return (
     <>
@@ -138,12 +148,18 @@ const AllTracksUser = () => {
             showTitle={false}
             marginTopWrapper={"24px"}
             isInPlayList={false}
-            tracks={allTracks}
+            tracks={allTracks.latestTracks}
+            tracksSRC={allTracks.tracksSRC}
+            totalTracks={allTracks.totalTracks}
             error={errorLoadingAllTracks}
             isFetching={isFetchingAllTracks}
             isSuccess={isSuccess}
-            display="none"
             rows={rows()}
+            onChangeCurrentPage={onPageChange}
+            onChangeSizePage={onPageSizeChange}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            totalPages={allTracks.totalPages}
           />
           {/* <Player tracks={sortedTracks} /> */}
         </>

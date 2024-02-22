@@ -4,7 +4,7 @@ import { BASE_URL } from "../constants/constants";
 export const tracksApi = createApi({
   reducerPath: "tracksApi",
   forceRefetch: true,
-  refetchOnFocus: true,
+  // refetchOnFocus: true,
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
@@ -15,20 +15,17 @@ export const tracksApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Tracks", "Playlists"],
+  tagTypes: ["Tracks"],
 
   endpoints: (builder) => ({
     getAllTracks: builder.query({
-      query: (page = "", limit = "") => ({
-        url: `/editor/tracks/latestTracks?${page && `page=${page}`} & ${
-          limit && `limit=${limit}`
+      query: ({ page = "", limit = "" }) => ({
+        url: `/editor/tracks/latestTracks?${page && `page=${page}`} ${
+          limit && `&limit=${limit}`
         }`,
       }),
       // provideTags: ["Tracks"],
-      providesTags: (_result, _err, id) => [
-        { type: "Tracks", id },
-        { type: "Playlists", id },
-      ],
+      providesTags: (_result, _err, id) => [{ type: "Tracks", id }],
     }),
     uploadTrack: builder.mutation({
       query: (body) => ({
@@ -53,4 +50,5 @@ export const {
   useGetAllTracksQuery,
   useUploadTrackMutation,
   useDeleteTrackMutation,
+  usePrefetch,
 } = tracksApi;

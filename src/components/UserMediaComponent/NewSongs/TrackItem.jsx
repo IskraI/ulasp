@@ -18,9 +18,10 @@ import {
 import { Link } from "react-router-dom";
 
 import {
-  setSrcPlayer,
+  setPreloadSrcPlayer,
   stopPlay,
   setCurrentIndex,
+  setSrcPlaying,
 } from "../../../redux/playerSlice";
 import { getPlayerState } from "../../../redux/playerSelectors";
 
@@ -31,9 +32,6 @@ const TrackItem = ({ id, title, icon, artist, trackURL, isLoading }) => {
 
   const ref = useRef();
 
-  console.log("ref", ref?.current?.style);
-
-  const isLoadedTrack = playerState.isLoaded;
   const currentTrackIndex = playerState.indexTrack;
 
   useEffect(() => {
@@ -58,23 +56,25 @@ const TrackItem = ({ id, title, icon, artist, trackURL, isLoading }) => {
 
   const playMusic = () => {
     dispatch(stopPlay([]));
+    const newTrackObject = {
+      id,
+      trackURL,
+      artist,
+      trackName: title,
+    };
+
     dispatch(
-      setSrcPlayer([
-        {
-          id,
-          trackURL,
-          artist,
-          trackName: title,
-        },
-      ])
+      setPreloadSrcPlayer({
+        preloadSrc: [newTrackObject],
+      })
     );
-    dispatch(setCurrentIndex(0));
-    setIsPlayingTrack(isLoadedTrack);
+    dispatch(setSrcPlaying({ indexTrack: 0 }));
+    setIsPlayingTrack(!isPlayingTrack);
   };
 
   const stopMusic = () => {
     dispatch(stopPlay([]));
-    setIsPlayingTrack(isLoadedTrack);
+    setIsPlayingTrack(!isPlayingTrack);
   };
 
   return (

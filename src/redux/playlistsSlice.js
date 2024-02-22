@@ -4,7 +4,7 @@ import { BASE_URL } from "../constants/constants";
 export const playlistsApi = createApi({
   reducerPath: "playlistsApi",
   forceRefetch: true,
-  refetchOnFocus: true,
+  // refetchOnFocus: true,
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
@@ -15,7 +15,7 @@ export const playlistsApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Playlists", "Tracks"],
+  tagTypes: ["Playlists"],
 
   endpoints: (builder) => ({
     getLatestPlaylists: builder.query({
@@ -25,18 +25,16 @@ export const playlistsApi = createApi({
         }`,
       }),
 
-      providesTags: (_result, _err, id) => [
-        { type: "Playlists", id },
-        { type: "Tracks" },
-      ],
+      providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
     }),
     getPlaylistById: builder.query({
-      query: (id) => ({ url: `/editor/playlist/${id}` }),
+      query: ({ playlistId: id, page = "", limit = "" }) => ({
+        url: `/editor/playlist/${id}?${page && `page=${page}`} ${
+          limit && `&limit=${limit}`
+        }`,
+      }),
 
-      providesTags: (_result, _err, id) => [
-        { type: "Playlists", id },
-        { type: "Tracks" },
-      ],
+      providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
     }),
     createPlaylist: builder.mutation({
       query: (body) => ({

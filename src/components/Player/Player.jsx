@@ -1,18 +1,23 @@
 /* eslint-disable react/prop-types */
 
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import {
+  setPreloadSrcPlayer,
   setCurrentIndex,
   pause,
   updateIsFirstPlay,
+  stopPlay,
+  setDefaultState,
+  setNextPage,
+  setSrcPlaying,
 } from "../../redux/playerSlice";
 import { useUpdateListenCountTrackByIdMutation } from "../../redux/tracksUserSlice";
+import { usePrefetch } from "../../redux/tracksSlice";
 
 import { getPlayerState } from "../../redux/playerSelectors";
 
 import { BASE_URL } from "../../constants/constants";
-
 
 import {
   PlayerWrapper,
@@ -22,13 +27,17 @@ import {
 } from "./Player.styled";
 
 const Player = ({ tracks = [], isFirst }) => {
-
   const playerRef = useRef();
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
   const currentTrackIndex = playerState.indexTrack;
   const isPlaying = playerState.isPlaying;
   const isPaused = playerState.isPaused;
+  const isLastTrack = playerState.isLastTrack;
+  const isLastPage = playerState.isLastPage;
+  const currentPage = playerState.currentPage;
+  const nextPage = playerState.nextPage;
+  const currentPageSize = playerState.pageSize;
 
   const [currentTrack, setTrackIndex] = useState();
   const [isPressedNext, setIsPressedNext] = useState(false);
@@ -36,6 +45,12 @@ const Player = ({ tracks = [], isFirst }) => {
   const [isEndOfPlaylist, setIsEndOfPlaylist] = useState(false);
   const [currentTrackArtist, setCurrentTrackArtist] = useState("Невизначений");
   const [currentTrackName, setCurrentTrackName] = useState("Невизначений");
+
+  const prefetchPage = usePrefetch("getAllTracks");
+
+  const prefetchNext = useCallback(() => {
+    prefetchPage({ page: nextPage, limit: currentPageSize });
+  }, [currentPageSize, nextPage, prefetchPage]);
 
   // const [isFirstPlay, setIsFirstPlay] = useState(isFirst);
   // const [isLoadStarted, setIsLoadStarted] = useState(false);
@@ -81,7 +96,6 @@ const Player = ({ tracks = [], isFirst }) => {
   }, [currentTrack, currentTrackIndex, dispatch, isPaused, isPlaying, tracks]);
 
   useEffect(() => {
-    // console.log("playerRef", playerRef?.current);
     if (isEndOfPlaylist || isPressedPrev || isPressedNext) {
       dispatch(setCurrentIndex(currentTrack));
       setIsPressedNext(false);
@@ -102,6 +116,12 @@ const Player = ({ tracks = [], isFirst }) => {
     setTrackIndex((currentTrack) =>
       currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
     );
+
+    if (isLastTrack) {
+      dispatch(setNextPage({ currentPage: nextPage }));
+
+      console.log("wead");
+    }
   };
 
   const handleClickPrevious = () => {
@@ -122,6 +142,10 @@ const Player = ({ tracks = [], isFirst }) => {
     setTrackIndex((currentTrack) =>
       currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
     );
+
+    if (isLastTrack) {
+      dispatch(setNextPage({ currentPage: nextPage }));
+    }
   };
 
   return (
@@ -149,13 +173,39 @@ const Player = ({ tracks = [], isFirst }) => {
 
           <PlayerReact
             onPause={() => {
-              dispatch(pause());
+              if (isPlaying && !isPaused) {
+                dispatch(pause());
+              }
             }}
             onPlay={() => {
               if (!isPlaying) {
-                dispatch(setCurrentIndex(currentTrackIndex));
+                dispatch(pause());
               }
+              // if (!isPlaying && playerState.src.length === 0) {
+              //   dispatch(
+              //     setSrcPlaying({
+              //       indexTrack: 0,
+              //     })
+              //   );
+              // } else {
+              //   dispatch(
+              //     setCurrentIndex(
+              //       currentTrack + (currentPage - 1) * currentPageSize
+              //     )
+              //   );
+              // }
               handlePlayLoadStart(tracks[currentTrack]?.id);
+            }}
+            onListen={() => {
+              if (
+                Math.ceil(playerRef.current.audio.current.duration * 0.95) ===
+                  Math.ceil(playerRef.current.audio.current.currentTime) &&
+                isLastTrack
+              ) {
+                prefetchNext();
+              } else {
+                return;
+              }
             }}
             ref={playerRef}
             autoPlay={false}
@@ -167,7 +217,9 @@ const Player = ({ tracks = [], isFirst }) => {
             src={trackSRC}
             showSkipControls={tracks?.length > 1 ? true : false}
             showFilledVolume={true}
-            onClickNext={handleClickNext}
+            onClickNext={() => {
+              handleClickNext();
+            }}
             onClickPrevious={handleClickPrevious}
             onEnded={handleEnd}
             // onLoadStart={() => handlePlayLoadStart(tracks[currentTrack]?.id)}
