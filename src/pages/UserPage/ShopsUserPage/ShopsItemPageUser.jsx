@@ -12,17 +12,12 @@ import {
 import symbol from "../../../assets/symbol.svg";
 import Playlists from "../../../components/UserMediaComponent/PlayLists/PlayListsShop";
 import { formDataFunction } from "../../../helpers/helpers";
-import {
-  useGetShopByIdforUserQuery,
- } from "../../../redux/shopsUserSlice";
+import { useGetShopByIdforUserQuery } from "../../../redux/shopsUserSlice";
 
 import { ShopsList } from "./Shops.styled";
 
-
 const ShopsItemPage = () => {
   const valueMediaLibrary = "shop";
-
-  
 
   const { shopId: idShopLibrary } = useParams();
 
@@ -34,8 +29,6 @@ const ShopsItemPage = () => {
     isSuccess: isSuccessShopItem,
   } = useGetShopByIdforUserQuery(idShopLibrary);
 
-  
-  
   return (
     <>
       {isFetchingShopItem && !isSuccessShopItem && <Loader />}
@@ -43,9 +36,7 @@ const ShopsItemPage = () => {
       {errorShopItem && <ErrorNotFound />}
       {isSuccessShopItem && !isErrorShopItem && (
         <>
-          <ControlMediateca
-            title={shopItem.shop.shopCategoryName}
-                      />
+          <ControlMediateca title={shopItem.shop.shopCategoryName} />
 
           {shopItem.shop.shopChildItems.length === 0 ? (
             <NoData text={"На данний час, ще не додано жодної категорії."} />
@@ -73,11 +64,9 @@ const ShopsItemPage = () => {
             data={shopItem.allPlaylistsInShopCategory}
             // isFetching={isFetchingShopCategory}
             showNavigationLink={false}
-             typeMediaLibrary={valueMediaLibrary}
+            typeMediaLibrary={valueMediaLibrary}
             idTypeOfMediaLibrary={idShopLibrary}
-                     />
-              
-         
+          />
         </>
       )}
     </>

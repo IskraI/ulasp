@@ -139,6 +139,7 @@
 }
 
 .rhap_repeat-button {
+  display: none;
   font-size: 26px;
   width: 26px;
   height: 26px;

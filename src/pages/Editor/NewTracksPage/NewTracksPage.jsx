@@ -6,6 +6,7 @@ import {
 import symbol from "../../../assets/symbol.svg";
 import AddTracks from "../../../components/EditorComponents/AddTracks/AddTracks";
 import { useRef, useState, useId } from "react";
+import { NoData } from "../../../components/Errors/Errors";
 
 const NewTracksPage = () => {
   const id = useId();
@@ -117,7 +118,7 @@ const NewTracksPage = () => {
     <>
       {isSuccess && !error && (
         <>
-          <AddTracks
+          {/* <AddTracks
             iconButton={`${symbol}#icon-plus`}
             textButton={"Музику"}
             uploadTrack={uploadTrack}
@@ -133,7 +134,8 @@ const NewTracksPage = () => {
             isCheckedAll={checkedMainCheckBox}
             rows={rows()}
             isInPlayList={false}
-          />
+          /> */}
+          <NoData text={"Розділ тимчасово не доступний. В розробці"}/>
         </>
       )}
     </>

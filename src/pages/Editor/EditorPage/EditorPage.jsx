@@ -17,6 +17,7 @@ const EditorPage = () => {
         <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
+        {/* {playerState.src.length !== 0 && <Player tracks={playerState.src} />} */}
         <Player tracks={playerState.src} />
       </PageSubpage>
     </PageSection>

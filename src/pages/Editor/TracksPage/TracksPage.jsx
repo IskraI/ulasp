@@ -1,20 +1,26 @@
+import { useParams } from "react-router-dom";
+import { useRef, useState, useId } from "react";
+
 import TracksTable from "../../../components/EditorComponents/TracksTable/TracksTable";
 import PlaylistListItem from "../../../components/EditorComponents/PlayLists/PlayListItem";
 import PlayListControl from "../../../components/EditorComponents/PlayLists/PlayListControl";
 import AddTracks from "../../../components/EditorComponents/AddTracks/AddTracks";
 import symbol from "../../../assets/symbol.svg";
 
-import { useGetPlaylistByIdQuery } from "../../../redux/playlistsSlice";
-import { useUploadTracksInPlaylistMutation } from "../../../redux/playlistsSlice";
 import { ErrorNotFound, Error500 } from "../../../components/Errors/Errors";
-import { useParams } from "react-router-dom";
-import { useRef, useState, useId } from "react";
 import { Loader } from "../../../components/Loader/Loader";
+
+import {
+  useGetPlaylistByIdQuery,
+  useUploadTracksInPlaylistMutation,
+} from "../../../redux/playlistsSlice";
 
 const TracksPage = () => {
   const id = useId();
   const BaseInputRef = useRef(null);
   const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   const { playlistId } = useParams();
 
@@ -24,9 +30,12 @@ const TracksPage = () => {
     isSuccess,
     isLoading,
     error,
-  } = useGetPlaylistByIdQuery(playlistId, {
-    forceRefetch: true,
-    refetchOnFocus: true,
+  } = useGetPlaylistByIdQuery({
+    playlistId,
+    page: currentPage,
+    limit: pageSize,
+    // forceRefetch: true,
+    // refetchOnFocus: true,
   });
 
   const [
@@ -125,6 +134,20 @@ const TracksPage = () => {
     return RowsTitle;
   };
 
+  const onPageChange = (page) => {
+    console.log("4 Step - setCurrentPage in mutation", page);
+    setCurrentPage(page);
+  };
+
+  const onPageSizeChange = (size) => {
+    console.log(size);
+    setPageSize(size);
+  };
+
+  if (isSuccess) {
+    console.log(data);
+  }
+
   return (
     <>
       {error?.status === "500" && <Error500 />}
@@ -179,6 +202,13 @@ const TracksPage = () => {
             errorUpload={errorUploadTrackInPlaylist}
             isUninitialized={isUninitializedUploadTrackInPlaylist}
             rows={rows()}
+            onChangeCurrentPage={onPageChange}
+            onChangeSizePage={onPageSizeChange}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            totalPages={data.totalPages}
+            totalTracks={data.totalTracks}
+            tracksSRC={data.tracksSRC}
           />
         </>
       )}

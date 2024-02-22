@@ -76,7 +76,6 @@ const MediaLibraryPage = () => {
   // console.log("Success", success);
   // console.log("Error", isErrorShops);
 
-  console.log(shops);
   return (
     <>
       {/* {error && <div>{ERROR_NOT_FOUND}</div>} */}
@@ -100,13 +99,13 @@ const MediaLibraryPage = () => {
             error={isErrorLatestPlaylist}
             showNavigationLink={true}
           />
-          <NewSongs
+          {/* <NewSongs
             data={allTracks.latestTracks}
             isFetching={isFetchingNewSongs}
             error={isErrorNewSongs}
             isSuccess={isSuccesLatestNewSongs}
             showNavigationLink={true}
-          />
+          /> */}
         </>
       )}
     </>

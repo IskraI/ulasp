@@ -3,14 +3,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect, useRef, useId } from "react";
 
 import { SvgStyled } from "../../Button/Button.styled";
-import { sToStr } from "../../../helpers/helpers";
+import { sToStr, compareArray } from "../../../helpers/helpers";
 import { BASE_URL } from "../../../constants/constants";
 import { WithOutGenre } from "../../Errors/Errors";
 import symbol from "../../../assets/symbol.svg";
 
 import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsSlice";
 import { useDeleteTrackMutation } from "../../../redux/tracksSlice";
-import { stopPlay, setCurrentIndex } from "../../../redux/playerSlice";
+import {
+  pause,
+  stopPlay,
+  setCurrentIndex,
+  setSrcPlaying,
+  setDefaultPreloadSrc,
+} from "../../../redux/playerSlice";
 import { getPlayerState } from "../../../redux/playerSelectors";
 
 import {
@@ -42,12 +48,16 @@ const TrackItem = ({
   isCheckedAll,
   showData,
   index,
+  countOfSkip,
 }) => {
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
   const [showPopUp, setShowPopUp] = useState(false);
   const [isPlayingTrack, setIsPlayingTrack] = useState(false);
   const [isPausedTrack, setIsPausedTrack] = useState(false);
+
+  // console.log("isPlayingTrack", isPlayingTrack);
+  // console.log("trackID", idTrack);
 
   const [id, setId] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
@@ -62,6 +72,10 @@ const TrackItem = ({
   const currentTrackIndex = playerState.indexTrack;
   const isPlaying = playerState.isPlaying;
   const isPaused = playerState.isPaused;
+  const futurePlayerSRC = playerState.preloadSrc;
+  const playerSRC = playerState.src;
+
+  const oneGenre = !isInPlayList ? playLists[0]?.playlistGenre[0]?.genre : null;
 
   const [
     deleteTrack,
@@ -74,6 +88,15 @@ const TrackItem = ({
       isSuccess: isSuccessDeleteTrackInPlaylist,
     },
   ] = useDeleteTrackInPlaylistMutation();
+
+  const makeUniq = (array) => {
+    const filteredGenre = {};
+    const genre = array.flatMap((playlist) => playlist.playlistGenre);
+    const uniqGenre = genre.filter(
+      ({ genre }) => !filteredGenre[genre] && (filteredGenre[genre] = 1)
+    );
+    return uniqGenre;
+  };
 
   // useEffect(() => {
   //   if (isCheckedAll && ref?.current !== null) {
@@ -154,6 +177,13 @@ const TrackItem = ({
   //   // console.log("arr", arr);
   // };
 
+  useEffect(() => {
+    document.addEventListener("click", handleClickDotsButton);
+    return () => {
+      document.removeEventListener("click", handleClickDotsButton);
+    };
+  }, []);
+
   const handleClickDotsButton = (e) => {
     if (dotsButtonRef.current && !dotsButtonRef.current.contains(e.target)) {
       setShowPopUp(false);
@@ -169,26 +199,12 @@ const TrackItem = ({
   };
 
   useEffect(() => {
-    document.addEventListener("click", handleClickDotsButton);
-    return () => {
-      document.removeEventListener("click", handleClickDotsButton);
-    };
-  }, []);
-
-  useEffect(() => {
     if (isPlaying && idTrack === playerState?.src[currentTrackIndex]?.id) {
       setIsPlayingTrack(true);
     } else {
       setIsPlayingTrack(false);
     }
-  }, [
-    currentTrackIndex,
-    dispatch,
-    idTrack,
-    isPaused,
-    isPlaying,
-    playerState?.src,
-  ]);
+  }, [currentTrackIndex, idTrack, isPlaying, playerState?.src]);
 
   useEffect(() => {
     if (isPaused && idTrack === playerState?.src[currentTrackIndex]?.id) {
@@ -196,37 +212,28 @@ const TrackItem = ({
     } else {
       setIsPausedTrack(false);
     }
-  }, [
-    currentTrackIndex,
-    dispatch,
-    idTrack,
-    isPaused,
-    isPlaying,
-    playerState?.src,
-  ]);
+  }, [currentTrackIndex, idTrack, isPaused, playerState?.src]);
 
   const playMusic = () => {
-    dispatch(setCurrentIndex(index));
-    setIsPlayingTrack(isLoadedTrack);
+    const comparedPlayerSRC = compareArray(futurePlayerSRC, playerSRC);
+
+    if (!comparedPlayerSRC && futurePlayerSRC.length !== 0) {
+      dispatch(setSrcPlaying({ indexTrack: index + countOfSkip }));
+      // dispatch(setDefaultPreloadSrc());
+    } else {
+      dispatch(setCurrentIndex(index + countOfSkip));
+    }
+
+    setIsPlayingTrack(isPlaying);
     setIsPausedTrack(isPaused);
+    // dispatch(setDefaultPreloadSrc());
   };
 
   const stopMusic = () => {
     dispatch(stopPlay(currentTrackIndex));
-    setIsPlayingTrack(isLoadedTrack);
+    setIsPlayingTrack(isPlaying);
     setIsPausedTrack(isPaused);
   };
-
-  const makeUniq = (array) => {
-    const filteredGenre = {};
-    const genre = array.flatMap((playlist) => playlist.playlistGenre);
-    const uniqGenre = genre.filter(
-      ({ genre }) => !filteredGenre[genre] && (filteredGenre[genre] = 1)
-    );
-    return uniqGenre;
-  };
-
-  const oneGenre = !isInPlayList ? playLists[0]?.playlistGenre[0]?.genre : null;
 
   return (
     <>

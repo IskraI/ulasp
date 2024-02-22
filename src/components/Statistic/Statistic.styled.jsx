@@ -9,7 +9,7 @@ export const StatsListWrapper = styled.div`
   margin-bottom: 29px;
 `;
 
-export const StatItem = styled.p`
+export const StatItem = styled.div`
   display: flex;
   padding: 8px;
   justify-content: center;
@@ -24,4 +24,6 @@ export const StatItem = styled.p`
 
 export const StatItemEditor = styled(StatItem)`
   margin-right: 68px;
+  background-color: ${(props) => props.backgroundColor};
+  flex-direction: column;
 `;
