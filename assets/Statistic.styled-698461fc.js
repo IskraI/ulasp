@@ -1,20 +1,22 @@
-import{n as t,f as a}from"./index-b25d462a.js";const e=t.div`
+import{n as t,f as o}from"./index-e9615bdd.js";const i=t.div`
   display: flex;
   gap: 8px;
   /* margin-left: 111px; */
   margin-top: 24px;
   margin-bottom: 29px;
-`,r=t.p`
+`,a=t.div`
   display: flex;
   padding: 8px;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  background: ${a.primaryColor};
-  color: ${a.mainFontColor};
+  background: ${o.primaryColor};
+  color: ${o.mainFontColor};
   text-align: center;
   font-size: 22px;
   line-height: calc(26.4 / 22);
-`,i=t(r)`
+`,e=t(a)`
   margin-right: 68px;
-`;export{e as S,r as a,i as b};
+  background-color: ${r=>r.backgroundColor};
+  flex-direction: column;
+`;export{i as S,a,e as b};
