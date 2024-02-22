@@ -60,6 +60,9 @@ import TracksPageUser from "./pages/UserPage/TracksPageUser/TracksPageUser";
 import ShopsItemPageUser from "./pages/UserPage/ShopsUserPage/ShopsItemPageUser";
 import ShopSubCategoryPageUser from "./pages/UserPage/ShopsUserPage/ShopSubCategoryPageUser";
 import PlaylistInShopSubCategoryPageUser from "./pages/UserPage/ShopsUserPage/PlaylistInShopSubCategoryPageUser";
+import CreatePlaylists from "./components/UserCabinetPage/CreatePlaylists/CreatePlaylists";
+import AddPlayLists from "./components/UserCabinetPage/AddPlaylists/AddPlaylistsItem";
+import FavoritePlaylists from "./components/UserCabinetPage/FavoritePlaylists/FavoritePlaylists";
 
 const AdminCabinetPage = lazy(() =>
   import("./components/AdminComponents/AdminCabinetPage/AdminCabinetPage")
@@ -232,6 +235,35 @@ function App() {
                   path="cabinet/myplaylists"
                   element={<MyPlaylists />}
                 />
+                 <Route
+                  path="cabinet/myplaylists/createplaylists"
+                  element={<CreatePlaylists />}
+                />
+                 <Route
+                  path="cabinet/myplaylists/createplaylists/:playlistId/tracks"
+                  element={<TracksPageUser display={"none"} />}
+                />
+                <Route
+                  path="cabinet/myplaylists/addplaylists"
+                  element={<AddPlayLists />}
+                />
+                <Route
+                  path="cabinet/myplaylists/addplaylists/:playlistId/tracks"
+                  element={<TracksPageUser display={"none"} />}
+                />
+                 <Route
+                  path="cabinet/myplaylists/favoriteplaylists"
+                  element={<FavoritePlaylists />}
+                />
+                <Route
+                  path="cabinet/myplaylists/favoriteplaylists/:playlistId/tracks"
+                  element={<TracksPageUser display={"none"} />}
+                />
+                <Route
+                  path="cabinet/myplaylists/newtracks"
+                  element={<AllTracksUser display={"none"} />}
+                />
+
                 <Route path="*" element={<ErrorPage />} />
               </Route>
             )}

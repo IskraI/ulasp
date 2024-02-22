@@ -1,4 +1,4 @@
-import CreatePlayListItem from "./CreatePlaylistItem";
+import FavoritePlaylistsItem from "./FavoritePlaylistsItem";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 import {useSelector} from "react-redux"
 import {
@@ -8,31 +8,36 @@ import {
   TitleContainer,
 } from "../../UserMediaComponent/PlayLists/MediaList.styled";
 import { useFavoritePlaylistForUserQuery, useAddPlaylistForUserQuery } from "../../../redux/playlistsUserSlice";
+// import { MockPlayer } from "../TracksTable/TracksTable.styled";
 import symbol from "../../../assets/symbol.svg";
 
-const CreatePlaylists = ({
+const FavoritePlaylists = ({
   title,
   displayPlayer,
  showNavigationLink,
-  data: playlists,
- 
+  // data: dataAdd,
+  // isLoadingAddPlaylist,
+ isLoading,
   isFetching,
   error,
-//   genre,
+  genre,
   shopCategoryName,
 }) => {
   const {
     data: dataFavorite,
-    isLoading: isLoadingFavoritePlaylist,
-  } = useFavoritePlaylistForUserQuery();
+      isLoading: isLoadingFavoritePlaylist,
+      } = useFavoritePlaylistForUserQuery();
   
-//   const {
-//     data: dataAdd,
-//     isLoading: isLoadingAddPlaylist,
-//   } = useAddPlaylistForUserQuery();
+  const {
+    data: dataAdd,
+      isLoading: isLoadingAddPlaylist,
+    isFetching: isFetchingAddPlaylist,
+    isSuccess: isSuccesAddPlaylist,
+    isError: isErrorAddPlaylist,
+  } = useAddPlaylistForUserQuery();
 
 
-// console.log('dataAdd playlist', dataAdd.add )
+// console.log('dataAdd playlist', dataAdd )
 // console.log('dataFavorite playlist', dataFavorite.favorites)
 
 
@@ -41,7 +46,7 @@ const CreatePlaylists = ({
       <TitleContainer>
         <TitleWrapper>{title}</TitleWrapper>
       </TitleContainer>
-      {!isFetching && !error && !isLoadingFavoritePlaylist  && (
+      {!isFetching && !error && !isLoadingFavoritePlaylist && !isLoadingAddPlaylist && (
         <>
           {/* <ControlWrapper> */}
           {/* <TitleWrapper>Нові плейлисти</TitleWrapper> */}
@@ -49,7 +54,7 @@ const CreatePlaylists = ({
           {/* </ControlWrapper> */}
           <MediaList>
            
-            {playlists && playlists.map(({ _id, playListName, playListAvatarURL }) => {
+            { dataFavorite.favorites.map(({ _id, playListName, playListAvatarURL }) => {
               // console.log(
               //   "dataFavorite.favorites.includes(_id)",
               //   dataFavorite.favorites.some((item) => item._id === _id)
@@ -57,13 +62,14 @@ const CreatePlaylists = ({
 
               return (
 
-                    <CreatePlayListItem
+                    <FavoritePlaylistsItem
                       key={_id}
                       id={_id}
                       favoriteStatus={dataFavorite.favorites.some((item) => item._id === _id)}
-                       title={playListName}
+                      addStatus={dataAdd.add.some((item) => item._id === _id)}
+                      title={playListName}
                       icon={playListAvatarURL}
-                    //   genre={genre}
+                      genre={genre}
                       shopCategoryName={shopCategoryName}
                     />
                                      
@@ -72,11 +78,11 @@ const CreatePlaylists = ({
             })}
 
           </MediaList>
-          <MediaNavigationLink link={"createplaylists"} showNavigationLink={showNavigationLink} />
+          <MediaNavigationLink link={"favoriteplaylists"} showNavigationLink={showNavigationLink} />
                   </>
         )}
     </>
   );
 };
 
-export default CreatePlaylists;
+export default FavoritePlaylists;

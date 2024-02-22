@@ -17,9 +17,12 @@ import symbol from "../../../assets/symbol.svg";
 const AddPlaylists = ({
   title,
   displayPlayer,
-  showNavigationLink,
-  dataAdd,
-  isLoading,
+
+ showNavigationLink,
+  // data: dataAdd,
+  // isLoadingAddPlaylist,
+ isLoading,
+
   isFetching,
   error,
   genre,
@@ -28,13 +31,10 @@ const AddPlaylists = ({
   const { data: dataFavorite, isLoading: isLoadingFavoritePlaylist } =
     useFavoritePlaylistForUserQuery();
 
-  // const {
-  //   data: dataAdd,
-  //     isLoading: isLoadingAddPlaylist,
-  //   isFetching: isFetchingAddPlaylist,
-  //   isSuccess: isSuccesAddPlaylist,
-  //   isError: isErrorAddPlaylist,
-  // } = useAddPlaylistForUserQuery();
+
+console.log('dataAdd playlist', dataAdd )
+// console.log('dataFavorite playlist', dataFavorite.favorites)
+
 
   // console.log("dataAdd AddPlaylists", dataAdd);
   // console.log('dataFavorite playlist', dataFavorite.favorites)
@@ -73,12 +73,11 @@ const AddPlaylists = ({
               );
             })}
           </MediaList>
-          <MediaNavigationLink
-            link={"newplaylists"}
-            showNavigationLink={showNavigationLink}
-          />
-        </>
-      )}
+
+          <MediaNavigationLink link={"addplaylists"} showNavigationLink={showNavigationLink} />
+                  </>
+        )}
+
     </>
   );
 };
