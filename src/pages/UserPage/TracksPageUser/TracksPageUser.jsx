@@ -13,6 +13,8 @@ const TracksPage = () => {
   const id = useId();
   const BaseInputRef = useRef(null);
   const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   const { playlistId } = useParams();
 
@@ -21,7 +23,11 @@ const TracksPage = () => {
     isFetching: isFetchingPlaylistById,
     isSuccess,
     error,
-  } = useGetPlaylistByIdForUserQuery(playlistId);
+  } = useGetPlaylistByIdForUserQuery({
+    playlistId,
+    page: currentPage,
+    limit: pageSize,
+  });
 
   const rows = () => {
     const RowsTitle = [
@@ -41,7 +47,7 @@ const TracksPage = () => {
       {
         title: "",
         type: "image",
-        titleSize: "5%",
+        titleSize: "10%",
         showData: true,
       },
       {
@@ -71,14 +77,14 @@ const TracksPage = () => {
       {
         title: "Плейлист",
         type: "text",
-        titleSize: "15%",
+        titleSize: "0%",
         showData: false,
       },
 
       {
         title: "",
         type: "button",
-        titleSize: "5%",
+        titleSize: "1%",
         showData: false,
       },
     ];
@@ -87,11 +93,13 @@ const TracksPage = () => {
   };
 
   const [sortedTracks, setSortedTracks] = useState([]);
+  const [sortedForSrc, setSortedForSrc] = useState([]);
   const [isSorted, setIsSorted] = useState(false);
 
   useEffect(() => {
     if (isSuccess) {
       setSortedTracks([...data.playlist.trackList]);
+      setSortedForSrc([...data.tracksSRC]);
     }
   }, [isSuccess, data]);
 
@@ -100,19 +108,28 @@ const TracksPage = () => {
       const sorted = [...sortedTracks].sort((a, b) => {
         return a.trackName.localeCompare(b.trackName);
       });
+      const sortedSrc = [...sortedForSrc].sort((a, b) => {
+        return a.trackName.localeCompare(b.trackName);
+      });
       setSortedTracks(sorted);
+      setSortedForSrc(sortedSrc);
       setIsSorted(true);
     } else {
       setSortedTracks([...data.playlist.trackList]);
+      setSortedForSrc([...data.tracksSRC]);
       setIsSorted(false);
     }
   };
 
-  useLayoutEffect(() => {
-    if (window.scrollY !== 0) {
-      window.scrollTo(0, 0);
-    }
-  }, []);
+  const onPageChange = (page) => {
+    console.log("4 Step - setCurrentPage in mutation", page);
+    setCurrentPage(page);
+  };
+
+  const onPageSizeChange = (size) => {
+    console.log(size);
+    setPageSize(size);
+  };
 
   console.log("data PlaylistById", data);
 
@@ -146,8 +163,14 @@ const TracksPage = () => {
             error={error}
             isFetching={isFetchingPlaylistById}
             isSuccess={isSuccess}
-            display="none"
             rows={rows()}
+            onChangeCurrentPage={onPageChange}
+            onChangeSizePage={onPageSizeChange}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            totalPages={data.totalPages}
+            totalTracks={data.totalTracks}
+            tracksSRC={isSorted ? sortedForSrc : data.tracksSRC}
           />
           {/* <Player tracks={sortedTracks} /> */}
         </>

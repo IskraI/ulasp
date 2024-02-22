@@ -6,9 +6,8 @@ import symbol from "../../../assets/symbol.svg";
 import { useState, useEffect, useId, useRef } from "react";
 import NavMusic from "../../../components/UserMediaComponent/NavMusic/NavMusic";
 import { useParams } from "react-router-dom";
-import Player from "../../../components/Player/Player";
 import DropDownTracksInGenres from "../../../components/DropDownGeners/DropDownTracksInGener";
-
+import { Loader } from "../../../components/Loader/Loader";
 // const RowsTitle = ["", "Назва пісні", "Виконавець", "Тривалість", "Жанр", ""];
 
 const AllTracksUser = () => {
@@ -16,6 +15,8 @@ const AllTracksUser = () => {
   const BaseInputRef = useRef(null);
   const { genreId } = useParams();
   const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   // const {
   //   data: allTracks,
 
@@ -28,7 +29,12 @@ const AllTracksUser = () => {
     error: errorLoadingAllTracks,
     isFetching: isFetchingAllTracks,
     isSuccess,
-  } = useGetTracksByGenreIdQuery(genreId);
+    isError,
+  } = useGetTracksByGenreIdQuery({
+    genreId,
+    page: currentPage,
+    limit: pageSize,
+  });
 
   const links = [
     {
@@ -41,23 +47,8 @@ const AllTracksUser = () => {
   const rows = () => {
     const RowsTitle = [
       {
-        title: (
-          <input
-            key={id}
-            type="checkbox"
-            id="mainInput"
-            ref={BaseInputRef}
-            style={{ width: "24px", height: "24px", marginRight: "24px" }}
-            onClick={() => {
-              if (BaseInputRef.current.checked) {
-                setCheckedMainCheckBox(true);
-              } else {
-                setCheckedMainCheckBox(false);
-              }
-            }}
-          />
-        ),
-        type: "checkbox",
+        title: "",
+        type: "none",
         titleSize: "2%",
         showData: false,
       },
@@ -66,24 +57,24 @@ const AllTracksUser = () => {
         title: "",
         type: "button",
         titleSize: "2%",
-        showData: false,
+        showData: true,
       },
       {
         title: "",
         type: "image",
-        titleSize: "5%",
+        titleSize: "10%",
         showData: true,
       },
       {
         title: "Назва пісні",
         type: "text",
-        titleSize: "20%",
+        titleSize: "25%",
         showData: true,
       },
       {
         title: "Виконавець",
         type: "text",
-        titleSize: "15%",
+        titleSize: "25%",
         showData: true,
       },
       {
@@ -101,14 +92,14 @@ const AllTracksUser = () => {
       {
         title: "Плейлист",
         type: "text",
-        titleSize: "15%",
+        titleSize: "0%",
         showData: false,
       },
 
       {
         title: "",
         type: "button",
-        titleSize: "5%",
+        titleSize: "1%",
         showData: false,
       },
     ];
@@ -130,19 +121,31 @@ const AllTracksUser = () => {
       })
     : [];
 
+  const onPageChange = (page) => {
+    console.log("4 Step - setCurrentPage in mutation", page);
+    setCurrentPage(page);
+  };
+
+  const onPageSizeChange = (size) => {
+    console.log(size);
+    setPageSize(size);
+  };
+
   return (
     <>
+      {!isSuccess && !isError && <Loader />}
+
       {/* <TabNavigation /> */}
-      <DropDownTracksInGenres currentGenreId={genreId} />
-      <NavMusic links={links} />
-      <BtnSort onClick={handleSortClick}>
-        <svg width="24" height="24">
-          <use href={`${symbol}#icon-sort`}></use>
-        </svg>
-      </BtnSort>
-      {isFetchingAllTracks && <p>Загружаемся.....</p>}
+
       {!isFetchingAllTracks && !errorLoadingAllTracks && (
         <>
+          <DropDownTracksInGenres currentGenreId={genreId} />
+          <NavMusic links={links} />
+          <BtnSort onClick={handleSortClick}>
+            <svg width="24" height="24">
+              <use href={`${symbol}#icon-sort`}></use>
+            </svg>
+          </BtnSort>
           {console.log("allTracks.tracks", allTracks.tracks)}
           <TracksTable
             title={"In playlist"}
@@ -155,8 +158,14 @@ const AllTracksUser = () => {
             error={errorLoadingAllTracks}
             isFetching={isFetchingAllTracks}
             isSuccess={isSuccess}
-            display="none"
             rows={rows()}
+            onChangeCurrentPage={onPageChange}
+            onChangeSizePage={onPageSizeChange}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            totalPages={allTracks.totalPages}
+            totalTracks={allTracks.totalTracks}
+            tracksSRC={allTracks.tracksSRC}
           />
           {/* <Player tracks={allTracks.tracks} /> */}
         </>

@@ -18,7 +18,7 @@ export const ErrorNotFound = ({ error, children }) => {
 };
 
 export const WithOutGenre = () => {
-  return <p style={{ fontWeight: "500", fontSize: "16px" }}>без жанру</p>;
+  return <p style={{ fontWeight: "500", fontSize: "16px" }}></p>;
 };
 
 export const NoData = ({ text, textColor }) => {

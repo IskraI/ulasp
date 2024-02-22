@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   TableCell,
   RowTitle,
@@ -14,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL, ERROR_NOT_FOUND } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 import { Button } from "../../Button/Button";
-import { setSrcPlayer, stopPlay } from "../../../redux/playerSlice";
+import { setPreloadSrcPlayer, stopPlay } from "../../../redux/playerSlice";
 import { getPlayerState } from "../../../redux/playerSelectors";
 
 const TracksTable = ({ rows, tracks, isLoading, error, display, title,  showTitle, marginTopWrapper, }) => {
@@ -45,7 +46,7 @@ const TracksTable = ({ rows, tracks, isLoading, error, display, title,  showTitl
       return newObject;
     });
 
-    dispatch(setSrcPlayer(trackURL));
+    dispatch(setPreloadSrcPlayer(trackURL));
   };
 
   const stopMusic = () => {

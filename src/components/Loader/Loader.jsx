@@ -19,13 +19,14 @@ export const Loader = () => {
   );
 };
 
-export const LoaderButton = () => {
+export const LoaderButton = ({ height, width, color }) => {
   return (
     <Oval
       visible={true}
-      height="20"
-      width="20"
-      color="#4fa94d"
+      height={height || 20}
+      width={width || 20}
+      color={color || "#4fa94d"}
+      secondaryColor={color || "#4fa94d"}
       ariaLabel="oval-loading"
       wrapperStyle={{}}
       wrapperClass=""
