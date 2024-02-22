@@ -18,7 +18,11 @@ import PrivateUserRoute from "./components/PrivateUserRoute";
 import Messages from "./components/AdminComponents/Messages/Messages";
 import MessagesUser from "./components/MessagesUser/MessagesUser";
 import MyPlaylistsUser from "./components/MyPlaylistsUser/MyPlaylistsUser";
-import AnalyticUser from "./components/AdminComponents/AnalyticUser/AnalyticUser";
+
+import ReportUser from "./components/AdminComponents/ReportUser/ReportUser";
+
+import MyPlaylists from "./pages/UserPage/MyPlaylists/MyPlaylists";
+
 // import AdminUsers from "./components/AdminUsers/AdminUsers";
 
 import OnlineUsers from "./components/AdminComponents/OnlineUsers/OnlineUsers";
@@ -226,7 +230,7 @@ function App() {
                 />
                 <Route
                   path="cabinet/myplaylists"
-                  element={<MyPlaylistsUser />}
+                  element={<MyPlaylists />}
                 />
                 <Route path="*" element={<ErrorPage />} />
               </Route>
@@ -248,7 +252,7 @@ function App() {
                 <Route path="users/carduser/:id" element={<CardUser />} />
                 <Route
                   path="users/carduser/:id/data"
-                  element={<AnalyticUser />}
+                  element={<ReportUser />}
                 />
                 <Route path="users/cardeditor/:id" element={<CardEditor />} />
                 <Route path="online" element={<OnlineUsers />} />

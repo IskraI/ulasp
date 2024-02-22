@@ -11,12 +11,12 @@ import {
    PlaylistImg,
   PlaylistInfoWrapper,
   PlaylistItemText,
-} from "./MediaList.styled";
+} from "../../UserMediaComponent/PlayLists/MediaList.styled";
 import { Link } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 
 
-const PlayListItem = ({ id, title, icon, genre, favoriteStatus, addStatus,
+const AddPlayListsItem = ({ id, title, icon, genre, favoriteStatus, addStatus,
   placeListCardInfo,
   countTracks, }) => {
 
@@ -41,7 +41,7 @@ const PlayListItem = ({ id, title, icon, genre, favoriteStatus, addStatus,
      
   //   };
   
-   const cabinet = `/user/cabinet/myplaylists/createplaylists`;
+   const cabinet = `/user/cabinet/myplaylists/addplaylists`;
   const newPlaylists = `/user/medialibrary/newplaylists/${id}/tracks`;
 
  
@@ -87,7 +87,7 @@ const PlayListItem = ({ id, title, icon, genre, favoriteStatus, addStatus,
             key={id}
             to={
               location.pathname === cabinet
-                ? `myplaylists/createplaylists/${id}/tracks`
+                ? `myplaylists/addplaylists/${id}/tracks`
                 : `${id}/tracks`
             }
             state={{ from: location }}
@@ -156,4 +156,4 @@ const PlayListItem = ({ id, title, icon, genre, favoriteStatus, addStatus,
   );
 };
 
-export default PlayListItem;
+export default AddPlayListsItem;

@@ -13,14 +13,15 @@ import {
   useSendMailUserByIdMutation,
 } from "../../../redux/dataUsersSlice";
 import { useNavigate, useParams } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ButtonSwitch } from "../ButtonSwitch/ButtonSwitch";
 
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
-const UsersTable = ({ users, visibleColumns, switchAccess }) => {
+const UsersTable = ({ users, visibleColumns }) => {
   const [hoveredRow, setHoveredRow] = useState(null);
+  // console.log("users", users);
 
   const handleRowHover = (index) => {
     setHoveredRow(index);
@@ -79,9 +80,12 @@ const UsersTable = ({ users, visibleColumns, switchAccess }) => {
 
         <tbody>
           {users.map((user, index) => {
+            {
+              // console.log("users", user._id, user.access);
+            }
             return (
               <TableRow
-                key={index}
+                key={user._id}
                 className={index === hoveredRow ? "hovered" : ""}
               >
                 {visibleColumns.map((column, columnIndex, array) => (

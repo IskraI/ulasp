@@ -18,7 +18,7 @@ export const playlistsUserApi = createApi({
   endpoints: (builder) => ({
     createPlaylistForUser: builder.mutation({
       query: (body) => ({
-        url: "/user/playlist/create",
+        url: "/user/userPlaylist/create",
         method: "POST",
         body,
       }),
@@ -31,6 +31,20 @@ export const playlistsUserApi = createApi({
           limit && `&limit=${limit}`
         }`,
       }),
+
+    
+     getCreatePlaylistsForUser: builder.query({
+       query: (page = "", limit = "") => ({
+        url: `/user/userPlaylist/all?${page && `page=${page}`} & ${
+          limit && `limit=${limit}`
+        }`,
+      }),
+
+      providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
+    }),
+    
+     getPlaylistByIdForUser: builder.query({
+      query: (id) => ({ url: `/user/playlist/${id}` }),
 
       providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
     }),
@@ -64,6 +78,7 @@ export const playlistsUserApi = createApi({
         method: "PATCH",
       }),
       invalidatesTags: ["PlaylistsFavorite"],
+
     }),
 
     addPlaylistForUser: builder.query({
@@ -71,8 +86,18 @@ export const playlistsUserApi = createApi({
 
       providesTags: ["PlaylistsAdd"],
     }),
+   
+//    addPlaylistForUser: builder.query({
+//       query: (page = "", limit = "") => ({ url: `/user/playlist/add?${page && `page=${page}`} & ${
+//           limit && `limit=${limit}`
+//         }`, }),
 
-    updateAddStatusApi: builder.mutation({
+//     //  providesTags: ["PlaylistsAdd"],
+//        providesTags: (_result, _err, id) => [{ type: "PlaylistsAdd", id }],
+//    }),
+   
+   updateAddStatusApi: builder.mutation({
+
       query: (playlistId) => ({
         url: `/user/playlist/add/${playlistId}`,
         method: "PATCH",
@@ -94,6 +119,7 @@ export const {
   useGetLatestPlaylistsForUserQuery,
   useGetPlaylistByIdForUserQuery,
   useCreatePlaylistForUserMutation,
+  useGetCreatePlaylistsForUserQuery,
   useDeletePlaylistForUserMutation,
   useUpdateFavoriteStatusApiMutation,
   useFavoritePlaylistForUserQuery,

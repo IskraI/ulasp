@@ -44,6 +44,9 @@ export const SignInAdminAndEditor = () => {
         reset();
       })
       .catch((e) => {
+        if (e.data?.message === "Login  or password is wrong") {
+          alert(e.data?.message);
+        }
         // console.log(e.data?.message || e);
         if (e?.status === "FETCH_ERROR") {
           navigate("/error", { state: { errorMessage: e?.status } });

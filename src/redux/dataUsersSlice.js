@@ -1,9 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { resetUser, setUser, setAdmin, setCurrent } from "./userSlice";
 
-
 import { BASE_URL } from "../constants/constants";
-
 
 export const dataUsersApi = createApi({
   reducerPath: "dataUsersApi",
@@ -20,7 +18,7 @@ export const dataUsersApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["dataUsers", "dataAdmins", "dataUser"],
+  tagTypes: ["dataUsers", "dataAdmins", "dataUser", "reportUser"],
   endpoints: (builder) => ({
     getUsersList: builder.query({
       query: (admin = false) => {
@@ -61,6 +59,7 @@ export const dataUsersApi = createApi({
         url: `admin/users/access/${id}`,
         method: "PATCH",
       }),
+
       invalidatesTags: ["dataUsers", "dataUser"],
     }),
 
@@ -75,6 +74,14 @@ export const dataUsersApi = createApi({
       //   console.error("Query failed", error);
       //   dispatch(resetUser()); // Сбросить состояние до значения по умолчанию
       // },
+    }),
+    countListensByUserById: builder.mutation({
+      query: (userData) => ({
+        url: `admin/users/countlistens`,
+        method: "POST",
+        body: userData, // Здесь передается объект userData с данными из формы
+      }),
+      providesTags: ["reportUser"], // При успешном выполнении инвалидирует тег "reportUser"
     }),
 
     createFopUser: builder.mutation({
@@ -138,8 +145,6 @@ export const dataUsersApi = createApi({
       query: (id) => ({ url: `admin/users/${id}/playlistcount` }),
       providesTags: ["dataUser"],
     }),
-
-    
   }),
 });
 
@@ -159,4 +164,5 @@ export const {
   useAccessUserUpdateByIdMutation,
   useGetUserByIdTrackCountQuery,
   useGetUserByIdPlaylistCountQuery,
+  useCountListensByUserByIdMutation,
 } = dataUsersApi;
