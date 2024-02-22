@@ -17,9 +17,9 @@ export const tracksUserApi = createApi({
 
   endpoints: (builder) => ({
     getAllTracksforUser: builder.query({
-      query: (page = "", limit = "") => ({
-        url: `/user/tracks/latestTracks?${page && `page=${page}`} & ${
-          limit && `limit=${limit}`
+      query: ({ page = "", limit = "" }) => ({
+        url: `/user/tracks/latestTracks?${page && `page=${page}`} ${
+          limit && `&limit=${limit}`
         }`,
       }),
 

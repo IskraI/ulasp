@@ -200,6 +200,10 @@ function App() {
                   path="medialibrary/shops/:shopId/:shopItemId/:playlistId/tracks"
                   element={<TracksPageUser />}
                 />
+                <Route
+                  path="medialibrary/shops/:shopId/:playlistId/tracks"
+                  element={<TracksPageUser />}
+                />
                 {/* <Route
                   path="medialibrary/shops/:shopId/playlists"
                   element={<PlaylistsPageUserInShop />}
@@ -290,6 +294,10 @@ function App() {
                 />
                 <Route
                   path="medialibrary/shops/:shopId/:shopItemId/:playlistId/tracks"
+                  element={<TracksPage />}
+                />
+                <Route
+                  path="medialibrary/shops/:shopId/:playlistId/tracks"
                   element={<TracksPage />}
                 />
 

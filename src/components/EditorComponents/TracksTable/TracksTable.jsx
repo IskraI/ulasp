@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useLocation } from "react-router-dom";
 
 import Pagination from "rc-pagination";
@@ -66,6 +66,7 @@ const TracksTable = ({
   totalPages,
 }) => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const playerState = useSelector(getPlayerState);
   const [currentPage, setCurrentPage] = useState(currPage);
   const [pageSize, setPageSize] = useState(currentPageSize);
@@ -95,8 +96,6 @@ const TracksTable = ({
       : currentPageForTrackPlaying * currentPageSize - 1;
 
   const lastTrackInPage = playerState.indexTrack === indexOfLastTrackInPage;
-
-  const location = useLocation();
 
   const onChangePage = useCallback(
     (page) => {
@@ -144,13 +143,9 @@ const TracksTable = ({
       );
     }
     console.log(pageSize !== currentPageSize);
-    console.log(pageSize);
-    // console.log(pageSize((prev) => console.log(prev)));
+
     if (currentPage !== currentPageGlobalState && !isFetching) {
-      if (
-        location.pathname !== playerState.location ||
-        pageSize !== currentPageSize
-      ) {
+      if (location.pathname !== playerState.location) {
         console.log("Здесь установилось значение");
         onChangePage(currentPage);
       } else {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
-// import ControlMediateca from "../ControlMediateca/ControlMediaTeca";
+import ControlMediateca from "../ControlMediatecaUser/ControlMediatecaUser";
 import PlaylistListItem from "./PlayListItemShop";
 
 import symbol from "../../../assets/symbol.svg";
@@ -18,23 +18,16 @@ const Playlists = ({
   isFetchingPlaylist,
   error,
   showNavigationLink,
-   typeMediaLibrary,
+  typeMediaLibrary,
   idTypeOfMediaLibrary,
- 
- }) => {
+}) => {
   console.log(playlists);
   return (
     <>
-      {/* <ControlMediateca
-        title={title}
-        iconButton={`${symbol}#icon-playlist-add`}
-        textButton={"Плейлист"}
-        onClick={toogleModal}
-      /> */}
-      {!isFetchingPlaylist &&
-        !error &&
-        !playlists.length &&
-        <p>Плейлисти ще не додані</p>}
+      <ControlMediateca title={title} />
+      {!isFetchingPlaylist && !error && !playlists.length && (
+        <p>Плейлисти ще не додані</p>
+      )}
 
       {!error && (
         <PlaylistWrapper>
@@ -54,7 +47,7 @@ const Playlists = ({
                 icon={playListAvatarURL}
                 typeMediaLibrary={typeMediaLibrary}
                 idTypeOfMediaLibrary={idTypeOfMediaLibrary}
-                             />
+              />
             ))}
           </PlaylistList>
           <MediaNavigationLink
@@ -63,7 +56,6 @@ const Playlists = ({
           />
         </PlaylistWrapper>
       )}
-         
     </>
   );
 };

@@ -15,7 +15,7 @@ const AllTracksEditor = () => {
   const BaseInputRef = useRef(null);
   const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(7);
+  const [pageSize, setPageSize] = useState(10);
 
   // const page = currentPage;
   // const limit = pageSize;

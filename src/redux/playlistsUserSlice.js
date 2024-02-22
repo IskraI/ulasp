@@ -16,24 +16,27 @@ export const playlistsUserApi = createApi({
   tagTypes: ["Playlists"],
 
   endpoints: (builder) => ({
-      createPlaylistForUser: builder.mutation({
+    createPlaylistForUser: builder.mutation({
       query: (body) => ({
         url: "/user/playlist/create",
         method: "POST",
         body,
       }),
       invalidatesTags: ["Playlists"],
-      }),
-    
-     getPlaylistByIdForUser: builder.query({
-      query: (id) => ({ url: `/user/playlist/${id}` }),
-
-       providesTags: (_result, _err, id) => [{ type: "Playlists", id },
-        { type: "Tracks" },],
     }),
-   
-        getLatestPlaylistsForUser: builder.query({
-       query: (page = "", limit = "") => ({
+
+    getPlaylistByIdForUser: builder.query({
+      query: ({ playlistId: id, page = "", limit = "" }) => ({
+        url: `/user/playlist/${id}?${page && `page=${page}`} ${
+          limit && `&limit=${limit}`
+        }`,
+      }),
+
+      providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
+    }),
+
+    getLatestPlaylistsForUser: builder.query({
+      query: (page = "", limit = "") => ({
         url: `/user/playlist/latest?${page && `page=${page}`} & ${
           limit && `limit=${limit}`
         }`,
@@ -42,7 +45,7 @@ export const playlistsUserApi = createApi({
       providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
     }),
 
-        deletePlaylistForUser: builder.mutation({
+    deletePlaylistForUser: builder.mutation({
       query: (id) => ({
         url: `/editor/playlist/delete/${id}`,
         method: "DELETE",
@@ -55,29 +58,27 @@ export const playlistsUserApi = createApi({
 
       providesTags: ["PlaylistsFavorite"],
     }),
-   updateFavoriteStatusApi: builder.mutation({
+    updateFavoriteStatusApi: builder.mutation({
       query: (playlistId) => ({
         url: `/user/playlist/favorites/${playlistId}`,
-           method: "PATCH",
-      
+        method: "PATCH",
       }),
       invalidatesTags: ["PlaylistsFavorite"],
-   }),
-   
-   addPlaylistForUser: builder.query({
+    }),
+
+    addPlaylistForUser: builder.query({
       query: () => ({ url: `/user/playlist/add` }),
 
       providesTags: ["PlaylistsAdd"],
-   }),
-   
-   updateAddStatusApi: builder.mutation({
+    }),
+
+    updateAddStatusApi: builder.mutation({
       query: (playlistId) => ({
         url: `/user/playlist/add/${playlistId}`,
-           method: "PATCH",
-      
+        method: "PATCH",
       }),
       invalidatesTags: ["PlaylistsAdd"],
-   }),
+    }),
 
     deleteTrackInPlaylist: builder.mutation({
       query: (trackId) => ({
@@ -90,13 +91,13 @@ export const playlistsUserApi = createApi({
 });
 
 export const {
-   useGetLatestPlaylistsForUserQuery,
+  useGetLatestPlaylistsForUserQuery,
   useGetPlaylistByIdForUserQuery,
   useCreatePlaylistForUserMutation,
-    useDeletePlaylistForUserMutation,
-   useUpdateFavoriteStatusApiMutation,
+  useDeletePlaylistForUserMutation,
+  useUpdateFavoriteStatusApiMutation,
   useFavoritePlaylistForUserQuery,
   useAddPlaylistForUserQuery,
   useUpdateAddStatusApiMutation,
-   useDeleteTrackInPlaylistMutation,
+  useDeleteTrackInPlaylistMutation,
 } = playlistsUserApi;
