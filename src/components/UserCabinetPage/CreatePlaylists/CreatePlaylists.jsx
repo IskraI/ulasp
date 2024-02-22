@@ -72,7 +72,7 @@ const CreatePlaylists = ({
             })}
 
           </MediaList>
-          <MediaNavigationLink link={"newplaylists"} showNavigationLink={showNavigationLink} />
+          <MediaNavigationLink link={"createplaylists"} showNavigationLink={showNavigationLink} />
                   </>
         )}
     </>

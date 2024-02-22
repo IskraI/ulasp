@@ -1,4 +1,4 @@
-import AddPlayListsItem from "./AddPlaylistsItem";
+import FavoritePlaylistsItem from "./FavoritePlaylistsItem";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 import {useSelector} from "react-redux"
 import {
@@ -11,7 +11,7 @@ import { useFavoritePlaylistForUserQuery, useAddPlaylistForUserQuery } from "../
 // import { MockPlayer } from "../TracksTable/TracksTable.styled";
 import symbol from "../../../assets/symbol.svg";
 
-const AddPlaylists = ({
+const FavoritePlaylists = ({
   title,
   displayPlayer,
  showNavigationLink,
@@ -37,7 +37,7 @@ const AddPlaylists = ({
   } = useAddPlaylistForUserQuery();
 
 
-console.log('dataAdd playlist', dataAdd )
+// console.log('dataAdd playlist', dataAdd )
 // console.log('dataFavorite playlist', dataFavorite.favorites)
 
 
@@ -54,7 +54,7 @@ console.log('dataAdd playlist', dataAdd )
           {/* </ControlWrapper> */}
           <MediaList>
            
-            { dataAdd.add.map(({ _id, playListName, playListAvatarURL }) => {
+            { dataFavorite.favorites.map(({ _id, playListName, playListAvatarURL }) => {
               // console.log(
               //   "dataFavorite.favorites.includes(_id)",
               //   dataFavorite.favorites.some((item) => item._id === _id)
@@ -62,7 +62,7 @@ console.log('dataAdd playlist', dataAdd )
 
               return (
 
-                    <AddPlayListsItem
+                    <FavoritePlaylistsItem
                       key={_id}
                       id={_id}
                       favoriteStatus={dataFavorite.favorites.some((item) => item._id === _id)}
@@ -78,11 +78,11 @@ console.log('dataAdd playlist', dataAdd )
             })}
 
           </MediaList>
-          <MediaNavigationLink link={"addplaylists"} showNavigationLink={showNavigationLink} />
+          <MediaNavigationLink link={"favoriteplaylists"} showNavigationLink={showNavigationLink} />
                   </>
         )}
     </>
   );
 };
 
-export default AddPlaylists;
+export default FavoritePlaylists;
