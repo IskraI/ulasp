@@ -4,8 +4,12 @@ export const COLUMNS = [
     accessor: "trackId._id",
   },
   {
-    Header: "trackName",
+    Header: "Назва використаного твору",
     accessor: "trackId.trackName",
+  },
+  {
+    Header: "Виконавець (П.І.Б. виконавця, співвиконавців або назва колективу",
+    accessor: "trackId.artist",
   },
   {
     Header: "listens",

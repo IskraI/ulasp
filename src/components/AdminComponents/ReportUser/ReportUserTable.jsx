@@ -6,27 +6,27 @@ import {
   TableReportRow,
 } from "./ReportUserTable.styled";
 
-export const columns = [
-  {
-    Header: "№ п/п",
-    accessor: (_, rowIndex) => rowIndex + 1,
-  },
-  {
-    Header: "trackName",
-    accessor: "trackId.trackName",
-  },
-  {
-    Header: "listens",
-    accessor: ({ listens }) => {
-      const sum = listens.reduce((acc, cur) => acc + cur.countOfListenes, 0);
-      return sum;
-    },
-  },
-];
+// export const columns = [
+//   {
+//     Header: "№ п/п",
+//     accessor: (_, rowIndex) => rowIndex + 1,
+//   },
+//   {
+//     Header: "trackName",
+//     accessor: "trackId.trackName",
+//   },
+//   {
+//     Header: "listens",
+//     accessor: ({ listens }) => {
+//       const sum = listens.reduce((acc, cur) => acc + cur.countOfListenes, 0);
+//       return sum;
+//     },
+//   },
+// ];
 
 const ReportUserTable = ({ data }) => {
   const tableInstance = useTable({
-    columns,
+    COLUMNS,
     data,
   });
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =

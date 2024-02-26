@@ -74,8 +74,6 @@ const MyPlaylists = () => {
     isSuccesLatestNewSongs;
   isSuccesAddPlaylist;
 
-  console.log("dataAdd.add.slice(0, 2)", dataAdd?.add);
-
   const error =
     isErrorCreatePlaylists &&
     isErrorFavoritePlaylist &&
