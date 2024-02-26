@@ -1,6 +1,7 @@
 import CreatePlayListItem from "./CreatePlaylistItem";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux";
+import { useState } from "react";
 import {
   TitleWrapper,
   ControlWrapper,
@@ -9,6 +10,7 @@ import {
 } from "../../UserMediaComponent/PlayLists/MediaList.styled";
 import { useFavoritePlaylistForUserQuery, useAddPlaylistForUserQuery } from "../../../redux/playlistsUserSlice";
 import symbol from "../../../assets/symbol.svg";
+import ControlMyplaylists from "../ControlMyplaylists/ControlMyplaylists"
 
 const CreatePlaylists = ({
   title,
@@ -21,6 +23,9 @@ const CreatePlaylists = ({
 //   genre,
   shopCategoryName,
 }) => {
+
+  const [showModal, setShowModal] = useState(false);
+
   const {
     data: dataFavorite,
     isLoading: isLoadingFavoritePlaylist,
@@ -34,13 +39,21 @@ const CreatePlaylists = ({
 
 // console.log('dataAdd playlist', dataAdd.add )
 // console.log('dataFavorite playlist', dataFavorite.favorites)
-
+ const toogleModal = () => {
+    return setShowModal(() => !showModal);
+  };
 
   return (
     <>
-      <TitleContainer>
+      {/* <TitleContainer>
         <TitleWrapper>{title}</TitleWrapper>
-      </TitleContainer>
+      </TitleContainer> */}
+       <ControlMyplaylists
+        title={title}
+        iconButton={`${symbol}#icon-playlist-add`}
+        textButton={"Плейлист"}
+        onClick={toogleModal}
+      />
       {!isFetching && !error && !isLoadingFavoritePlaylist  && (
         <>
           {/* <ControlWrapper> */}
