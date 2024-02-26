@@ -18,10 +18,10 @@ const AddPlaylists = ({
   title,
   displayPlayer,
 
- showNavigationLink,
-  // data: dataAdd,
+  showNavigationLink,
+  data: dataAdd,
   // isLoadingAddPlaylist,
- isLoading,
+  isLoading,
 
   isFetching,
   error,
@@ -31,10 +31,8 @@ const AddPlaylists = ({
   const { data: dataFavorite, isLoading: isLoadingFavoritePlaylist } =
     useFavoritePlaylistForUserQuery();
 
-
-console.log('dataAdd playlist', dataAdd )
-// console.log('dataFavorite playlist', dataFavorite.favorites)
-
+  console.log("dataAdd playlist", dataAdd);
+  // console.log('dataFavorite playlist', dataFavorite.favorites)
 
   // console.log("dataAdd AddPlaylists", dataAdd);
   // console.log('dataFavorite playlist', dataFavorite.favorites)
@@ -51,7 +49,7 @@ console.log('dataAdd playlist', dataAdd )
 
           {/* </ControlWrapper> */}
           <MediaList>
-            {dataAdd?.add.map(({ _id, playListName, playListAvatarURL }) => {
+            {dataAdd?.map(({ _id, playListName, playListAvatarURL }) => {
               // console.log(
               //   "dataFavorite.favorites.includes(_id)",
               //   dataFavorite.favorites.some((item) => item._id === _id)
@@ -64,7 +62,7 @@ console.log('dataAdd playlist', dataAdd )
                   favoriteStatus={dataFavorite.favorites.some(
                     (item) => item._id === _id
                   )}
-                  addStatus={dataAdd?.add.some((item) => item._id === _id)}
+                  addStatus={dataAdd?.some((item) => item._id === _id)}
                   title={playListName}
                   icon={playListAvatarURL}
                   genre={genre}
@@ -74,10 +72,12 @@ console.log('dataAdd playlist', dataAdd )
             })}
           </MediaList>
 
-          <MediaNavigationLink link={"addplaylists"} showNavigationLink={showNavigationLink} />
-                  </>
-        )}
-
+          <MediaNavigationLink
+            link={"addplaylists"}
+            showNavigationLink={showNavigationLink}
+          />
+        </>
+      )}
     </>
   );
 };
