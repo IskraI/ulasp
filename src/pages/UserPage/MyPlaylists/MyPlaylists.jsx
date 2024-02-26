@@ -13,7 +13,6 @@ import {
 import { useGetAllTracksforUserQuery } from "../../../redux/tracksUserSlice";
 import { Loader } from "../../../components/Loader/Loader";
 
-
 const MyPlaylists = () => {
   const {
     data: createPlaylists,
@@ -44,24 +43,18 @@ const MyPlaylists = () => {
     isFetching: isFetchingAddPlaylist,
     isSuccess: isSuccesAddPlaylist,
     isError: isErrorAddPlaylist,
+  } = useAddPlaylistForUserQuery();
 
-    } = useAddPlaylistForUserQuery();
-    
-   
-  
-// console.log('dataAdd playlist', dataAdd )
-  console.log('dataFavorite playlist', favoritePlaylist)
-
+  console.log("dataAdd playlist", dataAdd.add.slice(0, 2));
+  console.log(" allTracks", allTracks);
 
   const fetching =
     isFetchingCreatePlaylists &&
     isFetchingFavoritePlaylist &&
     isFetchingNewSongs &&
     isFetchingAddPlaylist &&
-
-    isErrorCreatePlaylists&&
+    isErrorCreatePlaylists &&
     !isErrorFavoritePlaylist &&
-
     !isErrorNewSongs &&
     !isFetchingAddPlaylist;
 
@@ -76,13 +69,18 @@ const MyPlaylists = () => {
     !isFetchingAddPlaylist;
 
   const success =
-    isSuccesCreatePlaylists && isSuccesLatestFavoritePlaylist && isSuccesLatestNewSongs;
+    isSuccesCreatePlaylists &&
+    isSuccesLatestFavoritePlaylist &&
+    isSuccesLatestNewSongs;
   isSuccesAddPlaylist;
 
+  console.log("dataAdd.add.slice(0, 2)", dataAdd?.add);
 
-  // console.log('dataAdd.add.slice(0, 2)',dataAdd.add)
-
-  const error = isErrorCreatePlaylists && isErrorFavoritePlaylist && isErrorNewSongs && isErrorFavoritePlaylist;
+  const error =
+    isErrorCreatePlaylists &&
+    isErrorFavoritePlaylist &&
+    isErrorNewSongs &&
+    isErrorFavoritePlaylist;
 
   return (
     <>
@@ -95,34 +93,35 @@ const MyPlaylists = () => {
             data={createPlaylists}
             isFetching={isFetchingCreatePlaylists}
             error={isErrorCreatePlaylists}
-
-             showNavigationLink={true}
-                    />
-                  {!isLoadingAddPlaylist && !isLoadingFavoritePlaylist&&<AddPlaylists
-                       title={"Додані плейлисти"}
-                      displayPlayer={"none"}
-                      data={dataAdd.add}
-                      isFetching={isFetchingAddPlaylist}
-                      isError={isErrorAddPlaylist}
-                      isSuccess={isSuccesAddPlaylist}
             showNavigationLink={true}
-            isLoadingAddPlaylist={isLoadingAddPlaylist}
-                  />}
+          />
+          {!isLoadingAddPlaylist && !isLoadingFavoritePlaylist && (
+            <AddPlaylists
+              title={"Додані плейлисти"}
+              displayPlayer={"none"}
+              data={dataAdd?.add.slice(0, 2)}
+              isFetching={isFetchingAddPlaylist}
+              isError={isErrorAddPlaylist}
+              isSuccess={isSuccesAddPlaylist}
+              showNavigationLink={true}
+              isLoadingAddPlaylist={isLoadingAddPlaylist}
+            />
+          )}
 
-          {!isLoadingFavoritePlaylist&&!isLoadingAddPlaylist&& (<FavoritePlaylists
-
-             title={"Улюблені плейлисти"}
-            displayPlayer={"none"}
-            data={favoritePlaylist}
-            dataFavorite={favoritePlaylist}
-            dataAdd={dataAdd}
-            isFetching={isFetchingFavoritePlaylist}
-            error={isErrorFavoritePlaylist}
-                        showNavigationLink={true}
-                 />)}
-             <NewSongs
-
-            data={allTracks}
+          {!isLoadingFavoritePlaylist && !isLoadingAddPlaylist && (
+            <FavoritePlaylists
+              title={"Улюблені плейлисти"}
+              displayPlayer={"none"}
+              data={favoritePlaylist}
+              dataFavorite={favoritePlaylist}
+              dataAdd={dataAdd}
+              isFetching={isFetchingFavoritePlaylist}
+              error={isErrorFavoritePlaylist}
+              showNavigationLink={true}
+            />
+          )}
+          <NewSongs
+            data={allTracks.latestTracks}
             isFetching={isFetchingNewSongs}
             error={isErrorNewSongs}
             showNavigationLink={true}
