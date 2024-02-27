@@ -1,4 +1,4 @@
-import{n,f as t,g as a,j as o,h,i as g}from"./index-582b1ba5.js";import"./Statistic.styled-7e18c956.js";n.p`
+import{n,f as t,g as a,j as o,h,i as g}from"./index-80d38ac1.js";import"./Statistic.styled-7c7b01f2.js";n.p`
   font-size: 24px;
   font-weight: 500;
   line-height: 1.21;
@@ -77,7 +77,7 @@ background:  ${t.accentHoverColor};
 color: ${t.mainFontColor};
 font-size: 20px;
 margin-top: 25px;
-`,c=n.h3`
+`,d=n.h3`
  color: ${t.mainFontColor};
   font-size: 20px;
   font-weight: 400;
@@ -95,4 +95,4 @@ border-radius: 10px;
 border: 0.5px solid ${t.mainFontColor};
 background:  rgba(234, 234, 234, 0.32);
 margin-top: 25px;
-`,C=()=>{const{register:e,handleSubmit:s,setValue:d}=a(),l=p=>{console.log("Отправлено:",p)};return o.jsxs(b,{onSubmit:s(l),children:[o.jsx(c,{children:"Написати адміністратору:"}),o.jsx(f,{...e("Тема"),placeholder:"Тема"}),o.jsx("br",{}),o.jsx(j,{...e("Текст"),placeholder:"Текст"}),o.jsx("br",{}),o.jsx(x,{type:"submit",children:"Відправити"})]})},$=()=>{const{register:e,handleSubmit:s,setValue:d}=a(),l=p=>{console.log("Запрос отправлен:",p)};return o.jsxs("form",{onSubmit:s(l),children:[o.jsx(c,{children:"Запросити акт звірки:"}),o.jsx(F,{...e("Акт")}),o.jsx(x,{type:"submit",children:"Запросити"})]})},y=()=>{const e=h(g);return console.log("User",e),o.jsxs(o.Fragment,{children:[o.jsx(m,{children:"Кабінет"}),o.jsx(i,{children:"Номер договору"}),o.jsx(r,{children:e.contractNumber}),o.jsx(i,{children:"Ідентифікаційний номер (код ЄДРПОУ)"}),o.jsx(r,{children:e.taxCode}),o.jsx(i,{children:"Остання оплата"}),o.jsx(r,{children:e.lastPay}),o.jsx(i,{children:"Наступна оплата"}),o.jsx(r,{children:e.dateOfAccess}),o.jsxs(u,{children:[o.jsx(C,{}),o.jsx($,{})]})]})};export{y as default};
+`,C=()=>{const{register:e,handleSubmit:s,setValue:c}=a(),l=p=>{console.log("Отправлено:",p)};return o.jsxs(b,{onSubmit:s(l),children:[o.jsx(d,{children:"Написати адміністратору:"}),o.jsx(f,{...e("Тема"),placeholder:"Тема"}),o.jsx("br",{}),o.jsx(j,{...e("Текст"),placeholder:"Текст"}),o.jsx("br",{}),o.jsx(x,{type:"submit",children:"Відправити"})]})},$=()=>{const{register:e,handleSubmit:s,setValue:c}=a(),l=p=>{console.log("Запрос отправлен:",p)};return o.jsxs("form",{onSubmit:s(l),children:[o.jsx(d,{children:"Запросити акт звірки:"}),o.jsx(F,{...e("Акт")}),o.jsx(x,{type:"submit",children:"Запросити"})]})},y=()=>{const e=h(g);return o.jsxs(o.Fragment,{children:[o.jsx(m,{children:"Кабінет"}),o.jsx(i,{children:"Номер договору"}),o.jsx(r,{children:e.contractNumber}),o.jsx(i,{children:"Ідентифікаційний номер (код ЄДРПОУ)"}),o.jsx(r,{children:e.taxCode}),o.jsx(i,{children:"Остання оплата"}),o.jsx(r,{children:e.lastPay}),o.jsx(i,{children:"Наступна оплата"}),o.jsx(r,{children:e.dateOfAccess}),o.jsxs(u,{children:[o.jsx(C,{}),o.jsx($,{})]})]})};export{y as default};
