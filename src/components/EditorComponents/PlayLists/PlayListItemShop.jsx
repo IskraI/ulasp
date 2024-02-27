@@ -25,9 +25,7 @@ import { shopsApi } from "../../../redux/shopsSlice";
 import {
   PlaylistItem,
   PlaylistImg,
-  PlaylistInfoWrapper,
   PlaylistItemText,
-  PlaylistCountTracks,
   PlaylistIconsWrapper,
   PlaylistDeleteButton,
   PlaylistCardInfo,

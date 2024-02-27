@@ -120,8 +120,8 @@ const TracksTable = ({
     onChangeSizePage(size);
   };
   useEffect(() => {
-    console.log("currentPageLocal", currentPage);
-    console.log("currentPageGlobal", currentPageGlobalState);
+    // console.log("currentPageLocal", currentPage);
+    // console.log("currentPageGlobal", currentPageGlobalState);
     if (currentPage === 1 && !isFetching) {
       // console.log("В прелоад");
       const trackURL = tracksSRC.map((track) => {
@@ -142,7 +142,6 @@ const TracksTable = ({
         })
       );
     }
-    console.log(pageSize !== currentPageSize);
 
     if (currentPage !== currentPageGlobalState && !isFetching) {
       if (location.pathname !== playerState.location) {
@@ -151,7 +150,7 @@ const TracksTable = ({
       } else {
         console.log("Здесь установилось глобальное значение");
 
-        onChangePage(currentPageGlobalState);
+        // onChangePage(currentPageGlobalState);
       }
     }
   }, [
