@@ -1,7 +1,7 @@
 export const COLUMNS = [
   {
-    Header: "Id",
-    accessor: "trackId._id",
+    Header: "№ п/п",
+    accessor: (_, rowIndex) => rowIndex + 1,
   },
   {
     Header: "Назва використаного твору",
@@ -13,10 +13,9 @@ export const COLUMNS = [
   },
   {
     Header: "listens",
-    accessor: "listens.countOfListenes",
-  },
-  {
-    Header: "date",
-    accessor: "listens.date",
+    accessor: ({ listens }) => {
+      const sum = listens.reduce((acc, cur) => acc + cur.countOfListenes, 0);
+      return sum;
+    },
   },
 ];

@@ -147,7 +147,22 @@ function App() {
     return (
       <>
         <Routes>
-          <Route element={<SharedLayout avatarURL={user.avatarURL} />}>
+          <Route
+            element={
+              <SharedLayout
+                avatarURL={user.avatarURL}
+                logo={
+                  user.adminRole
+                    ? "/admin/cabinet"
+                    : user.editorRole
+                    ? "/editor/cabinet"
+                    : user.userRole
+                    ? "/user/cabinet"
+                    : "/"
+                }
+              />
+            }
+          >
             <Route path="/" element={<PublicRoute component={WelcomePage} />} />
 
             <Route path="/signin" element={<PublicRoute component={Login} />} />
@@ -231,15 +246,12 @@ function App() {
                   path="medialibrary/newtracks"
                   element={<AllTracksUser display={"none"} />}
                 />
+                <Route path="cabinet/myplaylists" element={<MyPlaylists />} />
                 <Route
-                  path="cabinet/myplaylists"
-                  element={<MyPlaylists />}
-                />
-                 <Route
                   path="cabinet/myplaylists/createplaylists"
                   element={<CreatePlaylists />}
                 />
-                 <Route
+                <Route
                   path="cabinet/myplaylists/createplaylists/:playlistId/tracks"
                   element={<TracksPageUser display={"none"} />}
                 />
@@ -251,7 +263,7 @@ function App() {
                   path="cabinet/myplaylists/addplaylists/:playlistId/tracks"
                   element={<TracksPageUser display={"none"} />}
                 />
-                 <Route
+                <Route
                   path="cabinet/myplaylists/favoriteplaylists"
                   element={<FavoritePlaylists />}
                 />

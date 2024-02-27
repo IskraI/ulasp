@@ -16,7 +16,7 @@ import { ActForm } from "../../components/Form/ActForm";
 // import { ReportForm } from "../../components/Form/ReportForm";
 const UserCabinetPage = () => {
   const user = useSelector(getUserState);
-  console.log("User", user);
+  // console.log("User", user);
   // console.log("isSuccess", isSuccess);
   // console.log("isUninitialized", isUninitialized);
   return (

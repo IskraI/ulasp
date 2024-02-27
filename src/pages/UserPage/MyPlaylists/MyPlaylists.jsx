@@ -46,7 +46,7 @@ const MyPlaylists = () => {
   } = useAddPlaylistForUserQuery();
 
   console.log("dataAdd playlist", dataAdd.add.slice(0, 2));
-  console.log(" allTracks", allTracks);
+  console.log(" favoritePlaylist", favoritePlaylist);
 
   const fetching =
     isFetchingCreatePlaylists &&
