@@ -99,7 +99,7 @@ const MyPlaylists = () => {
             <AddPlaylists
               title={"Додані плейлисти"}
               displayPlayer={"none"}
-              data={dataAdd?.add.slice(0, 2)}
+              data={dataAdd?.add.slice(0, 6)}
               isFetching={isFetchingAddPlaylist}
               isError={isErrorAddPlaylist}
               isSuccess={isSuccesAddPlaylist}
@@ -112,7 +112,7 @@ const MyPlaylists = () => {
             <FavoritePlaylists
               title={"Улюблені плейлисти"}
               displayPlayer={"none"}
-              data={favoritePlaylist}
+              data={favoritePlaylist.favorites.slice(0, 6)}
               dataFavorite={favoritePlaylist}
               dataAdd={dataAdd}
               isFetching={isFetchingFavoritePlaylist}
@@ -121,7 +121,7 @@ const MyPlaylists = () => {
             />
           )}
           <NewSongs
-            data={allTracks.latestTracks}
+            data={allTracks?.latestTracks.slice(0,6)}
             isFetching={isFetchingNewSongs}
             error={isErrorNewSongs}
             showNavigationLink={true}

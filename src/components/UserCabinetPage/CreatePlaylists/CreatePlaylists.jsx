@@ -8,9 +8,11 @@ import {
   MediaList,
   TitleContainer,
 } from "../../UserMediaComponent/PlayLists/MediaList.styled";
-import { useFavoritePlaylistForUserQuery, useAddPlaylistForUserQuery } from "../../../redux/playlistsUserSlice";
+import { useFavoritePlaylistForUserQuery, useCreatePlaylistForUserMutation } from "../../../redux/playlistsUserSlice";
 import symbol from "../../../assets/symbol.svg";
 import ControlMyplaylists from "../ControlMyplaylists/ControlMyplaylists"
+import { Modal } from "../../Modal/Modal";
+import ModalFormMyplaylist from "../ControlMyplaylists/ModalFormMyplaylist";
 
 const CreatePlaylists = ({
   title,
@@ -25,21 +27,61 @@ const CreatePlaylists = ({
 }) => {
 
   const [showModal, setShowModal] = useState(false);
+  const [selectedPlaylistAvatar, setSelectedPlaylistAvatar] = useState(null);
 
   const {
     data: dataFavorite,
     isLoading: isLoadingFavoritePlaylist,
   } = useFavoritePlaylistForUserQuery();
+
+   const [
+    createPlaylist,
+    { isSuccess, isLoading: isLoadingCreatePlaylist, isError },
+  ] = useCreatePlaylistForUserMutation();
   
-//   const {
-//     data: dataAdd,
-//     isLoading: isLoadingAddPlaylist,
-//   } = useAddPlaylistForUserQuery();
 
+ const handleChoosePlaylistAvatar = (event) => {
+    console.log("event", event);
+    let file;
 
-// console.log('dataAdd playlist', dataAdd.add )
-// console.log('dataFavorite playlist', dataFavorite.favorites)
- const toogleModal = () => {
+    if (event.target.files[0] !== undefined) {
+      file = event.target.files[0];
+    }
+    if (file) {
+      setSelectedPlaylistAvatar(file);
+      console.log("file", file);
+    }
+  };
+
+   const formDataFunction = (data) => {
+    const formData = new FormData();
+
+    formData.append("playListName", data.playListName),
+      formData.append("type", data.type),
+      formData.append("picsURL", selectedPlaylistAvatar);
+
+    return formData;
+  };
+
+  const handleSubmitPlaylist = async (data) => {
+    try {
+      await createPlaylist(formDataFunction(data)).unwrap();
+      closeModal();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+  const clearImageCover = () => {
+    setSelectedPlaylistAvatar(null);
+  };
+  
+  const closeModal = () => {
+    clearImageCover();
+    return setShowModal(false);
+  };
+  
+  const toogleModal = () => {
     return setShowModal(() => !showModal);
   };
 
@@ -87,7 +129,24 @@ const CreatePlaylists = ({
           </MediaList>
           <MediaNavigationLink link={"createplaylists"} showNavigationLink={showNavigationLink} />
                   </>
-        )}
+      )}
+      {showModal && (
+        <Modal width={"814px"} onClose={closeModal} showCloseButton={true}>
+             <ModalFormMyplaylist
+                onSubmit={handleSubmitPlaylist}
+                changePlayListAvatar={handleChoosePlaylistAvatar}
+                img={selectedPlaylistAvatar}
+                clearImageCover={clearImageCover}
+                idInputImg={"picsURL"}
+                idInputFirst={"playListName"}
+                idInputSecond={"type"}
+                marginTopInputFirst="24px"
+                valueInputSecond={"playlist"}
+                placeholderFirst={`Назва плейлисту*`}
+                cover={true}
+              />
+           </Modal>
+      )}
     </>
   );
 };
