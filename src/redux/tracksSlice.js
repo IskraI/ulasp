@@ -19,9 +19,12 @@ export const tracksApi = createApi({
 
   endpoints: (builder) => ({
     getAllTracks: builder.query({
-      query: ({ page = "", limit = "" }) => ({
-        url: `/editor/tracks/latestTracks?${page && `page=${page}`} ${
-          limit && `&limit=${limit}`
+      query: ({ page = "", limit = "", sort = "" }) => ({
+        url: `/editor/tracks/latestTracks?${page && `page=${page}`} 
+        ${
+          limit &&
+          `&limit=${limit}${sort && `&sort=${sort}`}
+        `
         }`,
       }),
       // provideTags: ["Tracks"],

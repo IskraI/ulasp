@@ -27,11 +27,23 @@ export const NoData = ({ text, textColor }) => {
 
 export const Error500 = () => {
   return (
-    <div style={{ marginLeft: "auto", marginRight: "auto" }}>
-      <img src={error500} alt="ServerError" width={"300px"} />
+    <div
+      style={{
+        marginLeft: "auto",
+        marginRight: "auto",
+      }}
+    >
+      <img
+        src={error500}
+        alt="ServerError"
+        width={"300px"}
+        style={{ marginLeft: "auto", marginRight: "auto" }}
+      />
       <ErrorWrapper>{SERVER_ERROR}</ErrorWrapper>
 
-      <ErrorText>{SERVER_ERROR_M}</ErrorText>
+      <ErrorText style={{ justifyContent: "center" }}>
+        {SERVER_ERROR_M}
+      </ErrorText>
     </div>
   );
 };

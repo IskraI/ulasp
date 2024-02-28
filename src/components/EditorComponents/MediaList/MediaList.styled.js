@@ -71,11 +71,19 @@ export const LinkWrapper = styled(Link)`
 
 export const SvgMedia = styled.svg`
   fill: #000000;
-  transition: fill 350ms ${mainCubicTransition};
+  transform: rotate(
+    ${(props) => (props.transformIcon ? props.transformIcon + "deg" : "0deg")}
+  );
+
+  transition: all 550ms ${mainCubicTransition};
 
   &:hover {
     fill: ${colors.accentHoverColor};
-    transition: fill 350ms ${mainCubicTransition};
+    transform: rotate(
+      ${(props) =>
+        props.transformIcon ? props.transformIcon + "deg" : "0deg"}
+    );
+    transition: all 550ms ${mainCubicTransition};
   }
 `;
 

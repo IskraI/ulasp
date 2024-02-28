@@ -66,10 +66,10 @@ export const PlaylistItemText = styled.p`
   text-align: center;
 `;
 
-export const PlaylistCountTracks = styled(PlaylistItemText)`
-  margin-top: 6px;
-  margin-bottom: 0;
-`;
+// export const PlaylistCountTracks = styled(PlaylistItemText)`
+//   margin-top: 6px;
+//   margin-bottom: 0;
+// `;
 
 export const PlaylistIconsWrapper = styled.div`
   display: flex;

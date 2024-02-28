@@ -138,7 +138,7 @@ export const playerSlice = createSlice({
         console.log(action);
         state = {
           ...state,
-          preloadSrc: [],
+          // preloadSrc: [],
           src: state.src.length === 0 ? state.preloadSrc : state.src,
           currentPage: action.payload.currentPage,
         };

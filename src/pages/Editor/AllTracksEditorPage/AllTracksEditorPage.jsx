@@ -7,8 +7,10 @@ import {
   usePrefetch,
 } from "../../../redux/tracksSlice";
 import AddTracks from "../../../components/EditorComponents/AddTracks/AddTracks";
-import symbol from "../../../assets/symbol.svg";
+import SortTracks from "../../../components/EditorComponents/Sort/SortTracks";
+import CountTracks from "../../../components/EditorComponents/CountTracks/CountTracks";
 import { Loader } from "../../../components/Loader/Loader";
+import symbol from "../../../assets/symbol.svg";
 
 const AllTracksEditor = () => {
   const id = useId();
@@ -16,9 +18,12 @@ const AllTracksEditor = () => {
   const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-
-  // const page = currentPage;
-  // const limit = pageSize;
+  const [isSorted, setIsSorterd] = useState(false);
+  const [sortedBy, setSortedBy] = useState(-1);
+  // const [sortOptions, setSortOptions] = useState({
+  //   sortedBy: -1,
+  //   countOfSortedFields: 1,
+  // });
 
   const rows = () => {
     const RowsTitle = [
@@ -105,24 +110,27 @@ const AllTracksEditor = () => {
     return RowsTitle;
   };
 
+  // console.log(isSorted);
+
+  // const page = currentPage;
+  // const limit = pageSize;
+
   const {
     data: allTracks,
     error: errorLoadingAllTracks,
     isFetching: isFetchingAllTracks,
     isSuccess: isSuccessAllTracks,
     isLoading: isLoadingAllTracks,
+    refetch,
   } = useGetAllTracksQuery({
     page: currentPage,
     limit: pageSize,
-    // forceRefetch: true,
+    sort: sortedBy,
+    // sort: sortOptions.sortedBy,
+    // countOfSortedFields: sortOptions.countOfSortedFields,
+    forceRefetch: true,
     // refetchOnFocus: true,
   });
-
-  if (isSuccessAllTracks) {
-    console.log(allTracks);
-  }
-
-  // console.log(isLoadingAllTracks);
 
   const [
     uploadTrack,
@@ -137,6 +145,7 @@ const AllTracksEditor = () => {
   const onPageChange = (page) => {
     console.log("4 Step - setCurrentPage in mutation", page);
     setCurrentPage(page);
+    setIsSorterd(false);
   };
 
   const onPageSizeChange = (size) => {
@@ -147,20 +156,56 @@ const AllTracksEditor = () => {
   const prefetchPage = usePrefetch("getAllTracks");
 
   const prefetchNext = useCallback(() => {
-    prefetchPage({ page: 2, limit: 10 });
-  }, [prefetchPage]);
+    prefetchPage({
+      page: currentPage,
+      limit: pageSize,
+      sort: sortedBy === 1 ? -1 : 1,
+    });
+  }, [currentPage, pageSize, prefetchPage, sortedBy]);
+
+  const handleClickSort = (data) => {
+    // refetch();
+    setSortedBy(data);
+    if (currentPage > 1) {
+      setCurrentPage(1);
+      setIsSorterd(true);
+    }
+  };
 
   return (
     <>
       {!isSuccessAllTracks && <Loader />}
       {isSuccessAllTracks && !errorLoadingAllTracks && (
-        <>
-          <AddTracks
-            iconButton={`${symbol}#icon-plus`}
-            textButton={"Музику"}
-            uploadTrack={uploadTrack}
+        <AddTracks
+          iconButton={`${symbol}#icon-plus`}
+          textButton={"Музику"}
+          uploadTrack={uploadTrack}
+        />
+      )}
+
+      {allTracks?.totalTracks !== undefined && (
+        <div
+          style={{
+            width: "20%",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <CountTracks countTracks={allTracks?.totalTracks} fontSize={"24px"} />
+
+          <SortTracks
+            onClick={handleClickSort}
+            omMouseEnter={prefetchNext}
+            sortType={"Az"}
+            sortedBy={sortedBy}
+            prefetch={true}
           />
+        </div>
+      )}
+      {isSuccessAllTracks && !errorLoadingAllTracks && (
+        <>
           {/* <button onClick={() => prefetchNext()}>PpPPPPPPPP</button> */}
+
           <TracksTable
             // title={" Остання додана музика"}
             marginTopWrapper={"24px"}
@@ -182,6 +227,7 @@ const AllTracksEditor = () => {
             currentPage={currentPage}
             pageSize={pageSize}
             totalPages={allTracks.totalPages}
+            isSorted={isSorted}
           />
         </>
       )}

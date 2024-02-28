@@ -9,10 +9,12 @@ import symbol from "../../../assets/symbol.svg";
 
 import { ErrorNotFound, Error500 } from "../../../components/Errors/Errors";
 import { Loader } from "../../../components/Loader/Loader";
+import SortTracks from "../../../components/EditorComponents/Sort/SortTracks";
 
 import {
   useGetPlaylistByIdQuery,
   useUploadTracksInPlaylistMutation,
+  useUpdatePlaylistSortMutation,
 } from "../../../redux/playlistsSlice";
 
 const TracksPage = () => {
@@ -21,6 +23,7 @@ const TracksPage = () => {
   const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [isSorted, setIsSorterd] = useState(false);
 
   const { playlistId } = useParams();
 
@@ -29,12 +32,13 @@ const TracksPage = () => {
     isFetching: isFetchingPlaylistById,
     isSuccess,
     isLoading,
+    isError,
     error,
   } = useGetPlaylistByIdQuery({
     playlistId,
     page: currentPage,
     limit: pageSize,
-    // forceRefetch: true,
+
     // refetchOnFocus: true,
   });
 
@@ -49,6 +53,8 @@ const TracksPage = () => {
       isUninitialized: isUninitializedUploadTrackInPlaylist,
     },
   ] = useUploadTracksInPlaylistMutation();
+
+  const [updateSort] = useUpdatePlaylistSortMutation();
 
   const rows = () => {
     const RowsTitle = [
@@ -144,16 +150,23 @@ const TracksPage = () => {
     setPageSize(size);
   };
 
-  if (isSuccess) {
+  const handleClickSort = (data) => {
     console.log(data);
-  }
+    updateSort({ playlistId, data });
+    // setSortedBy(data);
+    if (currentPage > 1) {
+      setCurrentPage(1);
+      setIsSorterd(true);
+    }
+  };
 
   return (
     <>
-      {error?.status === "500" && <Error500 />}
-      {error && <ErrorNotFound />}
+      {error?.status === 500 && isError && <Error500 />}
+      {error?.status !== 500 && isError && <ErrorNotFound />}
       {!isSuccess && !error && <Loader />}
-      {isSuccess && !error && (
+
+      {data?.totalTracks !== undefined && (
         <>
           <AddTracks
             iconButton={`${symbol}#icon-plus`}
@@ -174,6 +187,13 @@ const TracksPage = () => {
               id={playlistId}
               countTracks={data.totalTracks}
             />
+
+            <SortTracks
+              onClick={handleClickSort}
+              sortType={"random"}
+              marginTop={"0px"}
+            />
+
             <PlayListControl
               isPublished={data.playlist.published}
               countTracks={data.totalTracks}
@@ -182,35 +202,38 @@ const TracksPage = () => {
               isLoadingUploadTrackInPlaylist={isLoadingUploadTrackInPlaylist}
             />
           </div>
-          <TracksTable
-            title={"In playlist"}
-            showTitle={false}
-            marginTopWrapper={"24px"}
-            isInPlayList={true}
-            playListId={data.playlist._id}
-            playListGenre={data.playlist.playlistGenre}
-            checkBox={true}
-            isCheckedAll={checkedMainCheckBox}
-            tracks={data.playlist.trackList}
-            error={error}
-            isFetching={isFetchingPlaylistById}
-            isSuccess={isSuccess}
-            dataUpload={dataUploadTrackInPlaylist}
-            isErrorUpload={isErrorUploadTrackInPlaylist}
-            isSuccessUpload={isSuccessUploadTrackInPlaylist}
-            isLoadingUpload={isLoadingUploadTrackInPlaylist}
-            errorUpload={errorUploadTrackInPlaylist}
-            isUninitialized={isUninitializedUploadTrackInPlaylist}
-            rows={rows()}
-            onChangeCurrentPage={onPageChange}
-            onChangeSizePage={onPageSizeChange}
-            currentPage={currentPage}
-            pageSize={pageSize}
-            totalPages={data.totalPages}
-            totalTracks={data.totalTracks}
-            tracksSRC={data.tracksSRC}
-          />
         </>
+      )}
+      {isSuccess && !error && (
+        <TracksTable
+          title={"In playlist"}
+          showTitle={false}
+          marginTopWrapper={"24px"}
+          isInPlayList={true}
+          playListId={data.playlist._id}
+          playListGenre={data.playlist.playlistGenre}
+          checkBox={true}
+          isCheckedAll={checkedMainCheckBox}
+          tracks={data.playlist.trackList}
+          error={error}
+          isFetching={isFetchingPlaylistById}
+          isSuccess={isSuccess}
+          dataUpload={dataUploadTrackInPlaylist}
+          isErrorUpload={isErrorUploadTrackInPlaylist}
+          isSuccessUpload={isSuccessUploadTrackInPlaylist}
+          isLoadingUpload={isLoadingUploadTrackInPlaylist}
+          errorUpload={errorUploadTrackInPlaylist}
+          isUninitialized={isUninitializedUploadTrackInPlaylist}
+          rows={rows()}
+          onChangeCurrentPage={onPageChange}
+          onChangeSizePage={onPageSizeChange}
+          currentPage={currentPage}
+          pageSize={pageSize}
+          totalPages={data.totalPages}
+          totalTracks={data.totalTracks}
+          tracksSRC={data.tracksSRC}
+          isSorted={isSorted}
+        />
       )}
     </>
   );

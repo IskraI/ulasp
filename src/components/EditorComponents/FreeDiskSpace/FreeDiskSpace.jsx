@@ -25,7 +25,7 @@ const FreeDiskSpace = () => {
   }
 
   return (
-    <oaderButton>
+    <>
       {isLoading && <LoaderButton height={50} width={50} color={"#00BFFF"} />}
       {isSuccess && !isLoading && (
         <StatItemEditor backgroundColor={backGroundColorCard}>
@@ -65,7 +65,7 @@ const FreeDiskSpace = () => {
           вільного місця
         </StatItemEditor>
       )}
-    </oaderButton>
+    </>
   );
 };
 
