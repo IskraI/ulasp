@@ -20,10 +20,6 @@ const AllTracksEditor = () => {
   const [pageSize, setPageSize] = useState(10);
   const [isSorted, setIsSorterd] = useState(false);
   const [sortedBy, setSortedBy] = useState(-1);
-  // const [sortOptions, setSortOptions] = useState({
-  //   sortedBy: -1,
-  //   countOfSortedFields: 1,
-  // });
 
   const rows = () => {
     const RowsTitle = [
@@ -110,26 +106,16 @@ const AllTracksEditor = () => {
     return RowsTitle;
   };
 
-  // console.log(isSorted);
-
-  // const page = currentPage;
-  // const limit = pageSize;
-
   const {
     data: allTracks,
     error: errorLoadingAllTracks,
     isFetching: isFetchingAllTracks,
     isSuccess: isSuccessAllTracks,
     isLoading: isLoadingAllTracks,
-    refetch,
   } = useGetAllTracksQuery({
     page: currentPage,
     limit: pageSize,
     sort: sortedBy,
-    // sort: sortOptions.sortedBy,
-    // countOfSortedFields: sortOptions.countOfSortedFields,
-    forceRefetch: true,
-    // refetchOnFocus: true,
   });
 
   const [
@@ -164,7 +150,6 @@ const AllTracksEditor = () => {
   }, [currentPage, pageSize, prefetchPage, sortedBy]);
 
   const handleClickSort = (data) => {
-    // refetch();
     setSortedBy(data);
     if (currentPage > 1) {
       setCurrentPage(1);
@@ -204,8 +189,6 @@ const AllTracksEditor = () => {
       )}
       {isSuccessAllTracks && !errorLoadingAllTracks && (
         <>
-          {/* <button onClick={() => prefetchNext()}>PpPPPPPPPP</button> */}
-
           <TracksTable
             // title={" Остання додана музика"}
             marginTopWrapper={"24px"}
