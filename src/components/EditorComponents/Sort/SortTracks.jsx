@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import symbol from "../../../assets/symbol.svg";
 import { SvgMedia } from "../MediaList/MediaList.styled";
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useState, useCallback } from "react";
 
 const SortTracks = ({
   onClick,
@@ -9,16 +9,17 @@ const SortTracks = ({
   sortType,
   sortedBy,
   prefetch,
+  marginTop,
 }) => {
-  const [rotateIcon, setRotateIcon] = useState(180);
-  const [isPrefetch, setIsPrefetch] = useState(false);
-
-  // const [isRotated, setIsRotated] = useState(false);
+  const [rotateIcon, setRotateIcon] = useState(360);
 
   const switchForSort = () => {
     switch (sortType) {
       case "Az":
         return handleSortAz();
+
+      case "random":
+        return handleSortRandom();
 
       default:
         alert("This type of sort is not available");
@@ -29,31 +30,39 @@ const SortTracks = ({
   const handleClickRotate = useCallback(() => {
     let transformIcon = -360 + 180;
 
-    return rotateIcon === 180
+    return rotateIcon === 360
       ? setRotateIcon(transformIcon)
-      : setRotateIcon(180);
+      : setRotateIcon(360);
   }, [rotateIcon]);
-
-  // useEffect(() => {
-  //   const transformIcon = -360 + 180;
-  //   rotateIcon === 180 ? setRotateIcon(transformIcon) : setRotateIcon(180);
-  // }, [rotateIcon]);
-
-  // const handleSort = useCallback(() => {
-  //   const max = -2;
-  //   const min = 2;
-  //   let sortedBy = Math.floor(Math.random() * (max - min + 1)) + min;
-
-  //   if (sortedBy === 0) {
-  //     sortedBy = -1;
-  //   }
-  //   console.log(sortedBy);
-  //   return { sortedBy, countOfSortedFields };
-  // }, [countOfSortedFields]);
 
   const handleSortAz = useCallback(() => {
     return sortedBy === -1 ? 1 : -1;
   }, [sortedBy]);
+
+  const handleSortRandom = useCallback(() => {
+    const getRandomNumber = () => {
+      const max = 5;
+      const min = 1;
+      let random = Math.floor(Math.random() * (max - min + 1)) + min;
+      return random;
+    };
+
+    const random = getRandomNumber();
+
+    return random;
+  }, []);
+
+  const selectIcon = () => {
+    switch (sortType) {
+      case "Az":
+        return "icon-sort";
+
+      case "random":
+        return "icon-random";
+      default:
+        break;
+    }
+  };
 
   return (
     <>
@@ -62,7 +71,8 @@ const SortTracks = ({
         style={{
           background: "none",
           border: "none",
-          marginTop: "auto",
+          marginTop: marginTop ? marginTop : "auto",
+          marginLeft: "24px",
         }}
         onMouseEnter={() => {
           if (prefetch) {
@@ -75,7 +85,7 @@ const SortTracks = ({
         }}
       >
         <SvgMedia width="24" height="24" transformIcon={rotateIcon}>
-          <use href={`${symbol}#icon-sort`}></use>
+          <use href={`${symbol}#${selectIcon()}`}></use>
         </SvgMedia>
       </button>
     </>
@@ -88,6 +98,7 @@ SortTracks.propTypes = {
   sortType: PropTypes.string,
   sortedBy: PropTypes.number,
   prefetch: PropTypes.bool,
+  marginTop: PropTypes.string,
 };
 
 export default SortTracks;

@@ -1,4 +1,4 @@
-import { useRef, useState, useId, useCallback, useMemo } from "react";
+import { useRef, useState, useId, useCallback } from "react";
 
 import TracksTable from "../../../components/EditorComponents/TracksTable/TracksTable";
 import {
@@ -16,7 +16,7 @@ const AllTracksEditor = () => {
   const id = useId();
   const BaseInputRef = useRef(null);
   const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
-  const [currentPage, setCurrentPage] = useState(3);
+  const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [isSorted, setIsSorterd] = useState(false);
   const [sortedBy, setSortedBy] = useState(-1);
@@ -128,7 +128,7 @@ const AllTracksEditor = () => {
     sort: sortedBy,
     // sort: sortOptions.sortedBy,
     // countOfSortedFields: sortOptions.countOfSortedFields,
-    // forceRefetch: true,
+    forceRefetch: true,
     // refetchOnFocus: true,
   });
 
@@ -145,6 +145,7 @@ const AllTracksEditor = () => {
   const onPageChange = (page) => {
     console.log("4 Step - setCurrentPage in mutation", page);
     setCurrentPage(page);
+    setIsSorterd(false);
   };
 
   const onPageSizeChange = (size) => {
@@ -163,8 +164,12 @@ const AllTracksEditor = () => {
   }, [currentPage, pageSize, prefetchPage, sortedBy]);
 
   const handleClickSort = (data) => {
+    // refetch();
     setSortedBy(data);
-    setCurrentPage(1);
+    if (currentPage > 1) {
+      setCurrentPage(1);
+      setIsSorterd(true);
+    }
   };
 
   return (
@@ -178,7 +183,7 @@ const AllTracksEditor = () => {
         />
       )}
 
-      {isSuccessAllTracks && (
+      {allTracks?.totalTracks !== undefined && (
         <div
           style={{
             width: "20%",
@@ -187,6 +192,7 @@ const AllTracksEditor = () => {
           }}
         >
           <CountTracks countTracks={allTracks?.totalTracks} fontSize={"24px"} />
+
           <SortTracks
             onClick={handleClickSort}
             omMouseEnter={prefetchNext}
@@ -196,7 +202,6 @@ const AllTracksEditor = () => {
           />
         </div>
       )}
-
       {isSuccessAllTracks && !errorLoadingAllTracks && (
         <>
           {/* <button onClick={() => prefetchNext()}>PpPPPPPPPP</button> */}
@@ -222,7 +227,7 @@ const AllTracksEditor = () => {
             currentPage={currentPage}
             pageSize={pageSize}
             totalPages={allTracks.totalPages}
-            // rerer={result}
+            isSorted={isSorted}
           />
         </>
       )}
