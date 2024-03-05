@@ -11,12 +11,12 @@ import { useFavoritePlaylistForUserQuery, useAddPlaylistForUserQuery } from "../
 // import { MockPlayer } from "../TracksTable/TracksTable.styled";
 import symbol from "../../../assets/symbol.svg";
 
-const FavoritePlaylists = ({
+const FavoriteAllPlaylists = ({
   title,
   displayPlayer,
   showNavigationLink,
-  data: dataFavorite,
-  isLoading: isLoadingFavoritePlaylist,
+  // dataFavorite,
+  //  isLoading: isLoadingFavoritePlaylist,
   // data: dataAdd,
   // isLoadingAddPlaylist,
  isLoading,
@@ -25,10 +25,10 @@ const FavoritePlaylists = ({
   genre,
   shopCategoryName,
 }) => {
-  // const {
-  //   data: dataFavorite,
-  //     isLoading: isLoadingFavoritePlaylist,
-  //     } = useFavoritePlaylistForUserQuery();
+  const {
+    data: dataFavorite,
+      isLoading: isLoadingFavoritePlaylist,
+      } = useFavoritePlaylistForUserQuery();
   
   const {
     data: dataAdd,
@@ -56,7 +56,7 @@ console.log("title",title)
           {/* </ControlWrapper> */}
           <MediaList>
            
-            { dataFavorite?.map(({ _id, playListName, playListAvatarURL }) => {
+            { dataFavorite.favorites.map(({ _id, playListName, playListAvatarURL }) => {
               // console.log(
               //   "dataFavorite.favorites.includes(_id)",
               //   dataFavorite.favorites.some((item) => item._id === _id)
@@ -67,7 +67,7 @@ console.log("title",title)
                     <FavoritePlaylistsItem
                       key={_id}
                       id={_id}
-                      favoriteStatus={dataFavorite?.some((item) => item._id === _id)}
+                      favoriteStatus={dataFavorite.favorites.some((item) => item._id === _id)}
                       addStatus={dataAdd.add.some((item) => item._id === _id)}
                       title={playListName}
                       icon={playListAvatarURL}
@@ -87,4 +87,4 @@ console.log("title",title)
   );
 };
 
-export default FavoritePlaylists;
+export default FavoriteAllPlaylists;

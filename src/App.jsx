@@ -63,6 +63,8 @@ import PlaylistInShopSubCategoryPageUser from "./pages/UserPage/ShopsUserPage/Pl
 import CreatePlaylists from "./components/UserCabinetPage/CreatePlaylists/CreatePlaylists";
 import AddPlayLists from "./components/UserCabinetPage/AddPlaylists/AddPlaylistsItem";
 import FavoritePlaylists from "./components/UserCabinetPage/FavoritePlaylists/FavoritePlaylists";
+import AddAllPlaylists from "./components/UserCabinetPage/AddPlaylists/AddAllPlaylists";
+import FavoriteAllPlaylists from "./components/UserCabinetPage/FavoritePlaylists/FavoriteAllPlaylists";
 
 const AdminCabinetPage = lazy(() =>
   import("./components/AdminComponents/AdminCabinetPage/AdminCabinetPage")
@@ -245,7 +247,7 @@ function App() {
                 />
                 <Route
                   path="cabinet/myplaylists/addplaylists"
-                  element={<AddPlayLists />}
+                  element={<AddAllPlaylists />}
                 />
                 <Route
                   path="cabinet/myplaylists/addplaylists/:playlistId/tracks"
@@ -253,10 +255,14 @@ function App() {
                 />
                  <Route
                   path="cabinet/myplaylists/favoriteplaylists"
-                  element={<FavoritePlaylists />}
+                  element={<FavoriteAllPlaylists />}
                 />
                 <Route
                   path="cabinet/myplaylists/favoriteplaylists/:playlistId/tracks"
+                  element={<TracksPageUser display={"none"} />}
+                />
+                <Route
+                  path="cabinet/myplaylists/:playlistId/tracks"
                   element={<TracksPageUser display={"none"} />}
                 />
                 <Route

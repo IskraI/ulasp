@@ -18,12 +18,11 @@ const CreatePlaylists = ({
   title,
   displayPlayer,
  showNavigationLink,
-  data: playlists,
- 
-  isFetching,
+ data:createPlaylists,
+   isFetching,
   error,
 //   genre,
-  shopCategoryName,
+  // shopCategoryName,
 }) => {
 
   const [showModal, setShowModal] = useState(false);
@@ -38,6 +37,8 @@ const CreatePlaylists = ({
     createPlaylist,
     { isSuccess, isLoading: isLoadingCreatePlaylist, isError },
   ] = useCreatePlaylistForUserMutation();
+
+  console.log("createPlaylists", createPlaylists)
   
 
  const handleChoosePlaylistAvatar = (event) => {
@@ -104,7 +105,7 @@ const CreatePlaylists = ({
           {/* </ControlWrapper> */}
           <MediaList>
            
-            {playlists && playlists.map(({ _id, playListName, playListAvatarURL }) => {
+            {createPlaylists?.map(({ _id, playListName, playListAvatarURL }) => {
               // console.log(
               //   "dataFavorite.favorites.includes(_id)",
               //   dataFavorite.favorites.some((item) => item._id === _id)
@@ -118,8 +119,7 @@ const CreatePlaylists = ({
                       favoriteStatus={dataFavorite.favorites.some((item) => item._id === _id)}
                        title={playListName}
                       icon={playListAvatarURL}
-                    //   genre={genre}
-                      shopCategoryName={shopCategoryName}
+                      //  shopCategoryName={shopCategoryName}
                     />
                                      
             );

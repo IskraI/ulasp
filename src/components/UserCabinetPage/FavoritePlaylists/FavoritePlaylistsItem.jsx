@@ -77,7 +77,7 @@ const FavoritePlaylistsItem = ({ id, title, icon, genre, favoriteStatus, addStat
   //     // For example: fetchFavoriteStatusFromBackend(id).then(response => setIsFavorite(response));
   //   }
   // }, [favoriteStatus, id]);
-
+console.log("location.pathname", location.pathname)
 // console.log('isFavorite', isFavorite)
   return (
    
@@ -87,7 +87,7 @@ const FavoritePlaylistsItem = ({ id, title, icon, genre, favoriteStatus, addStat
             key={id}
             to={
               location.pathname === cabinet
-                ? `myplaylists/addplaylists/${id}/tracks`
+                ? `myplaylists/favoriteplaylists/${id}/tracks`
                 : `${id}/tracks`
             }
             state={{ from: location }}

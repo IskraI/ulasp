@@ -19,7 +19,7 @@ const MyPlaylists = () => {
     isFetching: isFetchingCreatePlaylists,
     isSuccess: isSuccesCreatePlaylists,
     isError: isErrorCreatePlaylists,
-  } = useGetCreatePlaylistsForUserQuery(`?&limit=${12}`);
+  } = useGetCreatePlaylistsForUserQuery(`?&limit=${6}`);
 
   const {
     data: allTracks,
@@ -74,8 +74,7 @@ const MyPlaylists = () => {
     isSuccesLatestNewSongs;
   isSuccesAddPlaylist;
 
-  console.log("dataAdd.add.slice(0, 2)", dataAdd?.add);
-
+ 
   const error =
     isErrorCreatePlaylists &&
     isErrorFavoritePlaylist &&
@@ -112,8 +111,8 @@ const MyPlaylists = () => {
             <FavoritePlaylists
               title={"Улюблені плейлисти"}
               displayPlayer={"none"}
-              data={favoritePlaylist.favorites.slice(0, 6)}
-              dataFavorite={favoritePlaylist}
+              data={favoritePlaylist?.favorites.slice(0, 6)}
+              // dataFavorite={favoritePlaylist}
               dataAdd={dataAdd}
               isFetching={isFetchingFavoritePlaylist}
               error={isErrorFavoritePlaylist}

@@ -1,7 +1,7 @@
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 import { useState, useEffect } from "react";
-import { useUpdateFavoriteStatusApiMutation, useUpdateAddStatusApiMutation } from "../../../redux/playlistsUserSlice";
+import { useUpdateFavoriteStatusApiMutation, useUpdateAddStatusApiMutation,  useUpdateCabinetPlaylistStatusApiMutation, } from "../../../redux/playlistsUserSlice";
 import {
   MediaItem,
   IconsWrapper,
@@ -24,9 +24,9 @@ const CreatePlayListItem = ({ id, title, icon, favoriteStatus, addStatus,
   const navigate = useNavigate();
 
 // { _id, title, icon, isFavorite: initialFavorite }
-  const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
+  // const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
 //   const [toggleAdd] = useUpdateAddStatusApiMutation(id);
-
+const [toggleFavorite] =  useUpdateCabinetPlaylistStatusApiMutation(id);
   // const { data: dataFavorites } = useFavoritePlaylistForUserQuery();
  
   // console.log('favoriteStatus item', favoriteStatus)
@@ -87,7 +87,7 @@ const CreatePlayListItem = ({ id, title, icon, favoriteStatus, addStatus,
             key={id}
             to={
               location.pathname === cabinet
-                ? `createlaylists/${id}/tracks`
+                ? `createplaylists/${id}/tracks`
                 : `${id}/tracks`
             }
             state={{ from: location }}

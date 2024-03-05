@@ -21,6 +21,7 @@ export const playlistsUserApi = createApi({
         url: "/user/userPlaylist/create",
         method: "POST",
         body,
+        formData: true,
       }),
       invalidatesTags: ["Playlists"],
     }),
@@ -73,6 +74,14 @@ export const playlistsUserApi = createApi({
       }),
       invalidatesTags: ["PlaylistsFavorite"],
     }),
+    
+    updateCabinetPlaylistStatusApi: builder.mutation({
+      query: (playlistId) => ({
+        url: `/user//userPlaylist/favorites/${playlistId}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["PlaylistsFavorite"],
+    }),
 
     addPlaylistForUser: builder.query({
       query: () => ({ url: `/user/playlist/add` }),
@@ -114,6 +123,7 @@ export const {
   useGetCreatePlaylistsForUserQuery,
   useDeletePlaylistForUserMutation,
   useUpdateFavoriteStatusApiMutation,
+  useUpdateCabinetPlaylistStatusApiMutation,
   useFavoritePlaylistForUserQuery,
   useAddPlaylistForUserQuery,
   useUpdateAddStatusApiMutation,
