@@ -78,7 +78,8 @@ const AddPlayListsItem = ({ id, title, icon, genre, favoriteStatus, addStatus,
   //   }
   // }, [favoriteStatus, id]);
 
-// console.log('isFavorite', isFavorite)
+console.log('location.pathname', location.pathname)
+
   return (
    
       <MediaItem>

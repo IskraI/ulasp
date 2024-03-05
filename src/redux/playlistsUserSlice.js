@@ -66,6 +66,7 @@ export const playlistsUserApi = createApi({
 
       providesTags: ["PlaylistsFavorite"],
     }),
+
     updateFavoriteStatusApi: builder.mutation({
       query: (playlistId) => ({
         url: `/user/playlist/favorites/${playlistId}`,
