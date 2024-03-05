@@ -55,18 +55,12 @@ export const playlistsApi = createApi({
     }),
 
     uploadTracksInPlaylist: builder.mutation({
-      query: ({ playlistId, formData }) => (
-        console.log(formData.get("trackURL")),
-        {
-          url: `/editor/tracks/upload/${playlistId}`,
-          method: "POST",
-          body: formData,
-          formData: true,
-        }
-      ),
-      async onQueryStarted(arg) {
-        console.log(arg.formData.get("trackURL"));
-      },
+      query: ({ playlistId, formData }) => ({
+        url: `/editor/tracks/upload/${playlistId}`,
+        method: "POST",
+        body: formData,
+        formData: true,
+      }),
       invalidatesTags: ["Playlists"],
     }),
     deleteTrackInPlaylist: builder.mutation({

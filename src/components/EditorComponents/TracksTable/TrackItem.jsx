@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect, useRef, useId } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { SvgStyled } from "../../Button/Button.styled";
 import { sToStr, compareArray } from "../../../helpers/helpers";
@@ -30,7 +30,6 @@ import {
   InfoBlock,
   PlayButton,
 } from "../TracksTable/TracksTable.styled";
-const arr = [];
 
 const TrackItem = ({
   idTrack,
@@ -49,6 +48,10 @@ const TrackItem = ({
   showData,
   index,
   countOfSkip,
+  getCheckedTrackId,
+  addTrackToCheckedList,
+  deleteCheckedTrackId,
+  deselect,
 }) => {
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
@@ -59,10 +62,7 @@ const TrackItem = ({
   // console.log("isPlayingTrack", isPlayingTrack);
   // console.log("trackID", idTrack);
 
-  const [id, setId] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
-
-  const idUse = useId();
 
   const ref = useRef(null);
   const dotsButtonRef = useRef(null);
@@ -98,84 +98,9 @@ const TrackItem = ({
     return uniqGenre;
   };
 
-  // useEffect(() => {
-  //   if (isCheckedAll && ref?.current !== null) {
-  //     setIsChecked(true);
-  //     ref.current.checked = true;
-  //     // arr.splice(0, arr.length);
-  //     arr.push(idTrack);
-  //     // console.log(arr);
-  //   }
-  //   if (!isCheckedAll && ref?.current !== null) {
-  //     setIsChecked(false);
-  //     ref.current.checked = false;
-  //     arr.splice(0, arr.length);
-  //     // console.log(arr);
-  //   }
-  //   if (isSuccessDeleteTrack || isSuccessDeleteTrackInPlaylist) {
-  //     setShowPopUp(false);
-  //   }
-  // }, [
-  //   idTrack,
-  //   isCheckedAll,
-  //   isSuccessDeleteTrack,
-  //   isSuccessDeleteTrackInPlaylist,
-  // ]);
-
-  // useEffect(() => {
-  //   if (isChecked === false) {
-  //     setShowPopUp(false);
-  //   }
-  // }, [isChecked]);
-
   const PopUpToogle = () => {
     setShowPopUp(!showPopUp);
   };
-
-  // const handleClickCheckBox = () => {
-  //   setIsChecked(!isChecked);
-
-  //   // setId(idTrack);
-
-  //   setTrackId(idTrack);
-
-  //   console.log("Кликнули");
-
-  //   // if (arr.includes(idTrack)) {
-  //   //   console.log("arr", arr);
-
-  //   //   const indexTrack = arr.indexOf(idTrack);
-  //   //   console.log(indexTrack);
-  //   //   arr.splice(indexTrack);
-  //   //   console.log("arr", arr);
-
-  //   //   // console.log("Замечательно входит");
-  //   // } else {
-  //   //   arr.push(idTrack);
-  //   // }
-
-  //   if (arr.includes(idTrack)) {
-  //     console.log("arr", arr);
-
-  //     const indexTrack = arr.indexOf(idTrack);
-  //     console.log(indexTrack);
-  //     let knife = arr.splice(0, indexTrack);
-  //     // arr.slice(0, indexTrack);
-  //     console.log("arr", arr);
-  //     console.log("knife", knife);
-
-  //     // knife.length === 1 ? knife.splice(0, arr.length) : null;
-  //     // console.log("knife", knife);
-
-  //     // console.log("Замечательно входит");
-  //   } else {
-  //     console.log("PUSH");
-  //     arr.push(idTrack);
-  //     console.log("arr", arr);
-  //   }
-
-  //   // console.log("arr", arr);
-  // };
 
   useEffect(() => {
     document.addEventListener("click", handleClickDotsButton);
@@ -235,6 +160,41 @@ const TrackItem = ({
     setIsPausedTrack(isPaused);
   };
 
+  useEffect(() => {
+    if (isCheckedAll && !ref.current.checked) {
+      ref.current.checked = true;
+      setIsChecked(true);
+      getCheckedTrackId(idTrack);
+    }
+
+    if (!isCheckedAll && ref.current.checked) {
+      console.log("deselect", deselect);
+      if (!deselect) {
+        return;
+      }
+
+      setIsChecked(false);
+      ref.current.checked = false;
+      getCheckedTrackId();
+    }
+  }, [deselect, getCheckedTrackId, idTrack, isCheckedAll]);
+
+  const selectTrack = (id) => {
+    console.log(id);
+    if (!ref.current.checked) {
+      console.log("тут");
+      ref.current.checked = false;
+      setIsChecked(false);
+
+      deleteCheckedTrackId(id);
+    } else {
+      console.log("тут1");
+      ref.current.checked = true;
+      setIsChecked(true);
+      addTrackToCheckedList(id);
+    }
+  };
+
   return (
     <>
       <TrStyle
@@ -247,9 +207,9 @@ const TrackItem = ({
           <input
             type="checkbox"
             name=""
-            id="checkTrack"
+            id={idTrack}
             ref={ref}
-            // onClick={handleClickCheckBox}
+            onClick={() => selectTrack(idTrack)}
           />
         </TableCell>
         <TableCell showData={showData[1] || false}>
@@ -380,9 +340,15 @@ const TrackItem = ({
             ref={dotsButtonRef}
             type="button"
             onClick={PopUpToogle}
-            // disabled={isChecked ? false : true}
+            disabled={isChecked ? true : false}
           >
-            <SvgStyled showIcon={true} width="24" height="24" fillColor="black">
+            <SvgStyled
+              showIcon={true}
+              width="24"
+              height="24"
+              fillColor={isChecked ? "#CECCC180" : "#17161C"}
+              strokeColor={isChecked ? "#CECCC180" : "#17161C"}
+            >
               <use href={`${symbol}#icon-more-dots`}></use>
             </SvgStyled>
           </DotsButton>

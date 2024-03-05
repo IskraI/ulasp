@@ -18,8 +18,7 @@ import {
 } from "../../../redux/playlistsSlice";
 
 const TracksPage = () => {
-  const id = useId();
-  const BaseInputRef = useRef(null);
+  const baseInputRef = useRef(null);
   const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -58,33 +57,33 @@ const TracksPage = () => {
 
   const rows = () => {
     const RowsTitle = [
-      // {
-      //   title: (
-      //     <input
-      //       key={id}
-      //       type="checkbox"
-      //       id="mainInput"
-      //       ref={BaseInputRef}
-      //       style={{ width: "24px", height: "24px", marginRight: "24px" }}
-      //       onClick={() => {
-      //         if (BaseInputRef.current.checked) {
-      //           setCheckedMainCheckBox(true);
-      //         } else {
-      //           setCheckedMainCheckBox(false);
-      //         }
-      //       }}
-      //     />
-      //   ),
-      //   type: "checkbox",
-      //   titleSize: "2%",
-      //   showData: true,
-      // },
       {
-        title: "",
-        type: "button",
-        titleSize: "1%",
-        showData: false,
+        title: (
+          <input
+            key={playlistId}
+            type="checkbox"
+            id="mainInput"
+            ref={baseInputRef}
+            style={{ width: "24px", height: "24px", marginRight: "24px" }}
+            onClick={() => {
+              if (baseInputRef.current.checked) {
+                setCheckedMainCheckBox(true);
+              } else {
+                setCheckedMainCheckBox(false);
+              }
+            }}
+          />
+        ),
+        type: "checkbox",
+        titleSize: "3%",
+        showData: true,
       },
+      // {
+      //   title: "",
+      //   type: "button",
+      //   titleSize: "1%",
+      //   showData: false,
+      // },
 
       {
         title: "",
@@ -160,6 +159,18 @@ const TracksPage = () => {
     }
   };
 
+  const checkedAllFn = (data) => {
+    console.log(data);
+    if (!data) {
+      if (baseInputRef !== undefined) {
+        baseInputRef.current.checked = false;
+        setCheckedMainCheckBox(false);
+      }
+    } else {
+      baseInputRef.current.checked = true;
+      setCheckedMainCheckBox(true);
+    }
+  };
   return (
     <>
       {error?.status === 500 && isError && <Error500 />}
@@ -233,6 +244,7 @@ const TracksPage = () => {
           totalTracks={data.totalTracks}
           tracksSRC={data.tracksSRC}
           isSorted={isSorted}
+          checkedAllFn={checkedAllFn}
         />
       )}
     </>

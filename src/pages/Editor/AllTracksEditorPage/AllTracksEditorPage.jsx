@@ -14,7 +14,7 @@ import symbol from "../../../assets/symbol.svg";
 
 const AllTracksEditor = () => {
   const id = useId();
-  const BaseInputRef = useRef(null);
+  const baseInputRef = useRef(null);
   const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -23,33 +23,33 @@ const AllTracksEditor = () => {
 
   const rows = () => {
     const RowsTitle = [
-      // {
-      //   title: (
-      //     <input
-      //       key={id}
-      //       type="checkbox"
-      //       id="mainInput"
-      //       ref={BaseInputRef}
-      //       style={{ width: "24px", height: "24px", marginRight: "24px" }}
-      //       onClick={() => {
-      //         if (BaseInputRef.current.checked) {
-      //           setCheckedMainCheckBox(true);
-      //         } else {
-      //           setCheckedMainCheckBox(false);
-      //         }
-      //       }}
-      //     />
-      //   ),
-      //   type: "checkbox",
-      //   titleSize: "2%",
-      //   showData: true,
-      // },
       {
-        title: "",
-        type: "button",
-        titleSize: "1%",
-        showData: false,
+        title: (
+          <input
+            key={id}
+            type="checkbox"
+            id="mainInput"
+            ref={baseInputRef}
+            style={{ width: "16px", height: "16px", marginRight: "14px" }}
+            onClick={() => {
+              if (baseInputRef.current.checked) {
+                setCheckedMainCheckBox(true);
+              } else {
+                setCheckedMainCheckBox(false);
+              }
+            }}
+          />
+        ),
+        type: "checkbox",
+        titleSize: "3%",
+        showData: true,
       },
+      // {
+      //   title: "",
+      //   type: "button",
+      //   titleSize: "1%",
+      //   showData: false,
+      // },
 
       {
         title: "",
@@ -132,11 +132,13 @@ const AllTracksEditor = () => {
     console.log("4 Step - setCurrentPage in mutation", page);
     setCurrentPage(page);
     setIsSorterd(false);
+    setCheckedMainCheckBox(false);
   };
 
   const onPageSizeChange = (size) => {
     console.log(size);
     setPageSize(size);
+    setCheckedMainCheckBox(false);
   };
 
   const prefetchPage = usePrefetch("getAllTracks");
@@ -151,9 +153,21 @@ const AllTracksEditor = () => {
 
   const handleClickSort = (data) => {
     setSortedBy(data);
+    setCheckedMainCheckBox(false);
     if (currentPage > 1) {
       setCurrentPage(1);
       setIsSorterd(true);
+    }
+  };
+
+  const checkedAllFn = (data) => {
+    console.log(data);
+    if (!data) {
+      baseInputRef.current.checked = false;
+      setCheckedMainCheckBox(false);
+    } else {
+      baseInputRef.current.checked = true;
+      setCheckedMainCheckBox(true);
     }
   };
 
@@ -211,6 +225,7 @@ const AllTracksEditor = () => {
             pageSize={pageSize}
             totalPages={allTracks.totalPages}
             isSorted={isSorted}
+            checkedAllFn={checkedAllFn}
           />
         </>
       )}
