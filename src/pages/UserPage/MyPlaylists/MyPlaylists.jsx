@@ -19,7 +19,7 @@ const MyPlaylists = () => {
     isFetching: isFetchingCreatePlaylists,
     isSuccess: isSuccesCreatePlaylists,
     isError: isErrorCreatePlaylists,
-  } = useGetCreatePlaylistsForUserQuery(`?&limit=${12}`);
+  } = useGetCreatePlaylistsForUserQuery(`?&limit=${6}`);
 
   const {
     data: allTracks,
@@ -76,6 +76,7 @@ const MyPlaylists = () => {
     isSuccesLatestNewSongs;
   isSuccesAddPlaylist;
 
+
   const error =
     isErrorCreatePlaylists &&
     isErrorFavoritePlaylist &&
@@ -99,7 +100,7 @@ const MyPlaylists = () => {
             <AddPlaylists
               title={"Додані плейлисти"}
               displayPlayer={"none"}
-              data={dataAdd?.add.slice(0, 2)}
+              data={dataAdd?.add.slice(0, 6)}
               isFetching={isFetchingAddPlaylist}
               isError={isErrorAddPlaylist}
               isSuccess={isSuccesAddPlaylist}
@@ -112,8 +113,8 @@ const MyPlaylists = () => {
             <FavoritePlaylists
               title={"Улюблені плейлисти"}
               displayPlayer={"none"}
-              data={favoritePlaylist}
-              dataFavorite={favoritePlaylist}
+              data={favoritePlaylist?.favorites.slice(0, 6)}
+              // dataFavorite={favoritePlaylist}
               dataAdd={dataAdd}
               isFetching={isFetchingFavoritePlaylist}
               error={isErrorFavoritePlaylist}
@@ -121,7 +122,7 @@ const MyPlaylists = () => {
             />
           )}
           <NewSongs
-            data={allTracks.latestTracks}
+            data={allTracks?.latestTracks.slice(0,6)}
             isFetching={isFetchingNewSongs}
             error={isErrorNewSongs}
             showNavigationLink={true}
