@@ -10,22 +10,34 @@ export const ErrorText = styled.p`
 
 export const TableWrapper = styled.div`
   overflow-x: auto;
+  width: 595px;
+  height: 661px;
+  padding: 30px;
   background: rgba(256, 256, 256);
 `;
 
 export const TableReport = styled.table`
-  width: 100%;
+  /* width: 100%; */
   border-collapse: collapse;
+  /* border: 1px solid #ddd; Цвет и стиль рамки */
 `;
 
 export const TableReportRow = styled.th`
   white-space: nowrap;
   padding: 0.5rem;
   background: rgba(0, 0, 0, 0.1);
+  /* border: 1px solid #ddd; Цвет и стиль рамки */
+  padding: 8px;
+  text-align: left;
 `;
 
 export const TableReportBody = styled.tbody`
   &tr:nth-child(2n) {
     background: rgba(0, 0, 0, 0.05);
   }
+`;
+export const TableCell = styled.td`
+  border: 0.5px solid #828282; /* Цвет и стиль рамки */
+  padding: 8px;
+  text-align: left;
 `;

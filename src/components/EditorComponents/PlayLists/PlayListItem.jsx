@@ -1,6 +1,10 @@
 /* eslint-disable react/prop-types */
+import { useLocation, useNavigate } from "react-router-dom";
+
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
+import CountTracks from "../CountTracks/CountTracks";
+
 import { useDeletePlaylistMutation } from "../../../redux/playlistsSlice";
 import { useDeletePlaylistInGenreMutation } from "../../../redux/genresSlice";
 import { useDeletePlaylistInShopMutation } from "../../../redux/shopsSlice";
@@ -10,17 +14,11 @@ import {
   PlaylistImg,
   PlaylistInfoWrapper,
   PlaylistItemText,
-  PlaylistCountTracks,
   PlaylistIconsWrapper,
   PlaylistDeleteButton,
   PlaylistCardInfo,
   LinkToTracks,
 } from "./PlayLists.styled";
-
-import { Modal } from "../../Modal/Modal";
-import { getNoun } from "../../../helpers/helpers";
-
-import { useLocation, useNavigate } from "react-router-dom";
 
 const PlaylistListItem = ({
   id,
@@ -33,8 +31,6 @@ const PlaylistListItem = ({
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
-
-  const tracksCount = getNoun(countTracks, "пісня", "пісні", "пісень");
 
   const mediaLibrary = `/editor/medialibrary`;
   const newPlaylists = `/editor/medialibrary/newplaylists/${id}/tracks`;
@@ -129,9 +125,7 @@ const PlaylistListItem = ({
           />
           <PlaylistInfoWrapper>
             <PlaylistItemText>{title}</PlaylistItemText>
-            <PlaylistCountTracks>
-              {countTracks + `${" "}` + tracksCount}
-            </PlaylistCountTracks>
+            <CountTracks countTracks={countTracks} />
           </PlaylistInfoWrapper>
           <PlaylistIconsWrapper>
             <svg width="24" height="24">
@@ -142,7 +136,7 @@ const PlaylistListItem = ({
               type="button"
               onClick={deleteMediaItem}
               // disabled={isLoading}
-              disabled={true}
+              disabled={false}
             >
               {isLoading ? (
                 <svg width="24" height="24" stroke="#888889">
@@ -157,12 +151,6 @@ const PlaylistListItem = ({
           </PlaylistIconsWrapper>
         </PlaylistCardInfo>
       )}
-
-      {/* {data && (
-        <Modal width={"814px"}>
-          <p>{data.message}</p>
-        </Modal>
-      )} */}
     </>
   );
 };

@@ -1,9 +1,10 @@
 import { useTable } from "react-table";
-import { COLUMNS } from "./Colums";
+// import { COLUMNS } from "./Colums";
 import {
   TableWrapper,
   TableReport,
   TableReportRow,
+  TableCell,
 } from "./ReportUserTable.styled";
 
 export const columns = [
@@ -12,11 +13,23 @@ export const columns = [
     accessor: (_, rowIndex) => rowIndex + 1,
   },
   {
-    Header: "trackName",
+    Header: "Назва використаного твору",
     accessor: "trackId.trackName",
   },
   {
-    Header: "listens",
+    Header: "Виконавець (П.І.Б. виконавця, співвиконавців або назва колективу",
+    accessor: "trackId.artist",
+  },
+  {
+    Header: "Автор музики",
+    accessor: "",
+  },
+  {
+    Header: "Автор твору",
+    accessor: "",
+  },
+  {
+    Header: "Кількість  використань твору",
     accessor: ({ listens }) => {
       const sum = listens.reduce((acc, cur) => acc + cur.countOfListenes, 0);
       return sum;
@@ -25,6 +38,7 @@ export const columns = [
 ];
 
 const ReportUserTable = ({ data }) => {
+  console.log("COLUMNS :>> ", columns);
   const tableInstance = useTable({
     columns,
     data,
@@ -34,11 +48,12 @@ const ReportUserTable = ({ data }) => {
 
   return (
     <TableWrapper>
+      ЗВІТ про використані Об’єкти суміжних прав та Об’єкти авторского права за
       <TableReport {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup, ind) => (
             <tr key={ind} {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column, ind) => (
+              {headerGroup?.headers.map((column, ind) => (
                 <TableReportRow key={ind} {...column.getHeaderProps()}>
                   {column.render("Header")}
                 </TableReportRow>
@@ -54,9 +69,9 @@ const ReportUserTable = ({ data }) => {
               <tr key={rowIndex} {...row.getRowProps()}>
                 {row.cells.map((cell, cellIndex) => {
                   return (
-                    <td key={cellIndex} {...cell.getCellProps()}>
+                    <TableCell key={cellIndex} {...cell.getCellProps()}>
                       {cell.render("Cell")}
-                    </td>
+                    </TableCell>
                   );
                 })}
               </tr>

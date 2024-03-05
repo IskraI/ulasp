@@ -1,4 +1,7 @@
 /* eslint-disable react/prop-types */
+import { useState, useRef, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 import {
@@ -8,8 +11,6 @@ import {
 import { Modal } from "../../../components/Modal/Modal";
 import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
 import { ErrorNotFound } from "../../Errors/Errors";
-import { useLocation } from "react-router-dom";
-import { useState, useRef, useEffect } from "react";
 
 import {
   GenresItem,
@@ -22,8 +23,6 @@ import {
   GenresLabelPlusCover,
   EditWrapper,
 } from "./GenresItem.styled";
-
-import { Link } from "react-router-dom";
 
 const GenreListItem = ({ id, title, icon }) => {
   const ref = useRef();
@@ -75,15 +74,18 @@ const GenreListItem = ({ id, title, icon }) => {
     const formData = new FormData();
 
     if (!selectedImage) {
+      console.log("Cюда");
       formData.append("genre", genreTitle);
     }
 
     if (genreTitle === title) {
+      console.log("Cюда1");
       formData.append("picsURL", selectedImage);
       formData.append("type", "genre");
     }
 
     if (selectedImage && genreTitle !== title && genreTitle !== "") {
+      console.log("Cюда2");
       formData.append("genre", genreTitle);
       formData.append("picsURL", selectedImage);
       formData.append("type", "genre");
@@ -262,13 +264,13 @@ const GenreListItem = ({ id, title, icon }) => {
                 <ErrorNotFound />
               ))}
 
-            {isErrorUpdateGenre &&
-              errorUpdateGenre.data.code === "4091" &&
-              ((
-                <ErrorNotFound
-                  error={`Жанр    ${errorUpdateGenre.data.object} вже використовується`}
-                />
-              ) ?? <ErrorNotFound />)}
+            {isErrorUpdateGenre && errorUpdateGenre.data?.code === "4091" ? (
+              <ErrorNotFound
+                error={`Жанр    ${errorUpdateGenre.data?.object} вже використовується`}
+              />
+            ) : (
+              <ErrorNotFound error={errorUpdateGenre.data?.message} />
+            )}
 
             {/* {isErrorUpdateGenre && (errorUpdateGenre.data.code === "4091") &&
            ( <ErrorNotFound error={errorUpdateGenre.data.code} />) ?? (

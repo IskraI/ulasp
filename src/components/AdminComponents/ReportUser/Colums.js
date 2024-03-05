@@ -1,18 +1,21 @@
 export const COLUMNS = [
   {
-    Header: "Id",
-    accessor: "trackId._id",
+    Header: "№ п/п",
+    accessor: (_, rowIndex) => rowIndex + 1,
   },
   {
-    Header: "trackName",
+    Header: "Назва використаного твору",
     accessor: "trackId.trackName",
   },
   {
-    Header: "listens",
-    accessor: "listens.countOfListenes",
+    Header: "Виконавець (П.І.Б. виконавця, співвиконавців або назва колективу",
+    accessor: "trackId.artist",
   },
   {
-    Header: "date",
-    accessor: "listens.date",
+    Header: "listens",
+    accessor: ({ listens }) => {
+      const sum = listens.reduce((acc, cur) => acc + cur.countOfListenes, 0);
+      return sum;
+    },
   },
 ];

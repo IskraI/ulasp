@@ -61,15 +61,16 @@ const TracksTable = ({
   isUninitialized,
   onChangeCurrentPage,
   onChangeSizePage,
-  currentPage: currPage,
-  pageSize: currentPageSize,
+  currentPage,
+  pageSize,
   totalPages,
+  isSorted,
 }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const playerState = useSelector(getPlayerState);
-  const [currentPage, setCurrentPage] = useState(currPage);
-  const [pageSize, setPageSize] = useState(currentPageSize);
+  // const [currentPage, setCurrentPage] = useState(currPage);
+  // const [pageSize, setPageSize] = useState(currentPageSize);
 
   const tracksTableProps = {
     showTitle: showTitle ? "table-caption" : "none",
@@ -85,21 +86,18 @@ const TracksTable = ({
   const currentPageGlobalState = playerState.currentPage;
   const anyMorePages = totalPages > currentPage;
 
-  const currentPageForTrackPlaying = findPage(
-    playerState.indexTrack,
-    currentPageSize
-  );
+  const currentPageForTrackPlaying = findPage(playerState.indexTrack, pageSize);
 
   const indexOfLastTrackInPage =
-    currentPageSize > tracks.length
+    pageSize > tracks.length
       ? tracks.length - 1 + skip
-      : currentPageForTrackPlaying * currentPageSize - 1;
+      : currentPageForTrackPlaying * pageSize - 1;
 
   const lastTrackInPage = playerState.indexTrack === indexOfLastTrackInPage;
 
   const onChangePage = useCallback(
     (page) => {
-      setCurrentPage(page);
+      // setCurrentPage(page);
       onChangeCurrentPage(page);
       dispatch(
         setNextPage({
@@ -120,8 +118,8 @@ const TracksTable = ({
     onChangeSizePage(size);
   };
   useEffect(() => {
-    console.log("currentPageLocal", currentPage);
-    console.log("currentPageGlobal", currentPageGlobalState);
+    // console.log("currentPageLocal", currentPage);
+    // console.log("currentPageGlobal", currentPageGlobalState);
     if (currentPage === 1 && !isFetching) {
       // console.log("В прелоад");
       const trackURL = tracksSRC.map((track) => {
@@ -137,12 +135,14 @@ const TracksTable = ({
         setPreloadSrcPlayer({
           preloadSrc: trackURL,
           currentPage: currentPage,
-          pageSize: currentPageSize,
+          pageSize: pageSize,
           location: location.pathname,
         })
       );
     }
-    console.log(pageSize !== currentPageSize);
+
+    // console.log(currentPage);
+    // console.log(currentPageGlobalState);
 
     if (currentPage !== currentPageGlobalState && !isFetching) {
       if (location.pathname !== playerState.location) {
@@ -161,11 +161,16 @@ const TracksTable = ({
     isFetching,
     onChangePage,
     pageSize,
-    currentPageSize,
     tracksSRC,
     location,
     playerState.location,
   ]);
+
+  useEffect(() => {
+    if (isSorted) {
+      onChangePage(currentPage);
+    }
+  }, [currentPage, isSorted, onChangePage]);
 
   useEffect(() => {
     //если страницы есть и это последний трек
@@ -320,7 +325,7 @@ const TracksTable = ({
               </tbody>
             </TableStyle>
           </TracksTableWrapper>
-          {isSuccess && totalTracks > currentPageSize && (
+          {isSuccess && totalTracks > pageSize && (
             <Pagination
               style={{ marginTop: "auto", marginBottom: "24px" }}
               defaultCurrent={1}
@@ -329,7 +334,7 @@ const TracksTable = ({
               showLessItems
               selectComponentClass={Select}
               showSizeChanger={false}
-              defaultPageSize={currentPageSize}
+              defaultPageSize={pageSize}
               pageSize={pageSize}
               // onShowSizeChange={onPageSizeChange}
               onChangeSizePage={onPageSizeChange}

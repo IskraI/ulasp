@@ -10,10 +10,10 @@ import { ContainerWrraper } from "./SharedLayout.styled";
 
 // import { Container } from "./SharedLayout.styled";
 
-export const SharedLayout = ({avatarURL}) => {
+export const SharedLayout = ({ avatarURL, logo }) => {
   return (
     <>
-      <Header avatarURL={avatarURL} />
+      <Header avatarURL={avatarURL} logo={logo} />
       <ContainerWrraper>
         <main>
           <Suspense fallback={<Loader />}>
