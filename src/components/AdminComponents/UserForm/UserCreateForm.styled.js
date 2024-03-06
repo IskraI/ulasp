@@ -97,14 +97,14 @@ export const RegisterInput = styled.input`
   line-height: normal;
   &.invalid {
     /* border: 0.25px solid red; */
-    background-color: rgba(255, 243, 191, 1);
-    /* outline: 1px solid red; */
+    /* background-color: rgba(255, 243, 191, 1); */
+    outline: 1px solid red;
     /* border: none; */
   }
   &.valid {
-    background-color: rgba(234, 234, 234, 0.55);
+    /* background-color: rgba(234, 234, 234, 0.55); */
     /* border: 1px solid green; */
-    /* outline: 1px solid green; */
+    outline: 1px solid green;
     /* border: none; */
   }
 
@@ -260,11 +260,12 @@ export const RegisterNameInput = styled.input`
   line-height: normal;
 
   &.invalid {
-    background-color: rgba(255, 243, 191, 1);
+    /* background-color: rgba(255, 243, 191, 1); */
+    outline: 1px solid red;
   }
   &.valid {
-    /* outline: 1px solid green; */
-    background-color: rgba(234, 234, 234, 0.55);
+    outline: 1px solid green;
+    /* background-color: rgba(234, 234, 234, 0.55); */
   }
 
   &.invalid:hover + span {
