@@ -8,6 +8,8 @@ import {
   ReportFormLabel,
   ReportFormInput,
   FormField,
+  ReportWrapper,
+  ReporTabletWrapper,
 } from "./ReportUser.styled";
 import TabNavigation from "../../TabNavigation/TabNavigation";
 import { useForm } from "react-hook-form";
@@ -64,45 +66,56 @@ const ReportUser = () => {
   return (
     <>
       <TabNavigation pathtext={false} />
-      <Title>Звіт по користувачу з № договору: {user?.contractNumber}</Title>
-      <ReportForm onSubmit={handleSubmit(onFormSubmit)}>
-        {/* Звіт */}
-        <FormField>
-          <ReportFormField>
-            <ReportFormLabel>З</ReportFormLabel>
-            <ReportFormInput
-              type="date"
-              placeholder="дата"
-              // aria-describedby="dateOfStartTooltip"
-              // className={`${errors.dateOfStart ? "invalid" : ""}${
-              //   !errors.dateOfStart && dirtyFields.dateOfStart ? "valid" : ""
-              // }`}
-              {...register("dateOfStart")}
+      <ReportWrapper>
+        <div>
+          <Title>
+            Звіт по користувачу з № договору: {user?.contractNumber}
+          </Title>
+
+          <ReportForm onSubmit={handleSubmit(onFormSubmit)}>
+            {/* Звіт */}
+            <FormField>
+              <ReportFormField>
+                <ReportFormLabel>З</ReportFormLabel>
+                <ReportFormInput
+                  type="date"
+                  placeholder="дата"
+                  // aria-describedby="dateOfStartTooltip"
+                  // className={`${errors.dateOfStart ? "invalid" : ""}${
+                  //   !errors.dateOfStart && dirtyFields.dateOfStart ? "valid" : ""
+                  // }`}
+                  {...register("dateOfStart")}
+                />
+              </ReportFormField>
+              <ReportFormField>
+                <ReportFormLabel>по: </ReportFormLabel>
+                <ReportFormInput
+                  type="date"
+                  placeholder="дата"
+                  aria-describedby="dateOfEndTooltip"
+                  className={`${errors.dateOfEnd ? "invalid" : ""}${
+                    !errors.dateOfEnd && dirtyFields.dateOfEnd ? "valid" : ""
+                  }`}
+                  {...register("dateOfEnd")}
+                />
+              </ReportFormField>
+            </FormField>
+            <Button
+              type="submit"
+              padding="8px"
+              text="Cформувати"
+              disabled={
+                !isValid || (dirtyFields.dateOfEnd && errors.dateOfStart)
+              }
+              showIcon={false}
+              marginleft={"auto"}
             />
-          </ReportFormField>
-          <ReportFormField>
-            <ReportFormLabel>по: </ReportFormLabel>
-            <ReportFormInput
-              type="date"
-              placeholder="дата"
-              aria-describedby="dateOfEndTooltip"
-              className={`${errors.dateOfEnd ? "invalid" : ""}${
-                !errors.dateOfEnd && dirtyFields.dateOfEnd ? "valid" : ""
-              }`}
-              {...register("dateOfEnd")}
-            />
-          </ReportFormField>
-        </FormField>
-        <Button
-          type="submit"
-          padding="8px"
-          text="Cформувати"
-          disabled={!isValid || (dirtyFields.dateOfEnd && errors.dateOfStart)}
-          showIcon={false}
-          marginleft={"auto"}
-        />
-      </ReportForm>
-      {responseData && <ReportUserTable data={responseData} />}
+          </ReportForm>
+        </div>
+        <ReporTabletWrapper>
+          {responseData && <ReportUserTable data={responseData} />}
+        </ReporTabletWrapper>
+      </ReportWrapper>
     </>
   );
 };

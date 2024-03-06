@@ -13,32 +13,75 @@ export const columns = [
     accessor: (_, rowIndex) => rowIndex + 1,
   },
   {
-    Header: "Назва використаного твору",
-    accessor: "trackId.trackName",
+    Header: (
+      <span>
+        Назва
+        <br />
+        використаного твору
+      </span>
+    ),
+    accessor: "trackName",
   },
   {
-    Header: "Виконавець (П.І.Б. виконавця, співвиконавців або назва колективу",
-    accessor: "trackId.artist",
+    Header: (
+      <span>
+        Виконавець
+        <br />
+        (П.І.Б. виконавця,
+        <br />
+        співвиконавців <br />
+        або назва колективу)
+      </span>
+    ),
+    accessor: "artist",
   },
   {
-    Header: "Автор музики",
+    id: "music",
+    Header: (
+      <>
+        <span>Автор</span>
+        <br />
+        <span>музики</span>
+      </>
+    ),
     accessor: "",
   },
   {
-    Header: "Автор твору",
+    id: "author",
+    Header: (
+      <>
+        <span>Автор</span>
+        <br />
+        <span>твору</span>
+      </>
+    ),
     accessor: "",
   },
   {
-    Header: "Кількість  використань твору",
-    accessor: ({ listens }) => {
-      const sum = listens.reduce((acc, cur) => acc + cur.countOfListenes, 0);
+    id: "count",
+    Header: (
+      <>
+        <span>Кількість</span>
+        <br />
+        <span>
+          використань <br />
+          твору
+        </span>
+      </>
+    ),
+
+    accessor: (row) => {
+      const sum = row.listens.reduce(
+        (acc, cur) => acc + cur.countOfListenes,
+        0
+      );
       return sum;
     },
   },
 ];
 
 const ReportUserTable = ({ data }) => {
-  console.log("COLUMNS :>> ", columns);
+  // console.log("COLUMNS :>> ", columns);
   const tableInstance = useTable({
     columns,
     data,
