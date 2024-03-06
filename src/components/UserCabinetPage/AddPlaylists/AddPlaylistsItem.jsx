@@ -77,8 +77,8 @@ const AddPlayListsItem = ({ id, title, icon, genre, favoriteStatus, addStatus,
   //     // For example: fetchFavoriteStatusFromBackend(id).then(response => setIsFavorite(response));
   //   }
   // }, [favoriteStatus, id]);
-  console.log("location.pathname", location.pathname)
-  console.log("cabinet", cabinet)
+  // console.log("location.pathname", location.pathname)
+  // console.log("cabinet", cabinet)
 // console.log('isFavorite', isFavorite)
   return (
    
@@ -86,10 +86,7 @@ const AddPlayListsItem = ({ id, title, icon, genre, favoriteStatus, addStatus,
         {!placeListCardInfo ? (
           <Link
             key={id}
-            to={
-               `${id}/tracks`
-                     }
-          
+            to={`${id}/tracks`}
             state={{ from: location }}
             disabled={placeListCardInfo ? true : false}
             style={{

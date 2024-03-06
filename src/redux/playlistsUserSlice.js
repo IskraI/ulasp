@@ -35,7 +35,7 @@ export const playlistsUserApi = createApi({
     }),
 
     getCreatePlaylistsForUser: builder.query({
-      query: (page = "", limit = "") => ({
+      query: ( page = "", limit = "") => ({
         url: `/user/userPlaylist/all?${page && `page=${page}`} & ${
           limit && `limit=${limit}`
         }`,
@@ -77,7 +77,7 @@ export const playlistsUserApi = createApi({
     
     updateCabinetPlaylistStatusApi: builder.mutation({
       query: (playlistId) => ({
-        url: `/user//userPlaylist/favorites/${playlistId}`,
+        url: `/user/userPlaylist/favorites/${playlistId}`,
         method: "PATCH",
       }),
       invalidatesTags: ["PlaylistsFavorite"],
