@@ -3,6 +3,7 @@ import {
   RegisterNameBlock,
   RegisterNameLabel,
   RegisterNameInput,
+  Tooltip,
 } from "../UserCreateForm.styled";
 import { ButtonSwitch } from "../../ButtonSwitch/ButtonSwitch";
 import { Button } from "../../../Button/Button";
@@ -30,7 +31,6 @@ const RegisterNameFieldCard = ({
   handleEditActivation,
   handleCloseEdit,
 }) => {
-  console.log("user", user);
   return (
     <RegisterNameBlock>
       {!isEditing ? (
@@ -50,8 +50,7 @@ const RegisterNameFieldCard = ({
         <IconsWrapperUserEdit>
           <IconsButtonUserSave
             type="submit"
-            // onClick={() => handleEditActivation()}
-            // disabled={isEmptyGenreUpdateData(genreTitle, title)}
+            // onClick={() => console.log("object :>> ")}
           >
             <IconsSvgUserEdit width="24" height="24">
               <use href={`${symbol}#icon-check-in`}></use>
@@ -76,13 +75,27 @@ const RegisterNameFieldCard = ({
                   control={control}
                   defaultValue={user.lastName}
                   render={({ field }) => (
-                    <RegisterNameInput
-                      type="text"
-                      placeholder="Прізвище"
-                      readOnly={readOnly}
-                      value={field.value}
-                      onChange={(e) => field.onChange(e.target.value)}
-                    />
+                    <>
+                      <RegisterNameInput
+                        type="text"
+                        placeholder="Прізвище"
+                        readOnly={readOnly}
+                        value={field.value}
+                        onChange={(e) => field.onChange(e.target.value)}
+                        className={
+                          isEditing
+                            ? `${errors.lastName ? "invalid" : "valid"}`
+                            : ""
+                        }
+                      />
+                      {errors && errors.lastName && (
+                        <Tooltip
+                          className={`${errors.lastName ? "visible" : ""}`}
+                        >
+                          {errors.lastName.message}
+                        </Tooltip>
+                      )}
+                    </>
                   )}
                 />
               </RegisterNameField>
@@ -94,13 +107,27 @@ const RegisterNameFieldCard = ({
                   control={control}
                   defaultValue={user.firstName}
                   render={({ field }) => (
-                    <RegisterNameInput
-                      type="text"
-                      placeholder="Ім'я"
-                      readOnly={readOnly}
-                      value={field.value}
-                      onChange={(e) => field.onChange(e.target.value)}
-                    />
+                    <>
+                      <RegisterNameInput
+                        type="text"
+                        placeholder="Ім'я"
+                        readOnly={readOnly}
+                        value={field.value}
+                        onChange={(e) => field.onChange(e.target.value)}
+                        className={
+                          isEditing
+                            ? `${errors.firstName ? "invalid" : "valid"}`
+                            : ""
+                        }
+                      />
+                      {errors && errors.firstName && (
+                        <Tooltip
+                          className={`${errors.firstName ? "visible" : ""}`}
+                        >
+                          {errors.firstName.message}
+                        </Tooltip>
+                      )}
+                    </>
                   )}
                 />
               </RegisterNameField>
@@ -112,13 +139,27 @@ const RegisterNameFieldCard = ({
                   control={control}
                   defaultValue={user.fatherName}
                   render={({ field }) => (
-                    <RegisterNameInput
-                      type="text"
-                      placeholder="По-батькові"
-                      readOnly={readOnly}
-                      value={field.value}
-                      onChange={(e) => field.onChange(e.target.value)}
-                    />
+                    <>
+                      <RegisterNameInput
+                        type="text"
+                        placeholder="По-батькові"
+                        readOnly={readOnly}
+                        value={field.value}
+                        onChange={(e) => field.onChange(e.target.value)}
+                        className={
+                          isEditing
+                            ? `${errors.fatherName ? "invalid" : "valid"}`
+                            : ""
+                        }
+                      />
+                      {errors && errors.fatherName && (
+                        <Tooltip
+                          className={`${errors.fatherName ? "visible" : ""}`}
+                        >
+                          {errors.fatherName.message}
+                        </Tooltip>
+                      )}
+                    </>
                   )}
                 />
               </RegisterNameField>

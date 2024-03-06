@@ -101,6 +101,7 @@ const CardUserField = ({
               errors={errors}
               readOnly={!isEditing}
               user={user}
+              isEditing={isEditing}
             />
 
             <RegisterField>
@@ -141,13 +142,25 @@ const CardUserField = ({
                 control={control}
                 defaultValue={user.lastPay}
                 render={({ field }) => (
-                  <RegisterInput
-                    type="text"
-                    placeholder="Остання оплата"
-                    readOnly={!isEditing}
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.target.value)}
-                  />
+                  <>
+                    <RegisterInput
+                      type="text"
+                      placeholder="Остання оплата"
+                      readOnly={!isEditing}
+                      value={field.value}
+                      onChange={(e) => field.onChange(e.target.value)}
+                      className={
+                        isEditing
+                          ? `${errors.lastPay ? "invalid" : "valid"}`
+                          : ""
+                      }
+                    />
+                    {errors && errors.lastPay && (
+                      <Tooltip className={`${errors.lastPay ? "visible" : ""}`}>
+                        {errors.lastPay.message}
+                      </Tooltip>
+                    )}
+                  </>
                 )}
               />
             </RegisterField>
@@ -170,6 +183,7 @@ const CardUserField = ({
             </RegisterField>
 
             <ContactFaceFieldCard
+              isEditing={isEditing}
               control={control}
               register={register}
               errors={errors}

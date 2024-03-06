@@ -36,12 +36,44 @@ const ContactFaceFieldCard = ({
                 value={field.value}
                 onChange={(e) => field.onChange(e.target.value)}
                 className={
-                  !readOnly ? `${errors.contactFace ? "invalid" : "valid"}` : ""
+                  isEditing ? `${errors.contactFace ? "invalid" : "valid"}` : ""
                 }
               />
-              {errors.contactFace && (
+              {errors && errors.contactFace && (
                 <Tooltip className={`${errors.contactFace ? "visible" : ""}`}>
                   {errors.contactFace.message}
+                </Tooltip>
+              )}
+            </>
+          )}
+        />
+      </RegisterField>
+
+      <RegisterField>
+        <RegisterLabel>Ідентифікаційний код* </RegisterLabel>
+        <Controller
+          name="contactFaceTaxCode"
+          control={control}
+          defaultValue={user.contactFaceTaxCode}
+          render={({ field }) => (
+            <>
+              <RegisterInput
+                type="text"
+                placeholder="Ідентифікаційний код"
+                readOnly={readOnly}
+                value={field.value}
+                onChange={(e) => field.onChange(e.target.value)}
+                className={
+                  isEditing
+                    ? `${errors.contactFaceTaxCode ? "invalid" : "valid"}`
+                    : ""
+                }
+              />
+              {errors && errors.contactFaceTaxCode && (
+                <Tooltip
+                  className={`${errors.contactFaceTaxCode ? "visible" : ""}`}
+                >
+                  {errors.contactFaceTaxCode.message}
                 </Tooltip>
               )}
             </>
@@ -64,12 +96,12 @@ const ContactFaceFieldCard = ({
                 value={field.value}
                 onChange={(e) => field.onChange(e.target.value)}
                 className={
-                  !readOnly
+                  isEditing
                     ? `${errors.contactFaceTelNumber ? "invalid" : "valid"}`
                     : ""
                 }
               />
-              {errors.contactFaceTelNumber && (
+              {errors && errors.contactFaceTelNumber && (
                 <Tooltip
                   className={`${errors.contactFaceTelNumber ? "visible" : ""}`}
                 >
@@ -96,12 +128,12 @@ const ContactFaceFieldCard = ({
                 value={field.value}
                 onChange={(e) => field.onChange(e.target.value)}
                 className={
-                  !readOnly
+                  isEditing
                     ? `${errors.contactFaceEmail ? "invalid" : "valid"}`
                     : ""
                 }
               />
-              {errors.contactFaceEmail && (
+              {errors && errors.contactFaceEmail && (
                 <Tooltip
                   className={`${errors.contactFaceEmail ? "visible" : ""}`}
                 >
