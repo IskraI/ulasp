@@ -60,7 +60,7 @@ import TracksPageUser from "./pages/UserPage/TracksPageUser/TracksPageUser";
 import ShopsItemPageUser from "./pages/UserPage/ShopsUserPage/ShopsItemPageUser";
 import ShopSubCategoryPageUser from "./pages/UserPage/ShopsUserPage/ShopSubCategoryPageUser";
 import PlaylistInShopSubCategoryPageUser from "./pages/UserPage/ShopsUserPage/PlaylistInShopSubCategoryPageUser";
-import CreatePlaylists from "./components/UserCabinetPage/CreatePlaylists/CreatePlaylists";
+import CreateAllPlaylists from "./components/UserCabinetPage/CreatePlaylists/CreatePlaylists";
 import AddPlayLists from "./components/UserCabinetPage/AddPlaylists/AddPlaylistsItem";
 import FavoritePlaylists from "./components/UserCabinetPage/FavoritePlaylists/FavoritePlaylists";
 import AddAllPlaylists from "./components/UserCabinetPage/AddPlaylists/AddAllPlaylists";
@@ -251,7 +251,7 @@ function App() {
                 <Route path="cabinet/myplaylists" element={<MyPlaylists />} />
                 <Route
                   path="cabinet/myplaylists/createplaylists"
-                  element={<CreatePlaylists />}
+                  element={<CreateAllPlaylists />}
                 />
                 <Route
                   path="cabinet/myplaylists/createplaylists/:playlistId/tracks"

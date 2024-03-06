@@ -1,4 +1,5 @@
 import FavoritePlaylistsItem from "./FavoritePlaylistsItem";
+import FavoritePlaylists from './FavoritePlaylists';
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 import {useSelector} from "react-redux"
 import {
@@ -54,7 +55,7 @@ console.log("title",title)
           {/* <TitleWrapper>Нові плейлисти</TitleWrapper> */}
 
           {/* </ControlWrapper> */}
-          <MediaList>
+          {/* <MediaList>
            
             { dataFavorite.favorites.map(({ _id, playListName, playListAvatarURL }) => {
               // console.log(
@@ -79,8 +80,17 @@ console.log("title",title)
 
             })}
 
-          </MediaList>
-          <MediaNavigationLink link={"favoriteplaylists"} showNavigationLink={showNavigationLink} />
+          </MediaList> */}
+                 <FavoritePlaylists
+            data={dataFavorite?.favorites}
+            isLoading={isLoading}
+            isFetching={isFetching}
+            error={error}
+            title={"Улюблені плейлисти"}
+            showNavigationLink={false}
+          />  
+
+          {/* <MediaNavigationLink link={"favoriteplaylists"} showNavigationLink={showNavigationLink} /> */}
                   </>
         )}
     </>

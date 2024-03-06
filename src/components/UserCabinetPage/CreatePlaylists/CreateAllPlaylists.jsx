@@ -8,17 +8,18 @@ import {
   MediaList,
   TitleContainer,
 } from "../../UserMediaComponent/PlayLists/MediaList.styled";
-import { useFavoritePlaylistForUserQuery, useCreatePlaylistForUserMutation } from "../../../redux/playlistsUserSlice";
+import { useFavoritePlaylistForUserQuery, useCreatePlaylistForUserMutation, useGetCreatePlaylistsForUserQuery } from "../../../redux/playlistsUserSlice";
 import symbol from "../../../assets/symbol.svg";
 import ControlMyplaylists from "../ControlMyplaylists/ControlMyplaylists"
 import { Modal } from "../../Modal/Modal";
 import ModalFormMyplaylist from "../ControlMyplaylists/ModalFormMyplaylist";
+import CreatePlaylists from "./CreatePlaylists";
 
-const CreatePlaylists = ({
+const CreateAllPlaylists = ({
   title,
   displayPlayer,
  showNavigationLink,
- data:createPlaylists,
+//  data:createPlaylists,
    isFetching,
   error,
 //   genre,
@@ -33,13 +34,18 @@ const CreatePlaylists = ({
     isLoading: isLoadingFavoritePlaylist,
   } = useFavoritePlaylistForUserQuery();
 
+     const {
+    data: createPlaylists,
+    // isFetching: isFetchingCreatePlaylists,
+    // isSuccess: isSuccesCreatePlaylists,
+    // isError: isErrorCreatePlaylists,
+  } = useGetCreatePlaylistsForUserQuery();
    const [
     createPlaylist,
-    { isSuccess, isLoading: isLoadingCreatePlaylist, isError },
+    { isSuccess, isLoading: isLoadingCreatePlaylist, isError, isFetching:isFetchingCreatePlaylists },
   ] = useCreatePlaylistForUserMutation();
 
-  // console.log("createPlaylists", createPlaylists)
-  
+ 
 
  const handleChoosePlaylistAvatar = (event) => {
     console.log("event", event);
@@ -84,7 +90,9 @@ const CreatePlaylists = ({
   
   const toogleModal = () => {
     return setShowModal(() => !showModal);
-  };
+    };
+    
+  console.log("createPlaylists", createPlaylists)
 
   return (
     <>
@@ -103,7 +111,7 @@ const CreatePlaylists = ({
           {/* <TitleWrapper>Нові плейлисти</TitleWrapper> */}
 
           {/* </ControlWrapper> */}
-          <MediaList>
+          {/* <MediaList>
            
             {createPlaylists?.map(({ _id, playListName, playListAvatarURL }) => {
               // console.log(
@@ -126,8 +134,16 @@ const CreatePlaylists = ({
 
             })}
 
-          </MediaList>
-          <MediaNavigationLink link={"createplaylists"} showNavigationLink={showNavigationLink} />
+          </MediaList> */}
+                  <CreatePlaylists
+                       title={"Cтворені плейлисти"}
+            displayPlayer={"none"}
+            data={createPlaylists}
+            isFetching={isFetchingCreatePlaylists}
+            error={isError}
+            showNavigationLink={false}
+                  />
+          {/* <MediaNavigationLink link={"createplaylists"} showNavigationLink={showNavigationLink} /> */}
                   </>
       )}
       {showModal && (
@@ -151,4 +167,4 @@ const CreatePlaylists = ({
   );
 };
 
-export default CreatePlaylists;
+export default CreateAllPlaylists;

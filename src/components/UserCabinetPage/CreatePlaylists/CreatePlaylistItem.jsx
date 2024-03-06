@@ -41,7 +41,7 @@ const [toggleFavorite] =  useUpdateCabinetPlaylistStatusApiMutation(id);
      
   //   };
   
-   const cabinet = `/user/cabinet/myplaylists`;
+  //  const cabinet = `/user/cabinet/myplaylists`;
 //   const newPlaylists = `/user/medialibrary/newplaylists/${id}/tracks`;
 
  
@@ -85,11 +85,7 @@ const [toggleFavorite] =  useUpdateCabinetPlaylistStatusApiMutation(id);
         {!placeListCardInfo ? (
           <Link
             key={id}
-            to={
-              location.pathname === cabinet
-                ? `createplaylists/${id}/tracks`
-                : `${id}/tracks`
-            }
+            to={`${id}/tracks`}
             state={{ from: location }}
             disabled={placeListCardInfo ? true : false}
             style={{

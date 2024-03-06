@@ -1,4 +1,5 @@
 import AddPlayListsItem from "./AddPlaylistsItem";
+import AddPlaylists from "./AddPlaylists";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 import { useSelector } from "react-redux";
 import {
@@ -50,8 +51,16 @@ const AddAllPlaylists = ({
           {/* <ControlWrapper> */}
           {/* <TitleWrapper>Нові плейлисти</TitleWrapper> */}
 
-          {/* </ControlWrapper> */}
-          <MediaList>
+                  {/* </ControlWrapper> */}
+                 <AddPlaylists
+            data={dataAdd?.add}
+            isLoading={isLoading}
+            isFetching={isFetching}
+            error={error}
+            title={"Додані плейлисти"}
+            showNavigationLink={false}
+          />
+          {/* <MediaList>
             {dataAdd.add.map(({ _id, playListName, playListAvatarURL }) => {
               // console.log(
               //   "dataFavorite.favorites.includes(_id)",
@@ -73,12 +82,12 @@ const AddAllPlaylists = ({
                 />
               );
             })}
-          </MediaList>
+          </MediaList> */}
 
-          <MediaNavigationLink
+          {/* <MediaNavigationLink
             link={"addplaylists"}
             showNavigationLink={showNavigationLink}
-          />
+          /> */}
         </>
       )}
     </>
