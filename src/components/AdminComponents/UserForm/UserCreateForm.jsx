@@ -60,7 +60,7 @@ const UserCreateForm = ({ onCloseModal, section }) => {
     resolver: yupResolver(resolverShema),
   });
 
-  //перемикач дапуска
+  //перемикач допуска
   const handleTypeOfAccess = () => {
     setTypeOfAccess(typeOfAccess === true ? false : true);
   };

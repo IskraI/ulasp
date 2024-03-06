@@ -8,14 +8,8 @@ import {
 } from "../../../redux/dataUsersSlice";
 import { useNavigate } from "react-router-dom";
 
-import UserCreateForm from "../UserForm/UserCreateForm";
 import { useForm, Controller } from "react-hook-form";
 
-import {
-  SectionUserButton,
-  SectionUser,
-  UserCreateModal,
-} from "../UserForm/UserCreateForm.styled";
 import { Title } from "../AdminCabinetPage/AdminCabinetPage.styled";
 import {
   UserFopCardSchema,
