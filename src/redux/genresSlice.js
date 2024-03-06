@@ -79,6 +79,13 @@ export const genresApi = createApi({
       }),
       invalidatesTags: ["Genres"],
     }),
+    deletePlaylistInGenreOne: builder.mutation({
+      query: (id) => ({
+        url: `/editor/playlist/delete/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Genres"],
+    }),
   }),
 });
 

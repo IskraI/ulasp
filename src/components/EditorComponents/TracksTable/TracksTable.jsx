@@ -1,25 +1,31 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 
 import Pagination from "rc-pagination";
 import Select from "rc-select";
 
 import localeUA from "../../../constants/paginationLocaleUA.js";
-import { compareArray, findPage } from "../../../helpers/helpers.js";
+import { findPage } from "../../../helpers/helpers.js";
 
 import TrackItem from "./TrackItem";
 import { Loader, ProgressBarTracksTable } from "../../Loader/Loader";
 import { ErrorNotFound, NoData } from "../../Errors/Errors";
+import { Modal } from "../../Modal/Modal.jsx";
+import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled.jsx";
+
+import { Button } from "../../Button/Button.jsx";
 
 import {
   setPreloadSrcPlayer,
   setLastTrack,
-  setDefaultPreloadSrc,
   setNextPage,
-  setSrcPlaying,
+  setDefaultState,
 } from "../../../redux/playerSlice";
+
+import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsSlice";
+import { useDeleteTrackMutation } from "../../../redux/tracksSlice";
 import { getPlayerState } from "../../../redux/playerSelectors.js";
 
 import {
@@ -53,6 +59,7 @@ const TracksTable = ({
   playListId,
   playListGenre,
   isCheckedAll,
+  checkedAllFn,
   dataUpload,
   isErrorUpload,
   isSuccessUpload,
@@ -66,11 +73,35 @@ const TracksTable = ({
   totalPages,
   isSorted,
 }) => {
+  const [
+    deleteTrack,
+    {
+      data: dataDeleteTrack,
+      isSuccess: isSuccessDeleteTrack,
+      isLoading: isLoadingDeleteTrack,
+    },
+  ] = useDeleteTrackMutation();
+  const [
+    deleteTrackInPlaylist,
+    {
+      data: dataDeleteTrackInPlaylist,
+      isSuccess: isSuccessDeleteTrackInPlaylist,
+      isLoading: isLoadingDeleteTrackInPlayList,
+    },
+  ] = useDeleteTrackInPlaylistMutation();
+
   const dispatch = useDispatch();
   const location = useLocation();
   const playerState = useSelector(getPlayerState);
   // const [currentPage, setCurrentPage] = useState(currPage);
   // const [pageSize, setPageSize] = useState(currentPageSize);
+  const [tracksIdList, setTracksIdList] = useState([]);
+  const [deselect, setDeselect] = useState(true);
+  const [showModalSuccesDelete, setShowModalSuccesDelete] = useState(false);
+  const [deleteInfo, setDeleteInfo] = useState([]);
+
+  // console.log(deleteInfo);
+  console.log("tracksIdList ==>", tracksIdList);
 
   const tracksTableProps = {
     showTitle: showTitle ? "table-caption" : "none",
@@ -108,13 +139,16 @@ const TracksTable = ({
         top: 0,
         behavior: "instant",
       });
+      // checkedAllFn(false);
+      setTracksIdList([]);
     },
+
     [dispatch, onChangeCurrentPage]
   );
 
   const onPageSizeChange = (size) => {
     console.log(size);
-    setPageSize(size);
+    // setPageSize(size);
     onChangeSizePage(size);
   };
   useEffect(() => {
@@ -167,8 +201,12 @@ const TracksTable = ({
   ]);
 
   useEffect(() => {
+    console.log("Sorted", isSorted);
+
     if (isSorted) {
+      console.log("Sorted");
       onChangePage(currentPage);
+      setTracksIdList([]);
     }
   }, [currentPage, isSorted, onChangePage]);
 
@@ -214,16 +252,91 @@ const TracksTable = ({
   // const onPageChange = (page) => {
   //   console.log("page", page);
 
-  //   const ttt = onChangeCurrentPage(page);
-  //   setCurrentPage(ttt);
-  //   console.log(ttt);
-  // };
-
   // const onPageSizeChange = (pageSize) => {
   //   onChangeSizePage(pageSize);
   // };
 
   // console.log(onPageChange());
+
+  const getCheckedTrackId = (data) => {
+    if (data !== undefined) {
+      setTracksIdList((prev) => [...prev, data]);
+    } else {
+      setTracksIdList([]);
+    }
+  };
+
+  const addTrackToCheckedList = (data) => {
+    setTracksIdList((prev) => [...prev, data]);
+    if (tracksIdList.length === tracks.length - 1) {
+      checkedAllFn(true);
+      isCheckedAll = true;
+    }
+  };
+
+  const deleteCheckedTrackId = (data) => {
+    setDeselect(false);
+    checkedAllFn(false);
+    setTracksIdList((prev) =>
+      prev.filter((item) => {
+        return item !== data;
+      })
+    );
+  };
+
+  const promiseAll = async (results) => {
+    return await Promise.all([results]).then(
+      (values) => {
+        values.flat().map((value) => {
+          value.then((result) => {
+            setDeleteInfo((prev) => [...prev, result.object]);
+          });
+        });
+      },
+      (reason) => {
+        console.log(reason);
+      },
+      clearAfterDeleting(),
+      setShowModalSuccesDelete(true)
+    );
+  };
+
+  const deletingMultipleTracks = () => {
+    if (isInPlayList) {
+      const result = tracksIdList.map((id) =>
+        deleteTrackInPlaylist({
+          playListId,
+          idTrack: id,
+        }).unwrap()
+      );
+      promiseAll(result);
+    } else {
+      const result = tracksIdList.map((id) => deleteTrack(id).unwrap());
+      promiseAll(result);
+    }
+  };
+
+  const clearAfterDeleting = () => {
+    if (currentPage !== 1) {
+      dispatch(setDefaultState());
+      onChangePage(1);
+    }
+    checkedAllFn(false);
+    setTracksIdList([]);
+  };
+
+  useEffect(() => {
+    if (tracksIdList.length === tracks.length) {
+      setDeselect(true);
+    } else {
+      setDeselect(false);
+    }
+  }, [tracks.length, tracksIdList.length]);
+
+  const closeModalDeleteSuccess = () => {
+    setShowModalSuccesDelete(false);
+    setDeleteInfo([]);
+  };
 
   return (
     <>
@@ -231,9 +344,11 @@ const TracksTable = ({
       {tracks?.length === 0 && !isLoading && !error && (
         <NoData text={"Музика ще не завантажена"} textColor={"grey"} />
       )}
-      {isFetching && <Loader />}
+      {/* {isFetching && !isSuccessUpload && <Loader />} */}
 
-      {!error && isSuccess && !isFetching && tracks?.length !== 0 && (
+      {isFetching && currentPage > 1 && <Loader />}
+
+      {!error && isSuccess && tracks?.length !== 0 && (
         <>
           <TracksTableWrapper marginTop={tracksTableProps.marginTop}>
             <TableStyle>
@@ -318,6 +433,10 @@ const TracksTable = ({
                         isUninitialized={isUninitialized}
                         showData={tracksTableProps.showData}
                         countOfSkip={skip}
+                        getCheckedTrackId={getCheckedTrackId}
+                        deleteCheckedTrackId={deleteCheckedTrackId}
+                        addTrackToCheckedList={addTrackToCheckedList}
+                        deselect={deselect}
                       />
                     );
                   }
@@ -325,24 +444,78 @@ const TracksTable = ({
               </tbody>
             </TableStyle>
           </TracksTableWrapper>
-          {isSuccess && totalTracks > pageSize && (
-            <Pagination
-              style={{ marginTop: "auto", marginBottom: "24px" }}
-              defaultCurrent={1}
-              current={currentPage}
-              total={totalTracks}
-              showLessItems
-              selectComponentClass={Select}
-              showSizeChanger={false}
-              defaultPageSize={pageSize}
-              pageSize={pageSize}
-              // onShowSizeChange={onPageSizeChange}
-              onChangeSizePage={onPageSizeChange}
-              onChange={(page) => onChangePage(page)}
-              locale={localeUA}
-            />
-          )}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            {!location.pathname?.includes("cabinet") && (
+              <Button
+                type={"button"}
+                width={"140px"}
+                padding={"6px"}
+                fontsize={"16px"}
+                border={"1px solid #A4A2A2"}
+                background={"transparent"}
+                text={"Видалити"}
+                disabled={tracksIdList.length ? false : true}
+                onClick={deletingMultipleTracks}
+              />
+            )}
+            {isSuccess && totalTracks > pageSize && (
+              <Pagination
+                // style={{ marginBottom: "24px" }}
+                defaultCurrent={1}
+                current={currentPage}
+                total={totalTracks}
+                showLessItems
+                selectComponentClass={Select}
+                showSizeChanger={false}
+                defaultPageSize={pageSize}
+                pageSize={pageSize}
+                // onShowSizeChange={onPageSizeChange}
+                onChangeSizePage={onPageSizeChange}
+                onChange={(page) => onChangePage(page)}
+                locale={localeUA}
+              />
+            )}
+          </div>
         </>
+      )}
+      {showModalSuccesDelete && deleteInfo.length !== 0 && (
+        <Modal
+          width={"494px"}
+          onClose={closeModalDeleteSuccess}
+          showCloseButton={true}
+        >
+          <ModalInfoText paddingTop={"14px"}>
+            {deleteInfo.map(({ artist, trackName }) => {
+              return (
+                <div
+                  key={trackName}
+                  style={{
+                    display: "flex",
+                    gap: "4px",
+                    padding: "4px",
+                    margin: "2px",
+                  }}
+                >
+                  <ModalInfoTextBold>{artist}</ModalInfoTextBold>
+                  <p>{"-"}</p>
+                  <ModalInfoTextBold>{trackName}</ModalInfoTextBold>
+                  <ModalInfoTextBold
+                    style={{ fontSize: "18px", color: "#870505" }}
+                  >
+                    {"був видалений"}
+                  </ModalInfoTextBold>
+                </div>
+              );
+            })}
+            {/* deleteInfo.map(({(artist, trackName)}, index) => (<p>{artist}</p>
+            <p>{trackName}</p> */}
+          </ModalInfoText>
+        </Modal>
       )}
     </>
   );

@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useRef, useState, useId } from "react";
+import { useState } from "react";
 
 import TracksTable from "../../../components/EditorComponents/TracksTable/TracksTable";
 import PlaylistListItem from "../../../components/EditorComponents/PlayLists/PlayListItem";
@@ -10,6 +10,7 @@ import symbol from "../../../assets/symbol.svg";
 import { ErrorNotFound, Error500 } from "../../../components/Errors/Errors";
 import { Loader } from "../../../components/Loader/Loader";
 import SortTracks from "../../../components/EditorComponents/Sort/SortTracks";
+import RowsTrackPage from "./RowsTrackPage";
 
 import {
   useGetPlaylistByIdQuery,
@@ -18,8 +19,6 @@ import {
 } from "../../../redux/playlistsSlice";
 
 const TracksPage = () => {
-  const id = useId();
-  const BaseInputRef = useRef(null);
   const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -31,7 +30,7 @@ const TracksPage = () => {
     data,
     isFetching: isFetchingPlaylistById,
     isSuccess,
-    isLoading,
+    isLoading: isLoadingPlaylistById,
     isError,
     error,
   } = useGetPlaylistByIdQuery({
@@ -56,93 +55,10 @@ const TracksPage = () => {
 
   const [updateSort] = useUpdatePlaylistSortMutation();
 
-  const rows = () => {
-    const RowsTitle = [
-      // {
-      //   title: (
-      //     <input
-      //       key={id}
-      //       type="checkbox"
-      //       id="mainInput"
-      //       ref={BaseInputRef}
-      //       style={{ width: "24px", height: "24px", marginRight: "24px" }}
-      //       onClick={() => {
-      //         if (BaseInputRef.current.checked) {
-      //           setCheckedMainCheckBox(true);
-      //         } else {
-      //           setCheckedMainCheckBox(false);
-      //         }
-      //       }}
-      //     />
-      //   ),
-      //   type: "checkbox",
-      //   titleSize: "2%",
-      //   showData: true,
-      // },
-      {
-        title: "",
-        type: "button",
-        titleSize: "1%",
-        showData: false,
-      },
-
-      {
-        title: "",
-        type: "button",
-        titleSize: "1%",
-        showData: true,
-      },
-      {
-        title: "",
-        type: "image",
-        titleSize: "10%",
-        showData: true,
-      },
-      {
-        title: "Назва пісні",
-        type: "text",
-        titleSize: "20%",
-        showData: true,
-      },
-      {
-        title: "Виконавець",
-        type: "text",
-        titleSize: "15%",
-        showData: true,
-      },
-      {
-        title: "Тривалість",
-        type: "text",
-        titleSize: "12%",
-        showData: true,
-      },
-      {
-        title: "Жанр",
-        type: "text",
-        titleSize: "10%",
-        showData: true,
-      },
-      {
-        title: "Плейлист",
-        type: "text",
-        titleSize: "0%",
-        showData: false,
-      },
-
-      {
-        title: "",
-        type: "button",
-        titleSize: "5%",
-        showData: true,
-      },
-    ];
-
-    return RowsTitle;
-  };
-
   const onPageChange = (page) => {
     console.log("4 Step - setCurrentPage in mutation", page);
     setCurrentPage(page);
+    setCheckedMainCheckBox(false);
   };
 
   const onPageSizeChange = (size) => {
@@ -157,9 +73,31 @@ const TracksPage = () => {
     if (currentPage > 1) {
       setCurrentPage(1);
       setIsSorterd(true);
+      setCheckedMainCheckBox(false);
     }
   };
 
+  // const checkedAllFn = (data) => {
+  //   console.log(data);
+  //   if (!data) {
+  //     if (baseInputRef !== undefined) {
+  //       baseInputRef.current.checked = false;
+  //       setCheckedMainCheckBox(false);
+  //     }
+  //   } else {
+  //     baseInputRef.current.checked = true;
+  //     setCheckedMainCheckBox(true);
+  //   }
+  // };
+
+  const checkedAllFn = (data) => {
+    console.log(data);
+    if (!data) {
+      setCheckedMainCheckBox(false);
+    } else {
+      setCheckedMainCheckBox(true);
+    }
+  };
   return (
     <>
       {error?.status === 500 && isError && <Error500 />}
@@ -217,6 +155,7 @@ const TracksPage = () => {
           tracks={data.playlist.trackList}
           error={error}
           isFetching={isFetchingPlaylistById}
+          isLoading={isLoadingPlaylistById}
           isSuccess={isSuccess}
           dataUpload={dataUploadTrackInPlaylist}
           isErrorUpload={isErrorUploadTrackInPlaylist}
@@ -224,7 +163,7 @@ const TracksPage = () => {
           isLoadingUpload={isLoadingUploadTrackInPlaylist}
           errorUpload={errorUploadTrackInPlaylist}
           isUninitialized={isUninitializedUploadTrackInPlaylist}
-          rows={rows()}
+          rows={RowsTrackPage(checkedAllFn, checkedMainCheckBox)}
           onChangeCurrentPage={onPageChange}
           onChangeSizePage={onPageSizeChange}
           currentPage={currentPage}
@@ -233,6 +172,7 @@ const TracksPage = () => {
           totalTracks={data.totalTracks}
           tracksSRC={data.tracksSRC}
           isSorted={isSorted}
+          checkedAllFn={checkedAllFn}
         />
       )}
     </>
