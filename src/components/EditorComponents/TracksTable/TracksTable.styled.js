@@ -15,7 +15,7 @@ export const TableStyle = styled.table`
   width: 100%;
   /* border-collapse: collapse; */
   border-collapse: separate;
-  border-spacing: 0 2px;
+  border-spacing: 0 1px;
 `;
 
 export const TracksTitle = styled.caption`

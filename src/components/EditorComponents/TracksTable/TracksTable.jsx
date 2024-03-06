@@ -7,12 +7,13 @@ import Pagination from "rc-pagination";
 import Select from "rc-select";
 
 import localeUA from "../../../constants/paginationLocaleUA.js";
-import { compareArray, findPage } from "../../../helpers/helpers.js";
+import { findPage } from "../../../helpers/helpers.js";
 
 import TrackItem from "./TrackItem";
 import { Loader, ProgressBarTracksTable } from "../../Loader/Loader";
 import { ErrorNotFound, NoData } from "../../Errors/Errors";
 import { Modal } from "../../Modal/Modal.jsx";
+import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled.jsx";
 
 import { Button } from "../../Button/Button.jsx";
 
@@ -74,13 +75,18 @@ const TracksTable = ({
 }) => {
   const [
     deleteTrack,
-    { data: dataDeleteTrack, isSuccess: isSuccessDeleteTrack },
+    {
+      data: dataDeleteTrack,
+      isSuccess: isSuccessDeleteTrack,
+      isLoading: isLoadingDeleteTrack,
+    },
   ] = useDeleteTrackMutation();
   const [
     deleteTrackInPlaylist,
     {
       data: dataDeleteTrackInPlaylist,
       isSuccess: isSuccessDeleteTrackInPlaylist,
+      isLoading: isLoadingDeleteTrackInPlayList,
     },
   ] = useDeleteTrackInPlaylistMutation();
 
@@ -92,6 +98,10 @@ const TracksTable = ({
   const [tracksIdList, setTracksIdList] = useState([]);
   const [deselect, setDeselect] = useState(true);
   const [showModalSuccesDelete, setShowModalSuccesDelete] = useState(false);
+  const [deleteInfo, setDeleteInfo] = useState([]);
+
+  // console.log(deleteInfo);
+  console.log("tracksIdList ==>", tracksIdList);
 
   const tracksTableProps = {
     showTitle: showTitle ? "table-caption" : "none",
@@ -129,7 +139,10 @@ const TracksTable = ({
         top: 0,
         behavior: "instant",
       });
+      // checkedAllFn(false);
+      setTracksIdList([]);
     },
+
     [dispatch, onChangeCurrentPage]
   );
 
@@ -188,7 +201,10 @@ const TracksTable = ({
   ]);
 
   useEffect(() => {
+    console.log("Sorted", isSorted);
+
     if (isSorted) {
+      console.log("Sorted");
       onChangePage(currentPage);
       setTracksIdList([]);
     }
@@ -251,19 +267,14 @@ const TracksTable = ({
   };
 
   const addTrackToCheckedList = (data) => {
-    console.log(data);
-
     setTracksIdList((prev) => [...prev, data]);
     if (tracksIdList.length === tracks.length - 1) {
-      console.log("Попали?");
       checkedAllFn(true);
       isCheckedAll = true;
     }
   };
 
   const deleteCheckedTrackId = (data) => {
-    console.log(data);
-
     setDeselect(false);
     checkedAllFn(false);
     setTracksIdList((prev) =>
@@ -273,19 +284,21 @@ const TracksTable = ({
     );
   };
 
-  const promiseAll = (result) => {
-    return Promise.all([result])
-      .then(
-        (values) => {
-          console.log(values.flat());
-        },
-        (reason) => {
-          console.log(reason);
-        },
-        clearAfterDeleting(),
-        setShowModalSuccesDelete(true)
-      )
-      .finally(() => {});
+  const promiseAll = async (results) => {
+    return await Promise.all([results]).then(
+      (values) => {
+        values.flat().map((value) => {
+          value.then((result) => {
+            setDeleteInfo((prev) => [...prev, result.object]);
+          });
+        });
+      },
+      (reason) => {
+        console.log(reason);
+      },
+      clearAfterDeleting(),
+      setShowModalSuccesDelete(true)
+    );
   };
 
   const deletingMultipleTracks = () => {
@@ -296,20 +309,10 @@ const TracksTable = ({
           idTrack: id,
         }).unwrap()
       );
-      const res = promiseAll(result);
-
-      console.log(res.promiseState);
+      promiseAll(result);
     } else {
       const result = tracksIdList.map((id) => deleteTrack(id).unwrap());
-      Promise.all([result]).then(
-        (values) => {
-          console.log(values.flat());
-          clearAfterDeleting();
-        },
-        (reason) => {
-          console.log(reason);
-        }
-      );
+      promiseAll(result);
     }
   };
 
@@ -320,7 +323,6 @@ const TracksTable = ({
     }
     checkedAllFn(false);
     setTracksIdList([]);
-    // setShowModalSuccesDelete(true);
   };
 
   useEffect(() => {
@@ -331,15 +333,22 @@ const TracksTable = ({
     }
   }, [tracks.length, tracksIdList.length]);
 
+  const closeModalDeleteSuccess = () => {
+    setShowModalSuccesDelete(false);
+    setDeleteInfo([]);
+  };
+
   return (
     <>
       {error && <ErrorNotFound error={error?.data?.message} />}
       {tracks?.length === 0 && !isLoading && !error && (
         <NoData text={"Музика ще не завантажена"} textColor={"grey"} />
       )}
-      {isFetching && !isSuccessUpload && <Loader />}
+      {/* {isFetching && !isSuccessUpload && <Loader />} */}
 
-      {!error && isSuccess && !isFetching && tracks?.length !== 0 && (
+      {isFetching && currentPage > 1 && <Loader />}
+
+      {!error && isSuccess && tracks?.length !== 0 && (
         <>
           <TracksTableWrapper marginTop={tracksTableProps.marginTop}>
             <TableStyle>
@@ -441,18 +450,19 @@ const TracksTable = ({
               alignItems: "center",
             }}
           >
-            <Button
-              type={"button"}
-              width={"140px"}
-              padding={"6px"}
-              fontsize={"16px"}
-              border={"1px solid #A4A2A2"}
-              background={"transparent"}
-              text={"Видалити"}
-              display={"flex"}
-              disabled={tracksIdList.length ? false : true}
-              onClick={deletingMultipleTracks}
-            />
+            {!location.pathname?.includes("cabinet") && (
+              <Button
+                type={"button"}
+                width={"140px"}
+                padding={"6px"}
+                fontsize={"16px"}
+                border={"1px solid #A4A2A2"}
+                background={"transparent"}
+                text={"Видалити"}
+                disabled={tracksIdList.length ? false : true}
+                onClick={deletingMultipleTracks}
+              />
+            )}
             {isSuccess && totalTracks > pageSize && (
               <Pagination
                 // style={{ marginBottom: "24px" }}
@@ -472,6 +482,40 @@ const TracksTable = ({
             )}
           </div>
         </>
+      )}
+      {showModalSuccesDelete && deleteInfo.length !== 0 && (
+        <Modal
+          width={"494px"}
+          onClose={closeModalDeleteSuccess}
+          showCloseButton={true}
+        >
+          <ModalInfoText paddingTop={"14px"}>
+            {deleteInfo.map(({ artist, trackName }) => {
+              return (
+                <div
+                  key={trackName}
+                  style={{
+                    display: "flex",
+                    gap: "4px",
+                    padding: "4px",
+                    margin: "2px",
+                  }}
+                >
+                  <ModalInfoTextBold>{artist}</ModalInfoTextBold>
+                  <p>{"-"}</p>
+                  <ModalInfoTextBold>{trackName}</ModalInfoTextBold>
+                  <ModalInfoTextBold
+                    style={{ fontSize: "18px", color: "#870505" }}
+                  >
+                    {"був видалений"}
+                  </ModalInfoTextBold>
+                </div>
+              );
+            })}
+            {/* deleteInfo.map(({(artist, trackName)}, index) => (<p>{artist}</p>
+            <p>{trackName}</p> */}
+          </ModalInfoText>
+        </Modal>
       )}
     </>
   );

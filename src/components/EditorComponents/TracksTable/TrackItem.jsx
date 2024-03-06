@@ -7,6 +7,7 @@ import { sToStr, compareArray } from "../../../helpers/helpers";
 import { BASE_URL } from "../../../constants/constants";
 import { WithOutGenre } from "../../Errors/Errors";
 import symbol from "../../../assets/symbol.svg";
+import CustomCheckBox from "../../CustomCheckBox/CustomCheckBox";
 
 import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsSlice";
 import { useDeleteTrackMutation } from "../../../redux/tracksSlice";
@@ -30,6 +31,13 @@ import {
   InfoBlock,
   PlayButton,
 } from "../TracksTable/TracksTable.styled";
+
+import {
+  CheckBoxLabel,
+  CheckBoxSpan,
+  CheckBoxSVG,
+  CheckBoxInput,
+} from "../../CustomCheckBox/CustomCheckBox.styled";
 
 const TrackItem = ({
   idTrack,
@@ -168,11 +176,10 @@ const TrackItem = ({
     }
 
     if (!isCheckedAll && ref.current.checked) {
-      console.log("deselect", deselect);
+      // console.log("deselect", deselect);
       if (!deselect) {
         return;
       }
-
       setIsChecked(false);
       ref.current.checked = false;
       getCheckedTrackId();
@@ -182,13 +189,11 @@ const TrackItem = ({
   const selectTrack = (id) => {
     console.log(id);
     if (!ref.current.checked) {
-      console.log("тут");
       ref.current.checked = false;
       setIsChecked(false);
 
       deleteCheckedTrackId(id);
     } else {
-      console.log("тут1");
       ref.current.checked = true;
       setIsChecked(true);
       addTrackToCheckedList(id);
@@ -204,26 +209,21 @@ const TrackItem = ({
         }}
       >
         <TableCell showData={showData[0]}>
-          <input
-            type="checkbox"
-            name=""
-            id={idTrack}
-            ref={ref}
-            onClick={() => selectTrack(idTrack)}
-          />
+          <CheckBoxLabel htmlFor={idTrack}>
+            <CheckBoxSpan>
+              <CheckBoxSVG width="14px" height="15px">
+                {isChecked && <use href={`${symbol}#icon-check-in`}></use>}
+              </CheckBoxSVG>
+            </CheckBoxSpan>
+            <CheckBoxInput
+              type="checkbox"
+              id={idTrack}
+              ref={ref}
+              onClick={() => selectTrack(idTrack)}
+            />
+          </CheckBoxLabel>
         </TableCell>
         <TableCell showData={showData[1] || false}>
-          {/* <button
-            type="buton"
-            onClick={
-              isInPlayList
-                ? () => deleteTrackInPlaylist(idTrack).unwrap()
-                : () => deleteTrack(idTrack).unwrap()
-            }
-          >
-            X
-          </button> */}
-
           <PlayButton
             ref={playBtnRef}
             data-idtrack={idTrack}
