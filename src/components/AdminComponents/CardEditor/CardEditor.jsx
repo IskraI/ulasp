@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 import {
   useGetAdminByIdQuery,
   useDelUserByIdMutation,
-  useUnblockUserByIdMutation,
+  useUnblockEditorByIdMutation,
 } from "../../../redux/dataUsersSlice";
 import {
   ButtonContainer,
@@ -22,16 +22,20 @@ const CardEditor = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { data: user, error, isLoading } = useGetAdminByIdQuery(id);
+
   const [dispatchDel, { isLoading: isLoadingDel }] = useDelUserByIdMutation();
   const [dispatchUnblock, { isLoading: isLoadingUnblock }] =
-    useUnblockUserByIdMutation();
+    useUnblockEditorByIdMutation();
   const [activeModal, setActiveModal] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
   const handleShowModal = (modalContent) => {
     setActiveModal(modalContent);
+    document.body.classList.add("modal-open");
   };
   // console.log('user edit', user)
 
   const handleCloseModal = () => {
+    document.body.classList.remove("modal-open");
     setActiveModal(null);
   };
 
@@ -41,16 +45,26 @@ const CardEditor = () => {
       .then(() => {
         navigate("/admin/users/editors");
       })
-      .catch((error) => console.log(error.data.message));
+      .catch((e) => {
+        let errorMessage = e.data?.message;
+        setErrorMessage(errorMessage);
+        handleShowModal();
+      });
   };
 
   const handleUnblockUser = async () => {
     dispatchUnblock(id)
       .unwrap()
       .then(() => {
-        navigate("/admin/users/editors");
+        // navigate("/admin/users/editors");
+        setActiveModal(null);
+        document.body.classList.remove("modal-open");
       })
-      .catch((error) => console.log(error.data.message));
+      .catch((e) => {
+        let errorMessage = e.data?.message;
+        setErrorMessage(errorMessage);
+        handleShowModal();
+      });
   };
 
   return (
@@ -100,8 +114,9 @@ const CardEditor = () => {
           flexDirection="column"
         >
           <TextModal>
-            Користувач - {`${user.firstName} ${user.lastName}`} <br />
-            заблокован!
+            {user.status === true
+              ? `Підтвердіть заблокування користувача - ${user.firstName} ${user.lastName}`
+              : `Підтвердіть розблокування користувача - ${user.firstName} ${user.lastName}`}
           </TextModal>
           <ModalBtnContainer>
             <Button
@@ -135,7 +150,7 @@ const CardEditor = () => {
           showCloseButton={true}
           flexDirection="column"
         >
-          <TextModal>Ви впевнені, що хочете видалити користувача?</TextModal>
+          <TextModal>Ви впевнені, що хочете видалити ?</TextModal>
           <ModalBtnContainer>
             <Button
               type="button"

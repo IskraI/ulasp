@@ -1,6 +1,6 @@
 //typeOfUser - fop , tov
 //activeSection createuser, create editor, carduser, cardeditor
-import { useState } from "react";
+
 import {
   RegisterField,
   RegisterLabel,
@@ -16,8 +16,7 @@ import {
 import ContactFaceFieldCard from "../UserForm/UserFieldForm/ContactFaceFieldCard";
 import RegisterNameFieldCard from "../UserForm/UserFieldForm/RegisterNameFieldCard";
 import CommonFieldCard from "../UserForm/UserFieldForm/CommonFieldsCard";
-import { Button } from "../../Button/Button";
-import { useForm, Controller } from "react-hook-form";
+import {  Controller } from "react-hook-form";
 const CardUserField = ({
   user,
   control,

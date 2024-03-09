@@ -26,7 +26,6 @@ export const UserFopSchema = yup.object().shape({
       if (!value) return true; // Вернуть true если значение пустое или null
       return nameRegexp.test(value); // проверка имени
     }),
-  // .matches(nameRegexp, "По-батькові українською"),
 
   contractNumber: yup
     .string()
@@ -68,8 +67,7 @@ export const UserFopSchema = yup.object().shape({
       if (!value) return true; // Вернуть true если значение пустое или null
       return regularDateRegexp.test(value); // проверка даты
     }),
-  // .required("Обов'язкове поле!")
-  // .matches(regularDateRegexp, "TУ форматі дд.мм.рррр"),
+
   lastPay: yup
     .string()
     .nullable()
@@ -77,8 +75,6 @@ export const UserFopSchema = yup.object().shape({
       if (!value) return true; // Вернуть true если значение пустое или null
       return regularDateRegexp.test(value); // проверка даты
     }),
-  // .required("Обов'язкове поле!")
-  // .matches(regularDateRegexp, "У форматі дд.мм.рррр"),
 
   contactFace: yup
     .string()
@@ -215,13 +211,15 @@ export const MusicEditorSchema = yup.object().shape({
   comment: yup.string(),
   login: yup
     .string()
+
     .required("Обов'язкове поле!")
-    .matches(loginAdminRegexp, "латинські літери"),
+    .matches(loginAdminRegexp, "Логін латинськими літерами")
+    .min(5, "Повинно бути від 5 символів!"),
 
   password: yup
     .string()
     .required("Обов'язкове поле!")
-    .min(6, "Повинно бути від 6 знаків!"),
+    .min(6, "Повинно бути від 6 символів, одна з них цифра!"),
 });
 
 export const UserFopCardSchema = yup.object().shape({
@@ -278,16 +276,14 @@ export const UserFopCardSchema = yup.object().shape({
       if (!value) return true; // Вернуть true если значение пустое или null
       return regularDateRegexp.test(value); // проверка даты
     }),
-  // .matches(regularDateRegexp, "TУ форматі дд.мм.рррр"),
+
   lastPay: yup
     .string()
-    // .required("Обов'язкове поле!")
     .nullable()
     .test("is-empty-or-valid", "У форматі дд.мм.рррр", (value) => {
       if (!value) return true; // Вернуть true если значение пустое или null
       return regularDateRegexp.test(value); // проверка даты
     }),
-  // .matches(regularDateRegexp, "У форматі дд.мм.рррр"),
 
   contactFace: yup
     .string()
@@ -299,7 +295,6 @@ export const UserFopCardSchema = yup.object().shape({
     .string()
     .min(10, "Повинно бути 10 цифр!")
     .max(10, "Повинно бути 10 цифр!")
-    // .required("Обов'язкове поле!")
     .matches(onlyNumberRegexp, "Повинно бути 10 цифр!"),
 
   contactFaceTelNumber: yup
