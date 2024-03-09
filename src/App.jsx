@@ -65,6 +65,7 @@ import AddPlayLists from "./components/UserCabinetPage/AddPlaylists/AddPlaylists
 import FavoritePlaylists from "./components/UserCabinetPage/FavoritePlaylists/FavoritePlaylists";
 import AddAllPlaylists from "./components/UserCabinetPage/AddPlaylists/AddAllPlaylists";
 import FavoriteAllPlaylists from "./components/UserCabinetPage/FavoritePlaylists/FavoriteAllPlaylists";
+import TracksPageCreateUser from "./pages/UserPage/TracksPageUser/TracksCreateUser";
 
 const AdminCabinetPage = lazy(() =>
   import("./components/AdminComponents/AdminCabinetPage/AdminCabinetPage")
@@ -255,7 +256,7 @@ function App() {
                 />
                 <Route
                   path="cabinet/myplaylists/createplaylists/:playlistId/tracks"
-                  element={<TracksPageUser display={"none"} />}
+                  element={<TracksPageUser  />}
                 />
                 <Route
                   path="cabinet/myplaylists/addplaylists"

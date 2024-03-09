@@ -27,11 +27,24 @@ export const playlistsUserApi = createApi({
     }),
 
     getPlaylistByIdForUser: builder.query({
-      query: ({ playlistId: id, page = "", limit = "" }) => ({
+      query: ({ playlistId: id, page = "", limit = "", sort = "" }) => ({
         url: `/user/playlist/${id}?${page && `page=${page}`} ${
           limit && `&limit=${limit}`
+          }${sort && `&sort=${sort}`
         }`,
       }),
+
+       providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
+    }),
+
+    getCreatePlaylistByIdForUser: builder.query({
+      query: ({ playlistId: id, page = "", limit = "", sort = "" }) => ({
+        url: `/user/userPlaylist/${id}?${page && `page=${page}`} ${
+          limit && `&limit=${limit}`
+           }${sort && `&sort=${sort}`
+        }`,
+      }),
+       providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
     }),
 
     getCreatePlaylistsForUser: builder.query({
@@ -56,7 +69,7 @@ export const playlistsUserApi = createApi({
 
     deletePlaylistForUser: builder.mutation({
       query: (id) => ({
-        url: `/editor/playlist/delete/${id}`,
+        url: `/user/playlist/delete/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Playlists"],
@@ -128,4 +141,5 @@ export const {
   useAddPlaylistForUserQuery,
   useUpdateAddStatusApiMutation,
   useDeleteTrackInPlaylistMutation,
+  useGetCreatePlaylistByIdForUserQuery,
 } = playlistsUserApi;
