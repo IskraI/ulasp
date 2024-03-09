@@ -82,12 +82,14 @@ export const RegisterField = styled.div`
   height: 42px;
 `;
 export const RegisterInput = styled.input`
+  display: flex;
+  position: relative;
   background-color: rgba(234, 234, 234, 0.32);
   /* width: 100%; */
   padding-left: 8px;
-  display: flex;
+
   align-items: center;
-  position: relative;
+
   /* outline: none; */
   border: 1px solid rgba(23, 22, 28, 0.5);
   font-family: Inter;
@@ -114,10 +116,8 @@ export const RegisterInput = styled.input`
     z-index: 1;
     top: 100%; /* Положение подсказки относительно верхней границы input */
     left: 75%;
-    transform: translateX(-50%);
-    width: 50%;
-
-    /* Дополнительные стили для видимой подсказки при ховере */
+    transform: translateX(-40%);
+    width: 40%;
   }
 `;
 export const RegisterLabel = styled.label`
@@ -160,8 +160,6 @@ export const CommentTextarea = styled.textarea`
   outline: none;
   border: 0.25px solid rgba(23, 22, 28, 0.5);
   resize: none;
-  /* border: 0.5px solid  #17161C; */
-  /* stroke-width: 0.5px; */
 `;
 export const Commentlabel = styled.label`
   font-family: Inter;
@@ -308,11 +306,6 @@ export const Tooltip = styled.span`
   border: 1px solid rgba(23, 22, 28, 0.5);
   border-radius: 4px;
   font-size: 14px;
-
-  &.hover {
-    display: block;
-    /* Ваши стили для видимой подсказки */
-  }
 `;
 export const LoginForm = styled.form`
   display: flex;
@@ -418,6 +411,7 @@ export const RegisterLoginForm = styled.div`
 `;
 export const RegisterLoginInput = styled.input`
   display: flex;
+  position: relative;
   background-color: rgba(234, 234, 234, 0.32);
   width: 277px;
 
@@ -426,7 +420,7 @@ export const RegisterLoginInput = styled.input`
   gap: 8px;
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.4);
-  outline: none;
+  /* outline: none; */
   font-family: Inter;
   font-size: 20px;
   font-style: normal;
@@ -438,5 +432,16 @@ export const RegisterLoginInput = styled.input`
   }
   &.valid {
     outline: 1px solid green;
+  }
+  &.invalid:hover + span {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    top: 100%; /* Положение подсказки относительно верхней границы input */
+    left: 25%;
+    transform: translateX(-50%);
+    width: 50%;
+
+    /* Дополнительные стили для видимой подсказки при ховере */
   }
 `;

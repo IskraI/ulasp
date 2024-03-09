@@ -15,10 +15,8 @@ import {
   SubItem,
   NavigationLink,
   SubMenuLink,
-  SvgStyled,
 } from "./NavMenu.styled";
-import { useState, useEffect } from "react";
-
+import { useState } from "react";
 
 export const NavMenu = () => {
   const user = useSelector(getUserState);
@@ -32,14 +30,7 @@ export const NavMenu = () => {
     ? propAdminNav
     : user.editorRole
     ? propEditorNav
-      : propUserNav;
-  
-  //  useEffect(() => {
-   
-  //   if (user.userRole) {
-  //     navigate("user/cabinet");
-  //   }
-  // }, [navigate, user.userRole]);
+    : propUserNav;
 
   return (
     <Nav>

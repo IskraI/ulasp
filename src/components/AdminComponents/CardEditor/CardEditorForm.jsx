@@ -77,7 +77,8 @@ const EditorCardForm = ({ user }) => {
   return (
     <>
       <Title margintop="8px" marginbottom="16px">
-        Картка музичного редактора
+        {user.editorRole && <span>Картка музичного редактора</span>}
+        {user.adminRole && <span>Картка адміністратора</span>}
       </Title>
 
       <form onSubmit={handleSubmit(onFormSubmit)}>

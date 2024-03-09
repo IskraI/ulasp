@@ -61,12 +61,12 @@ export const propAdminNav = [
     navigation: "cabinet",
     picture: `${symbol}#icon-cabinet`,
   },
-  {
-    id: "navMessages",
-    title: "Повідомлення",
-    navigation: "messages",
-    picture: `${symbol}#icon-mail`,
-  },
+  // {
+  //   id: "navMessages",
+  //   title: "Повідомлення",
+  //   navigation: "messages",
+  //   picture: `${symbol}#icon-mail`,
+  // },
   {
     id: "navUsers",
     title: "Користувачі",
@@ -101,12 +101,12 @@ export const propUserNav = [
         navigation: "cabinet/myplaylists",
         picture: `${symbol}#icon-playlist`,
       },
-      {
-        id: "navMessages",
-        title: "Повідомлення",
-        navigation: "cabinet/messages",
-        picture: `${symbol}#icon-mail`,
-      },
+      // {
+      //   id: "navMessages",
+      //   title: "Повідомлення",
+      //   navigation: "cabinet/messages",
+      //   picture: `${symbol}#icon-mail`,
+      // },
     ],
   },
 

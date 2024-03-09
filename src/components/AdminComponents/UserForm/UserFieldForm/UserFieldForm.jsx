@@ -29,7 +29,7 @@ const UserFieldForm = ({
   register,
   dirtyFields,
 }) => {
-  // console.log("errors", errors);
+  console.log("errors", errors);
   // console.log("isValid", isValid);
 
   return (
@@ -141,23 +141,41 @@ const UserFieldForm = ({
               dirtyFields={dirtyFields}
             />
             <RegisterLoginForm>
-              <RegisterLoginInput
-                type="text"
-                placeholder="Логін"
-                className={`${errors.login ? "invalid" : ""}${
-                  !errors.login && dirtyFields.login ? "valid" : ""
-                }`}
-                {...register("login")}
-              />
-
-              <RegisterLoginInput
-                type="text"
-                placeholder="Пароль"
-                className={`${errors.password ? "invalid" : ""}${
-                  !errors.password && dirtyFields.password ? "valid" : ""
-                }`}
-                {...register("password")}
-              />
+              <RegisterField>
+                <RegisterLoginInput
+                  type="text"
+                  placeholder="Логін"
+                  aria-describedby="loginTooltip"
+                  className={`${errors.login ? "invalid" : ""}${
+                    !errors.login && dirtyFields.login ? "valid" : ""
+                  }`}
+                  {...register("login")}
+                />
+                <Tooltip
+                  id="loginTooltip"
+                  className={`${errors.login ? "visible" : ""}`}
+                >
+             
+                  {errors.login && errors.login.message}
+                </Tooltip>
+              </RegisterField>
+              <RegisterField>
+                <RegisterLoginInput
+                  type="text"
+                  placeholder="Пароль"
+                  aria-describedby="passwordTooltip"
+                  className={`${errors.password ? "invalid" : ""}${
+                    !errors.password && dirtyFields.password ? "valid" : ""
+                  }`}
+                  {...register("password")}
+                />
+                <Tooltip
+                  id="passwordTooltip"
+                  className={`${errors.password ? "visible" : ""}`}
+                >
+                  {errors.password && errors.password.message}
+                </Tooltip>
+              </RegisterField>
             </RegisterLoginForm>
           </>
         )}
