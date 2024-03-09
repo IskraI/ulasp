@@ -19,7 +19,7 @@ const TracksPage = () => {
 
   const { playlistId } = useParams();
 
-   const playlistQuery = location.pathname.includes("createplaylists")
+   const playlistQuery = location.pathname.includes("myplaylists")
     ? useGetCreatePlaylistByIdForUserQuery
     : useGetPlaylistByIdForUserQuery;
 
