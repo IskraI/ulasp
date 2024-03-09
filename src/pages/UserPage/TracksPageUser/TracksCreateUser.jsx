@@ -1,34 +1,29 @@
 import TracksTable from "../../../components/UserMediaComponent/TracksTable/TracksTableUser";
-import { useGetPlaylistByIdForUserQuery,useGetCreatePlaylistByIdForUserQuery } from "../../../redux/playlistsUserSlice";
+import { useGetCreatePlaylistByIdForUserQuery } from "../../../redux/playlistsUserSlice";
 import PlaylistListItem from "../../../components/UserMediaComponent/PlayLists/PlayListsItem";
 import { BtnSort } from "../AllTracksUser/AllTracksUser.styled";
 import { ErrorNotFound, Error500 } from "../../../components/Errors/Errors";
 import symbol from "../../../assets/symbol.svg";
 import Player from "../../../components/Player/Player";
 import { useState, useEffect, useLayoutEffect, useRef, useId } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Loader } from "../../../components/Loader/Loader";
 
-const TracksPage = () => {
+const TracksPageCreateUser = () => {
   const id = useId();
   const BaseInputRef = useRef(null);
-  const location = useLocation();
   const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
   const { playlistId } = useParams();
 
-   const playlistQuery = location.pathname.includes("createplaylists")
-    ? useGetCreatePlaylistByIdForUserQuery
-    : useGetPlaylistByIdForUserQuery;
-
   const {
     data,
     isFetching: isFetchingPlaylistById,
     isSuccess,
     error,
-  } =  playlistQuery({
+  } = useGetCreatePlaylistByIdForUserQuery({
     playlistId,
     page: currentPage,
     limit: pageSize,
@@ -184,4 +179,4 @@ const TracksPage = () => {
   );
 };
 
-export default TracksPage;
+export default TracksPageCreateUser;
