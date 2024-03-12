@@ -19,7 +19,7 @@ import {
 } from "./CreatePlaylistItem.syled";
 import { Link } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Modal } from "../../../components/Modal/Modal";
+import { Modal } from "../../Modal/Modal";
 import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
 import { ErrorNotFound } from "../../Errors/Errors";
 
@@ -54,15 +54,16 @@ const [toggleFavorite] =  useUpdateCabinetPlaylistStatusApiMutation(id);
   const [showModalError, setShowModalError] = useState(false);
   const [isFavorite, setIsFavorite] = useState(favoriteStatus || false);
   
-  const deleteMediaItem = () => {
+  const deleteMediaItem = async() => {
    try {
-      deletePlaylist(id).unwrap();
+     await deletePlaylist(id);
   setShowModalSucces(true);
    } catch (error) {
       setShowModalError(true);
     }
   };
 
+  
    const closeModalSuccess = () => {
     return setShowModalSucces(false);
   };
