@@ -18,7 +18,7 @@ const TracksPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 const [isSorted, setIsSorterd] = useState(false);
-
+ const [sortOrder, setSortOrder] = useState("random");
   const { playlistId } = useParams();
 
    const playlistQuery = location.pathname.includes("myplaylists")
@@ -139,7 +139,18 @@ const [isSorted, setIsSorterd] = useState(false);
       setIsSorterd(true);
       setCheckedMainCheckBox(false);
     }
+
+    localStorage.setItem("sortOrder", data);
+    setSortOrder(data);
+
   };
+
+   useEffect(() => {
+    const savedSortOrder = localStorage.getItem("sortOrder");
+    if (savedSortOrder) {
+      setSortOrder(savedSortOrder);
+    }
+  }, []); 
 
   const onPageChange = (page) => {
     console.log("4 Step - setCurrentPage in mutation", page);
@@ -175,8 +186,8 @@ const [isSorted, setIsSorterd] = useState(false);
           <SortTracks
               onClick={handleClickSort}
               sortType={"random"}
-              marginTop={"0px"}
-            />
+            marginTop={"-40px"}
+                                      />
 
           <TracksTable
             title={"In playlist"}
