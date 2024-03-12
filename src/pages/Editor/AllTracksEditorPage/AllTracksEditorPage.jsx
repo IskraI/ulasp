@@ -9,6 +9,7 @@ import {
 import AddTracks from "../../../components/EditorComponents/AddTracks/AddTracks";
 import SortTracks from "../../../components/EditorComponents/Sort/SortTracks";
 import CountTracks from "../../../components/EditorComponents/CountTracks/CountTracks";
+import SearchTracks from "../SearchTracks/SearchTracks";
 import { Loader } from "../../../components/Loader/Loader";
 import RowsAllTracks from "./RowsAllTracksEditor";
 import symbol from "../../../assets/symbol.svg";
@@ -21,6 +22,7 @@ const AllTracksEditor = () => {
   const [pageSize, setPageSize] = useState(10);
   const [isSorted, setIsSorterd] = useState(false);
   const [sortedBy, setSortedBy] = useState(-1);
+  const [query, setQuery] = useState("");
   const prefetchPage = usePrefetch("getAllTracks");
   const {
     data: allTracks,
@@ -32,6 +34,8 @@ const AllTracksEditor = () => {
     page: currentPage,
     limit: pageSize,
     sort: sortedBy,
+    query,
+    forseRefetch: true,
   });
 
   const [
@@ -85,6 +89,11 @@ const AllTracksEditor = () => {
     }
   };
 
+  const handleSearchTracks = (data) => setQuery(data);
+
+  const isSearchResultFail =
+    query !== "" && allTracks.latestTracks.length === 0;
+
   return (
     <>
       {!isSuccessAllTracks && <Loader />}
@@ -99,7 +108,6 @@ const AllTracksEditor = () => {
       {allTracks?.totalTracks !== undefined && (
         <WrapperInfoAndSort>
           <CountTracks countTracks={allTracks?.totalTracks} fontSize={"24px"} />
-
           <SortTracks
             onClick={handleClickSort}
             omMouseEnter={prefetchNext}
@@ -107,6 +115,7 @@ const AllTracksEditor = () => {
             sortedBy={sortedBy}
             prefetch={true}
           />
+          <SearchTracks handleSearchTracks={handleSearchTracks} />
         </WrapperInfoAndSort>
       )}
       {isSuccessAllTracks && !errorLoadingAllTracks && (
@@ -134,6 +143,7 @@ const AllTracksEditor = () => {
             totalPages={allTracks.totalPages}
             isSorted={isSorted}
             checkedAllFn={checkedAllFn}
+            isSearchResultFail={isSearchResultFail}
           />
         </>
       )}

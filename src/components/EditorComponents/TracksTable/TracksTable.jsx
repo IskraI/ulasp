@@ -12,6 +12,10 @@ import { findPage } from "../../../helpers/helpers.js";
 import TrackItem from "./TrackItem";
 import { Loader, ProgressBarTracksTable } from "../../Loader/Loader";
 import { ErrorNotFound, NoData } from "../../Errors/Errors";
+import {
+  HASNOT_BEEN_UPLOADED,
+  SEARCH_FAILED,
+} from "../../../constants/constants.js";
 import { Modal } from "../../Modal/Modal.jsx";
 import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled.jsx";
 
@@ -72,6 +76,7 @@ const TracksTable = ({
   pageSize,
   totalPages,
   isSorted,
+  isSearchResultFail,
 }) => {
   const [
     deleteTrack,
@@ -342,7 +347,10 @@ const TracksTable = ({
     <>
       {error && <ErrorNotFound error={error?.data?.message} />}
       {tracks?.length === 0 && !isLoading && !error && (
-        <NoData text={"Музика ще не завантажена"} textColor={"grey"} />
+        <NoData
+          text={isSearchResultFail ? SEARCH_FAILED : HASNOT_BEEN_UPLOADED}
+          textColor={"grey"}
+        />
       )}
       {/* {isFetching && !isSuccessUpload && <Loader />} */}
 
