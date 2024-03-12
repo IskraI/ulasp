@@ -109,7 +109,18 @@ export const playlistsUserApi = createApi({
 
     //     //  providesTags: ["PlaylistsAdd"],
     //        providesTags: (_result, _err, id) => [{ type: "PlaylistsAdd", id }],
-    //    }),
+    //    }), 
+    uploadTracksInPlaylist: builder.mutation({
+      query: ({ playlistId, formData }) => ({
+        url: `/user/tracks/upload/${playlistId}`,
+        method: "POST",
+        body: formData,
+        formData: true,
+      }),
+      invalidatesTags: ["Playlists"],
+    }),
+
+
 
     updateAddStatusApi: builder.mutation({
       query: (playlistId) => ({
@@ -125,6 +136,16 @@ export const playlistsUserApi = createApi({
         method: "DELETE",
       }),
       invalidatesTags: ["Playlists", "Tracks"],
+    }),
+     updatePlaylistSort: builder.mutation({
+      query: ({ playlistId, data }) => ({
+        url: `/user/playlist/sortupdate/${playlistId}`,
+        method: "PATCH",
+        body: {
+          data,
+        },
+      }),
+      invalidatesTags: ["Playlists"],
     }),
   }),
 });
@@ -142,4 +163,6 @@ export const {
   useUpdateAddStatusApiMutation,
   useDeleteTrackInPlaylistMutation,
   useGetCreatePlaylistByIdForUserQuery,
+  useUploadTracksInPlaylistMutation,
+    useUpdatePlaylistSortMutation,
 } = playlistsUserApi;
