@@ -40,24 +40,4 @@ export const SideBarBottomLineWrapper = styled.div`
   height: 100%;
 `;
 
-export const LogOuButton = styled.button`
-  color: ${colors.mainFontColor};
-  font-family: Inter;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  margin-left: 7px;
-  background: transparent;
-  border: none;
-`;
-
-export const Exit = styled.div`
-  display: flex;
-  margin-top: 16px;
-  margin-left: 189px;
-  margin-bottom: 16px;
-  align-items: center;
-`;
-
 export const BottomSection = styled.div``;
