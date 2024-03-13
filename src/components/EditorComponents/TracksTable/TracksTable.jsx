@@ -105,9 +105,6 @@ const TracksTable = ({
   const [showModalSuccesDelete, setShowModalSuccesDelete] = useState(false);
   const [deleteInfo, setDeleteInfo] = useState([]);
 
-  // console.log(deleteInfo);
-  console.log("tracksIdList ==>", tracksIdList);
-
   const tracksTableProps = {
     showTitle: showTitle ? "table-caption" : "none",
     marginTop: marginTopWrapper ? `${marginTopWrapper}` : "auto",
@@ -125,11 +122,24 @@ const TracksTable = ({
   const currentPageForTrackPlaying = findPage(playerState.indexTrack, pageSize);
 
   const indexOfLastTrackInPage =
-    pageSize > tracks.length
+    pageSize !== tracks.length
       ? tracks.length - 1 + skip
       : currentPageForTrackPlaying * pageSize - 1;
 
   const lastTrackInPage = playerState.indexTrack === indexOfLastTrackInPage;
+  console.log("pageSize", pageSize);
+  console.log("pageSize === tracks.length", pageSize === tracks.length);
+
+  // console.log("tracks.length - 1 + skip", tracks.length - 1 + skip);
+  // console.log(
+  //   "currentPageForTrackPlaying * pageSize - 1",
+  //   currentPageForTrackPlaying * pageSize - 1
+  // );
+  console.log("Длинна", tracks.length);
+  console.log("tracks.length - 1 + skip", tracks.length - 1 + skip);
+  console.log("currentPageForTrackPlaying", currentPageForTrackPlaying);
+  console.log("playerState.indexTrack", playerState.indexTrack);
+  console.log("indexOfLastTrackInPage", indexOfLastTrackInPage);
 
   const onChangePage = useCallback(
     (page) => {
@@ -156,6 +166,13 @@ const TracksTable = ({
     // setPageSize(size);
     onChangeSizePage(size);
   };
+
+  // useEffect(() => {
+  //   if (!isSearchResultFail) {
+  //     onChangePage(1);
+  //   }
+  // }, [isSearchResultFail, onChangePage]);
+
   useEffect(() => {
     // console.log("currentPageLocal", currentPage);
     // console.log("currentPageGlobal", currentPageGlobalState);
@@ -206,10 +223,7 @@ const TracksTable = ({
   ]);
 
   useEffect(() => {
-    console.log("Sorted", isSorted);
-
     if (isSorted) {
-      console.log("Sorted");
       onChangePage(currentPage);
       setTracksIdList([]);
     }
@@ -218,6 +232,7 @@ const TracksTable = ({
   useEffect(() => {
     //если страницы есть и это последний трек
     if (anyMorePages && lastTrackInPage) {
+      console.log("Попали");
       dispatch(
         setLastTrack({
           isLastTrack: true,
@@ -342,7 +357,7 @@ const TracksTable = ({
     setShowModalSuccesDelete(false);
     setDeleteInfo([]);
   };
-
+  console.log("errorUpload?.data.message", errorUpload?.data.message);
   return (
     <>
       {error && <ErrorNotFound error={error?.data?.message} />}
@@ -352,9 +367,9 @@ const TracksTable = ({
           textColor={"grey"}
         />
       )}
-      {/* {isFetching && !isSuccessUpload && <Loader />} */}
+      {isFetching && !isLoadingUpload && <Loader />}
 
-      {isFetching && currentPage > 1 && <Loader />}
+      {/* {isFetching && currentPage >= 1 && <Loader />} */}
 
       {!error && isSuccess && tracks?.length !== 0 && (
         <>
@@ -520,8 +535,6 @@ const TracksTable = ({
                 </div>
               );
             })}
-            {/* deleteInfo.map(({(artist, trackName)}, index) => (<p>{artist}</p>
-            <p>{trackName}</p> */}
           </ModalInfoText>
         </Modal>
       )}

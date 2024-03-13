@@ -26,10 +26,16 @@ export const playlistsApi = createApi({
       providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
     }),
     getPlaylistById: builder.query({
-      query: ({ playlistId: id, page = "", limit = "", sort = "" }) => ({
+      query: ({
+        playlistId: id,
+        page = "",
+        limit = "",
+        sort = "",
+        query = "",
+      }) => ({
         url: `/editor/playlist/${id}?${page && `page=${page}`}${
           limit && `&limit=${limit}`
-        }${sort && `&sort=${sort}`}`,
+        }${sort && `&sort=${sort}`}${`&query=${query}`}`,
       }),
 
       providesTags: (_result, _err, id) => [{ type: "Playlists", id }],

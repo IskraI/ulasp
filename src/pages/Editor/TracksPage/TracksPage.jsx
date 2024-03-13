@@ -10,6 +10,7 @@ import symbol from "../../../assets/symbol.svg";
 import { ErrorNotFound, Error500 } from "../../../components/Errors/Errors";
 import { Loader } from "../../../components/Loader/Loader";
 import SortTracks from "../../../components/EditorComponents/Sort/SortTracks";
+import SearchTracks from "../SearchTracks/SearchTracks";
 import RowsTrackPage from "./RowsTrackPage";
 
 import {
@@ -23,6 +24,7 @@ const TracksPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [isSorted, setIsSorterd] = useState(false);
+  const [query, setQuery] = useState("");
 
   const { playlistId } = useParams();
 
@@ -37,7 +39,7 @@ const TracksPage = () => {
     playlistId,
     page: currentPage,
     limit: pageSize,
-
+    query,
     // refetchOnFocus: true,
   });
 
@@ -67,9 +69,7 @@ const TracksPage = () => {
   };
 
   const handleClickSort = (data) => {
-    console.log(data);
     updateSort({ playlistId, data });
-    // setSortedBy(data);
     if (currentPage > 1) {
       setCurrentPage(1);
       setIsSorterd(true);
@@ -98,6 +98,18 @@ const TracksPage = () => {
       setCheckedMainCheckBox(true);
     }
   };
+
+  const handleSearchTracks = (data) => {
+    if (query !== "" && currentPage !== 1) {
+      // onPageChange(1);
+    }
+    setQuery(data);
+  };
+
+  const isSearchResultFail =
+    query !== "" && data.playlist.trackList.length === 0;
+
+  console.log("isSearchResultFail", isSearchResultFail);
   return (
     <>
       {error?.status === 500 && isError && <Error500 />}
@@ -136,9 +148,12 @@ const TracksPage = () => {
               isPublished={data.playlist.published}
               countTracks={data.totalTracks}
               playlistName={data.playlist.playListName}
+              isSearchResultFail={isSearchResultFail}
               isFetchingPlaylistById={isFetchingPlaylistById}
               isLoadingUploadTrackInPlaylist={isLoadingUploadTrackInPlaylist}
             />
+
+            <SearchTracks handleSearchTracks={handleSearchTracks} />
           </div>
         </>
       )}
@@ -173,6 +188,7 @@ const TracksPage = () => {
           tracksSRC={data.tracksSRC}
           isSorted={isSorted}
           checkedAllFn={checkedAllFn}
+          isSearchResultFail={isSearchResultFail}
         />
       )}
     </>

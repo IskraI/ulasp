@@ -135,6 +135,7 @@ const AllTracksEditor = () => {
             isLoading={isLoadingAllTracks}
             isLoadingUpload={isLoadingUploadTrack}
             isSuccessUpload={isSuccessUploadTrack}
+            isErrorUpload={isErrorUploadTrack}
             errorUpload={errorUploadTrack}
             onChangeCurrentPage={onPageChange}
             onChangeSizePage={onPageSizeChange}

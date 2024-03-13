@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+import PropTypes from "prop-types";
 import { Button } from "../../Button/Button";
 import { Modal } from "../../Modal/Modal";
 import {
@@ -11,7 +11,12 @@ import { LoaderButton } from "../../Loader/Loader";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-const PlayListControl = ({ isPublished, countTracks, playlistName }) => {
+const PlayListControl = ({
+  isPublished,
+  countTracks,
+  playlistName,
+  isSearchResultFail,
+}) => {
   const [isShowModal, setIsShowModal] = useState(false);
   const [isShowModalInfo, setIsShowModalInfo] = useState(false);
 
@@ -21,6 +26,9 @@ const PlayListControl = ({ isPublished, countTracks, playlistName }) => {
     useUpdatePlaylistMutation();
 
   useEffect(() => {
+    if (isSearchResultFail) {
+      return;
+    }
     if (isSuccess) {
       setIsShowModal(false);
     }
@@ -33,7 +41,14 @@ const PlayListControl = ({ isPublished, countTracks, playlistName }) => {
         }).unwrap();
       }
     }
-  }, [countTracks, isPublished, isSuccess, playlistId, updatePlaylist]);
+  }, [
+    countTracks,
+    isPublished,
+    isSearchResultFail,
+    isSuccess,
+    playlistId,
+    updatePlaylist,
+  ]);
 
   const handleSubmit = async () => {
     const body = Object.assign({ published: isPublished ? "false" : "true" });
@@ -62,31 +77,6 @@ const PlayListControl = ({ isPublished, countTracks, playlistName }) => {
     ) : (
       `Опублікувати`
     );
-
-  // const loaderBtn = useMemo(() => {
-  //   if (isPublished && isLoading) {
-  //     return (
-  //       <>
-  //         <p style={{ marginRight: "4px" }}>Деактивація</p>
-  //         <LoaderButton />
-  //       </>
-  //     );
-  //   }
-
-  //   if (!isPublished && isLoading) {
-  //     return (
-  //       <>
-  //         <p style={{ marginRight: "4px" }}>Публікуємо</p>
-  //         <LoaderButton />
-  //       </>
-  //     );
-  //   }
-  //   if (isPublished && !isLoading) {
-  //     return `Опублікований`;
-  //   } else {
-  //     return `Опублікувати`;
-  //   }
-  // }, [isPublished, isLoading]);
 
   return (
     <>
@@ -150,6 +140,13 @@ const PlayListControl = ({ isPublished, countTracks, playlistName }) => {
       )}
     </>
   );
+};
+
+PlayListControl.propTypes = {
+  isPublished: PropTypes.bool,
+  countTracks: PropTypes.number,
+  playlistName: PropTypes.string,
+  isSearchResultFail: PropTypes.bool,
 };
 
 export default PlayListControl;
