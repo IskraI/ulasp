@@ -1,42 +1,33 @@
 import TracksTable from "../../../components/UserMediaComponent/TracksTable/TracksTableUser";
-import { useGetPlaylistByIdForUserQuery,useGetCreatePlaylistByIdForUserQuery, useUpdatePlaylistSortMutation } from "../../../redux/playlistsUserSlice";
+import { useGetCreatePlaylistByIdForUserQuery } from "../../../redux/playlistsUserSlice";
 import PlaylistListItem from "../../../components/UserMediaComponent/PlayLists/PlayListsItem";
 import { BtnSort } from "../AllTracksUser/AllTracksUser.styled";
 import { ErrorNotFound, Error500 } from "../../../components/Errors/Errors";
 import symbol from "../../../assets/symbol.svg";
 import Player from "../../../components/Player/Player";
 import { useState, useEffect, useLayoutEffect, useRef, useId } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Loader } from "../../../components/Loader/Loader";
-import SortTracks from "../../../components/EditorComponents/Sort/SortTracks";
 
-const TracksPage = () => {
+const TracksPageCreateUser = () => {
   const id = useId();
   const BaseInputRef = useRef(null);
-  const location = useLocation();
   const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-const [isSorted, setIsSorterd] = useState(false);
- const [sortOrder, setSortOrder] = useState("random");
-  const { playlistId } = useParams();
 
-   const playlistQuery = location.pathname.includes("myplaylists")
-    ? useGetCreatePlaylistByIdForUserQuery
-    : useGetPlaylistByIdForUserQuery;
+  const { playlistId } = useParams();
 
   const {
     data,
     isFetching: isFetchingPlaylistById,
     isSuccess,
     error,
-  } =  playlistQuery({
+  } = useGetCreatePlaylistByIdForUserQuery({
     playlistId,
     page: currentPage,
     limit: pageSize,
   });
-
-   const [updateSort] = useUpdatePlaylistSortMutation();
 
   const rows = () => {
     const RowsTitle = [
@@ -101,56 +92,34 @@ const [isSorted, setIsSorterd] = useState(false);
     return RowsTitle;
   };
 
-  // const [sortedTracks, setSortedTracks] = useState([]);
-  // const [sortedForSrc, setSortedForSrc] = useState([]);
-  // const [isSorted, setIsSorted] = useState(false);
+  const [sortedTracks, setSortedTracks] = useState([]);
+  const [sortedForSrc, setSortedForSrc] = useState([]);
+  const [isSorted, setIsSorted] = useState(false);
 
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     setSortedTracks([...data.playlist.trackList]);
-  //     setSortedForSrc([...data.tracksSRC]);
-  //   }
-  // }, [isSuccess, data]);
-
-  // const handleSortClick = () => {
-  //   if (!isSorted) {
-  //     const sorted = [...sortedTracks].sort((a, b) => {
-  //       return a.trackName.localeCompare(b.trackName);
-  //     });
-  //     const sortedSrc = [...sortedForSrc].sort((a, b) => {
-  //       return a.trackName.localeCompare(b.trackName);
-  //     });
-  //     setSortedTracks(sorted);
-  //     setSortedForSrc(sortedSrc);
-  //     setIsSorted(true);
-  //   } else {
-  //     setSortedTracks([...data.playlist.trackList]);
-  //     setSortedForSrc([...data.tracksSRC]);
-  //     setIsSorted(false);
-  //   }
-  // };
-
-  const handleClickSort = (data) => {
-    console.log(data);
-    updateSort({ playlistId, data });
-    // setSortedBy(data);
-    if (currentPage > 1) {
-      setCurrentPage(1);
-      setIsSorterd(true);
-      setCheckedMainCheckBox(false);
+  useEffect(() => {
+    if (isSuccess) {
+      setSortedTracks([...data.playlist.trackList]);
+      setSortedForSrc([...data.tracksSRC]);
     }
+  }, [isSuccess, data]);
 
-    localStorage.setItem("sortOrder", data);
-    setSortOrder(data);
-
+  const handleSortClick = () => {
+    if (!isSorted) {
+      const sorted = [...sortedTracks].sort((a, b) => {
+        return a.trackName.localeCompare(b.trackName);
+      });
+      const sortedSrc = [...sortedForSrc].sort((a, b) => {
+        return a.trackName.localeCompare(b.trackName);
+      });
+      setSortedTracks(sorted);
+      setSortedForSrc(sortedSrc);
+      setIsSorted(true);
+    } else {
+      setSortedTracks([...data.playlist.trackList]);
+      setSortedForSrc([...data.tracksSRC]);
+      setIsSorted(false);
+    }
   };
-
-   useEffect(() => {
-    const savedSortOrder = localStorage.getItem("sortOrder");
-    if (savedSortOrder) {
-      setSortOrder(savedSortOrder);
-    }
-  }, []); 
 
   const onPageChange = (page) => {
     console.log("4 Step - setCurrentPage in mutation", page);
@@ -178,17 +147,11 @@ const [isSorted, setIsSorterd] = useState(false);
             id={playlistId}
             countTracks={data.totalTracks}
           />
-          {/* <BtnSort onClick={handleSortClick}>
+          <BtnSort onClick={handleSortClick}>
             <svg width="24" height="24">
               <use href={`${symbol}#icon-sort`}></use>
             </svg>
-          </BtnSort> */}
-          <SortTracks
-              onClick={handleClickSort}
-              sortType={"random"}
-            marginTop={"-40px"}
-                                      />
-
+          </BtnSort>
           <TracksTable
             title={"In playlist"}
             showTitle={false}
@@ -196,7 +159,7 @@ const [isSorted, setIsSorterd] = useState(false);
             isInPlayList={true}
             playListId={data.playlist._id}
             playListGenre={data.playlist.playlistGenre}
-            tracks={data.playlist.trackList}
+            tracks={isSorted ? sortedTracks : data.playlist.trackList}
             error={error}
             isFetching={isFetchingPlaylistById}
             isSuccess={isSuccess}
@@ -207,7 +170,7 @@ const [isSorted, setIsSorterd] = useState(false);
             pageSize={pageSize}
             totalPages={data.totalPages}
             totalTracks={data.totalTracks}
-            tracksSRC={data.tracksSRC}
+            tracksSRC={isSorted ? sortedForSrc : data.tracksSRC}
           />
           {/* <Player tracks={sortedTracks} /> */}
         </>
@@ -216,4 +179,4 @@ const [isSorted, setIsSorterd] = useState(false);
   );
 };
 
-export default TracksPage;
+export default TracksPageCreateUser;

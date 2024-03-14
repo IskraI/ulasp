@@ -92,3 +92,21 @@ export const ReportFormLabel = styled.label`
   align-items: center; */
   padding: 8px;
 `;
+export const ReportWrapper = styled.div`
+  display: flex;
+  gap: 24px;
+  /* align-items: stretch; */
+  justify-content: space-between;
+`;
+export const ReporTabletWrapper = styled.div`
+  display: block;
+  padding: 24px 0;
+  /* height: 100vh; */
+  width: 100%;
+  background: rgba(149, 202, 255, 0.42);
+  border-radius: 10px;
+  box-shadow: -2px 4px 30px 0px rgba(0, 0, 0, 0.3);
+  margin-left: auto;
+  margin-right: auto;
+  /* max-width: 100%; */
+`;

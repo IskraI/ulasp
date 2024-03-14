@@ -1,9 +1,13 @@
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { SignInSchema } from "./Schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { VscError } from "react-icons/vsc";
-import { useNavigate } from "react-router-dom";
-
+import { Modal } from "../Modal/Modal";
+import { ModalInfoText } from "../Modal/Modal.styled";
+import { errorMappings } from "../../constants/errorMessage";
 import {
   StyledButton,
   StyledError,
@@ -19,6 +23,18 @@ import { useSignInClientMutation } from "../../redux/authClientSlice";
 
 export const SignInClient = () => {
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleShowModal = () => {
+    setShowModal(true);
+    document.body.classList.add("modal-open");
+  };
+
+  const handleCloseModal = () => {
+    document.body.classList.remove("modal-open");
+    setShowModal(false);
+  };
 
   const {
     register,
@@ -33,7 +49,6 @@ export const SignInClient = () => {
   const [dispatch, { isLoading }] = useSignInClientMutation();
 
   const onSubmit = (data) => {
-    console.log("onSubmit", data);
     const credentials = {
       contractNumber: data.сontract,
       password: data.identification,
@@ -47,8 +62,16 @@ export const SignInClient = () => {
         reset();
       })
       .catch((e) => {
-        console.log(e.data?.message || e);
-        alert(e.data?.message || e);
+        let errorMessage = e.data?.message;
+        if (e.data.message) {
+          const mappedMessage = errorMappings[e.status];
+          if (mappedMessage) {
+            errorMessage = mappedMessage;
+          }
+        }
+
+        setErrorMessage(errorMessage);
+        handleShowModal();
       });
   };
 
@@ -131,6 +154,16 @@ export const SignInClient = () => {
           </StyledButton>
         </StyledFormInsight>
       </StyledForm>
+      {showModal && (
+        <Modal
+          width={"520px"}
+          padding={"24px"}
+          onClose={handleCloseModal}
+          showCloseButton={true}
+        >
+          <ModalInfoText> {errorMessage}</ModalInfoText>
+        </Modal>
+      )}
     </>
   );
 };

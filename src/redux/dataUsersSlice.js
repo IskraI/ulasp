@@ -54,6 +54,13 @@ export const dataUsersApi = createApi({
       }),
       invalidatesTags: ["dataUsers", "dataUser"],
     }),
+    unblockEditorById: builder.mutation({
+      query: (id) => ({
+        url: `admin/editors/status/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["dataUsers", "dataUser"],
+    }),
     accessUserUpdateById: builder.mutation({
       query: (id) => ({
         url: `admin/users/access/${id}`,
@@ -165,4 +172,5 @@ export const {
   useGetUserByIdTrackCountQuery,
   useGetUserByIdPlaylistCountQuery,
   useCountListensByUserByIdMutation,
+  useUnblockEditorByIdMutation,
 } = dataUsersApi;

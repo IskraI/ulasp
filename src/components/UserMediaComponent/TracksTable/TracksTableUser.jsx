@@ -114,7 +114,7 @@ const TracksTable = ({
     console.log("currentPageGlobal", currentPageGlobalState);
     if (currentPage === 1 && !isFetching) {
       // console.log("В прелоад");
-      const trackURL = tracksSRC.map((track) => {
+      const trackURL = tracksSRC?.map((track) => {
         const transformTrackObject = {
           id: track._id,
           trackURL: track.trackURL,
@@ -228,7 +228,7 @@ const TracksTable = ({
                 </tr>
               </THeadStyle>
               <tbody>
-                {tracks.map(
+                {tracks?.map(
                   (
                     {
                       _id,

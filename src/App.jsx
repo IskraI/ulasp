@@ -60,11 +60,12 @@ import TracksPageUser from "./pages/UserPage/TracksPageUser/TracksPageUser";
 import ShopsItemPageUser from "./pages/UserPage/ShopsUserPage/ShopsItemPageUser";
 import ShopSubCategoryPageUser from "./pages/UserPage/ShopsUserPage/ShopSubCategoryPageUser";
 import PlaylistInShopSubCategoryPageUser from "./pages/UserPage/ShopsUserPage/PlaylistInShopSubCategoryPageUser";
-import CreateAllPlaylists from "./components/UserCabinetPage/CreatePlaylists/CreatePlaylists";
+import CreateAllPlaylists from "./components/UserCabinetPage/CreatePlaylists/CreateAllPlaylists";
 import AddPlayLists from "./components/UserCabinetPage/AddPlaylists/AddPlaylistsItem";
 import FavoritePlaylists from "./components/UserCabinetPage/FavoritePlaylists/FavoritePlaylists";
 import AddAllPlaylists from "./components/UserCabinetPage/AddPlaylists/AddAllPlaylists";
 import FavoriteAllPlaylists from "./components/UserCabinetPage/FavoritePlaylists/FavoriteAllPlaylists";
+import TracksPageCreateUser from "./pages/UserPage/TracksPageUser/TracksCreateUser";
 
 const AdminCabinetPage = lazy(() =>
   import("./components/AdminComponents/AdminCabinetPage/AdminCabinetPage")
@@ -259,7 +260,7 @@ function App() {
                 />
                 <Route
                   path="cabinet/myplaylists/createplaylists/:playlistId/tracks"
-                  element={<TracksPageUser display={"none"} />}
+                  element={<TracksPageUser />}
                 />
                 <Route
                   path="cabinet/myplaylists/addplaylists"

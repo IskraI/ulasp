@@ -19,6 +19,7 @@ import {
   ModalBtnContainer,
 } from "./CardUser.styled";
 import { useNavigate } from "react-router-dom";
+import { Loader } from "../../Loader/Loader";
 
 const CardUser = () => {
   const navigate = useNavigate();
@@ -96,6 +97,7 @@ const CardUser = () => {
   return (
     <>
       <TabNavigation />
+      {isLoading && <Loader />}
       {!isLoading && !isLoadingSongsCount && (
         <CardUserForm
           user={user}
@@ -146,7 +148,6 @@ const CardUser = () => {
       </ButtonContainer>
       <Button
         type="button"
-        // display="none"
         padding="8px 27px"
         height="48px"
         marginleft={"auto"}

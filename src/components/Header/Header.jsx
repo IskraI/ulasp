@@ -7,7 +7,7 @@ import LogOutBtn from "../LogOutButton/LogOutButton";
 
 const Header = ({ avatarURL, logo }) => {
   const avatarSrc = avatarURL ? `${BASE_URL}/${avatarURL}` : defaultAvatarSrc;
-  console.log("logo :>> ", logo);
+
   return (
     <PageHeader>
       <Link to={logo}>

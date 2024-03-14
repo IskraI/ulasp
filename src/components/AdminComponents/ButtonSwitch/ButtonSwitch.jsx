@@ -5,7 +5,7 @@ import {
   Text,
 } from "../ButtonSwitch/ButtonSwitch.styled";
 import { useAccessUserUpdateByIdMutation } from "../../../redux/dataUsersSlice";
-
+import { LoaderButton } from "../../Loader/Loader";
 import { useState } from "react";
 
 export const ButtonSwitch = ({
@@ -37,7 +37,10 @@ export const ButtonSwitch = ({
       {/* {!form && ( */}
       <>
         {isLoadingAccess && (
-          <ButtonCustomSwitch type="button">Loading</ButtonCustomSwitch>
+          <ButtonCustomSwitch type="button">
+            {/* Loading... */}
+            <LoaderButton height={12} width={12} color={"#113f10"} />
+          </ButtonCustomSwitch>
         )}
 
         {!isLoadingAccess && typeOfAccess && (

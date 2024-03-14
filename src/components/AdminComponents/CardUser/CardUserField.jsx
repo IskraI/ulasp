@@ -1,6 +1,6 @@
 //typeOfUser - fop , tov
 //activeSection createuser, create editor, carduser, cardeditor
-import { useState } from "react";
+
 import {
   RegisterField,
   RegisterLabel,
@@ -16,8 +16,7 @@ import {
 import ContactFaceFieldCard from "../UserForm/UserFieldForm/ContactFaceFieldCard";
 import RegisterNameFieldCard from "../UserForm/UserFieldForm/RegisterNameFieldCard";
 import CommonFieldCard from "../UserForm/UserFieldForm/CommonFieldsCard";
-import { Button } from "../../Button/Button";
-import { useForm, Controller } from "react-hook-form";
+import {  Controller } from "react-hook-form";
 const CardUserField = ({
   user,
   control,
@@ -101,6 +100,7 @@ const CardUserField = ({
               errors={errors}
               readOnly={!isEditing}
               user={user}
+              isEditing={isEditing}
             />
 
             <RegisterField>
@@ -141,13 +141,25 @@ const CardUserField = ({
                 control={control}
                 defaultValue={user.lastPay}
                 render={({ field }) => (
-                  <RegisterInput
-                    type="text"
-                    placeholder="Остання оплата"
-                    readOnly={!isEditing}
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.target.value)}
-                  />
+                  <>
+                    <RegisterInput
+                      type="text"
+                      placeholder="Остання оплата"
+                      readOnly={!isEditing}
+                      value={field.value}
+                      onChange={(e) => field.onChange(e.target.value)}
+                      className={
+                        isEditing
+                          ? `${errors.lastPay ? "invalid" : "valid"}`
+                          : ""
+                      }
+                    />
+                    {errors && errors.lastPay && (
+                      <Tooltip className={`${errors.lastPay ? "visible" : ""}`}>
+                        {errors.lastPay.message}
+                      </Tooltip>
+                    )}
+                  </>
                 )}
               />
             </RegisterField>
@@ -170,6 +182,7 @@ const CardUserField = ({
             </RegisterField>
 
             <ContactFaceFieldCard
+              isEditing={isEditing}
               control={control}
               register={register}
               errors={errors}
