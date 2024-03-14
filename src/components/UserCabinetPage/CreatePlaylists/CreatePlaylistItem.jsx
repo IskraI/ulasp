@@ -101,7 +101,11 @@ const [toggleFavorite] =  useUpdateCabinetPlaylistStatusApiMutation(id);
         {!placeListCardInfo ? (
           <Link
             key={id}
-            to={`${id}/tracks`}
+           to={
+            location.pathname.includes("createplaylists")
+              ? `${id}/tracks`
+              : `createplaylists/${id}/tracks`
+          }
             state={{ from: location }}
             disabled={placeListCardInfo ? true : false}
             style={{
