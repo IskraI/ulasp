@@ -125,9 +125,7 @@ const AllTracksEditor = () => {
             sortedBy={sortedBy}
             prefetch={true}
           />
-          <SearchTracks
-            handleSearchTracks={handleSearchTracks}
-          />
+          <SearchTracks handleSearchTracks={handleSearchTracks} />
         </WrapperInfoAndSort>
       )}
       {isSuccessAllTracks && !errorLoadingAllTracks && (

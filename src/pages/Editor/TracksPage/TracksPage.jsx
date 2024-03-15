@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 import TracksTable from "../../../components/EditorComponents/TracksTable/TracksTable";
 import PlaylistListItem from "../../../components/EditorComponents/PlayLists/PlayListItem";
@@ -25,6 +25,7 @@ const TracksPage = () => {
   const [pageSize, setPageSize] = useState(10);
   const [isSorted, setIsSorterd] = useState(false);
   const [query, setQuery] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
 
   const { playlistId } = useParams();
 
@@ -60,6 +61,8 @@ const TracksPage = () => {
   const onPageChange = (page) => {
     console.log("4 Step - setCurrentPage in mutation", page);
     setCurrentPage(page);
+    setIsSorterd(false);
+    setIsSearching(false);
     setCheckedMainCheckBox(false);
   };
 
@@ -75,6 +78,7 @@ const TracksPage = () => {
       setIsSorterd(true);
       setCheckedMainCheckBox(false);
     }
+    setIsSearching(false);
   };
 
   // const checkedAllFn = (data) => {
@@ -99,12 +103,15 @@ const TracksPage = () => {
     }
   };
 
-  const handleSearchTracks = (data) => {
-    if (query !== "" && currentPage !== 1) {
-      // onPageChange(1);
+  const handleSearchTracks = useCallback((data, isActive) => {
+    if (isActive) {
+      setQuery(data);
+      setIsSearching(true);
+      checkedAllFn(false);
+    } else {
+      setIsSearching(false);
     }
-    setQuery(data);
-  };
+  }, []);
 
   const isSearchResultFail =
     query !== "" && data.playlist.trackList.length === 0;
@@ -187,6 +194,7 @@ const TracksPage = () => {
           totalTracks={data.totalTracks}
           tracksSRC={data.tracksSRC}
           isSorted={isSorted}
+          isSearching={isSearching}
           checkedAllFn={checkedAllFn}
           isSearchResultFail={isSearchResultFail}
         />
