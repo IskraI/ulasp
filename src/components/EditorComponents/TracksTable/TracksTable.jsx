@@ -77,6 +77,7 @@ const TracksTable = ({
   totalPages,
   isSorted,
   isSearchResultFail,
+  isSearching,
 }) => {
   const [
     deleteTrack,
@@ -98,8 +99,6 @@ const TracksTable = ({
   const dispatch = useDispatch();
   const location = useLocation();
   const playerState = useSelector(getPlayerState);
-  // const [currentPage, setCurrentPage] = useState(currPage);
-  // const [pageSize, setPageSize] = useState(currentPageSize);
   const [tracksIdList, setTracksIdList] = useState([]);
   const [deselect, setDeselect] = useState(true);
   const [showModalSuccesDelete, setShowModalSuccesDelete] = useState(false);
@@ -127,19 +126,19 @@ const TracksTable = ({
       : currentPageForTrackPlaying * pageSize - 1;
 
   const lastTrackInPage = playerState.indexTrack === indexOfLastTrackInPage;
-  console.log("pageSize", pageSize);
-  console.log("pageSize === tracks.length", pageSize === tracks.length);
+  // console.log("pageSize", pageSize);
+  // console.log("pageSize === tracks.length", pageSize === tracks.length);
 
   // console.log("tracks.length - 1 + skip", tracks.length - 1 + skip);
   // console.log(
   //   "currentPageForTrackPlaying * pageSize - 1",
   //   currentPageForTrackPlaying * pageSize - 1
   // );
-  console.log("Длинна", tracks.length);
-  console.log("tracks.length - 1 + skip", tracks.length - 1 + skip);
-  console.log("currentPageForTrackPlaying", currentPageForTrackPlaying);
-  console.log("playerState.indexTrack", playerState.indexTrack);
-  console.log("indexOfLastTrackInPage", indexOfLastTrackInPage);
+  // console.log("Длинна", tracks.length);
+  // console.log("tracks.length - 1 + skip", tracks.length - 1 + skip);
+  // console.log("currentPageForTrackPlaying", currentPageForTrackPlaying);
+  // console.log("playerState.indexTrack", playerState.indexTrack);
+  // console.log("indexOfLastTrackInPage", indexOfLastTrackInPage);
 
   const onChangePage = useCallback(
     (page) => {
@@ -166,12 +165,6 @@ const TracksTable = ({
     // setPageSize(size);
     onChangeSizePage(size);
   };
-
-  // useEffect(() => {
-  //   if (!isSearchResultFail) {
-  //     onChangePage(1);
-  //   }
-  // }, [isSearchResultFail, onChangePage]);
 
   useEffect(() => {
     // console.log("currentPageLocal", currentPage);
@@ -223,11 +216,31 @@ const TracksTable = ({
   ]);
 
   useEffect(() => {
+    if (tracksIdList.length === tracks.length) {
+      setDeselect(true);
+    } else {
+      setDeselect(false);
+    }
+  }, [isSearching, tracks.length, tracksIdList.length]);
+
+  useEffect(() => {
     if (isSorted) {
       onChangePage(currentPage);
       setTracksIdList([]);
     }
   }, [currentPage, isSorted, onChangePage]);
+
+  useEffect(() => {
+    if (isSearching) {
+      // setDeselect(false);
+      // if (currentPage !== 1) {
+      //   onChangePage(1);
+      // }
+      onChangePage(1);
+      setTracksIdList([]);
+      setDeselect(true);
+    }
+  }, [currentPage, isSearching, onChangePage]);
 
   useEffect(() => {
     //если страницы есть и это последний трек
@@ -269,14 +282,9 @@ const TracksTable = ({
     lastTrackInPage,
   ]);
 
-  // const onPageChange = (page) => {
-  //   console.log("page", page);
-
   // const onPageSizeChange = (pageSize) => {
   //   onChangeSizePage(pageSize);
   // };
-
-  // console.log(onPageChange());
 
   const getCheckedTrackId = (data) => {
     if (data !== undefined) {
@@ -345,19 +353,10 @@ const TracksTable = ({
     setTracksIdList([]);
   };
 
-  useEffect(() => {
-    if (tracksIdList.length === tracks.length) {
-      setDeselect(true);
-    } else {
-      setDeselect(false);
-    }
-  }, [tracks.length, tracksIdList.length]);
-
   const closeModalDeleteSuccess = () => {
     setShowModalSuccesDelete(false);
     setDeleteInfo([]);
   };
-  console.log("errorUpload?.data.message", errorUpload?.data.message);
   return (
     <>
       {error && <ErrorNotFound error={error?.data?.message} />}

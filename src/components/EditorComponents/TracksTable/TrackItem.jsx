@@ -176,7 +176,7 @@ const TrackItem = ({
     }
 
     if (!isCheckedAll && ref.current.checked) {
-      // console.log("deselect", deselect);
+      console.log("deselect", deselect);
       if (!deselect) {
         return;
       }

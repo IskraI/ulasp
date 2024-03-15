@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 import TracksTable from "../../../components/EditorComponents/TracksTable/TracksTable";
 import {
@@ -23,6 +23,8 @@ const AllTracksEditor = () => {
   const [isSorted, setIsSorterd] = useState(false);
   const [sortedBy, setSortedBy] = useState(-1);
   const [query, setQuery] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+
   const prefetchPage = usePrefetch("getAllTracks");
   const {
     data: allTracks,
@@ -60,6 +62,7 @@ const AllTracksEditor = () => {
     console.log("4 Step - setCurrentPage in mutation", page);
     setCurrentPage(page);
     setIsSorterd(false);
+    setIsSearching(false);
     setCheckedMainCheckBox(false);
   };
 
@@ -81,7 +84,6 @@ const AllTracksEditor = () => {
   };
 
   const checkedAllFn = (data) => {
-    console.log(data);
     if (!data) {
       setCheckedMainCheckBox(false);
     } else {
@@ -89,10 +91,18 @@ const AllTracksEditor = () => {
     }
   };
 
-  const handleSearchTracks = (data) => setQuery(data);
+  const handleSearchTracks = useCallback((data, isActive) => {
+    if (isActive) {
+      setQuery(data);
+      setIsSearching(true);
+      checkedAllFn(false);
+    } else {
+      setIsSearching(false);
+    }
+  }, []);
 
   const isSearchResultFail =
-    query !== "" && allTracks.latestTracks.length === 0;
+    query !== "" && allTracks?.latestTracks.length === 0;
 
   return (
     <>
@@ -115,7 +125,9 @@ const AllTracksEditor = () => {
             sortedBy={sortedBy}
             prefetch={true}
           />
-          <SearchTracks handleSearchTracks={handleSearchTracks} />
+          <SearchTracks
+            handleSearchTracks={handleSearchTracks}
+          />
         </WrapperInfoAndSort>
       )}
       {isSuccessAllTracks && !errorLoadingAllTracks && (
@@ -143,6 +155,7 @@ const AllTracksEditor = () => {
             pageSize={pageSize}
             totalPages={allTracks.totalPages}
             isSorted={isSorted}
+            isSearching={isSearching}
             checkedAllFn={checkedAllFn}
             isSearchResultFail={isSearchResultFail}
           />

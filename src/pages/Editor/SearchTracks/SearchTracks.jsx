@@ -5,16 +5,18 @@ import { SearchInput } from "./SearchTracks.styled";
 
 const SearchTracks = ({ handleSearchTracks }) => {
   const [inputValue, setInputValue] = useState("");
+  const [isInputActive, setIsInputActive] = useState(false);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       const query = inputValue.trim();
-      handleSearchTracks(query);
+      handleSearchTracks(query, isInputActive);
     }, 500);
     return () => clearTimeout(timeoutId);
-  }, [handleSearchTracks, inputValue]);
+  }, [handleSearchTracks, inputValue, isInputActive]);
 
   const handleTextChange = (e) => {
+    e.preventDefault();
     const inputValue = e.currentTarget.value;
     setInputValue(inputValue);
   };
@@ -25,6 +27,8 @@ const SearchTracks = ({ handleSearchTracks }) => {
       placeholder="Пошук"
       value={inputValue}
       onChange={handleTextChange}
+      onFocus={() => setIsInputActive(true)}
+      onBlur={() => setIsInputActive(false)}
     />
   );
 };
