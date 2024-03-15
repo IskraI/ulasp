@@ -14,3 +14,7 @@ export const ERROR_NOT_FOUND =
 export const SERVER_ERROR =
   "А щоб його підняло та гепнуло! Сервер знов звалився :(";
 export const SERVER_ERROR_M = "Будь ласка, спробуйте ще раз";
+
+export const HASNOT_BEEN_UPLOADED = "Музика ще не завантажена";
+
+export const SEARCH_FAILED = "За вашим пошуком результатів не знайдено";

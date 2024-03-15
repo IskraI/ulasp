@@ -1,15 +1,15 @@
 import styled from "@emotion/styled";
 import { colors } from "../../styles/vars";
 export const PageHeader = styled.header`
-   display: flex;
-   padding: 0 114px;
+  display: flex;
+  padding: 0 114px;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   width: 100%;
   height: 80px;
   background-color: ${colors.bgHeaderColor};
   border-bottom: 2px solid ${colors.primaryColor};
-  position:fixed;
+  position: fixed;
   z-index: 3;
 `;
 

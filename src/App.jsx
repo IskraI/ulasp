@@ -238,6 +238,10 @@ function App() {
                   element={<TracksPageUser display={"none"} />}
                 /> */}
                 <Route
+                  path="medialibrary/:playlistId/tracks"
+                  element={<TracksPageUser />}
+                />
+                <Route
                   path="medialibrary/newplaylists"
                   element={<NewPlaylistsUser display={"none"} />}
                 />

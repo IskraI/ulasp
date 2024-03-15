@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 import TracksTable from "../../../components/EditorComponents/TracksTable/TracksTable";
 import PlaylistListItem from "../../../components/EditorComponents/PlayLists/PlayListItem";
@@ -10,6 +10,7 @@ import symbol from "../../../assets/symbol.svg";
 import { ErrorNotFound, Error500 } from "../../../components/Errors/Errors";
 import { Loader } from "../../../components/Loader/Loader";
 import SortTracks from "../../../components/EditorComponents/Sort/SortTracks";
+import SearchTracks from "../SearchTracks/SearchTracks";
 import RowsTrackPage from "./RowsTrackPage";
 
 import {
@@ -23,6 +24,8 @@ const TracksPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [isSorted, setIsSorterd] = useState(false);
+  const [query, setQuery] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
 
   const { playlistId } = useParams();
 
@@ -37,7 +40,7 @@ const TracksPage = () => {
     playlistId,
     page: currentPage,
     limit: pageSize,
-
+    query,
     // refetchOnFocus: true,
   });
 
@@ -58,6 +61,8 @@ const TracksPage = () => {
   const onPageChange = (page) => {
     console.log("4 Step - setCurrentPage in mutation", page);
     setCurrentPage(page);
+    setIsSorterd(false);
+    setIsSearching(false);
     setCheckedMainCheckBox(false);
   };
 
@@ -67,14 +72,13 @@ const TracksPage = () => {
   };
 
   const handleClickSort = (data) => {
-    console.log(data);
     updateSort({ playlistId, data });
-    // setSortedBy(data);
     if (currentPage > 1) {
       setCurrentPage(1);
       setIsSorterd(true);
       setCheckedMainCheckBox(false);
     }
+    setIsSearching(false);
   };
 
   // const checkedAllFn = (data) => {
@@ -98,6 +102,21 @@ const TracksPage = () => {
       setCheckedMainCheckBox(true);
     }
   };
+
+  const handleSearchTracks = useCallback((data, isActive) => {
+    if (isActive) {
+      setQuery(data);
+      setIsSearching(true);
+      checkedAllFn(false);
+    } else {
+      setIsSearching(false);
+    }
+  }, []);
+
+  const isSearchResultFail =
+    query !== "" && data.playlist.trackList.length === 0;
+
+  console.log("isSearchResultFail", isSearchResultFail);
   return (
     <>
       {error?.status === 500 && isError && <Error500 />}
@@ -136,9 +155,12 @@ const TracksPage = () => {
               isPublished={data.playlist.published}
               countTracks={data.totalTracks}
               playlistName={data.playlist.playListName}
+              isSearchResultFail={isSearchResultFail}
               isFetchingPlaylistById={isFetchingPlaylistById}
               isLoadingUploadTrackInPlaylist={isLoadingUploadTrackInPlaylist}
             />
+
+            <SearchTracks handleSearchTracks={handleSearchTracks} />
           </div>
         </>
       )}
@@ -172,7 +194,9 @@ const TracksPage = () => {
           totalTracks={data.totalTracks}
           tracksSRC={data.tracksSRC}
           isSorted={isSorted}
+          isSearching={isSearching}
           checkedAllFn={checkedAllFn}
+          isSearchResultFail={isSearchResultFail}
         />
       )}
     </>

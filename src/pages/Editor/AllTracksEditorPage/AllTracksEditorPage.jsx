@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 import TracksTable from "../../../components/EditorComponents/TracksTable/TracksTable";
 import {
@@ -9,6 +9,7 @@ import {
 import AddTracks from "../../../components/EditorComponents/AddTracks/AddTracks";
 import SortTracks from "../../../components/EditorComponents/Sort/SortTracks";
 import CountTracks from "../../../components/EditorComponents/CountTracks/CountTracks";
+import SearchTracks from "../SearchTracks/SearchTracks";
 import { Loader } from "../../../components/Loader/Loader";
 import RowsAllTracks from "./RowsAllTracksEditor";
 import symbol from "../../../assets/symbol.svg";
@@ -21,6 +22,9 @@ const AllTracksEditor = () => {
   const [pageSize, setPageSize] = useState(10);
   const [isSorted, setIsSorterd] = useState(false);
   const [sortedBy, setSortedBy] = useState(-1);
+  const [query, setQuery] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+
   const prefetchPage = usePrefetch("getAllTracks");
   const {
     data: allTracks,
@@ -32,6 +36,8 @@ const AllTracksEditor = () => {
     page: currentPage,
     limit: pageSize,
     sort: sortedBy,
+    query,
+    forseRefetch: true,
   });
 
   const [
@@ -56,6 +62,7 @@ const AllTracksEditor = () => {
     console.log("4 Step - setCurrentPage in mutation", page);
     setCurrentPage(page);
     setIsSorterd(false);
+    setIsSearching(false);
     setCheckedMainCheckBox(false);
   };
 
@@ -77,13 +84,25 @@ const AllTracksEditor = () => {
   };
 
   const checkedAllFn = (data) => {
-    console.log(data);
     if (!data) {
       setCheckedMainCheckBox(false);
     } else {
       setCheckedMainCheckBox(true);
     }
   };
+
+  const handleSearchTracks = useCallback((data, isActive) => {
+    if (isActive) {
+      setQuery(data);
+      setIsSearching(true);
+      checkedAllFn(false);
+    } else {
+      setIsSearching(false);
+    }
+  }, []);
+
+  const isSearchResultFail =
+    query !== "" && allTracks?.latestTracks.length === 0;
 
   return (
     <>
@@ -99,7 +118,6 @@ const AllTracksEditor = () => {
       {allTracks?.totalTracks !== undefined && (
         <WrapperInfoAndSort>
           <CountTracks countTracks={allTracks?.totalTracks} fontSize={"24px"} />
-
           <SortTracks
             onClick={handleClickSort}
             omMouseEnter={prefetchNext}
@@ -107,6 +125,7 @@ const AllTracksEditor = () => {
             sortedBy={sortedBy}
             prefetch={true}
           />
+          <SearchTracks handleSearchTracks={handleSearchTracks} />
         </WrapperInfoAndSort>
       )}
       {isSuccessAllTracks && !errorLoadingAllTracks && (
@@ -126,6 +145,7 @@ const AllTracksEditor = () => {
             isLoading={isLoadingAllTracks}
             isLoadingUpload={isLoadingUploadTrack}
             isSuccessUpload={isSuccessUploadTrack}
+            isErrorUpload={isErrorUploadTrack}
             errorUpload={errorUploadTrack}
             onChangeCurrentPage={onPageChange}
             onChangeSizePage={onPageSizeChange}
@@ -133,7 +153,9 @@ const AllTracksEditor = () => {
             pageSize={pageSize}
             totalPages={allTracks.totalPages}
             isSorted={isSorted}
+            isSearching={isSearching}
             checkedAllFn={checkedAllFn}
+            isSearchResultFail={isSearchResultFail}
           />
         </>
       )}
