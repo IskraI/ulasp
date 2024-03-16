@@ -2,15 +2,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect, useRef } from "react";
 
-import { SvgStyled } from "../../Button/Button.styled";
 import { sToStr, compareArray } from "../../../helpers/helpers";
 import { BASE_URL } from "../../../constants/constants";
 import { WithOutGenre } from "../../Errors/Errors";
 import symbol from "../../../assets/symbol.svg";
-import CustomCheckBox from "../../CustomCheckBox/CustomCheckBox";
+import DotsBtn from "./DotsButton";
+import PopUpButtons from "./PopUpButtons";
 
 import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsSlice";
-import { useDeleteTrackMutation } from "../../../redux/tracksSlice";
+import {
+  useDeleteTrackMutation,
+  useUpdateTrackMutation,
+} from "../../../redux/tracksSlice";
 import {
   pause,
   stopPlay,
@@ -24,10 +27,6 @@ import {
   TableCell,
   TrackCover,
   TrStyle,
-  PopUpTracksTable,
-  PopUpButton,
-  DotsButton,
-  PopUpTracksTableWrapper,
   InfoBlock,
   PlayButton,
 } from "../TracksTable/TracksTable.styled";
@@ -73,7 +72,6 @@ const TrackItem = ({
   const [isChecked, setIsChecked] = useState(false);
 
   const ref = useRef(null);
-  const dotsButtonRef = useRef(null);
   const playBtnRef = useRef(null);
 
   const isLoadedTrack = playerState.isLoaded;
@@ -84,6 +82,8 @@ const TrackItem = ({
   const playerSRC = playerState.src;
 
   const oneGenre = !isInPlayList ? playLists[0]?.playlistGenre[0]?.genre : null;
+
+  const [updateTrack, { data: dataUpdateTrack }] = useUpdateTrackMutation();
 
   const [
     deleteTrack,
@@ -108,19 +108,6 @@ const TrackItem = ({
 
   const PopUpToogle = () => {
     setShowPopUp(!showPopUp);
-  };
-
-  useEffect(() => {
-    document.addEventListener("click", handleClickDotsButton);
-    return () => {
-      document.removeEventListener("click", handleClickDotsButton);
-    };
-  }, []);
-
-  const handleClickDotsButton = (e) => {
-    if (dotsButtonRef.current && !dotsButtonRef.current.contains(e.target)) {
-      setShowPopUp(false);
-    }
   };
 
   const PlayButtonToogle = () => {
@@ -198,6 +185,19 @@ const TrackItem = ({
       setIsChecked(true);
       addTrackToCheckedList(id);
     }
+  };
+
+  const removeTrack = () => {
+    isInPlayList
+      ? deleteTrackInPlaylist({
+          playListId,
+          idTrack,
+        }).unwrap()
+      : deleteTrack(idTrack).unwrap();
+  };
+
+  const updateTrackCover = () => {
+    updateTrack(idTrack).unwrap();
   };
 
   return (
@@ -311,47 +311,17 @@ const TrackItem = ({
         )}
         <TableCell showData={showData[8] || false}>
           {showPopUp && (
-            <PopUpTracksTableWrapper>
-              <PopUpTracksTable>
-                <PopUpButton
-                  type="button"
-                  onClick={
-                    isInPlayList
-                      ? () =>
-                          deleteTrackInPlaylist({
-                            playListId,
-                            idTrack,
-                          }).unwrap()
-                      : () => deleteTrack(idTrack).unwrap()
-                  }
-                >
-                  Видалити з медіатеки
-                </PopUpButton>
-                <PopUpButton disabled={true} type="button">
-                  Додати до плейлисту
-                </PopUpButton>
-                <PopUpButton disabled={true} type="button">
-                  Перенести до плейлисту
-                </PopUpButton>
-              </PopUpTracksTable>
-            </PopUpTracksTableWrapper>
+            <PopUpButtons
+              removeTrackFn={removeTrack}
+              updateTrackCoverFn={updateTrackCover}
+            />
           )}
-          <DotsButton
-            ref={dotsButtonRef}
-            type="button"
-            onClick={PopUpToogle}
-            disabled={isChecked ? true : false}
-          >
-            <SvgStyled
-              showIcon={true}
-              width="24"
-              height="24"
-              fillColor={isChecked ? "#CECCC180" : "#17161C"}
-              strokeColor={isChecked ? "#CECCC180" : "#17161C"}
-            >
-              <use href={`${symbol}#icon-more-dots`}></use>
-            </SvgStyled>
-          </DotsButton>
+          <DotsBtn
+            popUpToogle={PopUpToogle}
+            disablePopUp={() => setShowPopUp(false)}
+            isChecked={isChecked}
+            icon={`${symbol}#icon-more-dots`}
+          />
         </TableCell>
       </TrStyle>
     </>
