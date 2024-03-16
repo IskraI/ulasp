@@ -41,6 +41,16 @@ export const tracksApi = createApi({
       }),
       invalidatesTags: ["Tracks"],
     }),
+    updateTrack: builder.mutation({
+      query: (id) => ({
+        url: `/editor/tracks/updateTrackCover/`,
+        method: "PATCH",
+        body: {
+          id,
+        },
+      }),
+      invalidatesTags: ["Tracks"],
+    }),
   }),
 });
 
@@ -49,4 +59,5 @@ export const {
   useGetAllTracksQuery,
   useUploadTrackMutation,
   useDeleteTrackMutation,
+  useUpdateTrackMutation,
 } = tracksApi;

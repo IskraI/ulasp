@@ -245,7 +245,6 @@ const TracksTable = ({
   useEffect(() => {
     //если страницы есть и это последний трек
     if (anyMorePages && lastTrackInPage) {
-      console.log("Попали");
       dispatch(
         setLastTrack({
           isLastTrack: true,
@@ -370,7 +369,7 @@ const TracksTable = ({
 
       {/* {isFetching && currentPage >= 1 && <Loader />} */}
 
-      {!error && isSuccess && tracks?.length !== 0 && (
+      {!error && !isFetching && isSuccess && tracks?.length !== 0 && (
         <>
           <TracksTableWrapper marginTop={tracksTableProps.marginTop}>
             <TableStyle>
