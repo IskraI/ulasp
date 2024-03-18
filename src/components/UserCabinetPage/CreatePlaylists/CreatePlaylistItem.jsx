@@ -1,7 +1,7 @@
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 import { useState, useEffect } from "react";
-import { useUpdateFavoriteStatusApiMutation, useUpdateAddStatusApiMutation,  useUpdateCabinetPlaylistStatusApiMutation, } from "../../../redux/playlistsUserSlice";
+import { useUpdateFavoriteStatusApiMutation, useDeletePlaylistForUserMutation, useUpdateAddStatusApiMutation,  useUpdateCabinetPlaylistStatusApiMutation, useUpdatePlaylistTitleMutation } from "../../../redux/playlistsUserSlice";
 import {
   MediaItem,
   IconsWrapper,
@@ -11,9 +11,17 @@ import {
    PlaylistImg,
   PlaylistInfoWrapper,
   PlaylistItemText,
+  
 } from "../../UserMediaComponent/PlayLists/MediaList.styled";
+import {
+  PlaylistIconsWrapper,
+  PlaylistDeleteButton,
+} from "./CreatePlaylistItem.syled";
 import { Link } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Modal } from "../../Modal/Modal";
+import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
+import { ErrorNotFound } from "../../Errors/Errors";
 
 
 const CreatePlayListItem = ({ id, title, icon, favoriteStatus, addStatus,
@@ -28,23 +36,51 @@ const CreatePlayListItem = ({ id, title, icon, favoriteStatus, addStatus,
 //   const [toggleAdd] = useUpdateAddStatusApiMutation(id);
 const [toggleFavorite] =  useUpdateCabinetPlaylistStatusApiMutation(id);
   // const { data: dataFavorites } = useFavoritePlaylistForUserQuery();
- 
+  const [isEditing, setIsEditing] = useState(false);
+  const [playlistTitle, setPlaylistTitle] = useState(title);
   // console.log('favoriteStatus item', favoriteStatus)
+ const [
+    deletePlaylist,
+    {
+      isLoading,
+      isSuccess: isSuccessDeletePlaylist,
+      isError: isErrorDeletePlaylist,
+     error: errorDeletePlaylist,
+    },
+  ] = useDeletePlaylistForUserMutation();
 
-
-
+ const [updatePlaylistTitle] = useUpdatePlaylistTitleMutation();
+ const [showModalSuccess, setShowModalSucces] = useState(false);
+  const [showModalError, setShowModalError] = useState(false);
   const [isFavorite, setIsFavorite] = useState(favoriteStatus || false);
   
-//   const [isAdd, setIsAdd] = useState(addStatus || false);
-    // const handleToggleFavorite = (playlistId) => {
-    //   toggleFavorite(playlistId)
-     
-  //   };
-  
-  //  const cabinet = `/user/cabinet/myplaylists`;
-//   const newPlaylists = `/user/medialibrary/newplaylists/${id}/tracks`;
+  const deleteMediaItem = async() => {
+   try {
+     await deletePlaylist(id);
+  setShowModalSucces(true);
+   } catch (error) {
+      setShowModalError(true);
+    }
+  };
 
- 
+  
+   const closeModalSuccess = () => {
+    return setShowModalSucces(false);
+  };
+
+  const closeModalError = () => {
+    return setShowModalError(false);
+  };
+
+ const handleUpdatePlaylistTitle = async () => {
+    try {
+     
+      await updatePlaylistTitle({ title: playlistTitle });
+       setIsEditing(false);
+    } catch (error) {
+      console.error("Error updating playlist title:", error);
+    }
+  };
 
   const handleToggleFavorite = async () => {
      console.log('playlistId:', id);
@@ -58,34 +94,18 @@ const [toggleFavorite] =  useUpdateCabinetPlaylistStatusApiMutation(id);
     }
   };
 
-//   const handleToggleAdd = async () => {
-//      console.log('playlistId:', id);
-//     try {
-//       // Call the API to update the favorite status
-//       await toggleAdd(id);
-//       // Update the local state after a successful API call
-//       setIsAdd((prevIsAdd) => !prevIsAdd);
-//     } catch (error) {
-//       console.error('Error updating add status:', error);
-//     }
-//   };
 
-  // useEffect(() => {
-  //   // Fetch initial favorite status from the backend when the component mounts
-  //   if (!favoriteStatus) {
-  //     // Use your API call to get the favorite status from the backend
-  //     // For example: fetchFavoriteStatusFromBackend(id).then(response => setIsFavorite(response));
-  //   }
-  // }, [favoriteStatus, id]);
-
-// console.log('isFavorite', isFavorite)
   return (
-   
+   <>
       <MediaItem>
         {!placeListCardInfo ? (
           <Link
             key={id}
-            to={`${id}/tracks`}
+           to={
+            location.pathname.includes("createplaylists")
+              ? `${id}/tracks`
+              : `createplaylists/${id}/tracks`
+          }
             state={{ from: location }}
             disabled={placeListCardInfo ? true : false}
             style={{
@@ -106,6 +126,11 @@ const [toggleFavorite] =  useUpdateCabinetPlaylistStatusApiMutation(id);
             </PlaylistInfoWrapper>
           </>
         )}
+        
+       <PlaylistIconsWrapper>
+            <svg width="24" height="24"  style={{  marginRight: "4px"}}>
+              <use href={`${symbol}#icon-pen`} onClick={() => setIsEditing(true)}></use>
+        </svg>
         <IconsWrapper>
           <svg
             width="24"
@@ -114,41 +139,51 @@ const [toggleFavorite] =  useUpdateCabinetPlaylistStatusApiMutation(id);
             stroke="#17161C"
              onClick={()=>handleToggleFavorite(id)}
             //  onClick={handleToggleFavorite}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer" , marginRight: "4px"}}
           >
             <use href={`${symbol}#icon-heart-empty`}></use>
           </svg>
+      </IconsWrapper>
 
-          
-      {/* {!isAdd ? (
-    <svg
-      width="24"
-      height="24"
-      onClick={async () => {
-                await handleToggleAdd();
-                setIsAdd(true);
-      }}
-      style={{ cursor: "pointer" }}
-    >
-      <use href={`${symbol}#icon-plus`}></use>
-    </svg>
-  ) : (
-    <svg
-      width="24"
-      height="24"
-      onClick={async () => {
-                await handleToggleAdd();
-                setIsAdd(false);
-      }}
-      style={{ cursor: "pointer" }}
-    >
-      <use href={`${symbol}#icon-check`}></use>
-    </svg>
-  )} */}
-
-         </IconsWrapper>
+            <PlaylistDeleteButton
+              type="button"
+              onClick={deleteMediaItem}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <svg width="24" height="24" stroke="#888889">
+                  <use href={`${symbol}#icon-del-basket`}></use>
+                </svg>
+              ) : (
+                <svg width="24" height="24">
+                  <use href={`${symbol}#icon-del-basket`}></use>
+                </svg>
+              )}
+            </PlaylistDeleteButton>
+          </PlaylistIconsWrapper>
       </MediaItem>
     
+     {showModalSuccess &&  isSuccessDeletePlaylist && !isErrorDeletePlaylist && (
+        <Modal width={"394px"} onClose={closeModalSuccess}>
+          <ModalInfoText marginBottom={"34px"}>
+            Плейлист <ModalInfoTextBold>&quot;{title}&quot;</ModalInfoTextBold> був
+            видалений
+          </ModalInfoText>
+        </Modal>
+  )
+      }
+      {showModalError && (
+        <Modal width={"394px"} onClose={closeModalError} showCloseButton={true}>
+          <ModalInfoText marginBottom={"34px"}>
+            {isErrorDeletePlaylist &&
+              (<ErrorNotFound error={ errorDeletePlaylist.data.message} /> ?? (
+                <ErrorNotFound />
+              ))}
+                       
+          </ModalInfoText>
+        </Modal>
+      )}
+  </>
   );
 };
 

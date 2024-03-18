@@ -134,3 +134,4 @@ export const SvgMedia = styled.svg`
     transition: fill 350ms ${mainCubicTransition};
   }
 `;
+

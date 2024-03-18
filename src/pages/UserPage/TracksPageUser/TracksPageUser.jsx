@@ -9,6 +9,7 @@ import { useState, useEffect, useLayoutEffect, useRef, useId } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { Loader } from "../../../components/Loader/Loader";
 import SortTracks from "../../../components/EditorComponents/Sort/SortTracks";
+import AddTracksUser from "../../../components/UserCabinetPage/AddTracks/AddTracksUser"
 
 const TracksPage = () => {
   const id = useId();
@@ -21,10 +22,12 @@ const [isSorted, setIsSorterd] = useState(false);
  const [sortOrder, setSortOrder] = useState("random");
   const { playlistId } = useParams();
 
-   const playlistQuery = location.pathname.includes("myplaylists")
+   const playlistQuery = location.pathname.includes("createplaylists")
     ? useGetCreatePlaylistByIdForUserQuery
     : useGetPlaylistByIdForUserQuery;
 
+  const isCreatePlaylistsPage = location.pathname.includes("createplaylists");
+  
   const {
     data,
     isFetching: isFetchingPlaylistById,
@@ -170,7 +173,7 @@ const [isSorted, setIsSorterd] = useState(false);
       {error && <ErrorNotFound />}
       {!isSuccess && !error && <Loader />}
       {isSuccess && !error && (
-        <>
+        <><div style={{ display: "flex" }}>
           <PlaylistListItem
             icon={data.playlist.playListAvatarURL}
             title={data.playlist.playListName}
@@ -185,9 +188,20 @@ const [isSorted, setIsSorterd] = useState(false);
           </BtnSort> */}
           <SortTracks
               onClick={handleClickSort}
-              sortType={"random"}
-            marginTop={"-40px"}
-                                      />
+              sortType={"Az"}
+            marginTop={"0px"}
+          />
+        </div>
+          {isCreatePlaylistsPage && (
+            <div style={{ position: "absolute", top: "104px", right: "124px" }}>
+              <AddTracksUser
+                iconButton={`${symbol}#icon-plus`}
+                textButton={"Музику"}
+                playlistId={playlistId}
+              // uploadTrackInPlaylist={uploadTrackInPlaylist}
+              />
+            </div>
+          )}
 
           <TracksTable
             title={"In playlist"}
