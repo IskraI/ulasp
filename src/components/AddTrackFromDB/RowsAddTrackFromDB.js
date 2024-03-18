@@ -1,26 +1,17 @@
-import CustomCheckBox from "../../../components/CustomCheckBox/CustomCheckBox";
-
-const RowsAllTracks = (checkedAllFn, checkedMainCheckBox) => {
+const RowsAddTrackFromDB = () => {
   const RowsTitle = [
-    {
-      title: (
-        <CustomCheckBox
-          checkedAll={checkedAllFn}
-          isCheckedAll={checkedMainCheckBox}
-        />
-      ),
-      type: "checkbox",
-      titleSize: "3%",
-      showData: true,
-    },
-
     {
       title: "",
       type: "button",
-      titleSize: "4%",
-      showData: true,
+      titleSize: "1%",
+      showData: false,
     },
-
+    {
+      title: "",
+      type: "button",
+      titleSize: "1%",
+      showData: false,
+    },
     {
       title: "",
       type: "image",
@@ -42,37 +33,37 @@ const RowsAllTracks = (checkedAllFn, checkedMainCheckBox) => {
     {
       title: "Тривалість",
       type: "text",
-      titleSize: "12%",
-      showData: true,
+      titleSize: "0%",
+      showData: false,
     },
     {
       title: "Жанр",
       type: "text",
-      titleSize: "10%",
-      showData: true,
+      titleSize: "0%",
+      showData: false,
     },
     {
       title: "Плейлист",
       type: "text",
-      titleSize: "15%",
-      showData: true,
+      titleSize: "0%",
+      showData: false,
     },
 
     {
       title: "",
       type: "button",
-      titleSize: "8%",
-      showData: true,
+      titleSize: "5%",
+      showData: false,
     },
     {
       title: "",
       type: "button",
-      titleSize: "1%",
-      showData: false,
+      titleSize: "5%",
+      showData: true,
     },
   ];
 
   return RowsTitle;
 };
 
-export default RowsAllTracks;
+export default RowsAddTrackFromDB;

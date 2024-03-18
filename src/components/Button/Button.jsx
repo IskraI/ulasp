@@ -21,6 +21,8 @@ export const Button = ({
   disabled,
   showIcon,
   border,
+  fillColor,
+  strokeColor,
 }) => {
   return (
     <CustomButton
@@ -46,6 +48,8 @@ export const Button = ({
         height="24"
         showIcon={showIcon}
         style={{ marginRight: "8px" }}
+        fillColor={fillColor}
+        strokeColor={strokeColor}
       >
         <use href={icon}></use>
       </SvgStyled>

@@ -1,11 +1,15 @@
 import Genres from "../../../components/EditorComponents/Genres/Genres";
 import LatestPlaylists from "../../../components/EditorComponents/PlayLists/PlayLists";
-import NewSongs from "../../../components/EditorComponents/NewSongs/NewSongs";
 import ShopsPage from "../ShopsPage/ShopPage";
 import { useGetAllGenresQuery } from "../../../redux/genresSlice";
 import { useGetLatestPlaylistsQuery } from "../../../redux/playlistsSlice";
-import { useGetAllTracksQuery } from "../../../redux/tracksSlice";
+import {
+  useGetAllTracksQuery,
+  useGetTracksInChartQuery,
+} from "../../../redux/tracksSlice";
 import { useGetAllShopsQuery } from "../../../redux/shopsSlice";
+
+import NewTracksPage from "../NewTracksPage/NewTracksPage";
 
 import { Loader } from "../../../components/Loader/Loader";
 
@@ -42,7 +46,15 @@ const MediaLibraryPage = () => {
     isError: isErrorNewSongs,
   } = useGetAllTracksQuery(`?&limit=${9}`, {
     forceRefetch: true,
-    refetchOnFocus: true,
+  });
+
+  const {
+    data: tracksInChart,
+    isFetching: isFetchingTracksInChart,
+    isSuccess: isSuccesTracksInChart,
+    isError: isErrorTracksInChart,
+  } = useGetTracksInChartQuery(`?&limit=${9}`, {
+    forceRefetch: true,
   });
 
   const fetching =
@@ -71,10 +83,7 @@ const MediaLibraryPage = () => {
 
   const error = isErrorAllGenre && isErrorLatestPlaylist && isErrorNewSongs;
 
-  // console.log("Data", shops);
-  // console.log("Fetching", isFetchingShops);
-  // console.log("Success", success);
-  // console.log("Error", isErrorShops);
+  console.log(tracksInChart);
 
   return (
     <>
@@ -99,13 +108,8 @@ const MediaLibraryPage = () => {
             error={isErrorLatestPlaylist}
             showNavigationLink={true}
           />
-          {/* <NewSongs
-            data={allTracks.latestTracks}
-            isFetching={isFetchingNewSongs}
-            error={isErrorNewSongs}
-            isSuccess={isSuccesLatestNewSongs}
-            showNavigationLink={true}
-          /> */}
+
+          <NewTracksPage mediaLibrary={true} showTitle={false} />
         </>
       )}
     </>

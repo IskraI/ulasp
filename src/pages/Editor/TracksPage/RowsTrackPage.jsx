@@ -64,6 +64,12 @@ const RowsTrackPage = (checkedAllFn, checkedMainCheckBox) => {
       titleSize: "5%",
       showData: true,
     },
+    {
+      title: "",
+      type: "button",
+      titleSize: "1%",
+      showData: false,
+    },
   ];
 
   return RowsTitle;

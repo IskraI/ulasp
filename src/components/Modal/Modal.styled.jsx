@@ -21,9 +21,11 @@ export const ModalWindow = styled.div`
   border-radius: 15px;
   background: #7f99c0;
   position: relative;
+  top: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 999;
 `;
 
 export const CloseBtn = styled.button`

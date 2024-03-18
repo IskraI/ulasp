@@ -78,6 +78,7 @@ const TracksTable = ({
   isSorted,
   isSearchResultFail,
   isSearching,
+  deleteButton = true,
 }) => {
   const [
     deleteTrack,
@@ -167,10 +168,7 @@ const TracksTable = ({
   };
 
   useEffect(() => {
-    // console.log("currentPageLocal", currentPage);
-    // console.log("currentPageGlobal", currentPageGlobalState);
     if (currentPage === 1 && !isFetching) {
-      // console.log("В прелоад");
       const trackURL = tracksSRC.map((track) => {
         const transformTrackObject = {
           id: track._id,
@@ -356,6 +354,11 @@ const TracksTable = ({
     setShowModalSuccesDelete(false);
     setDeleteInfo([]);
   };
+
+  if (isFetching) {
+    return <Loader />;
+  }
+
   return (
     <>
       {error && <ErrorNotFound error={error?.data?.message} />}
@@ -365,11 +368,11 @@ const TracksTable = ({
           textColor={"grey"}
         />
       )}
-      {isFetching && !isLoadingUpload && <Loader />}
+      {/* {isFetching && !isLoadingUpload && <Loader />} */}
 
       {/* {isFetching && currentPage >= 1 && <Loader />} */}
 
-      {!error && !isFetching && isSuccess && tracks?.length !== 0 && (
+      {!error && isSuccess && tracks?.length !== 0 && (
         <>
           <TracksTableWrapper marginTop={tracksTableProps.marginTop}>
             <TableStyle>
@@ -425,6 +428,7 @@ const TracksTable = ({
                       trackDuration,
                       playList,
                       trackURL,
+                      isTopChart,
                     },
                     index
                   ) => {
@@ -438,6 +442,7 @@ const TracksTable = ({
                         countThInThead={rows.length}
                         disButtonPopUp={true}
                         trackURL={trackURL}
+                        isTopChart={isTopChart}
                         trackPictureURL={trackPictureURL}
                         trackName={trackName}
                         artist={artist}
@@ -471,7 +476,7 @@ const TracksTable = ({
               alignItems: "center",
             }}
           >
-            {!location.pathname?.includes("cabinet") && (
+            {deleteButton && (
               <Button
                 type={"button"}
                 width={"140px"}
@@ -484,7 +489,7 @@ const TracksTable = ({
                 onClick={deletingMultipleTracks}
               />
             )}
-            {isSuccess && totalTracks > pageSize && (
+            {isSuccess && (
               <Pagination
                 // style={{ marginBottom: "24px" }}
                 defaultCurrent={1}
@@ -495,6 +500,7 @@ const TracksTable = ({
                 showSizeChanger={false}
                 defaultPageSize={pageSize}
                 pageSize={pageSize}
+                hideOnSinglePage
                 // onShowSizeChange={onPageSizeChange}
                 onChangeSizePage={onPageSizeChange}
                 onChange={(page) => onChangePage(page)}

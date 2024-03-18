@@ -1,145 +1,93 @@
+import PropTypes from "prop-types";
+
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import TracksTable from "../../../components/EditorComponents/TracksTable/TracksTable";
-import {
-  useGetAllTracksQuery,
-  useUploadTrackMutation,
-} from "../../../redux/tracksSlice";
+import ControlMediateca from "../../../components/EditorComponents/ControlMediateca/ControlMediaTeca";
+
+import RowsForNewTracks from "./RowsForNewTracks";
 import symbol from "../../../assets/symbol.svg";
-import AddTracks from "../../../components/EditorComponents/AddTracks/AddTracks";
-import { useRef, useState, useId } from "react";
-import { NoData } from "../../../components/Errors/Errors";
+import AddTrackFromDB from "../../../components/AddTrackFromDB/AddTrackFromDB";
 
-const NewTracksPage = () => {
-  const id = useId();
-  const BaseInputRef = useRef(null);
-  const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
+import { useGetTracksInChartQuery } from "../../../redux/tracksSlice";
 
-  const rows = () => {
-    const RowsTitle = [
-      // {
-      //   title: (
-      //     <input
-      //       key={id}
-      //       type="checkbox"
-      //       id="mainInput"
-      //       ref={BaseInputRef}
-      //       style={{ width: "24px", height: "24px", marginRight: "24px" }}
-      //       onClick={() => {
-      //         if (BaseInputRef.current.checked) {
-      //           setCheckedMainCheckBox(true);
-      //         } else {
-      //           setCheckedMainCheckBox(false);
-      //         }
-      //       }}
-      //     />
-      //   ),
-      //   type: "checkbox",
-      //   titleSize: "1%",
-      //   showData: true,
-      // },
+const NewTracksPage = ({ mediaLibrary, showTitle = true }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
-      {
-        title: "",
-        type: "button",
-        titleSize: "1%",
-        showData: false,
-      },
-      {
-        title: "",
-        type: "button",
-        titleSize: "1%",
-        showData: true,
-      },
-      {
-        title: "",
-        type: "image",
-        titleSize: "10%",
-        showData: true,
-      },
-      {
-        title: "Назва пісні",
-        type: "text",
-        titleSize: "20%",
-        showData: true,
-      },
-      {
-        title: "Виконавець",
-        type: "text",
-        titleSize: "15%",
-        showData: true,
-      },
-      {
-        title: "Тривалість",
-        type: "text",
-        titleSize: "12%",
-        showData: true,
-      },
-      {
-        title: "Жанр",
-        type: "text",
-        titleSize: "10%",
-        showData: true,
-      },
-      {
-        title: "Плейлист",
-        type: "text",
-        titleSize: "0%",
-        showData: false,
-      },
-
-      {
-        title: "",
-        type: "button",
-        titleSize: "5%",
-        showData: true,
-      },
-    ];
-
-    return RowsTitle;
-  };
+  const navigate = useNavigate();
 
   const {
-    data: allTracks,
-    isFetching,
-    isSuccess,
-    error,
-  } = useGetAllTracksQuery({ forceRefetch: true, refetchOnFocus: true });
+    data: tracksInChart,
+    error: errorLoadingTracksInChart,
+    isFetching: isFetchingTracksInChart,
+    isSuccess: isSuccessTracksInChart,
+    isLoading: isLoadingTracksInChart,
+  } = useGetTracksInChartQuery({
+    page: currentPage,
+    limit: pageSize,
+    forseRefetch: true,
+  });
 
-  const [
-    uploadTrack,
-    {
-      isSuccess: isSuccessUploadTrack,
-      isError: isErrorUploadTrack,
-      isLoading: isLoadingUploadTrack,
-      error: errorUploadTrack,
-    },
-  ] = useUploadTrackMutation();
+  const onPageChange = (page) => {
+    console.log("4 Step - setCurrentPage in mutation", page);
+    setCurrentPage(page);
+  };
+
+  const onPageSizeChange = (size) => {
+    console.log(size);
+    setPageSize(size);
+  };
 
   return (
     <>
-      {isSuccess && !error && (
-        <>
-          {/* <AddTracks
-            iconButton={`${symbol}#icon-plus`}
-            textButton={"Музику"}
-            uploadTrack={uploadTrack}
-          />
+      {mediaLibrary ? (
+        <ControlMediateca
+          title={"Нові пісні"}
+          iconButton={`${symbol}#icon-plus`}
+          textButton={"Музику"}
+          onClick={() =>
+            navigate(`${location.pathname}/newtracks`, { replace: true })
+          }
+        />
+      ) : (
+        <AddTrackFromDB
+          iconButton={`${symbol}#icon-plus`}
+          textButton={"Музику"}
+        />
+      )}
 
+      {isSuccessTracksInChart && !errorLoadingTracksInChart && (
+        <>
           <TracksTable
-            title={" Остання додана музика"}
+            rows={RowsForNewTracks()}
+            title={"Новинки пісень"}
+            showTitle={showTitle}
             marginTopWrapper={"24px"}
-            tracks={allTracks.latestTracks}
-            error={error}
-            isFetching={isFetching}
-            isSuccess={isSuccess}
-            isCheckedAll={checkedMainCheckBox}
-            rows={rows()}
+            tracks={tracksInChart.tracksInChart}
+            tracksSRC={tracksInChart.tracksSRC}
+            totalTracks={tracksInChart.totalTracks}
+            error={errorLoadingTracksInChart}
+            isFetching={isFetchingTracksInChart}
+            isSuccess={isSuccessTracksInChart}
             isInPlayList={false}
-          /> */}
-          <NoData text={"Розділ тимчасово не доступний. В розробці"}/>
+            onChangeCurrentPage={onPageChange}
+            onChangeSizePage={onPageSizeChange}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            totalPages={tracksInChart.totalPages}
+            deleteButton={false}
+          />
         </>
       )}
     </>
   );
+};
+
+NewTracksPage.propTypes = {
+  mediaLibrary: PropTypes.bool,
+  showTitle: PropTypes.bool,
 };
 
 export default NewTracksPage;
