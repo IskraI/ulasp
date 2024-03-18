@@ -37,7 +37,7 @@ export const dataUsersApi = createApi({
       //   console.error("Query failed", error);
       //   dispatch(resetUser()); //?????? Сбросить состояние до значения по умолчанию
       // },
-      invalidatesTags: ["dataUsers", "dataUser"],
+      invalidatesTags: ["dataUsers"],
     }),
     sendMailUserById: builder.mutation({
       query: (id) => ({
@@ -54,9 +54,24 @@ export const dataUsersApi = createApi({
       }),
       invalidatesTags: ["dataUsers", "dataUser"],
     }),
+    editorLoginPasswordUpdate: builder.mutation({
+      query: ({ id, ...body }) => ({
+        url: `admin/editors/login/${id}`,
+        method: "PATCH",
+        body: body,
+      }),
+      invalidatesTags: ["dataUsers", "dataUser"],
+    }),
     unblockEditorById: builder.mutation({
       query: (id) => ({
         url: `admin/editors/status/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["dataUsers", "dataUser"],
+    }),
+    accessEditorById: builder.mutation({
+      query: (id) => ({
+        url: `admin/editors/access/${id}`,
         method: "PATCH",
       }),
       invalidatesTags: ["dataUsers", "dataUser"],
@@ -173,4 +188,5 @@ export const {
   useGetUserByIdPlaylistCountQuery,
   useCountListensByUserByIdMutation,
   useUnblockEditorByIdMutation,
+  useEditorLoginPasswordUpdateMutation,
 } = dataUsersApi;

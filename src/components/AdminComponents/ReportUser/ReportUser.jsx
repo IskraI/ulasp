@@ -1,5 +1,7 @@
 import { useLocation } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { useReactToPrint } from "react-to-print";
+
 import {
   ErrorText,
   Title,
@@ -14,18 +16,21 @@ import {
 import TabNavigation from "../../TabNavigation/TabNavigation";
 import { useForm } from "react-hook-form";
 import { Button } from "../../Button/Button";
+import { ButtonPrint } from "../ButtonPrint/ButtonPrint";
 import {
   useCountListensByUserByIdMutation,
   useGetUserByIdQuery,
 } from "../../../redux/dataUsersSlice";
 import { useParams } from "react-router-dom";
 import ReportUserTable from "./ReportUserTable";
+import ReportPrint from "./ReportPrint";
 
 const ReportUser = () => {
   const [responseData, setResponseData] = useState();
+  const [date, setDate] = useState({});
   const { id } = useParams();
   const { data: user, error, isLoading } = useGetUserByIdQuery(id);
-
+  console.log("responseData :>> ", responseData);
   // console.log("userId :>> ", id);
   // console.log("data :>> ", user);
   const [
@@ -44,11 +49,11 @@ const ReportUser = () => {
   });
   const onFormSubmit = (data) => {
     const formData = { ...data, userId: id };
+    setDate(data);
     console.log("formData :>> ", formData);
     dispatchCountListensByUser(formData)
       .unwrap()
       .then((responseData) => {
-        console.log("responseData :>> ", responseData);
         setResponseData(responseData);
       })
       .catch(
@@ -56,13 +61,14 @@ const ReportUser = () => {
           // console.log(error.data.message)
           error?.data?.message && alert(error.data.message)
       );
-    console.log(data);
   };
   const currentDate = new Date()
     .toLocaleDateString("en-GB")
     .split("/")
     .reverse()
     .join("-");
+  const componentRef = useRef();
+
   return (
     <>
       <TabNavigation pathtext={false} />
@@ -113,7 +119,22 @@ const ReportUser = () => {
           </ReportForm>
         </div>
         <ReporTabletWrapper>
-          {responseData && <ReportUserTable data={responseData} />}
+          {responseData && <ButtonPrint targetComponent={componentRef} />}
+          {responseData && (
+            <ReportPrint
+              ref={componentRef}
+              data={responseData}
+              date={date}
+              user={user}
+            />
+
+            // <ReportUserTable
+            //   data={responseData}
+            //   date={date}
+            //   user={user}
+            //   ref={componentRef}
+            // />
+          )}
         </ReporTabletWrapper>
       </ReportWrapper>
     </>

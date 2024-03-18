@@ -5,6 +5,7 @@ import symbol from "../../../assets/symbol.svg";
 import { useState, useEffect } from "react";
 import { Modal } from "../../Modal/Modal";
 import { useParams } from "react-router-dom";
+import { Error500, ErrorNotFound } from "../../../components/Errors/Errors";
 import {
   useGetUserByIdQuery,
   useDelUserByIdMutation,
@@ -24,7 +25,15 @@ import { Loader } from "../../Loader/Loader";
 const CardUser = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { data: user, error, isLoading } = useGetUserByIdQuery(id);
+  const [isUserDataDeleted, setIsUserDataDeleted] = useState(false);
+  const {
+    data: user,
+    error,
+    isLoading,
+  } = useGetUserByIdQuery(id, {
+    skip: isUserDataDeleted,
+  });
+
   const {
     data: playlistCount,
     error: errorPlaylistCount,
@@ -53,6 +62,7 @@ const CardUser = () => {
   }, [user?.status, user?.access]);
 
   const [activeModal, setActiveModal] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
   const handleShowModal = (modalContent) => {
     setActiveModal(modalContent);
     document.body.classList.add("modal-open");
@@ -68,17 +78,31 @@ const CardUser = () => {
       .unwrap()
       .then(() => {
         document.body.classList.remove("modal-open");
+        setIsUserDataDeleted(true);
+        setActiveModal("update");
         navigate("/admin/users");
       })
-      .catch((error) => console.log(error.data.message));
+      .catch((e) => {
+        let errorMessage = e.data?.message;
+        setErrorMessage(errorMessage);
+        setActiveModal("error");
+      });
   };
   const handleSendEmail = async () => {
     await dispatchSendMail(id)
       .unwrap()
       .then(() => {
-        alert("send email");
+        window.scrollTo({
+          top: 0,
+          behavior: "instant",
+        });
+        setActiveModal("sendMail");
       })
-      .catch((error) => alert(error.data.message));
+      .catch((e) => {
+        let errorMessage = e.data?.message;
+        setErrorMessage(errorMessage);
+        setActiveModal("error");
+      });
   };
 
   const handleUnblockUser = async () => {
@@ -87,19 +111,25 @@ const CardUser = () => {
       .then(() => {
         setActiveModal(null);
         const updatedDisableSendMail = user.status && user.access;
-        // console.log("user.status handleUnblockUser ", user.status);
         setDisableSendMail(updatedDisableSendMail);
         document.body.classList.remove("modal-open");
       })
-      .catch((error) => console.log(error.data.message));
+      .catch((e) => {
+        let errorMessage = e.data?.message;
+        setErrorMessage(errorMessage);
+        setActiveModal("error");
+      });
   };
 
   return (
     <>
       <TabNavigation />
+      {error && <ErrorNotFound />}
+      {error?.status === "500" && <Error500 />}
       {isLoading && <Loader />}
       {!isLoading && !isLoadingSongsCount && (
         <CardUserForm
+          id={id}
           user={user}
           playlistCount={playlistCount}
           tracksCount={tracksCount}
@@ -177,8 +207,12 @@ const CardUser = () => {
         >
           <TextModal>
             {user.status === true
-              ? `Підтвердіть заблокування користувача - ${user.firstName} ${user.lastName}`
-              : `Підтвердіть розблокування користувача - ${user.firstName} ${user.lastName}`}
+              ? `Підтвердіть заблокування користувача - ${
+                  user.firstName || ""
+                } ${user.lastName || ""} ${user.name || ""}`
+              : `Підтвердіть розблокування користувача - ${
+                  user.firstName || ""
+                } ${user.lastName || ""} ${user.name || ""}`}
           </TextModal>
           <ModalBtnContainer>
             <Button
@@ -232,6 +266,28 @@ const CardUser = () => {
               onClick={handleCloseModal}
             />
           </ModalBtnContainer>
+        </Modal>
+      )}
+      {activeModal === "sendMail" && (
+        <Modal
+          width={"664px"}
+          padding={"138px 138px 74px"}
+          onClose={handleCloseModal}
+          showCloseButton={true}
+          flexDirection="column"
+        >
+          <TextModal>Лист з даними доступу користувачу відправлено</TextModal>
+        </Modal>
+      )}
+
+      {activeModal === "error" && (
+        <Modal
+          width={"520px"}
+          padding={"24px 74px"}
+          onClose={handleCloseModal}
+          showCloseButton={true}
+        >
+          <TextModal> {errorMessage}</TextModal>
         </Modal>
       )}
     </>

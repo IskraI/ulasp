@@ -4,18 +4,19 @@ import {
   RegisterNameLabel,
   RegisterNameInput,
   Tooltip,
-} from "../UserCreateForm.styled";
-import { ButtonSwitch } from "../../ButtonSwitch/ButtonSwitch";
-import { Button } from "../../../Button/Button";
+} from "../UserForm/UserCreateForm.styled";
+import { ButtonSwitch } from "../ButtonSwitch/ButtonSwitch";
+import { Button } from "../../Button/Button";
 import { Controller } from "react-hook-form";
 import {
   IconsWrapperUserEdit,
   IconsButtonUserEdit,
   IconsSvgUserEdit,
   IconsButtonUserSave,
-} from "../UserCreateForm.styled";
+} from "../UserForm/UserCreateForm.styled";
 
-import symbol from "../../../../assets/symbol.svg";
+import symbol from "../../../assets/symbol.svg";
+
 const RegisterNameFieldCard = ({
   user,
   activeSectionCard,
@@ -38,8 +39,6 @@ const RegisterNameFieldCard = ({
           <IconsButtonUserEdit
             type="button"
             onClick={() => handleEditActivation()}
-            // onClick={editGenre}
-            // disabled={isEditing}
           >
             <IconsSvgUserEdit width="24" height="24">
               <use href={`${symbol}#icon-pen`}></use>
@@ -48,10 +47,7 @@ const RegisterNameFieldCard = ({
         </IconsWrapperUserEdit>
       ) : (
         <IconsWrapperUserEdit>
-          <IconsButtonUserSave
-            type="submit"
-            // onClick={() => console.log("object :>> ")}
-          >
+          <IconsButtonUserSave type="submit">
             <IconsSvgUserEdit width="24" height="24">
               <use href={`${symbol}#icon-check-in`}></use>
             </IconsSvgUserEdit>
@@ -171,13 +167,24 @@ const RegisterNameFieldCard = ({
                 control={control}
                 defaultValue={user.name}
                 render={({ field }) => (
-                  <RegisterNameInput
-                    type="text"
-                    placeholder="Назва компанії"
-                    readOnly={readOnly}
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.target.value)}
-                  />
+                  <>
+                    <RegisterNameInput
+                      type="text"
+                      placeholder="Назва компанії"
+                      readOnly={readOnly}
+                      value={field.value}
+                      width={"200px"}
+                      onChange={(e) => field.onChange(e.target.value)}
+                      className={
+                        isEditing ? `${errors.name ? "invalid" : "valid"}` : ""
+                      }
+                    />
+                    {errors && errors.name && (
+                      <Tooltip className={`${errors.name ? "visible" : ""}`}>
+                        {errors.name.message}
+                      </Tooltip>
+                    )}
+                  </>
                 )}
               />
             </RegisterNameField>
@@ -188,6 +195,8 @@ const RegisterNameFieldCard = ({
             idUser={user._id}
             type="button"
             isTrue={typeOfAccess}
+            editor={user.editorRole || user.adminRole}
+            // handleTypeOfAccess={handleTypeOfAccess}
             onClick={() => handleTypeOfAccess()}
           />
         </>
@@ -207,7 +216,7 @@ const RegisterNameFieldCard = ({
             type="button"
             idUser={user._id}
             isTrue={typeOfAccess}
-            onClick={() => console.log("edite card")}
+            onClick={() => handleTypeOfAccess()}
           />
         </>
       )}

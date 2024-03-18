@@ -94,7 +94,7 @@ const UserCreateForm = ({ onCloseModal, section }) => {
         ...data,
         editorRole: true,
         status: true,
-        access: true,
+        access: typeOfAccess,
       };
       // console.log("formData", formData);
       dispatchEditor(formData)
@@ -113,7 +113,7 @@ const UserCreateForm = ({ onCloseModal, section }) => {
 
     if (typeOfUser === "fop") {
       const formData = { ...data, access: typeOfAccess, userFop: typeOfUser };
-      console.log(formData);
+
       dispatchFop(formData)
         .unwrap()
         .then(() => {
@@ -182,7 +182,7 @@ const UserCreateForm = ({ onCloseModal, section }) => {
         <form onSubmit={handleSubmit(onFormSubmit)}>
           <UserFieldForm
             control={control}
-            handleTypeOfStatus={handleTypeOfAccess}
+            handleTypeOfAccess={handleTypeOfAccess}
             typeOfStatus={typeOfAccess}
             register={register}
             isValid={isValid}

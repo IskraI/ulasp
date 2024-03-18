@@ -19,8 +19,9 @@ import RegisterNameFieldForm from "./RegisterNameFieldForm";
 import CommonFieldForm from "./CommonFields";
 import { Button } from "../../../Button/Button";
 const UserFieldForm = ({
+  form,
   control,
-  handleTypeOfStatus,
+  handleTypeOfAccess,
   activeSection,
   typeOfStatus,
   typeOfUser,
@@ -29,14 +30,15 @@ const UserFieldForm = ({
   register,
   dirtyFields,
 }) => {
-  console.log("errors", errors);
+  // console.log("errors", errors);
   // console.log("isValid", isValid);
 
   return (
     <Fieldform>
       <RegisterLeftBlock>
         <RegisterNameFieldForm
-          handleTypeOfStatus={handleTypeOfStatus}
+          form={form}
+          handleTypeOfAccess={handleTypeOfAccess}
           register={register}
           errors={errors}
           typeOfUser={typeOfUser}
@@ -155,7 +157,6 @@ const UserFieldForm = ({
                   id="loginTooltip"
                   className={`${errors.login ? "visible" : ""}`}
                 >
-             
                   {errors.login && errors.login.message}
                 </Tooltip>
               </RegisterField>

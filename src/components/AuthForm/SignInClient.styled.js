@@ -6,7 +6,7 @@ export const StyledForm = styled.form`
   display: flex;
   justify-content: center;
   /* align-items: center; */
-  flex-direction: column; // Добавил 
+  flex-direction: column; // Добавил
 `;
 
 export const StyledFormInsight = styled.div`
@@ -53,6 +53,7 @@ export const StyledInput = styled.input`
 
   &:focus,
   &:hover {
+    outline: none;
     border: 1px solid ${colors.mainFontColor};
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.6) inset;
     background-color: transparent;
@@ -84,7 +85,7 @@ export const StyledButton = styled.button`
   border: 1px solid #000;
   background: ${colors.primaryColor};
   cursor: pointer;
-
+  /* background-color: transparent; */
   color: ${colors.mainFontColor};
   font-size: 20px;
   line-height: calc(44 / 40);
@@ -95,6 +96,15 @@ export const StyledButton = styled.button`
   &:hover {
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.4) inset;
   }
+  &:disabled {
+    background-color: transparent;
+    box-shadow: none;
+    cursor: default;
+  }
+  /* &.valid {
+    border-color: ${colors.mainFontColor};
+    background: ${colors.primaryColor};
+  } */
 `;
 
 export const StyledError = styled.div`

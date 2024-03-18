@@ -15,8 +15,8 @@ const ListEditors = ({ searchTerm }) => {
     },
     { key: "telNumber", label: "Контакт", type: "string" },
     { key: "email", label: "Email", type: "string" },
-    { key: "status", label: "Доступ", type: "status" },
-
+    { key: "status", label: "Статус", type: "status" },
+    // { key: "access", label: "Допуск", type: "access" }, // он - офф
     // { key: "editorRole", label: "Тип админа", type: "string" },
   ];
 

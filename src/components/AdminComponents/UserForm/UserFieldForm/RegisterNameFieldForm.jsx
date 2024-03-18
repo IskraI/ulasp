@@ -8,16 +8,16 @@ import {
 import { Button } from "../../../Button/Button";
 import { ButtonSwitch } from "../../ButtonSwitch/ButtonSwitch";
 const RegisterNameFieldForm = ({
+  form,
   register,
   errors,
   typeOfUser,
   typeOfStatus,
-  handleTypeOfStatus,
+  handleTypeOfAccess,
   isValid,
   activeSection,
   dirtyFields,
 }) => {
-
   return (
     <RegisterNameBlock>
       {typeOfUser === "fop" || activeSection === "MusicEditor" ? (
@@ -38,7 +38,7 @@ const RegisterNameFieldForm = ({
               id="lastNameTooltip"
               className={`${errors.lastName ? "visible" : ""}`}
             >
-           {errors.lastName && errors.lastName.message}
+              {errors.lastName && errors.lastName.message}
             </Tooltip>
           </RegisterNameField>
 
@@ -57,7 +57,7 @@ const RegisterNameFieldForm = ({
               id="firstNameTooltip"
               className={`${errors.firstName ? "visible" : ""}`}
             >
-                      {errors.firstName && errors.firstName.message}
+              {errors.firstName && errors.firstName.message}
             </Tooltip>
           </RegisterNameField>
 
@@ -76,7 +76,7 @@ const RegisterNameFieldForm = ({
               id="firstNameTooltip"
               className={`${errors.fatherName ? "visible" : ""}`}
             >
-                    {errors.fatherName && errors.fatherName.message}
+              {errors.fatherName && errors.fatherName.message}
             </Tooltip>
           </RegisterNameField>
         </>
@@ -85,29 +85,29 @@ const RegisterNameFieldForm = ({
           <RegisterNameLabel>Назва компанії</RegisterNameLabel>
           <RegisterNameInput
             type="text"
+            width={"100%"}
             placeholder="Назва компанії"
             aria-describedby="nameTooltip"
             className={`${errors.name ? "invalid" : ""}${
               !errors.name && dirtyFields.name ? "valid" : ""
             }`}
             {...register("name")}
-          />  <Tooltip
-          id="firstNameTooltip"
-          className={`${errors.name ? "visible" : ""}`}
-        >
-                    {errors.name && errors.name.message}
-        </Tooltip>
+          />{" "}
+          <Tooltip
+            id="firstNameTooltip"
+            className={`${errors.name ? "visible" : ""}`}
+          >
+            {errors.name && errors.name.message}
+          </Tooltip>
         </RegisterNameField>
       )}
 
       <ButtonSwitch
         type="button"
         isTrue={typeOfStatus}
-        onClick={() => handleTypeOfStatus()}
-        form= {true}
+        handleTypeOfAccess={handleTypeOfAccess}
+        form={true}
       />
-     
-       
     </RegisterNameBlock>
   );
 };

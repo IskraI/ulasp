@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Pagination from "rc-pagination";
 import {
   Table,
   TableRow,
@@ -15,13 +16,23 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { ButtonSwitch } from "../ButtonSwitch/ButtonSwitch";
-
+import { Modal } from "../../Modal/Modal";
+import { TextModal } from "../../Modal/Modal.styled";
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 const UsersTable = ({ users, visibleColumns }) => {
   const [hoveredRow, setHoveredRow] = useState(null);
-  // console.log("users", users);
+  const [activeModal, setActiveModal] = useState(null);
+  const handleShowModal = (modalContent) => {
+    setActiveModal(modalContent);
+    document.body.classList.add("modal-open");
+  };
+
+  const handleCloseModal = () => {
+    document.body.classList.remove("modal-open");
+    setActiveModal(null);
+  };
 
   const handleRowHover = (index) => {
     setHoveredRow(index);
@@ -51,16 +62,48 @@ const UsersTable = ({ users, visibleColumns }) => {
       ]);
 
       // Если обе операции успешны, выполнить отправку письма
-      await dispatchSendMail(id);
+      await dispatchSendMail(id)
+        .unwrap()
+        .then(() => {
+          setActiveModal("sendMail");
+        })
+        .catch((error) => alert(error.data.message));
 
       // Перейти на страницу пользователей
-      navigate("/admin/users");
+      // navigate("/admin/users");
     } catch (error) {
       alert(error.data.message);
     }
   };
 
-  // console.log("users", users);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // Количество элементов на странице
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = users.slice(indexOfFirstItem, indexOfLastItem);
+  // const onChangePage = useCallback(
+  //   (page) => {
+  //     // setCurrentPage(page);
+  //     onChangeCurrentPage(page);
+  //     dispatch(
+  //       setNextPage({
+  //         currentPage: page,
+  //       })
+  //     );
+  //     window.scrollTo({
+  //       top: 0,
+  //       behavior: "instant",
+  //     });
+  //     // checkedAllFn(false);
+  //     setTracksIdList([]);
+  //   },
+
+  //   [dispatch, onChangeCurrentPage]
+  // );
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+  // console.log("users.length :>> ", users.length);
   return (
     <>
       <Table>
@@ -79,7 +122,7 @@ const UsersTable = ({ users, visibleColumns }) => {
         </thead>
 
         <tbody>
-          {users.map((user, index) => {
+          {currentItems.map((user, index) => {
             {
               // console.log("users", user._id, user.access);
             }
@@ -174,6 +217,36 @@ const UsersTable = ({ users, visibleColumns }) => {
           })}
         </tbody>
       </Table>
+      {users.length > 10 && (
+        <Pagination
+          // style={{ marginBottom: "24px" }}
+          defaultCurrent={1}
+          current={currentPage}
+          total={users.length}
+          // showLessItems
+          // selectComponentClass={Select}
+          // showSizeChanger={false}
+          defaultPageSize={itemsPerPage}
+          pageSize={itemsPerPage}
+          // onShowSizeChange={onPageSizeChange}
+          // onChangeSizePage={onPageSizeChange}
+          onChange={(page) => handlePageChange(page)}
+        />
+      )}
+      {activeModal === "sendMail" && (
+        <Modal
+          width={"664px"}
+          padding={"38px 38px "}
+          onClose={handleCloseModal}
+          showCloseButton={true}
+          flexDirection="column"
+        >
+          <TextModal>
+            Лист з даними доступу користувачу відправлено. Допуск та статус
+            відкриті
+          </TextModal>
+        </Modal>
+      )}
     </>
   );
 };

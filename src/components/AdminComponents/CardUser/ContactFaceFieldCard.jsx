@@ -4,7 +4,7 @@ import {
   RegisterInput,
   RegisterContactField,
   Tooltip,
-} from "../UserCreateForm.styled";
+} from "../UserForm/UserCreateForm.styled";
 import InputMask from "react-input-mask";
 import { Controller } from "react-hook-form";
 
