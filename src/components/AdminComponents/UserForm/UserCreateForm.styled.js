@@ -90,13 +90,25 @@ export const RegisterInput = styled.input`
 
   align-items: center;
 
-  /* outline: none; */
+  outline: none;
   border: 1px solid rgba(23, 22, 28, 0.5);
   font-family: Inter;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  &:focus,
+  &:hover {
+    outline: 1px solid rgba(23, 22, 28, 0.5);
+  }
+  &.invalid:focus,
+  &.invalid:hover {
+    background-color: rgba(234, 234, 234, 0.5);
+  }
+  &.valid:focus,
+  &.valid:hover {
+    background-color: rgba(234, 234, 234, 0.5);
+  }
   &.invalid {
     /* border: 0.25px solid red; */
     /* background-color: rgba(255, 243, 191, 1); */
@@ -256,7 +268,14 @@ export const RegisterNameInput = styled.input`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-
+  &.invalid:focus,
+  &.invalid:hover {
+    background-color: rgba(234, 234, 234, 0.5);
+  }
+  &.valid:focus,
+  &.valid:hover {
+    background-color: rgba(234, 234, 234, 0.5);
+  }
   &.invalid {
     /* background-color: rgba(255, 243, 191, 1); */
     outline: 1px solid red;

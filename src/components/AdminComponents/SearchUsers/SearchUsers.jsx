@@ -73,7 +73,9 @@ export const SearchUsers = ({
           <TextInfo> не знайдено</TextInfo>
         </>
       ) : (
-        <UsersTable users={searchResults} visibleColumns={visibleColumns} />
+        <>
+          <UsersTable users={searchResults} visibleColumns={visibleColumns} />
+        </>
       )}
     </>
   );

@@ -7,6 +7,11 @@ export const Link = styled(NavLink)`
   &.active {
     text-decoration: underline;
   }
+  transition: ${transition.duration};
+  &:hover,
+  &:focus {
+    color: ${colors.accentHoverColor};
+  }
 `;
 export const SearchUsersContainer = styled.div`
   display: flex;
@@ -35,11 +40,15 @@ export const Input = styled.input`
   border-radius: 10px;
   border: 1px solid ${colors.mainFontColor};
   background-color: transparent;
-
+  outline: none;
   position: ${(props) => props.pageType === "list" && "absolute"};
   top: ${(props) => props.pageType === "list" && " 104px"};
   right: ${(props) => props.pageType === "list" && "60px"};
-
+  transition: ${transition.duration};
+  &:hover,
+  &:focus {
+    border-color: ${colors.accentHoverColor};
+  }
   ::placeholder {
     text-align: right;
     color: rgba(0, 0, 0, 0.4);

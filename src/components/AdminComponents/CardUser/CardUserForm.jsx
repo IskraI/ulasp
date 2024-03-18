@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Modal } from "../../Modal/Modal";
+import { TextModal } from "../../Modal/Modal.styled";
+import { Button } from "../../Button/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   useUpdateCompanyUserMutation,
@@ -8,7 +10,7 @@ import {
 } from "../../../redux/dataUsersSlice";
 import { useNavigate } from "react-router-dom";
 
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import { Title } from "../AdminCabinetPage/AdminCabinetPage.styled";
 import {
@@ -25,13 +27,12 @@ const CardUserForm = ({ user, playlistCount, tracksCount }) => {
   const typeOfUser = userFop; //fop/tov
 
   const [isEditing, setIsEditing] = useState(false);
-  const [typeOfAccess, setTypeOfAccess] = useState(access); //on/off статус он или офф
+
   const [dispatchFopUpdate, { isLoading: isLoadingFop }] =
     useUpdateFopUserMutation(); //ф-я для отправки формы юзера фоп
   const [dispatchCompanyUpdate, { isLoading: isLoadingCompany }] = //ф-я для отправки формы юзера тов
     useUpdateCompanyUserMutation();
-  const [dispatchAccess, { isLoading: isLoadingAccess }] =
-    useAccessUserUpdateByIdMutation(); //изменение access on/off
+
   const navigate = useNavigate();
   //создание формы - юзформ
 
@@ -48,7 +49,6 @@ const CardUserForm = ({ user, playlistCount, tracksCount }) => {
     formState: { errors, isValid, dirtyFields },
   } = useForm({
     mode: "onChange",
-    // defaultValues: { name: '', email: '', password: '' },
     resolver: yupResolver(resolverShema),
   });
 
@@ -58,39 +58,45 @@ const CardUserForm = ({ user, playlistCount, tracksCount }) => {
   };
 
   const onFormSubmit = (data) => {
-    console.log("formData сработала", data);
     if (typeOfUser === "fop") {
       const formData = {
         ...data,
-        access: typeOfAccess,
+        access,
         id,
         userFop: typeOfUser,
       };
-      // console.log("formData", formData);
 
       dispatchFopUpdate(formData)
         .unwrap()
         .then(() => {
           setIsEditing(false);
-          // navigate("/admin/users");
+          handleShowModal("update");
         })
-        .catch((error) => console.log(error.data.message));
+        .catch((e) => {
+          let errorMessage = e.data?.message;
+          setErrorMessage(errorMessage);
+          handleShowModal("error");
+        });
     }
     if (typeOfUser === "tov") {
       const formData = {
         ...data,
-        access: typeOfAccess,
+        access,
         id,
         userFop: typeOfUser,
       };
-      console.log("formData тов", formData);
+
       dispatchCompanyUpdate(formData)
         .unwrap()
         .then(() => {
-          // navigate("/admin/users");
+          handleShowModal("update");
           setIsEditing(false);
         })
-        .catch((error) => console.log(error.data));
+        .catch((e) => {
+          let errorMessage = e.data?.message;
+          setErrorMessage(errorMessage);
+          handleShowModal("error");
+        });
     }
   };
 
@@ -98,27 +104,28 @@ const CardUserForm = ({ user, playlistCount, tracksCount }) => {
     setIsEditing(false);
     reset({ user });
   };
-  const handleTypeOfAccess = () => {
-    setTypeOfAccess(typeOfAccess === true ? false : true);
+
+  const [activeModal, setActiveModal] = useState(null); //после успешного добавления спрашиваем добавить ли еще
+  const [errorMessage, setErrorMessage] = useState("");
+  const handleShowModal = (modalContent) => {
+    setActiveModal(modalContent);
+  };
+  const handleCloseModal = () => {
+    document.body.classList.remove("modal-open");
+    setActiveModal(null);
   };
 
-  // console.log("typeOfAccess", typeOfAccess);
   return (
     <>
-      {/* <UserCreateModal> */}
-
       <Title margintop="8px" marginbottom="16px">
-        {activeSectionCard === "User"
-          ? "Картка кориcтувача"
-          : "Картка музичного редактора"}
+        Картка кориcтувача
       </Title>
 
       <form onSubmit={handleSubmit(onFormSubmit)}>
         <CardUserField
           user={user}
           control={control}
-          handleTypeOfAccess={handleTypeOfAccess}
-          typeOfAccess={typeOfAccess}
+          typeOfAccess={access}
           register={register}
           isValid={isValid}
           errors={errors}
@@ -131,6 +138,37 @@ const CardUserForm = ({ user, playlistCount, tracksCount }) => {
           access={access}
         />
       </form>
+      {activeModal === "update" && (
+        <Modal
+          width={"520px"}
+          padding={"44px 24px"}
+          onClose={handleCloseModal}
+          showCloseButton={true}
+          flexDirection="column"
+        >
+          <TextModal>Дані успішно оновлені</TextModal>
+
+          <Button
+            type="button"
+            padding="8px 44px"
+            height="48px"
+            text="Ок"
+            showIcon={false}
+            margintop="24px"
+            onClick={handleCloseModal}
+          />
+        </Modal>
+      )}
+      {activeModal === "error" && (
+        <Modal
+          width={"520px"}
+          padding={"24px"}
+          onClose={handleCloseModal}
+          showCloseButton={true}
+        >
+          <TextModal> {errorMessage}</TextModal>
+        </Modal>
+      )}
     </>
   );
 };

@@ -1,5 +1,5 @@
 import TabNavigation from "../../TabNavigation/TabNavigation";
-import EditorCardForm from "./CardEditorForm";
+import CardEditorForm from "./CardEditorForm";
 import { Button } from "../../Button/Button";
 import symbol from "../../../assets/symbol.svg";
 import { useState } from "react";
@@ -16,7 +16,7 @@ import {
   ModalBtnContainer,
 } from "../CardUser/CardUser.styled";
 import { useNavigate } from "react-router-dom";
-import EditorLoginForm from "../UserForm/EditorLoginForm";
+import EditorLoginForm from "./EditorLoginForm";
 
 const CardEditor = () => {
   const navigate = useNavigate();
@@ -66,11 +66,11 @@ const CardEditor = () => {
         handleShowModal();
       });
   };
-
+  // console.log("user.editor :>> ", user?.editorRole);
   return (
     <>
       <TabNavigation />
-      {!isLoading && <EditorCardForm user={user} />}
+      {!isLoading && <CardEditorForm user={user} />}
       {!isLoading && <EditorLoginForm user={user} />}
       <ButtonContainer>
         <Button

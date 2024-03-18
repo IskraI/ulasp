@@ -3,9 +3,9 @@ import {
   RegisterLabel,
   RegisterInput,
   Tooltip,
-} from "../UserCreateForm.styled";
+} from "../UserForm/UserCreateForm.styled";
 
-import { useForm, Controller } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
 const CommonFieldCard = ({
   user,
@@ -13,9 +13,8 @@ const CommonFieldCard = ({
   control,
   isValid,
   errors,
-  register,
-  typeOfUser,
   isEditing,
+  activeSectionCard,
 }) => {
   return (
     <>
@@ -46,7 +45,7 @@ const CommonFieldCard = ({
           )}
         />
       </RegisterField>
-
+      {/* {activeSectionCard !== "MusicEditor" && ( */}
       <RegisterField>
         <RegisterLabel>Назва закладу</RegisterLabel>
         <Controller
@@ -74,6 +73,7 @@ const CommonFieldCard = ({
           )}
         />
       </RegisterField>
+      {/* )} */}
 
       <RegisterField>
         <RegisterLabel>Номер телефону*</RegisterLabel>
@@ -102,7 +102,6 @@ const CommonFieldCard = ({
           )}
         />
       </RegisterField>
-
       <RegisterField>
         <RegisterLabel>E-mail*</RegisterLabel>
         <Controller

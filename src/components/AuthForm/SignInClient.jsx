@@ -40,18 +40,19 @@ export const SignInClient = () => {
     register,
     handleSubmit,
     reset,
+    getValues,
     formState: { errors, isValid, dirtyFields },
   } = useForm({
-    mode: "onChange",
-    defaultValues: { сontractNumber: "", password: "" },
+    mode: "onBlur",
+    // defaultValues: { contractNumber: "", password: "" },
     resolver: yupResolver(SignInSchema),
   });
   const [dispatch, { isLoading }] = useSignInClientMutation();
 
   const onSubmit = (data) => {
     const credentials = {
-      contractNumber: data.сontract,
-      password: data.identification,
+      contractNumber: data.contractNumber,
+      password: data.password,
     };
 
     dispatch(credentials)
@@ -74,7 +75,11 @@ export const SignInClient = () => {
         handleShowModal();
       });
   };
-
+  // const v = getValues();
+  console.log(
+    "getValues()",
+    !isValid && Object.values(getValues()).some((element) => element === "")
+  );
   return (
     <>
       <StyledForm autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
@@ -83,21 +88,23 @@ export const SignInClient = () => {
           <StyledInnerDiv>
             <StyledInputWrap>
               <StyledInput
-                type="сontract"
-                name="сontract"
+                // type="сontract"
+                type="text"
+                name="contractNumber"
                 placeholder="№"
-                {...register("сontract")}
+                autoComplete="none"
                 className={
-                  errors.сontract
+                  errors.contractNumber
                     ? "invalid-border"
-                    : dirtyFields.сontract
+                    : dirtyFields.contractNumber
                     ? "valid-border"
                     : ""
                 }
+                {...register("contractNumber")}
               />
-              {errors.сontract && (
+              {errors.contractNumber && (
                 <div>
-                  <VscError
+                  {/* <VscError
                     style={{
                       width: "25px",
                       height: "25px",
@@ -107,9 +114,9 @@ export const SignInClient = () => {
                       top: "75%",
                       transform: "translateY(-50%)",
                       right: "12px",
-                    }}
-                  />
-                  <StyledError>{errors.сontract.message}</StyledError>
+                    }} */}
+                  {/* /> */}
+                  <StyledError>{errors.contractNumber.message}</StyledError>
                 </div>
               )}
             </StyledInputWrap>
@@ -118,21 +125,21 @@ export const SignInClient = () => {
           <StyledInnerDiv>
             <StyledInputWrap>
               <StyledInput
-                type="identification"
-                name="identification"
+                type="text"
+                name="password"
                 placeholder="№"
-                {...register("identification")}
+                {...register("password")}
                 className={
-                  errors.identification
+                  errors.password
                     ? "invalid-border"
-                    : dirtyFields.identification
+                    : dirtyFields.password
                     ? "valid-border"
                     : ""
                 }
               />
-              {errors.identification && (
+              {errors.password && (
                 <div>
-                  <VscError
+                  {/* <VscError
                     style={{
                       width: "25px",
                       height: "25px",
@@ -143,13 +150,19 @@ export const SignInClient = () => {
                       transform: "translateY(-50%)",
                       right: "12px",
                     }}
-                  />
-                  <StyledError>{errors.identification.message}</StyledError>
+                  /> */}
+                  <StyledError>{errors.password.message}</StyledError>
                 </div>
               )}
             </StyledInputWrap>
           </StyledInnerDiv>
-          <StyledButton type="submit" disabled={!isValid || isLoading}>
+          <StyledButton
+            type="submit"
+            disabled={
+              !isValid ||
+              Object.values(getValues()).some((element) => element === "")
+            }
+          >
             Вхід
           </StyledButton>
         </StyledFormInsight>

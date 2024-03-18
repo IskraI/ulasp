@@ -7,8 +7,10 @@ export const regularDateRegexp = /\d{2}\.\d{2}\.\d{4}/;
 export const phoneNumberUaRegexp = /^\+?3?8?(0\d{2}\d{3}\d{2}\d{2})$/;
 export const passportUaRegexp = /^([А-ЯЇІЄ]{2}\d{6})$/;
 export const nameCompanyRegexp = /^([а-яА-ЯїЇіІєЄ'ʼ]+)$/;
-const nameInstitutionRegexp =
-  /^(?:[^\s]+[а-яА-ЯїЇіІєЄ'ʼ-]+(?:\s+[^\s]+[а-яА-ЯїЇіІєЄ'ʼ-]+)*)$/;
+const nameInstitutionRegexp = /^(?=\S*?[а-яА-ЯїЇіІєЄ'ʼ-])\S{2,}(?:\s+\S{2,})*$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*\d).{6,}$/;
+// /^(?:[^\s]{3,}[а-яА-ЯїЇіІєЄ'ʼ-]+(?:\s+[^\s]{3,}[а-яА-ЯїЇіІєЄ'ʼ-]+)*)$/;
+// /^(?:[^\s]+[а-яА-ЯїЇіІєЄ'ʼ-]+(?:\s+[^\s]+[а-яА-ЯїЇіІєЄ'ʼ-]+)*)$/;
 
 export const UserFopSchema = yup.object().shape({
   firstName: yup
@@ -103,7 +105,7 @@ export const UserCompanySchema = yup.object().shape({
   name: yup
     .string()
     .required("Обов'язкове поле!")
-    .matches(nameCompanyRegexp, "Назва компанії українською мовою"),
+    .matches(nameInstitutionRegexp, "Назва компанії українською мовою"),
 
   contractNumber: yup
     .string()
@@ -196,6 +198,14 @@ export const MusicEditorSchema = yup.object().shape({
     .max(10, "Повинно бути 10 цифр!")
     .required("Обов'язкове поле!")
     .matches(onlyNumberRegexp, "Повинно бути 10 цифр!"),
+  institution: yup
+    .string()
+    .nullable()
+    // .matches(nameCompanyRegexp, "Назва закладу українською мовою")
+    .test("is-empty-or-valid", "Назва закладу українською мовою", (value) => {
+      if (!value) return true; // Вернуть true если значение пустое или null
+      return nameInstitutionRegexp.test(value); // проверка даты
+    }),
   // dayOfBirthday: yup
   //   .string()
   //   .required("Обов'язкове поле!")
@@ -313,7 +323,7 @@ export const UserCompanyCardSchema = yup.object().shape({
   name: yup
     .string()
     .required("Обов'язкове поле!")
-    .matches(nameCompanyRegexp, "Назва компанії українською мовою"),
+    .matches(nameInstitutionRegexp, "Назва компанії українською мовою"),
 
   contractNumber: yup
     .string()
@@ -380,4 +390,67 @@ export const UserCompanyCardSchema = yup.object().shape({
     .required("Обов'язкове поле!")
     .matches(emailRegexp, "Невірний формат email"),
   comment: yup.string(),
+});
+
+export const CardEditorSchema = yup.object().shape({
+  firstName: yup
+    .string()
+    .required("Обов'язкове поле!")
+    .matches(nameRegexp, "Ім'я українською"),
+  lastName: yup
+    .string()
+    .required("Обов'язкове поле!")
+    .matches(nameRegexp, "Прізвище українською"),
+
+  fatherName: yup
+    .string()
+    .nullable()
+    .test("is-empty-or-valid", "По-батькові українською або пусто", (value) => {
+      if (!value) return true; // Вернуть true если значение пустое или null
+      return nameRegexp.test(value); // проверка имени
+    }),
+
+  taxCode: yup
+    .string()
+    .min(10, "Повинно бути 10 цифр!")
+    .max(10, "Повинно бути 10 цифр!")
+    .required("Обов'язкове поле!")
+    .matches(onlyNumberRegexp, "Повинно бути 10 цифр!"),
+  institution: yup
+    .string()
+    .nullable()
+    // .matches(nameCompanyRegexp, "Назва закладу українською мовою")
+    .test("is-empty-or-valid", "Назва закладу українською мовою", (value) => {
+      if (!value) return true; // Вернуть true если значение пустое или null
+      return nameInstitutionRegexp.test(value); // проверка даты
+    }),
+
+  telNumber: yup
+    .string()
+    .required("Обов'язкове поле!")
+    .matches(phoneNumberUaRegexp, "У форматі 0503332211 або +380503332211"),
+  email: yup
+    .string()
+    .required("Обов'язкове поле!")
+    .matches(emailRegexp, "Невірний формат email"),
+  comment: yup.string(),
+});
+
+export const loginPasswordEditorSchema = yup.object().shape({
+  login: yup
+    .string()
+    .required("Обов'язкове поле!")
+    .matches(loginAdminRegexp, "Логін латинськими літерами")
+    .min(3, "Повинно бути від 3 символів!"),
+
+  password: yup
+    .string()
+    .test(
+      "is-empty-or-valid",
+      "Повинно бути від 6 символів, одна з них цифра!",
+      (value) => {
+        if (!value) return true; // Вернуть true если значение пустое или null
+        return passwordRegex.test(value); // проверка даты
+      }
+    ),
 });

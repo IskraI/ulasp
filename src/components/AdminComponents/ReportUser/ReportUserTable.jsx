@@ -1,10 +1,19 @@
 import { useTable } from "react-table";
+import React, { forwardRef } from "react";
 // import { COLUMNS } from "./Colums";
 import {
   TableWrapper,
   TableReport,
   TableReportRow,
   TableCell,
+  ReportTitle,
+  ReportTitleDesc,
+  ReportHeader,
+  ReportHeaderTh,
+  ReportHeaderTr,
+  ReportHeaderTd1,
+  ReportHeaderTd2,
+  TableReportThead,
 } from "./ReportUserTable.styled";
 
 export const columns = [
@@ -79,9 +88,31 @@ export const columns = [
     },
   },
 ];
+const formatDate = (dateString) => {
+  const months = [
+    "січня",
+    "лютого",
+    "березня",
+    "квітня",
+    "травня",
+    "червня",
+    "липня",
+    "серпня",
+    "вересня",
+    "жовтня",
+    "листопада",
+    "грудня",
+  ];
 
-const ReportUserTable = ({ data }) => {
-  // console.log("COLUMNS :>> ", columns);
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${day} ${month} ${year}`;
+};
+
+const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
   const tableInstance = useTable({
     columns,
     data,
@@ -90,10 +121,43 @@ const ReportUserTable = ({ data }) => {
     tableInstance;
 
   return (
-    <TableWrapper>
-      ЗВІТ про використані Об’єкти суміжних прав та Об’єкти авторского права за
-      <TableReport {...getTableProps()}>
+    <TableWrapper ref={ref}>
+      <ReportTitle>ЗВІТ </ReportTitle>
+      <ReportTitleDesc>
+        про використані Об’єкти суміжних прав та Об’єкти авторского права
+      </ReportTitleDesc>
+      <ReportTitleDesc>
+        за період з {formatDate(date.dateOfStart)} по{" "}
+        {formatDate(date.dateOfEnd)}
+      </ReportTitleDesc>
+
+      <ReportHeader className="header">
         <thead>
+          <ReportHeaderTr>
+            <ReportHeaderTh>Назва об'єкту</ReportHeaderTh>
+            <ReportHeaderTd1>{user.institution}</ReportHeaderTd1>
+          </ReportHeaderTr>
+          <ReportHeaderTr>
+            <ReportHeaderTh>Платник</ReportHeaderTh>
+            <ReportHeaderTd1>
+              {user.firstName || user.fatherName || user.lastName
+                ? `${user.firstName} ${user.fatherName} ${user.lastName}`
+                : user.name}
+            </ReportHeaderTd1>
+          </ReportHeaderTr>
+          <ReportHeaderTr>
+            <ReportHeaderTh>Договір номер</ReportHeaderTh>
+            <ReportHeaderTd2> {user.contractNumber}</ReportHeaderTd2>
+          </ReportHeaderTr>
+          <ReportHeaderTr>
+            <ReportHeaderTh>Ідентифікаційний номер (код ЄДРПОУ)</ReportHeaderTh>
+            <ReportHeaderTd2>{user.contactFaceTaxCode}</ReportHeaderTd2>
+          </ReportHeaderTr>
+        </thead>
+      </ReportHeader>
+
+      <TableReport {...getTableProps()}>
+        <TableReportThead>
           {headerGroups.map((headerGroup, ind) => (
             <tr key={ind} {...headerGroup.getHeaderGroupProps()}>
               {headerGroup?.headers.map((column, ind) => (
@@ -103,7 +167,7 @@ const ReportUserTable = ({ data }) => {
               ))}
             </tr>
           ))}
-        </thead>
+        </TableReportThead>
         <tbody {...getTableBodyProps()}>
           {rows.map((row, rowIndex) => {
             prepareRow(row);
@@ -124,6 +188,7 @@ const ReportUserTable = ({ data }) => {
       </TableReport>
     </TableWrapper>
   );
-};
+});
 
+ReportUserTable.displayName = "ReportUserTable";
 export default ReportUserTable;

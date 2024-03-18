@@ -80,12 +80,12 @@ export const propAdminNav = [
     navigation: "online",
     picture: `${symbol}#icon-online`,
   },
-  {
-    id: "navAnalytics",
-    title: "Аналітика",
-    navigation: "analytics",
-    picture: `${symbol}#icon-analytics`,
-  },
+  // {
+  //   id: "navAnalytics",
+  //   title: "Аналітика",
+  //   navigation: "analytics",
+  //   picture: `${symbol}#icon-analytics`,
+  // },
 ];
 
 export const propUserNav = [

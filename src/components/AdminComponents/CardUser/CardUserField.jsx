@@ -13,10 +13,10 @@ import {
   CommentTextarea,
   Tooltip,
 } from "../UserForm/UserCreateForm.styled";
-import ContactFaceFieldCard from "../UserForm/UserFieldForm/ContactFaceFieldCard";
-import RegisterNameFieldCard from "../UserForm/UserFieldForm/RegisterNameFieldCard";
-import CommonFieldCard from "../UserForm/UserFieldForm/CommonFieldsCard";
-import {  Controller } from "react-hook-form";
+import ContactFaceFieldCard from "./ContactFaceFieldCard";
+import RegisterNameFieldCard from "./RegisterNameFieldCard";
+import CommonFieldCard from "./CommonFieldsCard";
+import { Controller } from "react-hook-form";
 const CardUserField = ({
   user,
   control,
@@ -34,9 +34,7 @@ const CardUserField = ({
   dirtyFields,
   access,
 }) => {
-  // console.log("isEditing", isEditing);
-
-  // console.log("errors.contractNumber", errors.contractNumber);
+  // console.log("activeSectionCard", activeSectionCard);
   return (
     <Fieldform>
       <RegisterLeftBlock>
@@ -194,41 +192,16 @@ const CardUserField = ({
         )}
 
         {activeSectionCard === "MusicEditor" && (
-          <>
-            <CommonFieldCard
-              typeOfUser={"fop"}
-              register={register}
-              control={control}
-              isValid={isValid}
-              errors={errors}
-              readOnly={!isEditing}
-              user={user}
-            />
-            {/* <RegisterField>
-            <Controller
-                name="login"
-                control={control}
-                defaultValue={user.login}
-                render={({ field }) => (
-                  <RegisterInput
-                    type="text"
-                    placeholder="Остання оплата"
-                    readOnly={!isEditing}
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.target.value)}
-                  />
-                  )}
-                  />
-            </RegisterField>
-            <RegisterField>
-              <RegisterInput
-                type="text"
-                placeholder="Пароль"
-                readOnly={!isEditing}
-                {...register("password")}
-              />
-            </RegisterField> */}
-          </>
+          <CommonFieldCard
+            activeSectionCard={activeSectionCard}
+            register={register}
+            control={control}
+            isValid={isValid}
+            errors={errors}
+            readOnly={!isEditing}
+            user={user}
+            isEditing={isEditing}
+          />
         )}
       </RegisterLeftBlock>
       <RegisterRigthBlock>
@@ -250,14 +223,6 @@ const CardUserField = ({
             )}
           />
         </RegisterCommentField>
-        {/* <
-       Button
-         type="submit"
-         padding="8px"
-         text="Додати" 
-         // disabled={!isValid}
-       /> 
-       */}
       </RegisterRigthBlock>
     </Fieldform>
   );
