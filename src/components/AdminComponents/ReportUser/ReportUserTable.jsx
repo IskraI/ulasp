@@ -14,6 +14,9 @@ import {
   ReportHeaderTd1,
   ReportHeaderTd2,
   TableReportThead,
+  ReportFooter,
+  ReportFooterDesc,
+  ReportFooterBlockDesc,
 } from "./ReportUserTable.styled";
 
 export const columns = [
@@ -119,7 +122,8 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
   });
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
-
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
   return (
     <TableWrapper ref={ref}>
       <ReportTitle>ЗВІТ </ReportTitle>
@@ -186,6 +190,25 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
           })}
         </tbody>
       </TableReport>
+      <ReportFooter>
+        <div>
+          ____________ ___________________________________________ «____»
+          ___________ {currentYear} p.
+        </div>
+        <ReportFooterBlockDesc>
+          <div>
+            <ReportFooterDesc>
+              (підпис уповноваженої особи Користувача)
+            </ReportFooterDesc>
+            <ReportFooterDesc>
+              (посада та П.І.Б. уповноваженої особи Користувача)
+            </ReportFooterDesc>
+          </div>
+          <div>
+            <ReportFooterDesc>(дата складання звіту )</ReportFooterDesc>
+          </div>
+        </ReportFooterBlockDesc>
+      </ReportFooter>
     </TableWrapper>
   );
 });
