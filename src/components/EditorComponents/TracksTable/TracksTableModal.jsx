@@ -1,7 +1,4 @@
 /* eslint-disable react/prop-types */
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState, useCallback } from "react";
-import { useLocation } from "react-router-dom";
 
 import Pagination from "rc-pagination";
 
@@ -11,7 +8,7 @@ import TrackItem from "./TrackItem.jsx";
 import { Loader } from "../../Loader/Loader.jsx";
 import { ErrorNotFound, NoData } from "../../Errors/Errors.jsx";
 import {
-  HASNOT_BEEN_UPLOADED,
+  HASNOT_BEEN_ADDED,
   SEARCH_FAILED,
 } from "../../../constants/constants.js";
 
@@ -62,14 +59,9 @@ const TracksTable = ({
   return (
     <>
       {error && <ErrorNotFound error={error?.data?.message} />}
-      {tracks?.length === 0 && !isLoading && !error && (
-        <NoData
-          text={isSearchResultFail ? SEARCH_FAILED : HASNOT_BEEN_UPLOADED}
-          textColor={"grey"}
-        />
-      )}
 
-      {!error && !isFetching && isSuccess && tracks?.length !== 0 && (
+
+      {!error && isSuccess && tracks?.length !== 0 && (
         <>
           <TracksTableWrapper marginTop={tracksTableProps.marginTop}>
             <TableStyle>

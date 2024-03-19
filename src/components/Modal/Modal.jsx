@@ -21,6 +21,9 @@ export const Modal = ({
   children,
   onClose,
   flexDirection,
+  borderStyle,
+  borderWidth,
+  borderColor,
 }) => {
   useEffect(() => {
     const handleKeydown = (e) => {
@@ -53,6 +56,9 @@ export const Modal = ({
         width={width}
         padding={padding}
         flexDirection={flexDirection}
+        borderStyle={borderStyle}
+        borderWidth={borderWidth}
+        borderColor={borderColor}
       >
         <CloseBtn onClick={onClose} style={closeButtonStyle}>
           <CloseIcon />

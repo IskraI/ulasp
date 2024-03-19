@@ -9,11 +9,16 @@ import SearchTracks from "../../pages/Editor/SearchTracks/SearchTracks";
 import TracksTableModal from "../EditorComponents/TracksTable/TracksTableModal";
 import RowsAddTrackFromDB from "./RowsAddTrackFromDB";
 
+import { Loader } from "../Loader/Loader";
+import { NoData } from "../Errors/Errors";
+import { HASNOT_BEEN_ADDED, SEARCH_FAILED } from "../../constants/constants";
+
 import { ControlWrapper } from "../EditorComponents/MediaList/MediaList.styled";
 import { Wrapper, TitleSearchInput } from "./AddTrackFromDB.styled";
-import { Loader } from "../Loader/Loader";
+
 const AddTrackFromDB = ({ iconButton, textButton }) => {
   const [showModal, setShowModal] = useState(false);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
 
@@ -34,13 +39,11 @@ const AddTrackFromDB = ({ iconButton, textButton }) => {
   });
 
   const onPageChange = (page) => {
-    console.log("4 Step - setCurrentPage in mutation AddTrackFromDB", page);
     setCurrentPage(page);
     setIsSearching(false);
   };
 
   const onPageSizeChange = (size) => {
-    console.log(size);
     setPageSize(size);
   };
 
@@ -52,6 +55,9 @@ const AddTrackFromDB = ({ iconButton, textButton }) => {
       setIsSearching(false);
     }
   }, []);
+
+  const isSearchResultFail =
+    query !== "" && allTracks?.latestTracks.length === 0;
 
   return (
     <>
@@ -90,6 +96,12 @@ const AddTrackFromDB = ({ iconButton, textButton }) => {
               handleSearchTracks={handleSearchTracks}
               width={"100%"}
             />
+            {isSearchResultFail && (
+              <NoData
+                text={isSearchResultFail && SEARCH_FAILED}
+                textColor={"grey"}
+              />
+            )}
             {!isFetchingAllTracks && (
               <>
                 {query !== "" && (

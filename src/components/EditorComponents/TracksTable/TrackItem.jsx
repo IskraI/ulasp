@@ -9,7 +9,8 @@ import symbol from "../../../assets/symbol.svg";
 import DotsBtn from "./DotsButton";
 import PopUpButtons from "./PopUpButtons";
 import { Button } from "../../Button/Button";
-
+import { Modal } from "../../Modal/Modal";
+import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
 import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsSlice";
 import {
   useDeleteTrackMutation,
@@ -63,6 +64,7 @@ const TrackItem = ({
   deleteCheckedTrackId,
   deselect,
   isTopChart,
+  showCharMsg,
 }) => {
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
@@ -74,6 +76,7 @@ const TrackItem = ({
   // console.log("trackID", idTrack);
 
   const [isChecked, setIsChecked] = useState(false);
+  const [showModalChart, setShowModalChart] = useState(false);
 
   const ref = useRef(null);
   const playBtnRef = useRef(null);
@@ -90,10 +93,13 @@ const TrackItem = ({
   const [updateTrack, { data: dataUpdateTrack }] =
     useUpdateTrackCoverMutation();
 
-  const [addToChart, { data: dataAddToChart }] = useAddTrackToChartMutation();
+  const [addToChart, { data: dataAddToChart, isLoading: isLoadingAddToChart }] =
+    useAddTrackToChartMutation();
 
-  const [removeFromChart, { data: dataRemoveFromChart }] =
-    useRemoveTrackFromChartMutation();
+  const [
+    removeFromChart,
+    { data: dataRemoveFromChart, isLoading: isLoadingRemoveFromChart },
+  ] = useRemoveTrackFromChartMutation();
 
   const [
     deleteTrack,
@@ -211,11 +217,11 @@ const TrackItem = ({
   };
 
   const addTrackToChart = () => {
-    addToChart(idTrack).unwrap();
+    addToChart(idTrack).then(setShowModalChart(true)).unwrap();
   };
 
   const removeTrackFromChart = () => {
-    removeFromChart(idTrack).unwrap();
+    removeFromChart(idTrack).then(setShowModalChart(true)).unwrap();
   };
 
   return (
@@ -359,6 +365,25 @@ const TrackItem = ({
           />
         </TableCell>
       </TrStyle>
+      {showModalChart && (
+        <Modal
+          width={"494px"}
+          padding={"16px"}
+          borderColor={"#FFF3BF"}
+          borderStyle={"solid"}
+          borderWidth={"1px"}
+          onClose={() => setShowModalChart(false)}
+          bcgTransparent={true}
+        >
+          <ModalInfoText fontSize={"16px"}>
+            <ModalInfoTextBold>
+              {artist} - {trackName}
+            </ModalInfoTextBold>
+            {isLoadingAddToChart && "додано но нових пісень"}
+            {isLoadingRemoveFromChart && "видалено з нових пісень"}
+          </ModalInfoText>
+        </Modal>
+      )}
     </>
   );
 };

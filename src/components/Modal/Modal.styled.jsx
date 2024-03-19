@@ -17,6 +17,9 @@ export const ModalWindow = styled.div`
   width: ${(props) => props.width};
   padding: ${(props) => props.padding};
   flex-direction: ${(props) => props.flexDirection};
+  border-style: ${(props) => props.borderStyle || "none"};
+  border-width: ${(props) => props.borderWidth || "none"};
+  border-color: ${(props) => props.borderColor || "none"};
 
   border-radius: 15px;
   background: #7f99c0;
