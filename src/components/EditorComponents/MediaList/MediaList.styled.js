@@ -7,7 +7,7 @@ export const ControlWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   /* margin-top: 26px; */
-  margin-bottom: 24px;
+  margin-bottom: ${(props) => props.marginBottom || "24px"};
 `;
 
 export const TitleWrapper = styled.p`
@@ -80,8 +80,7 @@ export const SvgMedia = styled.svg`
   &:hover {
     fill: ${colors.accentHoverColor};
     transform: rotate(
-      ${(props) =>
-        props.transformIcon ? props.transformIcon + "deg" : "0deg"}
+      ${(props) => (props.transformIcon ? props.transformIcon + "deg" : "0deg")}
     );
     transition: all 550ms ${mainCubicTransition};
   }

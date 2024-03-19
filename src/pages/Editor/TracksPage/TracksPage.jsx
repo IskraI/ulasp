@@ -160,7 +160,10 @@ const TracksPage = () => {
               isLoadingUploadTrackInPlaylist={isLoadingUploadTrackInPlaylist}
             />
 
-            <SearchTracks handleSearchTracks={handleSearchTracks} />
+            <SearchTracks
+              handleSearchTracks={handleSearchTracks}
+              marginRight={"0px"}
+            />
           </div>
         </>
       )}

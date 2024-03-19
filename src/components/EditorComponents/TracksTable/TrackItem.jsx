@@ -8,11 +8,15 @@ import { WithOutGenre } from "../../Errors/Errors";
 import symbol from "../../../assets/symbol.svg";
 import DotsBtn from "./DotsButton";
 import PopUpButtons from "./PopUpButtons";
-
+import { Button } from "../../Button/Button";
+import { Modal } from "../../Modal/Modal";
+import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
 import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsSlice";
 import {
   useDeleteTrackMutation,
-  useUpdateTrackMutation,
+  useUpdateTrackCoverMutation,
+  useAddTrackToChartMutation,
+  useRemoveTrackFromChartMutation,
 } from "../../../redux/tracksSlice";
 import {
   pause,
@@ -59,6 +63,8 @@ const TrackItem = ({
   addTrackToCheckedList,
   deleteCheckedTrackId,
   deselect,
+  isTopChart,
+  showCharMsg,
 }) => {
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
@@ -70,6 +76,7 @@ const TrackItem = ({
   // console.log("trackID", idTrack);
 
   const [isChecked, setIsChecked] = useState(false);
+  const [showModalChart, setShowModalChart] = useState(false);
 
   const ref = useRef(null);
   const playBtnRef = useRef(null);
@@ -83,7 +90,16 @@ const TrackItem = ({
 
   const oneGenre = !isInPlayList ? playLists[0]?.playlistGenre[0]?.genre : null;
 
-  const [updateTrack, { data: dataUpdateTrack }] = useUpdateTrackMutation();
+  const [updateTrack, { data: dataUpdateTrack }] =
+    useUpdateTrackCoverMutation();
+
+  const [addToChart, { data: dataAddToChart, isLoading: isLoadingAddToChart }] =
+    useAddTrackToChartMutation();
+
+  const [
+    removeFromChart,
+    { data: dataRemoveFromChart, isLoading: isLoadingRemoveFromChart },
+  ] = useRemoveTrackFromChartMutation();
 
   const [
     deleteTrack,
@@ -200,6 +216,14 @@ const TrackItem = ({
     updateTrack(idTrack).unwrap();
   };
 
+  const addTrackToChart = () => {
+    addToChart(idTrack).then(setShowModalChart(true)).unwrap();
+  };
+
+  const removeTrackFromChart = () => {
+    removeFromChart(idTrack).then(setShowModalChart(true)).unwrap();
+  };
+
   return (
     <>
       <TrStyle
@@ -314,6 +338,9 @@ const TrackItem = ({
             <PopUpButtons
               removeTrackFn={removeTrack}
               updateTrackCoverFn={updateTrackCover}
+              addTrackToChartFn={addTrackToChart}
+              removeTrackFromChartFn={removeTrackFromChart}
+              isTopChart={isTopChart}
             />
           )}
           <DotsBtn
@@ -323,7 +350,40 @@ const TrackItem = ({
             icon={`${symbol}#icon-more-dots`}
           />
         </TableCell>
+        <TableCell showData={showData[9] || false}>
+          <Button
+            icon={
+              isTopChart ? `${symbol}#icon-close` : `${symbol}#icon-check-in`
+            }
+            onClick={isTopChart ? removeTrackFromChart : addTrackToChart}
+            type={"button"}
+            background={"none"}
+            border={"none"}
+            showIcon={true}
+            fillColor={"black"}
+            strokeColor={"none"}
+          />
+        </TableCell>
       </TrStyle>
+      {showModalChart && (
+        <Modal
+          width={"494px"}
+          padding={"16px"}
+          borderColor={"#FFF3BF"}
+          borderStyle={"solid"}
+          borderWidth={"1px"}
+          onClose={() => setShowModalChart(false)}
+          bcgTransparent={true}
+        >
+          <ModalInfoText fontSize={"16px"}>
+            <ModalInfoTextBold>
+              {artist} - {trackName}
+            </ModalInfoTextBold>
+            {isLoadingAddToChart && "додано но нових пісень"}
+            {isLoadingRemoveFromChart && "видалено з нових пісень"}
+          </ModalInfoText>
+        </Modal>
+      )}
     </>
   );
 };

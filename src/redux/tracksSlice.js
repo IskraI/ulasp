@@ -22,7 +22,14 @@ export const tracksApi = createApi({
           limit && `&limit=${limit}`
         }${sort && `&sort=${sort}`}${`&query=${query}`}`,
       }),
-      // provideTags: ["Tracks"],
+      providesTags: (_result, _err, id) => [{ type: "Tracks", id }],
+    }),
+    getTracksInChart: builder.query({
+      query: ({ page = "", limit = "" }) => ({
+        url: `/editor/tracks/getTracksInChart?${page && `page=${page}`} ${
+          limit && `&limit=${limit}`
+        }`,
+      }),
       providesTags: (_result, _err, id) => [{ type: "Tracks", id }],
     }),
     uploadTrack: builder.mutation({
@@ -41,13 +48,27 @@ export const tracksApi = createApi({
       }),
       invalidatesTags: ["Tracks"],
     }),
-    updateTrack: builder.mutation({
+    updateTrackCover: builder.mutation({
       query: (id) => ({
         url: `/editor/tracks/updateTrackCover/`,
         method: "PATCH",
         body: {
           id,
         },
+      }),
+      invalidatesTags: ["Tracks"],
+    }),
+    addTrackToChart: builder.mutation({
+      query: (id) => ({
+        url: `/editor/tracks/addTrackToChart/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["Tracks"],
+    }),
+    removeTrackFromChart: builder.mutation({
+      query: (id) => ({
+        url: `/editor/tracks/removeTrackFromChart/${id}`,
+        method: "PATCH",
       }),
       invalidatesTags: ["Tracks"],
     }),
@@ -59,5 +80,8 @@ export const {
   useGetAllTracksQuery,
   useUploadTrackMutation,
   useDeleteTrackMutation,
-  useUpdateTrackMutation,
+  useUpdateTrackCoverMutation,
+  useAddTrackToChartMutation,
+  useRemoveTrackFromChartMutation,
+  useGetTracksInChartQuery,
 } = tracksApi;

@@ -69,6 +69,12 @@ const RowsTitle = [
     titleSize: "5%",
     showData: true,
   },
+  {
+    title: "",
+    type: "button",
+    titleSize: "1%",
+    showData: false,
+  },
 ];
 
 const EditorCabinetPage = () => {
@@ -84,8 +90,7 @@ const EditorCabinetPage = () => {
   } = useGetAllTracksQuery({
     page: currentPage,
     limit: pageSize,
-    // forceRefetch: true,
-    // refetchOnFocus: true,
+    forceRefetch: true,
   });
 
   const onPageChange = (page) => {
@@ -138,6 +143,7 @@ const EditorCabinetPage = () => {
             currentPage={currentPage}
             pageSize={pageSize}
             totalPages={allTracks.totalPages}
+            deleteButton={false}
           />
         </>
       )}

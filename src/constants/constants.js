@@ -17,4 +17,6 @@ export const SERVER_ERROR_M = "Будь ласка, спробуйте ще ра
 
 export const HASNOT_BEEN_UPLOADED = "Музика ще не завантажена";
 
+export const HASNOT_BEEN_ADDED = "Музика ще не додана";
+
 export const SEARCH_FAILED = "За вашим пошуком результатів не знайдено";

@@ -1,8 +1,8 @@
 import { Grid, Oval, ProgressBar } from "react-loader-spinner";
 
-export const Loader = () => {
+export const Loader = ({ loaderHeight = "100vh" }) => {
   return (
-    <div style={{ height: "100vh" }}>
+    <div style={{ height: loaderHeight }}>
       <Grid
         color="#00BFFF"
         back

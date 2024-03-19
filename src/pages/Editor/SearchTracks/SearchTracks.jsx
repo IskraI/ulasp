@@ -3,7 +3,13 @@ import { useState, useEffect } from "react";
 
 import { SearchInput } from "./SearchTracks.styled";
 
-const SearchTracks = ({ handleSearchTracks }) => {
+const SearchTracks = ({
+  handleSearchTracks,
+  marginTop,
+  marginLeft,
+  marginRight,
+  width,
+}) => {
   const [inputValue, setInputValue] = useState("");
   const [isInputActive, setIsInputActive] = useState(false);
 
@@ -29,12 +35,20 @@ const SearchTracks = ({ handleSearchTracks }) => {
       onChange={handleTextChange}
       onFocus={() => setIsInputActive(true)}
       onBlur={() => setIsInputActive(false)}
+      marginTop={marginTop}
+      marginLeft={marginLeft}
+      marginRight={marginRight}
+      width={width}
     />
   );
 };
 
 SearchTracks.propTypes = {
   handleSearchTracks: PropTypes.func,
+  marginTop: PropTypes.string,
+  marginLeft: PropTypes.string,
+  marginRight: PropTypes.string,
+  width: PropTypes.string,
 };
 
 export default SearchTracks;
