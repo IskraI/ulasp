@@ -68,7 +68,7 @@ const ReportUser = () => {
     .reverse()
     .join("-");
   const componentRef = useRef();
-
+  console.log("currentDate :>> ", currentDate);
   return (
     <>
       <TabNavigation pathtext={false} />

@@ -113,3 +113,26 @@ export const ReportHeaderTd2 = styled.td`
   border: 0.5px solid rgba(130, 130, 130, 0.5);
   background: rgba(234, 234, 234, 0.32);
 `;
+
+export const ReportFooter = styled.div`
+  margin-top: 17px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`;
+export const ReportFooterDesc = styled.div`
+  margin-top: 8px;
+  font-family: Inter;
+  font-size: 12px; //8px
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0em;
+`;
+
+export const ReportFooterBlockDesc = styled.div`
+  display: flex;
+  width: 530px;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+`;
