@@ -251,7 +251,7 @@ function App() {
                 />
                 <Route
                   path="medialibrary/newtracks"
-                  element={<AllTracksUser display={"none"} />}
+                  element={<NewTracksUser />}
                 />
                 <Route path="cabinet/myplaylists" element={<MyPlaylists />} />
                 <Route

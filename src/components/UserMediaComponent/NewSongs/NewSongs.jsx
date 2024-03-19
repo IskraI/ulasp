@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 import { TitleWrapper, ControlWrapper } from "../MediaList/MediaList.styled";
 // import { Button } from "../../Button/Button";
 // import symbol from "../../../assets/symbol.svg";
@@ -6,22 +8,20 @@ import TracksItem from "./TrackItem";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 
 const NewSongs = ({
-  data: allTracks,
+  data: trackInChart,
   isFetching,
-  error,
+  isError,
   showNavigationLink,
 }) => {
-  // console.log("NewSongs allTracks", allTracks);
-
   return (
     <>
-      {!isFetching && !error && (
+      {!isFetching && !isError && (
         <>
           <ControlWrapper>
             <TitleWrapper>Нові пісні</TitleWrapper>
           </ControlWrapper>
           <Tracks>
-            {allTracks.map(
+            {trackInChart.map(
               ({ _id, trackPictureURL, trackName, artist, trackURL }) => (
                 <TracksItem
                   key={_id}
@@ -42,6 +42,13 @@ const NewSongs = ({
       )}
     </>
   );
+};
+
+NewSongs.propTypes = {
+  data: PropTypes.array,
+  isFetching: PropTypes.bool,
+  isError: PropTypes.bool,
+  showNavigationLink: PropTypes.bool,
 };
 
 export default NewSongs;

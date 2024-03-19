@@ -8,7 +8,7 @@ import {
   useFavoritePlaylistForUserQuery,
   useAddPlaylistForUserQuery,
 } from "../../../redux/playlistsUserSlice";
-import { useGetAllTracksforUserQuery } from "../../../redux/tracksUserSlice";
+import { useGetTracksInChartQuery } from "../../../redux/tracksSlice";
 import { useGetAllShopsUserQuery } from "../../../redux/shopsUserSlice";
 import { Loader } from "../../../components/Loader/Loader";
 
@@ -31,13 +31,6 @@ const MediaLibraryForUser = () => {
     isSuccess: isSuccesLatestPlaylist,
     isError: isErrorLatestPlaylist,
   } = useGetLatestPlaylistsForUserQuery(`?&limit=${12}`);
-  const {
-    data: allTracks,
-
-    isFetching: isFetchingNewSongs,
-    isSuccess: isSuccesLatestNewSongs,
-    isError: isErrorNewSongs,
-  } = useGetAllTracksforUserQuery({ page: "", limit: 6 });
 
   const {
     data: favoritePlaylist,
@@ -46,6 +39,18 @@ const MediaLibraryForUser = () => {
     isSuccess: isSuccesLatestFavoritePlaylist,
     isError: isErrorFavoritePlaylist,
   } = useFavoritePlaylistForUserQuery();
+
+  const {
+    data: tracksInChart,
+    error: errorLoadingTracksInChart,
+    isFetching: isFetchingTracksInChart,
+    isSuccess: isSuccessTracksInChart,
+    isLoading: isLoadingTracksInChart,
+    isError: isErrorTracksInChart,
+  } = useGetTracksInChartQuery({
+    limit: 6,
+    forseRefetch: true,
+  });
 
   const { data: dataAdd, isLoading: isLoadingAddPlaylist } =
     useAddPlaylistForUserQuery();
@@ -56,31 +61,22 @@ const MediaLibraryForUser = () => {
   const fetching =
     isFetchingAllGenre &&
     isFetchingLatestPlaylist &&
-    isFetchingNewSongs &&
+    isFetchingTracksInChart &&
     isFetchingShops &&
     !isErrorAllGenre &&
     !isErrorLatestPlaylist &&
-    !isErrorNewSongs &&
-    !isErrorShops;
-
-  const loading =
-    isFetchingAllGenre &&
-    isFetchingLatestPlaylist &&
-    isFetchingNewSongs &&
-    isFetchingShops &&
-    !isErrorAllGenre &&
-    !isErrorLatestPlaylist &&
-    !isErrorNewSongs &&
+    !isErrorTracksInChart &&
     !isErrorShops;
 
   const success =
-    isSuccesAllGenre && isSuccesLatestPlaylist && isSuccesLatestNewSongs;
+    isSuccesAllGenre && isSuccesLatestPlaylist && isSuccessTracksInChart;
   isSuccessShops;
 
-  const error = isErrorAllGenre && isErrorLatestPlaylist && isErrorNewSongs;
+  const error =
+    isErrorAllGenre && isErrorLatestPlaylist && isErrorTracksInChart;
   return (
     <>
-      {loading && <Loader />}
+      {fetching && <Loader />}
       {success && !fetching && (
         <>
           <Genres
@@ -111,10 +107,11 @@ const MediaLibraryForUser = () => {
               showNavigationLink={true}
             />
           )}
+
           <NewSongs
-            data={allTracks.latestTracks}
-            isFetching={isFetchingNewSongs}
-            error={isErrorNewSongs}
+            data={tracksInChart.tracksInChart}
+            isFetching={isFetchingTracksInChart}
+            isError={isErrorTracksInChart}
             showNavigationLink={true}
           />
         </>
