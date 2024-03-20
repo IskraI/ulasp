@@ -99,7 +99,9 @@ export const ReportWrapper = styled.div`
   justify-content: space-between;
 `;
 export const ReporTabletWrapper = styled.div`
-  display: block;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
   padding: 24px 0;
   /* height: 100vh; */
   width: 100%;
