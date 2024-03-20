@@ -75,7 +75,7 @@ const ReportUser = () => {
       <ReportWrapper>
         <div>
           <Title>
-            Звіт по користувачу з № договору: {user?.contractNumber}
+            {`Звіт по користувачу з № договору: ${user?.contractNumber}`}
           </Title>
 
           <ReportForm onSubmit={handleSubmit(onFormSubmit)}>

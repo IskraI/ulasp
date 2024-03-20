@@ -95,6 +95,7 @@ export const ReportFormLabel = styled.label`
 export const ReportWrapper = styled.div`
   display: flex;
   gap: 24px;
+  /* max-height: calc(100vh - 10%); */
   /* align-items: stretch; */
   justify-content: space-between;
 `;
@@ -103,7 +104,9 @@ export const ReporTabletWrapper = styled.div`
   flex-direction: row;
   align-items: flex-start;
   padding: 24px 0;
-  /* height: 100vh; */
+  max-height: calc(100vh - 250px);
+  /* overflow-y: scroll;
+  overflow-x: hidden; */
   width: 100%;
   background: rgba(149, 202, 255, 0.42);
   border-radius: 10px;

@@ -9,9 +9,9 @@ export const ErrorText = styled.p`
 `;
 
 export const TableWrapper = styled.div`
-  overflow-x: auto;
+  overflow-y: auto;
   max-width: 750px;
-
+  height: 100%;
   padding: 30px;
   background: rgba(256, 256, 256);
   margin-left: auto;
@@ -21,6 +21,7 @@ export const TableWrapper = styled.div`
 
 export const TableReport = styled.table`
   width: 100%;
+  height: 100vh;
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
@@ -66,6 +67,7 @@ export const ReportTitleDesc = styled.p`
   line-height: 18px;
   letter-spacing: 0em;
   text-align: center;
+  margin-bottom: 12px;
 `;
 
 export const ReportHeader = styled.table`
@@ -118,21 +120,65 @@ export const ReportFooter = styled.div`
   margin-top: 17px;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
 `;
-export const ReportFooterDesc = styled.div`
+export const ReportFooterDesc = styled.p`
   margin-top: 8px;
   font-family: Inter;
-  font-size: 12px; //8px
+  font-size: 10px; //8px
   font-weight: 400;
   line-height: 18px;
   letter-spacing: 0em;
+  position: relative;
 `;
 
+export const Underline = styled.span`
+  position: relative;
+  display: inline-block;
+  &:before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: ${(props) => props.left ?? "0%"};
+    width: ${(props) => props.width ?? "70%"};
+    height: 1px;
+    background-color: black;
+  }
+`;
+
+export const TextWithUnderline = styled.span`
+  position: relative;
+  display: inline-block;
+  &:before {
+    content: "${(props) => props.text}";
+    position: absolute;
+    top: -10%;
+    left: ${(props) => props.underlineLeft ?? "0%"};
+    width: ${(props) => props.underlineWidth ?? "70%"};
+    height: 1px;
+    background-color: black;
+  }
+`;
 export const ReportFooterBlockDesc = styled.div`
   display: flex;
-  width: 530px;
-  flex-direction: row;
+  width: 100%;
+  /* flex-direction: row; */
   align-items: flex-start;
   justify-content: space-between;
 `;
+
+export const ReportFooterComment = styled.p`
+  font-family: Inter;
+  font-size: 12px; //8px
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: center;
+  margin-bottom: 24px;
+`;
+
+// export const TextWithUnderline = ({ text, underlineWidth, underlineLeft }) => (
+//   <Underline width={underlineWidth} left={underlineLeft}>
+//     {text}
+//   </Underline>
+// );
