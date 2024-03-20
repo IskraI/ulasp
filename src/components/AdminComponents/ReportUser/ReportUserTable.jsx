@@ -17,6 +17,9 @@ import {
   ReportFooter,
   ReportFooterDesc,
   ReportFooterBlockDesc,
+  ReportFooterComment,
+  Underline,
+  TextWithUnderline,
 } from "./ReportUserTable.styled";
 
 export const columns = [
@@ -124,18 +127,23 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
     tableInstance;
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
+  // const nameForTitle =
   return (
     <TableWrapper ref={ref}>
-      <ReportTitle>ЗВІТ </ReportTitle>
+      <ReportTitle>ФОРМА ЗВIТУ</ReportTitle>
+      <ReportTitle>{`ТОВ/ФОП ${
+        user.firstName || user.fatherName || user.lastName
+          ? `${user.firstName} ${user.fatherName} ${user.lastName}`
+          : user.name
+      } /договір №${user.contractNumber}/`}</ReportTitle>
+
       <ReportTitleDesc>
-        про використані Об’єкти суміжних прав та Об’єкти авторского права
-      </ReportTitleDesc>
-      <ReportTitleDesc>
-        за період з {formatDate(date.dateOfStart)} по{" "}
-        {formatDate(date.dateOfEnd)}
+        про використані Об’єкти суміжних прав та Об’єкти авторского права за
+        період з {formatDate(date.dateOfStart)} p. по{" "}
+        {formatDate(date.dateOfEnd)} p.
       </ReportTitleDesc>
 
-      <ReportHeader className="header">
+      {/* <ReportHeader className="header">
         <thead>
           <ReportHeaderTr>
             <ReportHeaderTh>Назва об'єкту</ReportHeaderTh>
@@ -158,7 +166,7 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
             <ReportHeaderTd2>{user.contactFaceTaxCode}</ReportHeaderTd2>
           </ReportHeaderTr>
         </thead>
-      </ReportHeader>
+      </ReportHeader> */}
 
       <TableReport {...getTableProps()}>
         <TableReportThead>
@@ -192,21 +200,34 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
       </TableReport>
       <ReportFooter>
         <div>
+          <ReportFooterComment>
+            Примітки: для іноземних авторів виконавців і творів дані вказуються
+            мовою оригіналу; <br />
+            Сторони погоджуються, що Звіт може не співпадати з фактично
+            використаними музичними творами, але не
+            <br />
+            більше ніж на 10% загального часу використання музичних творів.
+          </ReportFooterComment>
+        </div>
+        {/* <div>
           ____________ ___________________________________________ «____»
           ___________ {currentYear} p.
-        </div>
+        </div> */}
         <ReportFooterBlockDesc>
-          <div>
-            <ReportFooterDesc>
+          <ReportFooterDesc>
+            <Underline width={"70%"} left={"5%"}>
               (підпис уповноваженої особи Користувача)
-            </ReportFooterDesc>
-            <ReportFooterDesc>
+            </Underline>
+          </ReportFooterDesc>
+          <ReportFooterDesc>
+            <Underline width={"120%"} left={"-15%"}>
               (посада та П.І.Б. уповноваженої особи Користувача)
-            </ReportFooterDesc>
-          </div>
-          <div>
-            <ReportFooterDesc>(дата складання звіту )</ReportFooterDesc>
-          </div>
+            </Underline>
+          </ReportFooterDesc>
+
+          <ReportFooterDesc>
+            <Underline width={"70%"}>(дата складання звіту )</Underline>
+          </ReportFooterDesc>
         </ReportFooterBlockDesc>
       </ReportFooter>
     </TableWrapper>
