@@ -3,8 +3,7 @@ import { BASE_URL } from "../constants/constants";
 
 export const genresApi = createApi({
   reducerPath: "genresApi",
-  forceRefetch: true,
-  refetchOnFocus: true,
+
   tagTypes: ["Genres"],
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,

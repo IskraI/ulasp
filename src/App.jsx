@@ -260,7 +260,7 @@ function App() {
                 />
                 <Route
                   path="cabinet/myplaylists/createplaylists/:playlistId/tracks"
-                  element={<TracksPageUser />}
+                  element={<TracksPageCreateUser />}
                 />
                 <Route
                   path="cabinet/myplaylists/addplaylists"

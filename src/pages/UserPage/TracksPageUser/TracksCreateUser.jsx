@@ -8,6 +8,8 @@ import Player from "../../../components/Player/Player";
 import { useState, useEffect, useLayoutEffect, useRef, useId } from "react";
 import { useParams } from "react-router-dom";
 import { Loader } from "../../../components/Loader/Loader";
+import AddTrackToPlaylistFromDB from "../../../components/UserCabinetPage/AddTrackToPlaylistFromDB/AddTrackToPlaylistFromDB";
+import rowsTracksCreateUser from "./RowsTracksCreateUser";
 
 const TracksPageCreateUser = () => {
   const id = useId();
@@ -28,69 +30,6 @@ const TracksPageCreateUser = () => {
     page: currentPage,
     limit: pageSize,
   });
-
-  const rows = () => {
-    const RowsTitle = [
-      {
-        title: "",
-        type: "checkbox",
-        titleSize: "2%",
-        showData: false,
-      },
-
-      {
-        title: "",
-        type: "button",
-        titleSize: "2%",
-        showData: true,
-      },
-      {
-        title: "",
-        type: "image",
-        titleSize: "10%",
-        showData: true,
-      },
-      {
-        title: "Назва пісні",
-        type: "text",
-        titleSize: "20%",
-        showData: true,
-      },
-      {
-        title: "Виконавець",
-        type: "text",
-        titleSize: "15%",
-        showData: true,
-      },
-      {
-        title: "Тривалість",
-        type: "text",
-        titleSize: "12%",
-        showData: true,
-      },
-      {
-        title: "Жанр",
-        type: "text",
-        titleSize: "10%",
-        showData: true,
-      },
-      {
-        title: "Плейлист",
-        type: "text",
-        titleSize: "0%",
-        showData: false,
-      },
-
-      {
-        title: "",
-        type: "button",
-        titleSize: "1%",
-        showData: false,
-      },
-    ];
-
-    return RowsTitle;
-  };
 
   const [sortedTracks, setSortedTracks] = useState([]);
   const [sortedForSrc, setSortedForSrc] = useState([]);
@@ -140,18 +79,28 @@ const TracksPageCreateUser = () => {
       {!isSuccess && !error && <Loader />}
       {isSuccess && !error && (
         <>
-          <PlaylistListItem
-            icon={data.playlist.playListAvatarURL}
-            title={data.playlist.playListName}
-            placeListCardInfo={true}
-            id={playlistId}
-            countTracks={data.totalTracks}
-          />
-          <BtnSort onClick={handleSortClick}>
-            <svg width="24" height="24">
-              <use href={`${symbol}#icon-sort`}></use>
-            </svg>
-          </BtnSort>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <PlaylistListItem
+              icon={data.playlist.playListAvatarURL}
+              title={data.playlist.playListName}
+              placeListCardInfo={true}
+              id={playlistId}
+              countTracks={data.totalTracks}
+            />
+            <BtnSort onClick={handleSortClick}>
+              <svg width="24" height="24">
+                <use href={`${symbol}#icon-sort`}></use>
+              </svg>
+            </BtnSort>
+
+            <AddTrackToPlaylistFromDB
+              iconButton={`${symbol}#icon-plus`}
+              textButton={"Музику"}
+              idPlaylist={playlistId}
+              trackListPlaylist={data.playlist.trackList}
+            />
+          </div>
+
           <TracksTable
             title={"In playlist"}
             showTitle={false}
@@ -163,7 +112,7 @@ const TracksPageCreateUser = () => {
             error={error}
             isFetching={isFetchingPlaylistById}
             isSuccess={isSuccess}
-            rows={rows()}
+            rows={rowsTracksCreateUser()}
             onChangeCurrentPage={onPageChange}
             onChangeSizePage={onPageSizeChange}
             currentPage={currentPage}
@@ -171,8 +120,8 @@ const TracksPageCreateUser = () => {
             totalPages={data.totalPages}
             totalTracks={data.totalTracks}
             tracksSRC={isSorted ? sortedForSrc : data.tracksSRC}
+            deleteButton={true}
           />
-          {/* <Player tracks={sortedTracks} /> */}
         </>
       )}
     </>

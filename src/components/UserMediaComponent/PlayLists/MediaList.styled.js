@@ -9,26 +9,23 @@ export const ControlWrapper = styled.div`
   margin-bottom: 24px;
 `;
 export const TitleContainer = styled.div`
-  margin-bottom: 16px; 
+  margin-bottom: 16px;
 `;
 export const TitleWrapper = styled.p`
   font-size: 24px;
   line-height: 1.21;
   font-weight: 500;
   color: ${colors.mainFontColor};
-  
 `;
 
 export const MediaList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
- 
-
 `;
 
 export const MediaItem = styled.li`
-position: relative;
+  position: relative;
   display: flex;
   /* justify-content: space-between; */
   align-items: center;
@@ -38,14 +35,6 @@ position: relative;
   border: 1px solid ${colors.accentHoverColor};
   border-radius: 10px;
   background-color: ${colors.activeBtnColor};
-
-  &:hover{
- background: #fff3bf;
-    border-radius: 10px;
-    font-weight: 600;
-    transform: translateY(-5px);
-    transition: transform 250ms ${mainCubicTransition};
-  }
 `;
 
 export const MediaImg = styled.img`
@@ -53,21 +42,19 @@ export const MediaImg = styled.img`
 `;
 
 export const MediaItemText = styled.p`
-position:absolute;
-top: 50%;
+  position: absolute;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 16px;
   line-height: 1.19;
   color: ${colors.mainFontColor};
-
 `;
 
 export const IconsWrapper = styled.div`
   display: flex;
   gap: 4px;
 `;
-
 
 export const PlaylistWrapper = styled.section`
   /* display: flex; */
@@ -99,19 +86,26 @@ export const PlaylistImg = styled.img`
 `;
 
 export const PlaylistInfoWrapper = styled.div`
-  margin: 0 auto 0 0;
+  margin: 0 4px 0 4px;
 `;
 
 export const PlaylistItemText = styled.p`
+  /* width: 90%; */
+  text-align: center;
   font-size: 16px;
   line-height: 1.19;
   font-weight: 500;
   color: ${colors.mainFontColor};
   margin-right: auto;
+  margin-left: auto;
   margin-bottom: 2px;
+  padding: 0px 4px;
 `;
 
 export const PlaylistCountTracks = styled(PlaylistItemText)`
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 4px;
   margin-bottom: 0;
 `;
 
@@ -134,4 +128,3 @@ export const SvgMedia = styled.svg`
     transition: fill 350ms ${mainCubicTransition};
   }
 `;
-

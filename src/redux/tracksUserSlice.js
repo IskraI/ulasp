@@ -17,13 +17,24 @@ export const tracksUserApi = createApi({
 
   endpoints: (builder) => ({
     getAllTracksforUser: builder.query({
-      query: ({ page = "", limit = "" }) => ({
+      query: ({ page = "", limit = "", query = "" }) => ({
         url: `/user/tracks/latestTracks?${page && `page=${page}`} ${
           limit && `&limit=${limit}`
-        }`,
+        }${`&query=${query}`}`,
       }),
 
       providesTags: (_result, _err, id) => [{ type: "Tracks", id }],
+    }),
+
+    getAllTracksForUsersPlaylist: builder.query({
+      query: ({ page = "", limit = "", query = "", id }) => ({
+        url: `/user/tracks/tracksForUserPlaylists?${page && `page=${page}`} ${
+          limit && `&limit=${limit}`
+        }${`&query=${query}`}${`&id=${id}`}`,
+        keepUnusedDataFor: 0,
+      }),
+
+      providesTags: ["Tracks"],
     }),
 
     getTracksByGenreId: builder.query({
@@ -58,6 +69,7 @@ export const tracksUserApi = createApi({
 
 export const {
   useGetAllTracksforUserQuery,
+  useGetAllTracksForUsersPlaylistQuery,
   useGetTracksByGenreIdQuery,
   useDeleteTrackMutation,
   useUpdateListenCountTrackByIdMutation,

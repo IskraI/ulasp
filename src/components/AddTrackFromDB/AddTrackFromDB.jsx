@@ -11,7 +11,7 @@ import RowsAddTrackFromDB from "./RowsAddTrackFromDB";
 
 import { Loader } from "../Loader/Loader";
 import { NoData } from "../Errors/Errors";
-import { HASNOT_BEEN_ADDED, SEARCH_FAILED } from "../../constants/constants";
+import { SEARCH_FAILED } from "../../constants/constants";
 
 import { ControlWrapper } from "../EditorComponents/MediaList/MediaList.styled";
 import { Wrapper, TitleSearchInput } from "./AddTrackFromDB.styled";
