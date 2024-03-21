@@ -30,25 +30,23 @@ export const playlistsUserApi = createApi({
       query: ({ playlistId: id, page = "", limit = "", sort = "" }) => ({
         url: `/user/playlist/${id}?${page && `page=${page}`} ${
           limit && `&limit=${limit}`
-          }${sort && `&sort=${sort}`
-        }`,
+        }${sort && `&sort=${sort}`}`,
       }),
 
-       providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
+      providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
     }),
 
     getCreatePlaylistByIdForUser: builder.query({
       query: ({ playlistId: id, page = "", limit = "", sort = "" }) => ({
         url: `/user/userPlaylist/${id}?${page && `page=${page}`} ${
           limit && `&limit=${limit}`
-           }${sort && `&sort=${sort}`
-        }`,
+        }${sort && `&sort=${sort}`}`,
       }),
-       providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
+      providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
     }),
 
     getCreatePlaylistsForUser: builder.query({
-      query: ( page = "", limit = "") => ({
+      query: (page = "", limit = "") => ({
         url: `/user/userPlaylist/all?${page && `page=${page}`} & ${
           limit && `limit=${limit}`
         }`,
@@ -75,7 +73,7 @@ export const playlistsUserApi = createApi({
       invalidatesTags: ["Playlists"],
     }),
 
-    updatePlaylistTitle:builder.mutation({
+    updatePlaylistTitle: builder.mutation({
       query: (id) => ({
         url: `/user/userPlaylist/updateTitle/${id}`,
         method: "DELETE",
@@ -95,7 +93,7 @@ export const playlistsUserApi = createApi({
       }),
       invalidatesTags: ["PlaylistsFavorite"],
     }),
-    
+
     updateCabinetPlaylistStatusApi: builder.mutation({
       query: (playlistId) => ({
         url: `/user/userPlaylist/favorites/${playlistId}`,
@@ -117,7 +115,7 @@ export const playlistsUserApi = createApi({
 
     //     //  providesTags: ["PlaylistsAdd"],
     //        providesTags: (_result, _err, id) => [{ type: "PlaylistsAdd", id }],
-    //    }), 
+    //    }),
     uploadTracksInPlaylist: builder.mutation({
       query: ({ playlistId, formData }) => ({
         url: `/user/tracks/upload/${playlistId}`,
@@ -127,8 +125,6 @@ export const playlistsUserApi = createApi({
       }),
       invalidatesTags: ["Playlists"],
     }),
-
-
 
     updateAddStatusApi: builder.mutation({
       query: (playlistId) => ({
@@ -145,12 +141,35 @@ export const playlistsUserApi = createApi({
       }),
       invalidatesTags: ["Playlists", "Tracks"],
     }),
-     updatePlaylistSort: builder.mutation({
+    updatePlaylistSort: builder.mutation({
       query: ({ playlistId, data }) => ({
         url: `/user/playlist/sortupdate/${playlistId}`,
         method: "PATCH",
         body: {
           data,
+        },
+      }),
+      invalidatesTags: ["Playlists"],
+    }),
+
+    addTrackToPlaylistUser: builder.mutation({
+      query: ({ playListId, tracksIdList }) => ({
+        url: `/user/userPlaylist/addTracks`,
+        method: "PATCH",
+        body: {
+          id: playListId,
+          tracksIdArray: tracksIdList,
+        },
+      }),
+      invalidatesTags: ["Playlists"],
+    }),
+    removeTrackFromPlaylistUser: builder.mutation({
+      query: ({ playListId, tracksIdList }) => ({
+        url: `/user/userPlaylist/removeTracks`,
+        method: "PATCH",
+        body: {
+          id: playListId,
+          tracksIdArray: tracksIdList,
         },
       }),
       invalidatesTags: ["Playlists"],
@@ -173,5 +192,7 @@ export const {
   useGetCreatePlaylistByIdForUserQuery,
   useUploadTracksInPlaylistMutation,
   useUpdatePlaylistSortMutation,
-    useUpdatePlaylistTitleMutation,
+  useUpdatePlaylistTitleMutation,
+  useAddTrackToPlaylistUserMutation,
+  useRemoveTrackFromPlaylistUserMutation,
 } = playlistsUserApi;

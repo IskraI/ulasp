@@ -9,6 +9,10 @@ const SearchTracks = ({
   marginLeft,
   marginRight,
   width,
+  height,
+  fontSize,
+  placeholderText,
+  placeholderAlign,
 }) => {
   const [inputValue, setInputValue] = useState("");
   const [isInputActive, setIsInputActive] = useState(false);
@@ -30,7 +34,7 @@ const SearchTracks = ({
   return (
     <SearchInput
       type="text"
-      placeholder="Пошук"
+      placeholder={placeholderText || "Пошук"}
       value={inputValue}
       onChange={handleTextChange}
       onFocus={() => setIsInputActive(true)}
@@ -39,6 +43,9 @@ const SearchTracks = ({
       marginLeft={marginLeft}
       marginRight={marginRight}
       width={width}
+      height={height}
+      fontSize={fontSize}
+      placeholderAlign={placeholderAlign}
     />
   );
 };
@@ -49,6 +56,10 @@ SearchTracks.propTypes = {
   marginLeft: PropTypes.string,
   marginRight: PropTypes.string,
   width: PropTypes.string,
+  height: PropTypes.string,
+  fontSize: PropTypes.string,
+  placeholderText: PropTypes.string,
+  placeholderAlign: PropTypes.string,
 };
 
 export default SearchTracks;

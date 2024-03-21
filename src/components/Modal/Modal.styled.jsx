@@ -11,10 +11,12 @@ export const Overlay = styled.div`
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 `;
 
 export const ModalWindow = styled.div`
   width: ${(props) => props.width};
+  height: ${(props) => props.height};
   padding: ${(props) => props.padding};
   flex-direction: ${(props) => props.flexDirection};
   border-style: ${(props) => props.borderStyle || "none"};

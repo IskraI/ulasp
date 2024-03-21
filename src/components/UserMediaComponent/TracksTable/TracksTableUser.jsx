@@ -11,6 +11,9 @@ import { compareArray, findPage } from "../../../helpers/helpers.js";
 
 import TrackItem from "./TrackItemUser";
 import { ErrorNotFound, NoData } from "../../Errors/Errors";
+import { Button } from "../../Button/Button.jsx";
+
+import { useRemoveTrackFromPlaylistUserMutation } from "../../../redux/playlistsUserSlice.js";
 
 import {
   setPreloadSrcPlayer,
@@ -18,6 +21,7 @@ import {
   setDefaultPreloadSrc,
   setNextPage,
   setSrcPlaying,
+  setDefaultState,
 } from "../../../redux/playerSlice";
 import { getPlayerState } from "../../../redux/playerSelectors.js";
 
@@ -52,15 +56,21 @@ const TracksTable = ({
   isCheckedAll,
   onChangeCurrentPage,
   onChangeSizePage,
-  currentPage: currPage,
-  pageSize: currentPageSize,
+  currentPage,
+  pageSize,
   totalPages,
+  deleteButton = false,
 }) => {
+  const [
+    removeTracksFromPlaylist,
+    { isLoading: isLoadingRemoveTracksFromPlaylist },
+  ] = useRemoveTrackFromPlaylistUserMutation();
+
   const dispatch = useDispatch();
   const location = useLocation();
   const playerState = useSelector(getPlayerState);
-  const [currentPage, setCurrentPage] = useState(currPage);
-  const [pageSize, setPageSize] = useState(currentPageSize);
+
+  const [tracksIdList, setTracksIdList] = useState([]);
   const tracksTableProps = {
     showTitle: showTitle ? "table-caption" : "none",
     marginTop: marginTopWrapper ? `${marginTopWrapper}` : "auto",
@@ -75,21 +85,17 @@ const TracksTable = ({
   const currentPageGlobalState = playerState.currentPage;
   const anyMorePages = totalPages > currentPage;
 
-  const currentPageForTrackPlaying = findPage(
-    playerState.indexTrack,
-    currentPageSize
-  );
+  const currentPageForTrackPlaying = findPage(playerState.indexTrack, pageSize);
 
   const indexOfLastTrackInPage =
-    currentPageSize > tracks.length
+    pageSize !== tracks.length
       ? tracks.length - 1 + skip
-      : currentPageForTrackPlaying * currentPageSize - 1;
+      : currentPageForTrackPlaying * pageSize - 1;
 
   const lastTrackInPage = playerState.indexTrack === indexOfLastTrackInPage;
 
   const onChangePage = useCallback(
     (page) => {
-      setCurrentPage(page);
       onChangeCurrentPage(page);
       dispatch(
         setNextPage({
@@ -104,11 +110,11 @@ const TracksTable = ({
     [dispatch, onChangeCurrentPage]
   );
 
-  const onPageSizeChange = (size) => {
-    console.log(size);
-    setPageSize(size);
-    onChangeSizePage(size);
-  };
+  // const onPageSizeChange = (size) => {
+  //   console.log(size);
+  //   setPageSize(size);
+  //   onChangeSizePage(size);
+  // };
   useEffect(() => {
     console.log("currentPageLocal", currentPage);
     console.log("currentPageGlobal", currentPageGlobalState);
@@ -127,12 +133,11 @@ const TracksTable = ({
         setPreloadSrcPlayer({
           preloadSrc: trackURL,
           currentPage: currentPage,
-          pageSize: currentPageSize,
+          pageSize: pageSize,
           location: location.pathname,
         })
       );
     }
-    console.log(pageSize !== currentPageSize);
 
     if (currentPage !== currentPageGlobalState && !isFetching) {
       if (location.pathname !== playerState.location) {
@@ -149,12 +154,11 @@ const TracksTable = ({
     currentPageGlobalState,
     dispatch,
     isFetching,
+    location.pathname,
     onChangePage,
     pageSize,
-    currentPageSize,
-    tracksSRC,
-    location,
     playerState.location,
+    tracksSRC,
   ]);
 
   useEffect(() => {
@@ -195,6 +199,42 @@ const TracksTable = ({
     dispatch,
     lastTrackInPage,
   ]);
+
+  // const getCheckedTrackId = (data) => {
+  //   if (data !== undefined) {
+  //     setTracksIdList((prev) => [...prev, data]);
+  //   } else {
+  //     setTracksIdList([]);
+  //   }
+  // };
+
+  const addTrackToCheckedList = (data) => {
+    setTracksIdList((prev) => [...prev, data]);
+  };
+
+  const deleteCheckedTrackId = (data) => {
+    setTracksIdList((prev) =>
+      prev.filter((item) => {
+        return item !== data;
+      })
+    );
+  };
+
+  const deletingMultipleTracks = () => {
+    console.log(tracksIdList);
+    removeTracksFromPlaylist({playListId, tracksIdList }).then(
+      clearAfterDeleting
+    );
+  };
+
+  const clearAfterDeleting = () => {
+    if (currentPage !== 1) {
+      dispatch(setDefaultState());
+      onChangePage(1);
+    }
+
+    setTracksIdList([]);
+  };
 
   console.log("new songs пропс пришел в тейблюзер", tracks);
   return (
@@ -263,6 +303,8 @@ const TracksTable = ({
                         playListId={playListId}
                         showData={tracksTableProps.showData}
                         countOfSkip={skip}
+                        deleteCheckedTrackId={deleteCheckedTrackId}
+                        addTrackToCheckedList={addTrackToCheckedList}
                       />
                     );
                   }
@@ -270,23 +312,44 @@ const TracksTable = ({
               </tbody>
             </TableStyle>
           </TracksTableWrapper>
-          {isSuccess && totalTracks > currentPageSize && (
-            <Pagination
-              style={{ marginTop: "auto", marginBottom: "24px" }}
-              defaultCurrent={1}
-              current={currentPage}
-              total={totalTracks}
-              showLessItems
-              selectComponentClass={Select}
-              showSizeChanger={false}
-              defaultPageSize={currentPageSize}
-              pageSize={pageSize}
-              // onShowSizeChange={onPageSizeChange}
-              onChangeSizePage={onPageSizeChange}
-              onChange={(page) => onChangePage(page)}
-              locale={localeUA}
-            />
-          )}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            {deleteButton && (
+              <Button
+                type={"button"}
+                width={"140px"}
+                padding={"6px"}
+                fontsize={"16px"}
+                border={"1px solid #A4A2A2"}
+                background={"transparent"}
+                text={"Видалити"}
+                disabled={tracksIdList.length ? false : true}
+                onClick={deletingMultipleTracks}
+              />
+            )}
+            {isSuccess && (
+              <Pagination
+                // style={{ marginBottom: "24px" }}
+                defaultCurrent={1}
+                current={currentPage}
+                total={totalTracks}
+                showLessItems
+                selectComponentClass={Select}
+                showSizeChanger={false}
+                defaultPageSize={pageSize}
+                pageSize={pageSize}
+                hideOnSinglePage
+                // onShowSizeChange={onPageSizeChange}
+                // onChangeSizePage={onPageSizeChange}
+                onChange={(page) => onChangePage(page)}
+                locale={localeUA}
+              />
+            )}
+          </div>
         </>
       )}
     </>

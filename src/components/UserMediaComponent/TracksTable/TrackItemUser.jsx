@@ -2,13 +2,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect, useRef, useId } from "react";
 
-import {
-  TableCell,
-  TrackCover,
-  TrStyle,
-  InfoBlock,
-  PlayButton,
-} from "../TracksTable/TracksTableUser.styled";
 import { sToStr, compareArray } from "../../../helpers/helpers";
 import { BASE_URL } from "../../../constants/constants";
 import { WithOutGenre } from "../../Errors/Errors";
@@ -21,6 +14,21 @@ import {
   setSrcPlaying,
 } from "../../../redux/playerSlice";
 import { getPlayerState } from "../../../redux/playerSelectors";
+
+import {
+  CheckBoxLabel,
+  CheckBoxSpan,
+  CheckBoxSVG,
+  CheckBoxInput,
+} from "../../CustomCheckBox/CustomCheckBox.styled";
+
+import {
+  TableCell,
+  TrackCover,
+  TrStyle,
+  InfoBlock,
+  PlayButton,
+} from "../TracksTable/TracksTableUser.styled";
 
 const TrackItem = ({
   idTrack,
@@ -40,12 +48,17 @@ const TrackItem = ({
   showData,
   index,
   countOfSkip,
+  getCheckedTrackId,
+  addTrackToCheckedList,
+  deleteCheckedTrackId,
 }) => {
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
   const [isPlayingTrack, setIsPlayingTrack] = useState(false);
   const [isPausedTrack, setIsPausedTrack] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
+  const ref = useRef(null);
   const playBtnRef = useRef(null);
 
   const isLoadedTrack = playerState.isLoaded;
@@ -108,10 +121,47 @@ const TrackItem = ({
     setIsPausedTrack(isPaused);
   };
 
+  const selectTrack = (id) => {
+    console.log(ref.current);
+    if (!ref.current.checked) {
+      ref.current.checked = false;
+      setIsChecked(false);
+      deleteCheckedTrackId(id);
+    } else {
+      ref.current.checked = true;
+      setIsChecked(true);
+      addTrackToCheckedList(id);
+    }
+  };
+
+  const idT = idTrack;
+
   return (
     <>
-      <TrStyle key={idTrack}>
-        <TableCell showData={showData[0]}></TableCell>
+      <TrStyle
+        key={idTrack}
+        style={{
+          background: isChecked ? "#FFF3BF" : null,
+        }}
+      >
+        <TableCell showData={showData[0]}>
+          <CheckBoxLabel htmlFor={idTrack}>
+            <CheckBoxSpan>
+              <CheckBoxSVG width="14px" height="15px">
+                {isChecked && <use href={`${symbol}#icon-check-in`}></use>}
+              </CheckBoxSVG>
+            </CheckBoxSpan>
+            <CheckBoxInput
+              type="checkbox"
+              id={idT}
+              ref={ref}
+              onClick={(e) => {
+                e.stopPropagation();
+                selectTrack(idTrack);
+              }}
+            />
+          </CheckBoxLabel>
+        </TableCell>
         <TableCell showData={showData[1] || false}>
           <PlayButton
             ref={playBtnRef}

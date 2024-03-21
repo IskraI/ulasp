@@ -3,8 +3,7 @@ import { BASE_URL } from "../constants/constants";
 
 export const shopsApi = createApi({
   reducerPath: "shopsApi",
-  forceRefetch: true,
-  refetchOnFocus: true,
+
   tagTypes: ["Shops", "ShopItem", "SubShopItem"],
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,

@@ -15,6 +15,7 @@ const CloseIcon = CloseIconStyled(Close);
 
 export const Modal = ({
   width,
+  height,
   padding,
   bcgTransparent,
   showCloseButton,
@@ -54,6 +55,7 @@ export const Modal = ({
     <Overlay style={overlayStyle}>
       <ModalWindow
         width={width}
+        height={height}
         padding={padding}
         flexDirection={flexDirection}
         borderStyle={borderStyle}
