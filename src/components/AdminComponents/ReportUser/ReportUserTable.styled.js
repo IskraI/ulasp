@@ -132,27 +132,84 @@ export const ReportFooterDesc = styled.p`
   position: relative;
 `;
 
-export const Underline = styled.span`
-  position: relative;
-  display: inline-block;
-  &:before {
-    content: "";
-    position: absolute;
-    top: -2px;
-    left: ${(props) => props.left ?? "0%"};
-    width: ${(props) => props.width ?? "70%"};
-    height: 1px;
-    background-color: black;
-  }
+// export const Underline = styled.span`
+//   position: relative;
+//   display: inline-block;
+//   &:before {
+//     content: "${(props) => props.text}";
+//     /* content: ""; */
+//     position: absolute;
+//     top: -2px;
+//     left: ${(props) => props.left ?? "0%"};
+//     width: ${(props) => props.width ?? "70%"};
+//     height: 1px;
+//     background-color: black;
+//   }
+// `;
+
+export const ReportFooterDate = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* flex-direction: row; */
+  align-items: flex-start;
+  justify-content: space-between;
 `;
 
+export const UnderlineDescDiv = styled.div`
+  display: inline-block;
+`;
+export const UnderlinedText = styled.span`
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
+`;
+export const LineAndYearContainer = styled.div`
+  display: flex;
+  /* flex-direction: row; */
+  align-items: flex-end;
+`;
+export const FlexChild = styled.div`
+  align-self: ${(props) => props.alignSelf};
+`;
+export const UnderlinedTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+export const UnderlineDate = styled.span`
+  /* display: inline-block; */
+  width: 60px;
+  flex-grow: 1;
+  height: 1px;
+  background-color: black;
+`;
+export const YearText = styled.span`
+  margin-left: 8px; /* Расстояние между линией и текстом с годом */
+`;
+export const NoteText = styled.span`
+  /* margin-top: 2px; Расстояние между годом и текстом с примечанием */
+  font-family: Inter;
+  font-size: 10px; //8px
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0em;
+`;
+
+export const Underline = styled.span`
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: black;
+`;
 export const TextWithUnderline = styled.span`
   position: relative;
   display: inline-block;
   &:before {
     content: "${(props) => props.text}";
     position: absolute;
-    top: -10%;
+    top: 10%;
     left: ${(props) => props.underlineLeft ?? "0%"};
     width: ${(props) => props.underlineWidth ?? "70%"};
     height: 1px;

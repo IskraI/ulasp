@@ -20,6 +20,15 @@ import {
   ReportFooterComment,
   Underline,
   TextWithUnderline,
+  ReportFooterDate,
+  UnderlineDescDiv,
+  UnderlinedText,
+  LineAndYearContainer,
+  UnderlinedTextContainer,
+  YearText,
+  UnderlineDate,
+  NoteText,
+  FlexChild,
 } from "./ReportUserTable.styled";
 
 export const columns = [
@@ -213,7 +222,7 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
           ____________ ___________________________________________ «____»
           ___________ {currentYear} p.
         </div> */}
-        <ReportFooterBlockDesc>
+        {/* <ReportFooterBlockDesc>
           <ReportFooterDesc>
             <Underline width={"70%"} left={"5%"}>
               (підпис уповноваженої особи Користувача)
@@ -224,10 +233,43 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
               (посада та П.І.Б. уповноваженої особи Користувача)
             </Underline>
           </ReportFooterDesc>
-
-          <ReportFooterDesc>
-            <Underline width={"70%"}>(дата складання звіту )</Underline>
-          </ReportFooterDesc>
+          <ReportFooterDate>
+            _______________ ррпрр
+            <ReportFooterDesc>
+              {/* <Underline width={"70%"} text={`2023`}> */}
+        {/* (дата складання звіту )</Underline> */}
+        {/* </ReportFooterDesc>
+          </ReportFooterDate>
+        </ReportFooterBlockDesc> */}{" "}
+        <ReportFooterBlockDesc>
+          <FlexChild alignSelf="flex-end">
+            <ReportFooterDesc>
+              <UnderlinedText>
+                {" "}
+                <Underline />
+                (підпис уповноваженої особи Користувача)
+              </UnderlinedText>
+            </ReportFooterDesc>
+          </FlexChild>
+          <FlexChild alignSelf="flex-end">
+            <ReportFooterDesc>
+              <UnderlinedText>
+                {" "}
+                <Underline />
+                (посада та П.І.Б. уповноваженої особи Користувача){" "}
+              </UnderlinedText>
+            </ReportFooterDesc>
+          </FlexChild>
+          {/* <ReportFooterDesc> */}
+          <UnderlinedTextContainer>
+            <LineAndYearContainer>
+              <YearText>{`"\u00A0\u00A0\u00A0\u00A0"`}</YearText>
+              <UnderlineDate />
+              <YearText>{currentYear} p.</YearText>
+            </LineAndYearContainer>
+            <NoteText>(дата складання звіту )</NoteText>
+          </UnderlinedTextContainer>
+          {/* </ReportFooterDesc> */}
         </ReportFooterBlockDesc>
       </ReportFooter>
     </TableWrapper>
