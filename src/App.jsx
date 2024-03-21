@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { isMobile } from "react-device-detect";
 import "./App.css";
 
@@ -49,7 +49,6 @@ import { useCurrentClientQuery } from "../src/redux/authClientSlice";
 import { getUserState } from "../src/redux/userSelectors";
 import { lazy, useEffect } from "react";
 
-import { Navigate } from "react-router-dom";
 import AllGenresForUser from "./pages/UserPage/AllGenresForUser/AllGenresForUser";
 import NewPlaylistsUser from "./pages/UserPage/NewPlaylistsUser/NewPlaylistsUser";
 import NewTracksUser from "./pages/UserPage/NewTracksUser/NewTracksUser";
@@ -89,7 +88,7 @@ const AdminUsers = lazy(() =>
 function App() {
   const user = useSelector(getUserState);
   const navigate = useNavigate();
-  // console.log("App user", user);
+  console.log("App user", user);
   // console.log("user.token", user.token);
   // console.log(" user.editorRole", user.editorRole);
   // console.log("user.adminRole", user.adminRole);
@@ -166,7 +165,10 @@ function App() {
               />
             }
           >
-            <Route path="/" element={<PublicRoute component={WelcomePage} />} />
+            <Route
+              path="/"
+              element={<PublicRoute component={WelcomePage} user={user} />}
+            />
 
             <Route path="/signin" element={<PublicRoute component={Login} />} />
 
