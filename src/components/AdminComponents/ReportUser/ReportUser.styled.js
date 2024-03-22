@@ -44,17 +44,12 @@ export const ReportFormField = styled.div`
   font-weight: 400;
   line-height: normal;
   position: relative;
-  /* background: rgba(234, 234, 234, 0.32); */
   height: 42px;
 `;
 
 export const ReportFormInput = styled.input`
   background-color: rgba(234, 234, 234, 0.32);
-  /* width: 100%; */
   padding: 8px;
-  /* display: flex; */
-  align-items: center;
-  /* position: relative; */
   outline: none;
   border: 0.25px solid rgba(23, 22, 28, 0.5);
   border-radius: 10px;
@@ -63,7 +58,7 @@ export const ReportFormInput = styled.input`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  width: 154px;
+  width: width 154px;
   &.invalid {
     outline: 1px solid red;
   }
@@ -95,8 +90,6 @@ export const ReportFormLabel = styled.label`
 export const ReportWrapper = styled.div`
   display: flex;
   gap: 24px;
-  /* max-height: calc(100vh - 10%); */
-  /* align-items: stretch; */
   justify-content: space-between;
 `;
 export const ReporTabletWrapper = styled.div`
@@ -104,14 +97,11 @@ export const ReporTabletWrapper = styled.div`
   flex-direction: row;
   align-items: flex-start;
   padding: 24px 0;
-  max-height: calc(100vh - 250px);
-  /* overflow-y: scroll;
-  overflow-x: hidden; */
+  max-height: calc(100vh - 240px);
   width: 100%;
   background: rgba(149, 202, 255, 0.42);
   border-radius: 10px;
   box-shadow: -2px 4px 30px 0px rgba(0, 0, 0, 0.3);
   margin-left: auto;
   margin-right: auto;
-  /* max-width: 100%; */
 `;
