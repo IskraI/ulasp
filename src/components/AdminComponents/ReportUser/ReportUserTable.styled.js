@@ -217,9 +217,3 @@ export const ReportFooterComment = styled.p`
   text-align: center;
   margin-bottom: 24px;
 `;
-
-// export const TextWithUnderline = ({ text, underlineWidth, underlineLeft }) => (
-//   <Underline width={underlineWidth} left={underlineLeft}>
-//     {text}
-//   </Underline>
-// );

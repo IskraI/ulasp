@@ -139,7 +139,7 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
     tableInstance;
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
-
+  console.log("date :>> ", date);
   return (
     <TableWrapper ref={ref}>
       <style>{getPageMargins()}</style>
@@ -151,9 +151,15 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
       } /договір №${user.contractNumber}/`}</ReportTitle>
 
       <ReportTitleDesc>
-        про використані Об’єкти суміжних прав та Об’єкти авторского права за
-        період з {formatDate(date.dateOfStart)} p. по{" "}
-        {formatDate(date.dateOfEnd)} p.
+        про використані Об’єкти суміжних прав та Об’єкти авторского права за{" "}
+        {date.dateOfStart !== "" && date.dateOfEnd !== "" ? (
+          <>
+            період <br />з {formatDate(date.dateOfStart)} p. по{" "}
+            {formatDate(date.dateOfEnd)} p.
+          </>
+        ) : (
+          ` ${date.quarterDate} квартал  ${date.quarterYearDate} року`
+        )}
       </ReportTitleDesc>
 
       {/* <ReportHeader className="header">
