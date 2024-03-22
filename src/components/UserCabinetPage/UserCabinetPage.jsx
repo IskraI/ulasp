@@ -22,19 +22,18 @@ const UserCabinetPage = () => {
   return (
     <>
       <TitleFirst>Кабінет</TitleFirst>
+
+      <TitleSecond>Номер договору</TitleSecond>
+      <DataUser>{user.contractNumber}</DataUser>
+      <TitleSecond>Ідентифікаційний номер (код ЄДРПОУ)</TitleSecond>
+      <DataUser>{user.taxCode}</DataUser>
+      <TitleSecond>Остання оплата</TitleSecond>
+      <DataUser>{user.lastPay}</DataUser>
+      <TitleSecond>Наступна оплата</TitleSecond>
+      <DataUser>{user.dateOfAccess}</DataUser>
       <FormContainer>
-        <div>
-          <TitleSecond>Номер договору</TitleSecond>
-          <DataUser>{user.contractNumber}</DataUser>
-          <TitleSecond>Ідентифікаційний номер (код ЄДРПОУ)</TitleSecond>
-          <DataUser>{user.taxCode}</DataUser>
-          <TitleSecond>Остання оплата</TitleSecond>
-          <DataUser>{user.lastPay}</DataUser>
-          <TitleSecond>Наступна оплата</TitleSecond>
-          <DataUser>{user.dateOfAccess}</DataUser>
-        </div>
         <AdminWriteForm />
-        {/* <ActForm /> */}
+        <ActForm />
       </FormContainer>
       {/* <ReportForm /> */}
     </>

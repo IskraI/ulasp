@@ -36,7 +36,7 @@ export const userSlice = createSlice({
     },
     setAvatar: {
       reducer(state, action) {
-          state = {
+        state = {
           ...state,
           avatarURL: action.payload.avatarURL,
         };
@@ -55,6 +55,20 @@ export const userSlice = createSlice({
           userRole: true,
           adminRole: false,
           editorRole: false,
+        };
+        return state;
+      },
+    },
+    setUserisLoggedIn: {
+      reducer(state, action) {
+        // console.log("action.payload setUser", action.payload);
+        state = {
+          ...state,
+          token: "",
+          isLoggedIn: false,
+          // userRole: true,
+          // adminRole: false,
+          // editorRole: false,
         };
         return state;
       },
@@ -96,6 +110,13 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUser, resetUser, setAdmin, setCurrent, setAvatar } = userSlice.actions;
+export const {
+  setUser,
+  resetUser,
+  setAdmin,
+  setCurrent,
+  setAvatar,
+  setUserisLoggedIn,
+} = userSlice.actions;
 
 export const userReducer = userSlice.reducer;

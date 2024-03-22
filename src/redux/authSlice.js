@@ -1,5 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { resetUser, setAvatar, setAdmin, setCurrent } from "./userSlice";
+import {
+  resetUser,
+  setAvatar,
+  setAdmin,
+  setCurrent,
+  setUserisLoggedIn,
+} from "./userSlice";
 
 import { BASE_URL } from "../constants/constants";
 
@@ -39,10 +45,19 @@ export const authApi = createApi({
       query: () => ({
         url: "/admin/current",
       }),
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        console.log("await queryFulfilled).data", (await queryFulfilled).data);
-        dispatch(setCurrent((await queryFulfilled).data));
+      async onQueryStarted(arg, { dispatch, queryFulfilled, queryRejected }) {
+        try {
+          const response = await queryFulfilled;
+          dispatch(setCurrent(response.data));
+        } catch (error) {
+          dispatch(setUserisLoggedIn()); // Устанавливаем isLoggedIn в false при ошибке
+          console.error("Ошибка при получении текущего пользователя:", error);
+        }
       },
+      // async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+      //   console.log("await queryFulfilled).data", (await queryFulfilled).data);
+      //   dispatch(setCurrent((await queryFulfilled).data));
+      // },
       async onQueryError(arg, { dispatch, error, queryFulfilled }) {
         console.log("error", error);
         dispatch(resetUser()); // Сбросить состояние до значения по умолчанию

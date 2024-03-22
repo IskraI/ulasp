@@ -1,8 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { resetUser, setUser, setAvatar, setCurrent } from "./userSlice";
+import {
+  resetUser,
+  setUser,
+  setAvatar,
+  setCurrent,
+  setUserisLoggedIn,
+} from "./userSlice";
 import { BASE_URL } from "../constants/constants";
-
 
 export const authClientApi = createApi({
   reducerPath: "authClientApi",
@@ -40,8 +45,14 @@ export const authClientApi = createApi({
       query: () => ({
         url: "/user/current",
       }),
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        dispatch(setCurrent((await queryFulfilled).data));
+      async onQueryStarted(arg, { dispatch, queryFulfilled, queryRejected }) {
+        try {
+          const response = await queryFulfilled;
+          dispatch(setCurrent(response.data));
+        } catch (error) {
+          dispatch(setUserisLoggedIn()); // Устанавливаем isLoggedIn в false при ошибке
+          console.error("Ошибка при получении текущего пользователя:", error);
+        }
       },
     }),
     updateClientAvatar: builder.mutation({
