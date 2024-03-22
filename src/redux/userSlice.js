@@ -66,9 +66,9 @@ export const userSlice = createSlice({
           ...state,
           token: "",
           isLoggedIn: false,
-          userRole: true,
-          adminRole: false,
-          editorRole: false,
+          // userRole: true,
+          // adminRole: false,
+          // editorRole: false,
         };
         return state;
       },
