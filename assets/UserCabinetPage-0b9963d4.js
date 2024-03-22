@@ -1,9 +1,9 @@
-import{n,f as t,g as l,j as o,h as x,i as d}from"./index-144fa81e.js";import"./Statistic.styled-7f877e03.js";n.p`
+import{n,f as t,g as a,j as o,h,i as g}from"./index-61800ec8.js";import"./Statistic.styled-975d075e.js";n.p`
   font-size: 24px;
   font-weight: 500;
   line-height: 1.21;
   color: ${t.mainFontColor};
-`;const c=n.h2`
+`;const m=n.h2`
   color: ${t.mainFontColor};
   font-size: 24px;
   font-weight: 500;
@@ -22,14 +22,13 @@ import{n,f as t,g as l,j as o,h as x,i as d}from"./index-144fa81e.js";import"./S
   font-weight: 400;
   line-height: 1.21;
   margin-top: 11px;
-`,h=n.div`
+`,u=n.div`
   display: flex;
-  justify-content: space-around;
   gap: 135px;
   position: relative;
-`,g=n.form`
+`,b=n.form`
   margin-left: 24px;
-`,m=n.input`
+`,f=n.input`
   display: flex;
   width: 421px;
   height: 45px;
@@ -45,7 +44,7 @@ import{n,f as t,g as l,j as o,h as x,i as d}from"./index-144fa81e.js";import"./S
     color: rgba(0, 0, 0, 0.3);
     font-size: 20px;
   }
-`,u=n.input`
+`,j=n.input`
   width: 421px;
   height: 145px;
   padding: 8px;
@@ -62,7 +61,7 @@ import{n,f as t,g as l,j as o,h as x,i as d}from"./index-144fa81e.js";import"./S
     top: 8px;
     left: 8px;
   }
-`,b=n.button`
+`,x=n.button`
   display: flex;
   width: 197px;
   height: 48px;
@@ -76,14 +75,14 @@ import{n,f as t,g as l,j as o,h as x,i as d}from"./index-144fa81e.js";import"./S
   color: ${t.mainFontColor};
   font-size: 20px;
   margin-top: 25px;
-`,f=n.h3`
+`,d=n.h3`
   color: ${t.mainFontColor};
   font-size: 20px;
   font-weight: 400;
   line-height: 1.21;
-  /* margin-top: 48px; */
+  margin-top: 48px;
   margin-left: 24px;
-`;n.input`
+`,F=n.input`
   display: flex;
   width: 422px;
   height: 213px;
@@ -94,4 +93,4 @@ import{n,f as t,g as l,j as o,h as x,i as d}from"./index-144fa81e.js";import"./S
   border: 0.5px solid ${t.mainFontColor};
   background: rgba(234, 234, 234, 0.32);
   margin-top: 25px;
-`;const j=()=>{const{register:e,handleSubmit:s,setValue:F}=l(),p=a=>{console.log("Отправлено:",a)};return o.jsxs(g,{onSubmit:s(p),children:[o.jsx(f,{children:"Написати адміністратору:"}),o.jsx(m,{...e("Тема"),placeholder:"Тема"}),o.jsx("br",{}),o.jsx(u,{...e("Текст"),placeholder:"Текст"}),o.jsx("br",{}),o.jsx(b,{type:"submit",children:"Відправити"})]})},w=()=>{const e=x(d);return o.jsxs(o.Fragment,{children:[o.jsx(c,{children:"Кабінет"}),o.jsxs(h,{children:[o.jsxs("div",{children:[o.jsx(i,{children:"Номер договору"}),o.jsx(r,{children:e.contractNumber}),o.jsx(i,{children:"Ідентифікаційний номер (код ЄДРПОУ)"}),o.jsx(r,{children:e.taxCode}),o.jsx(i,{children:"Остання оплата"}),o.jsx(r,{children:e.lastPay}),o.jsx(i,{children:"Наступна оплата"}),o.jsx(r,{children:e.dateOfAccess})]}),o.jsx(j,{})]})]})};export{w as default};
+`,C=()=>{const{register:e,handleSubmit:s,setValue:c}=a(),l=p=>{console.log("Отправлено:",p)};return o.jsxs(b,{onSubmit:s(l),children:[o.jsx(d,{children:"Написати адміністратору:"}),o.jsx(f,{...e("Тема"),placeholder:"Тема"}),o.jsx("br",{}),o.jsx(j,{...e("Текст"),placeholder:"Текст"}),o.jsx("br",{}),o.jsx(x,{type:"submit",children:"Відправити"})]})},$=()=>{const{register:e,handleSubmit:s,setValue:c}=a(),l=p=>{console.log("Запрос отправлен:",p)};return o.jsxs("form",{onSubmit:s(l),children:[o.jsx(d,{children:"Запросити акт звірки:"}),o.jsx(F,{...e("Акт")}),o.jsx(x,{type:"submit",children:"Запросити"})]})},y=()=>{const e=h(g);return o.jsxs(o.Fragment,{children:[o.jsx(m,{children:"Кабінет"}),o.jsx(i,{children:"Номер договору"}),o.jsx(r,{children:e.contractNumber}),o.jsx(i,{children:"Ідентифікаційний номер (код ЄДРПОУ)"}),o.jsx(r,{children:e.taxCode}),o.jsx(i,{children:"Остання оплата"}),o.jsx(r,{children:e.lastPay}),o.jsx(i,{children:"Наступна оплата"}),o.jsx(r,{children:e.dateOfAccess}),o.jsxs(u,{children:[o.jsx(C,{}),o.jsx($,{})]})]})};export{y as default};
