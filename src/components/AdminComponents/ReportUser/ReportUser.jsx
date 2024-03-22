@@ -23,7 +23,6 @@ import {
 } from "../../../redux/dataUsersSlice";
 import { useParams } from "react-router-dom";
 import ReportUserTable from "./ReportUserTable";
-import ReportPrint from "./ReportPrint";
 
 const ReportUser = () => {
   const [responseData, setResponseData] = useState();
@@ -68,7 +67,8 @@ const ReportUser = () => {
     .reverse()
     .join("-");
   const componentRef = useRef();
-  console.log("currentDate :>> ", currentDate);
+
+  const currentYear = new Date().getFullYear();
   return (
     <>
       <TabNavigation pathtext={false} />
@@ -106,6 +106,40 @@ const ReportUser = () => {
                 />
               </ReportFormField>
             </FormField>
+            <FormField>
+              <ReportFormField>
+                <ReportFormLabel>За </ReportFormLabel>
+                <ReportFormInput
+                  type="number"
+                  min="1"
+                  max="4"
+                  placeholder="квартал"
+                  width={"100px"}
+                  // aria-describedby="dateOfStartTooltip"
+                  // className={`${errors.dateOfStart ? "invalid" : ""}${
+                  //   !errors.dateOfStart && dirtyFields.dateOfStart ? "valid" : ""
+                  // }`}
+                  {...register("quarterDate")}
+                />{" "}
+                квартал
+              </ReportFormField>
+              <ReportFormField>
+                {/* <ReportFormLabel> рік </ReportFormLabel> */}
+                <ReportFormInput
+                  type="number"
+                  min="2023"
+                  max={currentYear}
+                  placeholder="Рік"
+                  width={"200px"}
+                  // aria-describedby="dateOfStartTooltip"
+                  // className={`${errors.dateOfStart ? "invalid" : ""}${
+                  //   !errors.dateOfStart && dirtyFields.dateOfStart ? "valid" : ""
+                  // }`}
+                  {...register("quarterYearDate")}
+                />{" "}
+                року
+              </ReportFormField>
+            </FormField>
             <Button
               type="submit"
               padding="8px"
@@ -121,19 +155,12 @@ const ReportUser = () => {
         <ReporTabletWrapper>
           {responseData && <ButtonPrint targetComponent={componentRef} />}
           {responseData && (
-            <ReportPrint
-              ref={componentRef}
+            <ReportUserTable
               data={responseData}
               date={date}
               user={user}
+              ref={componentRef}
             />
-
-            // <ReportUserTable
-            //   data={responseData}
-            //   date={date}
-            //   user={user}
-            //   ref={componentRef}
-            // />
           )}
         </ReporTabletWrapper>
       </ReportWrapper>

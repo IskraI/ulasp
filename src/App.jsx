@@ -88,7 +88,7 @@ const AdminUsers = lazy(() =>
 function App() {
   const user = useSelector(getUserState);
   const navigate = useNavigate();
-  console.log("App user", user);
+
   // console.log("user.token", user.token);
   // console.log(" user.editorRole", user.editorRole);
   // console.log("user.adminRole", user.adminRole);
@@ -116,28 +116,6 @@ function App() {
   });
 
   //если пользователь админ или редаткор, то скип = тру и єтот запрос пропустится
-
-  // if (error?.data.message === "Not authorized") {
-  //   // console.log(" user.adminRole ", user.adminRole);
-  //   // user.adminRole || user.editorRole
-  //   //   ? navigate("/adminlogin")
-  //   navigate("/");
-
-  // return (
-  //   <Routes>
-  //     <Route element={<SharedLayout avatarURL={user.avatarURL} />}>
-  //       <Route path="/" element={<PublicRoute component={WelcomePage} />} />
-
-  //       <Route path="/signin" element={<PublicRoute component={Login} />} />
-
-  //       <Route
-  //         path="/adminlogin"
-  //         element={<PublicRoute component={AdminLoginPage} />}
-  //       />
-  //     </Route>
-  //   </Routes>
-  // );
-  // }
 
   if (isMobile) {
     return (
