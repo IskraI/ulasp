@@ -4,10 +4,9 @@ import { getUserState } from "../redux/userSelectors";
 import { lazy, useEffect, useState } from "react";
 const PublicRoute = ({ component: Component, redirectTo = "/" }) => {
   const user = useSelector(getUserState);
-  console.log("isLoggedIn wwww :>> ", user);
 
   const [redirectTo1, setRedirectTo] = useState(null);
-  console.log("redirectTo :>> ", redirectTo1);
+  // console.log("redirectTo :>> ", redirectTo1);
   useEffect(() => {
     if (user && user.isLoggedIn) {
       if (user.adminRole) {
@@ -19,7 +18,8 @@ const PublicRoute = ({ component: Component, redirectTo = "/" }) => {
       }
     }
   }, []);
-
+  //если пользователь залогинен то переходит в кабинет
+  //если токен сгорел, то isLoggedIn в фолсе и остаемся на странице захода
   return !user.isLoggedIn ? <Component /> : <Navigate to={redirectTo1} />;
 };
 

@@ -61,7 +61,7 @@ export const TitleThird = styled.h3`
   font-size: 20px;
   font-weight: 400;
   line-height: 1.21;
-  /* margin-top: 48px; */
+  margin-top: 48px;
   margin-left: 24px;
 `;
 

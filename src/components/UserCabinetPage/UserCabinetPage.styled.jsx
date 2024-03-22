@@ -35,7 +35,6 @@ export const DataUser = styled.p`
 
 export const FormContainer = styled.div`
   display: flex;
-  justify-content: space-around;
   gap: 135px;
   position: relative;
 `;
