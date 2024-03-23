@@ -10,7 +10,7 @@ export const ErrorText = styled.p`
 
 export const TableWrapper = styled.div`
   overflow-y: auto;
-  max-width: 750px;
+  width: 740px;
   height: 100%;
   padding: 30px;
   background: rgba(256, 256, 256);
@@ -41,20 +41,26 @@ export const TableReportRow = styled.th`
 `;
 
 export const TableReportBody = styled.tbody`
-  &tr:nth-child(2n) {
+  /* &tr:nth-child(2n) {
     background: rgba(0, 0, 0, 0.05);
-  }
+  } */
 `;
 export const TableCell = styled.td`
   border: 0.5px solid #828282; /* Цвет и стиль рамки */
   padding: 8px;
   text-align: left;
+  &:first-child {
+    text-align: center;
+  }
+  &:last-child {
+    text-align: center;
+  }
 `;
 export const ReportTitle = styled.h3`
   font-family: Inter;
   font-size: 16px;
   font-weight: 600;
-  line-height: 19px;
+  /* line-height: 19px; */
   letter-spacing: 0em;
   text-align: center;
 `;
@@ -81,7 +87,7 @@ export const ReportHeader = styled.table`
 
 export const ReportHeaderTh = styled.th`
   font-family: Inter;
-  font-size: 10px; //6px
+  font-size: 8px; //6px
   font-weight: 400;
   line-height: 8px;
   letter-spacing: 0em;
@@ -89,9 +95,9 @@ export const ReportHeaderTh = styled.th`
 `;
 
 export const ReportHeaderTr = styled.tr`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 4px;
+  /* display: flex;
+  flex-direction: column; */
+  /* margin-bottom: 4px; */
 `;
 
 export const ReportHeaderTd1 = styled.td`

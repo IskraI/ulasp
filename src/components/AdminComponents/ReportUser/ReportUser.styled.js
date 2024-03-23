@@ -86,19 +86,25 @@ export const ReportFormLabel = styled.label`
 `;
 export const ReportWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 24px;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 `;
 export const ReporTabletWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  padding: 24px 0;
+  padding: 24px 24px;
   max-height: calc(100vh - 240px);
-  width: 100%;
+
+  width: 848px;
   background: rgba(149, 202, 255, 0.42);
   border-radius: 10px;
   box-shadow: -2px 4px 30px 0px rgba(0, 0, 0, 0.3);
-  margin-left: auto;
-  margin-right: auto;
+  /* margin-left: auto;
+  margin-right: auto; */
+`;
+
+export const ReportFormData = styled.div`
+  max-width: 421px;
 `;

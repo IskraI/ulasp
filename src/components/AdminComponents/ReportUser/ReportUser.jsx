@@ -13,6 +13,7 @@ import {
   ReportWrapper,
   ReporTabletWrapper,
   ReportFormInputRadio,
+  ReportFormData,
 } from "./ReportUser.styled";
 import TabNavigation from "../../TabNavigation/TabNavigation";
 import { useForm } from "react-hook-form";
@@ -132,7 +133,7 @@ const ReportUser = () => {
     <>
       <TabNavigation pathtext={false} />
       <ReportWrapper>
-        <div>
+        <ReportFormData>
           <Title>
             {`Звіт по користувачу з № договору: ${user?.contractNumber}`}
           </Title>
@@ -147,7 +148,7 @@ const ReportUser = () => {
                 checked={selectedOption === "date"}
                 onChange={handleOptionChange}
               />
-              <label htmlFor="date"></label>
+              <label className="radio-container" htmlFor="date"></label>
               <ReportFormField>
                 <ReportFormLabel>З</ReportFormLabel>
                 <ReportFormInput
@@ -186,7 +187,7 @@ const ReportUser = () => {
                 checked={selectedOption === "quarter"}
                 onChange={handleOptionChange}
               />
-              <label htmlFor="quarter"></label>
+              <label className="radio-container" htmlFor="quarter"></label>
               <ReportFormField>
                 <ReportFormLabel>За </ReportFormLabel>
                 <ReportFormInput
@@ -234,7 +235,7 @@ const ReportUser = () => {
               marginleft={"auto"}
             />
           </ReportForm>
-        </div>
+        </ReportFormData>
         <ReporTabletWrapper>
           {responseData && <ButtonPrint targetComponent={componentRef} />}
           {responseData && (

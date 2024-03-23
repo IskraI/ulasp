@@ -34,8 +34,8 @@ export const ButtonPrint = ({ targetComponent }) => {
       showIcon={true}
       icon={`${symbol}#icon-Print`}
       border={`none`}
-      marginleft={`24px`}
-      margintop={`24px`}
+      marginleft={`0px`}
+      margintop={`20px`}
       ariaLabel={`print`}
       fillColor={"rgba(23, 22, 28, 1)"}
 
