@@ -17,7 +17,6 @@ export const ReportForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  /* color: ${colors.mainFontColor}; */
   width: 421px;
   background: #7f99c0;
   font-size: 24px;
@@ -88,7 +87,6 @@ export const ReportWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
-  /* justify-content: space-between; */
 `;
 export const ReporTabletWrapper = styled.div`
   display: flex;
@@ -101,8 +99,6 @@ export const ReporTabletWrapper = styled.div`
   background: rgba(149, 202, 255, 0.42);
   border-radius: 10px;
   box-shadow: -2px 4px 30px 0px rgba(0, 0, 0, 0.3);
-  /* margin-left: auto;
-  margin-right: auto; */
 `;
 
 export const ReportFormData = styled.div`

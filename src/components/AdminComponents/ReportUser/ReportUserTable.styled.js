@@ -40,16 +40,12 @@ export const TableReportRow = styled.th`
   text-align: center;
 `;
 
-export const TableReportBody = styled.tbody`
-  /* &tr:nth-child(2n) {
-    background: rgba(0, 0, 0, 0.05);
-  } */
-`;
+export const TableReportBody = styled.tbody``;
 export const TableCell = styled.td`
   border: 0.5px solid #828282; /* Цвет и стиль рамки */
   padding: 8px;
   text-align: left;
-  &:first-child {
+  &:first-of-type {
     text-align: center;
   }
   &:last-child {

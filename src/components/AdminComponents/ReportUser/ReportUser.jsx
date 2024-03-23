@@ -25,24 +25,7 @@ import {
 } from "../../../redux/dataUsersSlice";
 import { useParams } from "react-router-dom";
 import ReportUserTable from "./ReportUserTable";
-
-const getQuarterRange = (quarter, year) => {
-  const startMonth = (quarter - 1) * 3 + 1; // Начальный месяц квартала
-  const startDate = new Date(year, startMonth - 1, 1); // Начало квартала
-  const endDate = new Date(year, startMonth + 2, 0); // Конец квартала
-
-  const yearEnd = endDate.getFullYear();
-  const monthEnd = String(endDate.getMonth() + 1).padStart(2, "0"); // +1, так как месяцы в JS начинаются с 0
-  const dayEnd = String(endDate.getDate()).padStart(2, "0");
-  const formattedEndDate = `${yearEnd}-${monthEnd}-${dayEnd}`;
-
-  const yearStart = startDate.getFullYear();
-  const monthStart = String(startDate.getMonth() + 1).padStart(2, "0"); // +1, так как месяцы в JS начинаются с 0
-  const dayStart = String(startDate.getDate()).padStart(2, "0");
-  const formattedStartDate = `${yearStart}-${monthStart}-${dayStart}`;
-  console.log("formattedEndDate :>> ", formattedEndDate, formattedStartDate);
-  return { formattedStartDate, formattedEndDate };
-};
+import { getQuarterRange } from "../../../helpers/helpers";
 
 const ReportUser = () => {
   const [responseData, setResponseData] = useState();
@@ -66,21 +49,9 @@ const ReportUser = () => {
   });
 
   const [selectedOption, setSelectedOption] = useState("date"); // По умолчанию выбрана дата
-  const [data, setFormData] = useState({
-    dateOfStart: "",
-    dateOfEnd: "",
-    quarterDate: "",
-    quarterYearDate: "",
-  });
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
-    setFormData({
-      dateOfStart: "",
-      dateOfEnd: "",
-      quarterDate: "",
-      quarterYearDate: "",
-    });
   };
   const handleDateInputChange = () => {
     setSelectedOption("date");
@@ -90,7 +61,6 @@ const ReportUser = () => {
   };
 
   const onFormSubmit = (data) => {
-    console.log("data :>> ", data);
     let formData;
 
     if (selectedOption === "date") {
@@ -99,6 +69,7 @@ const ReportUser = () => {
         dateOfEnd: data.dateOfEnd,
         userId: id,
       };
+
       setDate({ ...data, quarterDate: "", quarterYearDate: "" });
     } else {
       const { formattedStartDate, formattedEndDate } = getQuarterRange(
@@ -237,14 +208,23 @@ const ReportUser = () => {
           </ReportForm>
         </ReportFormData>
         <ReporTabletWrapper>
-          {responseData && <ButtonPrint targetComponent={componentRef} />}
-          {responseData && (
-            <ReportUserTable
-              data={responseData}
-              date={date}
-              user={user}
-              ref={componentRef}
-            />
+          {responseData?.length === 0 ? (
+            <>
+              використаних Об’єктів суміжних прав та Об’єктів авторского права
+              за обраний період немає
+            </>
+          ) : (
+            <>
+              {responseData && <ButtonPrint targetComponent={componentRef} />}
+              {responseData && (
+                <ReportUserTable
+                  data={responseData}
+                  date={date}
+                  user={user}
+                  ref={componentRef}
+                />
+              )}
+            </>
           )}
         </ReporTabletWrapper>
       </ReportWrapper>
