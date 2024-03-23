@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   padding: 10px 16px;
   width: 100%;
   height: 70vh;
+  overflow-y: scroll;
 `;
 
 export const TitleSearchInput = styled.p`

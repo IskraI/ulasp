@@ -69,7 +69,7 @@ const ModalForm = memo(function ModalForm({
               accept="image/*"
               id={idInputImg}
               value="" //значение пустая строка для кавера плейлиста
-              style={{ display: "none" }}
+              display={"none"}
               onChange={changePlayListAvatar}
             />
             {coverImage && (

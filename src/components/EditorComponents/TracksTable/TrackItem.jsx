@@ -217,11 +217,11 @@ const TrackItem = ({
   };
 
   const addTrackToChart = () => {
-    addToChart(idTrack).then(setShowModalChart(true)).unwrap();
+    addToChart(idTrack).unwrap().then(setShowModalChart(true));
   };
 
   const removeTrackFromChart = () => {
-    removeFromChart(idTrack).then(setShowModalChart(true)).unwrap();
+    removeFromChart(idTrack).unwrap().then(setShowModalChart(true));
   };
 
   return (

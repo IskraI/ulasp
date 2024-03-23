@@ -11,6 +11,7 @@ export const FormControlModal = styled.form`
 `;
 
 export const InputControlModal = styled.input`
+  display: ${(props) => props.display || "block"};
   width: 649px;
   height: 64px;
   padding: 8px;
