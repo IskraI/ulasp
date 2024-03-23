@@ -1,5 +1,5 @@
 import Genres from "../../../components/UserMediaComponent/Genres/Genres";
-import { useGetAllGenresForUserQuery } from "../../../redux/genresSlice";
+import { useGetAllGenresForUserQuery } from "../../../redux/genersUserSlice";
 import { Loader } from "../../../components/Loader/Loader";
 import TabNavigation from "../../../components/TabNavigation/TabNavigation";
 const AllGenresForUser = () => {

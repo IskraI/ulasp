@@ -11,16 +11,16 @@ import {
 import { Modal } from "../../../components/Modal/Modal";
 import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
 import { ErrorNotFound } from "../../Errors/Errors";
+import AddCover from "../../AddCover/AddCover";
 
 import {
-  GenresItem,
   GenresImg,
+  GenresItem,
   GenresItemText,
   GenresIconsWrapper,
   GenresButton,
   SvgGenres,
   EditInputText,
-  GenresLabelPlusCover,
   EditWrapper,
 } from "./GenresItem.styled";
 
@@ -121,17 +121,6 @@ const GenreListItem = ({ id, title, icon }) => {
     setGenreTitle(title);
   };
 
-  const handleChooseIcon = (event) => {
-    let file;
-
-    if (event.target.files[0] !== undefined) {
-      file = event.target.files[0];
-    }
-    if (file) {
-      setSelectedImage(file);
-    }
-  };
-
   const handleCloseEdit = () => {
     setSelectedImage(null);
     setIsEditing(false);
@@ -151,9 +140,9 @@ const GenreListItem = ({ id, title, icon }) => {
     return false;
   };
 
-  const coverImage = selectedImage
-    ? URL.createObjectURL(selectedImage)
-    : BASE_URL + "/" + icon;
+  const handleChooseCover = (data) => {
+    setSelectedImage(data);
+  };
 
   return (
     <>
@@ -161,16 +150,10 @@ const GenreListItem = ({ id, title, icon }) => {
         {isEditing ? (
           <div style={{ display: "flex", gap: "10px" }}>
             <EditWrapper>
-              <GenresImg src={coverImage} alt={title} />
-              <GenresLabelPlusCover htmlFor="coverGenre">
-                +
-              </GenresLabelPlusCover>
-              <input
-                type="file"
-                accept="image/*"
-                id="coverGenre"
-                onChange={handleChooseIcon}
-                style={{ display: "none" }}
+              <AddCover
+                cover={icon}
+                coverAlt={title}
+                handleChooseCover={handleChooseCover}
               />
             </EditWrapper>
             <EditInputText
@@ -250,7 +233,7 @@ const GenreListItem = ({ id, title, icon }) => {
 
       {showModalSuccess && isSuccessDeleteGenre && !isErrorDeleteGenre && (
         <Modal width={"394px"} onClose={closeModalSuccess}>
-          <ModalInfoText marginBottom={"34px"}>
+          <ModalInfoText fontSize={"20px"} marginBottom={"34px"}>
             Жанр <ModalInfoTextBold>&quot;{title}&quot;</ModalInfoTextBold> був
             видалений
           </ModalInfoText>
@@ -258,7 +241,7 @@ const GenreListItem = ({ id, title, icon }) => {
       )}
       {showModalError && (
         <Modal width={"394px"} onClose={closeModalError} showCloseButton={true}>
-          <ModalInfoText marginBottom={"34px"}>
+          <ModalInfoText fontSize={"20px"} marginBottom={"34px"}>
             {isErrorDeleteGenre &&
               (<ErrorNotFound error={errorDeleteGenre.data.message} /> ?? (
                 <ErrorNotFound />
@@ -271,11 +254,6 @@ const GenreListItem = ({ id, title, icon }) => {
             ) : (
               <ErrorNotFound error={errorUpdateGenre.data?.message} />
             )}
-
-            {/* {isErrorUpdateGenre && (errorUpdateGenre.data.code === "4091") &&
-           ( <ErrorNotFound error={errorUpdateGenre.data.code} />) ?? (
-              <ErrorNotFound />
-            )} */}
           </ModalInfoText>
         </Modal>
       )}

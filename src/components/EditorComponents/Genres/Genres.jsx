@@ -131,7 +131,7 @@ const Genres = ({
           onClose={closeModalSuccess}
           showCloseButton={true}
         >
-          <ModalInfoText marginBottom={"34px"}>
+          <ModalInfoText fontSize={"20px"} marginBottom={"34px"}>
             Новий жанр
             <ModalInfoTextBold>&quot;{newGenreName}&quot;</ModalInfoTextBold>був
             створений
