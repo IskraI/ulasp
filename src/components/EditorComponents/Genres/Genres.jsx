@@ -55,9 +55,6 @@ const Genres = ({
     dataCreateGenre?.newGenre.genre ?? "Назва нового жанру не була введена";
 
   const handleSubmitGenre = async (data, e) => {
-    console.log(data);
-    console.log(e);
-
     try {
       closeModalAdd();
       await createGenre(data).unwrap();
@@ -80,7 +77,7 @@ const Genres = ({
   };
 
   const toogleModal = () => {
-    return setShowModalAdd((prevsetShowModal) => !showModalAdd);
+    return setShowModalAdd(!showModalAdd);
   };
 
   return (

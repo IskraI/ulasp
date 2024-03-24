@@ -1,4 +1,5 @@
-/* eslint-disable react/prop-types */
+import PropTypes from "prop-types";
+
 import { TitleWrapper, ControlWrapper } from "../MediaList/MediaList.styled";
 
 import { Button } from "../../Button/Button";
@@ -26,6 +27,14 @@ const ControlMediateca = ({
       />
     </ControlWrapper>
   );
+};
+
+ControlMediateca.propTypes = {
+  title: PropTypes.string,
+  iconButton: PropTypes.string,
+  textButton: PropTypes.string,
+  onClick: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default ControlMediateca;

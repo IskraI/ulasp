@@ -1,4 +1,5 @@
-/* eslint-disable react/prop-types */
+import PropTypes from "prop-types";
+
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -11,7 +12,9 @@ import {
 import { Modal } from "../../../components/Modal/Modal";
 import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
 import { ErrorNotFound } from "../../Errors/Errors";
+import { ErrorValidateText } from "../../Errors/errors.styled";
 import AddCover from "../../AddCover/AddCover";
+import useValidateInput from "../../../hooks/useValidateInput";
 
 import {
   GenresImg,
@@ -22,16 +25,25 @@ import {
   SvgGenres,
   EditInputText,
   EditWrapper,
+  EditCardWrapper,
 } from "./GenresItem.styled";
 
 const GenreListItem = ({ id, title, icon }) => {
   const ref = useRef();
-
   const [showModalSuccess, setShowModalSucces] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [genreTitle, setGenreTitle] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+
+  const minLengthInput = 2;
+  const maxLengthInput = 20;
+
+  const [errorValidateMessage, isError, setIsError] = useValidateInput(
+    genreTitle,
+    minLengthInput,
+    maxLengthInput
+  );
 
   const location = useLocation();
   const [
@@ -124,31 +136,37 @@ const GenreListItem = ({ id, title, icon }) => {
   const handleCloseEdit = () => {
     setSelectedImage(null);
     setIsEditing(false);
+    setIsError(false);
   };
 
   const isEmptyGenreUpdateData = (firstStr, secondStr) => {
+    if (isError) {
+      // console.log("Должны быть тут");
+      return true;
+    }
     if (firstStr === "" || (firstStr === secondStr && selectedImage === null)) {
-      console.log("Кнопка выключена");
+      // console.log("Кнопка выключена");
       return true;
     }
     if (firstStr === "" && firstStr === secondStr && selectedImage !== null) {
-      console.log("Кнопка включена");
+      // console.log("Кнопка включена");
       return false;
     }
 
-    console.log("Кнопка включена");
+    // console.log("Кнопка включена");
     return false;
   };
 
-  const handleChooseCover = (data) => {
-    setSelectedImage(data);
-  };
+  const handleChooseCover = (data) => setSelectedImage(data);
 
   return (
     <>
-      <GenresItem>
+      <GenresItem isError={isError}>
         {isEditing ? (
-          <div style={{ display: "flex", gap: "10px" }}>
+          <EditCardWrapper>
+            {isError && (
+              <ErrorValidateText>{errorValidateMessage}</ErrorValidateText>
+            )}
             <EditWrapper>
               <AddCover
                 cover={icon}
@@ -158,11 +176,13 @@ const GenreListItem = ({ id, title, icon }) => {
             </EditWrapper>
             <EditInputText
               type="text"
+              size={17}
+              minLength={2}
+              maxLength={20}
               value={genreTitle}
               onChange={(e) => setGenreTitle(e.target.value)}
               ref={ref}
             />
-
             <GenresIconsWrapper>
               <GenresButton
                 type="button"
@@ -179,7 +199,7 @@ const GenreListItem = ({ id, title, icon }) => {
                 </SvgGenres>
               </GenresButton>
             </GenresIconsWrapper>
-          </div>
+          </EditCardWrapper>
         ) : (
           <>
             <Link
@@ -259,6 +279,12 @@ const GenreListItem = ({ id, title, icon }) => {
       )}
     </>
   );
+};
+
+GenreListItem.propTypes = {
+  id: PropTypes.string,
+  title: PropTypes.string,
+  icon: PropTypes.string,
 };
 
 export default GenreListItem;

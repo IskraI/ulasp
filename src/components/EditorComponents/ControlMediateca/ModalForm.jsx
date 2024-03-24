@@ -26,6 +26,8 @@ const ModalForm = memo(function ModalForm({
   img,
   clearImageCover,
   cover,
+  minLength,
+  maxLength,
 }) {
   const { control, register, handleSubmit, setValue, setFocus } = useForm({
     mode: "onChange",
@@ -36,8 +38,6 @@ const ModalForm = memo(function ModalForm({
   }, [idInputFirst, setFocus]);
 
   const coverImage = img ? URL.createObjectURL(img) : null;
-
-  // console.log("coverImage", coverImage);
 
   const idInputFirstValue = useWatch({
     control,
@@ -87,6 +87,8 @@ const ModalForm = memo(function ModalForm({
           setValue={setValue}
           placeholder={placeholderFirst}
           margintop={marginTopInputFirst}
+          minLength={minLength}
+          maxLength={maxLength}
         />
         {genre && <TextControlModal>{genre}</TextControlModal>}
 

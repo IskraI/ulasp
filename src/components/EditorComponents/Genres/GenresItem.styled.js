@@ -2,13 +2,17 @@ import styled from "@emotion/styled";
 import { colors, mainCubicTransition } from "../../../styles/vars";
 
 export const GenresItem = styled.li`
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 310px;
 
   padding: 10px;
-  border: 1px solid ${colors.accentHoverColor};
+  border: ${(props) =>
+    props.isError
+      ? `1px solid ${colors.errorColor}`
+      : `1px solid ${colors.accentHoverColor}`};
   border-radius: 10px;
   background-color: ${colors.activeBtnColor};
 `;
@@ -26,7 +30,6 @@ export const GenresItemText = styled.p`
   color: ${colors.mainFontColor};
   margin-right: auto;
   padding: 8px;
-  /* outline: 1px solid red; */
 `;
 
 export const GenresIconsWrapper = styled.div`
@@ -37,6 +40,7 @@ export const GenresIconsWrapper = styled.div`
 export const GenresButton = styled.button`
   background: none;
   border: none;
+  padding: 0;
 
   &:disabled {
     svg {
@@ -56,8 +60,6 @@ export const SvgGenres = styled.svg`
 `;
 
 export const EditInputText = styled.input`
-  min-width: 100px;
-  /* outline: 1px solid red; */
   text-align: center;
   padding: 8px;
   background: none;
@@ -71,9 +73,16 @@ export const EditInputText = styled.input`
   }
 `;
 
+export const EditCardWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+`;
+
 export const EditWrapper = styled.div`
   display: flex;
   position: relative;
-  /* width: 60px;
-  height: 40px; */
+  width: 60px;
+  height: 40px;
 `;

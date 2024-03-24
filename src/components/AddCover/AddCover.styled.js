@@ -1,11 +1,10 @@
 import styled from "@emotion/styled";
-import { colors, mainCubicTransition } from "../../styles/vars"
+import { colors, mainCubicTransition } from "../../styles/vars";
 
 export const Cover = styled.img`
   border-radius: 10px;
-  margin-right: auto;
-  width: 60px;
-  height: 40px;
+  min-width: 60px;
+  min-height: 40px;
 `;
 
 export const LabelPlusCover = styled.label`

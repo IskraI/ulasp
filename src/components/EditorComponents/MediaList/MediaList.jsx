@@ -307,29 +307,42 @@ const MediaListItem = ({
     setIsEditing(false);
   };
 
-  const isEmptyMediaUpdateData = (firstStr, secondStr) => {
-    if (firstStr === "" || (firstStr === secondStr && selectedImage === null)) {
-      setDisableEditButton(true);
-    }
-
-    if (mediaTitle.length > 28 || mediaTitle.length < 2) {
-      setDisableEditButton(true);
-    }
-    if (firstStr !== secondStr && selectedImage !== null) {
-      setDisableEditButton(false);
-    }
-
-    if (firstStr === secondStr && selectedImage !== null) {
-      setDisableEditButton(false);
-    }
-
-    if (firstStr !== secondStr && selectedImage === null) {
-      setDisableEditButton(false);
-    }
-  };
-
   useEffect(() => {
+    const isEmptyMediaUpdateData = (firstStr, secondStr) => {
+      if (mediaTitle.length < 2) {
+        console.log("Должны быть тут");
+        setDisableEditButton(true);
+        return;
+      }
+      if (
+        firstStr === "" ||
+        (firstStr === secondStr && selectedImage === null)
+      ) {
+        setDisableEditButton(true);
+        return;
+      }
+
+      if (mediaTitle.length > 28 || mediaTitle.length < 2) {
+        setDisableEditButton(true);
+        return;
+      }
+      if (firstStr !== secondStr && selectedImage !== null) {
+        setDisableEditButton(false);
+        return;
+      }
+
+      if (firstStr === secondStr && selectedImage !== null) {
+        setDisableEditButton(false);
+        return;
+      }
+
+      if (firstStr !== secondStr && selectedImage === null) {
+        setDisableEditButton(false);
+        return;
+      }
+    };
     if (isEditing) {
+      console.log("Попали");
       isEmptyMediaUpdateData(mediaTitle, title);
     }
   }, [isEditing, mediaTitle, title, selectedImage]);
@@ -360,6 +373,16 @@ const MediaListItem = ({
     return setShowModalError(false);
   };
 
+  const validateInput = (e) => {
+    setMediaTitle(e.target.value);
+
+    if (e.target.value.length > 28 || e.target.value.length < 2) {
+      setShowValidateError(true);
+    } else {
+      setShowValidateError(false);
+    }
+  };
+
   return (
     <>
       <MediaItem>
@@ -385,15 +408,8 @@ const MediaListItem = ({
             <EditInputText
               type="text"
               value={mediaTitle}
-              onChange={(e) => {
-                setMediaTitle(e.target.value);
-
-                if (e.target.value.length > 28 || e.target.value.length < 2) {
-                  setShowValidateError(true);
-                } else {
-                  setShowValidateError(false);
-                }
-              }}
+              onChange={validateInput}
+              minLength={2}
               maxLength={"29"}
               ref={ref}
             />

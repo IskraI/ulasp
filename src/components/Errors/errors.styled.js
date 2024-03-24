@@ -25,8 +25,9 @@ export const ErrorText = styled.p`
 
 export const ErrorValidateText = styled.p`
   position: absolute;
-  top: -32px;
+  top: -18px;
   font-size: 12px;
   font-weight: 600;
+  margin: 0 auto;
   color: ${colors.errorColor};
 `;

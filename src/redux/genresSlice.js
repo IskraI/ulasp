@@ -72,13 +72,13 @@ export const genresApi = createApi({
       }),
       invalidatesTags: ["Genres"],
     }),
-
   }),
 });
 
 export const {
   useGetAllGenresQuery,
   useGetGenreByIdQuery,
+  useGetGenreGenreForUpdateQuery,
   useCreateGenreMutation,
   useUpdateGenreByIdMutation,
   useDeleteGenreMutation,
