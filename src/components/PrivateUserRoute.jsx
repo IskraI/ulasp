@@ -8,7 +8,6 @@ const PrivateUserRoute = ({ component: Component, redirectTo = "/signin" }) => {
   const user = useSelector(getUserState);
   const skip = !user.token && !user.isLoggedIn;
 
-
   const { data, isLoading, isError } = useCurrentClientQuery("", {
     skip,
   });
@@ -20,14 +19,9 @@ const PrivateUserRoute = ({ component: Component, redirectTo = "/signin" }) => {
     return <Navigate to={"/signin"} />;
   }
 
+  if (user.isLoggedIn) return <Component user={data} />;
 
-  if (user.isLoggedIn ) return <Component />;
-
-  
-
-
-
-  return  <Navigate to={redirectTo} />;
+  return <Navigate to={redirectTo} />;
 };
 
 export default PrivateUserRoute;

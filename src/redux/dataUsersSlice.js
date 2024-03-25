@@ -105,6 +105,14 @@ export const dataUsersApi = createApi({
       }),
       providesTags: ["reportUser"], // При успешном выполнении инвалидирует тег "reportUser"
     }),
+    countListensForUserById: builder.mutation({
+      query: (userData) => ({
+        url: `user/countlistens`,
+        method: "POST",
+        body: userData, // Здесь передается объект userData с данными из формы
+      }),
+      providesTags: ["reportUser"], // При успешном выполнении инвалидирует тег "reportUser"
+    }),
 
     createFopUser: builder.mutation({
       query: (body) => ({
@@ -189,4 +197,5 @@ export const {
   useCountListensByUserByIdMutation,
   useUnblockEditorByIdMutation,
   useEditorLoginPasswordUpdateMutation,
+  useCountListensForUserByIdMutation,
 } = dataUsersApi;

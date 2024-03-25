@@ -12,12 +12,13 @@ export const Overlay = styled.div`
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
+  overflow: auto;
 `;
 
 export const ModalWindow = styled.div`
   width: ${(props) => props.width};
-  height: ${(props) => props.height};
-  padding: ${(props) => props.padding};
+  height: ${(props) => props.height || "90vh"};
+  padding: ${(props) => props.padding || "none"};
   flex-direction: ${(props) => props.flexDirection};
   border-style: ${(props) => props.borderStyle || "none"};
   border-width: ${(props) => props.borderWidth || "none"};
@@ -86,4 +87,13 @@ export const ModalBtnContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 16px;
+`;
+
+export const ReportModal = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  height: inherit;
+  padding: 44px 64px 44px 24px;
 `;

@@ -36,5 +36,9 @@ export const DataUser = styled.p`
 export const FormContainer = styled.div`
   display: flex;
   gap: 135px;
-  position: relative;
+  align-items: flex-start;
+`;
+
+export const InfoWrapper = styled.div`
+  display: block;
 `;

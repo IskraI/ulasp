@@ -8,20 +8,12 @@ import {
   TableCell,
   ReportTitle,
   ReportTitleDesc,
-  ReportHeader,
-  ReportHeaderTh,
-  ReportHeaderTr,
-  ReportHeaderTd1,
-  ReportHeaderTd2,
   TableReportThead,
   ReportFooter,
   ReportFooterDesc,
   ReportFooterBlockDesc,
   ReportFooterComment,
   Underline,
-  TextWithUnderline,
-  ReportFooterDate,
-  UnderlineDescDiv,
   UnderlinedText,
   LineAndYearContainer,
   UnderlinedTextContainer,
@@ -139,7 +131,7 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
     tableInstance;
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
-  console.log("date :>> ", date);
+
   return (
     <TableWrapper ref={ref}>
       <style>{getPageMargins()}</style>
@@ -225,9 +217,8 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
             Примітки: для іноземних авторів виконавців і творів дані вказуються
             мовою оригіналу; <br />
             Сторони погоджуються, що Звіт може не співпадати з фактично
-            використаними музичними творами, але не
-            <br />
-            більше ніж на 10% загального часу використання музичних творів.
+            використаними музичними творами, але не більше ніж на 10% загального
+            часу використання музичних творів.
           </ReportFooterComment>
         </div>
 
