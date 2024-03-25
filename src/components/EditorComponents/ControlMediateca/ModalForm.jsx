@@ -1,8 +1,10 @@
-/* eslint-disable react/display-name */
-/* eslint-disable react/prop-types */
-import { Button } from "../../Button/Button";
+import PropTypes from "prop-types";
+
 import { useForm, useWatch } from "react-hook-form";
 import { useEffect, memo } from "react";
+
+import useValidateInput from "../../../hooks/useValidateInput";
+import { Button } from "../../Button/Button";
 
 import {
   FormControlModal,
@@ -11,6 +13,7 @@ import {
   LabelInputControlModal,
   CoverImage,
   ClearImage,
+  ErrorValidateInput,
 } from "./ModalForm.styled";
 
 const ModalForm = memo(function ModalForm({
@@ -33,12 +36,6 @@ const ModalForm = memo(function ModalForm({
     mode: "onChange",
   });
 
-  useEffect(() => {
-    setFocus(idInputFirst);
-  }, [idInputFirst, setFocus]);
-
-  const coverImage = img ? URL.createObjectURL(img) : null;
-
   const idInputFirstValue = useWatch({
     control,
     name: idInputFirst,
@@ -46,6 +43,27 @@ const ModalForm = memo(function ModalForm({
   });
 
   const inputFirstValue = idInputFirstValue.trim();
+
+  const [errorValidateMessage, isError, setIsError] = useValidateInput(
+    inputFirstValue,
+    minLength,
+    maxLength
+  );
+
+  typeof useEffect(() => {
+    setFocus(idInputFirst);
+  }, [idInputFirst, setFocus]);
+
+  useEffect(() => {
+    if (!inputFirstValue) {
+      setIsError(true);
+    }
+    () => {
+      return setIsError(false);
+    };
+  }, [inputFirstValue, setIsError]);
+
+  const coverImage = img ? URL.createObjectURL(img) : null;
 
   return (
     <>
@@ -89,7 +107,11 @@ const ModalForm = memo(function ModalForm({
           margintop={marginTopInputFirst}
           minLength={minLength}
           maxLength={maxLength}
+          isError={isError}
         />
+        {isError && (
+          <ErrorValidateInput>{errorValidateMessage}</ErrorValidateInput>
+        )}
         {genre && <TextControlModal>{genre}</TextControlModal>}
 
         <InputControlModal
@@ -108,11 +130,28 @@ const ModalForm = memo(function ModalForm({
           padding="8px"
           marginleft={"auto"}
           marginbottom={"28px"}
-          disabled={inputFirstValue === "" ? true : false}
+          disabled={isError}
         />
       </FormControlModal>
     </>
   );
 });
+
+ModalForm.propTypes = {
+  onSubmit: PropTypes.func,
+  clearImageCover: PropTypes.func,
+  genre: PropTypes.string,
+  idInputFirst: PropTypes.string,
+  marginTopInputFirst: PropTypes.string,
+  placeholderFirst: PropTypes.string,
+  idInputSecond: PropTypes.string,
+  valueInputSecond: PropTypes.string,
+  idInputImg: PropTypes.string,
+  changePlayListAvatar: PropTypes.func,
+  img: PropTypes.string,
+  cover: PropTypes.bool,
+  minLength: PropTypes.string,
+  maxLength: PropTypes.string,
+};
 
 export default ModalForm;

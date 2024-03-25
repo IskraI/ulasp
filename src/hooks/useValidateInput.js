@@ -13,7 +13,11 @@ const useValidateInput = (mediaTitle, minLength, maxLength) => {
   const errorValidateMax = `Максимальна довжина ${maxLength} ${maxValue} `;
 
   useEffect(() => {
+    // if (!minLength || !maxLength) {
+    //   return;
+    // }
     if (!mediaTitle) {
+      setErrorMessage(errorValidateMin);
       return;
     }
 

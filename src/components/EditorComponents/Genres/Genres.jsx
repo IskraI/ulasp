@@ -54,7 +54,7 @@ const Genres = ({
   const newGenreName =
     dataCreateGenre?.newGenre.genre ?? "Назва нового жанру не була введена";
 
-  const handleSubmitGenre = async (data, e) => {
+  const handleSubmitGenre = async (data) => {
     try {
       closeModalAdd();
       await createGenre(data).unwrap();
@@ -119,6 +119,8 @@ const Genres = ({
             valueInputSecond={"genre"}
             placeholderFirst={"Назва жанру*"}
             cover={false}
+            minLength={"2"}
+            maxLength={"20"}
           />
         </Modal>
       )}
