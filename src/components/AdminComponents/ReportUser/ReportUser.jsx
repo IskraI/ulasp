@@ -5,25 +5,19 @@ import { useReactToPrint } from "react-to-print";
 import {
   ErrorText,
   Title,
-  ReportForm,
-  ReportFormField,
-  ReportFormLabel,
-  ReportFormInput,
-  FormField,
   ReportWrapper,
   ReporTabletWrapper,
-  ReportFormInputRadio,
   ReportFormData,
 } from "./ReportUser.styled";
 import TabNavigation from "../../TabNavigation/TabNavigation";
 import { useForm } from "react-hook-form";
-import { Button } from "../../Button/Button";
 import { ButtonPrint } from "../ButtonPrint/ButtonPrint";
 import {
   useCountListensByUserByIdMutation,
   useGetUserByIdQuery,
 } from "../../../redux/dataUsersSlice";
 import { useParams } from "react-router-dom";
+import ReportFormDataTemplate from "../../Form/FormForReport";
 import ReportUserTable from "./ReportUserTable";
 import { getQuarterRange } from "../../../helpers/helpers";
 
@@ -32,7 +26,11 @@ const ReportUser = () => {
   const [date, setDate] = useState({});
   const { id } = useParams();
   const { data: user, error, isLoading } = useGetUserByIdQuery(id);
+  const [selectedOption, setSelectedOption] = useState("date");
 
+  const handleSelectedOptionChange = (newSelectedOption) => {
+    setSelectedOption(newSelectedOption); // обновляем selectedOption внутри ReportUser
+  };
   const [
     dispatchCountListensByUser,
     { isLoading: isLoadingCountListensByUser },
@@ -42,23 +40,12 @@ const ReportUser = () => {
     control,
     register,
     handleSubmit,
+    getValues,
     formState: { errors, isValid, dirtyFields },
   } = useForm({
     mode: "onChange",
     // defaultValues: { name: '', email: '', password: '' },
   });
-
-  const [selectedOption, setSelectedOption] = useState("date"); // По умолчанию выбрана дата
-
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
-  const handleDateInputChange = () => {
-    setSelectedOption("date");
-  };
-  const handleQuaterInputChange = () => {
-    setSelectedOption("quarter");
-  };
 
   const onFormSubmit = (data) => {
     let formData;
@@ -98,8 +85,6 @@ const ReportUser = () => {
     .join("-");
   const componentRef = useRef();
 
-  const currentYear = new Date().getFullYear();
-
   return (
     <>
       <TabNavigation pathtext={false} />
@@ -108,111 +93,22 @@ const ReportUser = () => {
           <Title>
             {`Звіт по користувачу з № договору: ${user?.contractNumber}`}
           </Title>
-
-          <ReportForm onSubmit={handleSubmit(onFormSubmit)}>
-            <FormField>
-              <ReportFormInputRadio
-                type="radio"
-                id="date"
-                name="dateOption"
-                value="date"
-                checked={selectedOption === "date"}
-                onChange={handleOptionChange}
-              />
-              <label className="radio-container" htmlFor="date"></label>
-              <ReportFormField>
-                <ReportFormLabel>З</ReportFormLabel>
-                <ReportFormInput
-                  type="date"
-                  name="date"
-                  placeholder="дата"
-                  // aria-describedby="dateOfStartTooltip"
-                  // className={`${errors.dateOfStart ? "invalid" : ""}${
-                  //   !errors.dateOfStart && dirtyFields.dateOfStart ? "valid" : ""
-                  // }`}
-                  {...register("dateOfStart")}
-                  onChange={handleDateInputChange}
-                />
-              </ReportFormField>
-              <ReportFormField>
-                <ReportFormLabel>по: </ReportFormLabel>
-                <ReportFormInput
-                  type="date"
-                  placeholder="дата"
-                  aria-describedby="dateOfEndTooltip"
-                  className={`${errors.dateOfEnd ? "invalid" : ""}${
-                    !errors.dateOfEnd && dirtyFields.dateOfEnd ? "valid" : ""
-                  }`}
-                  {...register("dateOfEnd")}
-                  onChange={handleDateInputChange}
-                />
-              </ReportFormField>
-            </FormField>
-
-            <FormField>
-              <ReportFormInputRadio
-                type="radio"
-                id="quarter"
-                name="dateOption"
-                value="quarter"
-                checked={selectedOption === "quarter"}
-                onChange={handleOptionChange}
-              />
-              <label className="radio-container" htmlFor="quarter"></label>
-              <ReportFormField>
-                <ReportFormLabel>За </ReportFormLabel>
-                <ReportFormInput
-                  type="number"
-                  min="1"
-                  max="4"
-                  name="quater"
-                  placeholder="кв"
-                  width={"60px"}
-                  // aria-describedby="dateOfStartTooltip"
-                  // className={`${errors.dateOfStart ? "invalid" : ""}${
-                  //   !errors.dateOfStart && dirtyFields.dateOfStart ? "valid" : ""
-                  // }`}
-                  {...register("quarterDate")}
-                  onChange={handleQuaterInputChange}
-                />
-                <ReportFormLabel> квартал</ReportFormLabel>
-              </ReportFormField>
-              <ReportFormField>
-                <ReportFormInput
-                  type="number"
-                  min="2023"
-                  max={currentYear}
-                  placeholder="2023"
-                  width={"100px"}
-                  defaultValue={currentYear}
-                  // aria-describedby="dateOfStartTooltip"
-                  // className={`${errors.dateOfStart ? "invalid" : ""}${
-                  //   !errors.dateOfStart && dirtyFields.dateOfStart ? "valid" : ""
-                  // }`}
-                  {...register("quarterYearDate")}
-                  onChange={handleQuaterInputChange}
-                />{" "}
-                <ReportFormLabel> рік </ReportFormLabel>
-              </ReportFormField>
-            </FormField>
-            <Button
-              type="submit"
-              padding="8px"
-              text="Cформувати"
-              disabled={
-                !isValid || (dirtyFields.dateOfEnd && errors.dateOfStart)
-              }
-              showIcon={false}
-              marginleft={"auto"}
-            />
-          </ReportForm>
+          <ReportFormDataTemplate
+            handleSubmit={handleSubmit(onFormSubmit)}
+            register={register}
+            errors={errors}
+            dirtyFields={dirtyFields}
+            isValid={isValid}
+            getValues={getValues}
+            onSelectedOptionChange={handleSelectedOptionChange}
+          />
         </ReportFormData>
         <ReporTabletWrapper>
           {responseData?.length === 0 ? (
-            <>
-              використаних Об’єктів суміжних прав та Об’єктів авторского права
+            <ErrorText>
+              Bикористаних Об’єктів суміжних прав та Об’єктів авторского права
               за обраний період немає
-            </>
+            </ErrorText>
           ) : (
             <>
               {responseData && <ButtonPrint targetComponent={componentRef} />}
