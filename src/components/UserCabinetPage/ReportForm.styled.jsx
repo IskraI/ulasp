@@ -13,7 +13,7 @@ import { colors } from "../../styles/vars";
 //   margin-top: 86px;
 // `;
 
-export const TitleThird = styled.h3`
+export const TitleText = styled.h3`
   color: ${colors.mainFontColor};
   font-size: 20px;
   font-weight: 400;
@@ -117,28 +117,7 @@ export const Title = styled.h2`
   font-weight: 500;
   margin-bottom: 16px;
 `;
-export const ReportFormContainer = styled.form`
-  width: 421px;
-  height: 330qw;
-  flex-shrink: 0;
-  border-radius: 10px;
-  border: 0.5px solid ${colors.mainFontColor};
-  background: rgba(234, 234, 234, 0.32);
-  position: absolute;
-  margin-left: 580px;
-  margin-top: 86px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
 
-  background: #7f99c0;
-  font-size: 24px;
-  font-weight: 500;
-  border: 0.25px solid rgba(23, 22, 28, 0.5);
-  border-radius: 10px;
-
-  padding: 16px 12px;
-`;
 export const FormField = styled.div`
   display: flex;
 

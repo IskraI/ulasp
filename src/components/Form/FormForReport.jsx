@@ -7,6 +7,7 @@ import {
   ReportFormInput,
   FormField,
   ReportFormInputRadio,
+  TitleText,
 } from "../AdminComponents/ReportUser/ReportUser.styled";
 
 import { Button } from "../Button/Button";
@@ -17,8 +18,9 @@ const ReportFormDataTemplate = ({
   errors,
   dirtyFields,
   isValid,
-  getValues,
+
   onSelectedOptionChange,
+  titleText,
 }) => {
   const [selectedOption, setSelectedOption] = useState("date"); // По умолчанию выбрана дата
 
@@ -40,6 +42,7 @@ const ReportFormDataTemplate = ({
   return (
     // <ReportFormData>
     <ReportForm onSubmit={handleSubmit}>
+      {titleText && <TitleText>{titleText}:</TitleText>}
       <FormField>
         <ReportFormInputRadio
           type="radio"

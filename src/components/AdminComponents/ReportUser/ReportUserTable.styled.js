@@ -12,6 +12,7 @@ export const TableWrapper = styled.div`
   overflow-y: auto;
   width: 740px;
   height: 100%;
+  /* height: 554px; */
   padding: 30px;
   background: rgba(256, 256, 256);
   margin-left: auto;

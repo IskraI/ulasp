@@ -61,6 +61,7 @@ export const ReportFormInput = styled.input`
   &.invalid {
     outline: 1px solid red;
   }
+
   /* &.valid {
     outline: 1px solid green;
   } */
@@ -82,6 +83,15 @@ export const ReportFormInputRadio = styled.input`
 
 export const ReportFormLabel = styled.label`
   padding: 8px;
+`;
+export const TitleText = styled.h3`
+  color: ${colors.mainFontColor};
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.21;
+  margin-top: 16px;
+  text-align: center;
+  margin-bottom: 16px;
 `;
 export const ReportWrapper = styled.div`
   display: flex;
