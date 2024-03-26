@@ -38,7 +38,6 @@ export const ReportForm = ({ user }) => {
   });
 
   const onFormSubmit = (data) => {
-    console.log("data :>> ", data);
     let formData;
 
     if (selectedOption === "date") {
@@ -67,7 +66,7 @@ export const ReportForm = ({ user }) => {
       .then((responseData) => {
         setResponseData(responseData);
         handleShowModal("successReport");
-        console.log("responseData :>> ", responseData);
+        // console.log("responseData :>> ", responseData);
       })
       .catch((error) => {
         let errorMessage = error.data?.message;
@@ -104,7 +103,7 @@ export const ReportForm = ({ user }) => {
         <>
           <Modal
             // width={"664px"}
-            // height={"664px"}
+            height={"90vh"}
             // padding={"44px 64px 44px 24px"}
             onClose={handleCloseModal}
             showCloseButton={true}
