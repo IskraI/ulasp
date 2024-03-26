@@ -67,6 +67,7 @@ const Player = ({ tracks = [], isFirst }) => {
           // Отправка запроса в бэкенд
 
           await dispatchListenCountTrack(track);
+
           console.log("Запрос в бэкенд отправлен успешно");
           dispatch(updateIsFirstPlay(false));
         } catch (error) {

@@ -37,8 +37,8 @@ const UserCabinetPage = () => {
         <ReportForm user={user} />
       </FormContainer>
       <FormContainer>
-        <AdminWriteForm />
-        <ActForm />
+        <AdminWriteForm user={user} />
+        <ActForm user={user} />
       </FormContainer>
     </>
   );

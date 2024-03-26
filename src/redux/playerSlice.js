@@ -89,6 +89,7 @@ export const playerSlice = createSlice({
 
           indexTrack: action.payload,
           isPlaying: false,
+          isFirstPlay: true,
         };
         return state;
       },

@@ -27,7 +27,22 @@ export const dataUsersApi = createApi({
       },
       providesTags: ["dataUsers"],
     }),
-
+    //запрос акта сверки юзером
+    sendMailUserForActById: builder.mutation({
+      query: ({ id, ...body }) => ({
+        url: `/user/${id}/actemail`,
+        method: "POST",
+        body: body,
+      }),
+    }),
+    //написать администратору
+    sendMailUserToAdmin: builder.mutation({
+      query: ({ id, ...body }) => ({
+        url: `/user/${id}/emailtoadmin`,
+        method: "POST",
+        body: body,
+      }),
+    }),
     delUserById: builder.mutation({
       query: ({ id, admin = false }) => ({
         url: admin ? `admin/${id}` : `admin/users/${id}`,
@@ -179,6 +194,8 @@ export const dataUsersApi = createApi({
 });
 
 export const {
+  useSendMailUserToAdminMutation,
+  useSendMailUserForActByIdMutation,
   useSendMailUserByIdMutation,
   useGetAdminByIdQuery,
   useGetUsersListQuery,
