@@ -13,9 +13,9 @@ const useValidateInput = (mediaTitle, minLength, maxLength) => {
   const errorValidateMax = `Максимальна довжина ${maxLength} ${maxValue} `;
 
   useEffect(() => {
-    // if (!minLength || !maxLength) {
-    //   return;
-    // }
+    if (!minLength || !maxLength) {
+      return;
+    }
     if (!mediaTitle) {
       setErrorMessage(errorValidateMin);
       return;
@@ -24,7 +24,7 @@ const useValidateInput = (mediaTitle, minLength, maxLength) => {
     if (mediaTitle.length >= maxLength) {
       setShowValidateError(true);
       setErrorMessage(errorValidateMax);
-    } else if (mediaTitle.length <= minLength) {
+    } else if (mediaTitle.length < minLength) {
       setErrorMessage(errorValidateMin);
       setShowValidateError(true);
     } else {

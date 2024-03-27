@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import TracksTable from "../../../components/EditorComponents/TracksTable/TracksTable";
@@ -12,7 +12,7 @@ import AddTrackFromDB from "../../../components/AddTrackFromDB/AddTrackFromDB";
 
 import { useGetTracksInChartQuery } from "../../../redux/tracksSlice";
 
-const NewTracksPage = ({ mediaLibrary, showTitle = true }) => {
+const NewTracksPage = ({ mediaLibrary, limit, showTitle = true }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
@@ -39,6 +39,12 @@ const NewTracksPage = ({ mediaLibrary, showTitle = true }) => {
     console.log(size);
     setPageSize(size);
   };
+
+  useEffect(() => {
+    if (mediaLibrary) {
+      setPageSize(limit);
+    }
+  }, [mediaLibrary, limit]);
 
   return (
     <>
@@ -88,6 +94,7 @@ const NewTracksPage = ({ mediaLibrary, showTitle = true }) => {
 NewTracksPage.propTypes = {
   mediaLibrary: PropTypes.bool,
   showTitle: PropTypes.bool,
+  limit: PropTypes.string,
 };
 
 export default NewTracksPage;

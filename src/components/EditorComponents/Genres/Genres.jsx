@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { GenresWrapper, GenresNotFound } from "./Genres.styled";
+import { GenresWrapper } from "./Genres.styled";
 import GenreListItem from "./GenresItem";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 import { GenresList } from "./Genres.styled";
@@ -28,6 +28,9 @@ const Genres = ({
   const [showModalError, setShowModalError] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+
+  const minLengthInput = 2;
+  const maxLengthInput = 29;
 
   const [
     createGenre,
@@ -100,6 +103,8 @@ const Genres = ({
                 id={_id}
                 title={genre}
                 icon={genreAvatarURL}
+                minLengthInput={minLengthInput}
+                maxLengthInput={maxLengthInput}
               />
             ))}
           </GenresList>
@@ -119,8 +124,8 @@ const Genres = ({
             valueInputSecond={"genre"}
             placeholderFirst={"Назва жанру*"}
             cover={false}
-            minLength={"2"}
-            maxLength={"20"}
+            minLength={minLengthInput}
+            maxLength={maxLengthInput}
           />
         </Modal>
       )}

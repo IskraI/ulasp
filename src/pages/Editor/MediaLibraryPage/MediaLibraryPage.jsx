@@ -3,10 +3,7 @@ import LatestPlaylists from "../../../components/EditorComponents/PlayLists/Play
 import ShopsPage from "../ShopsPage/ShopPage";
 import { useGetAllGenresQuery } from "../../../redux/genresSlice";
 import { useGetLatestPlaylistsQuery } from "../../../redux/playlistsSlice";
-import {
-  useGetAllTracksQuery,
-  useGetTracksInChartQuery,
-} from "../../../redux/tracksSlice";
+import { useGetAllTracksQuery } from "../../../redux/tracksSlice";
 import { useGetAllShopsQuery } from "../../../redux/shopsSlice";
 
 import NewTracksPage from "../NewTracksPage/NewTracksPage";
@@ -48,15 +45,6 @@ const MediaLibraryPage = () => {
     forceRefetch: true,
   });
 
-  const {
-    data: tracksInChart,
-    isFetching: isFetchingTracksInChart,
-    isSuccess: isSuccesTracksInChart,
-    isError: isErrorTracksInChart,
-  } = useGetTracksInChartQuery(`?&limit=${9}`, {
-    forceRefetch: true,
-  });
-
   const fetching =
     isFetchingAllGenre &&
     isFetchingLatestPlaylist &&
@@ -83,8 +71,6 @@ const MediaLibraryPage = () => {
 
   const error = isErrorAllGenre && isErrorLatestPlaylist && isErrorNewSongs;
 
-  console.log(tracksInChart);
-
   return (
     <>
       {/* {error && <div>{ERROR_NOT_FOUND}</div>} */}
@@ -109,7 +95,7 @@ const MediaLibraryPage = () => {
             showNavigationLink={true}
           />
 
-          <NewTracksPage mediaLibrary={true} showTitle={false} />
+          <NewTracksPage mediaLibrary={true} limit={"9"} showTitle={false} />
         </>
       )}
     </>

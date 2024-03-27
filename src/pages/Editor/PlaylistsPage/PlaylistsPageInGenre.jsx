@@ -12,7 +12,7 @@ const PlaylistsPageInGenre = () => {
 
   return (
     <>
-      {isFetching && !isError && <Loader />}
+      {!isSuccess && !isError && <Loader />}
       {!isError && isSuccess && (
         <>
           <LatestPlaylists

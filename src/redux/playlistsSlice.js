@@ -74,9 +74,9 @@ export const playlistsApi = createApi({
       }),
       invalidatesTags: ["Playlists"],
     }),
-    updatePlaylist: builder.mutation({
+    updatePlaylistPublication: builder.mutation({
       query: ({ playlistId, body }) => ({
-        url: `/editor/playlist/update/${playlistId}`,
+        url: `/editor/playlist/updatePublication/${playlistId}`,
         method: "PATCH",
         body,
       }),
@@ -102,6 +102,6 @@ export const {
   useDeletePlaylistMutation,
   useUploadTracksInPlaylistMutation,
   useDeleteTrackInPlaylistMutation,
-  useUpdatePlaylistMutation,
+  useUpdatePlaylistPublicationMutation,
   useUpdatePlaylistSortMutation,
 } = playlistsApi;

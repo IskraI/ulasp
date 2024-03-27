@@ -86,3 +86,55 @@ export const PlaylistDeleteButton = styled.button`
     }
   }
 `;
+
+export const EditInputText = styled.input`
+  text-align: center;
+  padding: 8px;
+  background: none;
+  border: none;
+  font-size: 16px;
+
+  &:focus-visible {
+    border: none;
+    outline: none;
+    text-align: center;
+  }
+`;
+
+export const EditCardWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+`;
+
+export const EditWrapper = styled.div`
+  display: flex;
+  position: relative;
+  width: 60px;
+  height: 40px;
+`;
+
+export const PlaylistButton = styled.button`
+  background: none;
+  border: none;
+  padding: 0;
+
+  &:disabled {
+    svg {
+      fill: ${colors.bBgModal};
+    }
+  }
+`;
+
+export const SvgPlaylist = styled.svg`
+  fill: #000000;
+  transition: fill 250ms ${mainCubicTransition};
+
+  &:hover {
+    width: 30px;
+    height: 30px;
+    /* fill: ${colors.accentHoverColor}; */
+    transition: all 250ms ${mainCubicTransition};
+  }
+`;

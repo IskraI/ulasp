@@ -88,7 +88,7 @@ const AdminUsers = lazy(() =>
 function App() {
   const user = useSelector(getUserState);
   const navigate = useNavigate();
-  console.log("App user", user);
+  // console.log("App user", user);
   // console.log("user.token", user.token);
   // console.log(" user.editorRole", user.editorRole);
   // console.log("user.adminRole", user.adminRole);

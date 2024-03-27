@@ -17,27 +17,24 @@ import AddCover from "../../AddCover/AddCover";
 import useValidateInput from "../../../hooks/useValidateInput";
 
 import {
-  GenresImg,
-  GenresItem,
-  GenresItemText,
-  GenresIconsWrapper,
-  GenresButton,
-  SvgGenres,
+  MediaItem,
+  MediaImg,
+  MediaItemText,
+  MediaIconsWrapper,
+  MediaButton,
+  SvgMedia,
   EditInputText,
   EditWrapper,
   EditCardWrapper,
-} from "./GenresItem.styled";
+} from "../MediaList/MediaList.styled";
 
-const GenreListItem = ({ id, title, icon }) => {
+const GenreListItem = ({ id, title, icon, minLengthInput, maxLengthInput }) => {
   const ref = useRef();
   const [showModalSuccess, setShowModalSucces] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [genreTitle, setGenreTitle] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-
-  const minLengthInput = 2;
-  const maxLengthInput = 20;
 
   const [errorValidateMessage, isError, setIsError] = useValidateInput(
     genreTitle,
@@ -161,7 +158,7 @@ const GenreListItem = ({ id, title, icon }) => {
 
   return (
     <>
-      <GenresItem isError={isError}>
+      <MediaItem isError={isError} isEditing={isEditing}>
         {isEditing ? (
           <EditCardWrapper>
             {isError && (
@@ -177,28 +174,28 @@ const GenreListItem = ({ id, title, icon }) => {
             <EditInputText
               type="text"
               size={17}
-              minLength={2}
-              maxLength={20}
+              minLength={minLengthInput}
+              maxLength={maxLengthInput}
               value={genreTitle}
               onChange={(e) => setGenreTitle(e.target.value)}
               ref={ref}
             />
-            <GenresIconsWrapper>
-              <GenresButton
+            <MediaIconsWrapper>
+              <MediaButton
                 type="button"
                 onClick={() => updateGenreItem(title)}
                 disabled={isEmptyGenreUpdateData(genreTitle, title)}
               >
-                <SvgGenres width="24" height="24">
+                <SvgMedia width="24" height="24">
                   <use href={`${symbol}#icon-check-in`}></use>
-                </SvgGenres>
-              </GenresButton>
-              <GenresButton type="button" onClick={handleCloseEdit}>
-                <SvgGenres width="24" height="24">
+                </SvgMedia>
+              </MediaButton>
+              <MediaButton type="button" onClick={handleCloseEdit}>
+                <SvgMedia width="24" height="24">
                   <use href={`${symbol}#icon-close`}></use>
-                </SvgGenres>
-              </GenresButton>
-            </GenresIconsWrapper>
+                </SvgMedia>
+              </MediaButton>
+            </MediaIconsWrapper>
           </EditCardWrapper>
         ) : (
           <>
@@ -210,46 +207,47 @@ const GenreListItem = ({ id, title, icon }) => {
                 width: "100%",
                 display: "flex",
                 alignItems: "center",
+                justifyItems: "baseline",
               }}
             >
-              <GenresImg src={BASE_URL + "/" + icon} alt={title} />
-              <GenresItemText>{title}</GenresItemText>
+              <MediaImg src={BASE_URL + "/" + icon} alt={title} />
+              <MediaItemText>{title}</MediaItemText>
             </Link>
-            <GenresIconsWrapper>
-              <GenresButton
+            <MediaIconsWrapper>
+              <MediaButton
                 type="button"
                 onClick={editGenre}
                 disabled={isEditing}
               >
-                <SvgGenres width="24" height="24">
+                <SvgMedia width="24" height="24">
                   <use href={`${symbol}#icon-pen`}></use>
-                </SvgGenres>
-              </GenresButton>
+                </SvgMedia>
+              </MediaButton>
 
-              <GenresButton
+              <MediaButton
                 type="button"
                 onClick={deleteMediaItem}
                 disabled={isLoading}
               >
                 {isLoading ? (
-                  <SvgGenres
+                  <SvgMedia
                     width="24"
                     height="24"
                     stroke="#888889"
                     fill="#888889"
                   >
                     <use href={`${symbol}#icon-del-basket`}></use>
-                  </SvgGenres>
+                  </SvgMedia>
                 ) : (
-                  <SvgGenres width="24" height="24">
+                  <SvgMedia width="24" height="24">
                     <use href={`${symbol}#icon-del-basket`}></use>
-                  </SvgGenres>
+                  </SvgMedia>
                 )}
-              </GenresButton>
-            </GenresIconsWrapper>
+              </MediaButton>
+            </MediaIconsWrapper>
           </>
         )}
-      </GenresItem>
+      </MediaItem>
 
       {showModalSuccess && isSuccessDeleteGenre && !isErrorDeleteGenre && (
         <Modal width={"394px"} onClose={closeModalSuccess}>
@@ -285,6 +283,8 @@ GenreListItem.propTypes = {
   id: PropTypes.string,
   title: PropTypes.string,
   icon: PropTypes.string,
+  minLengthInput: PropTypes.number,
+  maxLengthInput: PropTypes.number,
 };
 
 export default GenreListItem;

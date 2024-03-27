@@ -148,10 +148,10 @@ ModalForm.propTypes = {
   valueInputSecond: PropTypes.string,
   idInputImg: PropTypes.string,
   changePlayListAvatar: PropTypes.func,
-  img: PropTypes.string,
+  img: PropTypes.object,
   cover: PropTypes.bool,
-  minLength: PropTypes.string,
-  maxLength: PropTypes.string,
+  minLength: PropTypes.number,
+  maxLength: PropTypes.number,
 };
 
 export default ModalForm;

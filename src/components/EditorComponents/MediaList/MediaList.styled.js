@@ -25,26 +25,36 @@ export const MediaItem = styled.li`
   width: 310px;
 
   padding: 10px;
-  border: 1px solid ${colors.accentHoverColor};
+  border: ${(props) =>
+    props.isError
+      ? `1px solid ${colors.errorColor}`
+      : props.isEditing
+      ? `1px solid green`
+      : `1px solid ${colors.accentHoverColor}`};
   border-radius: 10px;
   background-color: ${colors.activeBtnColor};
 `;
 
 export const MediaImg = styled.img`
   border-radius: 10px;
-  margin-right: auto;
+  /* margin-right: auto; */
+  margin-right: 4px;
+
   width: 60px;
   height: 40px;
 `;
 
 export const MediaItemText = styled.p`
+  /* margin-right: auto; */
+  /* text-overflow: clip; */
+
+  max-width: 170px;
   font-size: 16px;
   line-height: 1.19;
   color: ${colors.mainFontColor};
-  margin-right: auto;
-  padding: 0 6px;
+  margin: 0 auto;
+  padding: 0px 6px;
   text-align: center;
-  text-overflow: clip;
 `;
 
 export const MediaIconsWrapper = styled.div`
@@ -55,6 +65,7 @@ export const MediaIconsWrapper = styled.div`
 export const MediaButton = styled.button`
   background: none;
   border: none;
+  padding: 0;
   &:disabled {
     svg {
       fill: ${colors.bBgModal};
@@ -86,9 +97,20 @@ export const SvgMedia = styled.svg`
   }
 `;
 
+// export const SvgGenres = styled.svg`
+//   fill: #000000;
+//   transition: fill 350ms ${mainCubicTransition};
+
+//   &:hover {
+//     fill: ${colors.accentHoverColor};
+//     transition: fill 350ms ${mainCubicTransition};
+//   }
+// `;
+
 export const EditInputText = styled.input`
-  min-width: 100px;
-  /* outline: 1px solid red; */
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.19;
   text-align: center;
   padding: 8px;
   background: none;
@@ -101,12 +123,19 @@ export const EditInputText = styled.input`
     text-align: center;
   }
 `;
+//Добавить в остальные
+export const EditCardWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+`;
 
 export const EditWrapper = styled.div`
   display: flex;
   position: relative;
-  /* width: 60px;
-  height: 40px; */
+  width: 60px;
+  height: 40px;
 `;
 
 export const MediaLabelPlusCover = styled.label`

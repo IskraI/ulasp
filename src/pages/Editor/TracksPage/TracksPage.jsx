@@ -123,7 +123,7 @@ const TracksPage = () => {
       {error?.status !== 500 && isError && <ErrorNotFound />}
       {!isSuccess && !error && <Loader />}
 
-      {data?.totalTracks !== undefined && (
+      {data?.totalTracks !== undefined && !isError && (
         <>
           <AddTracks
             iconButton={`${symbol}#icon-plus`}
