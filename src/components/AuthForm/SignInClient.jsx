@@ -75,11 +75,7 @@ export const SignInClient = () => {
         handleShowModal();
       });
   };
-  // const v = getValues();
-  console.log(
-    "getValues()",
-    !isValid && Object.values(getValues()).some((element) => element === "")
-  );
+
   return (
     <>
       <StyledForm autoComplete="off" onSubmit={handleSubmit(onSubmit)}>

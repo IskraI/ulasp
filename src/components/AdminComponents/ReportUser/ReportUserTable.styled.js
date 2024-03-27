@@ -16,16 +16,15 @@ export const TableWrapper = styled.div`
   background: rgba(256, 256, 256);
   margin-left: auto;
   margin-right: auto;
-  border: 1px solid #ddd;
+  border: none;
 `;
 
 export const TableReport = styled.table`
   width: 100%;
-  height: 100vh;
+
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
-  /* border: 1px solid rgba(130, 130, 130, 1); Цвет и стиль рамки */
 `;
 
 export const TableReportThead = styled.thead`
@@ -132,21 +131,6 @@ export const ReportFooterDesc = styled.p`
   position: relative;
 `;
 
-// export const Underline = styled.span`
-//   position: relative;
-//   display: inline-block;
-//   &:before {
-//     content: "${(props) => props.text}";
-//     /* content: ""; */
-//     position: absolute;
-//     top: -2px;
-//     left: ${(props) => props.left ?? "0%"};
-//     width: ${(props) => props.width ?? "70%"};
-//     height: 1px;
-//     background-color: black;
-//   }
-// `;
-
 export const ReportFooterDate = styled.div`
   display: flex;
   flex-direction: column;
@@ -233,9 +217,3 @@ export const ReportFooterComment = styled.p`
   text-align: center;
   margin-bottom: 24px;
 `;
-
-// export const TextWithUnderline = ({ text, underlineWidth, underlineLeft }) => (
-//   <Underline width={underlineWidth} left={underlineLeft}>
-//     {text}
-//   </Underline>
-// );

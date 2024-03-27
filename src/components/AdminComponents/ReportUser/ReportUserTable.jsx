@@ -126,7 +126,10 @@ const formatDate = (dateString) => {
 
   return `${day} ${month} ${year}`;
 };
-
+const getPageMargins = () => {
+  return `@page { margin: 10mm 5mm 10mm 5mm !important;
+ }`;
+};
 const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
   const tableInstance = useTable({
     columns,
@@ -136,9 +139,10 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
     tableInstance;
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
-  // const nameForTitle =
+  console.log("date :>> ", date);
   return (
     <TableWrapper ref={ref}>
+      <style>{getPageMargins()}</style>
       <ReportTitle>ФОРМА ЗВIТУ</ReportTitle>
       <ReportTitle>{`ТОВ/ФОП ${
         user.firstName || user.fatherName || user.lastName
@@ -147,9 +151,15 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
       } /договір №${user.contractNumber}/`}</ReportTitle>
 
       <ReportTitleDesc>
-        про використані Об’єкти суміжних прав та Об’єкти авторского права за
-        період з {formatDate(date.dateOfStart)} p. по{" "}
-        {formatDate(date.dateOfEnd)} p.
+        про використані Об’єкти суміжних прав та Об’єкти авторского права за{" "}
+        {date.dateOfStart !== "" && date.dateOfEnd !== "" ? (
+          <>
+            період <br />з {formatDate(date.dateOfStart)} p. по{" "}
+            {formatDate(date.dateOfEnd)} p.
+          </>
+        ) : (
+          ` ${date.quarterDate} квартал  ${date.quarterYearDate} року`
+        )}
       </ReportTitleDesc>
 
       {/* <ReportHeader className="header">
@@ -189,6 +199,7 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
             </tr>
           ))}
         </TableReportThead>
+
         <tbody {...getTableBodyProps()}>
           {rows.map((row, rowIndex) => {
             prepareRow(row);
@@ -207,6 +218,7 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
           })}
         </tbody>
       </TableReport>
+
       <ReportFooter>
         <div>
           <ReportFooterComment>
@@ -218,29 +230,7 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
             більше ніж на 10% загального часу використання музичних творів.
           </ReportFooterComment>
         </div>
-        {/* <div>
-          ____________ ___________________________________________ «____»
-          ___________ {currentYear} p.
-        </div> */}
-        {/* <ReportFooterBlockDesc>
-          <ReportFooterDesc>
-            <Underline width={"70%"} left={"5%"}>
-              (підпис уповноваженої особи Користувача)
-            </Underline>
-          </ReportFooterDesc>
-          <ReportFooterDesc>
-            <Underline width={"120%"} left={"-15%"}>
-              (посада та П.І.Б. уповноваженої особи Користувача)
-            </Underline>
-          </ReportFooterDesc>
-          <ReportFooterDate>
-            _______________ ррпрр
-            <ReportFooterDesc>
-              {/* <Underline width={"70%"} text={`2023`}> */}
-        {/* (дата складання звіту )</Underline> */}
-        {/* </ReportFooterDesc>
-          </ReportFooterDate>
-        </ReportFooterBlockDesc> */}{" "}
+
         <ReportFooterBlockDesc>
           <FlexChild alignSelf="flex-end">
             <ReportFooterDesc>
