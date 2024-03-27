@@ -15,6 +15,7 @@ import { ErrorNotFound } from "../../Errors/Errors";
 import { ErrorValidateText } from "../../Errors/errors.styled";
 import AddCover from "../../AddCover/AddCover";
 import useValidateInput from "../../../hooks/useValidateInput";
+import { isEmptyMediaUpdateData } from "../../../helpers/helpers";
 
 import {
   MediaItem,
@@ -105,6 +106,7 @@ const GenreListItem = ({ id, title, icon, minLengthInput, maxLengthInput }) => {
       handleCloseEdit();
     } catch (error) {
       setShowModalError(true);
+      handleCloseEdit();
     }
   };
 
@@ -134,24 +136,6 @@ const GenreListItem = ({ id, title, icon, minLengthInput, maxLengthInput }) => {
     setSelectedImage(null);
     setIsEditing(false);
     setIsError(false);
-  };
-
-  const isEmptyGenreUpdateData = (firstStr, secondStr) => {
-    if (isError) {
-      // console.log("Должны быть тут");
-      return true;
-    }
-    if (firstStr === "" || (firstStr === secondStr && selectedImage === null)) {
-      // console.log("Кнопка выключена");
-      return true;
-    }
-    if (firstStr === "" && firstStr === secondStr && selectedImage !== null) {
-      // console.log("Кнопка включена");
-      return false;
-    }
-
-    // console.log("Кнопка включена");
-    return false;
   };
 
   const handleChooseCover = (data) => setSelectedImage(data);
@@ -184,7 +168,12 @@ const GenreListItem = ({ id, title, icon, minLengthInput, maxLengthInput }) => {
               <MediaButton
                 type="button"
                 onClick={() => updateGenreItem(title)}
-                disabled={isEmptyGenreUpdateData(genreTitle, title)}
+                disabled={isEmptyMediaUpdateData(
+                  genreTitle,
+                  title,
+                  isError,
+                  selectedImage
+                )}
               >
                 <SvgMedia width="24" height="24">
                   <use href={`${symbol}#icon-check-in`}></use>

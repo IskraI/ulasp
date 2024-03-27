@@ -12,7 +12,7 @@ import { ErrorNotFound } from "../../Errors/Errors";
 import { PlaylistWrapper, PlaylistList } from "./PlayLists.styled";
 import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
 import { LoaderButton } from "../../Loader/Loader";
-import { PlaylistItem } from "./PlayLists.styled";
+import { MediaItem } from "../MediaList/MediaList.styled";
 
 const Playlists = ({
   title,
@@ -119,10 +119,10 @@ const Playlists = ({
         <PlaylistWrapper>
           <PlaylistList>
             {isLoadingCreatePlaylist && (
-              <PlaylistItem>
+              <MediaItem>
                 <LoaderButton />
                 <p>Playlist creating...</p>
-              </PlaylistItem>
+              </MediaItem>
             )}
             {playlists.map(({ _id, playListName, playListAvatarURL }) => (
               <PlaylistListItem

@@ -10,8 +10,13 @@ import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
 
 import useValidateInput from "../../../hooks/useValidateInput";
 import AddCover from "../../AddCover/AddCover";
+import { isEmptyMediaUpdateData } from "../../../helpers/helpers";
+import { ErrorNotFound } from "../../Errors/Errors";
 
-import { useDeletePlaylistMutation } from "../../../redux/playlistsSlice";
+import {
+  useDeletePlaylistMutation,
+  useUpdatePlayListByIdMutation,
+} from "../../../redux/playlistsSlice";
 import { useDeletePlaylistInGenreMutation } from "../../../redux/genresSlice";
 import { useDeletePlaylistInShopMutation } from "../../../redux/shopsSlice";
 
@@ -59,7 +64,7 @@ const PlaylistListItem = ({
   const maxLengthInput = 20;
   ////////////
   const [errorValidateMessage, isError, setIsError] = useValidateInput(
-    title,
+    playlistTitle,
     minLengthInput,
     maxLengthInput
   );
@@ -74,11 +79,22 @@ const PlaylistListItem = ({
   const newPlaylists = `/editor/medialibrary/newplaylists/${id}/tracks`;
 
   const [
+    updatePlaylist,
+    {
+      isLoading: isLoadingUpdatePlaylist,
+      isSuccess: isSuccessUpdatePlaylist,
+      isError: isErrorUpdatePlaylist,
+      error: errorUpdatePlaylist,
+    },
+  ] = useUpdatePlayListByIdMutation();
+
+  const [
     deletePlaylist,
     {
       isLoading,
       isSuccess: isSuccessDeletePlaylist,
       isError: isErrorDeletePlaylist,
+      error: errorDeletePlaylist,
     },
   ] = useDeletePlaylistMutation();
 
@@ -131,54 +147,108 @@ const PlaylistListItem = ({
     setIsError(false);
   };
 
+  const handleChooseCover = (data) => setSelectedImage(data);
+
+  const updatePlaylistItem = async (title) => {
+    const formData = new FormData();
+
+    if (!selectedImage) {
+      formData.append("playListName", playlistTitle);
+    }
+
+    if (playlistTitle === title) {
+      formData.append("picsURL", selectedImage);
+      formData.append("type", "playlist");
+    }
+
+    if (selectedImage && playlistTitle !== title && playlistTitle !== "") {
+      formData.append("playListName", playlistTitle);
+      formData.append("picsURL", selectedImage);
+      formData.append("type", "playlist");
+    }
+
+    try {
+      await updatePlaylist({ id, formData }).unwrap();
+      handleCloseEdit();
+    } catch (error) {
+      setShowModalError(true);
+      handleCloseEdit();
+    }
+  };
+
   if (isEditing) {
     return (
-      <MediaItem>
-        <EditCardWrapper>
-          {isError && (
-            <ErrorValidateText>{errorValidateMessage}</ErrorValidateText>
-          )}
-          <EditWrapper>
-            <AddCover
-              cover={icon}
-              coverAlt={title}
-              // handleChooseCover={handleChooseCover}
+      <>
+        <MediaItem isError={isError} isEditing={isEditing}>
+          <EditCardWrapper>
+            {isError && (
+              <ErrorValidateText>{errorValidateMessage}</ErrorValidateText>
+            )}
+            <EditWrapper>
+              <AddCover
+                cover={icon}
+                coverAlt={title}
+                handleChooseCover={handleChooseCover}
+              />
+            </EditWrapper>
+            <EditInputText
+              type="text"
+              size={17}
+              minLength={minLengthInput}
+              maxLength={maxLengthInput}
+              value={playlistTitle}
+              onChange={(e) => setPlaylistTitle(e.target.value)}
+              ref={ref}
             />
-          </EditWrapper>
-          <EditInputText
-            type="text"
-            size={17}
-            minLength={minLengthInput}
-            maxLength={maxLengthInput}
-            value={playlistTitle}
-            onChange={(e) => setPlaylistTitle(e.target.value)}
-            ref={ref}
-          />
-          <MediaIconsWrapper>
-            <MediaButton
-              type="button"
-              // onClick={() => updateGenreItem(title)}
-              // disabled={isEmptyGenreUpdateData(genreTitle, title)}
-            >
-              <SvgMedia width="24" height="24">
-                <use href={`${symbol}#icon-check-in`}></use>
-              </SvgMedia>
-            </MediaButton>
-            <MediaButton type="button" onClick={handleCloseEdit}>
-              <SvgMedia width="24" height="24">
-                <use href={`${symbol}#icon-close`}></use>
-              </SvgMedia>
-            </MediaButton>
-          </MediaIconsWrapper>
-        </EditCardWrapper>
-      </MediaItem>
+            <MediaIconsWrapper>
+              <MediaButton
+                type="button"
+                onClick={() => updatePlaylistItem(title)}
+                disabled={isEmptyMediaUpdateData(
+                  playlistTitle,
+                  title,
+                  isError,
+                  selectedImage
+                )}
+              >
+                <SvgMedia width="24" height="24">
+                  <use href={`${symbol}#icon-check-in`}></use>
+                </SvgMedia>
+              </MediaButton>
+              <MediaButton type="button" onClick={handleCloseEdit}>
+                <SvgMedia width="24" height="24">
+                  <use href={`${symbol}#icon-close`}></use>
+                </SvgMedia>
+              </MediaButton>
+            </MediaIconsWrapper>
+          </EditCardWrapper>
+        </MediaItem>
+        {showModalError && (
+          <Modal
+            width={"394px"}
+            onClose={() => setShowModalError(false)}
+            showCloseButton={true}
+          >
+            <ModalInfoText fontSize={"20px"} marginBottom={"34px"}>
+              {isErrorUpdatePlaylist &&
+              errorUpdatePlaylist.data?.code === "4091" ? (
+                <ErrorNotFound
+                  error={`Плейлист ${errorUpdatePlaylist.data?.object} вже використовується`}
+                />
+              ) : (
+                <ErrorNotFound error={errorUpdatePlaylist.data?.message} />
+              )}
+            </ModalInfoText>
+          </Modal>
+        )}
+      </>
     );
   }
 
   return (
     <>
       {!placeListCardInfo ? (
-        <MediaItem>
+        <MediaItem isError={isError}>
           <LinkToTracks
             key={id}
             to={
@@ -194,9 +264,9 @@ const PlaylistListItem = ({
           </LinkToTracks>
           <MediaIconsWrapper>
             <MediaButton type="button" onClick={editPlaylist}>
-              <svg width="24" height="24">
+              <SvgMedia width="24" height="24">
                 <use href={`${symbol}#icon-pen`}></use>
-              </svg>
+              </SvgMedia>
             </MediaButton>
 
             <MediaButton
@@ -205,13 +275,13 @@ const PlaylistListItem = ({
               disabled={isLoading}
             >
               {isLoading ? (
-                <svg width="24" height="24" stroke="#888889">
+                <SvgMedia width="24" height="24" stroke="#888889">
                   <use href={`${symbol}#icon-del-basket`}></use>
-                </svg>
+                </SvgMedia>
               ) : (
-                <svg width="24" height="24">
+                <SvgMedia width="24" height="24">
                   <use href={`${symbol}#icon-del-basket`}></use>
-                </svg>
+                </SvgMedia>
               )}
             </MediaButton>
           </MediaIconsWrapper>
@@ -228,9 +298,9 @@ const PlaylistListItem = ({
             <CountTracks countTracks={countTracks} />
           </PlaylistInfoWrapper>
           <MediaIconsWrapper>
-            <svg width="24" height="24">
+            <SvgMedia width="24" height="24">
               <use href={`${symbol}#icon-pen`}></use>
-            </svg>
+            </SvgMedia>
 
             <MediaButton
               type="button"
@@ -239,13 +309,13 @@ const PlaylistListItem = ({
               disabled={false}
             >
               {isLoading ? (
-                <svg width="24" height="24" stroke="#888889">
+                <SvgMedia width="24" height="24" stroke="#888889">
                   <use href={`${symbol}#icon-del-basket`}></use>
-                </svg>
+                </SvgMedia>
               ) : (
-                <svg width="24" height="24">
+                <SvgMedia width="24" height="24">
                   <use href={`${symbol}#icon-del-basket`}></use>
-                </svg>
+                </SvgMedia>
               )}
             </MediaButton>
           </MediaIconsWrapper>
@@ -256,6 +326,29 @@ const PlaylistListItem = ({
           <ModalInfoText fontSize={"20px"} marginBottom={"34px"}>
             Плейлист <ModalInfoTextBold>&quot;{title}&quot;</ModalInfoTextBold>{" "}
             був видалений
+          </ModalInfoText>
+        </Modal>
+      )}
+      {showModalError && (
+        <Modal
+          width={"394px"}
+          onClose={() => setShowModalError(false)}
+          showCloseButton={true}
+        >
+          <ModalInfoText fontSize={"20px"} marginBottom={"34px"}>
+            {isErrorDeletePlaylist &&
+              (<ErrorNotFound error={errorDeletePlaylist.data.message} /> ?? (
+                <ErrorNotFound />
+              ))}
+
+            {isErrorUpdatePlaylist &&
+            errorUpdatePlaylist.data?.code === "4091" ? (
+              <ErrorNotFound
+                error={`Плейлист ${errorUpdatePlaylist.data?.object} вже використовується`}
+              />
+            ) : (
+              <ErrorNotFound error={errorUpdatePlaylist.data?.message} />
+            )}
           </ModalInfoText>
         </Modal>
       )}

@@ -92,6 +92,16 @@ export const playlistsApi = createApi({
       }),
       invalidatesTags: ["Playlists"],
     }),
+
+    updatePlayListById: builder.mutation({
+      query: ({ id, formData }) => ({
+        url: `/editor/playlist/update/${id}`,
+        method: "PATCH",
+        body: formData,
+        formData: true,
+      }),
+      invalidatesTags: ["Playlists"],
+    }),
   }),
 });
 
@@ -104,4 +114,5 @@ export const {
   useDeleteTrackInPlaylistMutation,
   useUpdatePlaylistPublicationMutation,
   useUpdatePlaylistSortMutation,
+  useUpdatePlayListByIdMutation,
 } = playlistsApi;

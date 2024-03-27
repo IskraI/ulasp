@@ -95,7 +95,7 @@ export const SvgMedia = styled.svg`
   transition: all 550ms ${mainCubicTransition};
 
   &:hover {
-    fill: ${colors.activeBtnColor};
+    fill: ${colors.bgHeaderColor};
 
     transform: rotate(
       ${(props) => (props.transformIcon ? props.transformIcon + "deg" : "0deg")}

@@ -22,17 +22,16 @@ import { useDeletePlaylistMutation } from "../../../redux/playlistsSlice";
 import { useDispatch } from "react-redux";
 import { shopsApi } from "../../../redux/shopsSlice";
 
-import {
-  PlaylistItem,
-  PlaylistImg,
-  PlaylistItemText,
-  PlaylistIconsWrapper,
-  PlaylistDeleteButton,
-  PlaylistCardInfo,
-  LinkToTracks,
-} from "./PlayLists.styled";
+import { PlaylistCardInfo, LinkToTracks } from "./PlayLists.styled";
 
-import { SvgMedia, MediaButton } from "../MediaList/MediaList.styled";
+import {
+  MediaItem,
+  MediaImg,
+  MediaItemText,
+  MediaIconsWrapper,
+  SvgMedia,
+  MediaButton,
+} from "../MediaList/MediaList.styled";
 
 const PlaylistListItem = ({
   id: idPlaylist,
@@ -154,7 +153,7 @@ const PlaylistListItem = ({
 
   return (
     <>
-      <PlaylistItem>
+      <MediaItem>
         <LinkToTracks
           key={idPlaylist}
           to={
@@ -165,14 +164,14 @@ const PlaylistListItem = ({
           state={{ from: location }}
           disabled={placeListCardInfo ? true : false}
         >
-          <PlaylistImg
+          <MediaImg
             marginRight={PropsPlayListItem.marginRight}
             src={BASE_URL + "/" + icon}
             alt={title}
           />
-          <PlaylistItemText>{title}</PlaylistItemText>
+          <MediaItemText>{title}</MediaItemText>
         </LinkToTracks>
-        <PlaylistIconsWrapper>
+        <MediaIconsWrapper>
           <SvgMedia width="24" height="24">
             <use href={`${symbol}#icon-pen`}></use>
           </SvgMedia>
@@ -192,8 +191,8 @@ const PlaylistListItem = ({
               </SvgMedia>
             )}
           </MediaButton>
-        </PlaylistIconsWrapper>
-      </PlaylistItem>
+        </MediaIconsWrapper>
+      </MediaItem>
       {showModalDeletePlaylist && (
         <Modal
           width={"567px"}
