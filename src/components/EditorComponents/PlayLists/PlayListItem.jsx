@@ -16,20 +16,22 @@ import { useDeletePlaylistInGenreMutation } from "../../../redux/genresSlice";
 import { useDeletePlaylistInShopMutation } from "../../../redux/shopsSlice";
 
 import {
-  PlaylistItem,
-  PlaylistImg,
   PlaylistInfoWrapper,
-  PlaylistItemText,
-  PlaylistIconsWrapper,
-  PlaylistDeleteButton,
   PlaylistCardInfo,
   LinkToTracks,
+} from "./PlayLists.styled";
+
+import {
+  MediaItem,
+  MediaImg,
+  MediaItemText,
+  MediaIconsWrapper,
+  MediaButton,
+  SvgMedia,
   EditWrapper,
   EditCardWrapper,
   EditInputText,
-  PlaylistButton,
-  SvgPlaylist,
-} from "./PlayLists.styled";
+} from "../MediaList/MediaList.styled";
 
 import { ErrorValidateText } from "../../Errors/errors.styled";
 
@@ -118,10 +120,6 @@ const PlaylistListItem = ({
     setShowModalSuccess(true);
   };
 
-  const PropsPlayListItem = {
-    marginRight: placeListCardInfo ? "16px" : "auto",
-  };
-
   const editPlaylist = () => {
     setIsEditing(true);
     setPlaylistTitle(title);
@@ -135,7 +133,7 @@ const PlaylistListItem = ({
 
   if (isEditing) {
     return (
-      <PlaylistItem>
+      <MediaItem>
         <EditCardWrapper>
           {isError && (
             <ErrorValidateText>{errorValidateMessage}</ErrorValidateText>
@@ -156,31 +154,31 @@ const PlaylistListItem = ({
             onChange={(e) => setPlaylistTitle(e.target.value)}
             ref={ref}
           />
-          <PlaylistIconsWrapper>
-            <PlaylistButton
+          <MediaIconsWrapper>
+            <MediaButton
               type="button"
               // onClick={() => updateGenreItem(title)}
               // disabled={isEmptyGenreUpdateData(genreTitle, title)}
             >
-              <SvgPlaylist width="24" height="24">
+              <SvgMedia width="24" height="24">
                 <use href={`${symbol}#icon-check-in`}></use>
-              </SvgPlaylist>
-            </PlaylistButton>
-            <PlaylistButton type="button" onClick={handleCloseEdit}>
-              <SvgPlaylist width="24" height="24">
+              </SvgMedia>
+            </MediaButton>
+            <MediaButton type="button" onClick={handleCloseEdit}>
+              <SvgMedia width="24" height="24">
                 <use href={`${symbol}#icon-close`}></use>
-              </SvgPlaylist>
-            </PlaylistButton>
-          </PlaylistIconsWrapper>
+              </SvgMedia>
+            </MediaButton>
+          </MediaIconsWrapper>
         </EditCardWrapper>
-      </PlaylistItem>
+      </MediaItem>
     );
   }
 
   return (
     <>
       {!placeListCardInfo ? (
-        <PlaylistItem>
+        <MediaItem>
           <LinkToTracks
             key={id}
             to={
@@ -191,21 +189,17 @@ const PlaylistListItem = ({
             state={{ from: location }}
             disabled={placeListCardInfo ? true : false}
           >
-            <PlaylistImg
-              marginRight={PropsPlayListItem.marginRight}
-              src={BASE_URL + "/" + icon}
-              alt={title}
-            />
-            <PlaylistItemText>{title}</PlaylistItemText>
+            <MediaImg src={BASE_URL + "/" + icon} alt={title} />
+            <MediaItemText>{title}</MediaItemText>
           </LinkToTracks>
-          <PlaylistIconsWrapper>
-            <PlaylistButton type="button" onClick={editPlaylist}>
+          <MediaIconsWrapper>
+            <MediaButton type="button" onClick={editPlaylist}>
               <svg width="24" height="24">
                 <use href={`${symbol}#icon-pen`}></use>
               </svg>
-            </PlaylistButton>
+            </MediaButton>
 
-            <PlaylistDeleteButton
+            <MediaButton
               type="button"
               onClick={deleteMediaItem}
               disabled={isLoading}
@@ -219,26 +213,26 @@ const PlaylistListItem = ({
                   <use href={`${symbol}#icon-del-basket`}></use>
                 </svg>
               )}
-            </PlaylistDeleteButton>
-          </PlaylistIconsWrapper>
-        </PlaylistItem>
+            </MediaButton>
+          </MediaIconsWrapper>
+        </MediaItem>
       ) : (
         <PlaylistCardInfo>
-          <PlaylistImg
-            marginRight={PropsPlayListItem.marginRight}
+          <MediaImg
+            marginRight={"16px"}
             src={BASE_URL + "/" + icon}
             alt={title}
           />
           <PlaylistInfoWrapper>
-            <PlaylistItemText>{title}</PlaylistItemText>
+            <MediaItemText>{title}</MediaItemText>
             <CountTracks countTracks={countTracks} />
           </PlaylistInfoWrapper>
-          <PlaylistIconsWrapper>
+          <MediaIconsWrapper>
             <svg width="24" height="24">
               <use href={`${symbol}#icon-pen`}></use>
             </svg>
 
-            <PlaylistDeleteButton
+            <MediaButton
               type="button"
               onClick={deleteMediaItem}
               // disabled={isLoading}
@@ -253,8 +247,8 @@ const PlaylistListItem = ({
                   <use href={`${symbol}#icon-del-basket`}></use>
                 </svg>
               )}
-            </PlaylistDeleteButton>
-          </PlaylistIconsWrapper>
+            </MediaButton>
+          </MediaIconsWrapper>
         </PlaylistCardInfo>
       )}
       {showModalSuccess && (

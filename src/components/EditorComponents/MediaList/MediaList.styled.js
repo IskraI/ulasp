@@ -33,12 +33,18 @@ export const MediaItem = styled.li`
       : `1px solid ${colors.accentHoverColor}`};
   border-radius: 10px;
   background-color: ${colors.activeBtnColor};
+
+  &:hover {
+    background-color: ${colors.accentHoverColor};
+    transition: background-color 500ms ${mainCubicTransition};
+  }
 `;
 
 export const MediaImg = styled.img`
   border-radius: 10px;
   /* margin-right: auto; */
-  margin-right: 4px;
+  /* margin-right: 4px; */
+  margin-right: ${(props) => props.marginRight ?? "4px"};
 
   width: 60px;
   height: 40px;
@@ -89,7 +95,8 @@ export const SvgMedia = styled.svg`
   transition: all 550ms ${mainCubicTransition};
 
   &:hover {
-    fill: ${colors.accentHoverColor};
+    fill: ${colors.activeBtnColor};
+
     transform: rotate(
       ${(props) => (props.transformIcon ? props.transformIcon + "deg" : "0deg")}
     );
