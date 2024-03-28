@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { useDispatch } from "react-redux";
 import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -6,13 +7,14 @@ import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 import CountTracks from "../CountTracks/CountTracks";
 import { Modal } from "../../Modal/Modal";
-import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
+import { Button } from "../../Button/Button";
 
 import useValidateInput from "../../../hooks/useValidateInput";
 import AddCover from "../../AddCover/AddCover";
 import { isEmptyMediaUpdateData } from "../../../helpers/helpers";
 import { ErrorNotFound } from "../../Errors/Errors";
 
+import ModalDeleteWarning from "../../ModalDeleteWarning/ModalDeleteWarning";
 import {
   useDeletePlaylistMutation,
   useUpdatePlayListByIdMutation,
@@ -21,6 +23,10 @@ import { useDeletePlaylistInGenreMutation } from "../../../redux/genresSlice";
 import { useDeletePlaylistInShopMutation } from "../../../redux/shopsSlice";
 
 import { genresApi } from "../../../redux/genresSlice";
+
+import { colors } from "../../../styles/vars";
+
+import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
 
 import {
   PlaylistInfoWrapper,
@@ -41,7 +47,6 @@ import {
 } from "../MediaList/MediaList.styled";
 
 import { ErrorValidateText } from "../../Errors/errors.styled";
-import { useDispatch } from "react-redux";
 
 const PlaylistListItem = ({
   id,
@@ -60,6 +65,8 @@ const PlaylistListItem = ({
   const navigate = useNavigate();
   const [showModalSuccess, setShowModalSuccess] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
+  const [showModalWarning, setShowModalWarning] = useState(false);
+
   const [isEditing, setIsEditing] = useState(false);
   const [playlistTitle, setPlaylistTitle] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -283,6 +290,10 @@ const PlaylistListItem = ({
     }
   };
 
+  const closeModalWarning = (data) => {
+    setShowModalWarning(data);
+  };
+
   return (
     <>
       {!placeListCardInfo ? (
@@ -340,7 +351,7 @@ const PlaylistListItem = ({
 
             <MediaButton
               type="button"
-              onClick={deletePlaylistWithTracks}
+              onClick={() => setShowModalWarning(true)}
               disabled={isLoading}
             >
               {isLoading ? (
@@ -386,6 +397,15 @@ const PlaylistListItem = ({
             )}
           </ModalInfoText>
         </Modal>
+      )}
+      {showModalWarning && (
+        <ModalDeleteWarning
+          text={
+            "Ця операція видалить плейлист з усім вмістом. Чи дійcно Ви цього бажаєте?"
+          }
+          onClick={deletePlaylistWithTracks}
+          closeModalWarning={closeModalWarning}
+        />
       )}
     </>
   );
