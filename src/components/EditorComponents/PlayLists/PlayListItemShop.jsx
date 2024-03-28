@@ -222,7 +222,7 @@ const PlaylistListItem = ({
               padding={"12px 26px"}
               onClick={() => {
                 setShowModalDeletePlaylist(false);
-                deletePlayList(idPlaylist).then(() => {
+                deletePlayList({idPlaylist}).then(() => {
                   setShowModalSuccessDelete(true);
                   dispatch(
                     shopsApi.util.invalidateTags([

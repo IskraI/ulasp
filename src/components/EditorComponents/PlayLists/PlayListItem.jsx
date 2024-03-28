@@ -64,6 +64,8 @@ const PlaylistListItem = ({
   const [playlistTitle, setPlaylistTitle] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
 
+  console.log("location", location);
+
   const ref = useRef(null);
 
   const [errorValidateMessage, isError, setIsError] = useValidateInput(
@@ -106,6 +108,21 @@ const PlaylistListItem = ({
 
   const [deletePlaylistInShop] = useDeletePlaylistInShopMutation();
 
+  useEffect(() => {
+    if (genre) {
+      dispatch(genresApi.util.invalidateTags(["Genres"]));
+    }
+    if (isSuccessDeletePlaylist) {
+      navigate(location?.state?.from);
+    }
+  }, [
+    dispatch,
+    genre,
+    isSuccessDeletePlaylist,
+    location?.state?.from,
+    navigate,
+  ]);
+
   if (
     location.pathname === newPlaylists &&
     isSuccessDeletePlaylist &&
@@ -135,7 +152,7 @@ const PlaylistListItem = ({
       return;
     }
 
-    deletePlaylist(id).unwrap();
+    deletePlaylist({ id }).unwrap();
     setShowModalSuccess(true);
   };
 
@@ -253,6 +270,19 @@ const PlaylistListItem = ({
     );
   }
 
+  const deletePlaylistWithTracks = async () => {
+    try {
+      await deletePlaylist({ id, deleteTracks: true }).unwrap();
+
+      if (genre) {
+        dispatch(genresApi.util.invalidateTags(["Genres"]));
+      }
+      navigate(location?.state?.from);
+    } catch (error) {
+      setShowModalError(true);
+    }
+  };
+
   return (
     <>
       {!placeListCardInfo ? (
@@ -310,9 +340,8 @@ const PlaylistListItem = ({
 
             <MediaButton
               type="button"
-              onClick={deleteMediaItem}
-              // disabled={isLoading}
-              disabled={false}
+              onClick={deletePlaylistWithTracks}
+              disabled={isLoading}
             >
               {isLoading ? (
                 <SvgMedia width="24" height="24" stroke="#888889">

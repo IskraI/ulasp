@@ -51,10 +51,17 @@ export const playlistsApi = createApi({
     }),
 
     deletePlaylist: builder.mutation({
-      query: (id) => ({
-        url: `/editor/playlist/delete/${id}`,
-        method: "DELETE",
-      }),
+      query: ({ id, deleteTracks = false }) => (
+        console.log(id),
+        console.log(deleteTracks),
+        {
+          url: `/editor/playlist/delete/${id}`,
+          method: "DELETE",
+          body: {
+            deleteTracks,
+          },
+        }
+      ),
       invalidatesTags: ["Playlists"],
     }),
 
@@ -115,4 +122,5 @@ export const {
   useUpdatePlaylistPublicationMutation,
   useUpdatePlaylistSortMutation,
   useUpdatePlayListByIdMutation,
+  useDeletePlaylistWithTracksMutation,
 } = playlistsApi;

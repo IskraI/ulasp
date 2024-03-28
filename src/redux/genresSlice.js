@@ -78,7 +78,6 @@ export const genresApi = createApi({
 export const {
   useGetAllGenresQuery,
   useGetGenreByIdQuery,
-  useGetGenreGenreForUpdateQuery,
   useCreateGenreMutation,
   useUpdateGenreByIdMutation,
   useDeleteGenreMutation,
