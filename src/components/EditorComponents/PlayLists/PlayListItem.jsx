@@ -296,18 +296,17 @@ const PlaylistListItem = ({
         </MediaItem>
       ) : (
         <PlaylistCardInfo>
-          <MediaImg
-            src={BASE_URL + "/" + icon}
-            alt={title}
-          />
+          <MediaImg src={BASE_URL + "/" + icon} alt={title} />
           <PlaylistInfoWrapper>
             <MediaItemText>{title}</MediaItemText>
             <CountTracks countTracks={countTracks} />
           </PlaylistInfoWrapper>
           <MediaIconsWrapper>
-            <SvgMedia width="24" height="24">
-              <use href={`${symbol}#icon-pen`}></use>
-            </SvgMedia>
+            <MediaButton type="button" onClick={editPlaylist}>
+              <SvgMedia width="24" height="24">
+                <use href={`${symbol}#icon-pen`}></use>
+              </SvgMedia>
+            </MediaButton>
 
             <MediaButton
               type="button"

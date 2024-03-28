@@ -70,12 +70,6 @@ const SortTracks = ({
     <>
       <SortBtn
         type="button"
-        // style={{
-        //   background: "none",
-        //   border: "none",
-        //   marginTop: marginTop ? marginTop : "auto",
-        //   marginLeft: "24px",
-        // }}
         marginTop={marginTop}
         onMouseEnter={() => {
           if (prefetch) {
