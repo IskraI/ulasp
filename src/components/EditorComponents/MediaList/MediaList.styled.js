@@ -22,7 +22,7 @@ export const MediaItem = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 310px;
+  min-width: 310px;
 
   padding: 10px;
   border: ${(props) =>
@@ -33,6 +33,7 @@ export const MediaItem = styled.li`
       : `1px solid ${colors.accentHoverColor}`};
   border-radius: 10px;
   background-color: ${colors.activeBtnColor};
+  transition: background-color 500ms ${mainCubicTransition};
 
   &:hover {
     background-color: ${colors.accentHoverColor};
@@ -48,6 +49,7 @@ export const MediaImg = styled.img`
 
   width: 60px;
   height: 40px;
+  object-fit: cover;
 `;
 
 export const MediaItemText = styled.p`
@@ -134,8 +136,9 @@ export const EditInputText = styled.input`
 export const EditCardWrapper = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   gap: 5px;
+  outline: 1px solid green;
 `;
 
 export const EditWrapper = styled.div`

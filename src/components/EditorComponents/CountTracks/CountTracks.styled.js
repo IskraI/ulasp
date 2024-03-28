@@ -3,17 +3,15 @@ import { colors } from "../../../styles/vars";
 
 export const DivWrapper = styled.div`
   display: flex;
+  justify-content: center;
+  align-content: center;
+  margin-top: 4px;
 `;
 
 export const CountTracksStyled = styled.p`
-  margin-top: 6px;
-  margin-bottom: 0;
-  margin-right: auto;
-  margin-left: 4px;
-  padding: 0 6px 0 6px;
-  font-size: ${(props) => (props.fontSize ? props.fontSize : "16px")};
+  padding: 2px 6px 2px 6px;
+  font-size: ${(props) => (props.fontSize ? props.fontSize : "14px")};
   line-height: 1.19;
   font-weight: 500;
   color: ${colors.mainFontColor};
-  text-align: center;
 `;

@@ -30,5 +30,6 @@ export const PlaylistCardInfo = styled.div`
 `;
 
 export const PlaylistInfoWrapper = styled.div`
+  width: 100%;
   margin: 0 auto 0 0;
 `;

@@ -144,7 +144,7 @@ const GenreListItem = ({ id, title, icon, minLengthInput, maxLengthInput }) => {
     <>
       <MediaItem isError={isError} isEditing={isEditing}>
         {isEditing ? (
-          <EditCardWrapper>
+          <>
             {isError && (
               <ErrorValidateText>{errorValidateMessage}</ErrorValidateText>
             )}
@@ -185,7 +185,7 @@ const GenreListItem = ({ id, title, icon, minLengthInput, maxLengthInput }) => {
                 </SvgMedia>
               </MediaButton>
             </MediaIconsWrapper>
-          </EditCardWrapper>
+          </>
         ) : (
           <>
             <Link

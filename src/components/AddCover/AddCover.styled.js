@@ -5,6 +5,7 @@ export const Cover = styled.img`
   border-radius: 10px;
   min-width: 60px;
   min-height: 40px;
+  object-fit: cover;
 `;
 
 export const LabelPlusCover = styled.label`

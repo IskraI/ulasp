@@ -9,7 +9,7 @@ import PlaylistListItem from "./PlayListItem";
 import { Modal } from "../../Modal/Modal";
 import symbol from "../../../assets/symbol.svg";
 import { ErrorNotFound, NoData } from "../../Errors/Errors";
-import { ModalInfoText, } from "../../Modal/Modal.styled";
+import { ModalInfoText } from "../../Modal/Modal.styled";
 
 import { useCreatePlaylistMutation } from "../../../redux/playlistsSlice";
 import { useCreatePlaylistInGenreMutation } from "../../../redux/genresSlice";
@@ -25,6 +25,8 @@ const LatestPlaylists = ({
   error,
   showNavigationLink,
   subCategory,
+  minLengthInput = 2,
+  maxLengthInput = 29,
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [showModalSuccess, setShowModalSuccess] = useState(false);
@@ -32,9 +34,6 @@ const LatestPlaylists = ({
   const [showModalError, setShowModalError] = useState(false);
 
   const [selectedPlaylistAvatar, setSelectedPlaylistAvatar] = useState(null);
-
-  const minLengthInput = 2;
-  const maxLengthInput = 29;
 
   const { genreId, shopSubCategoryId } = useParams();
 
@@ -178,6 +177,8 @@ const LatestPlaylists = ({
                 icon={playListAvatarURL}
                 genre={genre}
                 subCategory={subCategory}
+                minLengthInput={minLengthInput}
+                maxLengthInput={maxLengthInput}
               />
             ))}
           </PlaylistList>

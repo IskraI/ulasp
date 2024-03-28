@@ -20,6 +20,8 @@ import {
 import { useDeletePlaylistInGenreMutation } from "../../../redux/genresSlice";
 import { useDeletePlaylistInShopMutation } from "../../../redux/shopsSlice";
 
+import { genresApi } from "../../../redux/genresSlice";
+
 import {
   PlaylistInfoWrapper,
   PlaylistCardInfo,
@@ -39,6 +41,7 @@ import {
 } from "../MediaList/MediaList.styled";
 
 import { ErrorValidateText } from "../../Errors/errors.styled";
+import { useDispatch } from "react-redux";
 
 const PlaylistListItem = ({
   id,
@@ -48,7 +51,11 @@ const PlaylistListItem = ({
   placeListCardInfo,
   countTracks,
   subCategory,
+  minLengthInput,
+  maxLengthInput,
 }) => {
+  const dispatch = useDispatch();
+
   const location = useLocation();
   const navigate = useNavigate();
   const [showModalSuccess, setShowModalSuccess] = useState(false);
@@ -59,10 +66,6 @@ const PlaylistListItem = ({
 
   const ref = useRef(null);
 
-  //прокинуть пропсами
-  const minLengthInput = 2;
-  const maxLengthInput = 20;
-  ////////////
   const [errorValidateMessage, isError, setIsError] = useValidateInput(
     playlistTitle,
     minLengthInput,
@@ -169,7 +172,12 @@ const PlaylistListItem = ({
 
     try {
       await updatePlaylist({ id, formData }).unwrap();
+
       handleCloseEdit();
+
+      if (genre) {
+        dispatch(genresApi.util.invalidateTags(["Genres"]));
+      }
     } catch (error) {
       setShowModalError(true);
       handleCloseEdit();
@@ -180,48 +188,48 @@ const PlaylistListItem = ({
     return (
       <>
         <MediaItem isError={isError} isEditing={isEditing}>
-          <EditCardWrapper>
-            {isError && (
-              <ErrorValidateText>{errorValidateMessage}</ErrorValidateText>
-            )}
-            <EditWrapper>
-              <AddCover
-                cover={icon}
-                coverAlt={title}
-                handleChooseCover={handleChooseCover}
-              />
-            </EditWrapper>
-            <EditInputText
-              type="text"
-              size={17}
-              minLength={minLengthInput}
-              maxLength={maxLengthInput}
-              value={playlistTitle}
-              onChange={(e) => setPlaylistTitle(e.target.value)}
-              ref={ref}
+          {/* <EditCardWrapper> */}
+          {isError && (
+            <ErrorValidateText>{errorValidateMessage}</ErrorValidateText>
+          )}
+          <EditWrapper>
+            <AddCover
+              cover={icon}
+              coverAlt={title}
+              handleChooseCover={handleChooseCover}
             />
-            <MediaIconsWrapper>
-              <MediaButton
-                type="button"
-                onClick={() => updatePlaylistItem(title)}
-                disabled={isEmptyMediaUpdateData(
-                  playlistTitle,
-                  title,
-                  isError,
-                  selectedImage
-                )}
-              >
-                <SvgMedia width="24" height="24">
-                  <use href={`${symbol}#icon-check-in`}></use>
-                </SvgMedia>
-              </MediaButton>
-              <MediaButton type="button" onClick={handleCloseEdit}>
-                <SvgMedia width="24" height="24">
-                  <use href={`${symbol}#icon-close`}></use>
-                </SvgMedia>
-              </MediaButton>
-            </MediaIconsWrapper>
-          </EditCardWrapper>
+          </EditWrapper>
+          <EditInputText
+            type="text"
+            size={17}
+            minLength={minLengthInput}
+            maxLength={maxLengthInput}
+            value={playlistTitle}
+            onChange={(e) => setPlaylistTitle(e.target.value)}
+            ref={ref}
+          />
+          <MediaIconsWrapper>
+            <MediaButton
+              type="button"
+              onClick={() => updatePlaylistItem(title)}
+              disabled={isEmptyMediaUpdateData(
+                playlistTitle,
+                title,
+                isError,
+                selectedImage
+              )}
+            >
+              <SvgMedia width="24" height="24">
+                <use href={`${symbol}#icon-check-in`}></use>
+              </SvgMedia>
+            </MediaButton>
+            <MediaButton type="button" onClick={handleCloseEdit}>
+              <SvgMedia width="24" height="24">
+                <use href={`${symbol}#icon-close`}></use>
+              </SvgMedia>
+            </MediaButton>
+          </MediaIconsWrapper>
+          {/* </EditCardWrapper> */}
         </MediaItem>
         {showModalError && (
           <Modal
@@ -289,7 +297,6 @@ const PlaylistListItem = ({
       ) : (
         <PlaylistCardInfo>
           <MediaImg
-            marginRight={"16px"}
             src={BASE_URL + "/" + icon}
             alt={title}
           />
