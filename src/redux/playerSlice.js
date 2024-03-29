@@ -96,12 +96,13 @@ export const playerSlice = createSlice({
     },
     pause: {
       reducer(state) {
+        // console.log("action.payload pause ", state);
         state = {
           ...state,
           isPlaying: state.isPlaying ? false : true,
           isPaused: state.isPaused ? false : true,
           isLoaded: true,
-          isFirstPlay: false,
+          isFirstPlay: state.isPaused ? false : true,
         };
         return state;
       },
@@ -110,14 +111,16 @@ export const playerSlice = createSlice({
       reducer(state, action) {
         state = {
           ...state,
+
           isFirstPlay: action.payload,
         };
+
         return state;
       },
     },
     setLastTrack: {
       reducer(state, action) {
-        console.log(action.payload);
+        // console.log("setLastTrack", action.payload);
         state = {
           ...state,
           // isLastPage, isLastTrack
@@ -160,6 +163,7 @@ export const {
   setDefaultState,
   setDefaultPreloadSrc,
   setNextPage,
+  isFirstPlay,
 } = playerSlice.actions;
 
 export const playerReducer = playerSlice.reducer;
