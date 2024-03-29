@@ -1,5 +1,7 @@
 import TracksTable from "../../../components/UserMediaComponent/TracksTable/TracksTableUser";
 import { useGetCreatePlaylistByIdForUserQuery } from "../../../redux/playlistsUserSlice";
+
+import { useGetAllTracksForUsersPlaylistQuery } from "../../../redux/tracksUserSlice";
 import PlaylistListItem from "../../../components/UserMediaComponent/PlayLists/PlayListsItem";
 import { BtnSort } from "../AllTracksUser/AllTracksUser.styled";
 import { ErrorNotFound, Error500 } from "../../../components/Errors/Errors";
@@ -30,6 +32,13 @@ const TracksPageCreateUser = () => {
     page: currentPage,
     limit: pageSize,
   });
+
+  // const { data: dataTrack, isFetching: isFetchingDataTrack } =
+  //   useGetAllTracksForUsersPlaylistQuery({
+  //     id: playlistId,
+  //     page: currentPage,
+  //     limit: pageSize,
+  //   });
 
   const [sortedTracks, setSortedTracks] = useState([]);
   const [sortedForSrc, setSortedForSrc] = useState([]);
@@ -70,8 +79,6 @@ const TracksPageCreateUser = () => {
     setPageSize(size);
   };
 
-  console.log("data PlaylistById", data);
-
   return (
     <>
       {error?.status === "500" && <Error500 />}
@@ -105,9 +112,8 @@ const TracksPageCreateUser = () => {
             title={"In playlist"}
             showTitle={false}
             marginTopWrapper={"24px"}
-            isInPlayList={true}
+            isInPlayList={false}
             playListId={data.playlist._id}
-            playListGenre={data.playlist.playlistGenre}
             tracks={isSorted ? sortedTracks : data.playlist.trackList}
             error={error}
             isFetching={isFetchingPlaylistById}
