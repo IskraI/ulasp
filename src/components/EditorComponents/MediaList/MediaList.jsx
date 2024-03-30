@@ -6,6 +6,9 @@ import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 import { Modal } from "../../Modal/Modal";
 import { ErrorNotFound } from "../../Errors/Errors";
+import AddCover from "../../AddCover/AddCover";
+import useValidateInput from "../../../hooks/useValidateInput";
+import { isEmptyMediaUpdateData } from "../../../helpers/helpers";
 
 import {
   useUpdateShopByIdMutation,
@@ -26,7 +29,6 @@ import {
   SvgMedia,
   EditInputText,
   EditWrapper,
-  MediaLabelPlusCover,
 } from "./MediaList.styled";
 
 import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
@@ -40,13 +42,13 @@ const MediaListItem = ({
   typeCover,
   linkToPage,
   typeMediaLibrary,
+  minLengthInput = 2,
+  maxLengthInput = 29,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [showModalSuccessDelete, setShowModalSuccessDelete] = useState(false);
   const [showModalSuccessUpdate, setShowModalSuccessUpdate] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
-  const [showValidateError, setShowValidateError] = useState(false);
-  const [disableEditButton, setDisableEditButton] = useState(false);
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [oldMediaTitle, setOldMediaTitle] = useState(null);
@@ -58,6 +60,18 @@ const MediaListItem = ({
       ref.current.focus();
     }
   }, [isEditing]);
+
+  useEffect(() => {
+    if (showModalSuccessUpdate) {
+      setTimeout(() => setShowModalSuccessUpdate(false), 2000);
+    }
+  }, [showModalSuccessUpdate]);
+
+  const [errorValidateMessage, isError, setIsError] = useValidateInput(
+    mediaTitle,
+    minLengthInput,
+    maxLengthInput
+  );
 
   const ref = useRef();
   const location = useLocation();
@@ -187,7 +201,12 @@ const MediaListItem = ({
   const deleteMediaItem = () => {
     switch (typeMediaLibrary) {
       case "shop":
-        deleteShop(idMediaItem).unwrap().then(setShowModalSuccessDelete(true));
+        deleteShop(idMediaItem)
+          .unwrap()
+          .then(() => {
+            setShowModalSuccessDelete(true);
+            // modalDeleteRef.current.active = true;
+          });
         // .catch((e) => {
         //   if (e.status === 404) {
         //     setShowModalError(true);
@@ -282,70 +301,16 @@ const MediaListItem = ({
     }
   };
 
-  const coverImage = selectedImage
-    ? URL.createObjectURL(selectedImage)
-    : BASE_URL + "/" + icon;
-
   const editMedia = () => {
     setIsEditing(true);
     setMediaTitle(title);
   };
 
-  const handleChooseIcon = (event) => {
-    let file;
-
-    if (event.target.files[0] !== undefined) {
-      file = event.target.files[0];
-    }
-    if (file) {
-      setSelectedImage(file);
-    }
-  };
-
   const handleCloseEdit = () => {
     setSelectedImage(null);
     setIsEditing(false);
+    setIsError(false);
   };
-
-  useEffect(() => {
-    const isEmptyMediaUpdateData = (firstStr, secondStr) => {
-      if (mediaTitle.length < 2) {
-        console.log("Должны быть тут");
-        setDisableEditButton(true);
-        return;
-      }
-      if (
-        firstStr === "" ||
-        (firstStr === secondStr && selectedImage === null)
-      ) {
-        setDisableEditButton(true);
-        return;
-      }
-
-      if (mediaTitle.length > 28 || mediaTitle.length < 2) {
-        setDisableEditButton(true);
-        return;
-      }
-      if (firstStr !== secondStr && selectedImage !== null) {
-        setDisableEditButton(false);
-        return;
-      }
-
-      if (firstStr === secondStr && selectedImage !== null) {
-        setDisableEditButton(false);
-        return;
-      }
-
-      if (firstStr !== secondStr && selectedImage === null) {
-        setDisableEditButton(false);
-        return;
-      }
-    };
-    if (isEditing) {
-      console.log("Попали");
-      isEmptyMediaUpdateData(mediaTitle, title);
-    }
-  }, [isEditing, mediaTitle, title, selectedImage]);
 
   const selectLinkToPage = (linkToPage) => {
     // console.log(location.pathname.split("/").includes(linkToPage));
@@ -373,44 +338,31 @@ const MediaListItem = ({
     return setShowModalError(false);
   };
 
-  const validateInput = (e) => {
-    setMediaTitle(e.target.value);
-
-    if (e.target.value.length > 28 || e.target.value.length < 2) {
-      setShowValidateError(true);
-    } else {
-      setShowValidateError(false);
-    }
-  };
+  const handleChooseCover = (data) => setSelectedImage(data);
 
   return (
     <>
-      <MediaItem>
+      <MediaItem isError={isError} isEditing={isEditing}>
         {isEditing ? (
-          <div style={{ display: "flex", gap: "10px" }}>
-            {showValidateError && (
-              <ErrorValidateText>
-                Мінімальна довжина 2 символи та максимальна 28 символів.
-              </ErrorValidateText>
+          <>
+            {isError && (
+              <ErrorValidateText>{errorValidateMessage}</ErrorValidateText>
             )}
             <EditWrapper>
-              <MediaImg src={coverImage} alt={title} />
-              <MediaLabelPlusCover htmlFor="coverMedia">+</MediaLabelPlusCover>
-              <input
-                type="file"
-                accept="image/*"
-                id="coverMedia"
-                onChange={handleChooseIcon}
-                style={{ display: "none" }}
+              <AddCover
+                cover={icon}
+                coverAlt={title}
+                handleChooseCover={handleChooseCover}
               />
             </EditWrapper>
 
             <EditInputText
               type="text"
+              size={17}
+              minLength={minLengthInput}
+              maxLength={maxLengthInput}
               value={mediaTitle}
-              onChange={validateInput}
-              minLength={2}
-              maxLength={"29"}
+              onChange={(e) => setMediaTitle(e.target.value)}
               ref={ref}
             />
 
@@ -418,7 +370,12 @@ const MediaListItem = ({
               <MediaButton
                 type="button"
                 onClick={() => updateMediaItem(title)}
-                disabled={disableEditButton}
+                disabled={isEmptyMediaUpdateData(
+                  mediaTitle,
+                  title,
+                  isError,
+                  selectedImage
+                )}
               >
                 <SvgMedia width="24" height="24">
                   <use href={`${symbol}#icon-check-in`}></use>
@@ -430,7 +387,7 @@ const MediaListItem = ({
                 </SvgMedia>
               </MediaButton>
             </MediaIconsWrapper>
-          </div>
+          </>
         ) : (
           <>
             <LinkWrapper
@@ -475,11 +432,9 @@ const MediaListItem = ({
       </MediaItem>
 
       {showModalSuccessDelete && isSuccessDelete && (
-        <Modal width={"394px"} onClose={closeModalSuccessDelete}>
+        <Modal width={"500px"} onClose={closeModalSuccessDelete}>
           <ModalInfoText marginBottom={"34px"}>
-            {shopType}
-            <ModalInfoTextBold>&quot;{title}&quot;</ModalInfoTextBold>
-            був видален(-а)ий
+            {shopType}&#32; &quot;{title}&quot; &#32;був видален(-а)ий
           </ModalInfoText>
         </Modal>
       )}
@@ -506,7 +461,7 @@ const MediaListItem = ({
       )}
       {showModalSuccessUpdate && isSuccessUpdate && !isErrorUpdate && (
         <Modal
-          width={"394px"}
+          width={"500px"}
           onClose={closeModalSuccessUpdate}
           showCloseButton={true}
         >
@@ -517,8 +472,7 @@ const MediaListItem = ({
             marginBottom={"34px"}
           >
             {shopType}
-            <ModalInfoTextBold>&quot;{oldMediaTitle}&quot;</ModalInfoTextBold>
-            був оновлена(-ий).
+            &#32;&quot;{oldMediaTitle}&quot;&#32; був оновлена(-ий).
           </ModalInfoText>
         </Modal>
       )}

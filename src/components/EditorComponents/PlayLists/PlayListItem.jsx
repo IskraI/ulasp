@@ -7,7 +7,6 @@ import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 import CountTracks from "../CountTracks/CountTracks";
 import { Modal } from "../../Modal/Modal";
-import { Button } from "../../Button/Button";
 
 import useValidateInput from "../../../hooks/useValidateInput";
 import AddCover from "../../AddCover/AddCover";
@@ -23,8 +22,6 @@ import { useDeletePlaylistInGenreMutation } from "../../../redux/genresSlice";
 import { useDeletePlaylistInShopMutation } from "../../../redux/shopsSlice";
 
 import { genresApi } from "../../../redux/genresSlice";
-
-import { colors } from "../../../styles/vars";
 
 import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
 
@@ -71,7 +68,6 @@ const PlaylistListItem = ({
   const [playlistTitle, setPlaylistTitle] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
 
-  console.log("location", location);
 
   const ref = useRef(null);
 
