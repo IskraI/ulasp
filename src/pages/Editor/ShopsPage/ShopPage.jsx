@@ -24,7 +24,6 @@ import {
 import { ShopsWrapper, ShopsList } from "./Shops.styled";
 import {
   ModalInfoText,
-  ModalInfoTextBold,
 } from "../../../components/Modal/Modal.styled";
 
 const ShopsPage = ({ showNavigationLink, limit }) => {
