@@ -22,6 +22,7 @@ import { useDeletePlaylistInGenreMutation } from "../../../redux/genresSlice";
 import { useDeletePlaylistInShopMutation } from "../../../redux/shopsSlice";
 
 import { genresApi } from "../../../redux/genresSlice";
+import { shopsApi } from "../../../redux/shopsSlice";
 
 import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
 
@@ -39,7 +40,7 @@ import {
   MediaButton,
   SvgMedia,
   EditWrapper,
-  EditCardWrapper,
+  // EditCardWrapper,
   EditInputText,
 } from "../MediaList/MediaList.styled";
 
@@ -67,7 +68,6 @@ const PlaylistListItem = ({
   const [isEditing, setIsEditing] = useState(false);
   const [playlistTitle, setPlaylistTitle] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-
 
   const ref = useRef(null);
 
@@ -170,6 +170,14 @@ const PlaylistListItem = ({
     setIsError(false);
   };
 
+  const invalidateTags = () => {
+    dispatch(genresApi.util.invalidateTags(["Genres"]));
+
+    dispatch(
+      shopsApi.util.invalidateTags(["Shops", "ShopItem", "SubShopItem"])
+    );
+  };
+
   const handleChooseCover = (data) => setSelectedImage(data);
 
   const updatePlaylistItem = async (title) => {
@@ -195,9 +203,7 @@ const PlaylistListItem = ({
 
       handleCloseEdit();
 
-      if (genre) {
-        dispatch(genresApi.util.invalidateTags(["Genres"]));
-      }
+      invalidateTags();
     } catch (error) {
       setShowModalError(true);
       handleCloseEdit();
@@ -277,9 +283,7 @@ const PlaylistListItem = ({
     try {
       await deletePlaylist({ id, deleteTracks: true }).unwrap();
 
-      if (genre) {
-        dispatch(genresApi.util.invalidateTags(["Genres"]));
-      }
+      invalidateTags();
       navigate(location?.state?.from);
     } catch (error) {
       setShowModalError(true);

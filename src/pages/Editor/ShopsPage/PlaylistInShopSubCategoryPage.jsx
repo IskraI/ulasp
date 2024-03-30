@@ -70,6 +70,9 @@ const PlaylistInShopSubCategoryPage = () => {
     dataCreatePlaylist?.playListName ??
     "Назва нового плейлиста не була введена";
 
+  const minLengthInput = 2;
+  const maxLengthInput = 29;
+
   return (
     <>
       {isSuccessShopSubCategory && !isErrorShopSubCategory && (
@@ -87,6 +90,8 @@ const PlaylistInShopSubCategoryPage = () => {
           isErrorCreatePlaylist={isErrorCreatePlaylist}
           errorCreatePlaylist={errorCreatePlaylist}
           newPlaylistName={newPlaylistName}
+          minLengthInput={minLengthInput}
+          maxLengthInput={maxLengthInput}
         />
       )}
     </>

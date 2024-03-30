@@ -49,8 +49,6 @@ const ModalForm = memo(function ModalForm({
     minLength,
     maxLength
   );
-  console.log("minLength", minLength);
-  console.log("inputFirstValue", inputFirstValue);
 
   typeof useEffect(() => {
     setFocus(idInputFirst);
