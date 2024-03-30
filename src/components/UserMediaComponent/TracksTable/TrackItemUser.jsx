@@ -32,6 +32,7 @@ import {
   InfoBlock,
   PlayButton,
 } from "../TracksTable/TracksTableUser.styled";
+import { useAddTrackToAddMutation } from "../../../redux/tracksUserSlice.js";
 
 const TrackItem = ({
   idTrack,
@@ -86,12 +87,19 @@ const TrackItem = ({
   const PopUpToogle = () => {
     setShowPopUp(!showPopUp);
   };
+  const [addTrack, { isLoading: isLoadingAddTrack }] =
+    useAddTrackToAddMutation();
 
   const removeTrackFromAdd = () => {
     console.log("removeTrackFromAdd :>> id", idTrack);
   };
-  const addTrackFromAdd = () => {
-    console.log("addTrackFromAdd :>> id", idTrack);
+  const addTrackToAdd = () => {
+    addTrack(idTrack)
+      .unwrap()
+      .then((data) => {
+        console.log("add :>> ", data.message);
+      })
+      .catch((error) => console.log(error.data.message));
   };
   const [showModalAddTrackToPlaylist, setShowModalAddTrackToPlaylist] =
     useState(false);
@@ -274,7 +282,7 @@ const TrackItem = ({
           {showPopUp && (
             <PopUpButtons
               removeTrackFromAddTrackFn={removeTrackFromAdd}
-              addTrackToAddTrackFn={addTrackFromAdd}
+              addTrackToAddTrackFn={addTrackToAdd}
               isAddTrack={isAddTrack}
               addTrackToPlaylistFn={addTrackToPlaylist}
             />

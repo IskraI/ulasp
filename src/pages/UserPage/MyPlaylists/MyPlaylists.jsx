@@ -1,6 +1,6 @@
 import CreatePlaylists from "../../../components/UserCabinetPage/CreatePlaylists/CreatePlaylists";
 import FavoritePlaylists from "../../../components/UserCabinetPage/FavoritePlaylists/FavoritePlaylists";
-import NewSongs from "../../../components/UserMediaComponent/NewSongs/NewSongs";
+import AddTracksUser from "../../../components/UserMediaComponent/AddTracksUser/AddTracksUser";
 import AddPlaylists from "../../../components/UserCabinetPage/AddPlaylists/AddPlaylists";
 
 import {
@@ -119,7 +119,7 @@ const MyPlaylists = () => {
               showNavigationLink={true}
             />
           )}
-          <NewSongs
+          <AddTracksUser
             data={allTracks?.latestTracks.slice(0, 6)}
             isFetching={isFetchingNewSongs}
             error={isErrorNewSongs}

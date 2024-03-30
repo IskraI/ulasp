@@ -1,19 +1,11 @@
- 
 import styled from "@emotion/styled";
 
-
-export const Tracks = styled.section`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-  margin-bottom: 50px;
-
- 
-
+export const BtnSort = styled.button`
+position:absolute;
+ background: none;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  margin-left: 350px;
+  margin-top:  15px;
 `;
-
-export const TracksItem = styled.section`
- 
-  
-`;
-
