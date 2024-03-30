@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import { TitleWrapper, ControlWrapper } from "../MediaList/MediaList.styled";
 // import { Button } from "../../Button/Button";
 // import symbol from "../../../assets/symbol.svg";
-import { Tracks } from "./AddTracksUser.styled";
+import { Tracks } from "./NewSongs.styled";
 import TracksItem from "./TrackItem";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 
-const AddTracksUser = ({
+const NewSongs = ({
   data: trackInChart,
   isFetching,
   isError,
@@ -44,11 +44,11 @@ const AddTracksUser = ({
   );
 };
 
-AddTracksUser.propTypes = {
+NewSongs.propTypes = {
   data: PropTypes.array,
   isFetching: PropTypes.bool,
   isError: PropTypes.bool,
   showNavigationLink: PropTypes.bool,
 };
 
-export default AddTracksUser;
+export default NewSongs;
