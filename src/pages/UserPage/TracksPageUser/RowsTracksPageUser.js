@@ -3,7 +3,7 @@ const rowsTracksPageUser = () => {
     {
       title: "",
       type: "checkbox",
-      titleSize: "2%",
+      titleSize: "1%",
       showData: false,
     },
 
@@ -53,9 +53,15 @@ const rowsTracksPageUser = () => {
     {
       title: "",
       type: "button",
-      titleSize: "1%",
-      showData: false,
+      titleSize: "5%",
+      showData: true,
     },
+    // {
+    //   title: "",
+    //   type: "button",
+    //   titleSize: "1%",
+    //   showData: false,
+    // },
   ];
 
   return RowsTitle;

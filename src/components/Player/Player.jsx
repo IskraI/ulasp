@@ -46,7 +46,7 @@ const Player = ({ tracks = [] }) => {
   const [isEndOfPlaylist, setIsEndOfPlaylist] = useState(false);
   const [currentTrackArtist, setCurrentTrackArtist] = useState("Невизначений");
   const [currentTrackName, setCurrentTrackName] = useState("Невизначений");
-
+  const [error, setError] = useState(true);
   const prefetchPage = usePrefetch("getAllTracks");
 
   const prefetchNext = useCallback(() => {
@@ -60,11 +60,11 @@ const Player = ({ tracks = [] }) => {
   // console.log("isFirstPlay", isFirst);
 
   const handlePlayLoadStart = async (track) => {
-    // console.log(" track в handlePlayLoadStart", track);
     if (isFirst) {
       // console.log(
       //   `handlePlayLoadStart Песня с ${track} ID начала проигрываться. попробуем отправить счетчик dispatchListenCountTrack`
       // );
+
       if (track) {
         try {
           // Отправка запроса в бэкенд
@@ -88,18 +88,15 @@ const Player = ({ tracks = [] }) => {
     if (!isPlaying) {
       dispatch(pause());
     }
+
     // console.log("handlePlay :>> ");
     // handlePlayLoadStart(tracks[currentTrack]?.id);
   };
-  useEffect(() => {
-    handlePlayLoadStart(tracks[currentTrack]?.id);
-  }, [currentTrack]);
 
   const noData = tracks[currentTrack]?.trackURL === undefined;
   const trackSRC = BASE_URL + "/" + tracks[currentTrack]?.trackURL;
   // console.log("Локальный стейт плеера", currentTrack);
   // console.log("Глобальный стейт плеера", currentTrackIndex);
-  // console.log(" tracks._id", tracks[currentTrack]?.id);
 
   useEffect(() => {
     if (isPlaying || isPaused) {
@@ -164,6 +161,11 @@ const Player = ({ tracks = [] }) => {
       dispatch(setNextPage({ currentPage: nextPage }));
     }
   };
+  // console.log("playerRef :>> ", playerRef);
+
+  useEffect(() => {
+    handlePlayLoadStart(tracks[currentTrack]?.id);
+  }, [currentTrack]);
 
   return (
     <>
