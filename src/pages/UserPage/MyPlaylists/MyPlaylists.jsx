@@ -1,6 +1,6 @@
 import CreatePlaylists from "../../../components/UserCabinetPage/CreatePlaylists/CreatePlaylists";
 import FavoritePlaylists from "../../../components/UserCabinetPage/FavoritePlaylists/FavoritePlaylists";
-import AddTracksUser from "../../../components/UserMediaComponent/AddTracksUser/AddTracksUser";
+import AddTracksUser from "../../../components/UserMediaComponent/NewSongs/AddTracksUser";
 import AddPlaylists from "../../../components/UserCabinetPage/AddPlaylists/AddPlaylists";
 
 import {

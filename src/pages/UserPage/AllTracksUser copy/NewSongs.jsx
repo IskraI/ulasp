@@ -1,11 +1,11 @@
-import TabNavigation from "../../TabNavigation/TabNavigation";
-import TracksTable from "../TracksTable/TracksTableUser";
+import TabNavigation from "../../../components/TabNavigation/TabNavigation";
+import TracksTable from "../../../components/UserMediaComponent/TracksTable/TracksTableUser";
 import { useGetAllTracksforUserQuery } from "../../../redux/tracksUserSlice";
-import { BtnSort } from "./NewSongs.styled";
+import { BtnSort } from "./AllTracksUser.styled";
 import symbol from "../../../assets/symbol.svg";
 import { useState } from "react";
-import NavMusic from "../NavMusic/NavMusic";
-import { Loader } from "../../Loader/Loader";
+import NavMusic from "../../../components/UserMediaComponent/NavMusic/NavMusic";
+import { Loader } from "../../../components/Loader/Loader";
 
 // const RowsTitle = ["", "Назва пісні", "Виконавець", "Тривалість", "Жанр", ""];
 
