@@ -58,6 +58,7 @@ export const tracksApi = createApi({
       }),
       invalidatesTags: ["Tracks"],
     }),
+
     addTrackToChart: builder.mutation({
       query: (id) => ({
         url: `/editor/tracks/addTrackToChart/${id}`,

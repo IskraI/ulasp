@@ -49,7 +49,21 @@ export const tracksUserApi = createApi({
       // invalidatesTags: ["Tracks"],
       providesTags: (_result, _error, genreId) => [{ type: "Tracks", genreId }],
     }),
+    deleteTrackFromAdd: builder.mutation({
+      query: (id) => ({
+        url: `/user/tracks/removeFromAdd/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Tracks"],
+    }),
 
+    addTrackToAdd: builder.mutation({
+      query: (id) => ({
+        url: `/user/tracks/add/${id}`,
+        method: "POST",
+      }),
+      invalidatesTags: ["Tracks"],
+    }),
     deleteTrack: builder.mutation({
       query: (id) => ({
         url: `/user/tracks/delete/${id}`,
@@ -68,6 +82,8 @@ export const tracksUserApi = createApi({
 });
 
 export const {
+  useAddTrackToAddMutation,
+  useDeleteTrackFromAddMutation,
   useGetAllTracksforUserQuery,
   useGetAllTracksForUsersPlaylistQuery,
   useGetTracksByGenreIdQuery,

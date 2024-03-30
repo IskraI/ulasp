@@ -8,7 +8,7 @@ import { WithOutGenre } from "../../Errors/Errors";
 import { Modal } from "../../Modal/Modal";
 import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
 import symbol from "../../../assets/symbol.svg";
-
+import { useAddTrackToAddMutation } from "../../../redux/tracksUserSlice.js";
 import {
   stopPlay,
   setCurrentIndex,
@@ -155,6 +155,16 @@ const TrackItem = ({
       addTrackToCheckedList(id);
     }
   };
+  const [addTrack, { isLoading: isLoadingAddTrack }] =
+    useAddTrackToAddMutation();
+  const addTrackToAdd = () => {
+    addTrack(idTrack)
+      .unwrap()
+      .then((data) => {
+        console.log("add :>> ", data.message);
+      })
+      .catch((error) => console.log(error.data.message));
+  };
 
   const idT = idTrack;
 
@@ -274,7 +284,7 @@ const TrackItem = ({
           {showPopUp && (
             <PopUpButtons
               removeTrackFromAddTrackFn={removeTrackFromAdd}
-              addTrackToAddTrackFn={addTrackFromAdd}
+              addTrackToAddTrackFn={addTrackToAdd}
               isAddTrack={isAddTrack}
               addTrackToPlaylistFn={addTrackToPlaylist}
             />
