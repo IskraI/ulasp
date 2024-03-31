@@ -99,3 +99,12 @@ export const TextWrapper = styled.div`
   overflow: hidden;
   max-width: calc(100% - 100px);
 `;
+export const PlaylistAddButton = styled.button`
+  background: none;
+  border: none;
+  cursor: cell;
+  outline: none;
+  &:disabled {
+    pointer-events: none;
+  }
+`;

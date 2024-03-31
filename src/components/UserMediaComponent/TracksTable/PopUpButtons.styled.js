@@ -40,4 +40,7 @@ export const PopUpButton = styled.button`
   &:not(:last-of-type) {
     margin-bottom: 4px;
   }
+  &:disabled {
+    pointer-events: none;
+  }
 `;

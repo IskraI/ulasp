@@ -18,30 +18,38 @@ const PlaylistsForAdd = ({
   data: playlists,
   isFetching,
   error,
+  onClose,
 }) => {
   // console.log('dataAdd playlist', dataAdd.add )
-  // console.log('dataFavorite playlist', dataFavorite.favorites)
+  // console.log("playlist", playlists);
 
   return (
     <PlaylistModalContainer>
-      <TitleContainer>
-        <TitleWrapper>{title}</TitleWrapper>
-      </TitleContainer>
-      {!isFetching && !error && (
+      {playlists.length === 0 ? (
+        // onClose()
+        <TitleWrapper>нет плейлиста</TitleWrapper>
+      ) : (
         <>
-          <MediaList>
-            {playlists.map(({ _id, playListName, playListAvatarURL }) => {
-              return (
-                <PlayListItemForAdd
-                  key={_id}
-                  id={_id}
-                  title={playListName}
-                  icon={playListAvatarURL}
-                  trackId={trackId}
-                />
-              );
-            })}
-          </MediaList>
+          <TitleContainer>
+            <TitleWrapper>{title}</TitleWrapper>
+          </TitleContainer>
+          {!isFetching && !error && (
+            <>
+              <MediaList>
+                {playlists.map(({ _id, playListName, playListAvatarURL }) => {
+                  return (
+                    <PlayListItemForAdd
+                      key={_id}
+                      id={_id}
+                      title={playListName}
+                      icon={playListAvatarURL}
+                      trackId={trackId}
+                    />
+                  );
+                })}
+              </MediaList>
+            </>
+          )}
         </>
       )}
     </PlaylistModalContainer>

@@ -7,7 +7,7 @@ import {
 // import { Button } from "../../Button/Button";
 // import symbol from "../../../assets/symbol.svg";
 import { Tracks } from "./UserTrack.styled";
-import TracksItem from "./TrackItem";
+import TrackItem from "./TrackItem";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 
 const TrackAddByUser = ({
@@ -26,7 +26,7 @@ const TrackAddByUser = ({
           <Tracks>
             {trackAddUser.map(
               ({ _id, trackPictureURL, trackName, artist, trackURL }) => (
-                <TracksItem
+                <TrackItem
                   key={_id}
                   id={_id}
                   title={trackName}

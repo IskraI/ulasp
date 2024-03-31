@@ -16,6 +16,7 @@ export const TitleWrapper = styled.p`
   line-height: 1.21;
   font-weight: 500;
   color: ${colors.mainFontColor};
+  text-align: center;
 `;
 
 export const MediaList = styled.ul`
