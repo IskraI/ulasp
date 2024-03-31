@@ -8,14 +8,17 @@ import { WithOutGenre } from "../../Errors/Errors";
 import { Modal } from "../../Modal/Modal";
 import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
 import symbol from "../../../assets/symbol.svg";
-
+import {
+  useAddTrackToAddMutation,
+  useDeleteTrackFromAddMutation,
+} from "../../../redux/tracksUserSlice.js";
 import {
   stopPlay,
   setCurrentIndex,
   setSrcPlaying,
 } from "../../../redux/playerSlice";
 import { getPlayerState } from "../../../redux/playerSelectors";
-
+import PlaylistsForAdd from "../PlayLists/PlayListsForAddUser.jsx";
 import {
   CheckBoxLabel,
   CheckBoxSpan,
@@ -32,6 +35,10 @@ import {
   InfoBlock,
   PlayButton,
 } from "../TracksTable/TracksTableUser.styled";
+import {
+  useAddTrackToPlaylistUserMutation,
+  useGetPlaylistCreatedUserWithoutTrackIdQuery,
+} from "../../../redux/playlistsUserSlice.js";
 
 const TrackItem = ({
   idTrack,
@@ -54,14 +61,14 @@ const TrackItem = ({
   getCheckedTrackId,
   addTrackToCheckedList,
   deleteCheckedTrackId,
-  isAddTrack,
+  isAddTrackUser,
 }) => {
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
   const [isPlayingTrack, setIsPlayingTrack] = useState(false);
   const [isPausedTrack, setIsPausedTrack] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-
+  const [isAddTrack, setIsAddTrack] = useState(isAddTrackUser);
   const ref = useRef(null);
   const playBtnRef = useRef(null);
 
@@ -86,19 +93,63 @@ const TrackItem = ({
   const PopUpToogle = () => {
     setShowPopUp(!showPopUp);
   };
+  //удаление трека из  доданих
+  const [deleteTrack, { isLoading: isLoadingDeleteTrack }] =
+    useDeleteTrackFromAddMutation();
 
   const removeTrackFromAdd = () => {
-    console.log("removeTrackFromAdd :>> id", idTrack);
+    console.log("isAddTrack до:>> ", isAddTrack);
+    deleteTrack(idTrack)
+      .unwrap()
+      .then((data) => {
+        setShowModal("deleteTrack");
+        setIsAddTrack(false);
+      })
+      .catch((error) => console.log(error.data.message));
   };
-  const addTrackFromAdd = () => {
-    console.log("addTrackFromAdd :>> id", idTrack);
+  //добавление трека в додани
+  const [addTrack, { isLoading: isLoadingAddTrack }] =
+    useAddTrackToAddMutation();
+
+  const addTrackToAdd = () => {
+    addTrack(idTrack)
+      .unwrap()
+      .then((data) => {
+        setShowModal("addTrack");
+        setIsAddTrack(true);
+      })
+      .catch((error) => console.log(error));
   };
+  //модалка про добавление удаление
+  const [showModal, setShowModal] = useState("");
+
+  //добавление трека в плейлист юзера
+
+  //получаем список плейлистов юзера в которых нет этого трека
+  const {
+    data: playlistUserForAdd,
+    isLoading,
+    isError,
+  } = useGetPlaylistCreatedUserWithoutTrackIdQuery(idTrack);
+  //открываем модальное окно со списком плейлистов
   const [showModalAddTrackToPlaylist, setShowModalAddTrackToPlaylist] =
     useState(false);
 
-  const addTrackToPlaylist = () => {
+  const addTrackToPlaylistsModal = () => {
+    // console.log("playlistUserForAdd :>> ", playlistUserForAdd);
     setShowModalAddTrackToPlaylist(true);
   };
+
+  // //хук который отправляет запрос на бек
+  // const [
+  //   addTrackToPlaylist,
+  //   { data: dataRemoveFromChart, isLoading: isLoadingRemoveFromChart },
+  // ] = useAddTrackToPlaylistUserMutation();
+  // //функция которая вызывается при клике на плейлист и вызывает хук
+  // const addTrackInPlaylistUser = () => {
+  //   console.log("playlistUserForAdd :>> ", playlistUserForAdd.id);
+  //   setShowModalAddTrackToPlaylist(true);
+  // };
 
   const PlayButtonToogle = () => {
     if (isPlayingTrack) {
@@ -166,8 +217,8 @@ const TrackItem = ({
           background: isChecked ? "#FFF3BF" : null,
         }}
       >
-        <TableCell showData={showData[0]}>
-          {/* <CheckBoxLabel htmlFor={idTrack}>
+        <TableCell showData={showData[0] || false}>
+          <CheckBoxLabel htmlFor={idTrack}>
             <CheckBoxSpan>
               <CheckBoxSVG width="14px" height="15px">
                 {isChecked && <use href={`${symbol}#icon-check-in`}></use>}
@@ -182,7 +233,7 @@ const TrackItem = ({
                 selectTrack(idTrack);
               }}
             />
-          </CheckBoxLabel> */}
+          </CheckBoxLabel>
         </TableCell>
         <TableCell showData={showData[1] || false}>
           <PlayButton
@@ -274,9 +325,9 @@ const TrackItem = ({
           {showPopUp && (
             <PopUpButtons
               removeTrackFromAddTrackFn={removeTrackFromAdd}
-              addTrackToAddTrackFn={addTrackFromAdd}
+              addTrackToAddTrackFn={addTrackToAdd}
               isAddTrack={isAddTrack}
-              addTrackToPlaylistFn={addTrackToPlaylist}
+              addTrackToPlaylistFn={addTrackToPlaylistsModal}
             />
           )}
           <DotsBtn
@@ -296,7 +347,40 @@ const TrackItem = ({
           onClose={() => setShowModalAddTrackToPlaylist(false)}
           bcgTransparent={true}
         >
-          <ModalInfoText fontSize={"16px"}>Плейлисти</ModalInfoText>
+          {!isLoading && (
+            <PlaylistsForAdd
+              title={"Плейлисти для додавання"}
+              displayPlayer={"none"}
+              data={playlistUserForAdd}
+              trackId={idTrack}
+            />
+          )}
+        </Modal>
+      )}
+      {showModal === "addTrack" && (
+        <Modal
+          width={"494px"}
+          padding={"16px"}
+          borderColor={"#FFF3BF"}
+          borderStyle={"solid"}
+          borderWidth={"1px"}
+          onClose={() => setShowModal("")}
+          bcgTransparent={true}
+        >
+          <ModalInfoText fontSize={"16px"}>Трек додано</ModalInfoText>
+        </Modal>
+      )}
+      {showModal === "deleteTrack" && (
+        <Modal
+          width={"494px"}
+          padding={"16px"}
+          borderColor={"#FFF3BF"}
+          borderStyle={"solid"}
+          borderWidth={"1px"}
+          onClose={() => setShowModal("")}
+          bcgTransparent={true}
+        >
+          <ModalInfoText fontSize={"16px"}>Трек видалено</ModalInfoText>
         </Modal>
       )}
     </>

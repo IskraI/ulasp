@@ -13,7 +13,7 @@ export const tracksUserApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Tracks"],
+  tagTypes: ["Tracks", "AddTrackByUsers", "TracksByUser"],
 
   endpoints: (builder) => ({
     getAllTracksforUser: builder.query({
@@ -49,14 +49,38 @@ export const tracksUserApi = createApi({
       // invalidatesTags: ["Tracks"],
       providesTags: (_result, _error, genreId) => [{ type: "Tracks", genreId }],
     }),
+    deleteTrackFromAdd: builder.mutation({
+      query: (id) => ({
+        url: `/user/tracks/removeFromAdd/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Tracks"],
+    }),
 
+    addTrackToAdd: builder.mutation({
+      query: (id) => ({
+        url: `/user/tracks/add/${id}`,
+        method: "POST",
+      }),
+      invalidatesTags: ["Tracks", "AddTrackByUsers", "TracksByUser"],
+    }),
     deleteTrack: builder.mutation({
       query: (id) => ({
         url: `/user/tracks/delete/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Tracks"],
+      invalidatesTags: ["Tracks", "AddTrackByUsers", "TracksByUser"],
     }),
+
+    getAllAddTrackByUser: builder.query({
+      query: ({ page = "", limit = "" }) => ({
+        url: `user/tracks/add?${page && `page=${page}`} ${
+          limit && `&limit=${limit}`
+        }`,
+      }),
+      providesTags: ["TracksByUser"],
+    }),
+
     updateListenCountTrackById: builder.mutation({
       query: (id) => ({
         url: `user/tracks/countlisten/${id}`,
@@ -68,6 +92,9 @@ export const tracksUserApi = createApi({
 });
 
 export const {
+  useGetAllAddTrackByUserQuery,
+  useAddTrackToAddMutation,
+  useDeleteTrackFromAddMutation,
   useGetAllTracksforUserQuery,
   useGetAllTracksForUsersPlaylistQuery,
   useGetTracksByGenreIdQuery,

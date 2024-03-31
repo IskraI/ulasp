@@ -4,14 +4,14 @@ import NewSongs from "../../../components/UserMediaComponent/NewSongs/NewSongs";
 import AddPlaylists from "../../../components/UserCabinetPage/AddPlaylists/AddPlaylists";
 
 import {
-  useGetLatestPlaylistsForUserQuery,
   useFavoritePlaylistForUserQuery,
   useAddPlaylistForUserQuery,
   useGetCreatePlaylistsForUserQuery,
 } from "../../../redux/playlistsUserSlice";
 
-import { useGetAllTracksforUserQuery } from "../../../redux/tracksUserSlice";
+import { useGetAllAddTrackByUserQuery } from "../../../redux/tracksUserSlice";
 import { Loader } from "../../../components/Loader/Loader";
+import TrackAddByUser from "../../../components/UserCabinetPage/UserTrack/UserTrack";
 
 const MyPlaylists = () => {
   const {
@@ -21,13 +21,24 @@ const MyPlaylists = () => {
     isError: isErrorCreatePlaylists,
   } = useGetCreatePlaylistsForUserQuery(`?&limit=${6}`);
 
-  const {
-    data: allTracks,
+  // const {
+  //   data: allTracks,
 
-    isFetching: isFetchingNewSongs,
-    isSuccess: isSuccesLatestNewSongs,
-    isError: isErrorNewSongs,
-  } = useGetAllTracksforUserQuery(`?&limit=${6}`);
+  //   isFetching: isFetchingNewSongs,
+  //   isSuccess: isSuccesLatestNewSongs,
+  //   isError: isErrorNewSongs,
+  // } = useGetAllTracksforUserQuery(`?&limit=${6}`);
+  const {
+    data: tracksInAdd,
+    error: errorLoadingTracksInAdd,
+    isFetching: isFetchingTracksInAdd,
+    isSuccess: isSuccessTracksInAddt,
+    isLoading: isLoadingTracksInAdd,
+  } = useGetAllAddTrackByUserQuery({
+    page: 1,
+    limit: 6,
+    forseRefetch: true,
+  });
 
   const {
     data: favoritePlaylist,
@@ -46,38 +57,37 @@ const MyPlaylists = () => {
   } = useAddPlaylistForUserQuery();
 
   console.log("dataAdd playlist", dataAdd?.add.slice(0, 2));
-  console.log(" allTracks", allTracks);
 
   const fetching =
     isFetchingCreatePlaylists &&
     isFetchingFavoritePlaylist &&
-    isFetchingNewSongs &&
+    isFetchingTracksInAdd &&
     isFetchingAddPlaylist &&
     isErrorCreatePlaylists &&
     !isErrorFavoritePlaylist &&
-    !isErrorNewSongs &&
+    !errorLoadingTracksInAdd &&
     !isFetchingAddPlaylist;
 
   const loading =
     isFetchingCreatePlaylists &&
     isFetchingFavoritePlaylist &&
-    isFetchingNewSongs &&
+    isFetchingTracksInAdd &&
     isFetchingAddPlaylist &&
     // !isErrorAllGenre &&
     !isErrorFavoritePlaylist &&
-    !isErrorNewSongs &&
+    !errorLoadingTracksInAdd &&
     !isFetchingAddPlaylist;
 
   const success =
     isSuccesCreatePlaylists &&
     isSuccesLatestFavoritePlaylist &&
-    isSuccesLatestNewSongs;
+    isSuccessTracksInAddt;
   isSuccesAddPlaylist;
 
   const error =
     isErrorCreatePlaylists &&
     isErrorFavoritePlaylist &&
-    isErrorNewSongs &&
+    errorLoadingTracksInAdd &&
     isErrorFavoritePlaylist;
 
   return (
@@ -119,10 +129,12 @@ const MyPlaylists = () => {
               showNavigationLink={true}
             />
           )}
-          <NewSongs
-            data={allTracks?.latestTracks.slice(0, 6)}
-            isFetching={isFetchingNewSongs}
-            error={isErrorNewSongs}
+          <TrackAddByUser
+            data={tracksInAdd.tracksInAdd}
+            isFetching={isFetchingTracksInAdd}
+            // error={isErrorNewSongs}
+            // mediaLibrary={true}
+            // showTitle={false}
             showNavigationLink={true}
           />
         </>
