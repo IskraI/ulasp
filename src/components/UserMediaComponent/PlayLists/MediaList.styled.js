@@ -29,9 +29,9 @@ export const MediaItem = styled.li`
   display: flex;
   /* justify-content: space-between; */
   align-items: center;
-  width: 310px;
+  width: ${(props) => props.width ?? "310px"};
 
-  padding: 10px;
+  padding: ${(props) => props.padding ?? "10px"};
   border: 1px solid ${colors.accentHoverColor};
   border-radius: 10px;
   background-color: ${colors.activeBtnColor};
@@ -82,7 +82,6 @@ export const PlaylistItem = styled.li`
 
 export const PlaylistImg = styled.img`
   border-radius: 10px;
-  margin-right: auto;
 `;
 
 export const PlaylistInfoWrapper = styled.div`
@@ -127,4 +126,11 @@ export const SvgMedia = styled.svg`
     fill: ${colors.accentHoverColor};
     transition: fill 350ms ${mainCubicTransition};
   }
+`;
+
+export const PlaylistModalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
 `;

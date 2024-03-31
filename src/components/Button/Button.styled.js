@@ -25,7 +25,7 @@ export const CustomButton = styled.button`
   &:hover,
   :focus {
     background: #fff3bf;
-    border: 1px solid #17161c;
+    border:${(props) => props.borderHover ?? "1px solid #17161"};
   }
 
   &:active {
@@ -45,4 +45,10 @@ export const SvgStyled = styled.svg`
   fill: ${(props) => props.fillColor ?? "none"};
   stroke: ${(props) => props.strokeColor ?? "black"};
   display: ${(props) => (props.showIcon ? "block" : "none")};
+`;
+
+export const ImgStyled = styled.img`
+  border-radius: 10px;
+  margin-right: auto;
+  display: ${(props) => (props.showImg ? "block" : "none")};
 `;

@@ -78,6 +78,14 @@ const TracksPageCreateUser = () => {
     console.log(size);
     setPageSize(size);
   };
+  const checkedAllFn = (data) => {
+    console.log(data);
+    if (!data) {
+      setCheckedMainCheckBox(false);
+    } else {
+      setCheckedMainCheckBox(true);
+    }
+  };
 
   return (
     <>
@@ -111,6 +119,8 @@ const TracksPageCreateUser = () => {
           <TracksTable
             title={"In playlist"}
             showTitle={false}
+            checkBox={true}
+            isCheckedAll={checkedMainCheckBox}
             marginTopWrapper={"24px"}
             isInPlayList={false}
             playListId={data.playlist._id}

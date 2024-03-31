@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { CustomButton, SvgStyled } from "./Button.styled";
+import { CustomButton, SvgStyled, ImgStyled } from "./Button.styled";
 
 export const Button = ({
   width,
@@ -23,6 +23,9 @@ export const Button = ({
   border,
   fillColor,
   strokeColor,
+  showImg,
+  imgSrc,
+  borderHover,
 }) => {
   return (
     <CustomButton
@@ -42,7 +45,10 @@ export const Button = ({
       display={display}
       disabled={disabled}
       border={border}
+      imgSrc={imgSrc}
+      borderHover={borderHover}
     >
+      <ImgStyled src={imgSrc} alt={text} showImg={showImg} />
       <SvgStyled
         width="24"
         height="24"

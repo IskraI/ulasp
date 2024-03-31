@@ -52,6 +52,7 @@ import { lazy, useEffect } from "react";
 import AllGenresForUser from "./pages/UserPage/AllGenresForUser/AllGenresForUser";
 import NewPlaylistsUser from "./pages/UserPage/NewPlaylistsUser/NewPlaylistsUser";
 import NewTracksUser from "./pages/UserPage/NewTracksUser/NewTracksUser";
+import AddTracksUserPage from "./pages/UserPage/AddTracksUserPage/AddTracksUserPage";
 import AllTracksUser from "./pages/UserPage/AllTracksUser/AllTracksUser";
 import PlaylistsPageUserInGenre from "./pages/UserPage/PlaylistPageUser/PlaylistPageUserInGenre";
 import PlaylistsPageUserInShop from "./pages/UserPage/PlaylistPageUser/PlaylistsPageUserInShop";
@@ -265,6 +266,11 @@ function App() {
                 <Route
                   path="cabinet/myplaylists/newtracks"
                   element={<AllTracksUser display={"none"} />}
+                />
+
+                <Route
+                  path="cabinet/myplaylists/addtracks"
+                  element={<AddTracksUserPage display={"none"} />}
                 />
 
                 <Route path="*" element={<ErrorPage />} />

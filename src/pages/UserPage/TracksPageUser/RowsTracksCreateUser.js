@@ -53,8 +53,8 @@ const rowsTracksCreateUser = () => {
     {
       title: "",
       type: "button",
-      titleSize: "1%",
-      showData: false,
+      titleSize: "5%",
+      showData: true,
     },
   ];
 

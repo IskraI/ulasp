@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useLocation } from "react-router-dom";
-
+import { getUserState } from "../../../redux/userSelectors.js";
 import Pagination from "rc-pagination";
 import Select from "rc-select";
 
@@ -61,6 +61,8 @@ const TracksTable = ({
   totalPages,
   deleteButton = false,
 }) => {
+  const { id: idUser } = useSelector(getUserState);
+  console.log("user TracksTable :>> ", idUser);
   const [
     removeTracksFromPlaylist,
     { isLoading: isLoadingRemoveTracksFromPlaylist },
@@ -222,7 +224,7 @@ const TracksTable = ({
 
   const deletingMultipleTracks = () => {
     console.log(tracksIdList);
-    removeTracksFromPlaylist({playListId, tracksIdList }).then(
+    removeTracksFromPlaylist({ playListId, tracksIdList }).then(
       clearAfterDeleting
     );
   };
@@ -279,6 +281,7 @@ const TracksTable = ({
                       trackDuration,
                       playList,
                       trackURL,
+                      addTrackByUsers,
                     },
                     index
                   ) => {
@@ -306,6 +309,7 @@ const TracksTable = ({
                         countOfSkip={skip}
                         deleteCheckedTrackId={deleteCheckedTrackId}
                         addTrackToCheckedList={addTrackToCheckedList}
+                        isAddTrackUser={addTrackByUsers?.includes(idUser)}
                       />
                     );
                   }

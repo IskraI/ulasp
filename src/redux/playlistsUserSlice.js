@@ -13,7 +13,7 @@ export const playlistsUserApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Playlists"],
+  tagTypes: ["Playlists", "PlaylistsForAdd", "PlaylistsAdd"],
 
   endpoints: (builder) => ({
     createPlaylistForUser: builder.mutation({
@@ -163,6 +163,7 @@ export const playlistsUserApi = createApi({
       }),
       invalidatesTags: ["Playlists"],
     }),
+
     removeTrackFromPlaylistUser: builder.mutation({
       query: ({ playListId, tracksIdList }) => ({
         url: `/user/userPlaylist/removeTracks`,
@@ -172,12 +173,34 @@ export const playlistsUserApi = createApi({
           tracksIdArray: tracksIdList,
         },
       }),
-      invalidatesTags: ["Playlists"],
+      invalidatesTags: ["Playlists", "PlaylistsForAdd"],
+    }),
+    //получение плейлистов юзера в которых нет заданной песни
+    getPlaylistCreatedUserWithoutTrackId: builder.query({
+      query: (trackId, page = "", limit = "") => ({
+        url: `/user/userPlaylist/nonTrack/${trackId}?${
+          page && `page=${page}`
+        } & ${limit && `limit=${limit}`}`,
+      }),
+      providesTags: ["PlaylistsForAdd"],
+    }),
+    addTrackByIdToPlaylistUser: builder.mutation({
+      query: ({ id, trackId }) => ({
+        url: `/user/userPlaylist/addTrack`,
+        method: "POST",
+        body: {
+          id: id,
+          trackId: trackId,
+        },
+      }),
+      invalidatesTags: ["PlaylistsForAdd"],
     }),
   }),
 });
 
 export const {
+  useAddTrackByIdToPlaylistUserMutation,
+  useGetPlaylistCreatedUserWithoutTrackIdQuery,
   useGetLatestPlaylistsForUserQuery,
   useGetPlaylistByIdForUserQuery,
   useCreatePlaylistForUserMutation,
