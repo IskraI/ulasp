@@ -14,7 +14,7 @@ const AddTracksUserPage = () => {
     data: tracksInAdd,
     error: errorLoadingTracksInAdd,
     isFetching: isFetchingTracksInAdd,
-    isSuccess: isSuccessTracksInAddt,
+    isSuccess: isSuccessTracksInAdd,
     isLoading: isLoadingTracksInAdd,
   } = useGetAllAddTrackByUserQuery({
     page: currentPage,
@@ -38,8 +38,8 @@ const AddTracksUserPage = () => {
     <>
       {/* <TabNavigation /> */}
 
-      {isFetchingTracksInAdd && <Loader />}
-      {!isFetchingTracksInAdd && !errorLoadingTracksInAdd && (
+      {/* {isFetchingTracksInAdd && <Loader />} */}
+      {isSuccessTracksInAdd && !errorLoadingTracksInAdd && (
         <>
           <TracksTable
             title={"In playlist"}
@@ -51,7 +51,7 @@ const AddTracksUserPage = () => {
             totalTracks={tracksInAdd.totalTracks}
             error={errorLoadingTracksInAdd}
             isFetching={isFetchingTracksInAdd}
-            isSuccess={isSuccessTracksInAddt}
+            isSuccess={isSuccessTracksInAdd}
             rows={rowsNewTracksUser()}
             onChangeCurrentPage={onPageChange}
             onChangeSizePage={onPageSizeChange}
