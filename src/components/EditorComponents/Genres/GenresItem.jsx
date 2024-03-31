@@ -1,4 +1,5 @@
-/* eslint-disable react/prop-types */
+import PropTypes from "prop-types";
+
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -11,27 +12,36 @@ import {
 import { Modal } from "../../../components/Modal/Modal";
 import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
 import { ErrorNotFound } from "../../Errors/Errors";
+import { ErrorValidateText } from "../../Errors/errors.styled";
+import AddCover from "../../AddCover/AddCover";
+import useValidateInput from "../../../hooks/useValidateInput";
+import { isEmptyMediaUpdateData } from "../../../helpers/helpers";
 
 import {
-  GenresItem,
-  GenresImg,
-  GenresItemText,
-  GenresIconsWrapper,
-  GenresButton,
-  SvgGenres,
+  MediaItem,
+  MediaImg,
+  MediaItemText,
+  MediaIconsWrapper,
+  MediaButton,
+  SvgMedia,
   EditInputText,
-  GenresLabelPlusCover,
   EditWrapper,
-} from "./GenresItem.styled";
+  EditCardWrapper,
+} from "../MediaList/MediaList.styled";
 
-const GenreListItem = ({ id, title, icon }) => {
+const GenreListItem = ({ id, title, icon, minLengthInput, maxLengthInput }) => {
   const ref = useRef();
-
   const [showModalSuccess, setShowModalSucces] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [genreTitle, setGenreTitle] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+
+  const [errorValidateMessage, isError, setIsError] = useValidateInput(
+    genreTitle,
+    minLengthInput,
+    maxLengthInput
+  );
 
   const location = useLocation();
   const [
@@ -96,6 +106,7 @@ const GenreListItem = ({ id, title, icon }) => {
       handleCloseEdit();
     } catch (error) {
       setShowModalError(true);
+      handleCloseEdit();
     }
   };
 
@@ -121,82 +132,60 @@ const GenreListItem = ({ id, title, icon }) => {
     setGenreTitle(title);
   };
 
-  const handleChooseIcon = (event) => {
-    let file;
-
-    if (event.target.files[0] !== undefined) {
-      file = event.target.files[0];
-    }
-    if (file) {
-      setSelectedImage(file);
-    }
-  };
-
   const handleCloseEdit = () => {
     setSelectedImage(null);
     setIsEditing(false);
+    setIsError(false);
   };
 
-  const isEmptyGenreUpdateData = (firstStr, secondStr) => {
-    if (firstStr === "" || (firstStr === secondStr && selectedImage === null)) {
-      console.log("Кнопка выключена");
-      return true;
-    }
-    if (firstStr === "" && firstStr === secondStr && selectedImage !== null) {
-      console.log("Кнопка включена");
-      return false;
-    }
-
-    console.log("Кнопка включена");
-    return false;
-  };
-
-  const coverImage = selectedImage
-    ? URL.createObjectURL(selectedImage)
-    : BASE_URL + "/" + icon;
+  const handleChooseCover = (data) => setSelectedImage(data);
 
   return (
     <>
-      <GenresItem>
+      <MediaItem isError={isError} isEditing={isEditing}>
         {isEditing ? (
-          <div style={{ display: "flex", gap: "10px" }}>
+          <>
+            {isError && (
+              <ErrorValidateText>{errorValidateMessage}</ErrorValidateText>
+            )}
             <EditWrapper>
-              <GenresImg src={coverImage} alt={title} />
-              <GenresLabelPlusCover htmlFor="coverGenre">
-                +
-              </GenresLabelPlusCover>
-              <input
-                type="file"
-                accept="image/*"
-                id="coverGenre"
-                onChange={handleChooseIcon}
-                style={{ display: "none" }}
+              <AddCover
+                cover={icon}
+                coverAlt={title}
+                handleChooseCover={handleChooseCover}
               />
             </EditWrapper>
             <EditInputText
               type="text"
+              size={17}
+              minLength={minLengthInput}
+              maxLength={maxLengthInput}
               value={genreTitle}
               onChange={(e) => setGenreTitle(e.target.value)}
               ref={ref}
             />
-
-            <GenresIconsWrapper>
-              <GenresButton
+            <MediaIconsWrapper>
+              <MediaButton
                 type="button"
                 onClick={() => updateGenreItem(title)}
-                disabled={isEmptyGenreUpdateData(genreTitle, title)}
+                disabled={isEmptyMediaUpdateData(
+                  genreTitle,
+                  title,
+                  isError,
+                  selectedImage
+                )}
               >
-                <SvgGenres width="24" height="24">
+                <SvgMedia width="24" height="24">
                   <use href={`${symbol}#icon-check-in`}></use>
-                </SvgGenres>
-              </GenresButton>
-              <GenresButton type="button" onClick={handleCloseEdit}>
-                <SvgGenres width="24" height="24">
+                </SvgMedia>
+              </MediaButton>
+              <MediaButton type="button" onClick={handleCloseEdit}>
+                <SvgMedia width="24" height="24">
                   <use href={`${symbol}#icon-close`}></use>
-                </SvgGenres>
-              </GenresButton>
-            </GenresIconsWrapper>
-          </div>
+                </SvgMedia>
+              </MediaButton>
+            </MediaIconsWrapper>
+          </>
         ) : (
           <>
             <Link
@@ -207,50 +196,51 @@ const GenreListItem = ({ id, title, icon }) => {
                 width: "100%",
                 display: "flex",
                 alignItems: "center",
+                justifyItems: "baseline",
               }}
             >
-              <GenresImg src={BASE_URL + "/" + icon} alt={title} />
-              <GenresItemText>{title}</GenresItemText>
+              <MediaImg src={BASE_URL + "/" + icon} alt={title} />
+              <MediaItemText>{title}</MediaItemText>
             </Link>
-            <GenresIconsWrapper>
-              <GenresButton
+            <MediaIconsWrapper>
+              <MediaButton
                 type="button"
                 onClick={editGenre}
                 disabled={isEditing}
               >
-                <SvgGenres width="24" height="24">
+                <SvgMedia width="24" height="24">
                   <use href={`${symbol}#icon-pen`}></use>
-                </SvgGenres>
-              </GenresButton>
+                </SvgMedia>
+              </MediaButton>
 
-              <GenresButton
+              <MediaButton
                 type="button"
                 onClick={deleteMediaItem}
                 disabled={isLoading}
               >
                 {isLoading ? (
-                  <SvgGenres
+                  <SvgMedia
                     width="24"
                     height="24"
                     stroke="#888889"
                     fill="#888889"
                   >
                     <use href={`${symbol}#icon-del-basket`}></use>
-                  </SvgGenres>
+                  </SvgMedia>
                 ) : (
-                  <SvgGenres width="24" height="24">
+                  <SvgMedia width="24" height="24">
                     <use href={`${symbol}#icon-del-basket`}></use>
-                  </SvgGenres>
+                  </SvgMedia>
                 )}
-              </GenresButton>
-            </GenresIconsWrapper>
+              </MediaButton>
+            </MediaIconsWrapper>
           </>
         )}
-      </GenresItem>
+      </MediaItem>
 
       {showModalSuccess && isSuccessDeleteGenre && !isErrorDeleteGenre && (
         <Modal width={"394px"} onClose={closeModalSuccess}>
-          <ModalInfoText marginBottom={"34px"}>
+          <ModalInfoText fontSize={"20px"} marginBottom={"34px"}>
             Жанр <ModalInfoTextBold>&quot;{title}&quot;</ModalInfoTextBold> був
             видалений
           </ModalInfoText>
@@ -258,7 +248,7 @@ const GenreListItem = ({ id, title, icon }) => {
       )}
       {showModalError && (
         <Modal width={"394px"} onClose={closeModalError} showCloseButton={true}>
-          <ModalInfoText marginBottom={"34px"}>
+          <ModalInfoText fontSize={"20px"} marginBottom={"34px"}>
             {isErrorDeleteGenre &&
               (<ErrorNotFound error={errorDeleteGenre.data.message} /> ?? (
                 <ErrorNotFound />
@@ -271,16 +261,19 @@ const GenreListItem = ({ id, title, icon }) => {
             ) : (
               <ErrorNotFound error={errorUpdateGenre.data?.message} />
             )}
-
-            {/* {isErrorUpdateGenre && (errorUpdateGenre.data.code === "4091") &&
-           ( <ErrorNotFound error={errorUpdateGenre.data.code} />) ?? (
-              <ErrorNotFound />
-            )} */}
           </ModalInfoText>
         </Modal>
       )}
     </>
   );
+};
+
+GenreListItem.propTypes = {
+  id: PropTypes.string,
+  title: PropTypes.string,
+  icon: PropTypes.string,
+  minLengthInput: PropTypes.number,
+  maxLengthInput: PropTypes.number,
 };
 
 export default GenreListItem;

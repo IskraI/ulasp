@@ -49,6 +49,7 @@ const AddTrackFromDB = ({ iconButton, textButton }) => {
 
   const handleSearchTracks = useCallback((data, isActive) => {
     if (isActive) {
+      setCurrentPage(1);
       setQuery(data);
       setIsSearching(true);
     } else {
@@ -89,7 +90,6 @@ const AddTrackFromDB = ({ iconButton, textButton }) => {
             setQuery("");
           }}
         >
-          {isFetchingAllTracks && <Loader loaderHeight={"100%"} />}
           <Wrapper>
             <TitleSearchInput>Пошук пісень:</TitleSearchInput>
             <SearchTracks
@@ -102,6 +102,7 @@ const AddTrackFromDB = ({ iconButton, textButton }) => {
                 textColor={"grey"}
               />
             )}
+            {isFetchingAllTracks && <Loader loaderHeight={"100%"} />}
             {!isFetchingAllTracks && (
               <>
                 {query !== "" && (

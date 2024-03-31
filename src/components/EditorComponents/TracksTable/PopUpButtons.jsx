@@ -5,6 +5,7 @@ import { PopUpWrapper, PopUp, PopUpButton } from "./PopUpButtons.styled";
 const PopUpButtons = ({
   removeTrackFn,
   updateTrackCoverFn,
+  addTrackToPlaylists,
   addTrackToChartFn,
   removeTrackFromChartFn,
   isTopChart,
@@ -26,7 +27,7 @@ const PopUpButtons = ({
         <PopUpButton type="button" onClick={toogleTrackInChartFn}>
           {toogleTrackInChart}
         </PopUpButton>
-        <PopUpButton disabled={true} type="button">
+        <PopUpButton type="button" onClick={addTrackToPlaylists}>
           Додати до плейлисту
         </PopUpButton>
         <PopUpButton disabled={true} type="button">
@@ -43,6 +44,7 @@ const PopUpButtons = ({
 PopUpButtons.propTypes = {
   removeTrackFn: PropTypes.func,
   updateTrackCoverFn: PropTypes.func,
+  addTrackToPlaylists: PropTypes.func,
   addTrackToChartFn: PropTypes.func,
   removeTrackFromChartFn: PropTypes.func,
   isTopChart: PropTypes.bool,

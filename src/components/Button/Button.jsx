@@ -19,7 +19,7 @@ export const Button = ({
   fontsize = "20px",
   display,
   disabled,
-  showIcon,
+  showIcon = false,
   border,
   fillColor,
   strokeColor,

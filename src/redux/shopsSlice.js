@@ -126,11 +126,11 @@ export const shopsApi = createApi({
       invalidatesTags: ["Shops", "ShopItem", "SubShopItem"],
     }),
     deletePlaylistInShop: builder.mutation({
-      query: (id) => ({
-        url: `/editor/playlist/delete/${id}`,
+      query: ({ idTypeOfMediaLibrary, idPlaylist }) => ({
+        url: `/editor/shop/${idTypeOfMediaLibrary}/delete/${idPlaylist}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["SubShopItem", "ShopItem"],
+      invalidatesTags: ["Shops"],
     }),
     deletePlaylistInShopSubCategory: builder.mutation({
       query: ({ idTypeOfMediaLibrary, idPlaylist }) => ({

@@ -1,105 +1,90 @@
 import styled from "@emotion/styled";
 import { colors, mainCubicTransition } from "../../../styles/vars";
 
-export const GenresItem = styled.li`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 310px;
+// export const GenresItem = styled.li`
+//   position: relative;
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   width: 310px;
 
-  padding: 10px;
-  border: 1px solid ${colors.accentHoverColor};
-  border-radius: 10px;
-  background-color: ${colors.activeBtnColor};
-`;
+//   padding: 10px;
+//   border: ${(props) =>
+//     props.isError
+//       ? `1px solid ${colors.errorColor}`
+//       : `1px solid ${colors.accentHoverColor}`};
+//   border-radius: 10px;
+//   background-color: ${colors.activeBtnColor};
+// `;
 
-export const GenresImg = styled.img`
-  border-radius: 10px;
-  margin-right: auto;
-  width: 60px;
-  height: 40px;
-`;
+// export const GenresImg = styled.img`
+//   border-radius: 10px;
+//   margin-right: 4px;
+//   width: 60px;
+//   height: 40px;
+// `;
 
-export const GenresLabelPlusCover = styled.label`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  background-color: transparent;
-  border: none;
-  transition: all 550ms ${mainCubicTransition};
+// export const GenresItemText = styled.p`
+//   max-width: 170px;
+//   font-size: 16px;
+//   line-height: 1.19;
+//   color: ${colors.mainFontColor};
+//   margin: 0 auto;
+//   padding: 0px 6px;
+//   text-align: center;
+// `;
 
-  color: #fff;
-  font-size: 34px;
-  &:hover {
-    opacity: 1;
-    background-color: rgb(0, 0, 0, 0.6);
-    color: ${colors.accentHoverColor};
-    transition: all 650ms ${mainCubicTransition};
-  }
-`;
+// export const GenresIconsWrapper = styled.div`
+//   display: flex;
+//   gap: 4px;
+// `;
 
-export const GenresItemText = styled.p`
-  font-size: 16px;
-  line-height: 1.19;
-  color: ${colors.mainFontColor};
-  margin-right: auto;
-  padding: 8px;
-  /* outline: 1px solid red; */
-`;
+// export const GenresButton = styled.button`
+//   background: none;
+//   border: none;
+//   padding: 0;
 
-export const GenresIconsWrapper = styled.div`
-  display: flex;
-  gap: 4px;
-`;
+//   &:disabled {
+//     svg {
+//       fill: ${colors.bBgModal};
+//     }
+//   }
+// `;
 
-export const GenresButton = styled.button`
-  background: none;
-  border: none;
+// export const SvgGenres = styled.svg`
+//   fill: #000000;
+//   transition: fill 350ms ${mainCubicTransition};
 
-  &:disabled {
-    svg {
-      fill: ${colors.bBgModal};
-    }
-  }
-`;
+//   &:hover {
+//     fill: ${colors.accentHoverColor};
+//     transition: fill 350ms ${mainCubicTransition};
+//   }
+// `;
 
-export const SvgGenres = styled.svg`
-  fill: #000000;
-  transition: fill 350ms ${mainCubicTransition};
+// export const EditInputText = styled.input`
+//   text-align: center;
+//   padding: 8px;
+//   background: none;
+//   border: none;
+//   font-size: 16px;
 
-  &:hover {
-    fill: ${colors.accentHoverColor};
-    transition: fill 350ms ${mainCubicTransition};
-  }
-`;
+//   &:focus-visible {
+//     border: none;
+//     outline: none;
+//     text-align: center;
+//   }
+// `;
 
-export const EditInputText = styled.input`
-  min-width: 100px;
-  /* outline: 1px solid red; */
-  text-align: center;
-  padding: 8px;
-  background: none;
-  border: none;
-  font-size: 16px;
+// export const EditCardWrapper = styled.div`
+//   width: 100%;
+//   display: flex;
+//   justify-content: space-between;
+//   gap: 5px;
+// `;
 
-  &:focus-visible {
-    border: none;
-    outline: none;
-    text-align: center;
-  }
-`;
-
-export const EditWrapper = styled.div`
-  display: flex;
-  position: relative;
-  /* width: 60px;
-  height: 40px; */
-`;
+// export const EditWrapper = styled.div`
+//   display: flex;
+//   position: relative;
+//   width: 60px;
+//   height: 40px;
+//`;

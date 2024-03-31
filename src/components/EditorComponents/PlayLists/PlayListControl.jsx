@@ -6,7 +6,7 @@ import {
   ModalInfoTextBold,
   ButtonsModalWrapper,
 } from "../../Modal/Modal.styled";
-import { useUpdatePlaylistMutation } from "../../../redux/playlistsSlice";
+import { useUpdatePlaylistPublicationMutation } from "../../../redux/playlistsSlice";
 import { LoaderButton } from "../../Loader/Loader";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -22,8 +22,10 @@ const PlayListControl = ({
 
   const { playlistId } = useParams();
 
-  const [updatePlaylist, { isSuccess, isLoading }] =
-    useUpdatePlaylistMutation();
+  const [updatePlaylistPublication, { isSuccess, isLoading, status }] =
+    useUpdatePlaylistPublicationMutation();
+
+  console.log(status);
 
   useEffect(() => {
     if (isSearchResultFail) {
@@ -35,7 +37,7 @@ const PlayListControl = ({
     isCountTracksNull();
     async function isCountTracksNull() {
       if (!countTracks && isPublished) {
-        await updatePlaylist({
+        await updatePlaylistPublication({
           playlistId,
           body: { published: "false" },
         }).unwrap();
@@ -47,13 +49,13 @@ const PlayListControl = ({
     isSearchResultFail,
     isSuccess,
     playlistId,
-    updatePlaylist,
+    updatePlaylistPublication,
   ]);
 
   const handleSubmit = async () => {
     const body = Object.assign({ published: isPublished ? "false" : "true" });
 
-    await updatePlaylist({ playlistId, body })
+    await updatePlaylistPublication({ playlistId, body })
       .unwrap()
       .then(() => {
         if (!isPublished) {

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import ControlMediateca from "../../../components/EditorComponents/ControlMediateca/ControlMediaTeca";
@@ -24,13 +24,13 @@ import {
 } from "../../../redux/shopsSlice";
 
 import { ShopsList } from "./Shops.styled";
-import {
-  ModalInfoText,
-  ModalInfoTextBold,
-} from "../../../components/Modal/Modal.styled";
+import { ModalInfoText } from "../../../components/Modal/Modal.styled";
 
 const ShopSubCategoryPage = () => {
   const valueMediaLibrary = "shopItem";
+
+  const minLengthInput = 2;
+  const maxLengthInput = 29;
 
   const { shopItemId: idShopLibrary } = useParams();
 
@@ -38,6 +38,14 @@ const ShopSubCategoryPage = () => {
   const [showModalSuccess, setShowModalSuccess] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
   const [selectedPlaylistAvatar, setSelectedPlaylistAvatar] = useState(null);
+
+  useEffect(() => {
+    if (showModalSuccess) {
+      setTimeout(() => {
+        setShowModalSuccess(false);
+      }, 2000);
+    }
+  }, [showModalSuccess]);
 
   const {
     data: shopCategory,
@@ -136,7 +144,7 @@ const ShopSubCategoryPage = () => {
     dataCreateShopSubCategory?.shopSubCategory?.shopSubTypeName ??
     "Назва нової категорії не була введена";
 
-  console.log(shopCategory?.allPlaylistsInShopCategory);
+  console.log(shopCategory);
 
   return (
     <>
@@ -167,6 +175,8 @@ const ShopSubCategoryPage = () => {
                     typeMediaLibrary={"subCategoryShop"}
                     fieldForUpdate={"shopSubTypeName"}
                     typeCover={"shop"}
+                    minLengthInput={minLengthInput}
+                    maxLengthInput={maxLengthInput}
                     // linkToPage={linkToPage}
                   />
                 )
@@ -176,6 +186,7 @@ const ShopSubCategoryPage = () => {
           <Playlists
             title={`Плейлисти категорії "${shopCategory.shop.shopItemName}"`}
             data={shopCategory.allPlaylistsInShopCategory}
+            ownShopPlaylists={shopCategory.shop.playList}
             isFetching={isFetchingShopCategory}
             showNavigationLink={false}
             handleCreatePlaylist={handleSubmitPlayListInShopLibrary}
@@ -199,6 +210,8 @@ const ShopSubCategoryPage = () => {
                 valueInputSecond={"shop"}
                 placeholderFirst={"Підкатегорія закладу*"}
                 cover={false}
+                minLength={minLengthInput}
+                maxLength={maxLengthInput}
               />
             </Modal>
           )}
@@ -211,11 +224,8 @@ const ShopSubCategoryPage = () => {
                 showCloseButton={true}
               >
                 <ModalInfoText marginBottom={"34px"}>
-                  Підкатегорія
-                  <ModalInfoTextBold>
-                    &quot;{newSubCategory}&quot;
-                  </ModalInfoTextBold>
-                  була створена
+                  Підкатегорія &#32;&quot;{newSubCategory}&quot;&#32; була
+                  створена
                 </ModalInfoText>
               </Modal>
             )}

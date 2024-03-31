@@ -58,7 +58,7 @@ export const ButtonsModalWrapper = styled.div`
 
 export const ModalInfoText = styled.div`
   font-size: ${(props) => props.fontSize || "24px"};
-  line-height: 1.2;
+  line-height: 1.5;
   padding-top: ${(props) => props.paddingTop || "38px"};
   padding-bottom: ${(props) => props.paddingBottom || "38px"};
   padding-left: 22px;

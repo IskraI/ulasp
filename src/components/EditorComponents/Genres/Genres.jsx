@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { GenresWrapper, GenresNotFound } from "./Genres.styled";
+import { GenresWrapper } from "./Genres.styled";
 import GenreListItem from "./GenresItem";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 import { GenresList } from "./Genres.styled";
@@ -29,6 +29,9 @@ const Genres = ({
   const location = useLocation();
   const navigate = useNavigate();
 
+  const minLengthInput = 2;
+  const maxLengthInput = 29;
+
   const [
     createGenre,
     {
@@ -54,10 +57,7 @@ const Genres = ({
   const newGenreName =
     dataCreateGenre?.newGenre.genre ?? "Назва нового жанру не була введена";
 
-  const handleSubmitGenre = async (data, e) => {
-    console.log(data);
-    console.log(e);
-
+  const handleSubmitGenre = async (data) => {
     try {
       closeModalAdd();
       await createGenre(data).unwrap();
@@ -80,7 +80,7 @@ const Genres = ({
   };
 
   const toogleModal = () => {
-    return setShowModalAdd((prevsetShowModal) => !showModalAdd);
+    return setShowModalAdd(!showModalAdd);
   };
 
   return (
@@ -103,6 +103,8 @@ const Genres = ({
                 id={_id}
                 title={genre}
                 icon={genreAvatarURL}
+                minLengthInput={minLengthInput}
+                maxLengthInput={maxLengthInput}
               />
             ))}
           </GenresList>
@@ -122,6 +124,8 @@ const Genres = ({
             valueInputSecond={"genre"}
             placeholderFirst={"Назва жанру*"}
             cover={false}
+            minLength={minLengthInput}
+            maxLength={maxLengthInput}
           />
         </Modal>
       )}
@@ -131,7 +135,7 @@ const Genres = ({
           onClose={closeModalSuccess}
           showCloseButton={true}
         >
-          <ModalInfoText marginBottom={"34px"}>
+          <ModalInfoText fontSize={"20px"} marginBottom={"34px"}>
             Новий жанр
             <ModalInfoTextBold>&quot;{newGenreName}&quot;</ModalInfoTextBold>був
             створений

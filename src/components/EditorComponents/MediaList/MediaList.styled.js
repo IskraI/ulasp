@@ -22,29 +22,47 @@ export const MediaItem = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 310px;
+  min-width: 310px;
 
   padding: 10px;
-  border: 1px solid ${colors.accentHoverColor};
+  border: ${(props) =>
+    props.isError
+      ? `1px solid ${colors.errorColor}`
+      : props.isEditing
+      ? `1px solid green`
+      : `1px solid ${colors.accentHoverColor}`};
   border-radius: 10px;
   background-color: ${colors.activeBtnColor};
+  transition: background-color 500ms ${mainCubicTransition};
+
+  &:hover {
+    background-color: ${colors.accentHoverColor};
+    transition: background-color 500ms ${mainCubicTransition};
+  }
 `;
 
 export const MediaImg = styled.img`
   border-radius: 10px;
-  margin-right: auto;
+  /* margin-right: auto; */
+  /* margin-right: 4px; */
+  margin-right: ${(props) => props.marginRight ?? "4px"};
+
   width: 60px;
   height: 40px;
+  object-fit: cover;
 `;
 
 export const MediaItemText = styled.p`
+  /* margin-right: auto; */
+  /* text-overflow: clip; */
+
+  max-width: 170px;
   font-size: 16px;
   line-height: 1.19;
   color: ${colors.mainFontColor};
-  margin-right: auto;
-  padding: 0 6px;
+  margin: 0 auto;
+  padding: 0px 6px;
   text-align: center;
-  text-overflow: clip;
 `;
 
 export const MediaIconsWrapper = styled.div`
@@ -55,6 +73,7 @@ export const MediaIconsWrapper = styled.div`
 export const MediaButton = styled.button`
   background: none;
   border: none;
+  padding: 0;
   &:disabled {
     svg {
       fill: ${colors.bBgModal};
@@ -78,7 +97,8 @@ export const SvgMedia = styled.svg`
   transition: all 550ms ${mainCubicTransition};
 
   &:hover {
-    fill: ${colors.accentHoverColor};
+    fill: ${colors.bgHeaderColor};
+
     transform: rotate(
       ${(props) => (props.transformIcon ? props.transformIcon + "deg" : "0deg")}
     );
@@ -86,9 +106,20 @@ export const SvgMedia = styled.svg`
   }
 `;
 
+// export const SvgGenres = styled.svg`
+//   fill: #000000;
+//   transition: fill 350ms ${mainCubicTransition};
+
+//   &:hover {
+//     fill: ${colors.accentHoverColor};
+//     transition: fill 350ms ${mainCubicTransition};
+//   }
+// `;
+
 export const EditInputText = styled.input`
-  min-width: 100px;
-  /* outline: 1px solid red; */
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.19;
   text-align: center;
   padding: 8px;
   background: none;
@@ -101,36 +132,18 @@ export const EditInputText = styled.input`
     text-align: center;
   }
 `;
+//Добавить в остальные
+export const EditCardWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  /* justify-content: space-between; */
+  gap: 5px;
+  outline: 1px solid green;
+`;
 
 export const EditWrapper = styled.div`
   display: flex;
   position: relative;
-  /* width: 60px;
-  height: 40px; */
-`;
-
-export const MediaLabelPlusCover = styled.label`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  background-color: transparent;
-  border: none;
-  transition: all 550ms ${mainCubicTransition};
-
-  color: #fff;
-  font-size: 34px;
-  &:hover {
-    opacity: 1;
-    background-color: rgb(0, 0, 0, 0.6);
-    color: ${colors.accentHoverColor};
-    transition: all 650ms ${mainCubicTransition};
-  }
+  width: 60px;
+  height: 40px;
 `;

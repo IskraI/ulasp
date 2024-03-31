@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import ControlMediateca from "../../../components/EditorComponents/ControlMediateca/ControlMediaTeca";
 import MediaListItem from "../../../components/EditorComponents/MediaList/MediaList";
@@ -21,13 +21,13 @@ import {
 } from "../../../redux/shopsSlice";
 
 import { ShopsList } from "./Shops.styled";
-import {
-  ModalInfoText,
-  ModalInfoTextBold,
-} from "../../../components/Modal/Modal.styled";
+import { ModalInfoText } from "../../../components/Modal/Modal.styled";
 
 const ShopsItemPage = () => {
   const valueMediaLibrary = "shop";
+
+  const minLengthInput = 2;
+  const maxLengthInput = 29;
 
   const [showModal, setShowModal] = useState(false);
   const [showModalSuccessCreate, setShowModalSuccessCreate] = useState(false);
@@ -37,8 +37,14 @@ const ShopsItemPage = () => {
 
   const { shopId: idShopLibrary } = useParams();
 
+  useEffect(() => {
+    if (showModalSuccessCreate) {
+      setTimeout(() => {
+        setShowModalSuccessCreate(false);
+      }, 2000);
+    }
+  }, [showModalSuccessCreate]);
 
-  console.log(idShopLibrary);
 
   const {
     data: shopItem,
@@ -135,7 +141,6 @@ const ShopsItemPage = () => {
     dataCreateShopCategory?.shopItem?.shopItemName ??
     "Назва нової категорії не була введена";
 
-  console.log(shopItem?.allPlaylistsInShopCategory);
   return (
     <>
       {isFetchingShopItem && !isSuccessShopItem && <Loader />}
@@ -165,7 +170,8 @@ const ShopsItemPage = () => {
                     typeMediaLibrary={"shopItem"}
                     fieldForUpdate={"shopItemName"}
                     typeCover={"shop"}
-
+                    minLengthInput={minLengthInput}
+                    maxLengthInput={maxLengthInput}
                     // linkToPage={linkToPage}
                   />
                 )
@@ -173,8 +179,9 @@ const ShopsItemPage = () => {
             </ShopsList>
           )}
           <Playlists
-            title={`Плейлисти категорії "${shopItem.shop.shopCategoryName}"`}
+            title={`Плейлисти "${shopItem.shop.shopCategoryName}"`}
             data={shopItem.allPlaylistsInShopCategory}
+            ownShopPlaylists={shopItem.shop.playList}
             // isFetching={isFetchingShopCategory}
             showNavigationLink={false}
             handleCreatePlaylist={handleSubmitPlayListInShopLibrary}
@@ -197,6 +204,8 @@ const ShopsItemPage = () => {
                 valueInputSecond={"shop"}
                 placeholderFirst={"Категорія закладу*"}
                 cover={false}
+                minLength={minLengthInput}
+                maxLength={maxLengthInput}
               />
             </Modal>
           )}
@@ -209,11 +218,7 @@ const ShopsItemPage = () => {
                 showCloseButton={true}
               >
                 <ModalInfoText marginBottom={"34px"}>
-                  Категорія
-                  <ModalInfoTextBold>
-                    &quot;{newCategory}&quot;
-                  </ModalInfoTextBold>
-                  була створена
+                  Категорія &#32;&quot;{newCategory}&quot;&#32; була створена
                 </ModalInfoText>
               </Modal>
             )}

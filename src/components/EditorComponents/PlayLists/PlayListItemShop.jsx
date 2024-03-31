@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
@@ -11,38 +11,46 @@ import {
   ButtonsModalWrapper,
 } from "../../Modal/Modal.styled";
 import { Button } from "../../Button/Button";
-import { ErrorNotFound, NoData } from "../../Errors/Errors";
+import { ErrorNotFound } from "../../Errors/Errors";
+import AddCover from "../../AddCover/AddCover";
+import useValidateInput from "../../../hooks/useValidateInput";
+import { isEmptyMediaUpdateData } from "../../../helpers/helpers";
 
 import {
   useDeletePlaylistInShopMutation,
   useDeletePlaylistInShopSubCategoryMutation,
   useDeletePlaylistInShopItemMutation,
 } from "../../../redux/shopsSlice";
+import { useUpdatePlayListByIdMutation } from "../../../redux/playlistsSlice";
 import { useDeletePlaylistMutation } from "../../../redux/playlistsSlice";
 import { useDispatch } from "react-redux";
 import { shopsApi } from "../../../redux/shopsSlice";
 
-import {
-  PlaylistItem,
-  PlaylistImg,
-  PlaylistItemText,
-  PlaylistIconsWrapper,
-  PlaylistDeleteButton,
-  PlaylistCardInfo,
-  LinkToTracks,
-} from "./PlayLists.styled";
+import { LinkToTracks } from "./PlayLists.styled";
 
-import { SvgMedia, MediaButton } from "../MediaList/MediaList.styled";
+import {
+  MediaItem,
+  MediaImg,
+  MediaItemText,
+  MediaIconsWrapper,
+  SvgMedia,
+  MediaButton,
+  EditWrapper,
+  EditInputText,
+} from "../MediaList/MediaList.styled";
+
+import { ErrorValidateText } from "../../Errors/errors.styled";
 
 const PlaylistListItem = ({
   id: idPlaylist,
   title,
   icon,
-  placeListCardInfo,
-  countTracks,
   typeMediaLibrary,
   idTypeOfMediaLibrary,
   mediaLibraryName,
+  minLengthInput,
+  maxLengthInput,
+  ownShopPlaylists = [],
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -52,9 +60,51 @@ const PlaylistListItem = ({
   const [showModalSuccess, setShowModalSuccess] = useState(false);
   const [showModalSuccessDelete, setShowModalSuccessDelete] = useState(false);
   const [showModalDeletePlaylist, setShowModalDeletePlaylist] = useState(false);
+  const [showModalErrorUpdate, setShowModalErrorUpdate] = useState(false);
 
-  // const [deletePlaylistInShop, { isLoading: isLoadingDelete }] =
-  //   useDeletePlaylistInShopMutation();
+  const [disableDeleteBtn, setDisableDeleteBtn] = useState(true);
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [playlistTitle, setPlaylistTitle] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const [errorValidateMessage, isError, setIsError] = useValidateInput(
+    playlistTitle,
+    minLengthInput,
+    maxLengthInput
+  );
+
+  useEffect(() => {
+    if (!ownShopPlaylists.length) {
+      setDisableDeleteBtn(false);
+      return;
+    }
+    ownShopPlaylists.map((item) => {
+      if (item._id === idPlaylist) {
+        setDisableDeleteBtn(false);
+      }
+    });
+  }, [idPlaylist, ownShopPlaylists]);
+
+  const [
+    updatePlaylist,
+    {
+      isLoading: isLoadingUpdatePlaylist,
+      isSuccess: isSuccessUpdatePlaylist,
+      isError: isErrorUpdatePlaylist,
+      error: errorUpdatePlaylist,
+    },
+  ] = useUpdatePlayListByIdMutation();
+
+  const [
+    deletePlaylistInShop,
+    {
+      isLoading: isLoadingDeletePlaylistInShop,
+      isSuccess: isSuccessDeletePlaylistInShop,
+      error: errorDeletePlaylistInShop,
+      isError: isErrorDeletePlaylistInShop,
+    },
+  ] = useDeletePlaylistInShopMutation();
 
   const [
     deletePlaylistInShopSubCategory,
@@ -79,9 +129,6 @@ const PlaylistListItem = ({
   const [deletePlayList, { isSuccess: isSuccessDeletePlaylist }] =
     useDeletePlaylistMutation();
 
-  const mediaLibrary = `/editor/medialibrary`;
-  const newPlaylists = `/editor/medialibrary/newplaylists/${idPlaylist}/tracks`;
-
   let isLoadingDelete;
   let errorDelete;
   let isErrorDelete;
@@ -104,15 +151,21 @@ const PlaylistListItem = ({
       shopType = "Категорія";
       break;
     case "shop":
-      isLoadingDelete = isLoadingDeletePlaylistInShopItem;
-      isSuccessDelete = isSuccessDeletePlaylistInShopItem;
-      errorDelete = errorDeletePlaylistInShopItem;
-      isErrorDelete = isErrorDeletePlaylistInShopItem;
+      isLoadingDelete = isLoadingDeletePlaylistInShop;
+      isSuccessDelete = isSuccessDeletePlaylistInShop;
+      errorDelete = errorDeletePlaylistInShop;
+      isErrorDelete = isErrorDeletePlaylistInShop;
       shopType = "Категорія";
       break;
     default:
       return console.log("Нету такого типа, иди нахуй");
   }
+
+  const invalidateShopsTag = () => {
+    dispatch(
+      shopsApi.util.invalidateTags(["Shops", "ShopItem", "SubShopItem"])
+    );
+  };
 
   const deleteMediaItem = () => {
     switch (typeMediaLibrary) {
@@ -135,13 +188,15 @@ const PlaylistListItem = ({
             }
           });
         break;
+      case "shop":
+        deletePlaylistInShop({ idTypeOfMediaLibrary, idPlaylist })
+          .unwrap()
+          .then(() => setShowModalSuccessDelete(true))
+          .catch(() => setShowModalError(true));
+        break;
       default:
         return console.log("Нету такого типа, иди нахуй");
     }
-  };
-
-  const PropsPlayListItem = {
-    marginRight: placeListCardInfo ? "16px" : "auto",
   };
 
   const closeModalError = () => {
@@ -151,36 +206,119 @@ const PlaylistListItem = ({
   const closeModalSuccess = () => {
     return setShowModalSuccessDelete(false);
   };
+  const handleCloseEdit = () => {
+    setSelectedImage(null);
+    setIsEditing(false);
+    setIsError(false);
+  };
+  const handleChooseCover = (data) => setSelectedImage(data);
+
+  const updatePlaylistItem = async (title) => {
+    const formData = new FormData();
+
+    if (!selectedImage) {
+      formData.append("playListName", playlistTitle);
+    }
+
+    if (playlistTitle === title) {
+      formData.append("picsURL", selectedImage);
+      formData.append("type", "playlist");
+    }
+
+    if (selectedImage && playlistTitle !== title && playlistTitle !== "") {
+      formData.append("playListName", playlistTitle);
+      formData.append("picsURL", selectedImage);
+      formData.append("type", "playlist");
+    }
+
+    try {
+      await updatePlaylist({ id: idPlaylist, formData }).unwrap();
+
+      handleCloseEdit();
+
+      invalidateShopsTag();
+    } catch (error) {
+      setShowModalErrorUpdate(true);
+      handleCloseEdit();
+    }
+  };
+
+  const editPlaylist = () => {
+    setIsEditing(true);
+    setPlaylistTitle(title);
+  };
+
+  if (isEditing) {
+    return (
+      <>
+        <MediaItem isError={isError} isEditing={isEditing}>
+          {isError && (
+            <ErrorValidateText>{errorValidateMessage}</ErrorValidateText>
+          )}
+          <EditWrapper>
+            <AddCover
+              cover={icon}
+              coverAlt={title}
+              handleChooseCover={handleChooseCover}
+            />
+          </EditWrapper>
+          <EditInputText
+            type="text"
+            size={17}
+            minLength={minLengthInput}
+            maxLength={maxLengthInput}
+            value={playlistTitle}
+            onChange={(e) => setPlaylistTitle(e.target.value)}
+            autoFocus={true}
+          />
+          <MediaIconsWrapper>
+            <MediaButton
+              type="button"
+              onClick={() => updatePlaylistItem(title)}
+              disabled={isEmptyMediaUpdateData(
+                playlistTitle,
+                title,
+                isError,
+                selectedImage
+              )}
+            >
+              <SvgMedia width="24" height="24">
+                <use href={`${symbol}#icon-check-in`}></use>
+              </SvgMedia>
+            </MediaButton>
+            <MediaButton type="button" onClick={handleCloseEdit}>
+              <SvgMedia width="24" height="24">
+                <use href={`${symbol}#icon-close`}></use>
+              </SvgMedia>
+            </MediaButton>
+          </MediaIconsWrapper>
+        </MediaItem>
+      </>
+    );
+  }
 
   return (
     <>
-      <PlaylistItem>
+      <MediaItem>
         <LinkToTracks
           key={idPlaylist}
-          to={
-            location.pathname === mediaLibrary
-              ? `newplaylists/${idPlaylist}/tracks`
-              : `${idPlaylist}/tracks`
-          }
+          to={`${idPlaylist}/tracks`}
           state={{ from: location }}
-          disabled={placeListCardInfo ? true : false}
         >
-          <PlaylistImg
-            marginRight={PropsPlayListItem.marginRight}
-            src={BASE_URL + "/" + icon}
-            alt={title}
-          />
-          <PlaylistItemText>{title}</PlaylistItemText>
+          <MediaImg src={BASE_URL + "/" + icon} alt={title} />
+          <MediaItemText>{title}</MediaItemText>
         </LinkToTracks>
-        <PlaylistIconsWrapper>
-          <SvgMedia width="24" height="24">
-            <use href={`${symbol}#icon-pen`}></use>
-          </SvgMedia>
+        <MediaIconsWrapper>
+          <MediaButton type="button" onClick={editPlaylist}>
+            <SvgMedia width="24" height="24">
+              <use href={`${symbol}#icon-pen`}></use>
+            </SvgMedia>
+          </MediaButton>
 
           <MediaButton
             type="button"
             onClick={() => setShowModalDeletePlaylist(true)}
-            disabled={isLoadingDelete}
+            disabled={isLoadingDelete || disableDeleteBtn}
           >
             {isLoadingDelete ? (
               <SvgMedia width="24" height="24" stroke="#888889">
@@ -192,8 +330,9 @@ const PlaylistListItem = ({
               </SvgMedia>
             )}
           </MediaButton>
-        </PlaylistIconsWrapper>
-      </PlaylistItem>
+        </MediaIconsWrapper>
+      </MediaItem>
+
       {showModalDeletePlaylist && (
         <Modal
           width={"567px"}
@@ -201,10 +340,7 @@ const PlaylistListItem = ({
           showCloseButton={true}
           flexDirection={"column"}
         >
-          <ModalInfoText>
-            Видалити тільки з
-            <ModalInfoTextBold>{mediaLibraryName}</ModalInfoTextBold> ?
-          </ModalInfoText>
+          <ModalInfoText>Видалити тільки з {mediaLibraryName}?</ModalInfoText>
           <ButtonsModalWrapper>
             <Button
               type={"button"}
@@ -223,7 +359,7 @@ const PlaylistListItem = ({
               padding={"12px 26px"}
               onClick={() => {
                 setShowModalDeletePlaylist(false);
-                deletePlayList(idPlaylist).then(() => {
+                deletePlayList({ id: idPlaylist }).then(() => {
                   setShowModalSuccessDelete(true);
                   dispatch(
                     shopsApi.util.invalidateTags([
@@ -280,11 +416,24 @@ const PlaylistListItem = ({
           </ModalInfoText>
         </Modal>
       )}
-      {/* {data && (
-        <Modal width={"814px"}>
-          <p>{data.message}</p>
+      {showModalErrorUpdate && (
+        <Modal
+          width={"394px"}
+          onClose={() => setShowModalErrorUpdate(false)}
+          showCloseButton={true}
+        >
+          <ModalInfoText fontSize={"20px"} marginBottom={"34px"}>
+            {isErrorUpdatePlaylist &&
+            errorUpdatePlaylist.data?.code === "4091" ? (
+              <ErrorNotFound
+                error={`Плейлист ${errorUpdatePlaylist.data?.object} вже використовується`}
+              />
+            ) : (
+              <ErrorNotFound error={errorUpdatePlaylist.data?.message} />
+            )}
+          </ModalInfoText>
         </Modal>
-      )} */}
+      )}
     </>
   );
 };

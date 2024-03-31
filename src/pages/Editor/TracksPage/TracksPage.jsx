@@ -12,7 +12,7 @@ import { Loader } from "../../../components/Loader/Loader";
 import SortTracks from "../../../components/EditorComponents/Sort/SortTracks";
 import SearchTracks from "../SearchTracks/SearchTracks";
 import RowsTrackPage from "./RowsTrackPage";
-
+import BackButton from "../../../components/EditorComponents/BackButton/BackButton";
 import {
   useGetPlaylistByIdQuery,
   useUploadTracksInPlaylistMutation,
@@ -119,18 +119,29 @@ const TracksPage = () => {
   console.log("isSearchResultFail", isSearchResultFail);
   return (
     <>
+      {console.log(data)}
       {error?.status === 500 && isError && <Error500 />}
       {error?.status !== 500 && isError && <ErrorNotFound />}
       {!isSuccess && !error && <Loader />}
 
-      {data?.totalTracks !== undefined && (
+      {data?.totalTracks !== undefined && !isError && (
         <>
-          <AddTracks
-            iconButton={`${symbol}#icon-plus`}
-            textButton={"Музику"}
-            playlistId={playlistId}
-            uploadTrackInPlaylist={uploadTrackInPlaylist}
-          />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginBottom: "24px",
+            }}
+          >
+            <BackButton playlistName={data.playlist.playListName} />
+            <AddTracks
+              iconButton={`${symbol}#icon-plus`}
+              textButton={"Музику"}
+              playlistId={playlistId}
+              uploadTrackInPlaylist={uploadTrackInPlaylist}
+              marginBottom={"0"}
+            />
+          </div>
           <div
             style={{
               display: "flex",

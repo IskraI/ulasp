@@ -17,6 +17,7 @@ const AddTracks = ({
   playlistId,
   uploadTrack,
   uploadTrackInPlaylist,
+  marginBottom,
 }) => {
   const [selectedTracks, setSelectedTracks] = useState([]);
 
@@ -88,7 +89,7 @@ const AddTracks = ({
 
   return (
     <>
-      <ControlWrapper>
+      <ControlWrapper marginBottom={marginBottom}>
         <FormControlAddTrack autoComplete="off">
           <ButtonLabel htmlFor="tracks_input">
             <svg width="24" height="24" style={{ marginRight: "8px" }}>

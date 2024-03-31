@@ -1,7 +1,9 @@
 import PropTypes from "prop-types";
-import symbol from "../../../assets/symbol.svg";
-import { SvgMedia } from "../MediaList/MediaList.styled";
 import { useState, useCallback } from "react";
+import symbol from "../../../assets/symbol.svg";
+
+import { SortBtn, SvgSort } from "./SortTracks.styled";
+import { SvgMedia } from "../MediaList/MediaList.styled";
 
 const SortTracks = ({
   onClick,
@@ -66,14 +68,9 @@ const SortTracks = ({
 
   return (
     <>
-      <button
+      <SortBtn
         type="button"
-        style={{
-          background: "none",
-          border: "none",
-          marginTop: marginTop ? marginTop : "auto",
-          marginLeft: "24px",
-        }}
+        marginTop={marginTop}
         onMouseEnter={() => {
           if (prefetch) {
             omMouseEnter();
@@ -84,10 +81,10 @@ const SortTracks = ({
           onClick(switchForSort());
         }}
       >
-        <SvgMedia width="24" height="24" transformIcon={rotateIcon}>
+        <SvgSort width="28" height="28" transformIcon={rotateIcon}>
           <use href={`${symbol}#${selectIcon()}`}></use>
-        </SvgMedia>
-      </button>
+        </SvgSort>
+      </SortBtn>
     </>
   );
 };

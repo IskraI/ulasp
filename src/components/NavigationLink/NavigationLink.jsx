@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { NavigationLink } from "./NavigationLink.styled";
+import { NavigationLink, Wrapper } from "./NavigationLink.styled";
 
 const MediaNavigationLink = ({ link, showNavigationLink }) => {
   const MediaNavigationLinkProps = {
@@ -7,12 +7,14 @@ const MediaNavigationLink = ({ link, showNavigationLink }) => {
   };
 
   return (
-    <NavigationLink
-      to={link}
-      shownavigationlink={MediaNavigationLinkProps.showNavigationLink}
-    >
-      Дивитись всі
-    </NavigationLink>
+    <Wrapper>
+      <NavigationLink
+        to={link}
+        shownavigationlink={MediaNavigationLinkProps.showNavigationLink}
+      >
+        Дивитись всі
+      </NavigationLink>
+    </Wrapper>
   );
 };
 

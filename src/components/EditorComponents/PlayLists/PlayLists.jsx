@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
@@ -9,6 +9,7 @@ import PlaylistListItem from "./PlayListItem";
 import { Modal } from "../../Modal/Modal";
 import symbol from "../../../assets/symbol.svg";
 import { ErrorNotFound, NoData } from "../../Errors/Errors";
+import { ModalInfoText } from "../../Modal/Modal.styled";
 
 import { useCreatePlaylistMutation } from "../../../redux/playlistsSlice";
 import { useCreatePlaylistInGenreMutation } from "../../../redux/genresSlice";
@@ -24,22 +25,64 @@ const LatestPlaylists = ({
   error,
   showNavigationLink,
   subCategory,
+  minLengthInput = 2,
+  maxLengthInput = 29,
 }) => {
   const [showModal, setShowModal] = useState(false);
+  const [showModalSuccess, setShowModalSuccess] = useState(false);
+
+  const [showModalError, setShowModalError] = useState(false);
+
   const [selectedPlaylistAvatar, setSelectedPlaylistAvatar] = useState(null);
 
   const { genreId, shopSubCategoryId } = useParams();
 
   const [
     createPlaylist,
-    { isSuccess, isLoading: isLoadingCreatePlaylist, isError },
+    {
+      data: dataCreatePlaylist,
+      isSuccess: isSuccessCreatePlaylist,
+      isLoading: isLoadingCreatePlaylist,
+      isError: isErrorCreatePlaylist,
+      error: errorCreatePlaylist,
+    },
   ] = useCreatePlaylistMutation();
 
-  const [createPlaylistInGenre, { isSuccess: success }] =
-    useCreatePlaylistInGenreMutation();
+  const [
+    createPlaylistInGenre,
+    {
+      data: dataCreatePlaylistInGenre,
+      isSuccess: isSuccessCreatePlaylistInGenre,
+      isError: isErrorCreatePlaylistInGenre,
+      error: errorCreatePlaylistInGenre,
+    },
+  ] = useCreatePlaylistInGenreMutation();
+
+  const dataCreate = dataCreatePlaylist
+    ? dataCreatePlaylist
+    : dataCreatePlaylistInGenre;
+
+  const isSuccessCreate = isSuccessCreatePlaylist
+    ? isSuccessCreatePlaylist
+    : isSuccessCreatePlaylistInGenre;
+
+  const isErrorCreate = isErrorCreatePlaylist
+    ? isErrorCreatePlaylist
+    : isErrorCreatePlaylistInGenre;
+
+  const errorCreate = isErrorCreatePlaylist
+    ? errorCreatePlaylist
+    : errorCreatePlaylistInGenre;
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (isSuccessCreate) {
+        setShowModalSuccess(false);
+      }
+    }, 2000);
+  }, [isSuccessCreate]);
 
   const handleChoosePlaylistAvatar = (event) => {
-    console.log("event", event);
     let file;
 
     if (event.target.files[0] !== undefined) {
@@ -47,7 +90,6 @@ const LatestPlaylists = ({
     }
     if (file) {
       setSelectedPlaylistAvatar(file);
-      console.log("file", file);
     }
   };
 
@@ -63,10 +105,13 @@ const LatestPlaylists = ({
 
   const handleSubmitPlaylist = async (data) => {
     try {
-      await createPlaylist(formDataFunction(data)).unwrap();
+      const formData = formDataFunction(data);
+      await createPlaylist(formData).unwrap();
       closeModal();
+      setShowModalSuccess(true);
     } catch (error) {
       console.log(error);
+      setShowModalError(true);
     }
   };
 
@@ -75,8 +120,10 @@ const LatestPlaylists = ({
       const formData = formDataFunction(data);
       await createPlaylistInGenre({ genreId, formData }).unwrap();
       closeModal();
+      setShowModalSuccess(true);
     } catch (error) {
       console.log(error);
+      setShowModalError(true);
     }
   };
 
@@ -106,8 +153,6 @@ const LatestPlaylists = ({
     return setShowModal(() => !showModal);
   };
 
-  console.log("showNavigationLink", showNavigationLink);
-
   return (
     <>
       <ControlMediateca
@@ -131,7 +176,9 @@ const LatestPlaylists = ({
                 title={playListName}
                 icon={playListAvatarURL}
                 genre={genre}
-                subCategory={true}
+                subCategory={subCategory}
+                minLengthInput={minLengthInput}
+                maxLengthInput={maxLengthInput}
               />
             ))}
           </PlaylistList>
@@ -158,6 +205,8 @@ const LatestPlaylists = ({
                 valueInputSecond={"playlist"}
                 placeholderFirst={`Назва плейлисту у жанрі ${genre}*`}
                 cover={true}
+                minLength={minLengthInput}
+                maxLength={maxLengthInput}
               />
             </>
           ) : (
@@ -174,6 +223,8 @@ const LatestPlaylists = ({
                 valueInputSecond={"playlist"}
                 placeholderFirst={"Назва плейлисту*"}
                 cover={true}
+                minLength={minLengthInput}
+                maxLength={maxLengthInput}
               />
             )
           )}
@@ -192,6 +243,32 @@ const LatestPlaylists = ({
               cover={true}
             />
           )} */}
+        </Modal>
+      )}
+      {showModalSuccess && isSuccessCreate && !isErrorCreate && (
+        <Modal
+          width={"394px"}
+          onClose={() => setShowModalSuccess(false)}
+          showCloseButton={true}
+        >
+          <ModalInfoText fontSize={"20px"} marginBottom={"34px"}>
+            Новий плейлист був створений
+          </ModalInfoText>
+        </Modal>
+      )}
+      {showModalError && isErrorCreate && (
+        <Modal
+          width={"394px"}
+          onClose={() => setShowModalError(false)}
+          showCloseButton={true}
+        >
+          <ModalInfoText>
+            {(
+              <ErrorNotFound
+                error={`Плейлист ${errorCreate.data.object} вже використовується`}
+              />
+            ) ?? <ErrorNotFound />}
+          </ModalInfoText>
         </Modal>
       )}
     </>

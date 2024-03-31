@@ -8,15 +8,17 @@ import PlaylistListItem from "./PlayListItemShop";
 import { Modal } from "../../Modal/Modal";
 import symbol from "../../../assets/symbol.svg";
 import { ErrorNotFound } from "../../Errors/Errors";
+import useChooseAvatar from "../../../hooks/useChooseAvatar";
 
 import { PlaylistWrapper, PlaylistList } from "./PlayLists.styled";
-import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
+import { ModalInfoText } from "../../Modal/Modal.styled";
 import { LoaderButton } from "../../Loader/Loader";
-import { PlaylistItem } from "./PlayLists.styled";
+import { MediaItem } from "../MediaList/MediaList.styled";
 
 const Playlists = ({
   title,
   data: playlists = [],
+  ownShopPlaylists = [],
   isFetchingPlaylist,
   error,
   showNavigationLink,
@@ -30,31 +32,20 @@ const Playlists = ({
   isErrorCreatePlaylist,
   errorCreatePlaylist,
   newPlaylistName,
+  minLengthInput = 2,
+  maxLengthInput = 29,
 }) => {
-  console.log(playlists);
-
   const [showModal, setShowModal] = useState(false);
   const [showModalSuccess, setShowModalSuccess] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
 
-  const [selectedPlaylistAvatar, setSelectedPlaylistAvatar] = useState(null);
+  const [avatar, setAvatar, clearAvatar] = useChooseAvatar();
 
-  const handleChoosePlaylistAvatar = (event) => {
-    let file;
-
-    if (event.target.files[0] !== undefined) {
-      file = event.target.files[0];
+  useEffect(() => {
+    if (avatar !== undefined || null) {
+      onChangePlaylistAvatar(avatar);
     }
-    if (file) {
-      setSelectedPlaylistAvatar(file);
-    }
-  };
-
-  useEffect(
-    () => onChangePlaylistAvatar(selectedPlaylistAvatar),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedPlaylistAvatar]
-  );
+  }, [avatar, onChangePlaylistAvatar]);
 
   useEffect(() => {
     if (closeCreatePlaylistModal() === true) {
@@ -80,7 +71,7 @@ const Playlists = ({
   }, [showModalSuccess]);
 
   const clearImageCover = () => {
-    setSelectedPlaylistAvatar(null);
+    clearAvatar(null);
   };
 
   const closeModal = () => {
@@ -100,8 +91,6 @@ const Playlists = ({
     return setShowModalError(false);
   };
 
-  console.log(error);
-
   return (
     <>
       <ControlMediateca
@@ -119,10 +108,10 @@ const Playlists = ({
         <PlaylistWrapper>
           <PlaylistList>
             {isLoadingCreatePlaylist && (
-              <PlaylistItem>
+              <MediaItem>
                 <LoaderButton />
                 <p>Playlist creating...</p>
-              </PlaylistItem>
+              </MediaItem>
             )}
             {playlists.map(({ _id, playListName, playListAvatarURL }) => (
               <PlaylistListItem
@@ -134,6 +123,9 @@ const Playlists = ({
                 typeMediaLibrary={typeMediaLibrary}
                 idTypeOfMediaLibrary={idTypeOfMediaLibrary}
                 isLoadingCreatePlaylist={isLoadingCreatePlaylist}
+                minLengthInput={minLengthInput}
+                maxLengthInput={maxLengthInput}
+                ownShopPlaylists={ownShopPlaylists}
               />
             ))}
           </PlaylistList>
@@ -147,8 +139,8 @@ const Playlists = ({
         <Modal width={"814px"} onClose={closeModal} showCloseButton={true}>
           <ModalForm
             onSubmit={handleCreatePlaylist}
-            changePlayListAvatar={handleChoosePlaylistAvatar}
-            img={selectedPlaylistAvatar}
+            changePlayListAvatar={setAvatar}
+            img={avatar}
             clearImageCover={clearImageCover}
             idInputImg={"picsURL"}
             idInputFirst={"playListName"}
@@ -157,6 +149,8 @@ const Playlists = ({
             placeholderFirst={"Назва плейлисту*"}
             cover={true}
             marginTopInputFirst="24px"
+            minLength={minLengthInput}
+            maxLength={maxLengthInput}
           />
         </Modal>
       )}
@@ -169,11 +163,7 @@ const Playlists = ({
             showCloseButton={true}
           >
             <ModalInfoText marginBottom={"34px"}>
-              Плейлист
-              <ModalInfoTextBold>
-                &quot;{newPlaylistName}&quot;
-              </ModalInfoTextBold>
-              був створений
+              Плейлист &#32; &quot;{newPlaylistName}&quot;&#32; був створений
             </ModalInfoText>
           </Modal>
         )}

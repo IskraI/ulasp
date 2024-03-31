@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import MediaListItem from "../../../components/EditorComponents/MediaList/MediaList";
 import MediaNavigationLink from "../../../components/NavigationLink/NavigationLink";
@@ -24,7 +24,6 @@ import {
 import { ShopsWrapper, ShopsList } from "./Shops.styled";
 import {
   ModalInfoText,
-  ModalInfoTextBold,
 } from "../../../components/Modal/Modal.styled";
 
 const ShopsPage = ({ showNavigationLink, limit }) => {
@@ -32,6 +31,9 @@ const ShopsPage = ({ showNavigationLink, limit }) => {
   const [showModalSuccessCreate, setShowModalSuccessCreate] = useState(false);
 
   const [showModalError, setShowModalError] = useState(false);
+
+  const minLengthInput = 2;
+  const maxLengthInput = 29;
 
   const {
     data: shops,
@@ -41,7 +43,13 @@ const ShopsPage = ({ showNavigationLink, limit }) => {
     isSuccess: isSuccessAllShops,
   } = useGetAllShopsQuery(`?&limit=${limit ? 12 : ""}`);
 
-  console.log(shops);
+  useEffect(() => {
+    if (showModalSuccessCreate) {
+      setTimeout(() => {
+        setShowModalSuccessCreate(false);
+      }, 2000);
+    }
+  }, [showModalSuccessCreate]);
 
   const [
     createShop,
@@ -124,6 +132,8 @@ const ShopsPage = ({ showNavigationLink, limit }) => {
                   fieldForUpdate={"shopCategoryName"}
                   typeCover={"shop"}
                   linkToPage={linkToPage}
+                  minLengthInput={minLengthInput}
+                  maxLengthInput={maxLengthInput}
                 />
               ))}
             </ShopsList>
@@ -143,19 +153,19 @@ const ShopsPage = ({ showNavigationLink, limit }) => {
             valueInputSecond={"shop"}
             placeholderFirst={"Тип закладу*"}
             cover={false}
+            minLength={minLengthInput}
+            maxLength={maxLengthInput}
           />
         </Modal>
       )}
       {showModalSuccessCreate && isSuccessCreateShop && !isErrorCreateShop && (
         <Modal
-          width={"394px"}
+          width={"500px"}
           onClose={closeModalSuccessCreate}
           showCloseButton={true}
         >
           <ModalInfoText marginBottom={"34px"}>
-            Тип закладу
-            <ModalInfoTextBold>&quot;{newShop}&quot;</ModalInfoTextBold>
-            був створений
+            Тип закладу &quot;{newShop}&quot;&#32; був створений
           </ModalInfoText>
         </Modal>
       )}
