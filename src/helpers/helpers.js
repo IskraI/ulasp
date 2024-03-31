@@ -71,9 +71,7 @@ export const compareArray = function (a1, a2) {
 export function findPage(index, itemsPerPage) {
   return Math.ceil((index + 1) / itemsPerPage);
 }
-
-
-  export const isEmptyMediaUpdateData = (firstStr, secondStr, isError, image) => {
+export const isEmptyMediaUpdateData = (firstStr, secondStr, isError, image) => {
     if (isError) {
       // console.log("Должны быть тут");
       return true;
@@ -90,3 +88,20 @@ export function findPage(index, itemsPerPage) {
     // console.log("Кнопка включена");
     return false;
   };
+export function getQuarterRange(quarter, year) {
+  const startMonth = (quarter - 1) * 3 + 1; // Начальный месяц квартала
+  const startDate = new Date(year, startMonth - 1, 1); // Начало квартала
+  const endDate = new Date(year, startMonth + 2, 0); // Конец квартала
+
+  const yearEnd = endDate.getFullYear();
+  const monthEnd = String(endDate.getMonth() + 1).padStart(2, "0");
+  const dayEnd = String(endDate.getDate()).padStart(2, "0");
+  const formattedEndDate = `${yearEnd}-${monthEnd}-${dayEnd}`;
+
+  const yearStart = startDate.getFullYear();
+  const monthStart = String(startDate.getMonth() + 1).padStart(2, "0");
+  const dayStart = String(startDate.getDate()).padStart(2, "0");
+  const formattedStartDate = `${yearStart}-${monthStart}-${dayStart}`;
+
+  return { formattedStartDate, formattedEndDate };
+}

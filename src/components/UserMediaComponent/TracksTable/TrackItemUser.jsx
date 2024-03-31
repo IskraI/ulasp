@@ -5,7 +5,8 @@ import { useState, useEffect, useRef, useId } from "react";
 import { sToStr, compareArray } from "../../../helpers/helpers";
 import { BASE_URL } from "../../../constants/constants";
 import { WithOutGenre } from "../../Errors/Errors";
-
+import { Modal } from "../../Modal/Modal";
+import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
 import symbol from "../../../assets/symbol.svg";
 
 import {
@@ -21,6 +22,8 @@ import {
   CheckBoxSVG,
   CheckBoxInput,
 } from "../../CustomCheckBox/CustomCheckBox.styled";
+import DotsBtn from "./DotsButton.jsx";
+import PopUpButtons from "./PopUpButtons.jsx";
 
 import {
   TableCell,
@@ -51,6 +54,7 @@ const TrackItem = ({
   getCheckedTrackId,
   addTrackToCheckedList,
   deleteCheckedTrackId,
+  isAddTrack,
 }) => {
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
@@ -76,6 +80,24 @@ const TrackItem = ({
       ({ genre }) => !filteredGenre[genre] && (filteredGenre[genre] = 1)
     );
     return uniqGenre;
+  };
+
+  const [showPopUp, setShowPopUp] = useState(false);
+  const PopUpToogle = () => {
+    setShowPopUp(!showPopUp);
+  };
+
+  const removeTrackFromAdd = () => {
+    console.log("removeTrackFromAdd :>> id", idTrack);
+  };
+  const addTrackFromAdd = () => {
+    console.log("addTrackFromAdd :>> id", idTrack);
+  };
+  const [showModalAddTrackToPlaylist, setShowModalAddTrackToPlaylist] =
+    useState(false);
+
+  const addTrackToPlaylist = () => {
+    setShowModalAddTrackToPlaylist(true);
   };
 
   const PlayButtonToogle = () => {
@@ -145,7 +167,7 @@ const TrackItem = ({
         }}
       >
         <TableCell showData={showData[0]}>
-          <CheckBoxLabel htmlFor={idTrack}>
+          {/* <CheckBoxLabel htmlFor={idTrack}>
             <CheckBoxSpan>
               <CheckBoxSVG width="14px" height="15px">
                 {isChecked && <use href={`${symbol}#icon-check-in`}></use>}
@@ -160,7 +182,7 @@ const TrackItem = ({
                 selectTrack(idTrack);
               }}
             />
-          </CheckBoxLabel>
+          </CheckBoxLabel> */}
         </TableCell>
         <TableCell showData={showData[1] || false}>
           <PlayButton
@@ -248,8 +270,35 @@ const TrackItem = ({
         ) : (
           <TableCell showData={false}></TableCell>
         )}
-        <TableCell showData={showData[8] || false}></TableCell>
+        <TableCell showData={showData[8] || false}>
+          {showPopUp && (
+            <PopUpButtons
+              removeTrackFromAddTrackFn={removeTrackFromAdd}
+              addTrackToAddTrackFn={addTrackFromAdd}
+              isAddTrack={isAddTrack}
+              addTrackToPlaylistFn={addTrackToPlaylist}
+            />
+          )}
+          <DotsBtn
+            popUpToogle={PopUpToogle}
+            disablePopUp={() => setShowPopUp(false)}
+            icon={`${symbol}#icon-more-dots`}
+          />
+        </TableCell>
       </TrStyle>
+      {showModalAddTrackToPlaylist && (
+        <Modal
+          width={"494px"}
+          padding={"16px"}
+          borderColor={"#FFF3BF"}
+          borderStyle={"solid"}
+          borderWidth={"1px"}
+          onClose={() => setShowModalAddTrackToPlaylist(false)}
+          bcgTransparent={true}
+        >
+          <ModalInfoText fontSize={"16px"}>Плейлисти</ModalInfoText>
+        </Modal>
+      )}
     </>
   );
 };

@@ -17,7 +17,7 @@ const UserPage = () => {
         <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
-        <Player tracks={playerState.src} isFirst={playerState.isFirstPlay} />
+        <Player tracks={playerState.src} />
       </PageSubpage>
     </PageSection>
   );

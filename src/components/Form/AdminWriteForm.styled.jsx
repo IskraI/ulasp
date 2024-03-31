@@ -77,3 +77,27 @@ export const FormInput = styled.input`
   background: rgba(234, 234, 234, 0.32);
   margin-top: 25px;
 `;
+export const Textarea = styled.textarea`
+  background-color: rgba(234, 234, 234, 0.32);
+  width: 422px;
+  height: ${(props) => (props.height ? props.height : "213px")};
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  border-radius: 10px;
+  outline: none;
+  border: 0.25px solid rgba(23, 22, 28, 0.5);
+  resize: none;
+  margin-top: ${(props) => (props.marginTop ? props.marginTop : "25px")};
+  ::placeholder {
+    color: rgba(0, 0, 0, 0.3);
+    font-size: 20px;
+    position: absolute;
+    top: 8px;
+    left: 8px;
+  }
+`;

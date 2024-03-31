@@ -27,7 +27,22 @@ export const dataUsersApi = createApi({
       },
       providesTags: ["dataUsers"],
     }),
-
+    //запрос акта сверки юзером
+    sendMailUserForActById: builder.mutation({
+      query: ({ id, ...body }) => ({
+        url: `/user/${id}/actemail`,
+        method: "POST",
+        body: body,
+      }),
+    }),
+    //написать администратору
+    sendMailUserToAdmin: builder.mutation({
+      query: ({ id, ...body }) => ({
+        url: `/user/${id}/emailtoadmin`,
+        method: "POST",
+        body: body,
+      }),
+    }),
     delUserById: builder.mutation({
       query: ({ id, admin = false }) => ({
         url: admin ? `admin/${id}` : `admin/users/${id}`,
@@ -105,6 +120,14 @@ export const dataUsersApi = createApi({
       }),
       providesTags: ["reportUser"], // При успешном выполнении инвалидирует тег "reportUser"
     }),
+    countListensForUserById: builder.mutation({
+      query: (userData) => ({
+        url: `user/countlistens`,
+        method: "POST",
+        body: userData, // Здесь передается объект userData с данными из формы
+      }),
+      providesTags: ["reportUser"], // При успешном выполнении инвалидирует тег "reportUser"
+    }),
 
     createFopUser: builder.mutation({
       query: (body) => ({
@@ -171,6 +194,8 @@ export const dataUsersApi = createApi({
 });
 
 export const {
+  useSendMailUserToAdminMutation,
+  useSendMailUserForActByIdMutation,
   useSendMailUserByIdMutation,
   useGetAdminByIdQuery,
   useGetUsersListQuery,
@@ -189,4 +214,5 @@ export const {
   useCountListensByUserByIdMutation,
   useUnblockEditorByIdMutation,
   useEditorLoginPasswordUpdateMutation,
+  useCountListensForUserByIdMutation,
 } = dataUsersApi;

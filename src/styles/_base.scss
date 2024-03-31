@@ -144,3 +144,52 @@ button {
     overflow: visible !important;
   }
 }
+
+input[type="radio"] {
+  display: none;
+}
+
+/* Стилизация для контейнера радиокнопки */
+.radio-container {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  width: 12px;
+  // margin-right: 12px; /* Расстояние между радиокнопками */
+}
+
+/* Оформление видимой части радиокнопки */
+.radio-container::before {
+  content: "";
+  display: inline-block;
+  width: 10px; /* Ширина видимой части */
+  height: 10px; /* Высота видимой части */
+  border: 1px solid #49689e; /* Обводка */
+  border-radius: 50%; /* Круглая форма */
+  background-color: #a3abb9;
+  position: absolute;
+
+  left: 0;
+  top: 30%;
+}
+
+/* Оформление точки в центре радиокнопки (выбранной) */
+.radio-container::after {
+  content: "";
+  display: block;
+  width: 7px; /* Размер точки */
+  height: 7px; /* Размер точки */
+  background-color: #4d6075; /* Цвет точки */
+  border-radius: 50%; /* Круглая форма */
+  position: absolute;
+  left: 32%;
+  top: 43%;
+  transform: translate(-20%, -50%);
+  opacity: 0; /* Изначально скрыта */
+  transition: opacity 0.2s ease-in-out; /* Плавное появление/исчезновение */
+}
+
+/* Отображение точки (выбранной) при клике на радиокнопку */
+input[type="radio"]:checked + .radio-container::after {
+  opacity: 1; /* Отображение точки */
+}

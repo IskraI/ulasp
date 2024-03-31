@@ -26,7 +26,7 @@ import {
   TrackName,
 } from "./Player.styled";
 
-const Player = ({ tracks = [], isFirst }) => {
+const Player = ({ tracks = [] }) => {
   const playerRef = useRef();
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
@@ -36,6 +36,7 @@ const Player = ({ tracks = [], isFirst }) => {
   const isLastTrack = playerState.isLastTrack;
   const isLastPage = playerState.isLastPage;
   const currentPage = playerState.currentPage;
+  const isFirst = playerState.isFirstPlay;
   const nextPage = playerState.nextPage;
   const currentPageSize = playerState.pageSize;
 
@@ -45,7 +46,7 @@ const Player = ({ tracks = [], isFirst }) => {
   const [isEndOfPlaylist, setIsEndOfPlaylist] = useState(false);
   const [currentTrackArtist, setCurrentTrackArtist] = useState("Невизначений");
   const [currentTrackName, setCurrentTrackName] = useState("Невизначений");
-
+  const [error, setError] = useState(true);
   const prefetchPage = usePrefetch("getAllTracks");
 
   const prefetchNext = useCallback(() => {
@@ -57,27 +58,39 @@ const Player = ({ tracks = [], isFirst }) => {
 
   const [dispatchListenCountTrack] = useUpdateListenCountTrackByIdMutation();
   // console.log("isFirstPlay", isFirst);
+
   const handlePlayLoadStart = async (track) => {
     if (isFirst) {
-      console.log(
-        `handlePlayLoadStart Песня с ${track} ID начала проигрываться. Отправим dispatchListenCountTrack`
-      );
+      // console.log(
+      //   `handlePlayLoadStart Песня с ${track} ID начала проигрываться. попробуем отправить счетчик dispatchListenCountTrack`
+      // );
+
       if (track) {
         try {
           // Отправка запроса в бэкенд
 
           await dispatchListenCountTrack(track);
-          console.log("Запрос в бэкенд отправлен успешно");
+
+          console.log("Счетчик Запрос в бэкенд отправлен успешно");
           dispatch(updateIsFirstPlay(false));
         } catch (error) {
           console.error("Ошибка при отправке запроса в бэкенд:", error);
         }
       } else {
         console.log(
-          "Значение track не определено. Запрос на бэкенд не отправлен."
+          "запрос не отправляли - нет Значение track не определено. Запрос на бэкенд не отправлен."
         );
       }
     }
+  };
+  // console.log("isFirst :>> ", isFirst);
+  const handlePlay = () => {
+    if (!isPlaying) {
+      dispatch(pause());
+    }
+
+    // console.log("handlePlay :>> ");
+    // handlePlayLoadStart(tracks[currentTrack]?.id);
   };
 
   const noData = tracks[currentTrack]?.trackURL === undefined;
@@ -89,6 +102,7 @@ const Player = ({ tracks = [], isFirst }) => {
     if (isPlaying || isPaused) {
       setTrackIndex(currentTrackIndex);
       setCurrentTrackArtist(tracks[currentTrack]?.artist);
+
       setCurrentTrackName(tracks[currentTrack]?.trackName);
     } else {
       setTrackIndex();
@@ -142,11 +156,16 @@ const Player = ({ tracks = [], isFirst }) => {
     setTrackIndex((currentTrack) =>
       currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
     );
-
+    console.log("handleEnd currentTrack :>> ", currentTrack);
     if (isLastTrack) {
       dispatch(setNextPage({ currentPage: nextPage }));
     }
   };
+  // console.log("playerRef :>> ", playerRef);
+
+  useEffect(() => {
+    handlePlayLoadStart(tracks[currentTrack]?.id);
+  }, [currentTrack]);
 
   return (
     <>
@@ -177,25 +196,21 @@ const Player = ({ tracks = [], isFirst }) => {
                 dispatch(pause());
               }
             }}
-            onPlay={() => {
-              if (!isPlaying) {
-                dispatch(pause());
-              }
-              // if (!isPlaying && playerState.src.length === 0) {
-              //   dispatch(
-              //     setSrcPlaying({
-              //       indexTrack: 0,
-              //     })
-              //   );
-              // } else {
-              //   dispatch(
-              //     setCurrentIndex(
-              //       currentTrack + (currentPage - 1) * currentPageSize
-              //     )
-              //   );
-              // }
-              handlePlayLoadStart(tracks[currentTrack]?.id);
-            }}
+            onPlay={handlePlay}
+            // if (!isPlaying && playerState.src.length === 0) {
+            //   dispatch(
+            //     setSrcPlaying({
+            //       indexTrack: 0,
+            //     })
+            //   );
+            // } else {
+            //   dispatch(
+            //     setCurrentIndex(
+            //       currentTrack + (currentPage - 1) * currentPageSize
+            //     )
+            //   );
+            // }
+
             onListen={() => {
               if (
                 Math.ceil(playerRef.current.audio.current.duration * 0.95) ===

@@ -103,8 +103,6 @@ const TracksPage = () => {
     setPageSize(size);
   };
 
-  console.log("data PlaylistById", data);
-
   return (
     <>
       {error?.status === "500" && <Error500 />}

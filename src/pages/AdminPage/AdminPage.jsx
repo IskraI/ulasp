@@ -10,7 +10,7 @@ import { Loader } from "../../components/Loader/Loader";
 const AdminPage = ({ user }) => {
   return (
     <PageSection>
-      <SiteBarNav user={user} />
+      <SiteBarNav />
       <PageSubpage>
         <Suspense fallback={<Loader />}>
           <Outlet />
