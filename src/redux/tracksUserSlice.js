@@ -54,7 +54,7 @@ export const tracksUserApi = createApi({
         url: `/user/tracks/removeFromAdd/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Tracks"],
+      invalidatesTags: ["TracksByUser"],
     }),
 
     addTrackToAdd: builder.mutation({
@@ -62,14 +62,14 @@ export const tracksUserApi = createApi({
         url: `/user/tracks/add/${id}`,
         method: "POST",
       }),
-      invalidatesTags: ["Tracks", "AddTrackByUsers", "TracksByUser"],
+      invalidatesTags: ["TracksByUser"],
     }),
     deleteTrack: builder.mutation({
       query: (id) => ({
         url: `/user/tracks/delete/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Tracks", "AddTrackByUsers", "TracksByUser"],
+      invalidatesTags: ["Tracks"],
     }),
 
     getAllAddTrackByUser: builder.query({
