@@ -144,7 +144,7 @@ const ShopSubCategoryPage = () => {
     dataCreateShopSubCategory?.shopSubCategory?.shopSubTypeName ??
     "Назва нової категорії не була введена";
 
-  console.log(shopCategory?.allPlaylistsInShopCategory);
+  console.log(shopCategory);
 
   return (
     <>
@@ -186,6 +186,7 @@ const ShopSubCategoryPage = () => {
           <Playlists
             title={`Плейлисти категорії "${shopCategory.shop.shopItemName}"`}
             data={shopCategory.allPlaylistsInShopCategory}
+            ownShopPlaylists={shopCategory.shop.playList}
             isFetching={isFetchingShopCategory}
             showNavigationLink={false}
             handleCreatePlaylist={handleSubmitPlayListInShopLibrary}

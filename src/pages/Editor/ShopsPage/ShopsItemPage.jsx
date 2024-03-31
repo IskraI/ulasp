@@ -45,7 +45,6 @@ const ShopsItemPage = () => {
     }
   }, [showModalSuccessCreate]);
 
-  console.log(idShopLibrary);
 
   const {
     data: shopItem,
@@ -180,8 +179,9 @@ const ShopsItemPage = () => {
             </ShopsList>
           )}
           <Playlists
-            title={`Плейлисти категорії "${shopItem.shop.shopCategoryName}"`}
+            title={`Плейлисти "${shopItem.shop.shopCategoryName}"`}
             data={shopItem.allPlaylistsInShopCategory}
+            ownShopPlaylists={shopItem.shop.playList}
             // isFetching={isFetchingShopCategory}
             showNavigationLink={false}
             handleCreatePlaylist={handleSubmitPlayListInShopLibrary}

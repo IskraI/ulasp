@@ -11,13 +11,14 @@ import { ErrorNotFound } from "../../Errors/Errors";
 import useChooseAvatar from "../../../hooks/useChooseAvatar";
 
 import { PlaylistWrapper, PlaylistList } from "./PlayLists.styled";
-import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
+import { ModalInfoText } from "../../Modal/Modal.styled";
 import { LoaderButton } from "../../Loader/Loader";
 import { MediaItem } from "../MediaList/MediaList.styled";
 
 const Playlists = ({
   title,
   data: playlists = [],
+  ownShopPlaylists = [],
   isFetchingPlaylist,
   error,
   showNavigationLink,
@@ -124,6 +125,7 @@ const Playlists = ({
                 isLoadingCreatePlaylist={isLoadingCreatePlaylist}
                 minLengthInput={minLengthInput}
                 maxLengthInput={maxLengthInput}
+                ownShopPlaylists={ownShopPlaylists}
               />
             ))}
           </PlaylistList>

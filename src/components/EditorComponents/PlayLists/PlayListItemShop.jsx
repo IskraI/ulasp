@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
@@ -50,6 +50,7 @@ const PlaylistListItem = ({
   mediaLibraryName,
   minLengthInput,
   maxLengthInput,
+  ownShopPlaylists = [],
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -61,6 +62,8 @@ const PlaylistListItem = ({
   const [showModalDeletePlaylist, setShowModalDeletePlaylist] = useState(false);
   const [showModalErrorUpdate, setShowModalErrorUpdate] = useState(false);
 
+  const [disableDeleteBtn, setDisableDeleteBtn] = useState(true);
+
   const [isEditing, setIsEditing] = useState(false);
   const [playlistTitle, setPlaylistTitle] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -70,6 +73,18 @@ const PlaylistListItem = ({
     minLengthInput,
     maxLengthInput
   );
+
+  useEffect(() => {
+    if (!ownShopPlaylists.length) {
+      setDisableDeleteBtn(false);
+      return;
+    }
+    ownShopPlaylists.map((item) => {
+      if (item._id === idPlaylist) {
+        setDisableDeleteBtn(false);
+      }
+    });
+  }, [idPlaylist, ownShopPlaylists]);
 
   const [
     updatePlaylist,
@@ -303,7 +318,7 @@ const PlaylistListItem = ({
           <MediaButton
             type="button"
             onClick={() => setShowModalDeletePlaylist(true)}
-            disabled={isLoadingDelete}
+            disabled={isLoadingDelete || disableDeleteBtn}
           >
             {isLoadingDelete ? (
               <SvgMedia width="24" height="24" stroke="#888889">
