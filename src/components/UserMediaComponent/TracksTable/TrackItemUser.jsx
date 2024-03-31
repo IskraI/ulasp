@@ -128,7 +128,7 @@ const TrackItem = ({
   //получаем список плейлистов юзера в которых нет этого трека
   const {
     data: playlistUserForAdd,
-    isLoading,
+    isLoading: isLoadingPlaylistUserForAdd,
     isError,
   } = useGetPlaylistCreatedUserWithoutTrackIdQuery(idTrack);
   //открываем модальное окно со списком плейлистов
@@ -136,20 +136,14 @@ const TrackItem = ({
     useState(false);
 
   const addTrackToPlaylistsModal = () => {
-    // console.log("playlistUserForAdd :>> ", playlistUserForAdd);
     setShowModalAddTrackToPlaylist(true);
-  };
 
-  // //хук который отправляет запрос на бек
-  // const [
-  //   addTrackToPlaylist,
-  //   { data: dataRemoveFromChart, isLoading: isLoadingRemoveFromChart },
-  // ] = useAddTrackToPlaylistUserMutation();
-  // //функция которая вызывается при клике на плейлист и вызывает хук
-  // const addTrackInPlaylistUser = () => {
-  //   console.log("playlistUserForAdd :>> ", playlistUserForAdd.id);
-  //   setShowModalAddTrackToPlaylist(true);
-  // };
+    document.body.classList.add("modal-open");
+  };
+  const handleCloseModal = () => {
+    document.body.classList.remove("modal-open");
+    setShowModalAddTrackToPlaylist(false);
+  };
 
   const PlayButtonToogle = () => {
     if (isPlayingTrack) {
@@ -327,6 +321,7 @@ const TrackItem = ({
               removeTrackFromAddTrackFn={removeTrackFromAdd}
               addTrackToAddTrackFn={addTrackToAdd}
               isAddTrack={isAddTrack}
+              isFreePlaylist={playlistUserForAdd?.length !== 0}
               addTrackToPlaylistFn={addTrackToPlaylistsModal}
             />
           )}
@@ -339,21 +334,36 @@ const TrackItem = ({
       </TrStyle>
       {showModalAddTrackToPlaylist && (
         <Modal
-          width={"494px"}
-          padding={"16px"}
+          width={"45vw"}
+          padding={"24px"}
           borderColor={"#FFF3BF"}
           borderStyle={"solid"}
           borderWidth={"1px"}
-          onClose={() => setShowModalAddTrackToPlaylist(false)}
-          bcgTransparent={true}
+          onClose={handleCloseModal}
+          showCloseButton={true}
         >
-          {!isLoading && (
-            <PlaylistsForAdd
-              title={"Плейлисти для додавання"}
-              displayPlayer={"none"}
-              data={playlistUserForAdd}
-              trackId={idTrack}
-            />
+          {!isLoadingPlaylistUserForAdd && (
+            <div
+              style={{
+                marginTop: "20px",
+                padding: "20px",
+                width: "100%",
+                height: "100%",
+                overflowY: "auto",
+              }}
+            >
+              {playlistUserForAdd?.length === 0 ? (
+                handleCloseModal()
+              ) : (
+                <PlaylistsForAdd
+                  title={`Плейлисти для додавання "${trackName}"`}
+                  displayPlayer={"none"}
+                  data={playlistUserForAdd}
+                  trackId={idTrack}
+                  // onClose={handleCloseModal}
+                />
+              )}
+            </div>
           )}
         </Modal>
       )}
@@ -366,6 +376,7 @@ const TrackItem = ({
           borderWidth={"1px"}
           onClose={() => setShowModal("")}
           bcgTransparent={true}
+          showCloseButton={true}
         >
           <ModalInfoText fontSize={"16px"}>Трек додано</ModalInfoText>
         </Modal>
@@ -379,6 +390,7 @@ const TrackItem = ({
           borderWidth={"1px"}
           onClose={() => setShowModal("")}
           bcgTransparent={true}
+          showCloseButton={true}
         >
           <ModalInfoText fontSize={"16px"}>Трек видалено</ModalInfoText>
         </Modal>

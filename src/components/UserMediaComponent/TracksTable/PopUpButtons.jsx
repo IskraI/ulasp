@@ -7,10 +7,11 @@ const PopUpButtons = ({
   addTrackToAddTrackFn,
   addTrackToPlaylistFn,
   isAddTrack,
+  isFreePlaylist,
 }) => {
   const toogleTrackInAdd = isAddTrack
-    ? "Видалити зі списку доданих"
-    : "Додати до списку доданих";
+    ? "Видалити зі списку обраних"
+    : "Додати до списку обраних";
 
   const toogleTrackInAddFn = isAddTrack
     ? removeTrackFromAddTrackFn
@@ -22,7 +23,11 @@ const PopUpButtons = ({
         <PopUpButton type="button" onClick={toogleTrackInAddFn}>
           {toogleTrackInAdd}
         </PopUpButton>
-        <PopUpButton type="button" onClick={addTrackToPlaylistFn}>
+        <PopUpButton
+          type="button"
+          onClick={addTrackToPlaylistFn}
+          disabled={!isFreePlaylist}
+        >
           Додати до плейлисту
         </PopUpButton>
       </PopUp>
