@@ -40,6 +40,17 @@ export const playlistsApi = createApi({
 
       providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
     }),
+
+    getPlaylistsWithoutTrack: builder.query({
+      query: ({ id, page = "", limit = "" }) => ({
+        url: `/editor/playlist/without/track/${id}?${
+          page && `page=${page}`
+        } & ${limit && `limit=${limit}`}`,
+      }),
+
+      providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
+    }),
+
     createPlaylist: builder.mutation({
       query: (body) => ({
         url: "/editor/playlist/create",
@@ -115,6 +126,7 @@ export const playlistsApi = createApi({
 export const {
   useGetLatestPlaylistsQuery,
   useGetPlaylistByIdQuery,
+  useGetPlaylistsWithoutTrackQuery,
   useCreatePlaylistMutation,
   useDeletePlaylistMutation,
   useUploadTracksInPlaylistMutation,
@@ -122,5 +134,4 @@ export const {
   useUpdatePlaylistPublicationMutation,
   useUpdatePlaylistSortMutation,
   useUpdatePlayListByIdMutation,
-  useDeletePlaylistWithTracksMutation,
 } = playlistsApi;

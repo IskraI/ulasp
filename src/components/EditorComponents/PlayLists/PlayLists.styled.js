@@ -9,7 +9,7 @@ export const PlaylistWrapper = styled.section`
 export const PlaylistList = styled.ul`
   display: flex;
   flex-wrap: wrap;
-  gap: 24px;
+  gap: ${({ gap }) => (gap ? gap : "24px")};
   margin-bottom: 50px;
 `;
 
