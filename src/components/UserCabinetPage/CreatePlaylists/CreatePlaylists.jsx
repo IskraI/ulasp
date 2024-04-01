@@ -69,6 +69,7 @@ const CreatePlaylists = ({
   const handleSubmitPlaylist = async (data) => {
     try {
       await createPlaylist(formDataFunction(data)).unwrap();
+
       closeModal();
     } catch (error) {
       console.log(error);

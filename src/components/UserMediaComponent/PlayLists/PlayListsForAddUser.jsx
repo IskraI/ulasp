@@ -2,7 +2,7 @@ import PlayListItemForAdd from "./PlayListsItemForAddUser";
 
 import { useSelector } from "react-redux";
 import {
-  TitleWrapper,
+  TitleWrapperModal,
   MediaList,
   TitleContainer,
   ControlWrapper,
@@ -27,11 +27,11 @@ const PlaylistsForAdd = ({
     <PlaylistModalContainer>
       {playlists.length === 0 ? (
         // onClose()
-        <TitleWrapper>нет плейлиста</TitleWrapper>
+        <TitleWrapperModal>нет плейлиста</TitleWrapperModal>
       ) : (
         <>
           <TitleContainer>
-            <TitleWrapper>{title}</TitleWrapper>
+            <TitleWrapperModal>{title}</TitleWrapperModal>
           </TitleContainer>
           {!isFetching && !error && (
             <>
