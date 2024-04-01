@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useState } from "react";
 import { Button } from "../Button/Button";
 import { TitleThird, FormInput, Textarea } from "./AdminWriteForm.styled";
@@ -6,9 +6,15 @@ import { useSendMailUserForActByIdMutation } from "../../redux/dataUsersSlice";
 import { Modal } from "../Modal/Modal";
 import { TextModal } from "../Modal/Modal.styled";
 export const ActForm = ({ user }) => {
-  const { register, handleSubmit, setValue } = useForm();
+  const { control, register, handleSubmit, setValue } = useForm();
   const [dispatchSendMail, { isLoading: isLoadingSendMail }] =
     useSendMailUserForActByIdMutation();
+
+  const textValue = useWatch({
+    control,
+    name: "actText",
+    defaultValue: "",
+  }).trim();
   const onSubmit = (data) => {
     const formData = {
       ...data,
@@ -19,6 +25,7 @@ export const ActForm = ({ user }) => {
       .unwrap()
       .then(() => {
         handleShowModal("sendact");
+        setValue("actText", "");
       })
       .catch((e) => {
         let errorMessage = e.data?.message;
@@ -53,6 +60,7 @@ export const ActForm = ({ user }) => {
           text="Запросити"
           showIcon={false}
           margintop="24px"
+          disabled={!textValue}
         ></Button>
       </form>
 

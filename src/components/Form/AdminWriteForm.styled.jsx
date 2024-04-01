@@ -21,6 +21,22 @@ export const FormInput1 = styled.input`
     color: rgba(0, 0, 0, 0.3);
     font-size: 20px;
   }
+
+  &:active {
+    border: none;
+    outline: ${(props) =>
+      props.isError
+        ? `2px solid ${colors.errorColor}`
+        : `2px solid ${colors.accentHoverColor}`};
+  }
+
+  &:focus {
+    border: none;
+    outline: ${(props) =>
+      props.isError
+        ? `2px solid ${colors.errorColor}`
+        : `2px solid ${colors.accentHoverColor}`};
+  }
 `;
 export const FormInput2 = styled.input`
   width: 421px;
@@ -99,5 +115,21 @@ export const Textarea = styled.textarea`
     position: absolute;
     top: 8px;
     left: 8px;
+  }
+
+  &:active {
+    border: none;
+    outline: ${(props) =>
+      props.isError
+        ? `2px solid ${colors.errorColor}`
+        : `2px solid ${colors.accentHoverColor}`};
+  }
+
+  &:focus {
+    border: none;
+    outline: ${(props) =>
+      props.isError
+        ? `2px solid ${colors.errorColor}`
+        : `2px solid ${colors.accentHoverColor}`};
   }
 `;

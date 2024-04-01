@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useState } from "react";
 import { Button } from "../Button/Button";
 import { Modal } from "../Modal/Modal";
@@ -13,9 +13,21 @@ import {
 import { useSendMailUserToAdminMutation } from "../../redux/dataUsersSlice";
 
 export const AdminWriteForm = ({ user }) => {
-  const { register, handleSubmit, setValue } = useForm();
+  const { control, register, handleSubmit, setValue } = useForm();
   const [dispatchSendMail, { isLoading: isLoadingSendMail }] =
     useSendMailUserToAdminMutation();
+
+  const subjectValue = useWatch({
+    control,
+    name: "subject",
+    defaultValue: "",
+  }).trim();
+
+  const textValue = useWatch({
+    control,
+    name: "text",
+    defaultValue: "",
+  }).trim();
 
   const onSubmit = (data) => {
     const formData = {
@@ -26,6 +38,8 @@ export const AdminWriteForm = ({ user }) => {
       .unwrap()
       .then(() => {
         handleShowModal("sendmail");
+        setValue("text", "");
+        setValue("subject", "");
       })
       .catch((e) => {
         let errorMessage = e.data?.message;
@@ -37,6 +51,7 @@ export const AdminWriteForm = ({ user }) => {
   const [activeModal, setActiveModal] = useState(null); //после успешного добавления спрашиваем добавить ли еще
   const [errorMessage, setErrorMessage] = useState("");
   const handleShowModal = (modalContent) => {
+    console.log("modalContent", modalContent);
     setActiveModal(modalContent);
   };
   const handleCloseModal = () => {
@@ -47,7 +62,11 @@ export const AdminWriteForm = ({ user }) => {
     <>
       <AdminForm onSubmit={handleSubmit(onSubmit)}>
         <TitleThird>Написати адміністратору:</TitleThird>
-        <FormInput1 {...register("subject")} placeholder="Тема" />
+        <FormInput1
+          {...register("subject")}
+          placeholder="Тема"
+          maxLength={"100"}
+        />
 
         <Textarea
           {...register("text")}
@@ -63,6 +82,7 @@ export const AdminWriteForm = ({ user }) => {
           text="Відправити"
           showIcon={false}
           margintop="24px"
+          disabled={!subjectValue || !textValue}
         ></Button>
       </AdminForm>
       {activeModal === "sendmail" && (
@@ -73,7 +93,7 @@ export const AdminWriteForm = ({ user }) => {
           showCloseButton={true}
           flexDirection="column"
         >
-          <TextModal>Лист адмыныстратору відправлено</TextModal>
+          <TextModal>Лист адміністратору відправлено</TextModal>
 
           <Button
             type="button"
