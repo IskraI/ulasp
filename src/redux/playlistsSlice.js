@@ -47,8 +47,8 @@ export const playlistsApi = createApi({
           page && `page=${page}`
         } & ${limit && `limit=${limit}`}`,
       }),
-
-      providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
+      keepUnusedDataFor: 0,
+      providesTags: ["Playlists"],
     }),
 
     createPlaylist: builder.mutation({

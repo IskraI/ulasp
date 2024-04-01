@@ -10,11 +10,9 @@ import DotsBtn from "./DotsButton";
 import PopUpButtons from "./PopUpButtons";
 import { Button } from "../../Button/Button";
 import { Modal } from "../../Modal/Modal";
+import ModalAddToPlaylists from "./ModalAddToPlaylists";
 import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
-import {
-  useDeleteTrackInPlaylistMutation,
-  useGetPlaylistsWithoutTrackQuery,
-} from "../../../redux/playlistsSlice";
+import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsSlice";
 import {
   useDeleteTrackMutation,
   useUpdateTrackCoverMutation,
@@ -45,9 +43,6 @@ import {
   CheckBoxInput,
 } from "../../CustomCheckBox/CustomCheckBox.styled";
 
-import ModalPlayListItem from "./ModalPlayListItem";
-import { PlaylistList, PlaylistWrapper } from "../PlayLists/PlayLists.styled";
-
 const TrackItem = ({
   idTrack,
   trackPictureURL,
@@ -70,7 +65,6 @@ const TrackItem = ({
   deleteCheckedTrackId,
   deselect,
   isTopChart,
-  showCharMsg,
 }) => {
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
@@ -96,12 +90,6 @@ const TrackItem = ({
   const playerSRC = playerState.src;
 
   const oneGenre = !isInPlayList ? playLists[0]?.playlistGenre[0]?.genre : null;
-
-  const { data, isSuccess } = useGetPlaylistsWithoutTrackQuery({ id: idTrack });
-
-  if (isSuccess) {
-    console.log(data);
-  }
 
   const [updateTrack, { data: dataUpdateTrack }] =
     useUpdateTrackCoverMutation();
@@ -403,41 +391,10 @@ const TrackItem = ({
         </Modal>
       )}
       {showModalAddToPlaylists && (
-        <Modal
-          width={"95vw"}
-          height={"85vh"}
-          padding={"26px"}
-          borderColor={"#FFF3BF"}
-          borderStyle={"solid"}
-          borderWidth={"1px"}
-          showCloseButton
-          // flexDirection={"column"}
-          onClose={() => setShowModalAddToPlaylists(false)}
-          // bcgTransparent={true}
-        >
-          <div
-            style={{
-              marginTop: "20px",
-              padding: "20px",
-              outline: "1px solid red",
-              width: "100%",
-              height: "100%",
-              overflowY: "scroll",
-            }}
-          >
-            <PlaylistList gap={"10px"}>
-              {data.map(({ _id, playListName, playListAvatarURL }) => {
-                return (
-                  <ModalPlayListItem
-                    key={_id}
-                    title={playListName}
-                    icon={playListAvatarURL}
-                  />
-                );
-              })}
-            </PlaylistList>
-          </div>
-        </Modal>
+        <ModalAddToPlaylists
+          idTrack={idTrack}
+          modalClose={setShowModalAddToPlaylists}
+        />
       )}
     </>
   );

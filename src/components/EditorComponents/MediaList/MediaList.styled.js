@@ -34,6 +34,7 @@ export const MediaItem = styled.li`
   border-radius: 10px;
   background-color: ${colors.activeBtnColor};
   transition: background-color 500ms ${mainCubicTransition};
+  cursor: pointer;
 
   &:hover {
     background-color: ${colors.accentHoverColor};
