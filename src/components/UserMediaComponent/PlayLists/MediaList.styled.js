@@ -16,6 +16,12 @@ export const TitleWrapper = styled.p`
   line-height: 1.21;
   font-weight: 500;
   color: ${colors.mainFontColor};
+`;
+export const TitleWrapperModal = styled.p`
+  font-size: 24px;
+  line-height: 1.21;
+  font-weight: 500;
+  color: ${colors.mainFontColor};
   text-align: center;
 `;
 

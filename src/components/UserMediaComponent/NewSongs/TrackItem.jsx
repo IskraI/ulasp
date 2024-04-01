@@ -161,7 +161,7 @@ const TrackItem = ({ id, title, icon, artist, trackURL, isLoading }) => {
                 handleCloseModal()
               ) : (
                 <PlaylistsForAdd
-                  title={`Плейлисти для додавання "${trackName}"`}
+                  title={`Плейлисти для додавання`}
                   displayPlayer={"none"}
                   data={playlistUserForAdd}
                   trackId={id}

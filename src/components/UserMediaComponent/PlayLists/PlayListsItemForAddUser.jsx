@@ -60,6 +60,7 @@ const PlayListItemForAdd = ({
       <Button
         type="button"
         width={"inherit"}
+        height={"100%"}
         text={title}
         padding={"10px"}
         border={"none"}

@@ -93,12 +93,25 @@ const TrackItem = ({
   const PopUpToogle = () => {
     setShowPopUp(!showPopUp);
   };
+
+  //модалка про добавление удаление
+  const [showModal, setShowModal] = useState("");
+  useEffect(() => {
+    if (showModal) {
+      const timer = setTimeout(() => {
+        setShowModal("");
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [showModal]);
+
   //удаление трека из  доданих
-  const [deleteTrack, { isLoading: isLoadingDeleteTrack }] =
-    useDeleteTrackFromAddMutation();
+  const [
+    deleteTrack,
+    { data: dataDeleteTrack, isLoading: isLoadingDeleteTrack },
+  ] = useDeleteTrackFromAddMutation();
 
   const removeTrackFromAdd = () => {
-    console.log("isAddTrack до:>> ", isAddTrack);
     deleteTrack(idTrack)
       .unwrap()
       .then((data) => {
@@ -107,8 +120,9 @@ const TrackItem = ({
       })
       .catch((error) => console.log(error.data.message));
   };
+
   //добавление трека в додани
-  const [addTrack, { isLoading: isLoadingAddTrack }] =
+  const [addTrack, { data: dataAddTrack, isLoading: isLoadingAddTrack }] =
     useAddTrackToAddMutation();
 
   const addTrackToAdd = () => {
@@ -120,8 +134,6 @@ const TrackItem = ({
       })
       .catch((error) => console.log(error));
   };
-  //модалка про добавление удаление
-  const [showModal, setShowModal] = useState("");
 
   //добавление трека в плейлист юзера
 
@@ -356,7 +368,7 @@ const TrackItem = ({
                 handleCloseModal()
               ) : (
                 <PlaylistsForAdd
-                  title={`Плейлисти для додавання "${trackName}"`}
+                  title={`Плейлисти для додавання`}
                   displayPlayer={"none"}
                   data={playlistUserForAdd}
                   trackId={idTrack}
@@ -369,30 +381,42 @@ const TrackItem = ({
       )}
       {showModal === "addTrack" && (
         <Modal
-          width={"494px"}
+          width={"20vw"}
           padding={"16px"}
           borderColor={"#FFF3BF"}
           borderStyle={"solid"}
           borderWidth={"1px"}
           onClose={() => setShowModal("")}
-          bcgTransparent={true}
+          // bcgTransparent={true}
           showCloseButton={true}
         >
-          <ModalInfoText fontSize={"16px"}>Трек додано</ModalInfoText>
+          <ModalInfoText
+            fontSize={"20px"}
+            paddingTop={"0px"}
+            paddingBottom={"16px"}
+          >
+            додано до обраних пісень
+          </ModalInfoText>
         </Modal>
       )}
       {showModal === "deleteTrack" && (
         <Modal
-          width={"494px"}
+          width={"20vw"}
           padding={"16px"}
           borderColor={"#FFF3BF"}
           borderStyle={"solid"}
           borderWidth={"1px"}
           onClose={() => setShowModal("")}
-          bcgTransparent={true}
+          // bcgTransparent={true}
           showCloseButton={true}
         >
-          <ModalInfoText fontSize={"16px"}>Трек видалено</ModalInfoText>
+          <ModalInfoText
+            fontSize={"20px"}
+            paddingTop={"0px"}
+            paddingBottom={"16px"}
+          >
+            видалено з обраних пісень
+          </ModalInfoText>
         </Modal>
       )}
     </>

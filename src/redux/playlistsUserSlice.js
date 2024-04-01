@@ -23,7 +23,7 @@ export const playlistsUserApi = createApi({
         body,
         formData: true,
       }),
-      invalidatesTags: ["Playlists"],
+      invalidatesTags: ["Playlists", "PlaylistsForAdd"],
     }),
 
     getPlaylistByIdForUser: builder.query({
@@ -70,7 +70,7 @@ export const playlistsUserApi = createApi({
         url: `/user/userPlaylist/delete/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Playlists"],
+      invalidatesTags: ["Playlists", "PlaylistsForAdd"],
     }),
 
     updatePlaylistTitle: builder.mutation({
