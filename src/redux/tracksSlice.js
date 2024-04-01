@@ -73,6 +73,20 @@ export const tracksApi = createApi({
       }),
       invalidatesTags: ["Tracks"],
     }),
+    addTrackToPlaylists: builder.mutation({
+      query: ({ id, idPlaylists }) => (
+        console.log(id),
+        console.log(idPlaylists),
+        {
+          url: `/editor/tracks/addToPlaylists/${id}`,
+          method: "PATCH",
+          body: {
+            idPlaylists,
+          },
+        }
+      ),
+      invalidatesTags: ["Tracks"],
+    }),
   }),
 });
 
@@ -85,4 +99,5 @@ export const {
   useAddTrackToChartMutation,
   useRemoveTrackFromChartMutation,
   useGetTracksInChartQuery,
+  useAddTrackToPlaylistsMutation,
 } = tracksApi;

@@ -31,9 +31,8 @@ export const tracksUserApi = createApi({
         url: `/user/tracks/tracksForUserPlaylists?${page && `page=${page}`} ${
           limit && `&limit=${limit}`
         }${`&query=${query}`}${`&id=${id}`}`,
-        keepUnusedDataFor: 0,
       }),
-
+      keepUnusedDataFor: 0,
       providesTags: ["Tracks"],
     }),
 
