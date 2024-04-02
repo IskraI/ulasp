@@ -6,20 +6,11 @@ export const ShopsItem = styled.li`
   justify-content: space-between;
   align-items: center;
   width: 310px;
- position: relative;
+  position: relative;
   padding: 10px;
   border: 1px solid ${colors.accentHoverColor};
   border-radius: 10px;
   background-color: ${colors.activeBtnColor};
-
-   &:hover{
- background: #fff3bf;
-    border-radius: 10px;
-    font-weight: 600;
-    transform: translateY(-5px);
-    transition: transform 250ms ${mainCubicTransition};
-  }
-  
 `;
 
 export const ShopsImg = styled.img`
@@ -35,9 +26,7 @@ export const ShopsItemText = styled.p`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);    
- 
-
+  transform: translate(-50%, -50%);
 `;
 
 export const ShopsIconsWrapper = styled.div`

@@ -3,7 +3,6 @@ import { useState, useCallback } from "react";
 import symbol from "../../../assets/symbol.svg";
 
 import { SortBtn, SvgSort } from "./SortTracks.styled";
-import { SvgMedia } from "../MediaList/MediaList.styled";
 
 const SortTracks = ({
   onClick,
@@ -18,6 +17,7 @@ const SortTracks = ({
   const switchForSort = () => {
     switch (sortType) {
       case "Az":
+        console.log(handleSortAz());
         return handleSortAz();
 
       case "random":

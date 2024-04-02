@@ -5,8 +5,6 @@ import { useState } from "react";
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 
-
-
 import { ErrorNotFound, NoData } from "../../Errors/Errors";
 
 import { useDispatch } from "react-redux";
@@ -40,18 +38,11 @@ const PlaylistListItem = ({
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  
-   
-
   const mediaLibrary = `/editor/medialibrary`;
   const newPlaylists = `/editor/medialibrary/newplaylists/${idPlaylist}/tracks`;
 
- 
-  
-  const PropsPlayListItem = {
-    marginRight: placeListCardInfo ? "16px" : "auto",
-  };
-  
+
+
   return (
     <>
       <PlaylistItem>
@@ -66,20 +57,12 @@ const PlaylistListItem = ({
           disabled={placeListCardInfo ? true : false}
         >
           <PlaylistImg
-            marginRight={PropsPlayListItem.marginRight}
             src={BASE_URL + "/" + icon}
             alt={title}
           />
           <PlaylistItemText>{title}</PlaylistItemText>
         </LinkToTracks>
-        <PlaylistIconsWrapper>
-          <SvgMedia width="24" height="24">
-            <use href={`${symbol}#icon-pen`}></use>
-          </SvgMedia>
-        
-        </PlaylistIconsWrapper>
       </PlaylistItem>
-           
     </>
   );
 };

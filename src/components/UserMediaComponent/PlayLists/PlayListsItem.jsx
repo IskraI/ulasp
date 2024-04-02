@@ -1,22 +1,23 @@
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate, Link } from "react-router-dom";
+
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
-import { useState, useEffect } from "react";
+import CountTracks from "../../EditorComponents/CountTracks/CountTracks";
+
 import {
   useUpdateFavoriteStatusApiMutation,
   useUpdateAddStatusApiMutation,
 } from "../../../redux/playlistsUserSlice";
+
+import { PlaylistInfoWrapper } from "./PlayLists.styled";
+
 import {
   MediaItem,
-  IconsWrapper,
-  MediaItemText,
   MediaImg,
-  PlaylistCountTracks,
-  PlaylistImg,
-  PlaylistInfoWrapper,
-  PlaylistItemText,
-} from "./MediaList.styled";
-import { Link } from "react-router-dom";
-import { useLocation, useNavigate } from "react-router-dom";
+  MediaItemText,
+  MediaIconsWrapper,
+} from "../MediaList/MediaList.styled";
 
 const PlayListItem = ({
   id,
@@ -106,16 +107,14 @@ const PlayListItem = ({
         </Link>
       ) : (
         <>
-          <PlaylistImg src={BASE_URL + "/" + icon} alt={title} />
+          <MediaImg src={BASE_URL + "/" + icon} alt={title} />
           <PlaylistInfoWrapper>
-            <PlaylistItemText>{title}</PlaylistItemText>
-            <PlaylistCountTracks>
-              {countTracks + `${" "}` + "пісень"}
-            </PlaylistCountTracks>
+            <MediaItemText>{title}</MediaItemText>
+            <CountTracks countTracks={countTracks} />
           </PlaylistInfoWrapper>
         </>
       )}
-      <IconsWrapper>
+      <MediaIconsWrapper>
         <svg
           width="24"
           height="24"
@@ -153,7 +152,7 @@ const PlayListItem = ({
             <use href={`${symbol}#icon-check`}></use>
           </svg>
         )}
-      </IconsWrapper>
+      </MediaIconsWrapper>
     </MediaItem>
   );
 };

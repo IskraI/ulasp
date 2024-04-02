@@ -1,16 +1,18 @@
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 import { useLocation } from "react-router-dom";
-import {
-  MediaItem,
-  MediaItemText,
-  MediaImg,
-} from "./MediaList.styled";
+import { MediaItem, MediaItemText, MediaImg } from "./MediaList.styled";
 
 import { Link } from "react-router-dom";
 
-const MediaListItemShop = ({ id: idMediaItem, title, icon, linkToPage, typeMediaLibrary, }) => {
- const location = useLocation();
+const MediaListItemShop = ({
+  id: idMediaItem,
+  title,
+  icon,
+  linkToPage,
+  typeMediaLibrary,
+}) => {
+  const location = useLocation();
 
   const selectLinkToPage = (linkToPage) => {
     // console.log(location.pathname.split("/").includes(linkToPage));
@@ -25,7 +27,7 @@ const MediaListItemShop = ({ id: idMediaItem, title, icon, linkToPage, typeMedia
 
     return link;
   };
-  
+
   return (
     <>
       <MediaItem>
@@ -34,16 +36,16 @@ const MediaListItemShop = ({ id: idMediaItem, title, icon, linkToPage, typeMedia
           to={selectLinkToPage(linkToPage)}
           state={{ from: location.pathname }}
           style={{
-           width: "100%",
-      display: "flex",
-           alignItems: "center",
-           textAlign: "center",
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            textAlign: "center",
           }}
         >
-        <MediaImg src={BASE_URL + "/" + icon} alt={title} />
-             <MediaItemText>{title}</MediaItemText>
-            </Link>
-        </MediaItem>
+          <MediaImg src={BASE_URL + "/" + icon} alt={title} />
+          <MediaItemText>{title}</MediaItemText>
+        </Link>
+      </MediaItem>
     </>
   );
 };

@@ -87,7 +87,6 @@ const MediaLibraryForUser = () => {
             showNavigationLink={true}
           />
           <Shops
-            displayPlayer={"none"}
             data={shops}
             isFetching={isFetchingShops}
             isError={isErrorShops}
