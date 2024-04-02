@@ -1,7 +1,8 @@
+import { useState } from "react";
+
 import CreatePlayListItem from "./CreatePlaylistItem";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
-import { useSelector } from "react-redux";
-import { useState } from "react";
+
 import {
   TitleWrapper,
   ControlWrapper,
@@ -17,9 +18,10 @@ import ControlMyplaylists from "../ControlMyplaylists/ControlMyplaylists";
 import { Modal } from "../../Modal/Modal";
 import ModalFormMyplaylist from "../ControlMyplaylists/ModalFormMyplaylist";
 
+import useChooseAvatar from "../../../hooks/useChooseAvatar";
+
 const CreatePlaylists = ({
   title,
-  displayPlayer,
   showNavigationLink,
   data: createPlaylists,
   dataFavorite,
@@ -28,8 +30,10 @@ const CreatePlaylists = ({
   //   genre,
   // shopCategoryName,
 }) => {
+  const minLengthInput = 1;
+  const maxLengthInput = 29;
+
   const [showModal, setShowModal] = useState(false);
-  const [selectedPlaylistAvatar, setSelectedPlaylistAvatar] = useState(null);
 
   // const {
   //   data: dataFavorite,
@@ -41,27 +45,14 @@ const CreatePlaylists = ({
     { isSuccess, isLoading: isLoadingCreatePlaylist, isError },
   ] = useCreatePlaylistForUserMutation();
 
-  // console.log("createPlaylists", createPlaylists)
-
-  const handleChoosePlaylistAvatar = (event) => {
-    console.log("event", event);
-    let file;
-
-    if (event.target.files[0] !== undefined) {
-      file = event.target.files[0];
-    }
-    if (file) {
-      setSelectedPlaylistAvatar(file);
-      console.log("file", file);
-    }
-  };
+  const [avatar, chooseAvatar, resetAvatar] = useChooseAvatar();
 
   const formDataFunction = (data) => {
     const formData = new FormData();
 
     formData.append("playListName", data.playListName),
       formData.append("type", data.type),
-      formData.append("picsURL", selectedPlaylistAvatar);
+      formData.append("picsURL", avatar);
 
     return formData;
   };
@@ -76,44 +67,26 @@ const CreatePlaylists = ({
     }
   };
 
-  const clearImageCover = () => {
-    setSelectedPlaylistAvatar(null);
-  };
-
+  const clearImageCover = () => resetAvatar(null);
   const closeModal = () => {
     clearImageCover();
     return setShowModal(false);
   };
 
-  const toogleModal = () => {
-    return setShowModal(() => !showModal);
-  };
-
+  const toogleModal = () => setShowModal(() => !showModal);
   return (
     <>
-      {/* <TitleContainer>
-        <TitleWrapper>{title}</TitleWrapper>
-      </TitleContainer> */}
       <ControlMyplaylists
         title={title}
         iconButton={`${symbol}#icon-playlist-add`}
         textButton={"Плейлист"}
         onClick={toogleModal}
       />
-      {!isFetching && !error && (
+      {!error && (
         <>
-          {/* <ControlWrapper> */}
-          {/* <TitleWrapper>Нові плейлисти</TitleWrapper> */}
-
-          {/* </ControlWrapper> */}
           <MediaList>
             {createPlaylists?.map(
               ({ _id, playListName, playListAvatarURL }) => {
-                // console.log(
-                //   "dataFavorite.favorites.includes(_id)",
-                //   dataFavorite.favorites.some((item) => item._id === _id)
-                // );
-
                 return (
                   <CreatePlayListItem
                     key={_id}
@@ -123,7 +96,8 @@ const CreatePlaylists = ({
                     )}
                     title={playListName}
                     icon={playListAvatarURL}
-                    //  shopCategoryName={shopCategoryName}
+                    minLength={minLengthInput}
+                    maxLength={maxLengthInput}
                   />
                 );
               }
@@ -139,8 +113,8 @@ const CreatePlaylists = ({
         <Modal width={"814px"} onClose={closeModal} showCloseButton={true}>
           <ModalFormMyplaylist
             onSubmit={handleSubmitPlaylist}
-            changePlayListAvatar={handleChoosePlaylistAvatar}
-            img={selectedPlaylistAvatar}
+            changePlayListAvatar={chooseAvatar}
+            img={avatar}
             clearImageCover={clearImageCover}
             idInputImg={"picsURL"}
             idInputFirst={"playListName"}
@@ -149,6 +123,8 @@ const CreatePlaylists = ({
             valueInputSecond={"playlist"}
             placeholderFirst={`Назва плейлисту*`}
             cover={true}
+            minLength={minLengthInput}
+            maxLength={maxLengthInput}
           />
         </Modal>
       )}

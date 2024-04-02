@@ -1,45 +1,49 @@
-import { GenresWrapper } from "./Genres.styled";
-import MediaListItem from "../MediaList/MediaList";
-// import { MockPlayer } from "../TracksTable/TracksTable.styled";
+import PropTypes from "prop-types";
+
+import GenreListItem from "./GenresItem";
+
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 import {
   TitleWrapper,
   ControlWrapper,
   MediaList,
 } from "../MediaList/MediaList.styled";
-import { Button } from "../../Button/Button";
-import symbol from "../../../assets/symbol.svg";
-import { useState, useEffect } from "react";
 
+import { GenresWrapper } from "./Genres.styled";
 
-const Genres = ({
-  display,
-  displayPlayer,
-  data: genres,
-  isFetching,
-  error,
-   showNavigationLink
-}) => {
-  
+const Genres = ({ data: genres, isFetching, isError, showNavigationLink }) => {
   return (
     <>
-      {!isFetching && !error && (
+      {!isFetching && !isError && (
         <GenresWrapper>
           <ControlWrapper>
             <TitleWrapper>Жанри</TitleWrapper>
-                  </ControlWrapper>
+          </ControlWrapper>
           <MediaList>
             {genres.map(({ _id, genre, genreAvatarURL }) => (
-              <MediaListItem key={_id} id={_id} title={genre} icon={genreAvatarURL} />
+              <GenreListItem
+                key={_id}
+                id={_id}
+                title={genre}
+                icon={genreAvatarURL}
+              />
             ))}
           </MediaList>
-          <MediaNavigationLink  link={"genres"}
-            showNavigationLink={showNavigationLink} />
+          <MediaNavigationLink
+            link={"genres"}
+            showNavigationLink={showNavigationLink}
+          />
         </GenresWrapper>
       )}
-     
     </>
   );
+};
+
+Genres.propTypes = {
+  data: PropTypes.array,
+  isFetching: PropTypes.bool,
+  isError: PropTypes.bool,
+  showNavigationLink: PropTypes.bool,
 };
 
 export default Genres;

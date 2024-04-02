@@ -1,22 +1,16 @@
 import PlayListItem from "./PlayListsItem";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
-import { useSelector } from "react-redux";
-import {
-  TitleWrapper,
-  ControlWrapper,
-  MediaList,
-  TitleContainer,
-} from "./MediaList.styled";
+import { TitleWrapper, MediaList, TitleContainer } from "./MediaList.styled";
 import {
   useFavoritePlaylistForUserQuery,
   useAddPlaylistForUserQuery,
 } from "../../../redux/playlistsUserSlice";
-// import { MockPlayer } from "../TracksTable/TracksTable.styled";
-import symbol from "../../../assets/symbol.svg";
+
+import { NoData } from "../../Errors/Errors";
 
 const LatestPlaylists = ({
   title,
-  displayPlayer,
+
   showNavigationLink,
   data: playlists,
 
@@ -39,15 +33,14 @@ const LatestPlaylists = ({
       <TitleContainer>
         <TitleWrapper>{title}</TitleWrapper>
       </TitleContainer>
+      {!isFetching && !playlists.length && (
+        <NoData text={"Плейлисти ще не додані"} textColor={"grey"} />
+      )}
       {!isFetching &&
         !error &&
         !isLoadingFavoritePlaylist &&
         !isLoadingAddPlaylist && (
           <>
-            {/* <ControlWrapper> */}
-            {/* <TitleWrapper>Нові плейлисти</TitleWrapper> */}
-
-            {/* </ControlWrapper> */}
             <MediaList>
               {playlists.map(({ _id, playListName, playListAvatarURL }) => {
                 // console.log(

@@ -24,7 +24,6 @@ import { useDeletePlaylistInShopMutation } from "../../../redux/shopsSlice";
 import { genresApi } from "../../../redux/genresSlice";
 import { shopsApi } from "../../../redux/shopsSlice";
 
-
 import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
 
 import {
@@ -126,7 +125,7 @@ const PlaylistListItem = ({
     location?.state?.from,
     navigate,
   ]);
-
+  //проверить эту фигню
   if (
     location.pathname === newPlaylists &&
     isSuccessDeletePlaylist &&

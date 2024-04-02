@@ -28,6 +28,7 @@ const PlayListItem = ({
   addStatus,
   placeListCardInfo,
   countTracks,
+  showPlusBtn = true,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const PlayListItem = ({
 
   // const { data: dataFavorites } = useFavoritePlaylistForUserQuery();
 
-  // console.log('favoriteStatus item', favoriteStatus)
+  console.log("favoriteStatus item", favoriteStatus);
 
   const [isFavorite, setIsFavorite] = useState(favoriteStatus || false);
 
@@ -121,36 +122,38 @@ const PlayListItem = ({
           fill={isFavorite ? "#17161C" : "none"}
           stroke="#17161C"
           onClick={() => handleToggleFavorite(id)}
-          //  onClick={handleToggleFavorite}
           style={{ cursor: "pointer" }}
         >
           <use href={`${symbol}#icon-heart-empty`}></use>
         </svg>
-
-        {!isAdd ? (
-          <svg
-            width="24"
-            height="24"
-            onClick={async () => {
-              await handleToggleAdd();
-              setIsAdd(true);
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            <use href={`${symbol}#icon-plus`}></use>
-          </svg>
-        ) : (
-          <svg
-            width="24"
-            height="24"
-            onClick={async () => {
-              await handleToggleAdd();
-              setIsAdd(false);
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            <use href={`${symbol}#icon-check`}></use>
-          </svg>
+        {showPlusBtn && (
+          <>
+            {!isAdd ? (
+              <svg
+                width="24"
+                height="24"
+                onClick={async () => {
+                  await handleToggleAdd();
+                  setIsAdd(true);
+                }}
+                style={{ cursor: "pointer" }}
+              >
+                <use href={`${symbol}#icon-plus`}></use>
+              </svg>
+            ) : (
+              <svg
+                width="24"
+                height="24"
+                onClick={async () => {
+                  await handleToggleAdd();
+                  setIsAdd(false);
+                }}
+                style={{ cursor: "pointer" }}
+              >
+                <use href={`${symbol}#icon-check`}></use>
+              </svg>
+            )}
+          </>
         )}
       </MediaIconsWrapper>
     </MediaItem>

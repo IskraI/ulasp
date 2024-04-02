@@ -1,9 +1,7 @@
+import PropTypes from "prop-types";
 import { BASE_URL } from "../../../constants/constants";
-import symbol from "../../../assets/symbol.svg";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { MediaItem, MediaItemText, MediaImg } from "./MediaList.styled";
-
-import { Link } from "react-router-dom";
 
 const MediaListItemShop = ({
   id: idMediaItem,
@@ -15,8 +13,6 @@ const MediaListItemShop = ({
   const location = useLocation();
 
   const selectLinkToPage = (linkToPage) => {
-    // console.log(location.pathname.split("/").includes(linkToPage));
-
     if (location.pathname.split("/").includes(linkToPage)) {
       return location.pathname + "/" + idMediaItem;
     }
@@ -30,24 +26,26 @@ const MediaListItemShop = ({
 
   return (
     <>
-      <MediaItem>
-        <Link
-          key={idMediaItem}
-          to={selectLinkToPage(linkToPage)}
-          state={{ from: location.pathname }}
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            textAlign: "center",
-          }}
-        >
+      <Link
+        key={idMediaItem}
+        to={selectLinkToPage(linkToPage)}
+        state={{ from: location.pathname }}
+      >
+        <MediaItem>
           <MediaImg src={BASE_URL + "/" + icon} alt={title} />
-          <MediaItemText>{title}</MediaItemText>
-        </Link>
-      </MediaItem>
+          <MediaItemText padding={"0px 40px 0px 6px"}>{title}</MediaItemText>
+        </MediaItem>
+      </Link>
     </>
   );
+};
+
+MediaListItemShop.propTypes = {
+  id: PropTypes.string,
+  title: PropTypes.string,
+  icon: PropTypes.string,
+  linkToPage: PropTypes.string,
+  typeMediaLibrary: PropTypes.string,
 };
 
 export default MediaListItemShop;

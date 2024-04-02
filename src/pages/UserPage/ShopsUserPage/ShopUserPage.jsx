@@ -25,6 +25,7 @@
 
 // export default ShopsPage;
 
+import PropTypes from "prop-types";
 
 import MediaListItemShop from "../../../components/UserMediaComponent/MediaList/MediaListShop";
 import MediaNavigationLink from "../../../components/NavigationLink/NavigationLink";
@@ -36,16 +37,12 @@ import {
 } from "../../../components/Errors/Errors";
 import ControlMediateca from "../../../components/UserMediaComponent/ControlMediatecaUser/ControlMediatecaUser";
 
-import {
-  useGetAllShopsUserQuery,
-  } from "../../../redux/shopsUserSlice";
+import { useGetAllShopsUserQuery } from "../../../redux/shopsUserSlice";
 
 import { ShopsWrapper, ShopsList } from "./Shops.styled";
-import symbol from "../../../assets/symbol.svg";
 
 const ShopsPage = ({ showNavigationLink, limit }) => {
- 
-    const {
+  const {
     data: shops,
     isFetching: isFetchingAllShops,
     isError: isErrorAllShops,
@@ -53,10 +50,8 @@ const ShopsPage = ({ showNavigationLink, limit }) => {
     isSuccess: isSuccessAllShops,
   } = useGetAllShopsUserQuery(`?&limit=${limit ? 12 : ""}`);
 
-   
   const linkToPage = "shops";
 
- 
   return (
     <>
       {isFetchingAllShops && !isSuccessAllShops && <Loader />}
@@ -70,9 +65,7 @@ const ShopsPage = ({ showNavigationLink, limit }) => {
       )}
       {isSuccessAllShops && !isErrorAllShops && (
         <>
-          <ControlMediateca
-            title={"Плейлисти по типу закладу"}
-                      />
+          <ControlMediateca title={"Плейлисти по типу закладу"} />
           <ShopsWrapper>
             <ShopsList>
               {shops.map(({ _id, shopCategoryName, shopAvatarURL }) => (
@@ -95,10 +88,13 @@ const ShopsPage = ({ showNavigationLink, limit }) => {
           </ShopsWrapper>
         </>
       )}
-         </>
+    </>
   );
 };
 
+ShopsPage.propTypes = {
+  showNavigationLink: PropTypes.bool,
+  limit: PropTypes.string,
+};
+
 export default ShopsPage;
-
-

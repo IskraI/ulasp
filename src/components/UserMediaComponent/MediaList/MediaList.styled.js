@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 import { colors, mainCubicTransition } from "../../../styles/vars";
 
 export const ControlWrapper = styled.div`
@@ -27,7 +28,7 @@ export const MediaItem = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-width: 310px;
+  width: 310px;
 
   padding: 10px;
   border: ${(props) =>
@@ -57,18 +58,78 @@ export const MediaImg = styled.img`
 `;
 
 export const MediaItemText = styled.p`
-  max-width: 170px;
+  /* max-width: 170px; */
+
   font-size: 16px;
   line-height: 1.19;
   font-weight: 400;
   color: ${colors.mainFontColor};
   margin: 0 auto;
 
-  padding: 0px 6px;
+  padding: ${({ padding }) => padding || "0px 6px"};
   text-align: center;
 `;
 
 export const MediaIconsWrapper = styled.div`
   display: flex;
   gap: 4px;
+`;
+
+export const MediaButton = styled.button`
+  background: none;
+  border: none;
+  padding: 0;
+  &:disabled {
+    svg {
+      fill: ${colors.bBgModal};
+    }
+  }
+`;
+
+export const LinkWrapper = styled(Link)`
+  width: 100%;
+  display: flex;
+  align-items: center;
+`;
+
+export const SvgMedia = styled.svg`
+  fill: #000000;
+  transform: rotate(
+    ${(props) => (props.transformIcon ? props.transformIcon + "deg" : "0deg")}
+  );
+
+  transition: all 550ms ${mainCubicTransition};
+
+  &:hover {
+    fill: ${colors.bgHeaderColor};
+
+    transform: rotate(
+      ${(props) => (props.transformIcon ? props.transformIcon + "deg" : "0deg")}
+    );
+    transition: all 550ms ${mainCubicTransition};
+  }
+`;
+
+export const EditInputText = styled.input`
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.19;
+  text-align: center;
+  padding: 8px;
+  background: none;
+  border: none;
+  font-size: 16px;
+
+  &:focus-visible {
+    border: none;
+    outline: none;
+    text-align: center;
+  }
+`;
+
+export const EditWrapper = styled.div`
+  display: flex;
+  position: relative;
+  width: 60px;
+  height: 40px;
 `;

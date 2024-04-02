@@ -249,7 +249,7 @@ function App() {
                 />
                 <Route
                   path="cabinet/myplaylists/addplaylists/:playlistId/tracks"
-                  element={<TracksPageUser display={"none"} />}
+                  element={<TracksPageUser />}
                 />
                 <Route
                   path="cabinet/myplaylists/favoriteplaylists"

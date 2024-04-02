@@ -42,7 +42,7 @@ export const playlistsUserApi = createApi({
           limit && `&limit=${limit}`
         }${sort && `&sort=${sort}`}`,
       }),
-      providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
+      providesTags: ["Playlists"],
     }),
 
     getCreatePlaylistsForUser: builder.query({
@@ -73,12 +73,17 @@ export const playlistsUserApi = createApi({
       invalidatesTags: ["Playlists", "PlaylistsForAdd"],
     }),
 
-    updatePlaylistTitle: builder.mutation({
-      query: (id) => ({
-        url: `/user/userPlaylist/updateTitle/${id}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: ["Playlists"],
+    updatePlaylistById: builder.mutation({
+      query: ({ id, formData }) => (
+        console.log(formData.getAll("playListName")),
+        {
+          url: `/user/userPlaylist/update/${id}`,
+          method: "PATCH",
+          body: formData,
+          formData: true,
+        }
+      ),
+      invalidatesTags: ["Playlists", "PlaylistsForAdd"],
     }),
 
     favoritePlaylistForUser: builder.query({
@@ -215,7 +220,7 @@ export const {
   useGetCreatePlaylistByIdForUserQuery,
   useUploadTracksInPlaylistMutation,
   useUpdatePlaylistSortMutation,
-  useUpdatePlaylistTitleMutation,
+  useUpdatePlaylistByIdMutation,
   useAddTrackToPlaylistUserMutation,
   useRemoveTrackFromPlaylistUserMutation,
 } = playlistsUserApi;

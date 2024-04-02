@@ -1,17 +1,13 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
 
-import Playlists from "../../../components/UserMediaComponent/PlayLists/PlayListsShop";
-import { formDataFunction } from "../../../helpers/helpers";
+import LatestPlaylists from "../../../components/UserMediaComponent/PlayLists/PlayLists";
 
-import {
- useGetSubShopCategoryByIdUserQuery
- } from "../../../redux/shopsUserSlice";
+import { useGetSubShopCategoryByIdUserQuery } from "../../../redux/shopsUserSlice";
 
 const PlaylistInShopSubCategoryPage = () => {
   const { shopSubCategoryId: idShopLibrary } = useParams();
 
-    const valueMediaLibrary = "subCategoryShop";
+  const valueMediaLibrary = "subCategoryShop";
 
   const {
     data: shopSubCategory,
@@ -21,19 +17,13 @@ const PlaylistInShopSubCategoryPage = () => {
     isSuccess: isSuccessShopSubCategory,
   } = useGetSubShopCategoryByIdUserQuery(idShopLibrary);
 
- 
-
   return (
     <>
       {isSuccessShopSubCategory && !isErrorShopSubCategory && (
-        <Playlists
+        <LatestPlaylists
           title={`Плейлисти підкатегорії "${shopSubCategory.shopSubTypeName}"`}
           data={shopSubCategory.playList}
           isFetchingPlaylist={isFetchingShopSubCategory}
-          showNavigationLink={false}
-                    typeMediaLibrary={"subCategoryShop"}
-          idTypeOfMediaLibrary={idShopLibrary}
-          
         />
       )}
     </>

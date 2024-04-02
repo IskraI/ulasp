@@ -76,13 +76,14 @@ const TracksPage = () => {
               id={playlistId}
               countTracks={data.totalTracks}
             />
-
-            <SortTracks
-              onClick={handleClickSort}
-              sortType={"Az"}
-              sortedBy={sortedBy}
-              marginTop={"0px"}
-            />
+            {data?.playlist?.trackList?.length > 1 && (
+              <SortTracks
+                onClick={handleClickSort}
+                sortType={"Az"}
+                sortedBy={sortedBy}
+                marginTop={"0px"}
+              />
+            )}
           </div>
         )}
         {/* {isCreatePlaylistsPage && (
