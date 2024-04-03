@@ -46,7 +46,6 @@ const TrackItem = ({
   const ref = useRef();
 
   const currentTrackIndex = playerState.indexTrack;
-  console.log("addPlaylistUSer TrackItem id:>> ", id, playlistUserForAdd);
 
   useEffect(() => {
     if (id === playerState?.src[currentTrackIndex]?.id) {
