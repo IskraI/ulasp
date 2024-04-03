@@ -10,14 +10,16 @@ import {
   PlaylistImg,
   PlaylistItemText,
   PlaylistIconsWrapper,
-  PlaylistDeleteButton,
   TextWrapper,
   PlaylistAddButton,
   PlaylistItemText2,
 } from "./PlayLists.styled";
 import { Modal } from "../../Modal/Modal";
 import { Link } from "react-router-dom";
-import { useGetPlaylistCreatedUserWithoutTrackIdQuery } from "../../../redux/playlistsUserSlice";
+import {
+  useGetPlaylistCreatedUserWithoutTrackIdQuery,
+  useAddTrackByIdToPlaylistUserMutation,
+} from "../../../redux/playlistsUserSlice";
 import {
   setPreloadSrcPlayer,
   stopPlay,
@@ -27,7 +29,15 @@ import {
 import { getPlayerState } from "../../../redux/playerSelectors";
 import PlaylistsForAdd from "../../UserMediaComponent/PlayLists/PlayListsForAddUser";
 
-const TrackItem = ({ id, title, icon, artist, trackURL, isLoading }) => {
+const TrackItem = ({
+  id,
+  title,
+  icon,
+  artist,
+  trackURL,
+  isLoading,
+  addPlaylist,
+}) => {
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
   const [isPlayingTrack, setIsPlayingTrack] = useState(false);
@@ -79,11 +89,11 @@ const TrackItem = ({ id, title, icon, artist, trackURL, isLoading }) => {
     setIsPlayingTrack(!isPlayingTrack);
   };
   //получаем список плейлистов юзера в которых нет этого трека
-  const {
-    data: playlistUserForAdd,
-    isLoading: isLoadingPlaylistUserForAdd,
-    isError,
-  } = useGetPlaylistCreatedUserWithoutTrackIdQuery(id);
+  // const {
+  //   data: playlistUserForAdd,
+  //   isLoading: isLoadingPlaylistUserForAdd,
+  //   isError,
+  // } = useGetPlaylistCreatedUserWithoutTrackIdQuery(id);
   //открываем модальное окно со списком плейлистов
   const [showModalAddTrackToPlaylist, setShowModalAddTrackToPlaylist] =
     useState(false);
@@ -97,7 +107,26 @@ const TrackItem = ({ id, title, icon, artist, trackURL, isLoading }) => {
     document.body.classList.remove("modal-open");
     setShowModalAddTrackToPlaylist(false);
   };
+  const [playlistUserForAdd, setPlaylistUserForAdd] = useState([
+    ...addPlaylist,
+  ]);
 
+  //хук который отправляет запрос на бек
+  const [addTrackToPlaylist, { data, isLoading: isLoadingAddTrackToPlaylist }] =
+    useAddTrackByIdToPlaylistUserMutation();
+  //функция которая вызывается при клике на плейлист и вызывает хук
+  const addTrackInPlaylistUser = (id, trackId) => {
+    console.log("playlistUserForAdd :>> ", id);
+    console.log("trackId :>> ", trackId);
+
+    addTrackToPlaylist({ id, trackId }).then(() => {
+      console.log("добавили :>> ");
+      setPlaylistUserForAdd((prevPlaylists) =>
+        prevPlaylists.filter((playlist) => playlist._id !== id)
+      );
+    });
+  };
+  console.log("playlistUserForAdd :>> ", playlistUserForAdd);
   return (
     <>
       <PlaylistItem ref={ref}>
@@ -146,29 +175,28 @@ const TrackItem = ({ id, title, icon, artist, trackURL, isLoading }) => {
           onClose={handleCloseModal}
           showCloseButton={true}
         >
-          {!isLoadingPlaylistUserForAdd && (
-            <div
-              style={{
-                marginTop: "20px",
-                padding: "20px",
-                width: "100%",
-                height: "100%",
-                overflowY: "auto",
-              }}
-            >
-              {playlistUserForAdd?.length === 0 ? (
-                handleCloseModal()
-              ) : (
-                <PlaylistsForAdd
-                  title={"Плейлисти для додавання"}
-                  displayPlayer={"none"}
-                  data={playlistUserForAdd}
-                  trackId={id}
-                  // onClose={handleCloseModal}
-                />
-              )}
-            </div>
-          )}
+          <div
+            style={{
+              marginTop: "20px",
+              padding: "20px",
+              width: "100%",
+              height: "100%",
+              overflowY: "auto",
+            }}
+          >
+            {playlistUserForAdd?.length === 0 ? (
+              handleCloseModal()
+            ) : (
+              <PlaylistsForAdd
+                title={"Плейлисти для додавання"}
+                displayPlayer={"none"}
+                data={playlistUserForAdd}
+                trackId={id}
+                addTrackInPlaylistUser={addTrackInPlaylistUser}
+                // onClose={handleCloseModal}
+              />
+            )}
+          </div>
         </Modal>
       )}
     </>

@@ -15,6 +15,7 @@ const TrackAddByUser = ({
   isFetching,
   isError,
   showNavigationLink,
+  createPlaylists,
 }) => {
   return (
     <>
@@ -33,6 +34,9 @@ const TrackAddByUser = ({
                   artist={artist}
                   icon={trackPictureURL}
                   trackURL={trackURL}
+                  addPlaylist={createPlaylists.filter(
+                    (item) => !item.trackList.includes(_id)
+                  )}
                 />
               )
             )}
@@ -52,6 +56,7 @@ TrackAddByUser.propTypes = {
   isFetching: PropTypes.bool,
   isError: PropTypes.bool,
   showNavigationLink: PropTypes.bool,
+  createPlaylists: PropTypes.array,
 };
 
 export default TrackAddByUser;

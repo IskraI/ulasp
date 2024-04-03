@@ -103,15 +103,15 @@ const MyPlaylists = () => {
             showNavigationLink={true}
           />
           {/* {!isLoadingAddPlaylist && !isLoadingFavoritePlaylist && ( */}
-            <AddPlaylists
-              title={"Додані плейлисти"}
-              data={dataAdd?.add.slice(0, 6)}
-              isFetching={isFetchingAddPlaylist}
-              isError={isErrorAddPlaylist}
-              isSuccess={isSuccesAddPlaylist}
-              showNavigationLink={true}
-              isLoadingAddPlaylist={isLoadingAddPlaylist}
-            />
+          <AddPlaylists
+            title={"Додані плейлисти"}
+            data={dataAdd?.add.slice(0, 6)}
+            isFetching={isFetchingAddPlaylist}
+            isError={isErrorAddPlaylist}
+            isSuccess={isSuccesAddPlaylist}
+            showNavigationLink={true}
+            isLoadingAddPlaylist={isLoadingAddPlaylist}
+          />
           {/* )} */}
 
           <>
@@ -130,6 +130,7 @@ const MyPlaylists = () => {
           <TrackAddByUser
             data={tracksInAdd.tracksInAdd}
             isFetching={isFetchingTracksInAdd}
+            createPlaylists={createPlaylists}
             // error={isErrorNewSongs}
             // mediaLibrary={true}
             // showTitle={false}

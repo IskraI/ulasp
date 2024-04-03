@@ -28,26 +28,27 @@ const PlayListItemForAdd = ({
   favoriteStatus,
   handleAddTrackInPlaylist,
   trackId,
+  addTrackInPlaylistUser,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
   const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
 
-  //хук который отправляет запрос на бек
-  const [
-    addTrackToPlaylist,
-    { data: dataAddTrackToPlaylist, isLoading: isLoadingAddTrackToPlaylist },
-  ] = useAddTrackByIdToPlaylistUserMutation();
-  //функция которая вызывается при клике на плейлист и вызывает хук
-  const addTrackInPlaylistUser = (id) => {
-    console.log("playlistUserForAdd :>> ", id);
-    console.log("trackId :>> ", trackId);
+  // //хук который отправляет запрос на бек
+  // const [
+  //   addTrackToPlaylist,
+  //   { data: dataAddTrackToPlaylist, isLoading: isLoadingAddTrackToPlaylist },
+  // ] = useAddTrackByIdToPlaylistUserMutation();
+  // //функция которая вызывается при клике на плейлист и вызывает хук
+  // const addTrackInPlaylistUser = (id, trackId) => {
+  //   console.log("playlistUserForAdd :>> ", id);
+  //   console.log("trackId :>> ", trackId);
 
-    addTrackToPlaylist({ id, trackId }).then(() => {
-      console.log("добавили :>> ");
-    });
-  };
+  //   addTrackToPlaylist({ id, trackId }).then(() => {
+  //     console.log("добавили :>> ");
+  //   });
+  // };
 
   return (
     <MediaItem width={"220px"} padding={"0px"}>
