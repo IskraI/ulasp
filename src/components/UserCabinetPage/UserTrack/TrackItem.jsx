@@ -20,6 +20,7 @@ import {
   useGetPlaylistCreatedUserWithoutTrackIdQuery,
   useAddTrackByIdToPlaylistUserMutation,
 } from "../../../redux/playlistsUserSlice";
+
 import {
   setPreloadSrcPlayer,
   stopPlay,
@@ -45,6 +46,7 @@ const TrackItem = ({
   const ref = useRef();
 
   const currentTrackIndex = playerState.indexTrack;
+  console.log("addPlaylistUSer TrackItem id:>> ", id, playlistUserForAdd);
 
   useEffect(() => {
     if (id === playerState?.src[currentTrackIndex]?.id) {
@@ -89,6 +91,11 @@ const TrackItem = ({
     setIsPlayingTrack(!isPlayingTrack);
   };
   //получаем список плейлистов юзера в которых нет этого трека
+  // const {
+  //   data: playlistUserForAdd,
+  //   isLoading: isLoadingPlaylistUserForAdd,
+  //   isError,
+  // } = useGetPlaylistCreatedUserWithoutTrackIdQuery(id);
   // const {
   //   data: playlistUserForAdd,
   //   isLoading: isLoadingPlaylistUserForAdd,

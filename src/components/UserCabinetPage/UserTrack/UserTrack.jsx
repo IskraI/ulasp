@@ -28,6 +28,9 @@ const TrackAddByUser = ({
             {trackAddUser.map(
               ({ _id, trackPictureURL, trackName, artist, trackURL }) => (
                 <TrackItem
+                  addPlaylist={createPlaylists.filter(
+                    (item) => !item.trackList.includes(_id)
+                  )}
                   key={_id}
                   id={_id}
                   title={trackName}

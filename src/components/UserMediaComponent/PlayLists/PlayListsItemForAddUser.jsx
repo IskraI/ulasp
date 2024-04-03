@@ -41,7 +41,7 @@ const PlayListItemForAdd = ({
   //   { data: dataAddTrackToPlaylist, isLoading: isLoadingAddTrackToPlaylist },
   // ] = useAddTrackByIdToPlaylistUserMutation();
   // //функция которая вызывается при клике на плейлист и вызывает хук
-  // const addTrackInPlaylistUser = (id, trackId) => {
+  // const addTrackInPlaylistUser = (id) => {
   //   console.log("playlistUserForAdd :>> ", id);
   //   console.log("trackId :>> ", trackId);
 
@@ -67,7 +67,7 @@ const PlayListItemForAdd = ({
         border={"none"}
         showImg={"true"}
         imgSrc={`${BASE_URL}/${icon}`}
-        onClick={() => addTrackInPlaylistUser(id)}
+        onClick={() => addTrackInPlaylistUser(id, trackId)}
         borderHover={"none"}
       >
         <PlaylistImg src={BASE_URL + "/" + icon} alt={title} />
