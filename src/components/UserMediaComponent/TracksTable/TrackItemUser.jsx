@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect, useRef, useId } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { sToStr, compareArray } from "../../../helpers/helpers";
 import { BASE_URL } from "../../../constants/constants";
@@ -381,14 +381,13 @@ const TrackItem = ({
       )}
       {showModal === "addTrack" && (
         <Modal
-          width={"20vw"}
-          padding={"16px"}
+          width={"25vw"}
+          padding={"12px"}
           borderColor={"#FFF3BF"}
           borderStyle={"solid"}
           borderWidth={"1px"}
           onClose={() => setShowModal("")}
           // bcgTransparent={true}
-          showCloseButton={true}
         >
           <ModalInfoText
             fontSize={"20px"}
@@ -401,14 +400,13 @@ const TrackItem = ({
       )}
       {showModal === "deleteTrack" && (
         <Modal
-          width={"20vw"}
-          padding={"16px"}
+          width={"25vw"}
+          padding={"12px"}
           borderColor={"#FFF3BF"}
           borderStyle={"solid"}
           borderWidth={"1px"}
           onClose={() => setShowModal("")}
           // bcgTransparent={true}
-          showCloseButton={true}
         >
           <ModalInfoText
             fontSize={"20px"}

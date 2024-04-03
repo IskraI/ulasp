@@ -32,12 +32,6 @@ const Playlists = ({
       {!error && (
         <PlaylistWrapper>
           <PlaylistList>
-            {/* {isLoadingCreatePlaylist && (
-              <PlaylistItem>
-                <LoaderButton />
-                <p>Playlist creating...</p>
-              </PlaylistItem>
-            )} */}
             {playlists.map(({ _id, playListName, playListAvatarURL }) => (
               <PlaylistListItem
                 key={_id}

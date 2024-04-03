@@ -20,7 +20,7 @@ const AddAllPlaylists = ({
   displayPlayer,
 
   showNavigationLink,
-//   data: dataAdd,
+  //   data: dataAdd,
   // isLoadingAddPlaylist,
   isLoading,
 
@@ -30,10 +30,10 @@ const AddAllPlaylists = ({
   shopCategoryName,
 }) => {
   const { data: dataFavorite, isLoading: isLoadingFavoritePlaylist } =
-        useFavoritePlaylistForUserQuery();
-    
-     const { data: dataAdd, isLoading: isLoadingAddPlaylist } =
-     useAddPlaylistForUserQuery();
+    useFavoritePlaylistForUserQuery();
+
+  const { data: dataAdd, isLoading: isLoadingAddPlaylist } =
+    useAddPlaylistForUserQuery();
 
   console.log("dataAdd playlist", dataAdd);
   // console.log('dataFavorite playlist', dataFavorite.favorites)
@@ -51,8 +51,8 @@ const AddAllPlaylists = ({
           {/* <ControlWrapper> */}
           {/* <TitleWrapper>Нові плейлисти</TitleWrapper> */}
 
-                  {/* </ControlWrapper> */}
-                 <AddPlaylists
+          {/* </ControlWrapper> */}
+          <AddPlaylists
             data={dataAdd?.add}
             isLoading={isLoading}
             isFetching={isFetching}

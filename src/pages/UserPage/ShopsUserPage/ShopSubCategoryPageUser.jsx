@@ -1,12 +1,10 @@
-import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import ControlMediateca from "../../../components/UserMediaComponent/ControlMediatecaUser/ControlMediatecaUser";
 import MediaListItemShop from "../../../components/UserMediaComponent/MediaList/MediaListShop";
 import { Loader } from "../../../components/Loader/Loader";
-import symbol from "../../../assets/symbol.svg";
-import Playlists from "../../../components/UserMediaComponent/PlayLists/PlayListsShop";
-import { formDataFunction } from "../../../helpers/helpers";
+
+import LatestPlaylists from "../../../components/UserMediaComponent/PlayLists/PlayLists";
 
 import {
   Error500,
@@ -14,28 +12,23 @@ import {
   NoData,
 } from "../../../components/Errors/Errors";
 
-import {
-  useGetShopCategoryByIdUserQuery,  
-} from "../../../redux/shopsUserSlice";
+import { useGetShopCategoryByIdUserQuery } from "../../../redux/shopsUserSlice";
 
 import { ShopsList } from "./Shops.styled";
-
 
 const ShopSubCategoryPage = () => {
   const valueMediaLibrary = "shopItem";
 
   const { shopItemId: idShopLibrary } = useParams();
 
- 
   const {
     data: shopCategory,
     isFetching: isFetchingShopCategory,
     isError: isErrorShopCategory,
     error: errorShopCategory,
     isSuccess: isSuccessShopCategory,
-  } =  useGetShopCategoryByIdUserQuery(idShopLibrary);
+  } = useGetShopCategoryByIdUserQuery(idShopLibrary);
 
-  
   return (
     <>
       {isFetchingShopCategory && !isSuccessShopCategory && <Loader />}
@@ -43,9 +36,7 @@ const ShopSubCategoryPage = () => {
       {errorShopCategory && <ErrorNotFound />}
       {isSuccessShopCategory && !isErrorShopCategory && (
         <>
-          <ControlMediateca
-            title={shopCategory.shop.shopItemName}
-                     />
+          <ControlMediateca title={shopCategory.shop.shopItemName} />
 
           {shopCategory.shop.shopChildSubType.length === 0 ? (
             <NoData text={"На данний час, ще не додано жодної підкатегорії."} />
@@ -67,16 +58,12 @@ const ShopSubCategoryPage = () => {
               )}
             </ShopsList>
           )}
-          <Playlists
+          <LatestPlaylists
             title={`Плейлисти категорії "${shopCategory.shop.shopItemName}"`}
             data={shopCategory.allPlaylistsInShopCategory}
             isFetching={isFetchingShopCategory}
-            showNavigationLink={false}
-                        typeMediaLibrary={valueMediaLibrary}
-            idTypeOfMediaLibrary={idShopLibrary}
-                     />
+          />
           {/* parts Modal for create Shop SubType   */}
-                   
         </>
       )}
     </>

@@ -60,6 +60,7 @@ const TracksTable = ({
   pageSize,
   totalPages,
   deleteButton = false,
+  isSorted,
 }) => {
   const { id: idUser } = useSelector(getUserState);
   console.log("user TracksTable :>> ", idUser);
@@ -221,6 +222,13 @@ const TracksTable = ({
       })
     );
   };
+
+  useEffect(() => {
+    if (isSorted) {
+      onChangePage(currentPage);
+      setTracksIdList([]);
+    }
+  }, [currentPage, isSorted, onChangePage]);
 
   const deletingMultipleTracks = () => {
     console.log(tracksIdList);

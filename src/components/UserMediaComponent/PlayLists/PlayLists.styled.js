@@ -15,7 +15,7 @@ export const PlaylistList = styled.ul`
 
 export const PlaylistItem = styled.li`
   display: flex;
-   position: relative;
+  position: relative;
   justify-content: space-between;
   align-items: center;
   width: 310px;
@@ -43,21 +43,22 @@ export const PlaylistCardInfo = styled.div`
 `;
 export const PlaylistImg = styled.img`
   border-radius: 10px;
-  /* margin-right: auto; */
   margin-right: ${(props) => props.marginRight ?? "auto"};
 `;
 
 export const PlaylistInfoWrapper = styled.div`
-  margin: 0 auto 0 0;
+  margin: 0 4px 0 4px;
 `;
 
 export const PlaylistItemText = styled.p`
+  /* max-width: 170px; */
   font-size: 16px;
   line-height: 1.19;
-  font-weight: 500;
+  font-weight: 400;
   color: ${colors.mainFontColor};
   margin-right: auto;
-  margin-bottom: 2px;
+  padding: 0px 6px;
+  text-align: center;
 `;
 
 export const PlaylistCountTracks = styled(PlaylistItemText)`

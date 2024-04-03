@@ -1,7 +1,7 @@
 import Genres from "../../../components/UserMediaComponent/Genres/Genres";
 import LatestPlaylists from "../../../components/UserMediaComponent/PlayLists/PlayLists";
 import NewSongs from "../../../components/UserMediaComponent/NewSongs/NewSongs";
-import Shops from "../../../components/UserMediaComponent/Shops/Shops";
+import ShopsPage from "../ShopsUserPage/ShopUserPage";
 import { useGetAllGenresForUserQuery } from "../../../redux/genersUserSlice";
 import {
   useGetLatestPlaylistsForUserQuery,
@@ -83,11 +83,10 @@ const MediaLibraryForUser = () => {
             displayPlayer={"none"}
             data={genres}
             isFetching={isFetchingAllGenre}
-            error={isErrorAllGenre}
+            isError={isErrorAllGenre}
             showNavigationLink={true}
           />
-          <Shops
-            displayPlayer={"none"}
+          <ShopsPage
             data={shops}
             isFetching={isFetchingShops}
             isError={isErrorShops}
@@ -98,7 +97,6 @@ const MediaLibraryForUser = () => {
           {!isLoadingFavoritePlaylist && !isLoadingAddPlaylist && (
             <LatestPlaylists
               title={"Нові плейлисти"}
-              displayPlayer={"none"}
               data={playlists}
               dataFavorite={favoritePlaylist}
               dataAdd={dataAdd}

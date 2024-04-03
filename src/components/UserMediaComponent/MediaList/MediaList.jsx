@@ -19,14 +19,14 @@ const MediaListItem = ({ id, title, icon }) => {
           key={id}
           to={`/user/medialibrary/genres/${id}/playlists`}
           state={{ from: location }}
-          style={{
-           width: "100%",
-      display: "flex",
-      // flexDirection: "column", 
-      alignItems: "center",
-      // justifyContent: "center",
-      textAlign: "center",
-          }}
+      //     style={{
+      //      width: "100%",
+      // display: "flex",
+      // // flexDirection: "column", 
+      // alignItems: "center",
+      // // justifyContent: "center",
+      // textAlign: "center",
+      //     }}
         >
         <MediaImg src={BASE_URL + "/" + icon} alt={title} />
            {/* <div style={{ flex: 1 }}>  */}

@@ -1,22 +1,23 @@
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate, Link } from "react-router-dom";
+
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
-import { useState, useEffect } from "react";
+import CountTracks from "../../EditorComponents/CountTracks/CountTracks";
+
 import {
   useUpdateFavoriteStatusApiMutation,
   useUpdateAddStatusApiMutation,
 } from "../../../redux/playlistsUserSlice";
+
+import { PlaylistInfoWrapper } from "./PlayLists.styled";
+
 import {
   MediaItem,
-  IconsWrapper,
-  MediaItemText,
   MediaImg,
-  PlaylistCountTracks,
-  PlaylistImg,
-  PlaylistInfoWrapper,
-  PlaylistItemText,
-} from "./MediaList.styled";
-import { Link } from "react-router-dom";
-import { useLocation, useNavigate } from "react-router-dom";
+  MediaItemText,
+  MediaIconsWrapper,
+} from "../MediaList/MediaList.styled";
 
 const PlayListItem = ({
   id,
@@ -27,6 +28,7 @@ const PlayListItem = ({
   addStatus,
   placeListCardInfo,
   countTracks,
+  showPlusBtn = true,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -37,7 +39,7 @@ const PlayListItem = ({
 
   // const { data: dataFavorites } = useFavoritePlaylistForUserQuery();
 
-  // console.log('favoriteStatus item', favoriteStatus)
+  console.log("favoriteStatus item", favoriteStatus);
 
   const [isFavorite, setIsFavorite] = useState(favoriteStatus || false);
 
@@ -106,54 +108,54 @@ const PlayListItem = ({
         </Link>
       ) : (
         <>
-          <PlaylistImg src={BASE_URL + "/" + icon} alt={title} />
+          <MediaImg src={BASE_URL + "/" + icon} alt={title} />
           <PlaylistInfoWrapper>
-            <PlaylistItemText>{title}</PlaylistItemText>
-            <PlaylistCountTracks>
-              {countTracks + `${" "}` + "пісень"}
-            </PlaylistCountTracks>
+            <MediaItemText>{title}</MediaItemText>
+            <CountTracks countTracks={countTracks} />
           </PlaylistInfoWrapper>
         </>
       )}
-      <IconsWrapper>
+      <MediaIconsWrapper>
         <svg
           width="24"
           height="24"
           fill={isFavorite ? "#17161C" : "none"}
           stroke="#17161C"
           onClick={() => handleToggleFavorite(id)}
-          //  onClick={handleToggleFavorite}
           style={{ cursor: "pointer" }}
         >
           <use href={`${symbol}#icon-heart-empty`}></use>
         </svg>
-
-        {!isAdd ? (
-          <svg
-            width="24"
-            height="24"
-            onClick={async () => {
-              await handleToggleAdd();
-              setIsAdd(true);
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            <use href={`${symbol}#icon-plus`}></use>
-          </svg>
-        ) : (
-          <svg
-            width="24"
-            height="24"
-            onClick={async () => {
-              await handleToggleAdd();
-              setIsAdd(false);
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            <use href={`${symbol}#icon-check`}></use>
-          </svg>
+        {showPlusBtn && (
+          <>
+            {!isAdd ? (
+              <svg
+                width="24"
+                height="24"
+                onClick={async () => {
+                  await handleToggleAdd();
+                  setIsAdd(true);
+                }}
+                style={{ cursor: "pointer" }}
+              >
+                <use href={`${symbol}#icon-plus`}></use>
+              </svg>
+            ) : (
+              <svg
+                width="24"
+                height="24"
+                onClick={async () => {
+                  await handleToggleAdd();
+                  setIsAdd(false);
+                }}
+                style={{ cursor: "pointer" }}
+              >
+                <use href={`${symbol}#icon-check`}></use>
+              </svg>
+            )}
+          </>
         )}
-      </IconsWrapper>
+      </MediaIconsWrapper>
     </MediaItem>
   );
 };

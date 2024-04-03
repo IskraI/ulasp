@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
 
 import ControlMediateca from "../../../components/UserMediaComponent/ControlMediatecaUser/ControlMediatecaUser";
 import MediaListItemShop from "../../../components/UserMediaComponent/MediaList/MediaListShop";
@@ -9,9 +8,9 @@ import {
   ErrorNotFound,
   NoData,
 } from "../../../components/Errors/Errors";
-import symbol from "../../../assets/symbol.svg";
-import Playlists from "../../../components/UserMediaComponent/PlayLists/PlayListsShop";
-import { formDataFunction } from "../../../helpers/helpers";
+
+import LatestPlaylists from "../../../components/UserMediaComponent/PlayLists/PlayLists";
+
 import { useGetShopByIdforUserQuery } from "../../../redux/shopsUserSlice";
 
 import { ShopsList } from "./Shops.styled";
@@ -59,13 +58,10 @@ const ShopsItemPage = () => {
               )}
             </ShopsList>
           )}
-          <Playlists
+          <LatestPlaylists
             title={`Плейлисти категорії "${shopItem.shop.shopCategoryName}"`}
             data={shopItem.allPlaylistsInShopCategory}
-            // isFetching={isFetchingShopCategory}
-            showNavigationLink={false}
-            typeMediaLibrary={valueMediaLibrary}
-            idTypeOfMediaLibrary={idShopLibrary}
+            isFetching={isFetchingShopItem}
           />
         </>
       )}

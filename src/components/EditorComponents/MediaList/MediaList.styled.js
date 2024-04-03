@@ -54,9 +54,6 @@ export const MediaImg = styled.img`
 `;
 
 export const MediaItemText = styled.p`
-  /* margin-right: auto; */
-  /* text-overflow: clip; */
-
   max-width: 170px;
   font-size: 16px;
   line-height: 1.19;

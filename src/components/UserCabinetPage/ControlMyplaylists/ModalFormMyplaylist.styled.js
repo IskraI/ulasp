@@ -11,6 +11,7 @@ export const FormControlModal = styled.form`
 `;
 
 export const InputControlModal = styled.input`
+  display: ${(props) => props.display || "block"};
   width: 649px;
   height: 64px;
   padding: 8px;
@@ -22,12 +23,24 @@ export const InputControlModal = styled.input`
   background-color: rgba(234, 234, 234, 0.32);
 
   &:active {
-    outline: 2px solid ${colors.accentHoverColor};
+    outline: ${(props) =>
+      props.isError
+        ? `2px solid ${colors.errorColor}`
+        : `2px solid ${colors.accentHoverColor}`};
   }
 
   &:focus {
-    outline: 2px solid ${colors.accentHoverColor};
+    outline: ${(props) =>
+      props.isError
+        ? `2px solid ${colors.errorColor}`
+        : `2px solid ${colors.accentHoverColor}`};
   }
+`;
+
+export const ErrorValidateInput = styled.p`
+  font-size: 12px;
+  font-weight: 600;
+  color: ${colors.errorColor};
 `;
 
 export const TextControlModal = styled.p`
@@ -45,7 +58,7 @@ export const TextControlModal = styled.p`
 `;
 
 export const LabelInputControlModal = styled.label`
-  /* position: relative; */
+  position: relative;
   display: flex;
   align-self: center;
   justify-content: center;
