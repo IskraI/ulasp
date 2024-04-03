@@ -9,8 +9,7 @@ import {
   TitleContainer,
 } from "../../UserMediaComponent/PlayLists/MediaList.styled";
 import { useFavoritePlaylistForUserQuery, useAddPlaylistForUserQuery } from "../../../redux/playlistsUserSlice";
-// import { MockPlayer } from "../TracksTable/TracksTable.styled";
-import symbol from "../../../assets/symbol.svg";
+
 
 const FavoriteAllPlaylists = ({
   title,

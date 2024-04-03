@@ -257,20 +257,20 @@ function App() {
                 />
                 <Route
                   path="cabinet/myplaylists/favoriteplaylists/:playlistId/tracks"
-                  element={<TracksPageUser display={"none"} />}
+                  element={<TracksPageUser />}
                 />
                 <Route
                   path="cabinet/myplaylists/:playlistId/tracks"
-                  element={<TracksPageUser display={"none"} />}
+                  element={<TracksPageUser />}
                 />
                 <Route
                   path="cabinet/myplaylists/newtracks"
-                  element={<AllTracksUser display={"none"} />}
+                  element={<AllTracksUser />}
                 />
 
                 <Route
                   path="cabinet/myplaylists/addtracks"
-                  element={<AddTracksUserPage display={"none"} />}
+                  element={<AddTracksUserPage />}
                 />
 
                 <Route path="*" element={<ErrorPage />} />

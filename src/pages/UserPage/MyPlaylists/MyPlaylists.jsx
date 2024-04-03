@@ -1,6 +1,5 @@
 import CreatePlaylists from "../../../components/UserCabinetPage/CreatePlaylists/CreatePlaylists";
 import FavoritePlaylists from "../../../components/UserCabinetPage/FavoritePlaylists/FavoritePlaylists";
-import NewSongs from "../../../components/UserMediaComponent/NewSongs/NewSongs";
 import AddPlaylists from "../../../components/UserCabinetPage/AddPlaylists/AddPlaylists";
 
 import {
@@ -97,17 +96,15 @@ const MyPlaylists = () => {
         <>
           <CreatePlaylists
             title={"Cтворені плейлисти"}
-            displayPlayer={"none"}
             data={createPlaylists}
             dataFavorite={favoritePlaylist}
             isFetching={isFetchingCreatePlaylists}
             error={isErrorCreatePlaylists}
             showNavigationLink={true}
           />
-          {!isLoadingAddPlaylist && !isLoadingFavoritePlaylist && (
+          {/* {!isLoadingAddPlaylist && !isLoadingFavoritePlaylist && ( */}
             <AddPlaylists
               title={"Додані плейлисти"}
-              displayPlayer={"none"}
               data={dataAdd?.add.slice(0, 6)}
               isFetching={isFetchingAddPlaylist}
               isError={isErrorAddPlaylist}
@@ -115,12 +112,12 @@ const MyPlaylists = () => {
               showNavigationLink={true}
               isLoadingAddPlaylist={isLoadingAddPlaylist}
             />
-          )}
+          {/* )} */}
 
-          {!isLoadingFavoritePlaylist && !isLoadingAddPlaylist && (
+          <>
+            {isFetchingFavoritePlaylist && isFetchingAddPlaylist && <Loader />}
             <FavoritePlaylists
               title={"Улюблені плейлисти"}
-              displayPlayer={"none"}
               data={favoritePlaylist?.favorites.slice(0, 6)}
               // dataFavorite={favoritePlaylist}
               dataAdd={dataAdd}
@@ -128,7 +125,8 @@ const MyPlaylists = () => {
               error={isErrorFavoritePlaylist}
               showNavigationLink={true}
             />
-          )}
+          </>
+
           <TrackAddByUser
             data={tracksInAdd.tracksInAdd}
             isFetching={isFetchingTracksInAdd}
