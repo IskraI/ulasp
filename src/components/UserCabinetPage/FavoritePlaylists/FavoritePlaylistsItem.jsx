@@ -1,5 +1,6 @@
-import { useLocation, Link } from "react-router-dom";
-import { useState } from "react";
+import { useLocation, Link, useHref } from "react-router-dom";
+import { useMemo, useState } from "react";
+import { useSelector } from "react-redux";
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 
@@ -7,6 +8,7 @@ import {
   useUpdateFavoriteStatusApiMutation,
   useUpdateAddStatusApiMutation,
 } from "../../../redux/playlistsUserSlice";
+import { getUserState } from "../../../redux/userSelectors";
 
 import CountTracks from "../../EditorComponents/CountTracks/CountTracks";
 
@@ -27,27 +29,26 @@ const FavoritePlaylistsItem = ({
   addStatus,
   placeListCardInfo,
   countTracks,
+  owner,
 }) => {
   const location = useLocation();
 
-  // { _id, title, icon, isFavorite: initialFavorite }
+  const { id: userID } = useSelector(getUserState);
+
   const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
   const [toggleAdd] = useUpdateAddStatusApiMutation(id);
-
-  // const { data: dataFavorites } = useFavoritePlaylistForUserQuery();
-
-  // console.log('favoriteStatus item', favoriteStatus)
 
   const [isFavorite, setIsFavorite] = useState(favoriteStatus || false);
 
   const [isAdd, setIsAdd] = useState(addStatus || false);
-  // const handleToggleFavorite = (playlistId) => {
-  //   toggleFavorite(playlistId)
 
-  //   };
-
-  const cabinet = `/user/cabinet/myplaylists/favoriteplaylists`;
-  const newPlaylists = `/user/medialibrary/newplaylists/${id}/tracks`;
+  const itsMy = useMemo(() => {
+    if (userID === owner) {
+      return true;
+    } else {
+      return false;
+    }
+  }, [owner, userID]);
 
   const handleToggleFavorite = async () => {
     console.log("playlistId:", id);
@@ -73,21 +74,23 @@ const FavoritePlaylistsItem = ({
     }
   };
 
-  // useEffect(() => {
-  //   // Fetch initial favorite status from the backend when the component mounts
-  //   if (!favoriteStatus) {
-  //     // Use your API call to get the favorite status from the backend
-  //     // For example: fetchFavoriteStatusFromBackend(id).then(response => setIsFavorite(response));
-  //   }
-  // }, [favoriteStatus, id]);
-  // console.log("location.pathname", location.pathname)
-  // console.log('isFavorite', isFavorite)
+  const selectLink = () => {
+    if (itsMy) {
+      if (location.pathname.includes("favoriteplaylists")) {
+        return `/user/cabinet/myplaylists/createplaylists/${id}/tracks`;
+      }
+      return `createplaylists/${id}/tracks`;
+    } else {
+      return `${id}/tracks`;
+    }
+  };
+
   return (
     <MediaItem>
       {!placeListCardInfo ? (
         <Link
           key={id}
-          to={`${id}/tracks`}
+          to={selectLink()}
           state={{ from: location }}
           disabled={placeListCardInfo ? true : false}
           style={{
