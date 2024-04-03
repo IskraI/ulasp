@@ -12,6 +12,7 @@ const NewSongs = ({
   isFetching,
   isError,
   showNavigationLink,
+  createPlaylists,
 }) => {
   return (
     <>
@@ -30,6 +31,9 @@ const NewSongs = ({
                   artist={artist}
                   icon={trackPictureURL}
                   trackURL={trackURL}
+                  addPlaylist={createPlaylists.filter(
+                    (item) => !item.trackList.includes(_id)
+                  )}
                 />
               )
             )}

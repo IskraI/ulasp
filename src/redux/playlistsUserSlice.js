@@ -13,13 +13,7 @@ export const playlistsUserApi = createApi({
       return headers;
     },
   }),
-  tagTypes: [
-    "Playlists",
-    "PlaylistsForAdd",
-    "PlaylistsAdd",
-    "PlaylistsUser",
-    "PlaylistsFavorite",
-  ],
+  tagTypes: ["Playlists", "PlaylistsForAdd", "PlaylistsAdd"],
 
   endpoints: (builder) => ({
     createPlaylistForUser: builder.mutation({
@@ -48,7 +42,7 @@ export const playlistsUserApi = createApi({
           limit && `&limit=${limit}`
         }${sort && `&sort=${sort}`}`,
       }),
-      providesTags: ["PlaylistsUser"],
+      providesTags: ["Playlists"],
     }),
 
     getCreatePlaylistsForUser: builder.query({
@@ -58,7 +52,7 @@ export const playlistsUserApi = createApi({
         }`,
       }),
 
-      providesTags: (_result, _err, id) => [{ type: "PlaylistsUser", id }],
+      providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
     }),
 
     getLatestPlaylistsForUser: builder.query({
@@ -76,7 +70,7 @@ export const playlistsUserApi = createApi({
         url: `/user/userPlaylist/delete/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["PlaylistsUser", "PlaylistsForAdd"],
+      invalidatesTags: ["Playlists", "PlaylistsForAdd"],
     }),
 
     updatePlaylistById: builder.mutation({
@@ -89,7 +83,7 @@ export const playlistsUserApi = createApi({
           formData: true,
         }
       ),
-      invalidatesTags: ["PlaylistsUser", "PlaylistsForAdd"],
+      invalidatesTags: ["Playlists", "PlaylistsForAdd"],
     }),
 
     favoritePlaylistForUser: builder.query({
@@ -134,7 +128,7 @@ export const playlistsUserApi = createApi({
         body: formData,
         formData: true,
       }),
-      invalidatesTags: ["Playlists", "PlaylistsUser"],
+      invalidatesTags: ["Playlists"],
     }),
 
     updateAddStatusApi: builder.mutation({
@@ -150,7 +144,7 @@ export const playlistsUserApi = createApi({
         url: `/user/tracks/delete/${trackId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Playlists"],
+      invalidatesTags: ["Playlists", "Tracks"],
     }),
     updatePlaylistSort: builder.mutation({
       query: ({ playlistId, data }) => ({
@@ -172,7 +166,7 @@ export const playlistsUserApi = createApi({
           tracksIdArray: tracksIdList,
         },
       }),
-      invalidatesTags: ["PlaylistsUser"],
+      invalidatesTags: ["Playlists"],
     }),
 
     removeTrackFromPlaylistUser: builder.mutation({
@@ -184,7 +178,7 @@ export const playlistsUserApi = createApi({
           tracksIdArray: tracksIdList,
         },
       }),
-      invalidatesTags: ["PlaylistsUser"],
+      invalidatesTags: ["Playlists", "PlaylistsForAdd"],
     }),
     //получение плейлистов юзера в которых нет заданной песни
     getPlaylistCreatedUserWithoutTrackId: builder.query({
@@ -204,7 +198,7 @@ export const playlistsUserApi = createApi({
           trackId: trackId,
         },
       }),
-      invalidatesTags: ["PlaylistsUser"],
+      invalidatesTags: ["Playlists", "PlaylistsForAdd"],
     }),
   }),
 });

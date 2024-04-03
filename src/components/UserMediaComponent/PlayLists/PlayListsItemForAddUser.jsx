@@ -69,6 +69,7 @@ const PlayListItemForAdd = ({
         imgSrc={`${BASE_URL}/${icon}`}
         onClick={() => addTrackInPlaylistUser(id, trackId)}
         borderHover={"none"}
+        justifycontent={"space-evenly"}
       >
         <PlaylistImg src={BASE_URL + "/" + icon} alt={title} />
         <PlaylistInfoWrapper>
@@ -77,7 +78,6 @@ const PlayListItemForAdd = ({
             {countTracks + `${" "}` + "пісень"}
           </PlaylistCountTracks>
         </PlaylistInfoWrapper>
-        rjvbvbvbb vcgg
       </Button>
 
       {/* )} */}

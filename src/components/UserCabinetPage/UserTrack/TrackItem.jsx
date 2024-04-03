@@ -37,14 +37,15 @@ const TrackItem = ({
   artist,
   trackURL,
   isLoading,
-  addPlaylist,
+
+  createPlaylists,
 }) => {
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
   const [isPlayingTrack, setIsPlayingTrack] = useState(false);
 
   const ref = useRef();
-
+  console.log("object TrackItem:>> ", createPlaylists);
   const currentTrackIndex = playerState.indexTrack;
 
   useEffect(() => {
@@ -101,6 +102,7 @@ const TrackItem = ({
   //   isError,
   // } = useGetPlaylistCreatedUserWithoutTrackIdQuery(id);
   //открываем модальное окно со списком плейлистов
+
   const [showModalAddTrackToPlaylist, setShowModalAddTrackToPlaylist] =
     useState(false);
 
@@ -113,9 +115,12 @@ const TrackItem = ({
     document.body.classList.remove("modal-open");
     setShowModalAddTrackToPlaylist(false);
   };
-  const [playlistUserForAdd, setPlaylistUserForAdd] = useState([
-    ...addPlaylist,
-  ]);
+  const [playlistUserForAdd, setPlaylistUserForAdd] = useState(createPlaylists);
+  console.log("object playlistUserForAdd:>> ", playlistUserForAdd);
+  const addPlaylist = createPlaylists.filter(
+    (item) => !item.trackList.includes(id)
+  );
+  console.log("object addPlaylist:>> id", id, addPlaylist);
 
   //хук который отправляет запрос на бек
   const [addTrackToPlaylist, { data, isLoading: isLoadingAddTrackToPlaylist }] =
@@ -196,7 +201,7 @@ const TrackItem = ({
               <PlaylistsForAdd
                 title={"Плейлисти для додавання"}
                 displayPlayer={"none"}
-                data={playlistUserForAdd}
+                data={addPlaylist}
                 trackId={id}
                 addTrackInPlaylistUser={addTrackInPlaylistUser}
                 // onClose={handleCloseModal}

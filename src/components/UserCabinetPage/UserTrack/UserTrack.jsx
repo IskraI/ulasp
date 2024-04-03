@@ -17,6 +17,7 @@ const TrackAddByUser = ({
   showNavigationLink,
   createPlaylists,
 }) => {
+  console.log("createPlaylists TrackAddByUser :>> ", createPlaylists);
   return (
     <>
       {!isFetching && !isError && (
@@ -28,15 +29,13 @@ const TrackAddByUser = ({
             {trackAddUser.map(
               ({ _id, trackPictureURL, trackName, artist, trackURL }) => (
                 <TrackItem
-                  addPlaylist={createPlaylists.filter(
-                    (item) => !item.trackList.includes(_id)
-                  )}
                   key={_id}
                   id={_id}
                   title={trackName}
                   artist={artist}
                   icon={trackPictureURL}
                   trackURL={trackURL}
+                  createPlaylists={createPlaylists}
                 />
               )
             )}

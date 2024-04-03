@@ -3,7 +3,7 @@ import { colors, transition } from "../../styles/vars";
 
 export const CustomButton = styled.button`
   display: flex;
-  justify-content: center;
+  justify-content: ${(props) => props.justifycontent ?? "center"};
   align-items: center;
   border-radius: 10px;
   border: ${(props) => props.border || "1px solid #17161c"};
@@ -25,7 +25,7 @@ export const CustomButton = styled.button`
   &:hover,
   :focus {
     background: #fff3bf;
-    border:${(props) => props.borderHover ?? "1px solid #17161"};
+    border: ${(props) => props.borderHover ?? "1px solid #17161"};
   }
 
   &:active {
@@ -49,6 +49,6 @@ export const SvgStyled = styled.svg`
 
 export const ImgStyled = styled.img`
   border-radius: 10px;
-  margin-right: auto;
+  /* margin-right: auto; */
   display: ${(props) => (props.showImg ? "block" : "none")};
 `;

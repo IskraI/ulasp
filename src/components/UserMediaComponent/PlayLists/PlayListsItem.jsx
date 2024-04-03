@@ -39,7 +39,7 @@ const PlayListItem = ({
 
   // const { data: dataFavorites } = useFavoritePlaylistForUserQuery();
 
-  console.log("favoriteStatus item", favoriteStatus);
+  // console.log("favoriteStatus item", favoriteStatus);
 
   const [isFavorite, setIsFavorite] = useState(favoriteStatus || false);
 

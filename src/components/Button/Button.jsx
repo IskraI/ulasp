@@ -26,6 +26,7 @@ export const Button = ({
   showImg,
   imgSrc,
   borderHover,
+  justifycontent,
 }) => {
   return (
     <CustomButton
@@ -47,6 +48,7 @@ export const Button = ({
       border={border}
       imgSrc={imgSrc}
       borderHover={borderHover}
+      justifycontent={justifycontent}
     >
       <ImgStyled src={imgSrc} alt={text} showImg={showImg} />
       <SvgStyled

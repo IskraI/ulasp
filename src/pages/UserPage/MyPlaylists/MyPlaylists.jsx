@@ -20,12 +20,6 @@ const MyPlaylists = () => {
     isError: isErrorCreatePlaylists,
   } = useGetCreatePlaylistsForUserQuery(`?&limit=${6}`);
 
-  const {
-    data: allCreatePlaylists,
-    isFetching: isFetchingAllCreatePlaylists,
-    isSuccess: isSuccesAllCreatePlaylists,
-    isError: isErrorAllCreatePlaylists,
-  } = useGetCreatePlaylistsForUserQuery();
   // const {
   //   data: allTracks,
 
@@ -44,7 +38,12 @@ const MyPlaylists = () => {
     limit: 6,
     forseRefetch: true,
   });
-
+  const {
+    data: allCreatePlaylists,
+    isFetching: isFetchingAllCreatePlaylists,
+    isSuccess: isSuccesAllCreatePlaylists,
+    isError: isErrorAllCreatePlaylists,
+  } = useGetCreatePlaylistsForUserQuery();
   const {
     data: favoritePlaylist,
     isLoading: isLoadingFavoritePlaylist,
