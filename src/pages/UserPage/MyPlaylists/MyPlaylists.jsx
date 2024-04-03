@@ -20,6 +20,12 @@ const MyPlaylists = () => {
     isError: isErrorCreatePlaylists,
   } = useGetCreatePlaylistsForUserQuery(`?&limit=${6}`);
 
+  const {
+    data: allCreatePlaylists,
+    isFetching: isFetchingAllCreatePlaylists,
+    isSuccess: isSuccesAllCreatePlaylists,
+    isError: isErrorAllCreatePlaylists,
+  } = useGetCreatePlaylistsForUserQuery();
   // const {
   //   data: allTracks,
 
@@ -109,6 +115,7 @@ const MyPlaylists = () => {
             isSuccess={isSuccesAddPlaylist}
             showNavigationLink={true}
             isLoadingAddPlaylist={isLoadingAddPlaylist}
+            createPlaylists={allCreatePlaylists}
           />
           {/* )} */}
 
@@ -122,13 +129,14 @@ const MyPlaylists = () => {
               isFetching={isFetchingFavoritePlaylist}
               error={isErrorFavoritePlaylist}
               showNavigationLink={true}
+              createPlaylists={allCreatePlaylists}
             />
           </>
 
           <TrackAddByUser
             data={tracksInAdd.tracksInAdd}
             isFetching={isFetchingTracksInAdd}
-            createPlaylists={createPlaylists}
+            createPlaylists={allCreatePlaylists}
             // error={isErrorNewSongs}
             // mediaLibrary={true}
             // showTitle={false}

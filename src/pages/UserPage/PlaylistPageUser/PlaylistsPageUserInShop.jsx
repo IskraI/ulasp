@@ -11,7 +11,7 @@ const PlaylistsPageUserInGenre = () => {
   const { data, isFetching, isError, isSuccess } =
         useGetShopByIdforUserQuery(shopId);
     
-    
+
 
   return (
     <>
