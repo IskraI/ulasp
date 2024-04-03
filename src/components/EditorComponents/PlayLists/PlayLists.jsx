@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import useChooseAvatar from "../../../hooks/useChooseAvatar";
+
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 import ControlMediateca from "../ControlMediateca/ControlMediaTeca";
 import ModalForm from "../ControlMediateca/ModalForm";
@@ -23,8 +25,8 @@ const LatestPlaylists = ({
   isFetching,
   isLoading,
   error,
-  showNavigationLink,
   subCategory,
+  showNavigationLink,
   minLengthInput = 2,
   maxLengthInput = 29,
 }) => {
@@ -33,9 +35,9 @@ const LatestPlaylists = ({
 
   const [showModalError, setShowModalError] = useState(false);
 
-  const [selectedPlaylistAvatar, setSelectedPlaylistAvatar] = useState(null);
+  const { genreId } = useParams();
 
-  const { genreId, shopSubCategoryId } = useParams();
+  const [avatar, setAvatar, resetAvatar] = useChooseAvatar();
 
   const [
     createPlaylist,
@@ -82,23 +84,12 @@ const LatestPlaylists = ({
     }, 2000);
   }, [isSuccessCreate]);
 
-  const handleChoosePlaylistAvatar = (event) => {
-    let file;
-
-    if (event.target.files[0] !== undefined) {
-      file = event.target.files[0];
-    }
-    if (file) {
-      setSelectedPlaylistAvatar(file);
-    }
-  };
-
   const formDataFunction = (data) => {
     const formData = new FormData();
 
     formData.append("playListName", data.playListName),
       formData.append("type", data.type),
-      formData.append("picsURL", selectedPlaylistAvatar);
+      formData.append("picsURL", avatar);
 
     return formData;
   };
@@ -106,7 +97,15 @@ const LatestPlaylists = ({
   const handleSubmitPlaylist = async (data) => {
     try {
       const formData = formDataFunction(data);
-      await createPlaylist(formData).unwrap();
+
+      if (genre) {
+        console.log("ПОПАЛИ В ЖАНРЫ");
+        await createPlaylistInGenre({ genreId, formData }).unwrap();
+      } else {
+        console.log("НЕ ПОПАЛИ В ЖАНРЫ");
+        await createPlaylist(formData).unwrap();
+      }
+
       closeModal();
       setShowModalSuccess(true);
     } catch (error) {
@@ -115,34 +114,7 @@ const LatestPlaylists = ({
     }
   };
 
-  const handleSubmitInGenre = async (data) => {
-    try {
-      const formData = formDataFunction(data);
-      await createPlaylistInGenre({ genreId, formData }).unwrap();
-      closeModal();
-      setShowModalSuccess(true);
-    } catch (error) {
-      console.log(error);
-      setShowModalError(true);
-    }
-  };
-
-  // const handleSubmitInSubCategoryShop = async (data) => {
-  //   try {
-  //     const formData = formDataFunction(data);
-  //     await createPlaylistInSubCategoryShop({
-  //       shopSubCategoryId,
-  //       formData,
-  //     }).unwrap();
-  //     closeModal();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  const clearImageCover = () => {
-    setSelectedPlaylistAvatar(null);
-  };
+  const clearImageCover = () => resetAvatar(null);
 
   const closeModal = () => {
     clearImageCover();
@@ -193,9 +165,9 @@ const LatestPlaylists = ({
           {genre ? (
             <>
               <ModalForm
-                onSubmit={handleSubmitInGenre}
-                changePlayListAvatar={handleChoosePlaylistAvatar}
-                img={selectedPlaylistAvatar}
+                onSubmit={handleSubmitPlaylist}
+                changePlayListAvatar={setAvatar}
+                img={avatar}
                 clearImageCover={clearImageCover}
                 genre={`${genre}`}
                 idInputImg={"picsURL"}
@@ -213,8 +185,8 @@ const LatestPlaylists = ({
             !subCategory && (
               <ModalForm
                 onSubmit={handleSubmitPlaylist}
-                changePlayListAvatar={handleChoosePlaylistAvatar}
-                img={selectedPlaylistAvatar}
+                changePlayListAvatar={setAvatar}
+                img={avatar}
                 clearImageCover={clearImageCover}
                 idInputImg={"picsURL"}
                 idInputFirst={"playListName"}
@@ -228,21 +200,6 @@ const LatestPlaylists = ({
               />
             )
           )}
-          {/* {subCategory && (
-            <ModalForm
-              onSubmit={handleSubmitInSubCategoryShop}
-              changePlayListAvatar={handleChoosePlaylistAvatar}
-              img={selectedPlaylistAvatar}
-              clearImageCover={clearImageCover}
-              idInputImg={"picsURL"}
-              idInputFirst={"playListName"}
-              marginTopInputFirst="24px"
-              idInputSecond={"type"}
-              valueInputSecond={"playlist"}
-              placeholderFirst={"Назва плейлисту*"}
-              cover={true}
-            />
-          )} */}
         </Modal>
       )}
       {showModalSuccess && isSuccessCreate && !isErrorCreate && (

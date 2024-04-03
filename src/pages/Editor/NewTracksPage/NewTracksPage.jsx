@@ -84,6 +84,7 @@ const NewTracksPage = ({ mediaLibrary, limit, showTitle = true }) => {
             pageSize={pageSize}
             totalPages={tracksInChart.totalPages}
             deleteButton={false}
+            showPagination={false}
           />
         </>
       )}

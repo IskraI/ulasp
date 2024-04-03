@@ -145,7 +145,7 @@ const TracksTable = ({
                 hideOnSinglePage
                 onChangeSizePage={onChangeSizePage}
                 onChange={(page) => onChangeCurrentPage(page)}
-                locale={localeUA}
+                // locale={localeUA}
               />
             )}
           </div>

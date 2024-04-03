@@ -41,7 +41,6 @@ const TracksPage = () => {
     page: currentPage,
     limit: pageSize,
     query,
-    // refetchOnFocus: true,
   });
 
   const [
@@ -81,19 +80,6 @@ const TracksPage = () => {
     setIsSearching(false);
   };
 
-  // const checkedAllFn = (data) => {
-  //   console.log(data);
-  //   if (!data) {
-  //     if (baseInputRef !== undefined) {
-  //       baseInputRef.current.checked = false;
-  //       setCheckedMainCheckBox(false);
-  //     }
-  //   } else {
-  //     baseInputRef.current.checked = true;
-  //     setCheckedMainCheckBox(true);
-  //   }
-  // };
-
   const checkedAllFn = (data) => {
     console.log(data);
     if (!data) {
@@ -116,7 +102,6 @@ const TracksPage = () => {
   const isSearchResultFail =
     query !== "" && data.playlist.trackList.length === 0;
 
-  console.log("isSearchResultFail", isSearchResultFail);
   return (
     <>
       {console.log(data)}
@@ -133,7 +118,7 @@ const TracksPage = () => {
               marginBottom: "24px",
             }}
           >
-            <BackButton playlistName={data.playlist.playListName} />
+            <BackButton />
             <AddTracks
               iconButton={`${symbol}#icon-plus`}
               textButton={"Музику"}

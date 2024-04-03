@@ -1,7 +1,4 @@
-import { useNavigate, Navigate, NavLink } from "react-router-dom";
-
 import { useSelector } from "react-redux";
-// import { TabNavigation } from "../TabNavigation/TabNavigation";
 import { getUserState } from "../../redux/userSelectors";
 import {
   propAdminNav,
@@ -20,7 +17,6 @@ import { useState } from "react";
 
 export const NavMenu = () => {
   const user = useSelector(getUserState);
-  // const navigate = useNavigate();
 
   const [activeMenu, setActiveMenu] = useState(null);
 

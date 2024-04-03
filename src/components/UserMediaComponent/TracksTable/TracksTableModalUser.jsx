@@ -209,7 +209,7 @@ const TracksTableModalUser = ({
                 hideOnSinglePage
                 onChangeSizePage={onChangeSizePage}
                 onChange={(page) => onChangeCurrentPage(page)}
-                locale={localeUA}
+                // locale={localeUA}
               />
             )}
           </div>

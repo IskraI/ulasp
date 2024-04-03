@@ -68,6 +68,7 @@ export const MediaItemText = styled.p`
 
   padding: ${({ padding }) => padding || "0px 6px"};
   text-align: center;
+  overflow-wrap: break-word;
 `;
 
 export const MediaIconsWrapper = styled.div`
