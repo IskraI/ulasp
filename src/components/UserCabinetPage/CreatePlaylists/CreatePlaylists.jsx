@@ -27,6 +27,7 @@ const CreatePlaylists = ({
   dataFavorite,
   isFetching,
   error,
+
   //   genre,
   // shopCategoryName,
 }) => {
@@ -98,6 +99,7 @@ const CreatePlaylists = ({
                     icon={playListAvatarURL}
                     minLength={minLengthInput}
                     maxLength={maxLengthInput}
+                    createPlaylists={createPlaylists}
                   />
                 );
               }

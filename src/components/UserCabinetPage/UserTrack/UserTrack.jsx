@@ -37,9 +37,6 @@ const TrackAddByUser = ({
                   artist={artist}
                   icon={trackPictureURL}
                   trackURL={trackURL}
-                  addPlaylist={createPlaylists.filter(
-                    (item) => !item.trackList.includes(_id)
-                  )}
                 />
               )
             )}

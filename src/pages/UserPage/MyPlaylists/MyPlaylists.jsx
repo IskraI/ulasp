@@ -55,8 +55,6 @@ const MyPlaylists = () => {
     isError: isErrorAddPlaylist,
   } = useAddPlaylistForUserQuery();
 
-  console.log("dataAdd playlist", dataAdd?.add.slice(0, 2));
-
   const fetching =
     isFetchingCreatePlaylists &&
     isFetchingFavoritePlaylist &&

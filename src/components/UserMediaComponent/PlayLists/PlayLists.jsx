@@ -25,7 +25,7 @@ const LatestPlaylists = ({
   const { data: dataAdd, isLoading: isLoadingAddPlaylist } =
     useAddPlaylistForUserQuery();
 
-  // console.log('dataAdd playlist', dataAdd.add )
+  console.log("dataAdd playlist", dataAdd.add);
   // console.log('dataFavorite playlist', dataFavorite.favorites)
 
   return (

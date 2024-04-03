@@ -61,6 +61,7 @@ const TracksTable = ({
   totalPages,
   deleteButton = false,
   isSorted,
+  createPlaylists,
 }) => {
   const { id: idUser } = useSelector(getUserState);
   console.log("user TracksTable :>> ", idUser);
@@ -318,6 +319,9 @@ const TracksTable = ({
                         deleteCheckedTrackId={deleteCheckedTrackId}
                         addTrackToCheckedList={addTrackToCheckedList}
                         isAddTrackUser={addTrackByUsers?.includes(idUser)}
+                        addPlaylist={createPlaylists.filter(
+                          (item) => !item.trackList.includes(_id)
+                        )}
                       />
                     );
                   }

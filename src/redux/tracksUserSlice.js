@@ -61,7 +61,7 @@ export const tracksUserApi = createApi({
         url: `/user/tracks/add/${id}`,
         method: "POST",
       }),
-      invalidatesTags: ["TracksByUser"],
+      invalidatesTags: ["TracksByUser", "AddTrackByUsers"],
     }),
     deleteTrack: builder.mutation({
       query: (id) => ({
