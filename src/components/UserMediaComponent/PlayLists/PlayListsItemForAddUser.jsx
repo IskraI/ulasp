@@ -28,26 +28,27 @@ const PlayListItemForAdd = ({
   favoriteStatus,
   handleAddTrackInPlaylist,
   trackId,
+  addTrackInPlaylistUser,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
   const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
 
-  //хук который отправляет запрос на бек
-  const [
-    addTrackToPlaylist,
-    { data: dataAddTrackToPlaylist, isLoading: isLoadingAddTrackToPlaylist },
-  ] = useAddTrackByIdToPlaylistUserMutation();
-  //функция которая вызывается при клике на плейлист и вызывает хук
-  const addTrackInPlaylistUser = (id) => {
-    console.log("playlistUserForAdd :>> ", id);
-    console.log("trackId :>> ", trackId);
+  // //хук который отправляет запрос на бек
+  // const [
+  //   addTrackToPlaylist,
+  //   { data: dataAddTrackToPlaylist, isLoading: isLoadingAddTrackToPlaylist },
+  // ] = useAddTrackByIdToPlaylistUserMutation();
+  // //функция которая вызывается при клике на плейлист и вызывает хук
+  // const addTrackInPlaylistUser = (id) => {
+  //   console.log("playlistUserForAdd :>> ", id);
+  //   console.log("trackId :>> ", trackId);
 
-    addTrackToPlaylist({ id, trackId }).then(() => {
-      console.log("добавили :>> ");
-    });
-  };
+  //   addTrackToPlaylist({ id, trackId }).then(() => {
+  //     console.log("добавили :>> ");
+  //   });
+  // };
 
   return (
     <MediaItem width={"220px"} padding={"0px"}>
@@ -66,8 +67,9 @@ const PlayListItemForAdd = ({
         border={"none"}
         showImg={"true"}
         imgSrc={`${BASE_URL}/${icon}`}
-        onClick={() => addTrackInPlaylistUser(id)}
+        onClick={() => addTrackInPlaylistUser(id, trackId)}
         borderHover={"none"}
+        justifycontent={"space-evenly"}
       >
         <PlaylistImg src={BASE_URL + "/" + icon} alt={title} />
         <PlaylistInfoWrapper>
@@ -76,7 +78,6 @@ const PlayListItemForAdd = ({
             {countTracks + `${" "}` + "пісень"}
           </PlaylistCountTracks>
         </PlaylistInfoWrapper>
-        rjvbvbvbb vcgg
       </Button>
 
       {/* )} */}

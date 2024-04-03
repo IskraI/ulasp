@@ -19,6 +19,7 @@ const PlaylistsForAdd = ({
   isFetching,
   error,
   onClose,
+  addTrackInPlaylistUser,
 }) => {
   // console.log('dataAdd playlist', dataAdd.add )
   // console.log("playlist", playlists);
@@ -44,6 +45,7 @@ const PlaylistsForAdd = ({
                       title={playListName}
                       icon={playListAvatarURL}
                       trackId={trackId}
+                      addTrackInPlaylistUser={addTrackInPlaylistUser}
                     />
                   );
                 })}

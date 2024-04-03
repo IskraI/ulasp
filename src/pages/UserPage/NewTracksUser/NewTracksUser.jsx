@@ -5,7 +5,7 @@ import { useGetTracksInChartQuery } from "../../../redux/tracksSlice";
 import { useState } from "react";
 import NavMusic from "../../../components/UserMediaComponent/NavMusic/NavMusic";
 import { Loader } from "../../../components/Loader/Loader";
-
+import { useGetCreatePlaylistsForUserQuery } from "../../../redux/playlistsUserSlice";
 
 const NewTracksUser = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,6 +22,15 @@ const NewTracksUser = () => {
     limit: pageSize,
     forseRefetch: true,
   });
+
+  const {
+    data: createPlaylists,
+    isFetching: isFetchingCreatePlaylists,
+    isSuccess: isSuccesCreatePlaylists,
+    isError: isErrorCreatePlaylists,
+  } = useGetCreatePlaylistsForUserQuery(
+    
+  );
 
   const onPageChange = (page) => {
     setCurrentPage(page);
@@ -66,6 +75,7 @@ const NewTracksUser = () => {
             currentPage={currentPage}
             pageSize={pageSize}
             totalPages={tracksInChart.totalPages}
+            createPlaylists={createPlaylists}
           />
         </>
       )}

@@ -38,7 +38,12 @@ const MyPlaylists = () => {
     limit: 6,
     forseRefetch: true,
   });
-
+  const {
+    data: allCreatePlaylists,
+    isFetching: isFetchingAllCreatePlaylists,
+    isSuccess: isSuccesAllCreatePlaylists,
+    isError: isErrorAllCreatePlaylists,
+  } = useGetCreatePlaylistsForUserQuery();
   const {
     data: favoritePlaylist,
     isLoading: isLoadingFavoritePlaylist,
@@ -54,8 +59,6 @@ const MyPlaylists = () => {
     isSuccess: isSuccesAddPlaylist,
     isError: isErrorAddPlaylist,
   } = useAddPlaylistForUserQuery();
-
-  console.log("dataAdd playlist", dataAdd?.add.slice(0, 2));
 
   const fetching =
     isFetchingCreatePlaylists &&
@@ -103,15 +106,16 @@ const MyPlaylists = () => {
             showNavigationLink={true}
           />
           {/* {!isLoadingAddPlaylist && !isLoadingFavoritePlaylist && ( */}
-            <AddPlaylists
-              title={"Додані плейлисти"}
-              data={dataAdd?.add.slice(0, 6)}
-              isFetching={isFetchingAddPlaylist}
-              isError={isErrorAddPlaylist}
-              isSuccess={isSuccesAddPlaylist}
-              showNavigationLink={true}
-              isLoadingAddPlaylist={isLoadingAddPlaylist}
-            />
+          <AddPlaylists
+            title={"Додані плейлисти"}
+            data={dataAdd?.add.slice(0, 6)}
+            isFetching={isFetchingAddPlaylist}
+            isError={isErrorAddPlaylist}
+            isSuccess={isSuccesAddPlaylist}
+            showNavigationLink={true}
+            isLoadingAddPlaylist={isLoadingAddPlaylist}
+            createPlaylists={allCreatePlaylists}
+          />
           {/* )} */}
 
           <>
@@ -124,12 +128,14 @@ const MyPlaylists = () => {
               isFetching={isFetchingFavoritePlaylist}
               error={isErrorFavoritePlaylist}
               showNavigationLink={true}
+              createPlaylists={allCreatePlaylists}
             />
           </>
 
           <TrackAddByUser
             data={tracksInAdd.tracksInAdd}
             isFetching={isFetchingTracksInAdd}
+            createPlaylists={allCreatePlaylists}
             // error={isErrorNewSongs}
             // mediaLibrary={true}
             // showTitle={false}

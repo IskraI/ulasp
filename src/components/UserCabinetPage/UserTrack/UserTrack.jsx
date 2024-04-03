@@ -15,7 +15,9 @@ const TrackAddByUser = ({
   isFetching,
   isError,
   showNavigationLink,
+  createPlaylists,
 }) => {
+  console.log("createPlaylists TrackAddByUser :>> ", createPlaylists);
   return (
     <>
       {!isFetching && !isError && (
@@ -33,6 +35,7 @@ const TrackAddByUser = ({
                   artist={artist}
                   icon={trackPictureURL}
                   trackURL={trackURL}
+                  createPlaylists={createPlaylists}
                 />
               )
             )}
@@ -52,6 +55,7 @@ TrackAddByUser.propTypes = {
   isFetching: PropTypes.bool,
   isError: PropTypes.bool,
   showNavigationLink: PropTypes.bool,
+  createPlaylists: PropTypes.array,
 };
 
 export default TrackAddByUser;

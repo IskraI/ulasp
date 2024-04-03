@@ -198,7 +198,7 @@ export const playlistsUserApi = createApi({
           trackId: trackId,
         },
       }),
-      invalidatesTags: ["PlaylistsForAdd"],
+      invalidatesTags: ["Playlists", "PlaylistsForAdd"],
     }),
   }),
 });

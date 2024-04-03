@@ -2,7 +2,10 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import TracksTable from "../../../components/UserMediaComponent/TracksTable/TracksTableUser";
-import { useGetCreatePlaylistByIdForUserQuery } from "../../../redux/playlistsUserSlice";
+import {
+  useGetCreatePlaylistByIdForUserQuery,
+  useGetCreatePlaylistsForUserQuery,
+} from "../../../redux/playlistsUserSlice";
 
 import PlaylistListItem from "../../../components/UserMediaComponent/PlayLists/PlayListsItem";
 import { ErrorNotFound, Error500 } from "../../../components/Errors/Errors";
@@ -32,6 +35,12 @@ const TracksPageCreateUser = () => {
     limit: pageSize,
     sort: sortedBy,
   });
+  const {
+    data: createPlaylists,
+    isFetching: isFetchingCreatePlaylists,
+    isSuccess: isSuccesCreatePlaylists,
+    isError: isErrorCreatePlaylists,
+  } = useGetCreatePlaylistsForUserQuery();
 
   const onPageChange = (page) => setCurrentPage(page);
 
@@ -99,6 +108,7 @@ const TracksPageCreateUser = () => {
             tracksSRC={data.tracksSRC}
             deleteButton={true}
             isSorted={isSorted}
+            createPlaylists={createPlaylists}
           />
         )}
       </>
