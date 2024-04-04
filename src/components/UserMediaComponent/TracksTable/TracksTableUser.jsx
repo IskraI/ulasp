@@ -294,7 +294,7 @@ const TracksTable = ({
                     },
                     index
                   ) => {
-                    const addPlaylist = createPlaylists.filter(
+                    const addPlaylist = createPlaylists?.filter(
                       (item) => !item.trackList.includes(_id)
                     );
                     return (
