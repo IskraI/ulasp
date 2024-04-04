@@ -3,15 +3,15 @@ import { useGetAllGenresForUserQuery } from "../../redux/genersUserSlice";
 import { useGetTracksByGenreIdQuery } from "../../redux/tracksUserSlice";
 import { Loader } from "../Loader/Loader";
 import { StyledDropDown, Select, Option } from "./DropDownGeners.styled";
-import { useNavigate } from 'react-router-dom';
-import symbol from '../../assets/symbol.svg';
+import { useNavigate } from "react-router-dom";
+import symbol from "../../assets/symbol.svg";
 
 const DropDownTracksInGenres = ({ currentGenreId }) => {
   const navigate = useNavigate();
   const [selectedGenre, setSelectedGenre] = useState("");
   const { data: genres, error, isLoading } = useGetAllGenresForUserQuery();
-  const { data: tracksData, error: tracksError, isLoading: tracksLoading } = useGetTracksByGenreIdQuery(currentGenreId);
-
+  // const { data: tracksData, error: tracksError, isLoading: tracksLoading } = useGetTracksByGenreIdQuery(currentGenreId);
+  console.log("currentGenreId DropDownTracksInGenres:>> ", currentGenreId);
   const datasort = (genres, currentGenreId) => {
     const sortedArr = [];
     const remainingArr = [];
@@ -40,14 +40,14 @@ const DropDownTracksInGenres = ({ currentGenreId }) => {
       }
     }
   }, [genres, error, currentGenreId]);
-  
+
   if (isLoading) {
-    return <Loader/>;
+    return <Loader />;
   }
 
   const handleChange = (e) => {
     const selectedGenreId = e.target.value;
-      navigate(`/user/medialibrary/genres/${selectedGenreId}/tracks`);
+    navigate(`/user/medialibrary/genres/${selectedGenreId}/tracks`);
   };
 
   return (
@@ -59,18 +59,18 @@ const DropDownTracksInGenres = ({ currentGenreId }) => {
           <Select
             id="genreSelect"
             value={selectedGenre}
-              onChange={handleChange}
-                          >
-                        {genres &&
+            onChange={handleChange}
+          >
+            {genres &&
               datasort(genres, currentGenreId).map((genre) => (
                 <Option key={genre._id} value={genre._id}>
                   {genre.genre}
                 </Option>
               ))}
-                         </Select>
-                    </StyledDropDown>
-          )}
-           {/* {tracksLoading && <Loader />} 
+          </Select>
+        </StyledDropDown>
+      )}
+      {/* {tracksLoading && <Loader />} 
       {tracksError && <div>Error loading tracks: {tracksError}</div>} 
       {tracksData && (
         <div>

@@ -83,6 +83,7 @@ const TrackItem = ({
   const isPaused = playerState.isPaused;
   const futurePlayerSRC = playerState.preloadSrc;
   const playerSRC = playerState.src;
+
   const oneGenre = !isInPlayList ? playLists[0]?.playlistGenre[0]?.genre : [];
 
   const makeUniq = (array) => {
@@ -222,8 +223,10 @@ const TrackItem = ({
   // const addPl = addPlaylist ? addPlaylist : [];
 
   const idT = idTrack;
-  const [playlistUserForAdd, setPlaylistUserForAdd] = useState(addPlaylist);
-  console.log("playlistUserForAdd rackItem:>> ", playlistUserForAdd);
+  const [playlistUserForAdd, setPlaylistUserForAdd] = useState([
+    ...addPlaylist,
+  ]);
+  // console.log("playlistUserForAdd rackItem:>> ", playlistUserForAdd);
 
   //хук который отправляет запрос на бек
   const [addTrackToPlaylist, { data, isLoading: isLoadingAddTrackToPlaylist }] =

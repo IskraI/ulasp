@@ -1,6 +1,7 @@
 import TabNavigation from "../../../components/TabNavigation/TabNavigation";
 import TracksTable from "../../../components/UserMediaComponent/TracksTable/TracksTableUser";
 import { useGetTracksByGenreIdQuery } from "../../../redux/tracksUserSlice";
+import { useGetCreatePlaylistsForUserQuery } from "../../../redux/playlistsUserSlice";
 import { BtnSort } from "../AllTracksUser/AllTracksUser.styled";
 import symbol from "../../../assets/symbol.svg";
 import { useState, useEffect, useId, useRef } from "react";
@@ -23,7 +24,12 @@ const AllTracksUser = () => {
   //   error: errorLoadingAllTracks,
   //   isFetching: isFetchingAllTracks,
   // } = useGetAllTracksforUserQuery();
-
+  const {
+    data: createPlaylists,
+    isFetching: isFetchingGetCreatePlaylists,
+    isSuccess: isSuccesCreatePlaylists,
+    isError: isErrorCreatePlaylists,
+  } = useGetCreatePlaylistsForUserQuery();
   const {
     data: allTracks,
     error: errorLoadingAllTracks,
@@ -99,8 +105,8 @@ const AllTracksUser = () => {
       {
         title: "",
         type: "button",
-        titleSize: "1%",
-        showData: false,
+        titleSize: "5%",
+        showData: true,
       },
     ];
 
@@ -166,6 +172,7 @@ const AllTracksUser = () => {
             totalPages={allTracks.totalPages}
             totalTracks={allTracks.totalTracks}
             tracksSRC={allTracks.tracksSRC}
+            createPlaylists={createPlaylists}
           />
           {/* <Player tracks={allTracks.tracks} /> */}
         </>
