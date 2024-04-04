@@ -16,6 +16,8 @@ import {
 import symbol from "../../../assets/symbol.svg";
 import ControlMyplaylists from "../ControlMyplaylists/ControlMyplaylists";
 import { Modal } from "../../Modal/Modal";
+import { ModalInfoText } from "../../Modal/Modal.styled";
+import { ErrorNotFound } from "../../Errors/Errors";
 import ModalFormMyplaylist from "../ControlMyplaylists/ModalFormMyplaylist";
 
 import useChooseAvatar from "../../../hooks/useChooseAvatar";
@@ -35,6 +37,7 @@ const CreatePlaylists = ({
   const maxLengthInput = 29;
 
   const [showModal, setShowModal] = useState(false);
+  const [showModalErrorCreate, setShowModalErrorCreate] = useState(false);
 
   // const {
   //   data: dataFavorite,
@@ -43,7 +46,12 @@ const CreatePlaylists = ({
 
   const [
     createPlaylist,
-    { isSuccess, isLoading: isLoadingCreatePlaylist, isError },
+    {
+      isSuccess,
+      isLoading: isLoadingCreatePlaylist,
+      isError: isErrorCreatePlaylist,
+      error: errorCreatePlaylist,
+    },
   ] = useCreatePlaylistForUserMutation();
 
   const [avatar, chooseAvatar, resetAvatar] = useChooseAvatar();
@@ -65,6 +73,7 @@ const CreatePlaylists = ({
       closeModal();
     } catch (error) {
       console.log(error);
+      setShowModalErrorCreate(true);
     }
   };
 
@@ -128,6 +137,25 @@ const CreatePlaylists = ({
             minLength={minLengthInput}
             maxLength={maxLengthInput}
           />
+        </Modal>
+      )}
+      {showModalErrorCreate && (
+        <Modal
+          width={"25vw"}
+          height={"25vh"}
+          onClose={() => setShowModalErrorCreate(false)}
+          showCloseButton={true}
+        >
+          <ModalInfoText fontSize={"20px"} marginBottom={"34px"}>
+            {isErrorCreatePlaylist &&
+            errorCreatePlaylist.data?.code === "4091" ? (
+              <ErrorNotFound
+                error={`Плейлист "${errorCreatePlaylist.data?.object}" вже використовується`}
+              />
+            ) : (
+              <ErrorNotFound error={errorCreatePlaylist.data?.message} />
+            )}
+          </ModalInfoText>
         </Modal>
       )}
     </>

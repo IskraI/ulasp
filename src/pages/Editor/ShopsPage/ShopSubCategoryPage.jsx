@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
+import BackButton from "../../../components/EditorComponents/BackButton/BackButton";
 import ControlMediateca from "../../../components/EditorComponents/ControlMediateca/ControlMediaTeca";
 import MediaListItem from "../../../components/EditorComponents/MediaList/MediaList";
 import { Loader } from "../../../components/Loader/Loader";
@@ -153,6 +154,8 @@ const ShopSubCategoryPage = () => {
       {errorShopCategory && <ErrorNotFound />}
       {isSuccessShopCategory && !isErrorShopCategory && (
         <>
+          <BackButton />
+
           <ControlMediateca
             title={shopCategory.shop.shopItemName}
             iconButton={`${symbol}#icon-plus`}

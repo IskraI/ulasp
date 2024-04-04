@@ -18,8 +18,6 @@ const PlaylistsPageInGenre = () => {
           <LatestPlaylists
             title={`Плейлисти жанру "${data.genre}"`}
             genre={data.genre}
-            display={"none"}
-            displayPlayer={"none"}
             data={data.playList}
             isFetching={isFetching}
             showNavigationLink={false}

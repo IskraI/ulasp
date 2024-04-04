@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 
+import BackButton from "../../../components/EditorComponents/BackButton/BackButton";
 import Playlists from "../../../components/EditorComponents/PlayLists/PlayListsShop";
 import { formDataFunction } from "../../../helpers/helpers";
 
@@ -76,23 +77,26 @@ const PlaylistInShopSubCategoryPage = () => {
   return (
     <>
       {isSuccessShopSubCategory && !isErrorShopSubCategory && (
-        <Playlists
-          title={`Плейлисти підкатегорії "${shopSubCategory.shopSubTypeName}"`}
-          data={shopSubCategory.playList}
-          isFetchingPlaylist={isFetchingShopSubCategory}
-          showNavigationLink={false}
-          handleCreatePlaylist={handleSubmitPlayListInShopLibrary}
-          onChangePlaylistAvatar={handleAvatarChange}
-          closeCreatePlaylistModal={closeModalCreatePlaylist}
-          typeMediaLibrary={"subCategoryShop"}
-          idTypeOfMediaLibrary={idShopLibrary}
-          isSuccessCreatePlaylist={isSuccessCreatePlaylist}
-          isErrorCreatePlaylist={isErrorCreatePlaylist}
-          errorCreatePlaylist={errorCreatePlaylist}
-          newPlaylistName={newPlaylistName}
-          minLengthInput={minLengthInput}
-          maxLengthInput={maxLengthInput}
-        />
+        <>
+          <BackButton />
+          <Playlists
+            title={`Плейлисти підкатегорії "${shopSubCategory.shopSubTypeName}"`}
+            data={shopSubCategory.playList}
+            isFetchingPlaylist={isFetchingShopSubCategory}
+            showNavigationLink={false}
+            handleCreatePlaylist={handleSubmitPlayListInShopLibrary}
+            onChangePlaylistAvatar={handleAvatarChange}
+            closeCreatePlaylistModal={closeModalCreatePlaylist}
+            typeMediaLibrary={"subCategoryShop"}
+            idTypeOfMediaLibrary={idShopLibrary}
+            isSuccessCreatePlaylist={isSuccessCreatePlaylist}
+            isErrorCreatePlaylist={isErrorCreatePlaylist}
+            errorCreatePlaylist={errorCreatePlaylist}
+            newPlaylistName={newPlaylistName}
+            minLengthInput={minLengthInput}
+            maxLengthInput={maxLengthInput}
+          />
+        </>
       )}
     </>
   );

@@ -7,12 +7,12 @@ export const propEditorNav = [
     navigation: "cabinet",
     picture: `${symbol}#icon-cabinet`,
   },
-  {
-    id: "navMessages",
-    title: "Повідомлення",
-    navigation: "messages",
-    picture: `${symbol}#icon-mail`,
-  },
+  // {
+  //   id: "navMessages",
+  //   title: "Повідомлення",
+  //   navigation: "messages",
+  //   picture: `${symbol}#icon-mail`,
+  // },
   {
     id: "navMedia",
     title: "Медіатека",

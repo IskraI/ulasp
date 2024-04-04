@@ -96,7 +96,6 @@ const CreateAllPlaylists = ({}) => {
         !isLoadingFavoritePlaylist && (
           <CreatePlaylists
             title={"Cтворені плейлисти"}
-            displayPlayer={"none"}
             dataFavorite={dataFavorite}
             data={createPlaylists}
             isFetching={isFetchingCreatePlaylists}

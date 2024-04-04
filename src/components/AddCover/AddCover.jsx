@@ -1,27 +1,20 @@
 import PropTypes from "prop-types";
 
-import { useState } from "react";
+import { useEffect } from "react";
+import useChooseAvatar from "../../hooks/useChooseAvatar";
 import { Cover, LabelPlusCover } from "./AddCover.styled";
 import { BASE_URL } from "../../constants/constants";
 
 const AddCover = ({ cover, coverAlt, handleChooseCover }) => {
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [avatar, setAvatar] = useChooseAvatar();
 
-  const coverImage = selectedImage
-    ? URL.createObjectURL(selectedImage)
+  const coverImage = avatar
+    ? URL.createObjectURL(avatar)
     : BASE_URL + "/" + cover;
 
-  const handleChooseIcon = (event) => {
-    let file;
-
-    if (event.target.files[0] !== undefined) {
-      file = event.target.files[0];
-    }
-    if (file) {
-      setSelectedImage(file);
-      handleChooseCover(file);
-    }
-  };
+  useEffect(() => {
+    handleChooseCover(avatar);
+  }, [avatar, handleChooseCover]);
 
   return (
     <>
@@ -31,7 +24,7 @@ const AddCover = ({ cover, coverAlt, handleChooseCover }) => {
         type="file"
         accept="image/*"
         id="cover"
-        onChange={handleChooseIcon}
+        onChange={setAvatar}
         style={{ display: "none" }}
       />
     </>

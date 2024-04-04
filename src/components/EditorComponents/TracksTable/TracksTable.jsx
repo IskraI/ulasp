@@ -504,7 +504,7 @@ const TracksTable = ({
                 // onShowSizeChange={onPageSizeChange}
                 onChangeSizePage={onPageSizeChange}
                 onChange={(page) => onChangePage(page)}
-                locale={localeUA}
+                // locale={localeUA}
               />
             )}
           </div>
