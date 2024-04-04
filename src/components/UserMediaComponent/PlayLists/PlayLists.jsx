@@ -31,7 +31,6 @@ const LatestPlaylists = ({
     isSuccess: isSuccesCreatePlaylists,
     isError: isErrorCreatePlaylists,
   } = useGetCreatePlaylistsForUserQuery();
-  console.log("dataAdd playlist", dataAdd.add);
   // console.log('dataFavorite playlist', dataFavorite.favorites)
 
   return (

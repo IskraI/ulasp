@@ -66,6 +66,8 @@ const TrackItem = ({
   isAddTrackUser,
   addPlaylist,
 }) => {
+  console.log("addPlaylist", addPlaylist);
+
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
   const [isPlayingTrack, setIsPlayingTrack] = useState(false);
@@ -217,10 +219,10 @@ const TrackItem = ({
     }
   };
 
+  const addPl = addPlaylist ? addPlaylist : [];
+
   const idT = idTrack;
-  const [playlistUserForAdd, setPlaylistUserForAdd] = useState([
-    ...addPlaylist,
-  ]);
+  const [playlistUserForAdd, setPlaylistUserForAdd] = useState([...addPl]);
   //хук который отправляет запрос на бек
   const [addTrackToPlaylist, { data, isLoading: isLoadingAddTrackToPlaylist }] =
     useAddTrackByIdToPlaylistUserMutation();
