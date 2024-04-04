@@ -18,42 +18,39 @@ const PlaylistsForAdd = ({
   data: playlists,
   isFetching,
   error,
-  onClose,
+  handleCloseModal,
   addTrackInPlaylistUser,
 }) => {
   // console.log('dataAdd playlist', dataAdd.add )
-  // console.log("playlist", playlists);
+  console.log("PlaylistsForAdd playlist", playlists);
 
   return (
     <PlaylistModalContainer>
-      {playlists.length === 0 ? (
-        // onClose()
-        <TitleWrapperModal>нет плейлиста</TitleWrapperModal>
-      ) : (
-        <>
-          <TitleContainer>
-            <TitleWrapperModal>{title}</TitleWrapperModal>
-          </TitleContainer>
-          {!isFetching && !error && (
-            <>
-              <MediaList>
-                {playlists.map(({ _id, playListName, playListAvatarURL }) => {
-                  return (
-                    <PlayListItemForAdd
-                      key={_id}
-                      id={_id}
-                      title={playListName}
-                      icon={playListAvatarURL}
-                      trackId={trackId}
-                      addTrackInPlaylistUser={addTrackInPlaylistUser}
-                    />
-                  );
-                })}
-              </MediaList>
-            </>
-          )}
-        </>
-      )}
+      {/* {playlists.length === 0 && handleCloseModal()} */}
+
+      <>
+        <TitleContainer>
+          <TitleWrapperModal>{title}</TitleWrapperModal>
+        </TitleContainer>
+        {!isFetching && !error && (
+          <>
+            <MediaList>
+              {playlists.map(({ _id, playListName, playListAvatarURL }) => {
+                return (
+                  <PlayListItemForAdd
+                    key={_id}
+                    id={_id}
+                    title={playListName}
+                    icon={playListAvatarURL}
+                    trackId={trackId}
+                    addTrackInPlaylistUser={addTrackInPlaylistUser}
+                  />
+                );
+              })}
+            </MediaList>
+          </>
+        )}
+      </>
     </PlaylistModalContainer>
   );
 };

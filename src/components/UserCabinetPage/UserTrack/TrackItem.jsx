@@ -20,7 +20,7 @@ import {
   useGetPlaylistCreatedUserWithoutTrackIdQuery,
   useAddTrackByIdToPlaylistUserMutation,
 } from "../../../redux/playlistsUserSlice";
-
+import { playlistsUserApi } from "../../../redux/playlistsUserSlice.js";
 import {
   setPreloadSrcPlayer,
   stopPlay,
@@ -115,26 +115,20 @@ const TrackItem = ({
     document.body.classList.remove("modal-open");
     setShowModalAddTrackToPlaylist(false);
   };
-  const [playlistUserForAdd, setPlaylistUserForAdd] = useState(createPlaylists);
-  console.log("object playlistUserForAdd:>> ", playlistUserForAdd);
+
   const addPlaylist = createPlaylists.filter(
     (item) => !item.trackList.includes(id)
   );
-  console.log("object addPlaylist:>> id", id, addPlaylist);
+  // console.log("object addPlaylist:>> id", id, addPlaylist);
 
   //хук который отправляет запрос на бек
   const [addTrackToPlaylist, { data, isLoading: isLoadingAddTrackToPlaylist }] =
     useAddTrackByIdToPlaylistUserMutation();
   //функция которая вызывается при клике на плейлист и вызывает хук
   const addTrackInPlaylistUser = (id, trackId) => {
-    console.log("playlistUserForAdd :>> ", id);
-    console.log("trackId :>> ", trackId);
-
     addTrackToPlaylist({ id, trackId }).then(() => {
       console.log("добавили :>> ");
-      setPlaylistUserForAdd((prevPlaylists) =>
-        prevPlaylists.filter((playlist) => playlist._id !== id)
-      );
+      dispatch(playlistsUserApi.util.invalidateTags(["Playlists"]));
     });
   };
 
@@ -162,9 +156,9 @@ const TrackItem = ({
           <PlaylistAddButton
             type="button"
             onClick={addTrackToPlaylistsModal}
-            disabled={playlistUserForAdd?.length === 0}
+            disabled={addPlaylist?.length === 0}
           >
-            {playlistUserForAdd?.length === 0 ? (
+            {addPlaylist?.length === 0 ? (
               <svg width="24" height="24" stroke="#888889">
                 <use href={`${symbol}#icon-check`}></use>
               </svg>
@@ -195,7 +189,7 @@ const TrackItem = ({
               overflowY: "auto",
             }}
           >
-            {playlistUserForAdd?.length === 0 ? (
+            {addPlaylist?.length === 0 ? (
               handleCloseModal()
             ) : (
               <PlaylistsForAdd
@@ -204,7 +198,7 @@ const TrackItem = ({
                 data={addPlaylist}
                 trackId={id}
                 addTrackInPlaylistUser={addTrackInPlaylistUser}
-                // onClose={handleCloseModal}
+                handleCloseModal={handleCloseModal}
               />
             )}
           </div>

@@ -40,7 +40,7 @@ import {
   // useGetPlaylistCreatedUserWithoutTrackIdQuery,
 } from "../../../redux/playlistsUserSlice.js";
 import { useAddTrackByIdToPlaylistUserMutation } from "../../../redux/playlistsUserSlice.js";
-import { playlistsApi } from "../../../redux/playlistsSlice.js";
+// import { playlistsApi } from "../../../redux/playlistsSlice.js";
 
 const TrackItem = ({
   idTrack,
@@ -219,10 +219,12 @@ const TrackItem = ({
     }
   };
 
-  const addPl = addPlaylist ? addPlaylist : [];
+  // const addPl = addPlaylist ? addPlaylist : [];
 
   const idT = idTrack;
-  const [playlistUserForAdd, setPlaylistUserForAdd] = useState([...addPl]);
+  const [playlistUserForAdd, setPlaylistUserForAdd] = useState(addPlaylist);
+  console.log("playlistUserForAdd rackItem:>> ", playlistUserForAdd);
+
   //хук который отправляет запрос на бек
   const [addTrackToPlaylist, { data, isLoading: isLoadingAddTrackToPlaylist }] =
     useAddTrackByIdToPlaylistUserMutation();
@@ -233,7 +235,7 @@ const TrackItem = ({
 
     addTrackToPlaylist({ id, trackId }).then(() => {
       console.log("добавили :>> ");
-      dispatch(playlistsApi.util.invalidateTags(["Playlists"]));
+      // dispatch(playlistsUserApi.util.invalidateTags(["Playlists"]));
 
       setPlaylistUserForAdd((prevPlaylists) =>
         prevPlaylists.filter((playlist) => playlist._id !== id)

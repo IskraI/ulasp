@@ -294,9 +294,6 @@ const TracksTable = ({
                     },
                     index
                   ) => {
-                    const addPlaylist = createPlaylists?.filter(
-                      (item) => !item.trackList.includes(_id)
-                    );
                     return (
                       <TrackItem
                         key={_id}
@@ -322,7 +319,12 @@ const TracksTable = ({
                         deleteCheckedTrackId={deleteCheckedTrackId}
                         addTrackToCheckedList={addTrackToCheckedList}
                         isAddTrackUser={addTrackByUsers?.includes(idUser)}
-                        addPlaylist={addPlaylist}
+                        addPlaylist={
+                          createPlaylists.filter(
+                            (item) => !item.trackList.includes(_id)
+                          ) || []
+                        }
+                        createPlaylists={createPlaylists}
                       />
                     );
                   }

@@ -31,7 +31,7 @@ const NewSongs = ({
                   artist={artist}
                   icon={trackPictureURL}
                   trackURL={trackURL}
-                  addPlaylist={createPlaylists.filter(
+                  addPlaylist={createPlaylists?.filter(
                     (item) => !item.trackList.includes(_id)
                   )}
                 />
@@ -53,6 +53,7 @@ NewSongs.propTypes = {
   isFetching: PropTypes.bool,
   isError: PropTypes.bool,
   showNavigationLink: PropTypes.bool,
+  createPlaylists: PropTypes.array,
 };
 
 export default NewSongs;
