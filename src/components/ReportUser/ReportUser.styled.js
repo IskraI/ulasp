@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { colors } from "../../../styles/vars";
+import { colors } from "../../styles/vars";
 export const ErrorText = styled.p`
   color: #535250;
   text-align: center;
@@ -96,6 +96,11 @@ export const TitleText = styled.h3`
 export const ReportWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
+  gap: 24px;
+`;
+export const ReportFormButton = styled.div`
+  display: flex;
+  justify-content: flex-end;
   gap: 24px;
 `;
 export const ReporTabletWrapper = styled.div`

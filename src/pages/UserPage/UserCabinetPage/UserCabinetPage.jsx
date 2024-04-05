@@ -1,7 +1,7 @@
 import {
   StatsListWrapper,
   StatItemEditor,
-} from "../Statistic/Statistic.styled";
+} from "../../../components/Statistic/Statistic.styled";
 
 import {
   TitleSecond,
@@ -11,10 +11,10 @@ import {
   InfoWrapper,
 } from "./UserCabinetPage.styled";
 import { useSelector } from "react-redux";
-import { getUserState } from "../../redux/userSelectors";
-import { AdminWriteForm } from "../../components/Form/AdminWriteForm";
-import { ActForm } from "../../components/Form/ActForm";
-import { ReportForm } from "./ReportForm";
+import { getUserState } from "../../../redux/userSelectors";
+import { AdminWriteForm } from "../../../components/Form/AdminWriteForm";
+import { ActForm } from "../../../components/Form/ActForm";
+import { ReportForm } from "../../../components/ReportForm/ReportForm";
 
 const UserCabinetPage = () => {
   const user = useSelector(getUserState);
@@ -34,7 +34,7 @@ const UserCabinetPage = () => {
           <TitleSecond>Наступна оплата</TitleSecond>
           <DataUser>{user.dateOfAccess}</DataUser>
         </InfoWrapper>
-        <ReportForm user={user} />
+        <ReportForm user={user} userpage={true} />
       </FormContainer>
       <FormContainer>
         <AdminWriteForm user={user} />

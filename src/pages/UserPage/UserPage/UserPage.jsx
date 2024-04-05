@@ -1,11 +1,11 @@
-import { SiteBarNav } from "../../components/SiteBarNav/SiteBarNav";
+import { SiteBarNav } from "../../../components/SiteBarNav/SiteBarNav";
 import { Outlet } from "react-router-dom";
 import { Suspense } from "react";
 import { useSelector } from "react-redux";
-import { getPlayerState } from "../../redux/playerSelectors";
-import { Loader } from "../../components/Loader/Loader";
-import { PageSection, PageSubpage } from "../AdminPage/AdminPage.styled";
-import Player from "../../components/Player/Player";
+import { getPlayerState } from "../../../redux/playerSelectors";
+import { Loader } from "../../../components/Loader/Loader";
+import { PageSection, PageSubpage } from "../../AdminPage/AdminPage.styled";
+import Player from "../../../components/Player/Player";
 
 const UserPage = () => {
   const playerState = useSelector(getPlayerState);

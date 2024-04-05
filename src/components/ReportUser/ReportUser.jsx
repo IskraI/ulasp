@@ -9,17 +9,17 @@ import {
   ReporTabletWrapper,
   ReportFormData,
 } from "./ReportUser.styled";
-import TabNavigation from "../../TabNavigation/TabNavigation";
+import TabNavigation from "../TabNavigation/TabNavigation";
 import { useForm } from "react-hook-form";
-import { ButtonPrint } from "../ButtonPrint/ButtonPrint";
+import { ButtonPrint } from "../AdminComponents/ButtonPrint/ButtonPrint";
 import {
   useCountListensByUserByIdMutation,
   useGetUserByIdQuery,
-} from "../../../redux/dataUsersSlice";
+} from "../../redux/dataUsersSlice";
 import { useParams } from "react-router-dom";
-import ReportFormDataTemplate from "../../Form/FormForReport";
+import ReportFormDataTemplate from "../ReportForm/FormForReport";
 import ReportUserTable from "./ReportUserTable";
-import { getQuarterRange } from "../../../helpers/helpers";
+import { getQuarterRange } from "../../helpers/helpers";
 
 const ReportUser = () => {
   const [responseData, setResponseData] = useState();
@@ -31,6 +31,7 @@ const ReportUser = () => {
   const handleSelectedOptionChange = (newSelectedOption) => {
     setSelectedOption(newSelectedOption); // обновляем selectedOption внутри ReportUser
   };
+
   const [
     dispatchCountListensByUser,
     { isLoading: isLoadingCountListensByUser },

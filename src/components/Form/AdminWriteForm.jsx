@@ -16,7 +16,6 @@ export const AdminWriteForm = ({ user }) => {
   const { control, register, handleSubmit, setValue } = useForm();
   const [dispatchSendMail, { isLoading: isLoadingSendMail }] =
     useSendMailUserToAdminMutation();
-
   const subjectValue = useWatch({
     control,
     name: "subject",
@@ -50,6 +49,7 @@ export const AdminWriteForm = ({ user }) => {
   };
   const [activeModal, setActiveModal] = useState(null); //после успешного добавления спрашиваем добавить ли еще
   const [errorMessage, setErrorMessage] = useState("");
+
   const handleShowModal = (modalContent) => {
     console.log("modalContent", modalContent);
     setActiveModal(modalContent);
