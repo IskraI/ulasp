@@ -196,3 +196,21 @@ export const ReporTabletWrapper = styled.div`
 export const ReportFormData = styled.div`
   max-width: 421px;
 `;
+export const ReportForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 421px;
+  background: #7f99c0;
+  font-size: 24px;
+  font-weight: 500;
+  border: 0.25px solid rgba(23, 22, 28, 0.5);
+  border-radius: 10px;
+
+  padding: 16px 12px;
+`;
+export const ReportFormButton = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 24px;
+`;

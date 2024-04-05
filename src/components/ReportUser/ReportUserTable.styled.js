@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { colors } from "../../../styles/vars";
+import { colors } from "../../styles/vars";
 
 export const ErrorText = styled.p`
   color: #535250;
