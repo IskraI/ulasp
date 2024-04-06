@@ -320,7 +320,7 @@ const TracksTable = ({
                         addTrackToCheckedList={addTrackToCheckedList}
                         isAddTrackUser={addTrackByUsers?.includes(idUser)}
                         addPlaylist={
-                          createPlaylists.filter(
+                          (createPlaylists || []).filter(
                             (item) => !item.trackList.includes(_id)
                           ) || []
                         }
