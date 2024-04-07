@@ -98,6 +98,7 @@ const CardEditorForm = ({ user }) => {
           handleEditActivation={handleEditActivation}
           isEditing={isEditing}
           handleCloseEdit={handleCloseEdit}
+          editor={true}
         />
       </form>
       {activeModal === "successUpdate" && (
@@ -125,7 +126,7 @@ const CardEditorForm = ({ user }) => {
         <Modal
           width={"520px"}
           padding={"24px"}
-          onClose={handleCloseErrorModal}
+          onClose={handleCloseModal}
           showCloseButton={true}
         >
           <TextModal> {errorMessage}</TextModal>

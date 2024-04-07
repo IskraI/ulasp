@@ -15,65 +15,71 @@ const CommonFieldCard = ({
   errors,
   isEditing,
   activeSectionCard,
+  editor,
 }) => {
   return (
     <>
-      <RegisterField>
-        <RegisterLabel>Код ЄДРПОУ (ІНН)*</RegisterLabel>
-        <Controller
-          name="taxCode"
-          control={control}
-          defaultValue={user.taxCode}
-          render={({ field }) => (
-            <>
-              <RegisterInput
-                type="text"
-                placeholder="Код ЄДРПОУ (ІНН)"
-                readOnly={readOnly}
-                value={field.value}
-                onChange={(e) => field.onChange(e.target.value)}
-                className={
-                  isEditing ? `${errors.taxCode ? "invalid" : "valid"}` : ""
-                }
-              />
-              {errors && errors.taxCode && (
-                <Tooltip className={`${errors.taxCode ? "visible" : ""}`}>
-                  {errors.taxCode.message}
-                </Tooltip>
-              )}
-            </>
-          )}
-        />
-      </RegisterField>
+      {!editor && (
+        <RegisterField>
+          <RegisterLabel>Код ЄДРПОУ (ІНН)*</RegisterLabel>
+          <Controller
+            name="taxCode"
+            control={control}
+            defaultValue={user.taxCode}
+            render={({ field }) => (
+              <>
+                <RegisterInput
+                  type="text"
+                  placeholder="Код ЄДРПОУ (ІНН)"
+                  readOnly={readOnly}
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.target.value)}
+                  className={
+                    isEditing ? `${errors.taxCode ? "invalid" : "valid"}` : ""
+                  }
+                />
+                {errors && errors.taxCode && (
+                  <Tooltip className={`${errors.taxCode ? "visible" : ""}`}>
+                    {errors.taxCode.message}
+                  </Tooltip>
+                )}
+              </>
+            )}
+          />
+        </RegisterField>
+      )}
       {/* {activeSectionCard !== "MusicEditor" && ( */}
-      <RegisterField>
-        <RegisterLabel>Назва закладу</RegisterLabel>
-        <Controller
-          name="institution"
-          control={control}
-          defaultValue={user.institution}
-          render={({ field }) => (
-            <>
-              <RegisterInput
-                type="text"
-                placeholder="Назва закладу"
-                readOnly={readOnly}
-                value={field.value}
-                onChange={(e) => field.onChange(e.target.value)}
-                className={
-                  isEditing ? `${errors.institution ? "invalid" : "valid"}` : ""
-                }
-              />
-              {errors && errors.institution && (
-                <Tooltip className={`${errors.institution ? "visible" : ""}`}>
-                  {errors.institution.message}
-                </Tooltip>
-              )}
-            </>
-          )}
-        />
-      </RegisterField>
-      {/* )} */}
+      {!editor && (
+        <RegisterField>
+          <RegisterLabel>Назва закладу</RegisterLabel>
+          <Controller
+            name="institution"
+            control={control}
+            defaultValue={user.institution}
+            render={({ field }) => (
+              <>
+                <RegisterInput
+                  type="text"
+                  placeholder="Назва закладу"
+                  readOnly={readOnly}
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.target.value)}
+                  className={
+                    isEditing
+                      ? `${errors.institution ? "invalid" : "valid"}`
+                      : ""
+                  }
+                />
+                {errors && errors.institution && (
+                  <Tooltip className={`${errors.institution ? "visible" : ""}`}>
+                    {errors.institution.message}
+                  </Tooltip>
+                )}
+              </>
+            )}
+          />
+        </RegisterField>
+      )}
 
       <RegisterField>
         <RegisterLabel>Номер телефону*</RegisterLabel>

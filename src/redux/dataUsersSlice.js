@@ -213,6 +213,7 @@ export const {
   useGetUserByIdPlaylistCountQuery,
   useCountListensByUserByIdMutation,
   useUnblockEditorByIdMutation,
+  useAccessEditorByIdMutation,
   useEditorLoginPasswordUpdateMutation,
   useCountListensForUserByIdMutation,
 } = dataUsersApi;

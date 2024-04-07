@@ -31,6 +31,7 @@ const RegisterNameFieldCard = ({
   control,
   handleEditActivation,
   handleCloseEdit,
+  editor,
 }) => {
   return (
     <RegisterNameBlock>
@@ -195,7 +196,6 @@ const RegisterNameFieldCard = ({
             idUser={user._id}
             type="button"
             isTrue={typeOfAccess}
-            editor={user.editorRole || user.adminRole}
             // handleTypeOfAccess={handleTypeOfAccess}
             onClick={() => handleTypeOfAccess()}
           />
@@ -215,6 +215,7 @@ const RegisterNameFieldCard = ({
             // form={true}
             type="button"
             idUser={user._id}
+            editor={user.editorRole || user.adminRole}
             isTrue={typeOfAccess}
             onClick={() => handleTypeOfAccess()}
           />

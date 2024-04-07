@@ -22,7 +22,7 @@ const ContactFaceFieldCard = ({
   return (
     <RegisterContactField margintop={margintop}>
       <RegisterField>
-        <RegisterLabel>Контактна особа* </RegisterLabel>
+        <RegisterLabel>Контактна особа </RegisterLabel>
         <Controller
           name="contactFace"
           control={control}
@@ -49,8 +49,8 @@ const ContactFaceFieldCard = ({
         />
       </RegisterField>
 
-      <RegisterField>
-        <RegisterLabel>Ідентифікаційний код* </RegisterLabel>
+      {/* <RegisterField>
+        <RegisterLabel>Ідентифікаційний код </RegisterLabel>
         <Controller
           name="contactFaceTaxCode"
           control={control}
@@ -79,10 +79,10 @@ const ContactFaceFieldCard = ({
             </>
           )}
         />
-      </RegisterField>
+      </RegisterField> */}
 
       <RegisterField>
-        <RegisterLabel>Номер телефону* </RegisterLabel>
+        <RegisterLabel>Номер телефону </RegisterLabel>
         <Controller
           name="contactFaceTelNumber"
           control={control}
