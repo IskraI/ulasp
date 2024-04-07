@@ -9,7 +9,7 @@ import Login from "./pages/LoginPage/LoginPage";
 import AdminLoginPage from "./pages/AdminLoginPage/AdminLoginPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import EditorPage from "./pages/Editor/EditorPage/EditorPage";
-import UserPage from "./pages/UserPage/UserPage";
+import UserPage from "./pages/UserPage/UserPage/UserPage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import SharedLayout from "./components/SharedLayout/SharedLayout";
 import PublicRoute from "./components/PublicRoute";
@@ -19,7 +19,7 @@ import Messages from "./components/AdminComponents/Messages/Messages";
 import MessagesUser from "./components/MessagesUser/MessagesUser";
 import MyPlaylistsUser from "./components/MyPlaylistsUser/MyPlaylistsUser";
 
-import ReportUser from "./components/AdminComponents/ReportUser/ReportUser";
+import ReportUser from "./components/ReportUser/ReportUser";
 
 import MyPlaylists from "./pages/UserPage/MyPlaylists/MyPlaylists";
 
@@ -71,7 +71,7 @@ const AdminCabinetPage = lazy(() =>
   import("./components/AdminComponents/AdminCabinetPage/AdminCabinetPage")
 );
 const UserCabinetPage = lazy(() =>
-  import("./components/UserCabinetPage/UserCabinetPage")
+  import("./pages/UserPage/UserCabinetPage/UserCabinetPage")
 );
 const ListUsers = lazy(() =>
   import("./components/AdminComponents/AdminUsers/ListUsers")

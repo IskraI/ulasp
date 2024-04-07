@@ -140,7 +140,9 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
         user.firstName || user.fatherName || user.lastName
           ? `${user.firstName} ${user.fatherName} ${user.lastName}`
           : user.name
-      } /договір №${user.contractNumber}/`}</ReportTitle>
+      } /договір №${
+        user.contractNumberDoc ? user.contractNumberDoc : user.contractNumber
+      }/`}</ReportTitle>
 
       <ReportTitleDesc>
         про використані Об’єкти суміжних прав та Об’єкти авторского права за{" "}

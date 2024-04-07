@@ -14,46 +14,51 @@ const CommonFieldForm = ({
   errors,
   register,
   typeOfUser,
+  editor,
 }) => {
   return (
     <>
-      <RegisterField>
-        <RegisterLabel>Код ЄДРПОУ (ІНН)*</RegisterLabel>
-        <RegisterInput
-          type="text"
-          placeholder="Код ЄДРПОУ (ІНН)"
-          aria-describedby="taxCodeTooltip"
-          className={`${errors.taxCode ? "invalid" : ""}${
-            !errors.taxCode && dirtyFields.taxCode ? "valid" : ""
-          }`}
-          {...register("taxCode")}
-        />
-        <Tooltip
-          id="taxCodeTooltip"
-          className={`${errors.taxCode ? "visible" : ""}`}
-        >
-          {errors.taxCode && errors.taxCode.message}
-        </Tooltip>
-      </RegisterField>
+      {!editor && (
+        <RegisterField>
+          <RegisterLabel>Код ЄДРПОУ (ІНН)*</RegisterLabel>
+          <RegisterInput
+            type="text"
+            placeholder="Код ЄДРПОУ (ІНН)"
+            aria-describedby="taxCodeTooltip"
+            className={`${errors.taxCode ? "invalid" : ""}${
+              !errors.taxCode && dirtyFields.taxCode ? "valid" : ""
+            }`}
+            {...register("taxCode")}
+          />
+          <Tooltip
+            id="taxCodeTooltip"
+            className={`${errors.taxCode ? "visible" : ""}`}
+          >
+            {errors.taxCode && errors.taxCode.message}
+          </Tooltip>
+        </RegisterField>
+      )}
 
-      <RegisterField>
-        <RegisterLabel>Назва закладу</RegisterLabel>
-        <RegisterInput
-          type="text"
-          placeholder="Назва закладу"
-          aria-describedby="institutionTooltip"
-          className={`${errors.institution ? "invalid" : ""}${
-            !errors.institution && dirtyFields.institution ? "valid" : ""
-          }`}
-          {...register("institution")}
-        />
-        <Tooltip
-          id="institutionTooltip"
-          className={`${errors.institution ? "visible" : ""}`}
-        >
-          {errors.institution && errors.institution.message}
-        </Tooltip>
-      </RegisterField>
+      {!editor && (
+        <RegisterField>
+          <RegisterLabel>Назва закладу</RegisterLabel>
+          <RegisterInput
+            type="text"
+            placeholder="Назва закладу"
+            aria-describedby="institutionTooltip"
+            className={`${errors.institution ? "invalid" : ""}${
+              !errors.institution && dirtyFields.institution ? "valid" : ""
+            }`}
+            {...register("institution")}
+          />
+          <Tooltip
+            id="institutionTooltip"
+            className={`${errors.institution ? "visible" : ""}`}
+          >
+            {errors.institution && errors.institution.message}
+          </Tooltip>
+        </RegisterField>
+      )}
 
       <RegisterField>
         <RegisterLabel>Номер телефону*</RegisterLabel>

@@ -153,7 +153,8 @@ const UserCreateForm = ({ onCloseModal, section }) => {
     setTypeOfUser(typeOfUser === "tov" ? "fop" : "tov");
     reset();
   };
-
+  console.log("error :>> ", errors);
+  console.log("isValid :>> ", isValid);
   return (
     <>
       {/* {(isLoadingFop || isLoadingCompany || isLoadingEditor) && <Loader />} */}

@@ -51,11 +51,31 @@ const UserFieldForm = ({
         {activeSection === "User" && (
           <>
             <RegisterField>
-              <RegisterLabel>№ договору</RegisterLabel>
+              <RegisterLabel>№ договору*</RegisterLabel>
               <RegisterInput
                 type="text"
                 placeholder="№ договору"
                 aria-describedby="contractNumberTooltip"
+                className={`${errors.contractNumberDoc ? "invalid" : ""}${
+                  !errors.contractNumberDoc && dirtyFields.contractNumberDoc
+                    ? "valid"
+                    : ""
+                }`}
+                {...register("contractNumberDoc")}
+              />
+              <Tooltip
+                id="contractNumberTooltip"
+                className={`${errors.contractNumberDoc ? "visible" : ""}`}
+              >
+                {errors.contractNumber && errors.contractNumber.message}
+              </Tooltip>
+            </RegisterField>
+            <RegisterField>
+              <RegisterLabel>№ договору (логін)*</RegisterLabel>
+              <RegisterInput
+                type="text"
+                placeholder="№ договору логін"
+                aria-describedby="contractNumberLoginTooltip"
                 className={`${errors.contractNumber ? "invalid" : ""}${
                   !errors.contractNumber && dirtyFields.contractNumber
                     ? "valid"
@@ -82,7 +102,7 @@ const UserFieldForm = ({
             />
 
             <RegisterField>
-              <RegisterLabel>Надання доступу до*</RegisterLabel>
+              <RegisterLabel>Надання доступу до</RegisterLabel>
               <RegisterInput
                 type="text"
                 placeholder="Надання доступу до"
@@ -101,7 +121,7 @@ const UserFieldForm = ({
                 {errors.dateOfAccess && errors.dateOfAccess.message}
               </Tooltip>
             </RegisterField>
-            <RegisterField>
+            {/* <RegisterField>
               <RegisterLabel>Остання оплата* </RegisterLabel>
               <RegisterInput
                 type="text"
@@ -118,7 +138,7 @@ const UserFieldForm = ({
               >
                 {errors.lastPay && errors.lastPay.message}
               </Tooltip>
-            </RegisterField>
+            </RegisterField> */}
 
             <ContactFaceField
               control={control}
@@ -141,6 +161,7 @@ const UserFieldForm = ({
               errors={errors}
               readOnly="false"
               dirtyFields={dirtyFields}
+              editor={true}
             />
             <RegisterLoginForm>
               <RegisterField>
@@ -195,7 +216,8 @@ const UserFieldForm = ({
           padding="8px"
           text="Додати"
           disabled={
-            !isValid || (dirtyFields.dateOfAccess && errors.dateOfAccess)
+            !isValid
+            // || (dirtyFields.dateOfAccess && errors.dateOfAccess)
           }
           showIcon={false}
         />

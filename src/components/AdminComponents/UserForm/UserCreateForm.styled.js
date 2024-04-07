@@ -164,7 +164,7 @@ export const FormButton = styled.button`
 export const CommentTextarea = styled.textarea`
   background-color: rgba(234, 234, 234, 0.32);
   /* width: 100%; */
-  height: ${(props) => (props.height ? props.height : "220px")};
+  height: ${(props) => (props.height ? props.height : "180px")};
   padding: 8px;
   display: flex;
   align-items: center;
@@ -424,7 +424,7 @@ export const IconsSvgUserEdit = styled.svg`
 export const RegisterLoginForm = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 66px;
+  margin-top: 32px;
   gap: 16px;
   width: 277px;
 `;

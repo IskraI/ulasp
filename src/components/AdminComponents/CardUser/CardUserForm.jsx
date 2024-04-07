@@ -59,6 +59,7 @@ const CardUserForm = ({ user, playlistCount, tracksCount }) => {
 
   const onFormSubmit = (data) => {
     if (typeOfUser === "fop") {
+      console.log("data :>> ", data);
       const formData = {
         ...data,
         access,
