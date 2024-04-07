@@ -56,6 +56,9 @@ export const PlaylistItem = styled.li`
 export const PlaylistImg = styled.img`
   border-radius: 10px;
   margin-right: 8px;
+    width: 60px;
+  height: 40px;
+  object-fit: cover;
 `;
 
 export const PlaylistItemText = styled.p`

@@ -16,6 +16,7 @@ export const ItemContact = styled.li`
   display: flex;
   flex-direction: column;
   margin-top: 4px;
+  margin-bottom: 6px;
 `;
 
 export const StyledLink = styled.a`

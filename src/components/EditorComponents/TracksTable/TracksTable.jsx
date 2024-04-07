@@ -469,45 +469,45 @@ const TracksTable = ({
                 )}
               </tbody>
             </TableStyle>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              {deleteButton && (
+                <Button
+                  type={"button"}
+                  width={"140px"}
+                  padding={"6px"}
+                  fontsize={"16px"}
+                  border={"1px solid #A4A2A2"}
+                  background={"transparent"}
+                  text={"Видалити"}
+                  disabled={tracksIdList.length ? false : true}
+                  onClick={deletingMultipleTracks}
+                />
+              )}
+              {isSuccess && (
+                <Pagination
+                  // style={{ marginBottom: "24px" }}
+                  defaultCurrent={1}
+                  current={currentPage}
+                  total={totalTracks}
+                  showLessItems
+                  selectComponentClass={Select}
+                  showSizeChanger={false}
+                  defaultPageSize={pageSize}
+                  pageSize={pageSize}
+                  hideOnSinglePage
+                  // onShowSizeChange={onPageSizeChange}
+                  onChangeSizePage={onPageSizeChange}
+                  onChange={(page) => onChangePage(page)}
+                  // locale={localeUA}
+                />
+              )}
+            </div>
           </TracksTableWrapper>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            {deleteButton && (
-              <Button
-                type={"button"}
-                width={"140px"}
-                padding={"6px"}
-                fontsize={"16px"}
-                border={"1px solid #A4A2A2"}
-                background={"transparent"}
-                text={"Видалити"}
-                disabled={tracksIdList.length ? false : true}
-                onClick={deletingMultipleTracks}
-              />
-            )}
-            {isSuccess && (
-              <Pagination
-                // style={{ marginBottom: "24px" }}
-                defaultCurrent={1}
-                current={currentPage}
-                total={totalTracks}
-                showLessItems
-                selectComponentClass={Select}
-                showSizeChanger={false}
-                defaultPageSize={pageSize}
-                pageSize={pageSize}
-                hideOnSinglePage
-                // onShowSizeChange={onPageSizeChange}
-                onChangeSizePage={onPageSizeChange}
-                onChange={(page) => onChangePage(page)}
-                // locale={localeUA}
-              />
-            )}
-          </div>
         </>
       )}
       {showModalSuccesDelete && deleteInfo.length !== 0 && (

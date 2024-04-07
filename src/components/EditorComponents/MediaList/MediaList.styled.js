@@ -23,7 +23,7 @@ export const MediaItem = styled.li`
   justify-content: space-between;
   align-items: center;
   min-width: 310px;
-
+  max-width: 310px;
   padding: 10px;
   border: ${(props) =>
     props.isError
@@ -124,7 +124,7 @@ export const EditInputText = styled.input`
   background: none;
   border: none;
   font-size: 16px;
-
+  overflow-x: clip;
   &:focus-visible {
     border: none;
     outline: none;

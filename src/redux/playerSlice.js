@@ -131,6 +131,7 @@ export const playerSlice = createSlice({
     },
     setDefaultState: {
       reducer(state) {
+        console.log(state);
         state = {
           ...initialState,
         };
