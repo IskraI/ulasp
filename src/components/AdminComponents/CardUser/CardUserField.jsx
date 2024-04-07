@@ -33,8 +33,10 @@ const CardUserField = ({
   playlistCount,
   dirtyFields,
   access,
+  editor,
 }) => {
-  // console.log("activeSectionCard", activeSectionCard);
+  // console.log("user", user);
+  console.log("errors :>> ", errors);
   return (
     <Fieldform>
       <RegisterLeftBlock>
@@ -53,6 +55,7 @@ const CardUserField = ({
           control={control}
           handleCloseEdit={handleCloseEdit}
           access={access}
+          editor={editor}
         />
 
         {activeSectionCard === "User" && (
@@ -60,6 +63,39 @@ const CardUserField = ({
             <RegisterField>
               <RegisterLabel>№ договору</RegisterLabel>
 
+              <Controller
+                name="contractNumberDoc"
+                control={control}
+                defaultValue={user.contractNumberDoc}
+                render={({ field }) => (
+                  <>
+                    <RegisterInput
+                      type="text"
+                      placeholder="№ договора"
+                      readOnly={!isEditing}
+                      value={field.value}
+                      onChange={(e) => field.onChange(e.target.value)}
+                      className={
+                        isEditing
+                          ? `${errors.contractNumberDoc ? "invalid" : "valid"}`
+                          : ""
+                      }
+                    />
+                    {errors.contractNumberDoc && (
+                      <Tooltip
+                        className={`${
+                          errors.contractNumberDoc ? "visible" : ""
+                        }`}
+                      >
+                        {errors.contractNumberDoc.message}
+                      </Tooltip>
+                    )}
+                  </>
+                )}
+              />
+            </RegisterField>
+            <RegisterField>
+              <RegisterLabel>№ договору (логін)*</RegisterLabel>
               <Controller
                 name="contractNumber"
                 control={control}
@@ -132,7 +168,7 @@ const CardUserField = ({
                 )}
               />
             </RegisterField>
-            <RegisterField>
+            {/* <RegisterField>
               <RegisterLabel>Остання оплата* </RegisterLabel>
               <Controller
                 name="lastPay"
@@ -160,7 +196,7 @@ const CardUserField = ({
                   </>
                 )}
               />
-            </RegisterField>
+            </RegisterField> */}
             <RegisterField>
               <RegisterLabel>Кількість доданих плейлистів </RegisterLabel>
               <RegisterInput
@@ -201,6 +237,7 @@ const CardUserField = ({
             readOnly={!isEditing}
             user={user}
             isEditing={isEditing}
+            editor={true}
           />
         )}
       </RegisterLeftBlock>

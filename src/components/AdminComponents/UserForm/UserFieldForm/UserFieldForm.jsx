@@ -56,6 +56,26 @@ const UserFieldForm = ({
                 type="text"
                 placeholder="№ договору"
                 aria-describedby="contractNumberTooltip"
+                className={`${errors.contractNumberDoc ? "invalid" : ""}${
+                  !errors.contractNumberDoc && dirtyFields.contractNumberDoc
+                    ? "valid"
+                    : ""
+                }`}
+                {...register("contractNumberDoc")}
+              />
+              <Tooltip
+                id="contractNumberTooltip"
+                className={`${errors.contractNumberDoc ? "visible" : ""}`}
+              >
+                {errors.contractNumber && errors.contractNumber.message}
+              </Tooltip>
+            </RegisterField>
+            <RegisterField>
+              <RegisterLabel>№ договору (логін)*</RegisterLabel>
+              <RegisterInput
+                type="text"
+                placeholder="№ договору логін"
+                aria-describedby="contractNumberLoginTooltip"
                 className={`${errors.contractNumber ? "invalid" : ""}${
                   !errors.contractNumber && dirtyFields.contractNumber
                     ? "valid"
@@ -68,27 +88,6 @@ const UserFieldForm = ({
                 className={`${errors.contractNumber ? "visible" : ""}`}
               >
                 {errors.contractNumber && errors.contractNumber.message}
-              </Tooltip>
-            </RegisterField>
-            <RegisterField>
-              <RegisterLabel>№ договору (логін)*</RegisterLabel>
-              <RegisterInput
-                type="text"
-                placeholder="№ договору логін"
-                aria-describedby="contractNumberLoginTooltip"
-                className={`${errors.contractNumberLogin ? "invalid" : ""}${
-                  !errors.contractNumberLogin && dirtyFields.contractNumberLogin
-                    ? "valid"
-                    : ""
-                }`}
-                {...register("contractNumberLogin")}
-              />
-              <Tooltip
-                id="contractNumberTooltip"
-                className={`${errors.contractNumberLogin ? "visible" : ""}`}
-              >
-                {errors.contractNumberLogin &&
-                  errors.contractNumberLogin.message}
               </Tooltip>
             </RegisterField>
 

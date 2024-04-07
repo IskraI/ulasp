@@ -4,7 +4,10 @@ import {
   Circle,
   Text,
 } from "../ButtonSwitch/ButtonSwitch.styled";
-import { useAccessUserUpdateByIdMutation } from "../../../redux/dataUsersSlice";
+import {
+  useAccessEditorByIdMutation,
+  useAccessUserUpdateByIdMutation,
+} from "../../../redux/dataUsersSlice";
 import { LoaderButton } from "../../Loader/Loader";
 import { useState } from "react";
 
@@ -15,22 +18,34 @@ export const ButtonSwitch = ({
   onClick,
   form,
   handleTypeOfAccess,
+  editor,
 }) => {
   const [typeOfAccess, setTypeOfAccess] = useState(isTrue);
 
   const [isHovered, setIsHovered] = useState(false);
   const [dispatchAccess, { isLoading: isLoadingAccess }] =
     useAccessUserUpdateByIdMutation();
+  const [dispatchAccessEditor, { isLoading: isLoadingAccessEditor }] =
+    useAccessEditorByIdMutation();
 
   const handleSwitchAccess = (idUser) => {
-    dispatchAccess(idUser)
-      .unwrap()
-      .then(() => {
-        setIsHovered(false);
-        setTypeOfAccess((prev) => !prev);
-        console.log("dispatchAccess", idUser);
-      })
-      .catch((error) => console.log(error.data.message));
+    editor
+      ? dispatchAccessEditor(idUser)
+          .unwrap()
+          .then(() => {
+            setIsHovered(false);
+            setTypeOfAccess((prev) => !prev);
+            console.log("dispatchAccess", idUser);
+          })
+          .catch((error) => console.log(error.data.message))
+      : dispatchAccess(idUser)
+          .unwrap()
+          .then(() => {
+            setIsHovered(false);
+            setTypeOfAccess((prev) => !prev);
+            console.log("dispatchAccess", idUser);
+          })
+          .catch((error) => console.log(error.data.message));
   };
   // console.log("isTrue :>> ", isTrue);
   return (
