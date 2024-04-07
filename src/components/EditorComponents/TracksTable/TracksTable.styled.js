@@ -3,6 +3,7 @@ import { colors } from "../../../styles/vars";
 
 export const TracksTableWrapper = styled.div`
   margin-top: ${(props) => props.marginTop};
+  margin-bottom: ${({ marginBottom }) => marginBottom || "24px"};
   display: flex;
   flex-direction: column;
 `;

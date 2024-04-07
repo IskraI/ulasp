@@ -34,6 +34,10 @@
   margin-top: 8px;
 }
 
+.rhap_stacked .rhap_controls-section .without_margin {
+  margin-top: 0px;
+}
+
 .rhap_horizontal {
   flex-direction: row;
 }

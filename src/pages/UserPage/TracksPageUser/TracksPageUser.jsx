@@ -23,7 +23,7 @@ const TracksPage = () => {
   const [pageSize, setPageSize] = useState(10);
   const [isSorted, setIsSorterd] = useState(false);
   const { playlistId } = useParams();
-  const [sortedBy, setSortedBy] = useState(-1);
+  const [sortedBy, setSortedBy] = useState(1);
 
   const playlistQuery = location.pathname.includes("createplaylists")
     ? useGetCreatePlaylistByIdForUserQuery

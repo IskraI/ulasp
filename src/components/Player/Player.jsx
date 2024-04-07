@@ -18,7 +18,7 @@ import { usePrefetch } from "../../redux/tracksSlice";
 import { getPlayerState } from "../../redux/playerSelectors";
 
 import { BASE_URL } from "../../constants/constants";
-
+import { RHAP_UI } from "react-h5-audio-player";
 import {
   PlayerWrapper,
   PlayerReact,
@@ -26,7 +26,7 @@ import {
   TrackName,
 } from "./Player.styled";
 
-const Player = ({ tracks = [] }) => {
+const Player = ({ tracks = [], inHeader = false }) => {
   const playerRef = useRef();
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
@@ -48,6 +48,21 @@ const Player = ({ tracks = [] }) => {
   const [currentTrackName, setCurrentTrackName] = useState("Невизначений");
   const [error, setError] = useState(true);
   const prefetchPage = usePrefetch("getAllTracks");
+
+  // console.log(
+  //   "playerRef ====>>>>>",
+  //   playerRef?.current?.container.current.style.svg
+  // );
+
+  useEffect(() => {
+    if (inHeader) {
+      const el = document.getElementsByClassName("rhap_stacked");
+      if (el[0] !== undefined) {
+        el[0].className =
+          ".rhap_stacked .rhap_controls-section .without_margin";
+      }
+    }
+  }, [inHeader]);
 
   const prefetchNext = useCallback(() => {
     prefetchPage({ page: nextPage, limit: currentPageSize });
@@ -169,26 +184,41 @@ const Player = ({ tracks = [] }) => {
 
   return (
     <>
-      <PlayerWrapper>
+      <PlayerWrapper inHeader={inHeader}>
         <>
-          <TracksArtist>
-            {isPlaying
-              ? currentTrackArtist
-              : isPaused
-              ? currentTrackArtist
-              : noData
-              ? currentTrackArtist
-              : currentTrackArtist}
-          </TracksArtist>
-          <TrackName>
-            {isPlaying
-              ? currentTrackName
-              : isPaused
-              ? currentTrackName
-              : noData
-              ? currentTrackName
-              : currentTrackName}
-          </TrackName>
+          <div
+            style={{
+              width: "30%",
+              display: inHeader ? "flex" : "block",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "4px",
+              textAlign: "center",
+              border: "0px",
+              // outline: "1px solid red",
+            }}
+          >
+            <TracksArtist inHeader={inHeader}>
+              {isPlaying
+                ? currentTrackArtist
+                : isPaused
+                ? currentTrackArtist
+                : noData
+                ? currentTrackArtist
+                : currentTrackArtist}
+            </TracksArtist>
+
+            <TrackName inHeader={inHeader}>
+              {isPlaying
+                ? currentTrackName
+                : isPaused
+                ? currentTrackName
+                : noData
+                ? currentTrackName
+                : currentTrackName}
+            </TrackName>
+          </div>
 
           <PlayerReact
             onPause={() => {
@@ -237,10 +267,13 @@ const Player = ({ tracks = [] }) => {
             }}
             onClickPrevious={handleClickPrevious}
             onEnded={handleEnd}
+            onError={"onError"}
+            onPlayError={"onPlayError"}
             // onLoadStart={() => handlePlayLoadStart(tracks[currentTrack]?.id)}
           />
         </>
       </PlayerWrapper>
+      {/* <div>`${playerRef?.current?.container?.current}`</div> */}
     </>
   );
 };

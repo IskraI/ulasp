@@ -1,40 +1,24 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import symbol from "../../assets/symbol.svg";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserState } from "../../redux/userSelectors";
 import { useLogoutMutation } from "../../redux/authSlice";
 import { useLogoutClientMutation } from "../../redux/authClientSlice";
 
+import { setDefaultState } from "../../redux/playerSlice";
+
 import { Exit, LogOutButton, Wrapper } from "./LogOutButton.styled";
 
 const LogOutBtn = () => {
+  const resetPlayer = useDispatch();
   const user = useSelector(getUserState);
   const [dispatch] = useLogoutMutation();
   const [dispatchClient] = useLogoutClientMutation();
-  const [visibleExit, setVisibleExit] = useState(false);
-
-  const location = useLocation();
-
-  useEffect(() => {
-    switch (location.pathname) {
-      case "/":
-        setVisibleExit(false);
-        break;
-      case "/signin":
-        setVisibleExit(false);
-        break;
-      case "/adminlogin":
-        setVisibleExit(false);
-        break;
-      default:
-        setVisibleExit(true);
-    }
-  }, [location.pathname]);
 
   const navigate = useNavigate();
   const handleLogOut = () => {
+    resetPlayer(setDefaultState());
     if (user.userRole) {
       dispatchClient()
         .unwrap()
@@ -52,7 +36,7 @@ const LogOutBtn = () => {
 
   return (
     <Exit>
-      {user.isLoggedIn && visibleExit && (
+      {user.isLoggedIn && (
         <>
           <LogOutButton type="button" onClick={handleLogOut}>
             <Wrapper>
