@@ -1,14 +1,14 @@
 import { SiteBarNav } from "../../../components/SiteBarNav/SiteBarNav";
 import { Outlet } from "react-router-dom";
 import { Suspense } from "react";
-import { useSelector } from "react-redux";
-import { getPlayerState } from "../../../redux/playerSelectors";
+// import { useSelector } from "react-redux";
+// import { getPlayerState } from "../../../redux/playerSelectors";
 import { Loader } from "../../../components/Loader/Loader";
 import { PageSection, PageSubpage } from "../../AdminPage/AdminPage.styled";
-import Player from "../../../components/Player/Player";
+// import Player from "../../../components/Player/Player";
 
 const UserPage = () => {
-  const playerState = useSelector(getPlayerState);
+  // const playerState = useSelector(getPlayerState);
 
   return (
     <PageSection>
@@ -17,7 +17,7 @@ const UserPage = () => {
         <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
-        <Player tracks={playerState.src} />
+        {/* <Player tracks={playerState.src} /> */}
       </PageSubpage>
     </PageSection>
   );
