@@ -140,7 +140,6 @@ export const playerSlice = createSlice({
     },
     setNextPage: {
       reducer(state, action) {
-        console.log(action);
         state = {
           ...state,
           // preloadSrc: [],

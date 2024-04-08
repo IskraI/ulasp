@@ -14,8 +14,9 @@ import {
   HASNOT_BEEN_UPLOADED,
   SEARCH_FAILED,
 } from "../../../constants/constants.js";
-import { Modal } from "../../Modal/Modal.jsx";
-import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled.jsx";
+
+import ModalDeleteWarning from "../../ModalDeleteWarning/ModalDeleteWarning.jsx";
+import ModalInfoDeleteTracks from "./ModalInfoDeleteTracks.jsx";
 
 import { Button } from "../../Button/Button.jsx";
 import SelectPageSize from "./SelectSize.jsx";
@@ -30,7 +31,7 @@ import {
 import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsSlice";
 import { useDeleteTrackMutation } from "../../../redux/tracksSlice";
 import { getPlayerState } from "../../../redux/playerSelectors.js";
-
+import { playlistsApi } from "../../../redux/playlistsSlice";
 import {
   TracksTableWrapper,
   TableCell,
@@ -42,7 +43,6 @@ import {
 } from "../TracksTable/TracksTable.styled";
 
 import "../../../styles/pagination.css";
-import "../../../styles/rc-select.css";
 
 const TracksTable = ({
   rows,
@@ -104,6 +104,8 @@ const TracksTable = ({
   const [deselect, setDeselect] = useState(true);
   const [showModalSuccesDelete, setShowModalSuccesDelete] = useState(false);
   const [deleteInfo, setDeleteInfo] = useState([]);
+  const [showDeleteWarning, setShowDeleteWarning] = useState(false);
+  const [selectDeleteButton, setSelectDeleteButton] = useState(null);
 
   const tracksTableProps = {
     showTitle: showTitle ? "table-caption" : "none",
@@ -141,9 +143,14 @@ const TracksTable = ({
   // console.log("playerState.indexTrack", playerState.indexTrack);
   // console.log("indexOfLastTrackInPage", indexOfLastTrackInPage);
 
+  useEffect(() => {
+    if (showModalSuccesDelete) {
+      setTimeout(() => closeModalDeleteSuccess(), 3500);
+    }
+  }, [showModalSuccesDelete]);
+
   const onChangePage = useCallback(
     (page) => {
-      // setCurrentPage(page);
       onChangeCurrentPage(page);
       dispatch(
         setNextPage({
@@ -154,7 +161,6 @@ const TracksTable = ({
         top: 0,
         behavior: "instant",
       });
-      // checkedAllFn(false);
       setTracksIdList([]);
     },
 
@@ -318,7 +324,7 @@ const TracksTable = ({
     );
   };
 
-  const deletingMultipleTracks = () => {
+  const deletingMultipleTracksInPlaylist = () => {
     if (isInPlayList) {
       const result = tracksIdList.map((id) =>
         deleteTrackInPlaylist({
@@ -327,10 +333,15 @@ const TracksTable = ({
         }).unwrap()
       );
       promiseAll(result);
-    } else {
-      const result = tracksIdList.map((id) => deleteTrack(id).unwrap());
-      promiseAll(result);
     }
+    setShowDeleteWarning(false);
+  };
+
+  const deletingMultipleTracks = () => {
+    const result = tracksIdList.map((id) => deleteTrack(id).unwrap());
+    promiseAll(result);
+    dispatch(playlistsApi.util.invalidateTags(["Playlists"]));
+    setShowDeleteWarning(false);
   };
 
   const clearAfterDeleting = () => {
@@ -342,6 +353,12 @@ const TracksTable = ({
     setTracksIdList([]);
   };
 
+  const openModalDeleteWarning = (e) => {
+    const btnID = e.currentTarget.id;
+    setSelectDeleteButton(btnID);
+    setShowDeleteWarning(true);
+  };
+
   const closeModalDeleteSuccess = () => {
     setShowModalSuccesDelete(false);
     setDeleteInfo([]);
@@ -350,7 +367,6 @@ const TracksTable = ({
   if (isFetching) {
     return <Loader />;
   }
-
   return (
     <>
       {error && <ErrorNotFound error={error?.data?.message} />}
@@ -467,17 +483,33 @@ const TracksTable = ({
                 alignItems: "center",
               }}
             >
+              {deleteButton && isInPlayList && (
+                <Button
+                  id={"deleteFromPlaylist"}
+                  type={"button"}
+                  width={"200px"}
+                  padding={"6px"}
+                  marginright={"12px"}
+                  fontsize={"16px"}
+                  border={"1px solid #A4A2A2"}
+                  background={"transparent"}
+                  text={"Видалити з плейлисту"}
+                  disabled={tracksIdList.length ? false : true}
+                  onClick={openModalDeleteWarning}
+                />
+              )}
               {deleteButton && (
                 <Button
+                  id={"deleteMediateca"}
                   type={"button"}
-                  width={"140px"}
+                  width={"200px"}
                   padding={"6px"}
                   fontsize={"16px"}
                   border={"1px solid #A4A2A2"}
                   background={"transparent"}
-                  text={"Видалити"}
+                  text={"Видалити з медіатеки "}
                   disabled={tracksIdList.length ? false : true}
-                  onClick={deletingMultipleTracks}
+                  onClick={openModalDeleteWarning}
                 />
               )}
               {isSuccess && showPagination && (
@@ -516,36 +548,25 @@ const TracksTable = ({
         </>
       )}
       {showModalSuccesDelete && deleteInfo.length !== 0 && (
-        <Modal
-          width={"494px"}
-          onClose={closeModalDeleteSuccess}
-          showCloseButton={true}
-        >
-          <ModalInfoText paddingTop={"14px"}>
-            {deleteInfo.map(({ artist, trackName }) => {
-              return (
-                <div
-                  key={trackName}
-                  style={{
-                    display: "flex",
-                    gap: "4px",
-                    padding: "4px",
-                    margin: "2px",
-                  }}
-                >
-                  <ModalInfoTextBold>{artist}</ModalInfoTextBold>
-                  <p>{"-"}</p>
-                  <ModalInfoTextBold>{trackName}</ModalInfoTextBold>
-                  <ModalInfoTextBold
-                    style={{ fontSize: "18px", color: "#870505" }}
-                  >
-                    {"був видалений"}
-                  </ModalInfoTextBold>
-                </div>
-              );
-            })}
-          </ModalInfoText>
-        </Modal>
+        <ModalInfoDeleteTracks
+          closeModal={closeModalDeleteSuccess}
+          deleteInfo={deleteInfo}
+        />
+      )}
+      {showDeleteWarning && (
+        <ModalDeleteWarning
+          text={
+            selectDeleteButton === "deleteFromPlaylist"
+              ? "Ця операція видалить виділені пісни з плейлисту, але вони залишаться у медіатеці. Чи дійcно Ви цього бажаєте?"
+              : "Ця операція видалить виділені пісни з медіатеки та плейлисту. Чи дійcно Ви цього бажаєте?"
+          }
+          onClick={
+            selectDeleteButton === "deleteFromPlaylist"
+              ? deletingMultipleTracksInPlaylist
+              : deletingMultipleTracks
+          }
+          closeModalWarning={() => setShowDeleteWarning(false)}
+        />
       )}
     </>
   );

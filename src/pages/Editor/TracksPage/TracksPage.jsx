@@ -104,7 +104,6 @@ const TracksPage = () => {
 
   return (
     <>
-      {console.log(data)}
       {error?.status === 500 && isError && <Error500 />}
       {error?.status !== 500 && isError && <ErrorNotFound />}
       {!isSuccess && !error && <Loader />}

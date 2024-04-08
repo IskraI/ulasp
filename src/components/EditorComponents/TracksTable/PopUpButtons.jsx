@@ -9,6 +9,7 @@ const PopUpButtons = ({
   addTrackToChartFn,
   removeTrackFromChartFn,
   isTopChart,
+  isInPlayList = true,
 }) => {
   const toogleTrackInChart = isTopChart
     ? "Видалити з новинок"
@@ -22,7 +23,7 @@ const PopUpButtons = ({
     <PopUpWrapper>
       <PopUp>
         <PopUpButton type="button" onClick={removeTrackFn}>
-          Видалити з медіатеки
+          {isInPlayList ? "Видалити з плейлисту" : "Видалити з медіатеки"}
         </PopUpButton>
         <PopUpButton type="button" onClick={toogleTrackInChartFn}>
           {toogleTrackInChart}
@@ -48,6 +49,7 @@ PopUpButtons.propTypes = {
   addTrackToChartFn: PropTypes.func,
   removeTrackFromChartFn: PropTypes.func,
   isTopChart: PropTypes.bool,
+  isInPlayList: PropTypes.bool,
 };
 
 export default PopUpButtons;

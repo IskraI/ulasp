@@ -347,6 +347,7 @@ const TrackItem = ({
               addTrackToChartFn={addTrackToChart}
               removeTrackFromChartFn={removeTrackFromChart}
               isTopChart={isTopChart}
+              isInPlayList={isInPlayList}
             />
           )}
           <DotsBtn
