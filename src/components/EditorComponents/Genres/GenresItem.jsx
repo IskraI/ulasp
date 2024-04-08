@@ -1,21 +1,29 @@
 import PropTypes from "prop-types";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
+
+import { Modal } from "../../../components/Modal/Modal";
+
+import { ErrorNotFound } from "../../Errors/Errors";
+
+import AddCover from "../../AddCover/AddCover";
+import useValidateInput from "../../../hooks/useValidateInput";
+import { isEmptyMediaUpdateData } from "../../../helpers/helpers";
+import ModalDeleteWarning from "../../ModalDeleteWarning/ModalDeleteWarning";
+
 import {
   useDeleteGenreMutation,
   useUpdateGenreByIdMutation,
 } from "../../../redux/genresSlice";
-import { Modal } from "../../../components/Modal/Modal";
+
+import useFocusInput from "../../../hooks/useFocusInput";
+
 import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
-import { ErrorNotFound } from "../../Errors/Errors";
 import { ErrorValidateText } from "../../Errors/errors.styled";
-import AddCover from "../../AddCover/AddCover";
-import useValidateInput from "../../../hooks/useValidateInput";
-import { isEmptyMediaUpdateData } from "../../../helpers/helpers";
 
 import {
   MediaItem,
@@ -26,13 +34,13 @@ import {
   SvgMedia,
   EditInputText,
   EditWrapper,
-  EditCardWrapper,
 } from "../MediaList/MediaList.styled";
 
 const GenreListItem = ({ id, title, icon, minLengthInput, maxLengthInput }) => {
-  const ref = useRef();
   const [showModalSuccess, setShowModalSucces] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
+  const [showModalDeleteWarning, setShowModalDeleteWarning] = useState(false);
+
   const [isEditing, setIsEditing] = useState(false);
   const [genreTitle, setGenreTitle] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -66,6 +74,8 @@ const GenreListItem = ({ id, title, icon, minLengthInput, maxLengthInput }) => {
     },
   ] = useUpdateGenreByIdMutation();
 
+  const [ref] = useFocusInput(isEditing);
+
   // console.log("data", dataUpdateGenre);
   // console.log("isSuccess", isSuccessUpdateGenre);
   // console.log("isError", isErrorUpdateGenre);
@@ -74,28 +84,19 @@ const GenreListItem = ({ id, title, icon, minLengthInput, maxLengthInput }) => {
 
   // console.log("isErrorDeleteGenre", isSuccessDeleteGenre);
 
-  useEffect(() => {
-    if (isEditing) {
-      ref.current.focus();
-    }
-  }, [isEditing]);
-
   const updateGenreItem = async (title) => {
     const formData = new FormData();
 
     if (!selectedImage) {
-      console.log("Cюда");
       formData.append("genre", genreTitle);
     }
 
     if (genreTitle === title) {
-      console.log("Cюда1");
       formData.append("picsURL", selectedImage);
       formData.append("type", "genre");
     }
 
     if (selectedImage && genreTitle !== title && genreTitle !== "") {
-      console.log("Cюда2");
       formData.append("genre", genreTitle);
       formData.append("picsURL", selectedImage);
       formData.append("type", "genre");
@@ -113,19 +114,17 @@ const GenreListItem = ({ id, title, icon, minLengthInput, maxLengthInput }) => {
   const deleteMediaItem = async () => {
     try {
       await deleteGenre(id).unwrap();
+      setShowModalDeleteWarning(false);
       setShowModalSucces(true);
     } catch (error) {
+      setShowModalDeleteWarning(false);
       setShowModalError(true);
     }
   };
 
-  const closeModalSuccess = () => {
-    return setShowModalSucces(false);
-  };
+  const closeModalSuccess = () => setShowModalSucces(false);
 
-  const closeModalError = () => {
-    return setShowModalError(false);
-  };
+  const closeModalError = () => setShowModalError(false);
 
   const editGenre = () => {
     setIsEditing(true);
@@ -215,7 +214,7 @@ const GenreListItem = ({ id, title, icon, minLengthInput, maxLengthInput }) => {
 
               <MediaButton
                 type="button"
-                onClick={deleteMediaItem}
+                onClick={() => setShowModalDeleteWarning(true)}
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -263,6 +262,13 @@ const GenreListItem = ({ id, title, icon, minLengthInput, maxLengthInput }) => {
             )}
           </ModalInfoText>
         </Modal>
+      )}
+      {showModalDeleteWarning && (
+        <ModalDeleteWarning
+          text={`Ця дія видалить жанр "${title}". Плейлисти залишаться в медіатеці. Ви впевнені?`}
+          onClick={deleteMediaItem}
+          closeModalWarning={() => setShowModalDeleteWarning(false)}
+        />
       )}
     </>
   );
