@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useLocation } from "react-router-dom";
 import { NavigationLink, Wrapper } from "./NavigationLink.styled";
 
-const MediaNavigationLink = ({ link, showNavigationLink }) => {
+const MediaNavigationLink = ({ link, showNavigationLink, marginTop }) => {
   const MediaNavigationLinkProps = {
     showNavigationLink: showNavigationLink ? "flex" : "none",
   };
@@ -10,7 +10,7 @@ const MediaNavigationLink = ({ link, showNavigationLink }) => {
   const location = useLocation();
 
   return (
-    <Wrapper>
+    <Wrapper marginTop={marginTop}>
       <NavigationLink
         to={link}
         state={{ from: location }}
@@ -25,6 +25,7 @@ const MediaNavigationLink = ({ link, showNavigationLink }) => {
 MediaNavigationLink.propTypes = {
   link: PropTypes.string,
   showNavigationLink: PropTypes.bool,
+  marginTop: PropTypes.string,
 };
 
 export default MediaNavigationLink;

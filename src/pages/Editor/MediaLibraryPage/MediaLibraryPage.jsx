@@ -96,7 +96,12 @@ const MediaLibraryPage = () => {
             showNavigationLink={true}
           />
 
-          <NewTracksPage mediaLibrary={true} limit={"9"} showTitle={false} />
+          <NewTracksPage
+            mediaLibrary={true}
+            limit={"9"}
+            showTitle={false}
+            showNavigationLink={true}
+          />
         </>
       )}
     </>

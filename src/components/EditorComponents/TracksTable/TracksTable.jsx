@@ -2,9 +2,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, useCallback } from "react";
 import { useLocation } from "react-router-dom";
-
 import Pagination from "rc-pagination";
-import Select from "rc-select";
 
 import localeUA from "../../../constants/paginationLocaleUA.js";
 import { findPage } from "../../../helpers/helpers.js";
@@ -20,6 +18,7 @@ import { Modal } from "../../Modal/Modal.jsx";
 import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled.jsx";
 
 import { Button } from "../../Button/Button.jsx";
+import SelectPageSize from "./SelectSize.jsx";
 
 import {
   setPreloadSrcPlayer,
@@ -79,6 +78,7 @@ const TracksTable = ({
   isSearchResultFail,
   isSearching,
   deleteButton = true,
+  showPagination = true,
 }) => {
   const [
     deleteTrack,
@@ -163,8 +163,8 @@ const TracksTable = ({
 
   const onPageSizeChange = (size) => {
     console.log(size);
-    // setPageSize(size);
     onChangeSizePage(size);
+    onChangePage(1);
   };
 
   useEffect(() => {
@@ -230,10 +230,6 @@ const TracksTable = ({
 
   useEffect(() => {
     if (isSearching) {
-      // setDeselect(false);
-      // if (currentPage !== 1) {
-      //   onChangePage(1);
-      // }
       onChangePage(1);
       setTracksIdList([]);
       setDeselect(true);
@@ -278,10 +274,6 @@ const TracksTable = ({
     dispatch,
     lastTrackInPage,
   ]);
-
-  // const onPageSizeChange = (pageSize) => {
-  //   onChangeSizePage(pageSize);
-  // };
 
   const getCheckedTrackId = (data) => {
     if (data !== undefined) {
@@ -488,23 +480,36 @@ const TracksTable = ({
                   onClick={deletingMultipleTracks}
                 />
               )}
-              {isSuccess && (
-                <Pagination
-                  // style={{ marginBottom: "24px" }}
-                  defaultCurrent={1}
-                  current={currentPage}
-                  total={totalTracks}
-                  showLessItems
-                  selectComponentClass={Select}
-                  showSizeChanger={false}
-                  defaultPageSize={pageSize}
-                  pageSize={pageSize}
-                  hideOnSinglePage
-                  // onShowSizeChange={onPageSizeChange}
-                  onChangeSizePage={onPageSizeChange}
-                  onChange={(page) => onChangePage(page)}
-                  // locale={localeUA}
-                />
+              {isSuccess && showPagination && (
+                <div
+                  style={{
+                    display: "flex",
+                    marginLeft: "auto",
+                    alignItems: "center",
+                  }}
+                >
+                  <SelectPageSize
+                    pageSize={pageSize}
+                    onChange={onPageSizeChange}
+                    totalPages={totalPages}
+                    optionValue={[10, 20, 50, 100]}
+                  />
+
+                  <Pagination
+                    // style={{ marginBottom: "24px" }}
+                    defaultCurrent={1}
+                    current={currentPage}
+                    total={totalTracks}
+                    showLessItems
+                    showSizeChanger={false}
+                    defaultPageSize={pageSize}
+                    pageSize={pageSize}
+                    hideOnSinglePage
+                    onChange={(page) => onChangePage(page)}
+                    // locale={localeUA}
+                    showTitle
+                  />
+                </div>
               )}
             </div>
           </TracksTableWrapper>
