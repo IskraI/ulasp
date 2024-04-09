@@ -18,8 +18,6 @@ import { useCreatePlaylistInGenreMutation } from "../../../redux/genresSlice";
 
 import { PlaylistWrapper, PlaylistList } from "./PlayLists.styled";
 
-import BackButton from "../BackButton/BackButton";
-
 const LatestPlaylists = ({
   title,
   data: playlists,
@@ -123,13 +121,10 @@ const LatestPlaylists = ({
     return setShowModal(false);
   };
 
-  const toogleModal = () => {
-    return setShowModal(() => !showModal);
-  };
+  const toogleModal = () => setShowModal(() => !showModal);
 
   return (
     <>
-      <BackButton />
       <ControlMediateca
         title={title}
         iconButton={`${symbol}#icon-playlist-add`}

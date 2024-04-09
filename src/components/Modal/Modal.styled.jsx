@@ -51,9 +51,10 @@ export const CloseIconStyled = (component) => styled(component)`
 export const ButtonsModalWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   gap: 24px;
   margin-right: 24px;
-  margin-bottom: 24px;
+  margin-bottom: ${({ marginBottom }) => marginBottom || "24px"};
 `;
 
 export const ModalInfoText = styled.div`
@@ -66,6 +67,8 @@ export const ModalInfoText = styled.div`
   margin-top: ${(props) => props.marginTop || "34px"};
   margin-bottom: ${(props) => props.marginBottom};
   text-align: center;
+  color: ${({ warning }) =>
+    warning ? `${colors.errorColor}` : `${colors.mainFontColor}`};
 `;
 
 export const ModalInfoTextBold = styled.span`

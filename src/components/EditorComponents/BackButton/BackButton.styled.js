@@ -12,4 +12,7 @@ export const PathContainer = styled.div`
   display: flex;
   align-items: center;
 `;
-export const BackLink = styled(NavLink)``;
+export const BackLink = styled(NavLink)`
+  display: flex;
+  align-items: center;
+`;

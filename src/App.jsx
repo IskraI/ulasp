@@ -17,7 +17,6 @@ import PrivateRoute from "./components/PrivateRoute";
 import PrivateUserRoute from "./components/PrivateUserRoute";
 import Messages from "./components/AdminComponents/Messages/Messages";
 import MessagesUser from "./components/MessagesUser/MessagesUser";
-import MyPlaylistsUser from "./components/MyPlaylistsUser/MyPlaylistsUser";
 
 import ReportUser from "./components/ReportUser/ReportUser";
 

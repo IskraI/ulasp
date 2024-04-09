@@ -24,6 +24,8 @@ import { useDeletePlaylistInShopMutation } from "../../../redux/shopsSlice";
 import { genresApi } from "../../../redux/genresSlice";
 import { shopsApi } from "../../../redux/shopsSlice";
 
+import useFocusInput from "../../../hooks/useFocusInput";
+
 import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
 
 import {
@@ -40,7 +42,6 @@ import {
   MediaButton,
   SvgMedia,
   EditWrapper,
-  // EditCardWrapper,
   EditInputText,
 } from "../MediaList/MediaList.styled";
 
@@ -69,19 +70,13 @@ const PlaylistListItem = ({
   const [playlistTitle, setPlaylistTitle] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const ref = useRef(null);
+  const [ref] = useFocusInput(isEditing);
 
   const [errorValidateMessage, isError, setIsError] = useValidateInput(
     playlistTitle,
     minLengthInput,
     maxLengthInput
   );
-
-  useEffect(() => {
-    if (isEditing) {
-      ref.current.focus();
-    }
-  }, [isEditing]);
 
   const mediaLibrary = `/editor/medialibrary`;
   const newPlaylists = `/editor/medialibrary/newplaylists/${id}/tracks`;
@@ -125,14 +120,6 @@ const PlaylistListItem = ({
     location?.state?.from,
     navigate,
   ]);
-  //проверить эту фигню
-  if (
-    location.pathname === newPlaylists &&
-    isSuccessDeletePlaylist &&
-    !isErrorDeletePlaylist
-  ) {
-    navigate(`${mediaLibrary}/newplaylists`);
-  }
 
   useEffect(() => {
     setTimeout(() => {
@@ -143,6 +130,7 @@ const PlaylistListItem = ({
   }, [showModalSuccess]);
 
   const deleteMediaItem = () => {
+    closeModalWarning();
     if (genre) {
       deletePlaylistInGenre(id).unwrap();
       setShowModalSuccess(true);
@@ -156,6 +144,7 @@ const PlaylistListItem = ({
     }
 
     deletePlaylist({ id }).unwrap();
+
     setShowModalSuccess(true);
   };
 
@@ -214,7 +203,6 @@ const PlaylistListItem = ({
     return (
       <>
         <MediaItem isError={isError} isEditing={isEditing}>
-          {/* <EditCardWrapper> */}
           {isError && (
             <ErrorValidateText>{errorValidateMessage}</ErrorValidateText>
           )}
@@ -255,7 +243,6 @@ const PlaylistListItem = ({
               </SvgMedia>
             </MediaButton>
           </MediaIconsWrapper>
-          {/* </EditCardWrapper> */}
         </MediaItem>
         {showModalError && (
           <Modal
@@ -281,19 +268,20 @@ const PlaylistListItem = ({
 
   const deletePlaylistWithTracks = async () => {
     try {
-      await deletePlaylist({ id, deleteTracks: true }).unwrap();
+      closeModalWarning();
 
-      invalidateTags();
+      await deletePlaylist({ id, deleteTracks: true })
+        .unwrap()
+        .then(setShowModalSuccess(true));
+
       navigate(location?.state?.from);
+      invalidateTags();
     } catch (error) {
       setShowModalError(true);
     }
   };
 
-  const closeModalWarning = (data) => {
-    setShowModalWarning(data);
-  };
-
+  const closeModalWarning = () => setShowModalWarning(false);
   return (
     <>
       {!placeListCardInfo ? (
@@ -320,7 +308,8 @@ const PlaylistListItem = ({
 
             <MediaButton
               type="button"
-              onClick={deleteMediaItem}
+              // onClick={deleteMediaItem}
+              onClick={() => setShowModalWarning(true)}
               disabled={isLoading}
             >
               {isLoading ? (
@@ -401,9 +390,13 @@ const PlaylistListItem = ({
       {showModalWarning && (
         <ModalDeleteWarning
           text={
-            "Ця операція видалить плейлист з усім вмістом. Чи дійcно Ви цього бажаєте?"
+            placeListCardInfo
+              ? "Ця операція видалить плейлист з усім вмістом. Чи дійcно Ви цього бажаєте?"
+              : `Ця операція видалить плейлист "${title}". Пісні залишаться в медіатеці. Чи дійcно Ви цього бажаєте?`
           }
-          onClick={deletePlaylistWithTracks}
+          onClick={
+            placeListCardInfo ? deletePlaylistWithTracks : deleteMediaItem
+          }
           closeModalWarning={closeModalWarning}
         />
       )}

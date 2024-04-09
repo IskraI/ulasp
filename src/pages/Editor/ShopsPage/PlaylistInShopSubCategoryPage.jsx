@@ -63,10 +63,7 @@ const PlaylistInShopSubCategoryPage = () => {
     }
   };
 
-  const handleAvatarChange = (avatar) => {
-    setSelectedPlaylistAvatar(avatar);
-  };
-
+  const handleAvatarChange = (avatar) => setSelectedPlaylistAvatar(avatar);
   const newPlaylistName =
     dataCreatePlaylist?.playListName ??
     "Назва нового плейлиста не була введена";
@@ -90,6 +87,7 @@ const PlaylistInShopSubCategoryPage = () => {
             typeMediaLibrary={"subCategoryShop"}
             idTypeOfMediaLibrary={idShopLibrary}
             isSuccessCreatePlaylist={isSuccessCreatePlaylist}
+            isLoadingCreatePlaylist={isLoadingCreatePlaylist}
             isErrorCreatePlaylist={isErrorCreatePlaylist}
             errorCreatePlaylist={errorCreatePlaylist}
             newPlaylistName={newPlaylistName}

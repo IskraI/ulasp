@@ -1,10 +1,12 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
 const useFocusInput = (isNeed) => {
   const ref = useRef(null);
-  if (isNeed) {
-    ref?.current?.focus();
-  }
+  useEffect(() => {
+    if (isNeed) {
+      ref?.current?.focus();
+    }
+  }, [isNeed]);
 
   return [ref];
 };
