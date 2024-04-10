@@ -1,4 +1,4 @@
-import{n as t,f as o}from"./index-fa6a07d2.js";const i=t.div`
+import{n as t,f as o}from"./index-7620bdc1.js";const i=t.div`
   display: flex;
   gap: 8px;
   /* margin-left: 111px; */
