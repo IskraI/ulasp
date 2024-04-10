@@ -44,6 +44,7 @@ const CardUser = () => {
     error: errorSongsCount,
     isLoading: isLoadingSongsCount,
   } = useGetUserByIdTrackCountQuery(id);
+
   const [dispatchSendMail, { isLoading: isLoadingSendMail }] =
     useSendMailUserByIdMutation();
   const [dispatchDel, { isLoading: isLoadingDel }] = useDelUserByIdMutation();
@@ -120,7 +121,7 @@ const CardUser = () => {
         setActiveModal("error");
       });
   };
-
+  console.log("tracksCount :>> ", tracksCount?.count);
   return (
     <>
       <TabNavigation />
@@ -132,7 +133,7 @@ const CardUser = () => {
           id={id}
           user={user}
           playlistCount={playlistCount}
-          tracksCount={tracksCount}
+          tracksCount={tracksCount?.count}
         />
       )}
       <ButtonContainer>

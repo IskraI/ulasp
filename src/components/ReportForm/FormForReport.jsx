@@ -27,7 +27,7 @@ const ReportFormDataTemplate = ({
   getValues,
   reset,
 }) => {
-  console.log("errors :>> ", errors);
+  // console.log("errors :>> ", errors?);
   const [selectedOption, setSelectedOption] = useState("date"); // По умолчанию выбрана дата
 
   const isDateOfStart = useWatch({
@@ -48,8 +48,8 @@ const ReportFormDataTemplate = ({
     defaultValue: "",
   }).trim();
 
-  console.log("isDateOfStart :>> ", isDateOfStart);
-  console.log("isDateOfStart :>> ", isDateOfEnd);
+  // console.log("isDateOfStart :>> ", isDateOfStart);
+  // console.log("isDateOfStart :>> ", isDateOfEnd);
   const handleOptionChange = (event) => {
     //переключение радиобаттон - говорим  форме какие значения брать
     const newSelectedOption = event.target.value;
@@ -80,7 +80,7 @@ const ReportFormDataTemplate = ({
   };
 
   const currentYear = new Date().getFullYear();
-  console.log("selectedOption :>> ", selectedOption);
+  // console.log("selectedOption :>> ", selectedOption);
   return (
     // <ReportFormData>
     <ReportForm onSubmit={handleSubmit}>

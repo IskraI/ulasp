@@ -170,7 +170,7 @@ input[type="radio"] {
   background-color: #a3abb9;
   position: absolute;
 
-  left: 0;
+  left: 0%;
   top: 30%;
 }
 
@@ -184,7 +184,7 @@ input[type="radio"] {
   border-radius: 50%; /* Круглая форма */
   position: absolute;
   left: 32%;
-  top: 43%;
+  top: 45%;
   transform: translate(-20%, -50%);
   opacity: 0; /* Изначально скрыта */
   transition: opacity 0.2s ease-in-out; /* Плавное появление/исчезновение */

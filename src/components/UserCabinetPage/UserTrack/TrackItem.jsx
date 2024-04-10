@@ -45,7 +45,7 @@ const TrackItem = ({
   const [isPlayingTrack, setIsPlayingTrack] = useState(false);
 
   const ref = useRef();
-  console.log("object TrackItem:>> ", createPlaylists);
+  // console.log("object TrackItem:>> ", createPlaylists);
   const currentTrackIndex = playerState.indexTrack;
 
   useEffect(() => {

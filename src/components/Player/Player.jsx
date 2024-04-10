@@ -46,6 +46,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
   const [currentTrackArtist, setCurrentTrackArtist] = useState("Невизначений");
   const [currentTrackName, setCurrentTrackName] = useState("Невизначений");
   const [error, setError] = useState(true);
+  const [requestSent, setRequestSent] = useState(false);
   const prefetchPage = usePrefetch("getAllTracks");
 
   // console.log(
@@ -75,9 +76,9 @@ const Player = ({ tracks = [], inHeader = false }) => {
 
   const handlePlayLoadStart = async (track) => {
     if (isFirst) {
-      // console.log(
-      //   `handlePlayLoadStart Песня с ${track} ID начала проигрываться. попробуем отправить счетчик dispatchListenCountTrack`
-      // );
+      console.log(
+        `handlePlayLoadStart Песня с ${track} ID начала проигрываться. попробуем отправить счетчик dispatchListenCountTrack`
+      );
 
       if (track) {
         try {
@@ -104,7 +105,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
     }
 
     // console.log("handlePlay :>> ");
-    // handlePlayLoadStart(tracks[currentTrack]?.id);
+    handlePlayLoadStart(tracks[currentTrack]?.id);
   };
 
   const noData = tracks[currentTrack]?.trackURL === undefined;
@@ -177,9 +178,9 @@ const Player = ({ tracks = [], inHeader = false }) => {
   };
   // console.log("playerRef :>> ", playerRef);
 
-  useEffect(() => {
-    handlePlayLoadStart(tracks[currentTrack]?.id);
-  }, [currentTrack]);
+  // useEffect(() => {
+  //   handlePlayLoadStart(tracks[currentTrack]?.id);
+  // }, [currentTrack]);
 
   return (
     <>
@@ -225,7 +226,17 @@ const Player = ({ tracks = [], inHeader = false }) => {
                 dispatch(pause());
               }
             }}
-            onPlay={handlePlay}
+            onPlay={() => {
+              if (!isPlaying) {
+                dispatch(pause());
+              }
+              // if (isPlaying && !isPaused && isFirst) {
+              setTimeout(() => {
+                handlePlayLoadStart(tracks[currentTrack]?.id);
+              }, 10000);
+              // }
+              // console.log("handlePlay :>> ");
+            }}
             // if (!isPlaying && playerState.src.length === 0) {
             //   dispatch(
             //     setSrcPlaying({

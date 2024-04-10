@@ -28,6 +28,8 @@ const ReportUser = () => {
   const { data: user, error, isLoading } = useGetUserByIdQuery(id);
   const [selectedOption, setSelectedOption] = useState("date");
 
+  console.log("зашли в репорт :>> ");
+
   const handleSelectedOptionChange = (newSelectedOption) => {
     setSelectedOption(newSelectedOption); // обновляем selectedOption внутри ReportUser
   };
@@ -92,7 +94,11 @@ const ReportUser = () => {
       <ReportWrapper>
         <ReportFormData>
           <Title>
-            {`Звіт по користувачу з № договору: ${user?.contractNumber}`}
+            {`Звіт по користувачу з № договору: ${
+              user?.contractNumberDoc
+                ? user.contractNumberDoc
+                : user.contractNumber
+            }`}
           </Title>
           <ReportFormDataTemplate
             handleSubmit={handleSubmit(onFormSubmit)}
@@ -102,6 +108,7 @@ const ReportUser = () => {
             isValid={isValid}
             getValues={getValues}
             onSelectedOptionChange={handleSelectedOptionChange}
+            control={control}
           />
         </ReportFormData>
         <ReporTabletWrapper>

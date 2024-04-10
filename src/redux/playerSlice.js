@@ -96,13 +96,13 @@ export const playerSlice = createSlice({
     },
     pause: {
       reducer(state) {
-        // console.log("action.payload pause ", state);
+        console.log("action.payload pause ", state.isPaused);
         state = {
           ...state,
           isPlaying: state.isPlaying ? false : true,
           isPaused: state.isPaused ? false : true,
           isLoaded: true,
-          isFirstPlay: state.isPaused ? false : true,
+          isFirstPlay: false,
         };
         return state;
       },

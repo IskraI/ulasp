@@ -85,7 +85,7 @@ export const userSlice = createSlice({
             isLoggedIn: true,
           };
         } else {
-          // console.log("action.payload.user", action.payload.user);
+          console.log("action.payload.user", action.payload.user);
           state = {
             ...state,
             ...action.payload.user,

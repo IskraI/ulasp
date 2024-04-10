@@ -136,6 +136,7 @@ const CardUserForm = ({ user, playlistCount, tracksCount }) => {
           isEditing={isEditing}
           handleCloseEdit={handleCloseEdit}
           playlistCount={playlistCount}
+          tracksCount={tracksCount}
           access={access}
         />
       </form>

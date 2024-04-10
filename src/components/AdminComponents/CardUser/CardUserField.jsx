@@ -31,6 +31,7 @@ const CardUserField = ({
   handleEditActivation,
   handleCloseEdit,
   playlistCount,
+  tracksCount,
   dirtyFields,
   access,
   editor,
@@ -210,7 +211,8 @@ const CardUserField = ({
               <RegisterLabel>Кількість доданих пісень </RegisterLabel>
               <RegisterInput
                 type="text"
-                placeholder="в розробці"
+                placeholder="загружається"
+                defaultValue={tracksCount}
                 readOnly={true}
               />
             </RegisterField>
