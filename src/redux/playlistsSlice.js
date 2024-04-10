@@ -17,10 +17,10 @@ export const playlistsApi = createApi({
 
   endpoints: (builder) => ({
     getLatestPlaylists: builder.query({
-      query: (page = "", limit = "") => ({
-        url: `/editor/playlist/latest?${page && `page=${page}`} & ${
-          limit && `limit=${limit}`
-        }`,
+      query: ({ page = "", limit = "", withoutPlaylist = "" }) => ({
+        url: `/editor/playlist/latest?${page && `page=${page}`} ${
+          limit && `&limit=${limit}`
+        } ${withoutPlaylist && `&withoutPlaylist=${withoutPlaylist}`}`,
       }),
 
       providesTags: (_result, _err, id) => [{ type: "Playlists", id }],
@@ -116,6 +116,18 @@ export const playlistsApi = createApi({
       }),
       invalidatesTags: ["Playlists"],
     }),
+    replaceTracksToPlaylists: builder.mutation({
+      query: ({ idPlaylistFrom, tracks, playlists }) => ({
+        url: `/editor/playlist/replaceTracksToPlaylists`,
+        method: "PATCH",
+        body: {
+          idPlaylistFrom,
+          tracks,
+          playlists,
+        },
+      }),
+      invalidatesTags: ["Playlists"],
+    }),
   }),
 });
 
@@ -130,4 +142,5 @@ export const {
   useUpdatePlaylistPublicationMutation,
   useUpdatePlaylistSortMutation,
   useUpdatePlayListByIdMutation,
+  useReplaceTracksToPlaylistsMutation,
 } = playlistsApi;

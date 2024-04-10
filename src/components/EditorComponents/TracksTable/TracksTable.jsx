@@ -17,6 +17,7 @@ import {
 
 import ModalDeleteWarning from "../../ModalDeleteWarning/ModalDeleteWarning.jsx";
 import ModalInfoDeleteTracks from "./ModalInfoDeleteTracks.jsx";
+import ModalAddToPlaylists from "./ModalAddToPlaylists.jsx";
 
 import { Button } from "../../Button/Button.jsx";
 import SelectPageSize from "./SelectSize.jsx";
@@ -106,6 +107,8 @@ const TracksTable = ({
   const [deleteInfo, setDeleteInfo] = useState([]);
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
   const [selectDeleteButton, setSelectDeleteButton] = useState(null);
+  const [showModalReplaceToPlaylsit, setShowModalReplaceToPlaylsit] =
+    useState(false);
 
   const tracksTableProps = {
     showTitle: showTitle ? "table-caption" : "none",
@@ -129,19 +132,6 @@ const TracksTable = ({
       : currentPageForTrackPlaying * pageSize - 1;
 
   const lastTrackInPage = playerState.indexTrack === indexOfLastTrackInPage;
-  // console.log("pageSize", pageSize);
-  // console.log("pageSize === tracks.length", pageSize === tracks.length);
-
-  // console.log("tracks.length - 1 + skip", tracks.length - 1 + skip);
-  // console.log(
-  //   "currentPageForTrackPlaying * pageSize - 1",
-  //   currentPageForTrackPlaying * pageSize - 1
-  // );
-  // console.log("Длинна", tracks.length);
-  // console.log("tracks.length - 1 + skip", tracks.length - 1 + skip);
-  // console.log("currentPageForTrackPlaying", currentPageForTrackPlaying);
-  // console.log("playerState.indexTrack", playerState.indexTrack);
-  // console.log("indexOfLastTrackInPage", indexOfLastTrackInPage);
 
   useEffect(() => {
     if (showModalSuccesDelete) {
@@ -364,6 +354,12 @@ const TracksTable = ({
     setDeleteInfo([]);
   };
 
+  const closeModalReplaceSuccess = () => {
+    setShowModalReplaceToPlaylsit(false);
+    clearAfterDeleting();
+    setDeselect(true);
+  };
+
   if (isFetching) {
     return <Loader />;
   }
@@ -485,6 +481,20 @@ const TracksTable = ({
             >
               {deleteButton && isInPlayList && (
                 <Button
+                  type={"button"}
+                  width={"200px"}
+                  padding={"6px"}
+                  marginright={"12px"}
+                  fontsize={"16px"}
+                  border={"1px solid #A4A2A2"}
+                  background={"transparent"}
+                  text={"Перенести з плейлисту"}
+                  disabled={tracksIdList.length ? false : true}
+                  onClick={() => setShowModalReplaceToPlaylsit(true)}
+                />
+              )}
+              {deleteButton && isInPlayList && (
+                <Button
                   id={"deleteFromPlaylist"}
                   type={"button"}
                   width={"200px"}
@@ -498,6 +508,7 @@ const TracksTable = ({
                   onClick={openModalDeleteWarning}
                 />
               )}
+
               {deleteButton && (
                 <Button
                   id={"deleteMediateca"}
@@ -512,6 +523,7 @@ const TracksTable = ({
                   onClick={openModalDeleteWarning}
                 />
               )}
+
               {isSuccess && showPagination && (
                 <div
                   style={{
@@ -566,6 +578,14 @@ const TracksTable = ({
               : deletingMultipleTracks
           }
           closeModalWarning={() => setShowDeleteWarning(false)}
+        />
+      )}
+      {showModalReplaceToPlaylsit && (
+        <ModalAddToPlaylists
+          playListId={playListId}
+          tracks={tracksIdList}
+          replaceMany={true}
+          modalClose={closeModalReplaceSuccess}
         />
       )}
     </>

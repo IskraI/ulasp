@@ -233,7 +233,7 @@ const MediaListItem = ({
 
         break;
       default:
-        return console.log("Нету такого типа, иди нахуй");
+        console.warn("Unknown type");
     }
   };
 

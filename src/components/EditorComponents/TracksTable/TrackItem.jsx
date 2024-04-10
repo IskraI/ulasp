@@ -12,7 +12,11 @@ import { Button } from "../../Button/Button";
 import { Modal } from "../../Modal/Modal";
 import ModalAddToPlaylists from "./ModalAddToPlaylists";
 import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
-import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsSlice";
+import {
+  playlistsApi,
+  useDeleteTrackInPlaylistMutation,
+} from "../../../redux/playlistsSlice";
+
 import {
   useDeleteTrackMutation,
   useUpdateTrackCoverMutation,
@@ -72,12 +76,10 @@ const TrackItem = ({
   const [isPlayingTrack, setIsPlayingTrack] = useState(false);
   const [isPausedTrack, setIsPausedTrack] = useState(false);
 
-  // console.log("isPlayingTrack", isPlayingTrack);
-  // console.log("trackID", idTrack);
-
   const [isChecked, setIsChecked] = useState(false);
   const [showModalChart, setShowModalChart] = useState(false);
   const [showModalAddToPlaylists, setShowModalAddToPlaylists] = useState(false);
+  const [replaceTrack, setReplaceTrack] = useState(false);
 
   const ref = useRef(null);
   const playBtnRef = useRef(null);
@@ -91,11 +93,26 @@ const TrackItem = ({
 
   const oneGenre = !isInPlayList ? playLists[0]?.playlistGenre[0]?.genre : null;
 
+  const invalidatePlaylist = () => {
+    setShowModalChart(false);
+    setTimeout(() => {
+      if (isInPlayList) {
+        dispatch(playlistsApi.util.invalidateTags(["Playlists"]));
+      }
+    }, 1000);
+  };
+
   const [updateTrack, { data: dataUpdateTrack }] =
     useUpdateTrackCoverMutation();
 
-  const [addToChart, { data: dataAddToChart, isLoading: isLoadingAddToChart }] =
-    useAddTrackToChartMutation();
+  const [
+    addToChart,
+    {
+      data: dataAddToChart,
+      isLoading: isLoadingAddToChart,
+      isSuccess: isSucessAddToChart,
+    },
+  ] = useAddTrackToChartMutation();
 
   const [
     removeFromChart,
@@ -180,7 +197,6 @@ const TrackItem = ({
     }
 
     if (!isCheckedAll && ref.current.checked) {
-      console.log("deselect", deselect);
       if (!deselect) {
         return;
       }
@@ -218,15 +234,23 @@ const TrackItem = ({
   };
 
   const addTrackToChart = () => {
-    addToChart(idTrack).unwrap().then(setShowModalChart(true));
+    addToChart(idTrack)
+      .unwrap()
+      .then(setShowModalChart(true))
+      .finally(invalidatePlaylist);
   };
 
   const removeTrackFromChart = () => {
-    removeFromChart(idTrack).unwrap().then(setShowModalChart(true));
+    removeFromChart(idTrack)
+      .unwrap()
+      .then(setShowModalChart(true))
+      .finally(invalidatePlaylist);
   };
 
-  const addTrackToPlaylists = () => {
-    setShowModalAddToPlaylists(true);
+  const addTrackToPlaylists = () => setShowModalAddToPlaylists(true);
+  const replaceTrackToPlaylists = () => {
+    addTrackToPlaylists();
+    setReplaceTrack(true);
   };
 
   return (
@@ -344,6 +368,7 @@ const TrackItem = ({
               removeTrackFn={removeTrack}
               updateTrackCoverFn={updateTrackCover}
               addTrackToPlaylists={addTrackToPlaylists}
+              replaceTrackToPlaylist={replaceTrackToPlaylists}
               addTrackToChartFn={addTrackToChart}
               removeTrackFromChartFn={removeTrackFromChart}
               isTopChart={isTopChart}
@@ -394,7 +419,9 @@ const TrackItem = ({
       {showModalAddToPlaylists && (
         <ModalAddToPlaylists
           idTrack={idTrack}
+          playListId={playListId}
           modalClose={setShowModalAddToPlaylists}
+          replaceTrack={replaceTrack}
         />
       )}
     </>

@@ -6,6 +6,7 @@ const PopUpButtons = ({
   removeTrackFn,
   updateTrackCoverFn,
   addTrackToPlaylists,
+  replaceTrackToPlaylist,
   addTrackToChartFn,
   removeTrackFromChartFn,
   isTopChart,
@@ -31,9 +32,11 @@ const PopUpButtons = ({
         <PopUpButton type="button" onClick={addTrackToPlaylists}>
           Додати до плейлисту
         </PopUpButton>
-        <PopUpButton disabled={true} type="button">
-          Перенести до плейлисту
-        </PopUpButton>
+        {isInPlayList && (
+          <PopUpButton type="button" onClick={replaceTrackToPlaylist}>
+            Перенести до плейлисту
+          </PopUpButton>
+        )}
         <PopUpButton type="button" onClick={updateTrackCoverFn}>
           Оновити обкладинку
         </PopUpButton>
@@ -46,6 +49,7 @@ PopUpButtons.propTypes = {
   removeTrackFn: PropTypes.func,
   updateTrackCoverFn: PropTypes.func,
   addTrackToPlaylists: PropTypes.func,
+  replaceTrackToPlaylist: PropTypes.func,
   addTrackToChartFn: PropTypes.func,
   removeTrackFromChartFn: PropTypes.func,
   isTopChart: PropTypes.bool,
