@@ -66,8 +66,6 @@ const TrackItem = ({
   isAddTrackUser,
   addPlaylist,
 }) => {
-  console.log("addPlaylist", addPlaylist);
-
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
   const [isPlayingTrack, setIsPlayingTrack] = useState(false);

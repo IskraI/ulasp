@@ -18,7 +18,7 @@ import { ReportForm } from "../../../components/ReportForm/ReportForm";
 
 const UserCabinetPage = () => {
   const user = useSelector(getUserState);
-  // console.log("User", user);
+  console.log("User", user);
 
   return (
     <>
@@ -26,12 +26,16 @@ const UserCabinetPage = () => {
       <FormContainer>
         <InfoWrapper>
           <TitleSecond>Номер договору</TitleSecond>
-          <DataUser>{user.contractNumber}</DataUser>
+          <DataUser>
+            {user.contractNumberDoc
+              ? user.contractNumberDoc
+              : user.contractNumber}
+          </DataUser>
           <TitleSecond>Ідентифікаційний номер (код ЄДРПОУ)</TitleSecond>
           <DataUser>{user.taxCode}</DataUser>
-          <TitleSecond>Остання оплата</TitleSecond>
-          <DataUser>{user.lastPay}</DataUser>
-          <TitleSecond>Наступна оплата</TitleSecond>
+          {/* <TitleSecond>Остання оплата</TitleSecond>
+          <DataUser>{user.lastPay}</DataUser> */}
+          <TitleSecond>Надання доступу до</TitleSecond>
           <DataUser>{user.dateOfAccess}</DataUser>
         </InfoWrapper>
         <ReportForm user={user} userpage={true} />
