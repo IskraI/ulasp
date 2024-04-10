@@ -121,9 +121,7 @@ const LatestPlaylists = ({
     return setShowModal(false);
   };
 
-  const toogleModal = () => {
-    return setShowModal(() => !showModal);
-  };
+  const toogleModal = () => setShowModal(() => !showModal);
 
   return (
     <>

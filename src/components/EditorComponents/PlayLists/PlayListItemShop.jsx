@@ -5,11 +5,7 @@ import { useEffect, useState } from "react";
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 import { Modal } from "../../Modal/Modal";
-import {
-  ModalInfoText,
-  ModalInfoTextBold,
-  ButtonsModalWrapper,
-} from "../../Modal/Modal.styled";
+import { ModalInfoText, ButtonsModalWrapper } from "../../Modal/Modal.styled";
 import { Button } from "../../Button/Button";
 import { ErrorNotFound } from "../../Errors/Errors";
 import AddCover from "../../AddCover/AddCover";
@@ -158,7 +154,7 @@ const PlaylistListItem = ({
       shopType = "Категорія";
       break;
     default:
-      return console.log("Нету такого типа, иди нахуй");
+      return console.log("Нету такого типа");
   }
 
   const invalidateShopsTag = () => {
@@ -184,7 +180,7 @@ const PlaylistListItem = ({
             if (e.status === 404) {
               setShowModalError(true);
             } else {
-              console.log("Заебал, пошел нахуй");
+              console.log("Нету такого типа");
             }
           });
         break;
@@ -195,17 +191,14 @@ const PlaylistListItem = ({
           .catch(() => setShowModalError(true));
         break;
       default:
-        return console.log("Нету такого типа, иди нахуй");
+        return console.log("Нету такого типа");
     }
   };
 
-  const closeModalError = () => {
-    return setShowModalError(false);
-  };
+  const closeModalError = () => setShowModalError(false);
 
-  const closeModalSuccess = () => {
-    return setShowModalSuccessDelete(false);
-  };
+  const closeModalSuccess = () => setShowModalSuccessDelete(false);
+
   const handleCloseEdit = () => {
     setSelectedImage(null);
     setIsEditing(false);
@@ -335,12 +328,22 @@ const PlaylistListItem = ({
 
       {showModalDeletePlaylist && (
         <Modal
-          width={"567px"}
+          width={"900px"}
           onClose={() => setShowModalDeletePlaylist(false)}
           showCloseButton={true}
           flexDirection={"column"}
         >
-          <ModalInfoText>Видалити тільки з {mediaLibraryName}?</ModalInfoText>
+          <ModalInfoText warning marginTop={"4px"} paddingBottom={"4px"}>
+            Уважно!
+          </ModalInfoText>
+          <ModalInfoText
+            marginTop={"0"}
+            marginBottom={"6px"}
+            paddingTop={"2px"}
+            paddingBottom={"2px"}
+          >
+            Видалити тільки з підкатегорії? Плейлист залишиться в медіатеці.
+          </ModalInfoText>
           <ButtonsModalWrapper>
             <Button
               type={"button"}
@@ -352,11 +355,22 @@ const PlaylistListItem = ({
                 deleteMediaItem();
               }}
             />
+          </ButtonsModalWrapper>
+          <ModalInfoText
+            marginTop={"0"}
+            marginBottom={"6px"}
+            paddingTop={"2px"}
+            paddingBottom={"2px"}
+          >
+            Видалити з медіатеки? Пісні залишиться у медіатеці.
+          </ModalInfoText>
+          <ButtonsModalWrapper marginBottom={"6px"}>
             <Button
               type={"button"}
-              text={"Ні"}
+              text={"Так"}
               showIcon={false}
               padding={"12px 26px"}
+              marginbottom={"0"}
               onClick={() => {
                 setShowModalDeletePlaylist(false);
                 deletePlayList({ id: idPlaylist }).then(() => {
@@ -372,47 +386,31 @@ const PlaylistListItem = ({
               }}
             />
           </ButtonsModalWrapper>
+          <hr style={{ width: "100%" }} />
+          <ButtonsModalWrapper>
+            <Button
+              type={"button"}
+              text={"Скасувати"}
+              showIcon={false}
+              padding={"12px 16px"}
+              onClick={() => setShowModalDeletePlaylist(false)}
+            />
+          </ButtonsModalWrapper>
         </Modal>
       )}
-      {showModalSuccessDelete && isSuccessDelete && (
-        <Modal width={"394px"} onClose={closeModalSuccess}>
-          <ModalInfoText marginBottom={"34px"}>
-            Плейлист
-            <ModalInfoTextBold>&quot;{title}&quot;</ModalInfoTextBold>
-            був видалений
-          </ModalInfoText>
-        </Modal>
-      )}
-      {showModalSuccessDelete && isSuccessDeletePlaylist && (
-        <Modal width={"394px"} onClose={closeModalSuccess}>
-          <ModalInfoText marginBottom={"34px"}>
-            Плейлист
-            <ModalInfoTextBold>&quot;{title}&quot;</ModalInfoTextBold>
-            був видалений
-          </ModalInfoText>
-        </Modal>
-      )}
+      {showModalSuccessDelete &&
+        (isSuccessDelete || isSuccessDeletePlaylist) && (
+          <Modal width={"494px"} onClose={closeModalSuccess}>
+            <ModalInfoText marginBottom={"34px"}>
+              Плейлист &#32;&quot;{title}&quot;&#32; був видалений
+            </ModalInfoText>
+          </Modal>
+        )}
+
       {showModalError && (
         <Modal width={"694px"} onClose={closeModalError} showCloseButton={true}>
           <ModalInfoText marginBottom={"34px"}>
-            {typeMediaLibrary === "shopItem" ? (
-              <ErrorNotFound
-                error={`Упссс... Але Ви не можете видалити плейлист "${title}".`}
-              >
-                <p
-                  style={{
-                    fontSmooth: "auto",
-                    fontWeight: "bold",
-                    fontSize: "16px",
-                  }}
-                >
-                  Скоріш за всього, він є в інших категоріях/підкатегоріях, але
-                  ми точно цього ще не знаємо 😞
-                </p>
-              </ErrorNotFound>
-            ) : (
-              <ErrorNotFound />
-            )}
+            <ErrorNotFound />
           </ModalInfoText>
         </Modal>
       )}

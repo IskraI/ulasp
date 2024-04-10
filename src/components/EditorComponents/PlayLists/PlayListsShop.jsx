@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 
-import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 import ControlMediateca from "../ControlMediateca/ControlMediaTeca";
 import ModalForm from "../ControlMediateca/ModalForm";
 import PlaylistListItem from "./PlayListItemShop";
@@ -13,7 +12,7 @@ import useChooseAvatar from "../../../hooks/useChooseAvatar";
 import { PlaylistWrapper, PlaylistList } from "./PlayLists.styled";
 import { ModalInfoText } from "../../Modal/Modal.styled";
 import { LoaderButton } from "../../Loader/Loader";
-import { MediaItem } from "../MediaList/MediaList.styled";
+import { MediaItem, MediaItemText } from "../MediaList/MediaList.styled";
 
 const Playlists = ({
   title,
@@ -21,7 +20,6 @@ const Playlists = ({
   ownShopPlaylists = [],
   isFetchingPlaylist,
   error,
-  showNavigationLink,
   handleCreatePlaylist,
   onChangePlaylistAvatar,
   closeCreatePlaylistModal,
@@ -49,7 +47,7 @@ const Playlists = ({
 
   useEffect(() => {
     if (closeCreatePlaylistModal() === true) {
-      closeCreatePlaylistModal(closeModal()), console.log("Сработал еффект");
+      closeCreatePlaylistModal(closeModal());
     } else {
       return;
     }
@@ -70,26 +68,18 @@ const Playlists = ({
     }
   }, [showModalSuccess]);
 
-  const clearImageCover = () => {
-    clearAvatar(null);
-  };
+  const clearImageCover = () => clearAvatar(null);
 
   const closeModal = () => {
     clearImageCover();
     return setShowModal(false);
   };
 
-  const toogleModal = () => {
-    return setShowModal(!showModal);
-  };
+  const toogleModal = () => setShowModal(!showModal);
 
-  const closeModalSuccess = () => {
-    return setShowModalSuccess(false);
-  };
+  const closeModalSuccess = () => setShowModalSuccess(false);
 
-  const closeModalError = () => {
-    return setShowModalError(false);
-  };
+  const closeModalError = () => setShowModalError(false);
 
   return (
     <>
@@ -109,8 +99,8 @@ const Playlists = ({
           <PlaylistList>
             {isLoadingCreatePlaylist && (
               <MediaItem>
-                <LoaderButton />
-                <p>Playlist creating...</p>
+                <LoaderButton height={"30"} width={"30"} />
+                <MediaItemText>Створюємо плейлист...</MediaItemText>
               </MediaItem>
             )}
             {playlists.map(({ _id, playListName, playListAvatarURL }) => (
@@ -129,10 +119,6 @@ const Playlists = ({
               />
             ))}
           </PlaylistList>
-          <MediaNavigationLink
-            link={"newplaylists"}
-            showNavigationLink={showNavigationLink}
-          />
         </PlaylistWrapper>
       )}
       {showModal && (

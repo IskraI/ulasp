@@ -1,5 +1,4 @@
-/* eslint-disable react/prop-types */
-
+import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, useRef, useCallback } from "react";
 import {
@@ -276,6 +275,11 @@ const Player = ({ tracks = [], inHeader = false }) => {
       {/* <div>`${playerRef?.current?.container?.current}`</div> */}
     </>
   );
+};
+
+Player.propTypes = {
+  tracks: PropTypes.array,
+  inHeader: PropTypes.bool,
 };
 
 export default Player;

@@ -2,6 +2,7 @@
 import { CustomButton, SvgStyled, ImgStyled } from "./Button.styled";
 
 export const Button = ({
+  id,
   width,
   marginbottom,
   margintop,
@@ -30,6 +31,7 @@ export const Button = ({
 }) => {
   return (
     <CustomButton
+      id={id}
       type={type}
       width={width}
       height={height}

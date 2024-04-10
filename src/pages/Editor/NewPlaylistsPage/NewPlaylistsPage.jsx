@@ -7,7 +7,7 @@ const NewPlaylistsPage = () => {
     isFetching: isFetchingLatestPlaylist,
     error: isErrorLatestPlaylist,
     isSuccess,
-  } = useGetLatestPlaylistsQuery();
+  } = useGetLatestPlaylistsQuery({});
   return (
     <>
       {!isSuccess && !isErrorLatestPlaylist && <Loader />}

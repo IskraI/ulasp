@@ -69,6 +69,8 @@ const AllTracksEditor = () => {
   const onPageSizeChange = (size) => {
     console.log(size);
     setPageSize(size);
+    setIsSorterd(false);
+    setIsSearching(false);
     setCheckedMainCheckBox(false);
   };
 

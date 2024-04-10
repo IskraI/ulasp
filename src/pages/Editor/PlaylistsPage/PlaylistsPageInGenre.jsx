@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useGetGenreByIdQuery } from "../../../redux/genresSlice";
 import LatestPlaylists from "../../../components/EditorComponents/PlayLists/PlayLists";
 import { Loader } from "../../../components/Loader/Loader";
+import BackButton from "../../../components/EditorComponents/BackButton/BackButton";
 
 const PlaylistsPageInGenre = () => {
   const { genreId } = useParams();
@@ -15,6 +16,7 @@ const PlaylistsPageInGenre = () => {
       {!isSuccess && !isError && <Loader />}
       {!isError && isSuccess && (
         <>
+          <BackButton backLink={"/editor/medialibrary/genres/"} />
           <LatestPlaylists
             title={`Плейлисти жанру "${data.genre}"`}
             genre={data.genre}

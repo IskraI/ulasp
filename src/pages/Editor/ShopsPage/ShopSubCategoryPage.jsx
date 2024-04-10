@@ -145,8 +145,6 @@ const ShopSubCategoryPage = () => {
     dataCreateShopSubCategory?.shopSubCategory?.shopSubTypeName ??
     "Назва нової категорії не була введена";
 
-  console.log(shopCategory);
-
   return (
     <>
       {isFetchingShopCategory && !isSuccessShopCategory && <Loader />}

@@ -9,10 +9,16 @@ import ControlMediateca from "../../../components/EditorComponents/ControlMediat
 import RowsForNewTracks from "./RowsForNewTracks";
 import symbol from "../../../assets/symbol.svg";
 import AddTrackFromDB from "../../../components/AddTrackFromDB/AddTrackFromDB";
+import MediaNavigationLink from "../../../components/NavigationLink/NavigationLink";
 
 import { useGetTracksInChartQuery } from "../../../redux/tracksSlice";
 
-const NewTracksPage = ({ mediaLibrary, limit, showTitle = true }) => {
+const NewTracksPage = ({
+  mediaLibrary,
+  limit,
+  showTitle = true,
+  showNavigationLink,
+}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
@@ -84,7 +90,12 @@ const NewTracksPage = ({ mediaLibrary, limit, showTitle = true }) => {
             pageSize={pageSize}
             totalPages={tracksInChart.totalPages}
             deleteButton={false}
-            showPagination={false}
+            showPagination={mediaLibrary ? false : true}
+          />
+          <MediaNavigationLink
+            link={"newtracks"}
+            showNavigationLink={showNavigationLink}
+            marginTop={"0"}
           />
         </>
       )}
@@ -96,6 +107,7 @@ NewTracksPage.propTypes = {
   mediaLibrary: PropTypes.bool,
   showTitle: PropTypes.bool,
   limit: PropTypes.string,
+  showNavigationLink: PropTypes.bool,
 };
 
 export default NewTracksPage;

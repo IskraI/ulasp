@@ -1,4 +1,7 @@
 /* eslint-disable react/prop-types */
+import { useLocation, useNavigate } from "react-router-dom";
+
+import { useEffect, useState } from "react";
 import { GenresWrapper } from "./Genres.styled";
 import GenreListItem from "./GenresItem";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
@@ -11,9 +14,7 @@ import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
 import { useCreateGenreMutation } from "../../../redux/genresSlice";
 import { ErrorNotFound, NoData } from "../../Errors/Errors";
 
-import { useLocation, useNavigate } from "react-router-dom";
 
-import { useEffect, useState } from "react";
 
 const Genres = ({
   data: genres,

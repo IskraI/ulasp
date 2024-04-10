@@ -6,9 +6,11 @@ const PopUpButtons = ({
   removeTrackFn,
   updateTrackCoverFn,
   addTrackToPlaylists,
+  replaceTrackToPlaylist,
   addTrackToChartFn,
   removeTrackFromChartFn,
   isTopChart,
+  isInPlayList = true,
 }) => {
   const toogleTrackInChart = isTopChart
     ? "Видалити з новинок"
@@ -22,7 +24,7 @@ const PopUpButtons = ({
     <PopUpWrapper>
       <PopUp>
         <PopUpButton type="button" onClick={removeTrackFn}>
-          Видалити з медіатеки
+          {isInPlayList ? "Видалити з плейлисту" : "Видалити з медіатеки"}
         </PopUpButton>
         <PopUpButton type="button" onClick={toogleTrackInChartFn}>
           {toogleTrackInChart}
@@ -30,9 +32,11 @@ const PopUpButtons = ({
         <PopUpButton type="button" onClick={addTrackToPlaylists}>
           Додати до плейлисту
         </PopUpButton>
-        <PopUpButton disabled={true} type="button">
-          Перенести до плейлисту
-        </PopUpButton>
+        {isInPlayList && (
+          <PopUpButton type="button" onClick={replaceTrackToPlaylist}>
+            Перенести до плейлисту
+          </PopUpButton>
+        )}
         <PopUpButton type="button" onClick={updateTrackCoverFn}>
           Оновити обкладинку
         </PopUpButton>
@@ -45,9 +49,11 @@ PopUpButtons.propTypes = {
   removeTrackFn: PropTypes.func,
   updateTrackCoverFn: PropTypes.func,
   addTrackToPlaylists: PropTypes.func,
+  replaceTrackToPlaylist: PropTypes.func,
   addTrackToChartFn: PropTypes.func,
   removeTrackFromChartFn: PropTypes.func,
   isTopChart: PropTypes.bool,
+  isInPlayList: PropTypes.bool,
 };
 
 export default PopUpButtons;

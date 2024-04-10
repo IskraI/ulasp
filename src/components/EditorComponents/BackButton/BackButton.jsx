@@ -1,17 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
+
 import { PathText, BackLink, PathContainer } from "./BackButton.styled";
 import symbol from "../../../assets/symbol.svg";
 
-export const BackButton = () => {
-  const navigate = useNavigate();
-
-  const goBack = () => {
-    navigate(-1);
-  };
-
+export const BackButton = ({ backLink }) => {
   return (
     <PathContainer>
-      <BackLink onClick={goBack}>
+      <BackLink to={backLink || -1}>
         <svg className="icon" width="24" height="24">
           <use
             href={`${symbol}#icon-arrow`}
@@ -20,10 +15,14 @@ export const BackButton = () => {
             fill="#17161C"
           ></use>
         </svg>
+        <PathText>Назад</PathText>
       </BackLink>
-      <PathText>Назад</PathText>
     </PathContainer>
   );
+};
+
+BackButton.propTypes = {
+  backLink: PropTypes.string,
 };
 
 export default BackButton;

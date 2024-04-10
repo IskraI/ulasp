@@ -35,7 +35,7 @@ const MediaLibraryPage = () => {
     isLoading: isLoadingLatestPlaylist,
     isSuccess: isSuccesLatestPlaylist,
     isError: isErrorLatestPlaylist,
-  } = useGetLatestPlaylistsQuery(`?&limit=${12}`);
+  } = useGetLatestPlaylistsQuery({ limit: 12 });
 
   const {
     data: allTracks,
@@ -96,7 +96,12 @@ const MediaLibraryPage = () => {
             showNavigationLink={true}
           />
 
-          <NewTracksPage mediaLibrary={true} limit={"9"} showTitle={false} />
+          <NewTracksPage
+            mediaLibrary={true}
+            limit={"9"}
+            showTitle={false}
+            showNavigationLink={true}
+          />
         </>
       )}
     </>

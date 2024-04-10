@@ -25,8 +25,6 @@ const PlayListControl = ({
   const [updatePlaylistPublication, { isSuccess, isLoading, status }] =
     useUpdatePlaylistPublicationMutation();
 
-  console.log(status);
-
   useEffect(() => {
     if (isSearchResultFail) {
       return;

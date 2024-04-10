@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useLocation } from "react-router-dom";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
@@ -9,6 +9,7 @@ import { ErrorNotFound } from "../../Errors/Errors";
 import AddCover from "../../AddCover/AddCover";
 import useValidateInput from "../../../hooks/useValidateInput";
 import { isEmptyMediaUpdateData } from "../../../helpers/helpers";
+import ModalDeleteWarning from "../../ModalDeleteWarning/ModalDeleteWarning";
 
 import {
   useUpdateShopByIdMutation,
@@ -45,21 +46,18 @@ const MediaListItem = ({
   minLengthInput = 2,
   maxLengthInput = 29,
 }) => {
+  const location = useLocation();
+
   const [isEditing, setIsEditing] = useState(false);
   const [showModalSuccessDelete, setShowModalSuccessDelete] = useState(false);
   const [showModalSuccessUpdate, setShowModalSuccessUpdate] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
+  const [showModalDeleteWarning, setShowModalDeleteWarning] = useState(false);
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [oldMediaTitle, setOldMediaTitle] = useState(null);
 
   const [mediaTitle, setMediaTitle] = useState(null);
-
-  useEffect(() => {
-    if (isEditing) {
-      ref.current.focus();
-    }
-  }, [isEditing]);
 
   useEffect(() => {
     if (showModalSuccessUpdate) {
@@ -72,9 +70,6 @@ const MediaListItem = ({
     minLengthInput,
     maxLengthInput
   );
-
-  const ref = useRef();
-  const location = useLocation();
 
   const [
     deleteShopCategory,
@@ -198,49 +193,47 @@ const MediaListItem = ({
       shopType;
   }
 
+  const textModalDeleteWarning = (type) => {
+    switch (type) {
+      case "shop":
+        return `Ця дія видалить тип закладу "${title}" 
+        та усі вкладенності категорій та підкатегорій. Плейлисти залишаться в медіатеці. Ви впевнені?`;
+      case "shopItem":
+        return `Ця дія видалить категорію закладу "${title}" 
+        та усі вкладенності підкатегорій. Плейлисти залишаться в медіатеці. Ви впевнені?`;
+      case "subCategoryShop":
+        return `Ця дія видалить підкатегорію закладу "${title}". Плейлисти залишаться в медіатеці. Ви впевнені?`;
+      default: {
+        console.warn("Unknown type");
+      }
+    }
+  };
+
   const deleteMediaItem = () => {
+    setShowModalDeleteWarning(false);
     switch (typeMediaLibrary) {
       case "shop":
         deleteShop(idMediaItem)
           .unwrap()
           .then(() => {
             setShowModalSuccessDelete(true);
-            // modalDeleteRef.current.active = true;
           });
-        // .catch((e) => {
-        //   if (e.status === 404) {
-        //     setShowModalError(true);
-        //   } else {
-        //     console.log("Заебал, пошел нахуй");
-        //   }
-        // });
+
         break;
       case "shopItem":
         deleteShopCategory(idMediaItem)
           .unwrap()
           .then(setShowModalSuccessDelete(true));
-        // .catch((e) => {
-        //   if (e.status === 404) {
-        //     setShowModalError(true);
-        //   } else {
-        //     console.log("Заебал, пошел нахуй");
-        //   }
-        // });
+
         break;
       case "subCategoryShop":
         deleteShopSubCategory(idMediaItem)
           .unwrap()
           .then(setShowModalSuccessDelete(true));
-        // .catch((e) => {
-        //   if (e.status === 404) {
-        //     setShowModalError(true);
-        //   } else {
-        //     console.log("Заебал, пошел нахуй");
-        //   }
-        // });
+
         break;
       default:
-        return console.log("Нету такого типа, иди нахуй");
+        console.warn("Unknown type");
     }
   };
 
@@ -363,7 +356,7 @@ const MediaListItem = ({
               maxLength={maxLengthInput}
               value={mediaTitle}
               onChange={(e) => setMediaTitle(e.target.value)}
-              ref={ref}
+              autoFocus={true}
             />
 
             <MediaIconsWrapper>
@@ -413,7 +406,7 @@ const MediaListItem = ({
 
               <MediaButton
                 type="button"
-                onClick={deleteMediaItem}
+                onClick={() => setShowModalDeleteWarning(true)}
                 disabled={isLoadingDelete}
               >
                 {isLoadingDelete ? (
@@ -430,7 +423,13 @@ const MediaListItem = ({
           </>
         )}
       </MediaItem>
-
+      {showModalDeleteWarning && (
+        <ModalDeleteWarning
+          text={textModalDeleteWarning(typeMediaLibrary)}
+          onClick={deleteMediaItem}
+          closeModalWarning={() => setShowModalDeleteWarning(false)}
+        />
+      )}
       {showModalSuccessDelete && isSuccessDelete && (
         <Modal width={"500px"} onClose={closeModalSuccessDelete}>
           <ModalInfoText marginBottom={"34px"}>
