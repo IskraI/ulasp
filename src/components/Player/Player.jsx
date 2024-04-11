@@ -47,6 +47,11 @@ const Player = ({ tracks = [], inHeader = false }) => {
   const [currentTrackName, setCurrentTrackName] = useState("Невизначений");
   const [error, setError] = useState(true);
   const [requestSent, setRequestSent] = useState(false);
+  const requestSentRef = useRef(false);
+  const [listenDuration, setListenDuration] = useState(0);
+  const [currentDuration, setCurrentDuration] = useState(0);
+
+  const [intervalId, setIntervalId] = useState(null);
   const prefetchPage = usePrefetch("getAllTracks");
 
   // console.log(
@@ -75,6 +80,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
   // console.log("isFirstPlay", isFirst);
 
   const handlePlayLoadStart = async (track) => {
+    // console.log("isFirst :>> ", isFirst);
     if (isFirst) {
       console.log(
         `handlePlayLoadStart Песня с ${track} ID начала проигрываться. попробуем отправить счетчик dispatchListenCountTrack`
@@ -98,15 +104,6 @@ const Player = ({ tracks = [], inHeader = false }) => {
       }
     }
   };
-  // console.log("isFirst :>> ", isFirst);
-  const handlePlay = () => {
-    if (!isPlaying) {
-      dispatch(pause());
-    }
-
-    // console.log("handlePlay :>> ");
-    handlePlayLoadStart(tracks[currentTrack]?.id);
-  };
 
   const noData = tracks[currentTrack]?.trackURL === undefined;
   const trackSRC = BASE_URL + "/" + tracks[currentTrack]?.trackURL;
@@ -121,6 +118,8 @@ const Player = ({ tracks = [], inHeader = false }) => {
       setCurrentTrackName(tracks[currentTrack]?.trackName);
     } else {
       setTrackIndex();
+      setListenDuration(0);
+      requestSentRef.current = false;
     }
   }, [currentTrack, currentTrackIndex, dispatch, isPaused, isPlaying, tracks]);
 
@@ -130,18 +129,31 @@ const Player = ({ tracks = [], inHeader = false }) => {
       setIsPressedNext(false);
       setIsPressedPrev(false);
       setIsEndOfPlaylist(false);
+      setListenDuration(0);
+      requestSentRef.current = false;
+      clearInterval(intervalId);
     }
   }, [currentTrack, dispatch, isEndOfPlaylist, isPressedNext, isPressedPrev]);
 
   useEffect(() => {
     if (!isPaused && playerRef.current.audio.current.currentTime !== 0) {
       playerRef.current.audio.current.play();
+      if (
+        Math.ceil(playerRef.current.audio.current.currentTime) !==
+        currentDuration
+      ) {
+        setListenDuration(0);
+        requestSentRef.current = false;
+      }
     }
   }, [isPaused]);
 
   const handleClickNext = () => {
+    console.log("handleClickNext :>> ", isFirst);
     dispatch(updateIsFirstPlay(true));
     setIsPressedNext(true);
+    setListenDuration(0);
+    requestSentRef.current = false;
     setTrackIndex((currentTrack) =>
       currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
     );
@@ -156,6 +168,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
   const handleClickPrevious = () => {
     dispatch(updateIsFirstPlay(true));
     setIsPressedPrev(true);
+    requestSentRef.current = false;
     setTrackIndex((currentTrack) =>
       currentTrack > tracks.length - 1 || currentTrack === 0
         ? tracks.length - 1
@@ -167,7 +180,9 @@ const Player = ({ tracks = [], inHeader = false }) => {
     console.log("Песня завершила проигрывание.");
     dispatch(updateIsFirstPlay(true));
     setIsEndOfPlaylist(true);
-
+    setListenDuration(0);
+    clearInterval(intervalId);
+    requestSentRef.current = false;
     setTrackIndex((currentTrack) =>
       currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
     );
@@ -176,12 +191,32 @@ const Player = ({ tracks = [], inHeader = false }) => {
       dispatch(setNextPage({ currentPage: nextPage }));
     }
   };
-  // console.log("playerRef :>> ", playerRef);
 
-  // useEffect(() => {
-  //   handlePlayLoadStart(tracks[currentTrack]?.id);
-  // }, [currentTrack]);
+  console.log("listenDuration :>> ", listenDuration);
+  // console.log("isPlaying :>> ", isPlaying);
+  // console.log("isPaused :>> ", isPaused);
+  console.log("isFirst :>> ", isFirst);
+  console.log("playerRef.current.audio :>> ", playerRef?.current?.audio);
+  useEffect(() => {
+    // console.log("requestSentRef.current :>> ", requestSentRef.current);
+    if (isPlaying && listenDuration < 10 && !requestSentRef.current) {
+      const id = setInterval(() => {
+        setListenDuration((prevSeconds) => prevSeconds + 1);
+      }, 1000);
 
+      return () => clearInterval(id); // Очистка интервала при размонтировании компонента
+    } else if (listenDuration === 10 && !requestSentRef.current) {
+      console.log("отправляем на бек :>> ");
+      handlePlayLoadStart(tracks[currentTrack]?.id);
+      requestSentRef.current = true;
+    }
+  }, [isPlaying, listenDuration, currentTrack]);
+
+  const handlePlay = () => {
+    if (!isPlaying) {
+      dispatch(pause());
+    }
+  };
   return (
     <>
       <PlayerWrapper inHeader={inHeader}>
@@ -222,6 +257,9 @@ const Player = ({ tracks = [], inHeader = false }) => {
 
           <PlayerReact
             onPause={() => {
+              setCurrentDuration(
+                Math.ceil(playerRef.current.audio.current.currentTime)
+              );
               if (isPlaying && !isPaused) {
                 dispatch(pause());
               }
@@ -230,13 +268,9 @@ const Player = ({ tracks = [], inHeader = false }) => {
               if (!isPlaying) {
                 dispatch(pause());
               }
-              // if (isPlaying && !isPaused && isFirst) {
-              setTimeout(() => {
-                handlePlayLoadStart(tracks[currentTrack]?.id);
-              }, 10000);
-              // }
-              // console.log("handlePlay :>> ");
             }}
+            // if (isPlaying && !isPaused && isFirst) {
+
             // if (!isPlaying && playerState.src.length === 0) {
             //   dispatch(
             //     setSrcPlaying({
@@ -277,8 +311,8 @@ const Player = ({ tracks = [], inHeader = false }) => {
             }}
             onClickPrevious={handleClickPrevious}
             onEnded={handleEnd}
-            onError={"onError"}
-            onPlayError={"onPlayError"}
+            // onError={"onError"}
+            // onPlayError={"onPlayError"}
             // onLoadStart={() => handlePlayLoadStart(tracks[currentTrack]?.id)}
           />
         </>

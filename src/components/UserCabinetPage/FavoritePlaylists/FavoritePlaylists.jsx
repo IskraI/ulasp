@@ -70,7 +70,7 @@ const FavoritePlaylists = ({
                     favoriteStatus={dataFavorite?.some(
                       (item) => item._id === _id
                     )}
-                    addStatus={dataAdd.add.some((item) => item._id === _id)}
+                    addStatus={dataAdd.add?.some((item) => item._id === _id)}
                     title={playListName}
                     icon={playListAvatarURL}
                     genre={genre}

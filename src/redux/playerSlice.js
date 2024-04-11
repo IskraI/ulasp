@@ -77,7 +77,7 @@ export const playerSlice = createSlice({
           nextPage: state.isPaused ? state.nextPage : null,
           isLastTrack: state.isPaused ? state.isLastTrack : false,
           isLastPage: state.isPaused ? state.isLastTrack : false,
-          isFirstPlay: state.isPaused ? false : true,
+          // isFirstPlay: state.isPaused ? false : true,
         };
         return state;
       },
@@ -96,19 +96,20 @@ export const playerSlice = createSlice({
     },
     pause: {
       reducer(state) {
-        console.log("action.payload pause ", state.isPaused);
+        // console.log("action.payload pause ", state.isPaused);
         state = {
           ...state,
           isPlaying: state.isPlaying ? false : true,
           isPaused: state.isPaused ? false : true,
           isLoaded: true,
-          isFirstPlay: false,
+          // isFirstPlay: false,
         };
         return state;
       },
     },
     updateIsFirstPlay: {
       reducer(state, action) {
+        console.log("updateIsFirstPlay :>> ", action.payload);
         state = {
           ...state,
 
