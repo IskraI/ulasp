@@ -56,19 +56,6 @@ const Player = ({ tracks = [], inHeader = false }) => {
   //   "playerRef ====>>>>>",
   //   playerRef?.current?.container.current.style.svg
   // );
-  useEffect(() => {
-    console.log("isPlaying :>> ", isPlaying);
-    console.log("onPlayError  :>> ", onPlayError);
-    if (isPlaying && !isPaused) {
-      const id = setInterval(() => {
-        setListenDuration((prevSeconds) => prevSeconds + 1);
-      }, 1000);
-      setIntervalId(id);
-    } else {
-      clearInterval(intervalId);
-    }
-    return () => clearInterval(intervalId);
-  }, [isPlaying, isPaused]);
 
   useEffect(() => {
     if (inHeader) {
@@ -115,14 +102,6 @@ const Player = ({ tracks = [], inHeader = false }) => {
     }
   };
   // console.log("isFirst :>> ", isFirst);
-  const handlePlay = () => {
-    if (!isPlaying) {
-      dispatch(pause());
-    }
-
-    // console.log("handlePlay :>> ");
-    handlePlayLoadStart(tracks[currentTrack]?.id);
-  };
 
   const noData = tracks[currentTrack]?.trackURL === undefined;
   const trackSRC = BASE_URL + "/" + tracks[currentTrack]?.trackURL;
@@ -161,6 +140,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
   const handleClickNext = () => {
     dispatch(updateIsFirstPlay(true));
     setIsPressedNext(true);
+    setListenDuration(0);
     setTrackIndex((currentTrack) =>
       currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
     );
@@ -202,6 +182,28 @@ const Player = ({ tracks = [], inHeader = false }) => {
     handlePlayLoadStart(tracks[currentTrack]?.id);
   }, [currentTrack]);
 
+  useEffect(() => {
+    console.log("isPlaying :>> ", isPlaying);
+    console.log("isPaused :>> ", isPaused);
+    if (isPlaying) {
+      const id = setInterval(() => {
+        setListenDuration((prevSeconds) => prevSeconds + 1);
+      }, 1000);
+      setIntervalId(id);
+    } else {
+      clearInterval(intervalId);
+    }
+    return () => clearInterval(intervalId);
+  }, [isPlaying, isPaused]);
+
+  const handlePlay = () => {
+    if (!isPlaying) {
+      dispatch(pause());
+    }
+
+    // console.log("handlePlay :>> ");
+    handlePlayLoadStart(tracks[currentTrack]?.id);
+  };
   return (
     <>
       <PlayerWrapper inHeader={inHeader}>
@@ -309,8 +311,8 @@ const Player = ({ tracks = [], inHeader = false }) => {
             }}
             onClickPrevious={handleClickPrevious}
             onEnded={handleEnd}
-            onError={"onError"}
-            onPlayError={"onPlayError"}
+            // onError={"onError"}
+            // onPlayError={"onPlayError"}
             // onLoadStart={() => handlePlayLoadStart(tracks[currentTrack]?.id)}
           />
         </>
