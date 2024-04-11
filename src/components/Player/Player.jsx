@@ -47,7 +47,9 @@ const Player = ({ tracks = [], inHeader = false }) => {
   const [currentTrackName, setCurrentTrackName] = useState("Невизначений");
   const [error, setError] = useState(true);
   const [requestSent, setRequestSent] = useState(false);
+  const requestSentRef = useRef(false);
   const [listenDuration, setListenDuration] = useState(0);
+  const [currentDuration, setCurrentDuration] = useState(0);
 
   const [intervalId, setIntervalId] = useState(null);
   const prefetchPage = usePrefetch("getAllTracks");
@@ -78,6 +80,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
   // console.log("isFirstPlay", isFirst);
 
   const handlePlayLoadStart = async (track) => {
+    // console.log("isFirst :>> ", isFirst);
     if (isFirst) {
       console.log(
         `handlePlayLoadStart Песня с ${track} ID начала проигрываться. попробуем отправить счетчик dispatchListenCountTrack`
@@ -101,7 +104,6 @@ const Player = ({ tracks = [], inHeader = false }) => {
       }
     }
   };
-  // console.log("isFirst :>> ", isFirst);
 
   const noData = tracks[currentTrack]?.trackURL === undefined;
   const trackSRC = BASE_URL + "/" + tracks[currentTrack]?.trackURL;
@@ -117,6 +119,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
     } else {
       setTrackIndex();
       setListenDuration(0);
+      requestSentRef.current = false;
     }
   }, [currentTrack, currentTrackIndex, dispatch, isPaused, isPlaying, tracks]);
 
@@ -127,6 +130,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
       setIsPressedPrev(false);
       setIsEndOfPlaylist(false);
       setListenDuration(0);
+      requestSentRef.current = false;
       clearInterval(intervalId);
     }
   }, [currentTrack, dispatch, isEndOfPlaylist, isPressedNext, isPressedPrev]);
@@ -134,13 +138,22 @@ const Player = ({ tracks = [], inHeader = false }) => {
   useEffect(() => {
     if (!isPaused && playerRef.current.audio.current.currentTime !== 0) {
       playerRef.current.audio.current.play();
+      if (
+        Math.ceil(playerRef.current.audio.current.currentTime) !==
+        currentDuration
+      ) {
+        setListenDuration(0);
+        requestSentRef.current = false;
+      }
     }
   }, [isPaused]);
 
   const handleClickNext = () => {
+    console.log("handleClickNext :>> ", isFirst);
     dispatch(updateIsFirstPlay(true));
     setIsPressedNext(true);
     setListenDuration(0);
+    requestSentRef.current = false;
     setTrackIndex((currentTrack) =>
       currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
     );
@@ -155,6 +168,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
   const handleClickPrevious = () => {
     dispatch(updateIsFirstPlay(true));
     setIsPressedPrev(true);
+    requestSentRef.current = false;
     setTrackIndex((currentTrack) =>
       currentTrack > tracks.length - 1 || currentTrack === 0
         ? tracks.length - 1
@@ -168,7 +182,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
     setIsEndOfPlaylist(true);
     setListenDuration(0);
     clearInterval(intervalId);
-
+    requestSentRef.current = false;
     setTrackIndex((currentTrack) =>
       currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
     );
@@ -177,32 +191,31 @@ const Player = ({ tracks = [], inHeader = false }) => {
       dispatch(setNextPage({ currentPage: nextPage }));
     }
   };
-  console.log("listenDuration :>> ", listenDuration);
-  useEffect(() => {
-    handlePlayLoadStart(tracks[currentTrack]?.id);
-  }, [currentTrack]);
 
+  console.log("listenDuration :>> ", listenDuration);
+  // console.log("isPlaying :>> ", isPlaying);
+  // console.log("isPaused :>> ", isPaused);
+  console.log("isFirst :>> ", isFirst);
+  console.log("playerRef.current.audio :>> ", playerRef?.current?.audio);
   useEffect(() => {
-    console.log("isPlaying :>> ", isPlaying);
-    console.log("isPaused :>> ", isPaused);
-    if (isPlaying && !isPaused) {
+    // console.log("requestSentRef.current :>> ", requestSentRef.current);
+    if (isPlaying && listenDuration < 10 && !requestSentRef.current) {
       const id = setInterval(() => {
         setListenDuration((prevSeconds) => prevSeconds + 1);
       }, 1000);
-      setIntervalId(id);
-    } else {
-      clearInterval(intervalId);
+
+      return () => clearInterval(id); // Очистка интервала при размонтировании компонента
+    } else if (listenDuration === 10 && !requestSentRef.current) {
+      console.log("отправляем на бек :>> ");
+      handlePlayLoadStart(tracks[currentTrack]?.id);
+      requestSentRef.current = true;
     }
-    return () => clearInterval(intervalId);
-  }, [isPlaying, isPaused, currentTrack]);
+  }, [isPlaying, listenDuration, currentTrack]);
 
   const handlePlay = () => {
     if (!isPlaying) {
       dispatch(pause());
     }
-
-    // console.log("handlePlay :>> ");
-    handlePlayLoadStart(tracks[currentTrack]?.id);
   };
   return (
     <>
@@ -244,6 +257,9 @@ const Player = ({ tracks = [], inHeader = false }) => {
 
           <PlayerReact
             onPause={() => {
+              setCurrentDuration(
+                Math.ceil(playerRef.current.audio.current.currentTime)
+              );
               if (isPlaying && !isPaused) {
                 dispatch(pause());
               }
@@ -270,22 +286,6 @@ const Player = ({ tracks = [], inHeader = false }) => {
             // }
 
             onListen={() => {
-              // if (
-              //   playerRef.current.audio.current.currentTime > 10 &&
-              //   !requestSent
-              // ) {
-              //   // console.log(
-              //   //   "playerRef.current.audio.current.duration  :>> ",
-              //   //   playerRef.current.audio,
-              //   //   playerRef.current.audio.current.currentTime,
-              //   //   playerRef.current.audio.current.duration
-              //   // );
-              //   handlePlayLoadStart(tracks[currentTrack]?.id);
-              //   setRequestSent(true);
-              // }
-
-              // console.log("handlePlay :>> ");
-              // }}
               if (
                 Math.ceil(playerRef.current.audio.current.duration * 0.95) ===
                   Math.ceil(playerRef.current.audio.current.currentTime) &&
