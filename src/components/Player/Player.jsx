@@ -46,10 +46,9 @@ const Player = ({ tracks = [], inHeader = false }) => {
   const [currentTrackArtist, setCurrentTrackArtist] = useState("Невизначений");
   const [currentTrackName, setCurrentTrackName] = useState("Невизначений");
   const [error, setError] = useState(true);
-  const [requestSent, setRequestSent] = useState(false);
+
   const requestSentRef = useRef(false);
   const [listenDuration, setListenDuration] = useState(0);
-  const [currentDuration, setCurrentDuration] = useState(0);
 
   const [intervalId, setIntervalId] = useState(null);
   const prefetchPage = usePrefetch("getAllTracks");
@@ -138,13 +137,6 @@ const Player = ({ tracks = [], inHeader = false }) => {
   useEffect(() => {
     if (!isPaused && playerRef.current.audio.current.currentTime !== 0) {
       playerRef.current.audio.current.play();
-      if (
-        Math.ceil(playerRef.current.audio.current.currentTime) !==
-        currentDuration
-      ) {
-        setListenDuration(0);
-        requestSentRef.current = false;
-      }
     }
   }, [isPaused]);
 
@@ -196,7 +188,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
   // console.log("isPlaying :>> ", isPlaying);
   // console.log("isPaused :>> ", isPaused);
   console.log("isFirst :>> ", isFirst);
-  console.log("playerRef.current.audio :>> ", playerRef?.current?.audio);
+
   useEffect(() => {
     // console.log("requestSentRef.current :>> ", requestSentRef.current);
     if (isPlaying && listenDuration < 10 && !requestSentRef.current) {
@@ -257,9 +249,6 @@ const Player = ({ tracks = [], inHeader = false }) => {
 
           <PlayerReact
             onPause={() => {
-              setCurrentDuration(
-                Math.ceil(playerRef.current.audio.current.currentTime)
-              );
               if (isPlaying && !isPaused) {
                 dispatch(pause());
               }
@@ -311,6 +300,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
             }}
             onClickPrevious={handleClickPrevious}
             onEnded={handleEnd}
+            onSeeking={() => setListenDuration(0)}
             // onError={"onError"}
             // onPlayError={"onPlayError"}
             // onLoadStart={() => handlePlayLoadStart(tracks[currentTrack]?.id)}
