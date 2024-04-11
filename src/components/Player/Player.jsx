@@ -185,7 +185,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
   useEffect(() => {
     console.log("isPlaying :>> ", isPlaying);
     console.log("isPaused :>> ", isPaused);
-    if (isPlaying) {
+    if (isPlaying && !isPaused) {
       const id = setInterval(() => {
         setListenDuration((prevSeconds) => prevSeconds + 1);
       }, 1000);
@@ -194,7 +194,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
       clearInterval(intervalId);
     }
     return () => clearInterval(intervalId);
-  }, [isPlaying, isPaused]);
+  }, [isPlaying, isPaused, currentTrack]);
 
   const handlePlay = () => {
     if (!isPlaying) {
