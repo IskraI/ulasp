@@ -47,12 +47,28 @@ const Player = ({ tracks = [], inHeader = false }) => {
   const [currentTrackName, setCurrentTrackName] = useState("Невизначений");
   const [error, setError] = useState(true);
   const [requestSent, setRequestSent] = useState(false);
+  const [listenDuration, setListenDuration] = useState(0);
+
+  const [intervalId, setIntervalId] = useState(null);
   const prefetchPage = usePrefetch("getAllTracks");
 
   // console.log(
   //   "playerRef ====>>>>>",
   //   playerRef?.current?.container.current.style.svg
   // );
+  useEffect(() => {
+    console.log("isPlaying :>> ", isPlaying);
+    console.log("onPlayError  :>> ", onPlayError);
+    if (isPlaying && !isPaused) {
+      const id = setInterval(() => {
+        setListenDuration((prevSeconds) => prevSeconds + 1);
+      }, 1000);
+      setIntervalId(id);
+    } else {
+      clearInterval(intervalId);
+    }
+    return () => clearInterval(intervalId);
+  }, [isPlaying, isPaused]);
 
   useEffect(() => {
     if (inHeader) {
@@ -121,6 +137,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
       setCurrentTrackName(tracks[currentTrack]?.trackName);
     } else {
       setTrackIndex();
+      setListenDuration(0);
     }
   }, [currentTrack, currentTrackIndex, dispatch, isPaused, isPlaying, tracks]);
 
@@ -130,6 +147,8 @@ const Player = ({ tracks = [], inHeader = false }) => {
       setIsPressedNext(false);
       setIsPressedPrev(false);
       setIsEndOfPlaylist(false);
+      setListenDuration(0);
+      clearInterval(intervalId);
     }
   }, [currentTrack, dispatch, isEndOfPlaylist, isPressedNext, isPressedPrev]);
 
@@ -167,6 +186,8 @@ const Player = ({ tracks = [], inHeader = false }) => {
     console.log("Песня завершила проигрывание.");
     dispatch(updateIsFirstPlay(true));
     setIsEndOfPlaylist(true);
+    setListenDuration(0);
+    clearInterval(intervalId);
 
     setTrackIndex((currentTrack) =>
       currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
@@ -176,11 +197,10 @@ const Player = ({ tracks = [], inHeader = false }) => {
       dispatch(setNextPage({ currentPage: nextPage }));
     }
   };
-  // console.log("playerRef :>> ", playerRef);
-
-  // useEffect(() => {
-  //   handlePlayLoadStart(tracks[currentTrack]?.id);
-  // }, [currentTrack]);
+  console.log("listenDuration :>> ", listenDuration);
+  useEffect(() => {
+    handlePlayLoadStart(tracks[currentTrack]?.id);
+  }, [currentTrack]);
 
   return (
     <>
@@ -230,13 +250,9 @@ const Player = ({ tracks = [], inHeader = false }) => {
               if (!isPlaying) {
                 dispatch(pause());
               }
-              // if (isPlaying && !isPaused && isFirst) {
-              setTimeout(() => {
-                handlePlayLoadStart(tracks[currentTrack]?.id);
-              }, 10000);
-              // }
-              // console.log("handlePlay :>> ");
             }}
+            // if (isPlaying && !isPaused && isFirst) {
+
             // if (!isPlaying && playerState.src.length === 0) {
             //   dispatch(
             //     setSrcPlaying({
@@ -252,6 +268,22 @@ const Player = ({ tracks = [], inHeader = false }) => {
             // }
 
             onListen={() => {
+              // if (
+              //   playerRef.current.audio.current.currentTime > 10 &&
+              //   !requestSent
+              // ) {
+              //   // console.log(
+              //   //   "playerRef.current.audio.current.duration  :>> ",
+              //   //   playerRef.current.audio,
+              //   //   playerRef.current.audio.current.currentTime,
+              //   //   playerRef.current.audio.current.duration
+              //   // );
+              //   handlePlayLoadStart(tracks[currentTrack]?.id);
+              //   setRequestSent(true);
+              // }
+
+              // console.log("handlePlay :>> ");
+              // }}
               if (
                 Math.ceil(playerRef.current.audio.current.duration * 0.95) ===
                   Math.ceil(playerRef.current.audio.current.currentTime) &&
