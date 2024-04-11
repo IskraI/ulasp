@@ -375,8 +375,9 @@ const TrackItem = ({
       </TrStyle>
       {showModalAddTrackToPlaylist && (
         <Modal
-          width={"45vw"}
-          padding={"24px"}
+          width={"85vw"}
+          height={"80vh"}
+          padding={"14px"}
           borderColor={"#FFF3BF"}
           borderStyle={"solid"}
           borderWidth={"1px"}
@@ -385,14 +386,14 @@ const TrackItem = ({
         >
           <div
             style={{
-              marginTop: "20px",
-              padding: "20px",
+              marginTop: "10px",
+              padding: "6px",
               width: "100%",
               height: "100%",
               overflowY: "auto",
             }}
           >
-            {playlistUserForAdd?.length === 0 ? (
+            {/* {playlistUserForAdd?.length === 0 ? (
               handleCloseModal()
             ) : (
               <PlaylistsForAdd
@@ -403,7 +404,14 @@ const TrackItem = ({
                 addTrackInPlaylistUser={addTrackInPlaylistUser}
                 // onClose={handleCloseModal}
               />
-            )}
+            )} */}
+
+            <PlaylistsForAdd
+              title={`Оберіть плейлист та додайте пісню чи створіть новий плейлист`}
+              data={playlistUserForAdd}
+              trackId={idTrack}
+              addTrackInPlaylistUser={addTrackInPlaylistUser}
+            />
           </div>
         </Modal>
       )}

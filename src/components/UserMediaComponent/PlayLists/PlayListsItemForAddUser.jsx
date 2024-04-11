@@ -1,23 +1,10 @@
 import { BASE_URL } from "../../../constants/constants";
-import symbol from "../../../assets/symbol.svg";
-import { useState, useEffect } from "react";
-import {
-  useAddTrackByIdToPlaylistUserMutation,
-  useUpdateFavoriteStatusApiMutation,
-} from "../../../redux/playlistsUserSlice";
-import { Button } from "../../Button/Button";
+
 import {
   MediaItem,
-  IconsWrapper,
   MediaItemText,
   MediaImg,
-  PlaylistCountTracks,
-  PlaylistImg,
-  PlaylistInfoWrapper,
-  PlaylistItemText,
-} from "./MediaList.styled";
-import { Link } from "react-router-dom";
-import { useLocation, useNavigate } from "react-router-dom";
+} from "../MediaList/MediaList.styled";
 
 const PlayListItemForAdd = ({
   id,
@@ -30,11 +17,6 @@ const PlayListItemForAdd = ({
   trackId,
   addTrackInPlaylistUser,
 }) => {
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
-
   // //хук который отправляет запрос на бек
   // const [
   //   addTrackToPlaylist,
@@ -51,47 +33,14 @@ const PlayListItemForAdd = ({
   // };
 
   return (
-    <MediaItem width={"220px"} padding={"0px"}>
-      {/* {!placeListCardInfo ? (
-        <>
-          <MediaImg src={BASE_URL + "/" + icon} alt={title} />
-          <MediaItemText>{title}</MediaItemText>
-        </>
-      ) : ( */}
-      <Button
-        type="button"
-        width={"inherit"}
-        height={"100%"}
-        text={title}
-        padding={"10px"}
-        border={"none"}
-        showImg={"true"}
-        imgSrc={`${BASE_URL}/${icon}`}
+    <MediaItem width={"250px"}>
+      <div
+        style={{ width: "100%", display: "flex", alignItems: "center" }}
         onClick={() => addTrackInPlaylistUser(id, trackId)}
-        borderHover={"none"}
-        justifycontent={"space-evenly"}
       >
-        <PlaylistImg src={BASE_URL + "/" + icon} alt={title} />
-        <PlaylistInfoWrapper>
-          {/* <PlaylistItemText>{title}</PlaylistItemText> */}
-          <PlaylistCountTracks>
-            {countTracks + `${" "}` + "пісень"}
-          </PlaylistCountTracks>
-        </PlaylistInfoWrapper>
-      </Button>
-
-      {/* )} */}
-      {/* <IconsWrapper>
-          <svg
-            width="24"
-            height="24"
-            fill={favoriteStatus ? "#17161C" : "none"}
-            stroke="#17161C"
-            style={{ cursor: "pointer" }}
-          >
-            <use href={`${symbol}#icon-heart-empty`}></use>
-          </svg>
-        </IconsWrapper> */}
+        <MediaImg src={BASE_URL + "/" + icon} alt={title} />
+        <MediaItemText>{title}</MediaItemText>
+      </div>
     </MediaItem>
   );
 };

@@ -28,7 +28,7 @@ export const MediaItem = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 310px;
+  width: ${({ width }) => width || "310px"};
 
   padding: 10px;
   border: ${(props) =>

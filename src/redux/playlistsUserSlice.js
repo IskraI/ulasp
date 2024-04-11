@@ -108,7 +108,10 @@ export const playlistsUserApi = createApi({
     }),
 
     addPlaylistForUser: builder.query({
-      query: () => ({ url: `/user/playlist/add` }),
+      query: () => ({
+        url: `/user/playlist/add`,
+        method: "POST",
+      }),
 
       providesTags: ["PlaylistsAdd"],
     }),
