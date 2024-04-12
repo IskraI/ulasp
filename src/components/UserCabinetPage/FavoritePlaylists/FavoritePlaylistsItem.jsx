@@ -5,6 +5,7 @@ import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 
 import {
+  useUpdateFavoriteStatusPlaylistUserMutation,
   useUpdateFavoriteStatusApiMutation,
   useUpdateAddStatusApiMutation,
 } from "../../../redux/playlistsUserSlice";
@@ -34,11 +35,13 @@ const FavoritePlaylistsItem = ({
   const location = useLocation();
 
   const { id: userID } = useSelector(getUserState);
-
+  const [toggleFavoritePlaylistUser] =
+    useUpdateFavoriteStatusPlaylistUserMutation(id);
   const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
+  // const [toggleFavoriteUser] = useUp;
   const [toggleAdd] = useUpdateAddStatusApiMutation(id);
 
-  const [isFavorite, setIsFavorite] = useState(favoriteStatus || false);
+  const [isFavorite, setIsFavorite] = useState(favoriteStatus);
 
   const [isAdd, setIsAdd] = useState(addStatus || false);
 
@@ -52,9 +55,15 @@ const FavoritePlaylistsItem = ({
 
   const handleToggleFavorite = async () => {
     console.log("playlistId:", id);
+
     try {
+      if (itsMy) {
+        await toggleFavoritePlaylistUser(id);
+      } else {
+        await toggleFavorite(id);
+      }
       // Call the API to update the favorite status
-      await toggleFavorite(id);
+
       // Update the local state after a successful API call
       setIsFavorite((prevIsFavorite) => !prevIsFavorite);
     } catch (error) {

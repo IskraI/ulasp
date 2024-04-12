@@ -257,22 +257,23 @@ const Player = ({ tracks = [], inHeader = false }) => {
               if (!isPlaying) {
                 dispatch(pause());
               }
+              // if (!isPlaying && playerState.src.length === 0) {
+              //   dispatch(
+              //     setSrcPlaying({
+              //       indexTrack: 0,
+              //     })
+              //   );
+              // } else {
+              //   dispatch(
+              //     setCurrentIndex(
+              //       currentTrack + (currentPage - 1) * currentPageSize
+              //     )
+              //   );
+              // }
             }}
             // if (isPlaying && !isPaused && isFirst) {
 
-            // if (!isPlaying && playerState.src.length === 0) {
-            //   dispatch(
-            //     setSrcPlaying({
-            //       indexTrack: 0,
-            //     })
-            //   );
-            // } else {
-            //   dispatch(
-            //     setCurrentIndex(
-            //       currentTrack + (currentPage - 1) * currentPageSize
-            //     )
-            //   );
-            // }
+            //
 
             onListen={() => {
               if (

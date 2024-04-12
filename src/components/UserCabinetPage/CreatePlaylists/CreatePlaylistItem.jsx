@@ -7,7 +7,7 @@ import {
   useUpdateFavoriteStatusApiMutation,
   useDeletePlaylistForUserMutation,
   useUpdateAddStatusApiMutation,
-  useUpdateCabinetPlaylistStatusApiMutation,
+  useUpdateFavoriteStatusPlaylistUserMutation,
   useUpdatePlaylistByIdMutation,
 } from "../../../redux/playlistsUserSlice";
 
@@ -54,7 +54,8 @@ const CreatePlayListItem = ({
   const location = useLocation();
   const ref = useRef(null);
 
-  const [toggleFavorite] = useUpdateCabinetPlaylistStatusApiMutation(id);
+  const [toggleFavoritePlaylistUser] =
+    useUpdateFavoriteStatusPlaylistUserMutation(id);
   const [isEditing, setIsEditing] = useState(false);
   const [playlistTitle, setPlaylistTitle] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -82,8 +83,10 @@ const CreatePlayListItem = ({
   const [showModalError, setShowModalError] = useState(false);
   const [showModalErrorUpdate, setShowModalErrorUpdate] = useState(false);
 
-  const [isFavorite, setIsFavorite] = useState(favoriteStatus || false);
-
+  const [isFavorite, setIsFavorite] = useState(() => favoriteStatus);
+  // useEffect
+  console.log("isFavorite :>> ", isFavorite);
+  console.log("favoriteStatus :>> ", favoriteStatus);
   const [errorValidateMessage, isError, setIsError] = useValidateInput(
     playlistTitle,
     minLength,
@@ -114,12 +117,13 @@ const CreatePlayListItem = ({
   };
 
   const handleToggleFavorite = async () => {
-    console.log("playlistId:", id);
     try {
+      console.log("playlistId:", id);
       // Call the API to update the favorite status
-      await toggleFavorite(id);
+      await toggleFavoritePlaylistUser(id);
       // Update the local state after a successful API call
       setIsFavorite((prevIsFavorite) => !prevIsFavorite);
+      console.log("toggleFavoritePlaylistUser ");
     } catch (error) {
       console.error("Error updating favorite status:", error);
     }
