@@ -11,6 +11,8 @@ import ReportFormDataTemplate from "./FormForReport";
 import { ReportModal } from "../Modal/Modal.styled";
 import { ButtonPrint } from "../AdminComponents/ButtonPrint/ButtonPrint";
 import ReportUserTable from "../ReportUser/ReportUserTable";
+import { ExportToExcel } from "../ReportUser/ExportXLS";
+
 export const ReportForm = ({ user, userpage }) => {
   const [responseData, setResponseData] = useState([]);
   const [date, setDate] = useState({});
@@ -138,7 +140,20 @@ export const ReportForm = ({ user, userpage }) => {
               flexDirection="row"
             >
               <ReportModal>
-                <ButtonPrint targetComponent={componentRef} />
+                <div>
+                  {responseData && (
+                    <ButtonPrint targetComponent={componentRef} />
+                  )}
+                  {responseData && (
+                    <ExportToExcel
+                      data={responseData}
+                      fileName={user.contractNumberDoc}
+                      date={date}
+                      user={user}
+                    />
+                  )}
+                </div>
+
                 <ReportUserTable
                   data={responseData}
                   date={date}

@@ -57,6 +57,10 @@ export const playlistsUserApi = createApi({
           limit && `&limit=${limit}`
         }`,
       }),
+      // getCreatePlaylistsForUser: builder.query({
+      //   query: () => ({
+      //     url: `/user/userPlaylist/all`,
+      //   }),
 
       providesTags: ["Playlists", "PlaylistsForAdd"], //добавил PlaylistsForAdd
     }),

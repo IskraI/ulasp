@@ -13,6 +13,13 @@
 import React from "react";
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx-js-style";
+import { Button } from "../Button/Button";
+import symbol from "../../assets/symbol.svg";
+import { ButtonPrint } from "../AdminComponents/ButtonPrint/ButtonPrint";
+import {
+  ButtonPrintCustom,
+  SvgStyled,
+} from "../AdminComponents/ButtonPrint/ButtonPrint.styled";
 
 export const ExportToExcel = ({ data, fileName, user, date }) => {
   const fileType =
@@ -21,19 +28,85 @@ export const ExportToExcel = ({ data, fileName, user, date }) => {
   const calculateTotalListens = (listens) => {
     return listens.reduce((acc, cur) => acc + cur.countOfListenes, 0);
   };
+  const formatDate = (dateString) => {
+    const months = [
+      "січня",
+      "лютого",
+      "березня",
+      "квітня",
+      "травня",
+      "червня",
+      "липня",
+      "серпня",
+      "вересня",
+      "жовтня",
+      "листопада",
+      "грудня",
+    ];
 
-  const exportToCSV = (data, fileName) => {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+
+    return `${day} ${month} ${year}`;
+  };
+  const months = [
+    "січня",
+    "лютого",
+    "березня",
+    "квітня",
+    "травня",
+    "червня",
+    "липня",
+    "серпня",
+    "вересня",
+    "жовтня",
+    "листопада",
+    "грудня",
+  ];
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonth = String(now.getMonth() + 1).padStart(2, "0");
+  const currentDay = String(now.getDate()).padStart(2, "0");
+  const currentMonthIndex = now.getMonth();
+  const currentHour = String(now.getHours()).padStart(2, "0");
+  const currentMinute = String(now.getMinutes()).padStart(2, "0");
+  const currentSecond = String(now.getSeconds()).padStart(2, "0");
+  const fileNameFormat = `${fileName}_${currentDay}${currentMonth}${currentYear}${currentHour}${currentMinute}`;
+
+  const exportToCSV = (data, fileNameFormat) => {
+    const cellStyle = {
+      font: { sz: 12 }, // Устанавливаем размер шрифта
+      alignment: { wrapText: true }, // Включаем автоперенос текста
+      border: {
+        // Устанавливаем границы
+        top: { style: "thin", color: { rgb: "000000" } },
+        bottom: { style: "thin", color: { rgb: "000000" } },
+        left: { style: "thin", color: { rgb: "000000" } },
+        right: { style: "thin", color: { rgb: "000000" } },
+      },
+    };
+
     const dataRows = data.map((item, index) => ({
       "№ п/п": index + 1,
       "Назва використаного твору": item.trackName,
-      "Виконавець (П.І.Б. виконавця,співвиконавців або назва колективу)":
+      "Виконавець (П.І.Б. виконавця, співвиконавців або назва колективу)":
         item.artist,
-      "Автор музыки": "", // Пустая колонка с названием "Автор музыки"
+      "Автор музики": "", // Пустая колонка с названием "Автор музыки"
       "Автор твору": "", // Пустая колонка с названием "Автор твору"
       "Кількість використань твору": calculateTotalListens(item.listens),
     }));
 
-    const ws = XLSX.utils.json_to_sheet(dataRows, {
+    const dataRowsWithStyle = dataRows.map((row) => {
+      const styledRow = {};
+      Object.keys(row).forEach((key) => {
+        styledRow[key] = { v: row[key], s: cellStyle }; // Применяем стиль к ячейке
+      });
+      return styledRow;
+    });
+
+    const ws = XLSX.utils.json_to_sheet(dataRowsWithStyle, {
       header: [
         "№ п/п",
         "Назва використаного твору",
@@ -44,6 +117,7 @@ export const ExportToExcel = ({ data, fileName, user, date }) => {
       ],
       origin: { r: 4, c: 0 }, // Начать заполнение с ячейки A4
     });
+
     // Применяем стили к заголовку
     const headerStyle = {
       font: { bold: true },
@@ -59,7 +133,7 @@ export const ExportToExcel = ({ data, fileName, user, date }) => {
         left: { style: "thin", color: { rgb: "000000" } },
         right: { style: "thin", color: { rgb: "000000" } },
       },
-      fill: { fgColor: { rgb: "E9E9E9" } },
+      fill: { fgColor: { rgb: "b4b7bb" } },
     };
     const range = { s: { r: 4, c: 0 }, e: { r: 4, c: 5 } }; // Диапазон от A4 до F4
 
@@ -122,48 +196,186 @@ export const ExportToExcel = ({ data, fileName, user, date }) => {
       alignment: { horizontal: "center", vertical: "center" }, // Выравнивание по центру
     };
     ws["A3"].s = {
-      font: { sz: 12, bold: false }, // Размер шрифта
+      font: { sz: 11, bold: false }, // Размер шрифта
       alignment: { horizontal: "center", vertical: "center", wrapText: true }, // Выравнивание по центру
     };
 
     ws["!cols"] = [
-      { wpx: 40 }, // Ширина первой колонки
-      { wpx: 120 }, // Ширина второй колонки
-      { wpx: 120 }, // Ширина третьей колонки
-      { wpx: 80 },
-      { wpx: 80 },
-      { wpx: 80 },
-
-      // Оставшиеся колонки будут иметь ширину по умолчанию
+      { wpx: 36 }, // Ширина первой колонки
+      { wpx: 170 }, // Ширина второй колонки
+      { wpx: 160 }, // Ширина третьей колонки
+      { wpx: 68 },
+      { wpx: 68 },
+      { wpx: 90 },
     ];
-    // ws["!rows"] = [{ hpx: 30 }, { hpx: 20 }, { hpx: 20 }];
+
+    const footerStyle = {
+      font: { sz: 8, bold: true }, // размер 12 и жирный шрифт
+      alignment: { horizontal: "center", vertical: "center", wrapText: true }, // автоперенос текста
+    };
     const footer = [
-      [],
+      [""],
       [
-        "Примітки: для іноземних авторів виконавців і творів дані вказуються мовою оригіналу;",
+        "Примітки: для іноземних авторів виконавців і творів дані вказуються мовою оригіналу; " +
+          "Сторони погоджуються, що Звіт може не співпадати з фактично використаними музичними творами, " +
+          "але не більше ніж на 10% загального часу використання музичних творів.",
       ],
+      // [""],
       [
-        "Сторони погоджуються, що Звіт може не співпадати з фактично використаними музичними творами, але не",
+        "",
+        "",
+        "",
+        "",
+        "",
+        `${currentDay} ${months[currentMonthIndex]} ${currentYear}`,
       ],
-      ["більше ніж на 10% загального часу використання музичних творів."],
       [
         "(підпис уповноваженої особи Користувача)",
+        "",
+
         "(посада та П.І.Б. уповноваженої особи Користувача)",
-        "2024-04-12",
+        "",
+        "",
+        "(дата складання звіту)",
       ],
     ];
-    XLSX.utils.sheet_add_aoa(ws, footer, { origin: -1 });
+
+    const footerStyled = footer.map((row) => {
+      const styledRow = {};
+      Object.keys(row).forEach((key) => {
+        styledRow[key] = { v: row[key], s: footerStyle }; // Применяем стиль к ячейке
+      });
+      return styledRow;
+    });
+
+    const lastFooterRowStyles = [
+      {
+        font: {
+          sz: 8,
+          bold: false,
+          // vertAlign: "superscript",
+        },
+        alignment: { horizontal: "centre", vertical: "top" },
+        border: {
+          top: {
+            style: "thin",
+            color: { rgb: "000000" },
+          },
+        },
+      }, // Стиль для первой ячейки
+      {
+        font: { sz: 8 },
+        alignment: { horizontal: "right", vertical: "top" },
+        border: {
+          top: {
+            style: "thin",
+            color: { rgb: "000000" },
+          },
+        },
+      }, // Стиль для второй ячейки
+
+      {
+        font: { sz: 8 },
+        alignment: { horizontal: "centre", vertical: "top" },
+        border: {
+          top: {
+            style: "thin",
+            color: { rgb: "000000" },
+          },
+        },
+      }, // Стиль для 3 ячейки
+      {
+        font: { sz: 8, bold: false },
+        alignment: { horizontal: "right", vertical: "top" },
+        border: {
+          top: {
+            style: "thin",
+            color: { rgb: "000000" },
+          },
+        },
+      }, // Стиль для 4 ячейки
+      { font: { sz: 8 } }, // Стиль для 5 ячейки
+      {
+        font: {
+          sz: 8,
+          bold: false,
+        },
+        // vertAlign: "superscript",
+
+        alignment: { horizontal: "left", vertical: "top" },
+
+        border: {
+          top: {
+            style: "thin",
+            color: { rgb: "000000" },
+          },
+        },
+      }, // Стиль для 6 ячейки
+    ];
+    const lastFooterRow = footerStyled[footerStyled.length - 1];
+    Object.keys(lastFooterRow).forEach((key, index) => {
+      lastFooterRow[key].s = lastFooterRowStyles[index];
+    });
+
+    const footerStyledArray = footerStyled.map((row) => Object.values(row));
+
+    // Определение диапазона для объединения ячеек
+    const startCellFooter = XLSX.utils.encode_cell({
+      r: dataRowsWithStyle.length + 4 + 2,
+      c: 0,
+    }); // Начало объединяемой области для футера
+    const endCellFooter = XLSX.utils.encode_cell({
+      r: dataRowsWithStyle.length + 4 + 2,
+      c: 5,
+    }); // Конец объединяемой области для футера
+    const cellMerges = [
+      {
+        s: { r: dataRowsWithStyle.length + 4 + 4, c: 0 },
+        e: { r: dataRowsWithStyle.length + 4 + 4, c: 1 },
+      },
+      {
+        s: { r: dataRowsWithStyle.length + 4 + 4, c: 2 },
+        e: { r: dataRowsWithStyle.length + 4 + 4, c: 3 },
+      },
+    ];
+    if (!ws["!rows"]) {
+      ws["!rows"] = [];
+    }
+    ws["!rows"][2] = { hpx: 33 };
+    ws["!rows"][dataRowsWithStyle.length + 4 + 2] = { hpx: 36 };
+    // Объединяем ячейки для футера
+    ws["!merges"] = ws["!merges"] || [];
+    ws["!merges"].push({ s: startCellFooter, e: endCellFooter });
+    ws["!merges"].push(...cellMerges);
+
+    XLSX.utils.sheet_add_aoa(ws, footerStyledArray, { origin: -1 });
 
     // Создаем файл Excel и сохраняем его
     const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
     const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
     const dataFile = new Blob([excelBuffer], { type: fileType });
-    FileSaver.saveAs(dataFile, fileName + fileExtension);
+    FileSaver.saveAs(dataFile, fileNameFormat + fileExtension);
   };
 
   return (
-    <button type="button" onClick={(e) => exportToCSV(data, fileName)}>
-      Export
-    </button>
+    <Button
+      // text={"Export"}
+      type="button"
+      showIcon={true}
+      icon={`${symbol}#icon-save`}
+      onClick={(e) => exportToCSV(data, fileNameFormat)}
+      border={`none`}
+      background={`none`}
+      marginleft={`0px`}
+      marginright={`0px`}
+      margintop={`20px`}
+      ariaLabel={`export`}
+      svgmarginright={`0px`}
+      // fillColor={"rgba(23, 22, 28, 1)"}
+    >
+      {/* <SvgStyled width="24" height="24">
+        <use href={`${symbol}#icon-save`}></use>
+      </SvgStyled> */}
+    </Button>
   );
 };
