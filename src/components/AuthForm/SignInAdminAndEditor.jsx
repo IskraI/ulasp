@@ -1,10 +1,14 @@
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { AdminAndEditorSchema } from "./Schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { VscError } from "react-icons/vsc";
 import { useNavigate } from "react-router-dom";
 import ErrorPage from "../../pages/ErrorPage/ErrorPage";
+import { Modal } from "../Modal/Modal";
+import { ModalInfoText } from "../Modal/Modal.styled";
+import { errorMappings } from "../../constants/errorMessage";
 import {
   StyledButton,
   StyledError,
@@ -20,7 +24,20 @@ import { useSigninMutation } from "../../redux/authSlice";
 
 export const SignInAdminAndEditor = () => {
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [dispatch, error, isFetching] = useSigninMutation();
+ 
+ const handleShowModal = () => {
+    setShowModal(true);
+    document.body.classList.add("modal-open");
+  };
+
+  const handleCloseModal = () => {
+    document.body.classList.remove("modal-open");
+    setShowModal(false);
+  };
+
   const {
     register,
     handleSubmit,
@@ -44,9 +61,17 @@ export const SignInAdminAndEditor = () => {
         reset();
       })
       .catch((e) => {
-        if (e.data?.message === "Login  or password is wrong") {
-          alert(e.data?.message);
+         let errorMessage = e.data?.message;
+        // if (e.data?.message === "Login  or password is wrong") {
+        // alert(e.data?.message);
+        if (e.data.message) {
+           const mappedMessage = errorMappings[e.status];
+          if (mappedMessage) {
+            errorMessage = mappedMessage;
+          }
         }
+        setErrorMessage(errorMessage);
+        handleShowModal();
         // console.log(e.data?.message || e);
         if (e?.status === "FETCH_ERROR") {
           navigate("/error", { state: { errorMessage: e?.status } });
@@ -137,6 +162,16 @@ export const SignInAdminAndEditor = () => {
         </StyledButton>
         {/* </StyledFormInsight> */}
       </StyledForm>
+       {showModal && (
+        <Modal
+          width={"520px"}
+          padding={"24px"}
+          onClose={handleCloseModal}
+          showCloseButton={true}
+        >
+          <ModalInfoText> {errorMessage}</ModalInfoText>
+        </Modal>
+      )}
     </>
   );
 };
