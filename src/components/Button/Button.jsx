@@ -28,6 +28,7 @@ export const Button = ({
   imgSrc,
   borderHover,
   justifycontent,
+  svgmarginright,
 }) => {
   return (
     <CustomButton
@@ -57,7 +58,8 @@ export const Button = ({
         width="24"
         height="24"
         showIcon={showIcon}
-        style={{ marginRight: "8px" }}
+        // style={{ marginRight: "8px" }}
+        marginright={svgmarginright}
         fillColor={fillColor}
         strokeColor={strokeColor}
       >

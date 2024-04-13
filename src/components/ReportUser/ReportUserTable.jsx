@@ -168,7 +168,7 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
         }/`}</ReportTitle>
 
         <ReportTitleDesc>
-          про використані Об’єкти суміжних прав та Об’єкти авторского права за{" "}
+          про використані Об’єкти суміжних прав та Об’єкти авторського права за{" "}
           {date.dateOfStart !== "" && date.dateOfEnd !== "" ? (
             <>
               період <br />з {formatDate(date.dateOfStart)} p. по{" "}
@@ -178,31 +178,6 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
             ` ${date.quarterDate} квартал  ${date.quarterYearDate} року`
           )}
         </ReportTitleDesc>
-
-        {/* <ReportHeader className="header">
-        <thead>
-          <ReportHeaderTr>
-            <ReportHeaderTh>Назва об'єкту</ReportHeaderTh>
-            <ReportHeaderTd1>{user.institution}</ReportHeaderTd1>
-          </ReportHeaderTr>
-          <ReportHeaderTr>
-            <ReportHeaderTh>Платник</ReportHeaderTh>
-            <ReportHeaderTd1>
-              {user.firstName || user.fatherName || user.lastName
-                ? `${user.firstName} ${user.fatherName} ${user.lastName}`
-                : user.name}
-            </ReportHeaderTd1>
-          </ReportHeaderTr>
-          <ReportHeaderTr>
-            <ReportHeaderTh>Договір номер</ReportHeaderTh>
-            <ReportHeaderTd2> {user.contractNumber}</ReportHeaderTd2>
-          </ReportHeaderTr>
-          <ReportHeaderTr>
-            <ReportHeaderTh>Ідентифікаційний номер (код ЄДРПОУ)</ReportHeaderTh>
-            <ReportHeaderTd2>{user.contactFaceTaxCode}</ReportHeaderTd2>
-          </ReportHeaderTr>
-        </thead>
-      </ReportHeader> */}
 
         <TableReport {...getTableProps()} id="tableList">
           <TableReportThead>

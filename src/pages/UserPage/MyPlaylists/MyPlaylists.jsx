@@ -43,7 +43,7 @@ const MyPlaylists = () => {
     isFetching: isFetchingAllCreatePlaylists,
     isSuccess: isSuccesAllCreatePlaylists,
     isError: isErrorAllCreatePlaylists,
-  } = useGetCreatePlaylistsForUserQuery();
+  } = useGetCreatePlaylistsForUserQuery({ page: "", limit: "" });
   const {
     data: favoritePlaylist,
     isLoading: isLoadingFavoritePlaylist,

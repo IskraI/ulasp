@@ -1,7 +1,7 @@
 import React from "react";
 import { useReactToPrint } from "react-to-print";
 import { ButtonPrintCustom, SvgStyled } from "./ButtonPrint.styled";
-import { Button } from "../../Button/Button";
+
 import symbol from "../../../assets/symbol.svg";
 
 export const ButtonPrint = ({ targetComponent }) => {

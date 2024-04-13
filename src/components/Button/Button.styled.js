@@ -45,6 +45,7 @@ export const SvgStyled = styled.svg`
   fill: ${(props) => props.fillColor ?? "none"};
   stroke: ${(props) => props.strokeColor ?? "black"};
   display: ${(props) => (props.showIcon ? "block" : "none")};
+  margin-right: ${(props) => props.marginright ?? "8px"};
 `;
 
 export const ImgStyled = styled.img`
