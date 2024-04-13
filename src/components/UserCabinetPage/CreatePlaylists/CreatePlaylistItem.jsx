@@ -39,6 +39,7 @@ import {
 import useValidateInput from "../../../hooks/useValidateInput";
 
 import AddCover from "../../AddCover/AddCover";
+import { LoaderButton } from "../../Loader/Loader";
 
 const CreatePlayListItem = ({
   id,
@@ -54,8 +55,10 @@ const CreatePlayListItem = ({
   const location = useLocation();
   const ref = useRef(null);
 
-  const [toggleFavoritePlaylistUser] =
-    useUpdateFavoriteStatusPlaylistUserMutation(id);
+  const [
+    toggleFavoritePlaylistUser,
+    { isLoading: isLoadingFavoriteStatusPlaylistUser },
+  ] = useUpdateFavoriteStatusPlaylistUserMutation(id);
   const [isEditing, setIsEditing] = useState(false);
   const [playlistTitle, setPlaylistTitle] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -84,14 +87,17 @@ const CreatePlayListItem = ({
   const [showModalErrorUpdate, setShowModalErrorUpdate] = useState(false);
 
   const [isFavorite, setIsFavorite] = useState(() => favoriteStatus);
-  // useEffect
-  console.log("isFavorite :>> ", isFavorite);
-  console.log("favoriteStatus :>> ", favoriteStatus);
+
+  // console.log("favoriteStatus :>> ", favoriteStatus);
   const [errorValidateMessage, isError, setIsError] = useValidateInput(
     playlistTitle,
     minLength,
     maxLength
   );
+
+  useEffect(() => {
+    setIsFavorite(favoriteStatus);
+  }, [favoriteStatus]);
 
   useEffect(() => {
     if (isEditing) {
@@ -123,7 +129,7 @@ const CreatePlayListItem = ({
       await toggleFavoritePlaylistUser(id);
       // Update the local state after a successful API call
       setIsFavorite((prevIsFavorite) => !prevIsFavorite);
-      console.log("toggleFavoritePlaylistUser ");
+      // console.log("toggleFavoritePlaylistUser ");
     } catch (error) {
       console.error("Error updating favorite status:", error);
     }
@@ -255,17 +261,23 @@ const CreatePlayListItem = ({
           <svg width="24" height="24" style={{ marginRight: "4px" }}>
             <use href={`${symbol}#icon-pen`} onClick={editPlaylist}></use>
           </svg>
+
           <MediaIconsWrapper>
-            <svg
-              width="24"
-              height="24"
-              fill={isFavorite ? "#17161C" : "none"}
-              stroke="#17161C"
-              onClick={() => handleToggleFavorite(id)}
-              style={{ cursor: "pointer", marginRight: "4px" }}
-            >
-              <use href={`${symbol}#icon-heart-empty`}></use>
-            </svg>
+            {isLoadingFavoriteStatusPlaylistUser && (
+              <LoaderButton width={"24"} height={"24"} />
+            )}
+            {!isLoadingFavoriteStatusPlaylistUser && (
+              <svg
+                width="24"
+                height="24"
+                fill={isFavorite ? "#17161C" : "none"}
+                stroke="#17161C"
+                onClick={() => handleToggleFavorite(id)}
+                style={{ cursor: "pointer", marginRight: "4px" }}
+              >
+                <use href={`${symbol}#icon-heart-empty`}></use>
+              </svg>
+            )}
           </MediaIconsWrapper>
 
           <PlaylistDeleteButton

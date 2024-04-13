@@ -1,5 +1,5 @@
 import { useLocation, Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 
@@ -17,6 +17,7 @@ import {
   MediaIconsWrapper,
 } from "../../UserMediaComponent/MediaList/MediaList.styled";
 import { PlaylistInfoWrapper } from "../../UserMediaComponent/PlayLists/PlayLists.styled";
+import { LoaderButton } from "../../Loader/Loader";
 
 const AddPlayListsItem = ({
   id,
@@ -31,7 +32,8 @@ const AddPlayListsItem = ({
   const location = useLocation();
 
   // { _id, title, icon, isFavorite: initialFavorite }
-  const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
+  const [toggleFavorite, { isLoading: isLoadingFavoriteStatusPlaylist }] =
+    useUpdateFavoriteStatusApiMutation(id);
   const [toggleAdd] = useUpdateAddStatusApiMutation(id);
 
   // const { data: dataFavorites } = useFavoritePlaylistForUserQuery();
@@ -39,6 +41,9 @@ const AddPlayListsItem = ({
   // console.log('favoriteStatus item', favoriteStatus)
 
   const [isFavorite, setIsFavorite] = useState(favoriteStatus || false);
+  useEffect(() => {
+    setIsFavorite(favoriteStatus);
+  }, [favoriteStatus]);
 
   const [isAdd, setIsAdd] = useState(addStatus || false);
   // const handleToggleFavorite = (playlistId) => {
@@ -110,17 +115,22 @@ const AddPlayListsItem = ({
         </>
       )}
       <MediaIconsWrapper>
-        <svg
-          width="24"
-          height="24"
-          fill={isFavorite ? "#17161C" : "none"}
-          stroke="#17161C"
-          onClick={() => handleToggleFavorite(id)}
-          //  onClick={handleToggleFavorite}
-          style={{ cursor: "pointer" }}
-        >
-          <use href={`${symbol}#icon-heart-empty`}></use>
-        </svg>
+        {isLoadingFavoriteStatusPlaylist && (
+          <LoaderButton width={"24"} height={"24"} />
+        )}
+        {!isLoadingFavoriteStatusPlaylist && (
+          <svg
+            width="24"
+            height="24"
+            fill={isFavorite ? "#17161C" : "none"}
+            stroke="#17161C"
+            onClick={() => handleToggleFavorite(id)}
+            //  onClick={handleToggleFavorite}
+            style={{ cursor: "pointer" }}
+          >
+            <use href={`${symbol}#icon-heart-empty`}></use>
+          </svg>
+        )}
 
         {!isAdd ? (
           <svg

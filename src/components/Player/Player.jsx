@@ -184,26 +184,41 @@ const Player = ({ tracks = [], inHeader = false }) => {
     }
   };
 
-  console.log("listenDuration :>> ", listenDuration);
+  // console.log("listenDuration :>> ", listenDuration);
   // console.log("isPlaying :>> ", isPlaying);
   // console.log("isPaused :>> ", isPaused);
-  console.log("isFirst :>> ", isFirst);
+  // console.log("isFirst :>> ", isFirst);
 
   useEffect(() => {
     // console.log("requestSentRef.current :>> ", requestSentRef.current);
-    if (isPlaying && listenDuration < 10 && !requestSentRef.current) {
+
+    if (playerRef?.current?.audio.current.error) {
+      //если ошибка при проигрывании то выходим из этого еффекта и ничего не делаем. если ошибки нет то считаем время
+      // console.log("error :>> ", playerRef?.current?.audio.current.error);
+      return;
+    }
+
+    if (isPlaying && listenDuration < 30 && !requestSentRef.current) {
       const id = setInterval(() => {
         setListenDuration((prevSeconds) => prevSeconds + 1);
       }, 1000);
 
       return () => clearInterval(id); // Очистка интервала при размонтировании компонента
-    } else if (listenDuration === 10 && !requestSentRef.current) {
-      console.log("отправляем на бек :>> ");
+    } else if (listenDuration === 30 && !requestSentRef.current) {
+      // console.log("отправляем на бек :>> ");
       handlePlayLoadStart(tracks[currentTrack]?.id);
       requestSentRef.current = true;
     }
-  }, [isPlaying, listenDuration, currentTrack]);
-
+  }, [
+    isPlaying,
+    listenDuration,
+    currentTrack,
+    playerRef?.current?.audio.current.error,
+  ]);
+  // console.log(
+  //   "playerRef.current.audio.current :>> ",
+  //   playerRef?.current?.audio.current.error
+  // );
   const handlePlay = () => {
     if (!isPlaying) {
       dispatch(pause());
@@ -256,6 +271,9 @@ const Player = ({ tracks = [], inHeader = false }) => {
             onPlay={() => {
               if (!isPlaying) {
                 dispatch(pause());
+              }
+              if (isPlaying && isFirst) {
+                setListenDuration(0);
               }
               // if (!isPlaying && playerState.src.length === 0) {
               //   dispatch(
