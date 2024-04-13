@@ -1,10 +1,11 @@
 import { useLocation, Link, useHref } from "react-router-dom";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
 
 import {
+  useUpdateFavoriteStatusPlaylistUserMutation,
   useUpdateFavoriteStatusApiMutation,
   useUpdateAddStatusApiMutation,
 } from "../../../redux/playlistsUserSlice";
@@ -19,6 +20,7 @@ import {
   MediaIconsWrapper,
 } from "../../UserMediaComponent/MediaList/MediaList.styled";
 import { PlaylistInfoWrapper } from "../../UserMediaComponent/PlayLists/PlayLists.styled";
+import { LoaderButton } from "../../Loader/Loader";
 
 const FavoritePlaylistsItem = ({
   id,
@@ -34,11 +36,16 @@ const FavoritePlaylistsItem = ({
   const location = useLocation();
 
   const { id: userID } = useSelector(getUserState);
-
-  const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
+  const [
+    toggleFavoritePlaylistUser,
+    { isLoading: isLoadingFavoriteStatusPlaylistUser },
+  ] = useUpdateFavoriteStatusPlaylistUserMutation(id);
+  const [toggleFavorite, { isLoading: isLoadingFavoriteStatusPlaylist }] =
+    useUpdateFavoriteStatusApiMutation(id);
+  // const [toggleFavoriteUser] = useUp;
   const [toggleAdd] = useUpdateAddStatusApiMutation(id);
 
-  const [isFavorite, setIsFavorite] = useState(favoriteStatus || false);
+  // const [isFavorite, setIsFavorite] = useState(favoriteStatus);
 
   const [isAdd, setIsAdd] = useState(addStatus || false);
 
@@ -52,18 +59,24 @@ const FavoritePlaylistsItem = ({
 
   const handleToggleFavorite = async () => {
     console.log("playlistId:", id);
+
     try {
+      if (itsMy) {
+        await toggleFavoritePlaylistUser(id);
+      } else {
+        await toggleFavorite(id);
+      }
       // Call the API to update the favorite status
-      await toggleFavorite(id);
+
       // Update the local state after a successful API call
-      setIsFavorite((prevIsFavorite) => !prevIsFavorite);
+      // setIsFavorite((prevIsFavorite) => !prevIsFavorite);
     } catch (error) {
       console.error("Error updating favorite status:", error);
     }
   };
 
   const handleToggleAdd = async () => {
-    console.log("playlistId:", id);
+    // console.log("playlistId:", id);
     try {
       // Call the API to update the favorite status
       await toggleAdd(id);
@@ -112,42 +125,53 @@ const FavoritePlaylistsItem = ({
         </>
       )}
       <MediaIconsWrapper>
-        <svg
-          width="24"
-          height="24"
-          fill={isFavorite ? "#17161C" : "none"}
-          stroke="#17161C"
-          onClick={() => handleToggleFavorite(id)}
-          //  onClick={handleToggleFavorite}
-          style={{ cursor: "pointer" }}
-        >
-          <use href={`${symbol}#icon-heart-empty`}></use>
-        </svg>
-
-        {!isAdd ? (
-          <svg
-            width="24"
-            height="24"
-            onClick={async () => {
-              await handleToggleAdd();
-              setIsAdd(true);
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            <use href={`${symbol}#icon-plus`}></use>
-          </svg>
-        ) : (
-          <svg
-            width="24"
-            height="24"
-            onClick={async () => {
-              await handleToggleAdd();
-              setIsAdd(false);
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            <use href={`${symbol}#icon-check`}></use>
-          </svg>
+        {isLoadingFavoriteStatusPlaylist && (
+          <LoaderButton width={"24"} height={"24"} />
+        )}
+        {isLoadingFavoriteStatusPlaylistUser && (
+          <LoaderButton width={"24"} height={"24"} />
+        )}
+        {!isLoadingFavoriteStatusPlaylist &&
+          !isLoadingFavoriteStatusPlaylistUser && (
+            <svg
+              width="24"
+              height="24"
+              fill={"#17161C"}
+              stroke="#17161C"
+              onClick={() => handleToggleFavorite(id)}
+              style={{ cursor: "pointer" }}
+            >
+              <use href={`${symbol}#icon-heart-empty`}></use>
+            </svg>
+          )}
+        {!itsMy && (
+          <>
+            {!isAdd ? (
+              <svg
+                width="24"
+                height="24"
+                onClick={async () => {
+                  await handleToggleAdd();
+                  setIsAdd(true);
+                }}
+                style={{ cursor: "pointer" }}
+              >
+                <use href={`${symbol}#icon-plus`}></use>
+              </svg>
+            ) : (
+              <svg
+                width="24"
+                height="24"
+                onClick={async () => {
+                  await handleToggleAdd();
+                  setIsAdd(false);
+                }}
+                style={{ cursor: "pointer" }}
+              >
+                <use href={`${symbol}#icon-check`}></use>
+              </svg>
+            )}
+          </>
         )}
       </MediaIconsWrapper>
     </MediaItem>

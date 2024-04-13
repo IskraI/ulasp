@@ -10,4 +10,6 @@ export default defineConfig({
   server: {
     port: 9080,
   },
+  node: { fs: "empty" },
+  externals: [{ "./cptable": "var cptable" }, { "./jszip": "jszip" }],
 });

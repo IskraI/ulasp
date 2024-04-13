@@ -5,6 +5,7 @@ import TracksTable from "../../../components/UserMediaComponent/TracksTable/Trac
 import {
   useGetCreatePlaylistByIdForUserQuery,
   useGetCreatePlaylistsForUserQuery,
+  useFavoritePlaylistForUserQuery,
 } from "../../../redux/playlistsUserSlice";
 
 import PlaylistListItem from "../../../components/UserMediaComponent/PlayLists/PlayListsItem";
@@ -42,6 +43,9 @@ const TracksPageCreateUser = () => {
     isError: isErrorCreatePlaylists,
   } = useGetCreatePlaylistsForUserQuery();
 
+  const { data: dataFavorite, isLoading: isLoadingFavoritePlaylist } =
+    useFavoritePlaylistForUserQuery();
+
   const onPageChange = (page) => setCurrentPage(page);
 
   const onPageSizeChange = (size) => setPageSize(size);
@@ -53,6 +57,7 @@ const TracksPageCreateUser = () => {
     }
     setIsSorterd(true);
   };
+
   return (
     <>
       {error?.status === "500" && <Error500 />}
@@ -68,6 +73,10 @@ const TracksPageCreateUser = () => {
               id={playlistId}
               countTracks={data.totalTracks}
               showPlusBtn={false}
+              owner={data.playlist.owner}
+              favoriteStatus={dataFavorite.favorites.some(
+                (item) => item._id === playlistId
+              )}
             />
             {data?.playlist?.trackList?.length > 1 && (
               <SortTracks

@@ -102,7 +102,7 @@ export const playlistsUserApi = createApi({
       invalidatesTags: ["PlaylistsFavorite"],
     }),
 
-    updateCabinetPlaylistStatusApi: builder.mutation({
+    updateFavoriteStatusPlaylistUser: builder.mutation({
       query: (playlistId) => ({
         url: `/user/userPlaylist/favorites/${playlistId}`,
         method: "PATCH",
@@ -207,7 +207,7 @@ export const {
   useGetCreatePlaylistsForUserQuery,
   useDeletePlaylistForUserMutation,
   useUpdateFavoriteStatusApiMutation,
-  useUpdateCabinetPlaylistStatusApiMutation,
+  useUpdateFavoriteStatusPlaylistUserMutation,
   useFavoritePlaylistForUserQuery,
   useAddPlaylistForUserQuery,
   useUpdateAddStatusApiMutation,

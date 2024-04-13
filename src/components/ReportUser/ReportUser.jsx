@@ -20,7 +20,7 @@ import { useParams } from "react-router-dom";
 import ReportFormDataTemplate from "../ReportForm/FormForReport";
 import ReportUserTable from "./ReportUserTable";
 import { getQuarterRange } from "../../helpers/helpers";
-
+import { ExportToExcel } from "./ExportXLS";
 const ReportUser = () => {
   const [responseData, setResponseData] = useState();
   const [date, setDate] = useState({});
@@ -96,8 +96,8 @@ const ReportUser = () => {
           <Title>
             {`Звіт по користувачу з № договору: ${
               user?.contractNumberDoc
-                ? user.contractNumberDoc
-                : user.contractNumber
+                ? user?.contractNumberDoc
+                : user?.contractNumber
             }`}
           </Title>
           <ReportFormDataTemplate
@@ -119,7 +119,18 @@ const ReportUser = () => {
             </ErrorText>
           ) : (
             <>
-              {responseData && <ButtonPrint targetComponent={componentRef} />}
+              {" "}
+              <div>
+                {responseData && <ButtonPrint targetComponent={componentRef} />}
+                {responseData && (
+                  <ExportToExcel
+                    data={responseData}
+                    fileName={user.contractNumberDoc}
+                    date={date}
+                    user={user}
+                  />
+                )}
+              </div>
               {responseData && (
                 <ReportUserTable
                   data={responseData}

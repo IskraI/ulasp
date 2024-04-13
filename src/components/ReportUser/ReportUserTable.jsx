@@ -23,6 +23,28 @@ import {
   FlexChild,
 } from "./ReportUserTable.styled";
 
+// function fnExcelReport() {
+//   let tab_text = "<table border='2px'><tr bgcolor='#FFFFFF'>";
+//   let j = 0;
+//   const tab = document.getElementById("tableList");
+
+//   for (j = 2; j < tab.rows.length; j++) {
+//     tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
+//   }
+
+//   tab_text = tab_text + "</table>";
+//   tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");
+//   tab_text = tab_text.replace(/<img[^>]*>/gi, "");
+//   tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, "");
+
+//   var uri = "data:application/vnd.ms-excel,";
+//   var a = document.createElement("a");
+//   a.setAttribute("href", uri + encodeURIComponent(tab_text));
+//   a.setAttribute("download", new Date() + ".xls");
+//   document.body.appendChild(a);
+//   a.click();
+// }
+
 export const columns = [
   {
     Header: "№ п/п",
@@ -133,30 +155,31 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
   const currentYear = currentDate.getFullYear();
 
   return (
-    <TableWrapper ref={ref}>
-      <style>{getPageMargins()}</style>
-      <ReportTitle>ФОРМА ЗВIТУ</ReportTitle>
-      <ReportTitle>{`ТОВ/ФОП ${
-        user.firstName || user.fatherName || user.lastName
-          ? `${user.firstName} ${user.fatherName} ${user.lastName}`
-          : user.name
-      } /договір №${
-        user.contractNumberDoc ? user.contractNumberDoc : user.contractNumber
-      }/`}</ReportTitle>
+    <>
+      <TableWrapper ref={ref}>
+        <style>{getPageMargins()}</style>
+        <ReportTitle>ФОРМА ЗВIТУ</ReportTitle>
+        <ReportTitle>{`ТОВ/ФОП ${
+          user.firstName || user.fatherName || user.lastName
+            ? `${user.firstName} ${user.fatherName} ${user.lastName}`
+            : user.name
+        } /договір №${
+          user.contractNumberDoc ? user.contractNumberDoc : user.contractNumber
+        }/`}</ReportTitle>
 
-      <ReportTitleDesc>
-        про використані Об’єкти суміжних прав та Об’єкти авторского права за{" "}
-        {date.dateOfStart !== "" && date.dateOfEnd !== "" ? (
-          <>
-            період <br />з {formatDate(date.dateOfStart)} p. по{" "}
-            {formatDate(date.dateOfEnd)} p.
-          </>
-        ) : (
-          ` ${date.quarterDate} квартал  ${date.quarterYearDate} року`
-        )}
-      </ReportTitleDesc>
+        <ReportTitleDesc>
+          про використані Об’єкти суміжних прав та Об’єкти авторского права за{" "}
+          {date.dateOfStart !== "" && date.dateOfEnd !== "" ? (
+            <>
+              період <br />з {formatDate(date.dateOfStart)} p. по{" "}
+              {formatDate(date.dateOfEnd)} p.
+            </>
+          ) : (
+            ` ${date.quarterDate} квартал  ${date.quarterYearDate} року`
+          )}
+        </ReportTitleDesc>
 
-      {/* <ReportHeader className="header">
+        {/* <ReportHeader className="header">
         <thead>
           <ReportHeaderTr>
             <ReportHeaderTh>Назва об'єкту</ReportHeaderTh>
@@ -181,81 +204,82 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
         </thead>
       </ReportHeader> */}
 
-      <TableReport {...getTableProps()}>
-        <TableReportThead>
-          {headerGroups.map((headerGroup, ind) => (
-            <tr key={ind} {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup?.headers.map((column, ind) => (
-                <TableReportRow key={ind} {...column.getHeaderProps()}>
-                  {column.render("Header")}
-                </TableReportRow>
-              ))}
-            </tr>
-          ))}
-        </TableReportThead>
-
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row, rowIndex) => {
-            prepareRow(row);
-
-            return (
-              <tr key={rowIndex} {...row.getRowProps()}>
-                {row.cells.map((cell, cellIndex) => {
-                  return (
-                    <TableCell key={cellIndex} {...cell.getCellProps()}>
-                      {cell.render("Cell")}
-                    </TableCell>
-                  );
-                })}
+        <TableReport {...getTableProps()} id="tableList">
+          <TableReportThead>
+            {headerGroups.map((headerGroup, ind) => (
+              <tr key={ind} {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup?.headers.map((column, ind) => (
+                  <TableReportRow key={ind} {...column.getHeaderProps()}>
+                    {column.render("Header")}
+                  </TableReportRow>
+                ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </TableReport>
+            ))}
+          </TableReportThead>
 
-      <ReportFooter>
-        <div>
-          <ReportFooterComment>
-            Примітки: для іноземних авторів виконавців і творів дані вказуються
-            мовою оригіналу; <br />
-            Сторони погоджуються, що Звіт може не співпадати з фактично
-            використаними музичними творами, але не більше ніж на 10% загального
-            часу використання музичних творів.
-          </ReportFooterComment>
-        </div>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row, rowIndex) => {
+              prepareRow(row);
 
-        <ReportFooterBlockDesc>
-          <FlexChild alignSelf="flex-end">
-            <ReportFooterDesc>
-              <UnderlinedText>
-                {" "}
-                <Underline />
-                (підпис уповноваженої особи Користувача)
-              </UnderlinedText>
-            </ReportFooterDesc>
-          </FlexChild>
-          <FlexChild alignSelf="flex-end">
-            <ReportFooterDesc>
-              <UnderlinedText>
-                {" "}
-                <Underline />
-                (посада та П.І.Б. уповноваженої особи Користувача){" "}
-              </UnderlinedText>
-            </ReportFooterDesc>
-          </FlexChild>
-          {/* <ReportFooterDesc> */}
-          <UnderlinedTextContainer>
-            <LineAndYearContainer>
-              <YearText>{`"\u00A0\u00A0\u00A0\u00A0"`}</YearText>
-              <UnderlineDate />
-              <YearText>{currentYear} p.</YearText>
-            </LineAndYearContainer>
-            <NoteText>(дата складання звіту )</NoteText>
-          </UnderlinedTextContainer>
-          {/* </ReportFooterDesc> */}
-        </ReportFooterBlockDesc>
-      </ReportFooter>
-    </TableWrapper>
+              return (
+                <tr key={rowIndex} {...row.getRowProps()}>
+                  {row.cells.map((cell, cellIndex) => {
+                    return (
+                      <TableCell key={cellIndex} {...cell.getCellProps()}>
+                        {cell.render("Cell")}
+                      </TableCell>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </TableReport>
+
+        <ReportFooter>
+          <div>
+            <ReportFooterComment>
+              Примітки: для іноземних авторів виконавців і творів дані
+              вказуються мовою оригіналу; <br />
+              Сторони погоджуються, що Звіт може не співпадати з фактично
+              використаними музичними творами, але не більше ніж на 10%
+              загального часу використання музичних творів.
+            </ReportFooterComment>
+          </div>
+
+          <ReportFooterBlockDesc>
+            <FlexChild alignSelf="flex-end">
+              <ReportFooterDesc>
+                <UnderlinedText>
+                  {" "}
+                  <Underline />
+                  (підпис уповноваженої особи Користувача)
+                </UnderlinedText>
+              </ReportFooterDesc>
+            </FlexChild>
+            <FlexChild alignSelf="flex-end">
+              <ReportFooterDesc>
+                <UnderlinedText>
+                  {" "}
+                  <Underline />
+                  (посада та П.І.Б. уповноваженої особи Користувача){" "}
+                </UnderlinedText>
+              </ReportFooterDesc>
+            </FlexChild>
+            {/* <ReportFooterDesc> */}
+            <UnderlinedTextContainer>
+              <LineAndYearContainer>
+                <YearText>{`"\u00A0\u00A0\u00A0\u00A0"`}</YearText>
+                <UnderlineDate />
+                <YearText>{currentYear} p.</YearText>
+              </LineAndYearContainer>
+              <NoteText>(дата складання звіту )</NoteText>
+            </UnderlinedTextContainer>
+            {/* </ReportFooterDesc> */}
+          </ReportFooterBlockDesc>
+        </ReportFooter>
+      </TableWrapper>
+    </>
   );
 });
 

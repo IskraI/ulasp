@@ -8,10 +8,7 @@ import {
   MediaList,
   TitleContainer,
 } from "../../UserMediaComponent/PlayLists/MediaList.styled";
-import {
-  useFavoritePlaylistForUserQuery,
-  useAddPlaylistForUserQuery,
-} from "../../../redux/playlistsUserSlice";
+import { useAddPlaylistForUserQuery } from "../../../redux/playlistsUserSlice";
 
 const FavoritePlaylists = ({
   title,
