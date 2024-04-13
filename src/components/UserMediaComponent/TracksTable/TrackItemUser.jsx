@@ -6,7 +6,7 @@ import { sToStr, compareArray } from "../../../helpers/helpers";
 import { BASE_URL } from "../../../constants/constants";
 import { WithOutGenre } from "../../Errors/Errors";
 import { Modal } from "../../Modal/Modal";
-import { ModalInfoText, ModalInfoTextBold } from "../../Modal/Modal.styled";
+import { ModalInfoText } from "../../Modal/Modal.styled";
 import symbol from "../../../assets/symbol.svg";
 import {
   useAddTrackToAddMutation,
@@ -18,7 +18,6 @@ import {
   setSrcPlaying,
 } from "../../../redux/playerSlice";
 import { getPlayerState } from "../../../redux/playerSelectors";
-import PlaylistsForAdd from "../PlayLists/PlayListsForAddUser.jsx";
 import {
   CheckBoxLabel,
   CheckBoxSpan,
@@ -27,7 +26,9 @@ import {
 } from "../../CustomCheckBox/CustomCheckBox.styled";
 import DotsBtn from "./DotsButton.jsx";
 import PopUpButtons from "./PopUpButtons.jsx";
-import { playlistsUserApi } from "../../../redux/playlistsUserSlice.js";
+
+import AddTracksUser from "../../UserCabinetPage/AddTracks/AddTracksUser.jsx";
+
 import {
   TableCell,
   TrackCover,
@@ -35,12 +36,6 @@ import {
   InfoBlock,
   PlayButton,
 } from "../TracksTable/TracksTableUser.styled";
-import {
-  useAddTrackToPlaylistUserMutation,
-  // useGetPlaylistCreatedUserWithoutTrackIdQuery,
-} from "../../../redux/playlistsUserSlice.js";
-import { useAddTrackByIdToPlaylistUserMutation } from "../../../redux/playlistsUserSlice.js";
-// import { playlistsApi } from "../../../redux/playlistsSlice.js";
 
 const TrackItem = ({
   idTrack,
@@ -64,7 +59,6 @@ const TrackItem = ({
   addTrackToCheckedList,
   deleteCheckedTrackId,
   isAddTrackUser,
-  addPlaylist,
 }) => {
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
@@ -139,15 +133,6 @@ const TrackItem = ({
       .catch((error) => console.log(error));
   };
 
-  //добавление трека в плейлист юзера
-
-  //получаем список плейлистов юзера в которых нет этого трека
-  // const {
-  //   data: playlistUserForAdd,
-  //   isLoading: isLoadingPlaylistUserForAdd,
-  //   isError,
-  // } = useGetPlaylistCreatedUserWithoutTrackIdQuery(idTrack);
-
   //открываем модальное окно со списком плейлистов
   const [showModalAddTrackToPlaylist, setShowModalAddTrackToPlaylist] =
     useState(false);
@@ -218,32 +203,6 @@ const TrackItem = ({
     }
   };
 
-  // const addPl = addPlaylist ? addPlaylist : [];
-
-  const idT = idTrack;
-  const [playlistUserForAdd, setPlaylistUserForAdd] = useState([
-    ...addPlaylist,
-  ]);
-  // console.log("playlistUserForAdd rackItem:>> ", playlistUserForAdd);
-
-  //хук который отправляет запрос на бек
-  const [addTrackToPlaylist, { data, isLoading: isLoadingAddTrackToPlaylist }] =
-    useAddTrackByIdToPlaylistUserMutation();
-  //функция которая вызывается при клике на плейлист и вызывает хук
-  const addTrackInPlaylistUser = (id, trackId) => {
-    console.log("playlistUserForAdd :>> ", id);
-    console.log("trackId :>> ", trackId);
-
-    addTrackToPlaylist({ id, trackId }).then(() => {
-      console.log("добавили :>> ");
-      // dispatch(playlistsUserApi.util.invalidateTags(["Playlists"]));
-
-      setPlaylistUserForAdd((prevPlaylists) =>
-        prevPlaylists.filter((playlist) => playlist._id !== id)
-      );
-    });
-  };
-
   return (
     <>
       <TrStyle
@@ -261,7 +220,7 @@ const TrackItem = ({
             </CheckBoxSpan>
             <CheckBoxInput
               type="checkbox"
-              id={idT}
+              id={idTrack}
               ref={ref}
               onClick={(e) => {
                 e.stopPropagation();
@@ -362,7 +321,6 @@ const TrackItem = ({
               removeTrackFromAddTrackFn={removeTrackFromAdd}
               addTrackToAddTrackFn={addTrackToAdd}
               isAddTrack={isAddTrack}
-              isFreePlaylist={playlistUserForAdd?.length !== 0}
               addTrackToPlaylistFn={addTrackToPlaylistsModal}
             />
           )}
@@ -374,39 +332,9 @@ const TrackItem = ({
         </TableCell>
       </TrStyle>
       {showModalAddTrackToPlaylist && (
-        <Modal
-          width={"45vw"}
-          padding={"24px"}
-          borderColor={"#FFF3BF"}
-          borderStyle={"solid"}
-          borderWidth={"1px"}
-          onClose={handleCloseModal}
-          showCloseButton={true}
-        >
-          <div
-            style={{
-              marginTop: "20px",
-              padding: "20px",
-              width: "100%",
-              height: "100%",
-              overflowY: "auto",
-            }}
-          >
-            {playlistUserForAdd?.length === 0 ? (
-              handleCloseModal()
-            ) : (
-              <PlaylistsForAdd
-                title={`Плейлисти для додавання`}
-                displayPlayer={"none"}
-                data={playlistUserForAdd}
-                trackId={idTrack}
-                addTrackInPlaylistUser={addTrackInPlaylistUser}
-                // onClose={handleCloseModal}
-              />
-            )}
-          </div>
-        </Modal>
+        <AddTracksUser idTrack={idTrack} handleCloseModal={handleCloseModal} />
       )}
+
       {showModal === "addTrack" && (
         <Modal
           width={"25vw"}
@@ -415,7 +343,6 @@ const TrackItem = ({
           borderStyle={"solid"}
           borderWidth={"1px"}
           onClose={() => setShowModal("")}
-          // bcgTransparent={true}
         >
           <ModalInfoText
             fontSize={"20px"}
@@ -434,7 +361,6 @@ const TrackItem = ({
           borderStyle={"solid"}
           borderWidth={"1px"}
           onClose={() => setShowModal("")}
-          // bcgTransparent={true}
         >
           <ModalInfoText
             fontSize={"20px"}

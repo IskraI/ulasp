@@ -21,8 +21,13 @@ export const WithOutGenre = () => {
   return <p style={{ fontWeight: "500", fontSize: "16px" }}></p>;
 };
 
-export const NoData = ({ text, textColor }) => {
-  return <ErrorWrapper textColor={textColor}>{text}</ErrorWrapper>;
+export const NoData = ({ text, textColor, children }) => {
+  return (
+    <ErrorWrapper textColor={textColor}>
+      {text}
+      {children}
+    </ErrorWrapper>
+  );
 };
 
 export const Error500 = () => {

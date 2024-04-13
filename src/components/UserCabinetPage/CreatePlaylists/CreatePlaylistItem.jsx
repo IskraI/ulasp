@@ -235,7 +235,7 @@ const CreatePlayListItem = ({
             }}
           >
             <MediaImg src={BASE_URL + "/" + icon} alt={title} />
-            <MediaItemText>{title}</MediaItemText>
+            <MediaItemText maxWidth={"135px"}>{title}</MediaItemText>
           </Link>
         ) : (
           <>

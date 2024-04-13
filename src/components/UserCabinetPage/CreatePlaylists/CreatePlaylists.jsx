@@ -17,7 +17,7 @@ import symbol from "../../../assets/symbol.svg";
 import ControlMyplaylists from "../ControlMyplaylists/ControlMyplaylists";
 import { Modal } from "../../Modal/Modal";
 import { ModalInfoText } from "../../Modal/Modal.styled";
-import { ErrorNotFound } from "../../Errors/Errors";
+import { ErrorNotFound, NoData } from "../../Errors/Errors";
 import ModalFormMyplaylist from "../ControlMyplaylists/ModalFormMyplaylist";
 
 import useChooseAvatar from "../../../hooks/useChooseAvatar";
@@ -92,6 +92,12 @@ const CreatePlaylists = ({
         textButton={"Плейлист"}
         onClick={toogleModal}
       />
+      {createPlaylists.length === 0 && (
+        <NoData
+          text={"Ви ще не створили жодного плейлиста"}
+          textColor={"grey"}
+        />
+      )}
       {!error && (
         <>
           <MediaList>

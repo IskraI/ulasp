@@ -14,7 +14,7 @@ import {
   useGetCreatePlaylistByIdForUserQuery,
   useFavoritePlaylistForUserQuery,
   useAddPlaylistForUserQuery,
-  useGetCreatePlaylistsForUserQuery,
+  // useGetCreatePlaylistsForUserQuery,
 } from "../../../redux/playlistsUserSlice";
 
 const TracksPage = () => {
@@ -31,12 +31,12 @@ const TracksPage = () => {
 
   const { data: dataFavorite } = useFavoritePlaylistForUserQuery();
   const { data: dataAdd } = useAddPlaylistForUserQuery();
-  const {
-    data: createPlaylists,
-    isFetching: isFetchingCreatePlaylists,
-    isSuccess: isSuccesCreatePlaylists,
-    isError: isErrorCreatePlaylists,
-  } = useGetCreatePlaylistsForUserQuery();
+  // const {
+  //   data: createPlaylists,
+  //   isFetching: isFetchingCreatePlaylists,
+  //   isSuccess: isSuccesCreatePlaylists,
+  //   isError: isErrorCreatePlaylists,
+  // } = useGetCreatePlaylistsForUserQuery();
   const {
     data,
     isFetching: isFetchingPlaylistById,
@@ -108,16 +108,7 @@ const TracksPage = () => {
             )}
           </div>
         )}
-        {/* {isCreatePlaylistsPage && (
-            <div style={{ position: "absolute", top: "104px", right: "124px" }}>
-              <AddTracksUser
-                iconButton={`${symbol}#icon-plus`}
-                textButton={"Музику"}
-                playlistId={playlistId}
-                // uploadTrackInPlaylist={uploadTrackInPlaylist}
-              />
-            </div>
-          )} */}
+
         {isFetchingPlaylistById && <Loader />}
         {isSuccess && !isError && !isFetchingPlaylistById && (
           <TracksTable
@@ -140,7 +131,6 @@ const TracksPage = () => {
             totalTracks={data.totalTracks}
             tracksSRC={data.tracksSRC}
             isSorted={isSorted}
-            createPlaylists={createPlaylists}
           />
         )}
       </>

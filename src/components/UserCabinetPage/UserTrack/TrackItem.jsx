@@ -1,9 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
+
+import AddTracksUser from "../AddTracks/AddTracksUser";
 
 import {
   PlaylistItem,
@@ -14,13 +17,7 @@ import {
   PlaylistAddButton,
   PlaylistItemText2,
 } from "./PlayLists.styled";
-import { Modal } from "../../Modal/Modal";
-import { Link } from "react-router-dom";
-import {
-  useGetPlaylistCreatedUserWithoutTrackIdQuery,
-  useAddTrackByIdToPlaylistUserMutation,
-} from "../../../redux/playlistsUserSlice";
-import { playlistsUserApi } from "../../../redux/playlistsUserSlice.js";
+
 import {
   setPreloadSrcPlayer,
   stopPlay,
@@ -28,18 +25,8 @@ import {
   setSrcPlaying,
 } from "../../../redux/playerSlice";
 import { getPlayerState } from "../../../redux/playerSelectors";
-import PlaylistsForAdd from "../../UserMediaComponent/PlayLists/PlayListsForAddUser";
 
-const TrackItem = ({
-  id,
-  title,
-  icon,
-  artist,
-  trackURL,
-  isLoading,
-
-  createPlaylists,
-}) => {
+const TrackItem = ({ id, title, icon, artist, trackURL, isLoading }) => {
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
   const [isPlayingTrack, setIsPlayingTrack] = useState(false);
@@ -90,46 +77,17 @@ const TrackItem = ({
     dispatch(stopPlay([]));
     setIsPlayingTrack(!isPlayingTrack);
   };
-  //получаем список плейлистов юзера в которых нет этого трека
-  // const {
-  //   data: playlistUserForAdd,
-  //   isLoading: isLoadingPlaylistUserForAdd,
-  //   isError,
-  // } = useGetPlaylistCreatedUserWithoutTrackIdQuery(id);
-  // const {
-  //   data: playlistUserForAdd,
-  //   isLoading: isLoadingPlaylistUserForAdd,
-  //   isError,
-  // } = useGetPlaylistCreatedUserWithoutTrackIdQuery(id);
-  //открываем модальное окно со списком плейлистов
 
   const [showModalAddTrackToPlaylist, setShowModalAddTrackToPlaylist] =
     useState(false);
 
   const addTrackToPlaylistsModal = () => {
-    // console.log("playlistUserForAdd :>> ", playlistUserForAdd);
     setShowModalAddTrackToPlaylist(true);
     document.body.classList.add("modal-open");
   };
   const handleCloseModal = () => {
     document.body.classList.remove("modal-open");
     setShowModalAddTrackToPlaylist(false);
-  };
-
-  const addPlaylist = createPlaylists.filter(
-    (item) => !item.trackList.includes(id)
-  );
-  // console.log("object addPlaylist:>> id", id, addPlaylist);
-
-  //хук который отправляет запрос на бек
-  const [addTrackToPlaylist, { data, isLoading: isLoadingAddTrackToPlaylist }] =
-    useAddTrackByIdToPlaylistUserMutation();
-  //функция которая вызывается при клике на плейлист и вызывает хук
-  const addTrackInPlaylistUser = (id, trackId) => {
-    addTrackToPlaylist({ id, trackId }).then(() => {
-      console.log("добавили :>> ");
-      dispatch(playlistsUserApi.util.invalidateTags(["Playlists"]));
-    });
   };
 
   return (
@@ -153,56 +111,15 @@ const TrackItem = ({
           </TextWrapper>
         </Link>
         <PlaylistIconsWrapper>
-          <PlaylistAddButton
-            type="button"
-            onClick={addTrackToPlaylistsModal}
-            disabled={addPlaylist?.length === 0}
-          >
-            {addPlaylist?.length === 0 ? (
-              <svg width="24" height="24" stroke="#888889">
-                <use href={`${symbol}#icon-check`}></use>
-              </svg>
-            ) : (
-              <svg width="24" height="24">
-                <use href={`${symbol}#icon-plus`}></use>
-              </svg>
-            )}
+          <PlaylistAddButton type="button" onClick={addTrackToPlaylistsModal}>
+            <svg width="24" height="24">
+              <use href={`${symbol}#icon-plus`}></use>
+            </svg>
           </PlaylistAddButton>
         </PlaylistIconsWrapper>
       </PlaylistItem>
       {showModalAddTrackToPlaylist && (
-        <Modal
-          width={"45vw"}
-          padding={"24px"}
-          borderColor={"#FFF3BF"}
-          borderStyle={"solid"}
-          borderWidth={"1px"}
-          onClose={handleCloseModal}
-          showCloseButton={true}
-        >
-          <div
-            style={{
-              marginTop: "20px",
-              padding: "20px",
-              width: "100%",
-              height: "100%",
-              overflowY: "auto",
-            }}
-          >
-            {addPlaylist?.length === 0 ? (
-              handleCloseModal()
-            ) : (
-              <PlaylistsForAdd
-                title={"Плейлисти для додавання"}
-                displayPlayer={"none"}
-                data={addPlaylist}
-                trackId={id}
-                addTrackInPlaylistUser={addTrackInPlaylistUser}
-                handleCloseModal={handleCloseModal}
-              />
-            )}
-          </div>
-        </Modal>
+        <AddTracksUser idTrack={id} handleCloseModal={handleCloseModal} />
       )}
     </>
   );

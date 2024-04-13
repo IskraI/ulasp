@@ -26,7 +26,7 @@ const PopUpButtons = ({
         <PopUpButton
           type="button"
           onClick={addTrackToPlaylistFn}
-          disabled={!isFreePlaylist}
+          // disabled={!isFreePlaylist}
         >
           Додати до плейлисту
         </PopUpButton>

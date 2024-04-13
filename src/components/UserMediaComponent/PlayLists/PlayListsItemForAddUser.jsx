@@ -1,99 +1,44 @@
+import PropTypes from "prop-types";
+
 import { BASE_URL } from "../../../constants/constants";
-import symbol from "../../../assets/symbol.svg";
-import { useState, useEffect } from "react";
-import {
-  useAddTrackByIdToPlaylistUserMutation,
-  useUpdateFavoriteStatusApiMutation,
-} from "../../../redux/playlistsUserSlice";
-import { Button } from "../../Button/Button";
+
+import { useAddTrackByIdToPlaylistUserMutation } from "../../../redux/playlistsUserSlice";
+
 import {
   MediaItem,
-  IconsWrapper,
   MediaItemText,
   MediaImg,
-  PlaylistCountTracks,
-  PlaylistImg,
-  PlaylistInfoWrapper,
-  PlaylistItemText,
-} from "./MediaList.styled";
-import { Link } from "react-router-dom";
-import { useLocation, useNavigate } from "react-router-dom";
+} from "../MediaList/MediaList.styled";
 
-const PlayListItemForAdd = ({
-  id,
-  title,
-  icon,
-  countTracks,
-  placeListCardInf,
-  favoriteStatus,
-  handleAddTrackInPlaylist,
-  trackId,
-  addTrackInPlaylistUser,
-}) => {
-  const location = useLocation();
-  const navigate = useNavigate();
+const PlayListItemForAdd = ({ id, title, icon, trackId, showSuccess }) => {
+  const [addTrackToPlaylist] = useAddTrackByIdToPlaylistUserMutation();
 
-  const [toggleFavorite] = useUpdateFavoriteStatusApiMutation(id);
-
-  // //хук который отправляет запрос на бек
-  // const [
-  //   addTrackToPlaylist,
-  //   { data: dataAddTrackToPlaylist, isLoading: isLoadingAddTrackToPlaylist },
-  // ] = useAddTrackByIdToPlaylistUserMutation();
-  // //функция которая вызывается при клике на плейлист и вызывает хук
-  // const addTrackInPlaylistUser = (id) => {
-  //   console.log("playlistUserForAdd :>> ", id);
-  //   console.log("trackId :>> ", trackId);
-
-  //   addTrackToPlaylist({ id, trackId }).then(() => {
-  //     console.log("добавили :>> ");
-  //   });
-  // };
+  const addTrackInPlaylistUser = (id, trackId) => {
+    addTrackToPlaylist({ id, trackId }).unwrap();
+    showSuccess(true);
+  };
 
   return (
-    <MediaItem width={"220px"} padding={"0px"}>
-      {/* {!placeListCardInfo ? (
-        <>
+    <>
+      <MediaItem width={"250px"}>
+        <div
+          style={{ width: "100%", display: "flex", alignItems: "center" }}
+          onClick={() => addTrackInPlaylistUser(id, trackId)}
+        >
           <MediaImg src={BASE_URL + "/" + icon} alt={title} />
-          <MediaItemText>{title}</MediaItemText>
-        </>
-      ) : ( */}
-      <Button
-        type="button"
-        width={"inherit"}
-        height={"100%"}
-        text={title}
-        padding={"10px"}
-        border={"none"}
-        showImg={"true"}
-        imgSrc={`${BASE_URL}/${icon}`}
-        onClick={() => addTrackInPlaylistUser(id, trackId)}
-        borderHover={"none"}
-        justifycontent={"space-evenly"}
-      >
-        <PlaylistImg src={BASE_URL + "/" + icon} alt={title} />
-        <PlaylistInfoWrapper>
-          {/* <PlaylistItemText>{title}</PlaylistItemText> */}
-          <PlaylistCountTracks>
-            {countTracks + `${" "}` + "пісень"}
-          </PlaylistCountTracks>
-        </PlaylistInfoWrapper>
-      </Button>
-
-      {/* )} */}
-      {/* <IconsWrapper>
-          <svg
-            width="24"
-            height="24"
-            fill={favoriteStatus ? "#17161C" : "none"}
-            stroke="#17161C"
-            style={{ cursor: "pointer" }}
-          >
-            <use href={`${symbol}#icon-heart-empty`}></use>
-          </svg>
-        </IconsWrapper> */}
-    </MediaItem>
+          <MediaItemText maxWidth={"170px"}>{title}</MediaItemText>
+        </div>
+      </MediaItem>
+    </>
   );
+};
+
+PlayListItemForAdd.propTypes = {
+  id: PropTypes.string,
+  title: PropTypes.string,
+  icon: PropTypes.string,
+  trackId: PropTypes.string,
+  showSuccess: PropTypes.func,
 };
 
 export default PlayListItemForAdd;
