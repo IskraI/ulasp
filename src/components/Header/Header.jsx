@@ -15,6 +15,7 @@ const Header = ({ avatarURL, logo }) => {
   const avatarSrc = avatarURL ? `${BASE_URL}/${avatarURL}` : defaultAvatarSrc;
   const playerState = useSelector(getPlayerState);
 
+  const [visibleBtn] = useVisibleInHeader({ button: true });
   const [visible] = useVisibleInHeader();
 
   return (
@@ -48,7 +49,7 @@ const Header = ({ avatarURL, logo }) => {
           />
         </>
       )}
-      {visible && <LogOutBtn />}
+      {visibleBtn && <LogOutBtn />}
 
       {/* </AvatarHeader> */}
     </PageHeader>

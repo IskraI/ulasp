@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-const useVisibleInHeader = () => {
+const useVisibleInHeader = (button) => {
   const location = useLocation();
 
   const [visible, setVisible] = useState(false);
@@ -16,10 +16,18 @@ const useVisibleInHeader = () => {
       case "/adminlogin":
         setVisible(false);
         break;
+
       default:
         setVisible(true);
     }
-  }, [location.pathname]);
+
+    if (location.pathname.includes("admin")) {
+      if (button) {
+        return;
+      }
+      setVisible(false);
+    }
+  }, [button, location.pathname]);
 
   return [visible];
 };
