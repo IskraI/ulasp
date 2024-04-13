@@ -4,9 +4,9 @@ import { useState, useEffect, useRef } from "react";
 
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
-import { useAddTrackByIdToPlaylistUserMutation } from "../../../redux/playlistsUserSlice";
 
-import { Modal } from "../../Modal/Modal";
+import AddTracksUser from "../../UserCabinetPage/AddTracks/AddTracksUser";
+
 import {
   PlaylistItem,
   PlaylistImg,
@@ -16,7 +16,6 @@ import {
   TextWrapper,
   PlaylistItemText2,
 } from "./PlayLists.styled";
-
 
 import { PlaylistAddButton } from "../../UserCabinetPage/UserTrack/PlayLists.styled";
 
@@ -29,7 +28,6 @@ import {
   setSrcPlaying,
 } from "../../../redux/playerSlice";
 import { getPlayerState } from "../../../redux/playerSelectors";
-import PlaylistsForAdd from "../../UserMediaComponent/PlayLists/PlayListsForAddUser";
 
 const TrackItem = ({
   id,
@@ -67,25 +65,7 @@ const TrackItem = ({
       playMusic();
     }
   };
-  //получаем список плейлистов юзера в которых нет этого трека
-  const [playlistUserForAdd, setPlaylistUserForAdd] = useState([
-    ...addPlaylist,
-  ]);
-  //хук который отправляет запрос на бек
-  const [addTrackToPlaylist, { data, isLoading: isLoadingAddTrackToPlaylist }] =
-    useAddTrackByIdToPlaylistUserMutation();
-  //функция которая вызывается при клике на плейлист и вызывает хук
-  const addTrackInPlaylistUser = (id, trackId) => {
-    console.log("playlistUserForAdd :>> ", id);
-    console.log("trackId :>> ", trackId);
 
-    addTrackToPlaylist({ id, trackId }).then(() => {
-      console.log("добавили :>> ");
-      setPlaylistUserForAdd((prevPlaylists) =>
-        prevPlaylists.filter((playlist) => playlist._id !== id)
-      );
-    });
-  };
   //открываем модальное окно со списком плейлистов
   const [showModalAddTrackToPlaylist, setShowModalAddTrackToPlaylist] =
     useState(false);
@@ -143,56 +123,15 @@ const TrackItem = ({
           </TextWrapper>
         </Link>
         <PlaylistIconsWrapper>
-          <PlaylistAddButton
-            type="button"
-            onClick={addTrackToPlaylistsModal}
-            disabled={playlistUserForAdd?.length === 0}
-          >
-            {playlistUserForAdd?.length === 0 ? (
-              <svg width="24" height="24" stroke="#888889">
-                <use href={`${symbol}#icon-check`}></use>
-              </svg>
-            ) : (
-              <svg width="24" height="24">
-                <use href={`${symbol}#icon-plus`}></use>
-              </svg>
-            )}
+          <PlaylistAddButton type="button" onClick={addTrackToPlaylistsModal}>
+            <svg width="24" height="24">
+              <use href={`${symbol}#icon-plus`}></use>
+            </svg>
           </PlaylistAddButton>
         </PlaylistIconsWrapper>
       </PlaylistItem>
       {showModalAddTrackToPlaylist && (
-        <Modal
-          width={"45vw"}
-          padding={"24px"}
-          borderColor={"#FFF3BF"}
-          borderStyle={"solid"}
-          borderWidth={"1px"}
-          onClose={handleCloseModal}
-          showCloseButton={true}
-        >
-          <div
-            style={{
-              marginTop: "20px",
-              padding: "20px",
-              width: "100%",
-              height: "100%",
-              overflowY: "auto",
-            }}
-          >
-            {playlistUserForAdd?.length === 0 ? (
-              handleCloseModal()
-            ) : (
-              <PlaylistsForAdd
-                title={`Плейлисти для додавання`}
-                displayPlayer={"none"}
-                data={playlistUserForAdd}
-                trackId={id}
-                addTrackInPlaylistUser={addTrackInPlaylistUser}
-                // onClose={handleCloseModal}
-              />
-            )}
-          </div>
-        </Modal>
+        <AddTracksUser idTrack={id} handleCloseModal={handleCloseModal} />
       )}
     </>
   );

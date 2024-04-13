@@ -20,7 +20,7 @@ export const TitleWrapper = styled.p`
 export const TitleWrapperModal = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   width: 100%;
   font-size: 24px;
   line-height: 1.21;
@@ -28,6 +28,7 @@ export const TitleWrapperModal = styled.div`
   color: ${colors.mainFontColor};
   /* text-align: center; */
   margin-bottom: 2px;
+  gap: 12px;
 `;
 
 export const MediaList = styled.ul`
@@ -143,7 +144,7 @@ export const SvgMedia = styled.svg`
 export const PlaylistModalContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: ${({ alignItems }) => alignItems || "start"};
   justify-content: center;
   gap: 4px;
 `;

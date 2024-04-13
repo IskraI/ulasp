@@ -32,7 +32,7 @@ const CreateAllPlaylists = ({}) => {
     isFetching: isFetchingGetCreatePlaylists,
     isSuccess: isSuccesCreatePlaylists,
     isError: isErrorCreatePlaylists,
-  } = useGetCreatePlaylistsForUserQuery();
+  } = useGetCreatePlaylistsForUserQuery({ page: 1 });
   const [
     createPlaylist,
     {
@@ -89,20 +89,22 @@ const CreateAllPlaylists = ({}) => {
 
   console.log("createPlaylists", createPlaylists);
 
+  if (isFetchingCreatePlaylists) {
+    return <div style={{ width: "100%" }}>Хуй на на </div>;
+  }
+
   return (
     <>
-      {!isFetchingGetCreatePlaylists &&
-        !isError &&
-        !isLoadingFavoritePlaylist && (
-          <CreatePlaylists
-            title={"Cтворені плейлисти"}
-            dataFavorite={dataFavorite}
-            data={createPlaylists}
-            isFetching={isFetchingCreatePlaylists}
-            error={isError}
-            showNavigationLink={false}
-          />
-        )}
+      {isSuccesCreatePlaylists && !isError && !isLoadingFavoritePlaylist && (
+        <CreatePlaylists
+          title={"Cтворені плейлисти"}
+          dataFavorite={dataFavorite}
+          data={createPlaylists}
+          isFetching={isFetchingCreatePlaylists}
+          error={isError}
+          showNavigationLink={false}
+        />
+      )}
       {showModal && (
         <Modal width={"814px"} onClose={closeModal} showCloseButton={true}>
           <ModalFormMyplaylist

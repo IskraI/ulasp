@@ -4,10 +4,8 @@ import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 import { useSelector } from "react-redux";
 import {
   TitleWrapper,
-  ControlWrapper,
-  MediaList,
   TitleContainer,
-} from "../../UserMediaComponent/PlayLists/MediaList.styled";
+} from "../../UserMediaComponent/MediaList/MediaList.styled";
 import {
   useFavoritePlaylistForUserQuery,
   useAddPlaylistForUserQuery,

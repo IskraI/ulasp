@@ -1,4 +1,8 @@
+import PropTypes from "prop-types";
+
 import { BASE_URL } from "../../../constants/constants";
+
+import { useAddTrackByIdToPlaylistUserMutation } from "../../../redux/playlistsUserSlice";
 
 import {
   MediaItem,
@@ -6,43 +10,35 @@ import {
   MediaImg,
 } from "../MediaList/MediaList.styled";
 
-const PlayListItemForAdd = ({
-  id,
-  title,
-  icon,
-  countTracks,
-  placeListCardInf,
-  favoriteStatus,
-  handleAddTrackInPlaylist,
-  trackId,
-  addTrackInPlaylistUser,
-}) => {
-  // //хук который отправляет запрос на бек
-  // const [
-  //   addTrackToPlaylist,
-  //   { data: dataAddTrackToPlaylist, isLoading: isLoadingAddTrackToPlaylist },
-  // ] = useAddTrackByIdToPlaylistUserMutation();
-  // //функция которая вызывается при клике на плейлист и вызывает хук
-  // const addTrackInPlaylistUser = (id) => {
-  //   console.log("playlistUserForAdd :>> ", id);
-  //   console.log("trackId :>> ", trackId);
+const PlayListItemForAdd = ({ id, title, icon, trackId, showSuccess }) => {
+  const [addTrackToPlaylist] = useAddTrackByIdToPlaylistUserMutation();
 
-  //   addTrackToPlaylist({ id, trackId }).then(() => {
-  //     console.log("добавили :>> ");
-  //   });
-  // };
+  const addTrackInPlaylistUser = (id, trackId) => {
+    addTrackToPlaylist({ id, trackId }).unwrap();
+    showSuccess(true);
+  };
 
   return (
-    <MediaItem width={"250px"}>
-      <div
-        style={{ width: "100%", display: "flex", alignItems: "center" }}
-        onClick={() => addTrackInPlaylistUser(id, trackId)}
-      >
-        <MediaImg src={BASE_URL + "/" + icon} alt={title} />
-        <MediaItemText>{title}</MediaItemText>
-      </div>
-    </MediaItem>
+    <>
+      <MediaItem width={"250px"}>
+        <div
+          style={{ width: "100%", display: "flex", alignItems: "center" }}
+          onClick={() => addTrackInPlaylistUser(id, trackId)}
+        >
+          <MediaImg src={BASE_URL + "/" + icon} alt={title} />
+          <MediaItemText maxWidth={"170px"}>{title}</MediaItemText>
+        </div>
+      </MediaItem>
+    </>
   );
+};
+
+PlayListItemForAdd.propTypes = {
+  id: PropTypes.string,
+  title: PropTypes.string,
+  icon: PropTypes.string,
+  trackId: PropTypes.string,
+  showSuccess: PropTypes.func,
 };
 
 export default PlayListItemForAdd;

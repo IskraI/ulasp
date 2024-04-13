@@ -5,7 +5,7 @@ import {
   ControlWrapper,
   MediaList,
   TitleContainer,
-} from "../../UserMediaComponent/PlayLists/MediaList.styled";
+} from "../../UserMediaComponent/MediaList/MediaList.styled";
 import {
   useFavoritePlaylistForUserQuery,
   useAddPlaylistForUserQuery,

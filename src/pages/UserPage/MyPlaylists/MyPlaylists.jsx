@@ -18,7 +18,7 @@ const MyPlaylists = () => {
     isFetching: isFetchingCreatePlaylists,
     isSuccess: isSuccesCreatePlaylists,
     isError: isErrorCreatePlaylists,
-  } = useGetCreatePlaylistsForUserQuery(`?&limit=${6}`);
+  } = useGetCreatePlaylistsForUserQuery({ page: 1, limit: 6 });
 
   // const {
   //   data: allTracks,
@@ -135,7 +135,6 @@ const MyPlaylists = () => {
           <TrackAddByUser
             data={tracksInAdd.tracksInAdd}
             isFetching={isFetchingTracksInAdd}
-            createPlaylists={allCreatePlaylists}
             // error={isErrorNewSongs}
             // mediaLibrary={true}
             // showTitle={false}

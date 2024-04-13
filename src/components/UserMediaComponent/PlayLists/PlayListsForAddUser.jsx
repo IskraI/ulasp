@@ -1,158 +1,147 @@
-import { useState } from "react";
+import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 
 import PlayListItemForAdd from "./PlayListsItemForAddUser";
-import ModalFormMyplaylist from "../../UserCabinetPage/ControlMyplaylists/ModalFormMyplaylist";
 import ControlMyplaylists from "../../UserCabinetPage/ControlMyplaylists/ControlMyplaylists";
 
-import useChooseAvatar from "../../../hooks/useChooseAvatar";
+import CreateUsersPlaylists from "../TracksTable/CreateUsersPlaylists";
 
 import { Modal } from "../../Modal/Modal";
+import { Loader } from "../../Loader/Loader";
+import { NoData } from "../../Errors/Errors";
 
-import { ErrorNotFound } from "../../Errors/Errors";
+import { useGetPlaylistCreatedUserWithoutTrackIdQuery } from "../../../redux/playlistsUserSlice";
 
-import { useCreatePlaylistForUserMutation } from "../../../redux/playlistsUserSlice";
+import symbol from "../../../assets/symbol.svg";
 
 import { ModalInfoText } from "../../Modal/Modal.styled";
 
 import {
   TitleWrapperModal,
   MediaList,
-  TitleContainer,
-  ControlWrapper,
   PlaylistModalContainer,
 } from "./MediaList.styled";
 
-import symbol from "../../../assets/symbol.svg";
+const PlaylistsForAdd = ({ title, trackId }) => {
+  const {
+    data,
+    isSuccess: isSuccesCreatePlaylists,
+    isError: isErrorCreatePlaylists,
+    isLoading,
+  } = useGetPlaylistCreatedUserWithoutTrackIdQuery(trackId, {
+    refetchOnFocus: true,
+  });
 
-const PlaylistsForAdd = ({
-  title,
-  trackId,
-  data: playlists,
-  isFetching,
-  error,
-  handleCloseModal,
-  addTrackInPlaylistUser,
-}) => {
-  const minLength = 1;
-  const maxLength = 29;
+  const [showModalSuccess, setShowModalSuccess] = useState(false);
+  const [showModalCreatePlaylist, setShowModalCreatePlaylist] = useState(false);
 
-  const [
-    createPlaylist,
-    {
-      isSuccess,
-      isLoading: isLoadingCreatePlaylist,
-      isError: isErrorCreatePlaylist,
-      error: errorCreatePlaylist,
-    },
-  ] = useCreatePlaylistForUserMutation();
-
-  const [avatar, chooseAvatar, resetAvatar] = useChooseAvatar();
-
-  const [showModal, setShowModal] = useState(false);
-  const [showModalErrorCreate, setShowModalErrorCreate] = useState(false);
-
-  const closeModal = () => setShowModal(false);
-  const toogleModal = () => setShowModal(() => !showModal);
-
-  const formDataFunction = (data) => {
-    const formData = new FormData();
-
-    formData.append("playListName", data.playListName),
-      formData.append("type", data.type),
-      formData.append("picsURL", avatar);
-
-    return formData;
-  };
-
-  const handleSubmitPlaylist = async (data) => {
-    try {
-      await createPlaylist(formDataFunction(data)).unwrap();
-
-      closeModal();
-    } catch (error) {
-      console.log(error);
-      setShowModalErrorCreate(true);
+  useEffect(() => {
+    if (showModalSuccess) {
+      setTimeout(() => {
+        setShowModalSuccess(false);
+      }, 1500);
     }
-  };
+  }, [showModalSuccess]);
 
-  // console.log('dataAdd playlist', dataAdd.add )
-  console.log("PlaylistsForAdd playlist", playlists);
+  const toogleModal = () =>
+    setShowModalCreatePlaylist(() => !showModalCreatePlaylist);
+
+  const noPlaylists =
+    "Доступних плейлистів для цієї пісні не знайдено. Ви можете створити новий плейлист";
 
   return (
-    <PlaylistModalContainer>
-      {/* {playlists.length === 0 && handleCloseModal()} */}
-
-      <>
-        <TitleWrapperModal>
-          {playlists.length > 0 ? title : "Створіть свій плейлист"}
-          <ControlMyplaylists
-            iconButton={`${symbol}#icon-playlist-add`}
-            textButton={"Плейлист"}
-            onClick={toogleModal}
-          />
-        </TitleWrapperModal>
-
-        {!isFetching && !error && (
-          <>
-            {playlists.length > 0 && (
-              <MediaList>
-                {playlists.map(({ _id, playListName, playListAvatarURL }) => {
-                  return (
-                    <PlayListItemForAdd
-                      key={_id}
-                      id={_id}
-                      title={playListName}
-                      icon={playListAvatarURL}
-                      trackId={trackId}
-                      addTrackInPlaylistUser={addTrackInPlaylistUser}
-                    />
-                  );
-                })}
-              </MediaList>
+    <PlaylistModalContainer
+      alignItems={data?.playlistsWithoutTrack?.length > 3 ? "center" : "start"}
+    >
+      {isLoading && <Loader />}
+      {isSuccesCreatePlaylists && (
+        <>
+          <TitleWrapperModal>
+            {data?.playlistsWithoutTrack?.length > 0
+              ? title
+              : data?.countPlaylists
+              ? null
+              : "Створіть свій перший плейлист"}
+            {(!data?.countPlaylists ||
+              data?.playlistsWithoutTrack?.length > 0) && (
+              <ControlMyplaylists
+                iconButton={`${symbol}#icon-playlist-add`}
+                textButton={"Плейлист"}
+                onClick={toogleModal}
+              />
             )}
-          </>
-        )}
-      </>
-      {showModal && (
-        <Modal width={"814px"} onClose={closeModal} showCloseButton={true}>
-          <ModalFormMyplaylist
-            onSubmit={handleSubmitPlaylist}
-            changePlayListAvatar={chooseAvatar}
-            img={avatar}
-            clearImageCover={() => resetAvatar(null)}
-            idInputImg={"picsURL"}
-            idInputFirst={"playListName"}
-            idInputSecond={"type"}
-            marginTopInputFirst="24px"
-            valueInputSecond={"playlist"}
-            placeholderFirst={`Назва плейлисту*`}
-            cover={true}
-            minLength={minLength}
-            maxLength={maxLength}
-          />
-        </Modal>
+          </TitleWrapperModal>
+
+          {!isErrorCreatePlaylists && (
+            <>
+              {!data?.playlistsWithoutTrack?.length &&
+                data?.countPlaylists >= 1 && (
+                  <div
+                    style={{
+                      width: "100%",
+                      padding: "12px",
+                      textAlign: "center",
+                    }}
+                  >
+                    <NoData text={noPlaylists} textColor={"grey"}>
+                      <ControlMyplaylists
+                        iconButton={`${symbol}#icon-playlist-add`}
+                        textButton={"Плейлист"}
+                        onClick={toogleModal}
+                      />
+                    </NoData>
+                  </div>
+                )}
+
+              <MediaList>
+                {data?.playlistsWithoutTrack?.map(
+                  ({ _id, playListName, playListAvatarURL }) => {
+                    return (
+                      <PlayListItemForAdd
+                        key={_id}
+                        id={_id}
+                        title={playListName}
+                        icon={playListAvatarURL}
+                        trackId={trackId}
+                        showSuccess={(data) => setShowModalSuccess(data)}
+                      />
+                    );
+                  }
+                )}
+              </MediaList>
+            </>
+          )}
+        </>
       )}
-      {showModalErrorCreate && (
+      {showModalCreatePlaylist && (
+        <CreateUsersPlaylists onClose={toogleModal} />
+      )}
+      {showModalSuccess && (
         <Modal
           width={"25vw"}
-          height={"25vh"}
-          onClose={() => setShowModalErrorCreate(false)}
-          showCloseButton={true}
+          padding={"4px"}
+          borderColor={"#FFF3BF"}
+          borderStyle={"solid"}
+          borderWidth={"1px"}
+          margintop={"2px"}
+          onClose={() => setShowModalSuccess(false)}
         >
-          <ModalInfoText fontSize={"20px"} marginBottom={"34px"}>
-            {isErrorCreatePlaylist &&
-            errorCreatePlaylist.data?.code === "4091" ? (
-              <ErrorNotFound
-                error={`Плейлист "${errorCreatePlaylist.data?.object}" вже використовується`}
-              />
-            ) : (
-              <ErrorNotFound error={errorCreatePlaylist.data?.message} />
-            )}
+          <ModalInfoText
+            marginTop={"2px"}
+            paddingTop={"4px"}
+            paddingBottom={"4px"}
+          >
+            Успішно додано
           </ModalInfoText>
         </Modal>
       )}
     </PlaylistModalContainer>
   );
+};
+
+PlaylistsForAdd.propTypes = {
+  title: PropTypes.string,
+  trackId: PropTypes.string,
 };
 
 export default PlaylistsForAdd;

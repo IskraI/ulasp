@@ -17,6 +17,10 @@ export const TitleWrapper = styled.p`
   color: ${colors.mainFontColor};
 `;
 
+export const TitleContainer = styled.div`
+  margin-bottom: 16px;
+`;
+
 export const MediaList = styled.ul`
   display: flex;
   flex-wrap: wrap;
@@ -58,8 +62,7 @@ export const MediaImg = styled.img`
 `;
 
 export const MediaItemText = styled.p`
-  /* max-width: 170px; */
-
+  max-width: ${({ maxWidth }) => maxWidth || "180px"};
   font-size: 16px;
   line-height: 1.19;
   font-weight: 400;
