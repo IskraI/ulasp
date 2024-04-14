@@ -5,7 +5,6 @@ import { useGetAllGenresQuery } from "../../../redux/genresSlice";
 import { useGetLatestPlaylistsQuery } from "../../../redux/playlistsSlice";
 import { useGetAllTracksQuery } from "../../../redux/tracksSlice";
 import { useGetAllShopsQuery } from "../../../redux/shopsSlice";
-import { useGetCreatePlaylistsForUserQuery } from "../../../redux/playlistsUserSlice";
 
 import NewTracksPage from "../NewTracksPage/NewTracksPage";
 

@@ -1,18 +1,17 @@
 import PropTypes from "prop-types";
 
 import { TitleWrapper, ControlWrapper } from "../MediaList/MediaList.styled";
-// import { Button } from "../../Button/Button";
-// import symbol from "../../../assets/symbol.svg";
-import { Tracks } from "./NewSongs.styled";
+
 import TracksItem from "./TrackItem";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
+
+import { Tracks } from "./NewSongs.styled";
 
 const NewSongs = ({
   data: trackInChart,
   isFetching,
   isError,
   showNavigationLink,
-  createPlaylists,
 }) => {
   return (
     <>
@@ -31,9 +30,6 @@ const NewSongs = ({
                   artist={artist}
                   icon={trackPictureURL}
                   trackURL={trackURL}
-                  addPlaylist={createPlaylists?.filter(
-                    (item) => !item.trackList.includes(_id)
-                  )}
                 />
               )
             )}
@@ -53,7 +49,6 @@ NewSongs.propTypes = {
   isFetching: PropTypes.bool,
   isError: PropTypes.bool,
   showNavigationLink: PropTypes.bool,
-  createPlaylists: PropTypes.array,
 };
 
 export default NewSongs;
