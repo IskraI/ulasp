@@ -62,19 +62,20 @@ export const SignInAdminAndEditor = () => {
       })
       .catch((e) => {
         let errorMessage = e.data?.message;
-        // if (e.data?.message === "Login  or password is wrong") {
-        // alert(e.data?.message);
-        console.log("e.data?.message :>> ", e.data?.message);
-
         if (e.data.message) {
           const mappedMessage = errorMappings[e.status];
+
           if (mappedMessage) {
-            errorMessage = mappedMessage;
+            if (typeof mappedMessage === "object") {
+              errorMessage = mappedMessage[e.data.message];
+            } else {
+              errorMessage = mappedMessage;
+            }
           }
         }
         setErrorMessage(errorMessage);
         handleShowModal();
-        // console.log(e.data?.message || e);
+
         if (e?.status === "FETCH_ERROR") {
           navigate("/error", { state: { errorMessage: e?.status } });
         }

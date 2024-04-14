@@ -66,8 +66,13 @@ export const SignInClient = () => {
         let errorMessage = e.data?.message;
         if (e.data.message) {
           const mappedMessage = errorMappings[e.status];
+
           if (mappedMessage) {
-            errorMessage = mappedMessage;
+            if (typeof mappedMessage === "object") {
+              errorMessage = mappedMessage[e.data.message];
+            } else {
+              errorMessage = mappedMessage;
+            }
           }
         }
 
