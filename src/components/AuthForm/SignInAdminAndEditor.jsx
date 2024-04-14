@@ -27,8 +27,8 @@ export const SignInAdminAndEditor = () => {
   const [showModal, setShowModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [dispatch, error, isFetching] = useSigninMutation();
- 
- const handleShowModal = () => {
+
+  const handleShowModal = () => {
     setShowModal(true);
     document.body.classList.add("modal-open");
   };
@@ -61,11 +61,13 @@ export const SignInAdminAndEditor = () => {
         reset();
       })
       .catch((e) => {
-         let errorMessage = e.data?.message;
+        let errorMessage = e.data?.message;
         // if (e.data?.message === "Login  or password is wrong") {
         // alert(e.data?.message);
+        console.log("e.data?.message :>> ", e.data?.message);
+
         if (e.data.message) {
-           const mappedMessage = errorMappings[e.status];
+          const mappedMessage = errorMappings[e.status];
           if (mappedMessage) {
             errorMessage = mappedMessage;
           }
@@ -162,7 +164,7 @@ export const SignInAdminAndEditor = () => {
         </StyledButton>
         {/* </StyledFormInsight> */}
       </StyledForm>
-       {showModal && (
+      {showModal && (
         <Modal
           width={"520px"}
           padding={"24px"}
