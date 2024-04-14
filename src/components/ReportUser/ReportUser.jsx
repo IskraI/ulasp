@@ -20,7 +20,7 @@ import { useParams } from "react-router-dom";
 import ReportFormDataTemplate from "../ReportForm/FormForReport";
 import ReportUserTable from "./ReportUserTable";
 import { getQuarterRange } from "../../helpers/helpers";
-import { ExportToExcel } from "./ExportXLS";
+import { ExportToExcel } from "./ExportToXls";
 const ReportUser = () => {
   const [responseData, setResponseData] = useState();
   const [date, setDate] = useState({});

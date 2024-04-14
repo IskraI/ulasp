@@ -1,25 +1,7 @@
-// import React, { useState } from "react";
-// import ReactExport from "react-data-export";
-// const ExcelFile = ReactExport.ExcelFile;
-// const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
-// const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
-
-// export const ExportXls = ({ data, date, user }) => {
-//   console.log("data :>> ", data);
-
-//   return <div></div>;
-// };
-
-import React from "react";
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx-js-style";
 import { Button } from "../Button/Button";
 import symbol from "../../assets/symbol.svg";
-import { ButtonPrint } from "../AdminComponents/ButtonPrint/ButtonPrint";
-import {
-  ButtonPrintCustom,
-  SvgStyled,
-} from "../AdminComponents/ButtonPrint/ButtonPrint.styled";
 
 export const ExportToExcel = ({ data, fileName, user, date }) => {
   const fileType =
