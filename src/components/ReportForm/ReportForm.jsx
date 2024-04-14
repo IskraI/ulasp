@@ -11,7 +11,7 @@ import ReportFormDataTemplate from "./FormForReport";
 import { ReportModal } from "../Modal/Modal.styled";
 import { ButtonPrint } from "../AdminComponents/ButtonPrint/ButtonPrint";
 import ReportUserTable from "../ReportUser/ReportUserTable";
-import { ExportToExcel } from "../ReportUser/ExportXLS";
+import { ExportToExcel } from "../ReportUser/ExportToXls";
 
 export const ReportForm = ({ user, userpage }) => {
   const [responseData, setResponseData] = useState([]);
