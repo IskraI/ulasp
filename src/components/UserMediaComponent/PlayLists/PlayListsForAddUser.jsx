@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import PlayListItemForAdd from "./PlayListsItemForAddUser";
 import ControlMyplaylists from "../../UserCabinetPage/ControlMyplaylists/ControlMyplaylists";
 
-import CreateUsersPlaylists from "../TracksTable/CreateUsersPlaylists";
+import CreateUsersPlaylists from "../../UserCabinetPage/CreatePlaylists/CreateUsersPlaylists";
 
 import { Modal } from "../../Modal/Modal";
 import { Loader } from "../../Loader/Loader";

@@ -11,9 +11,10 @@ import {
   useAddPlaylistForUserQuery,
 } from "../../../redux/playlistsUserSlice";
 
+import { NoData } from "../../Errors/Errors";
+
 const AddPlaylists = ({
   title,
-  displayPlayer,
 
   showNavigationLink,
   data: dataAdd,
@@ -35,6 +36,12 @@ const AddPlaylists = ({
       </TitleContainer>
 
       <>
+        {dataAdd?.length === 0 && (
+          <NoData
+            text={"Ви ще не додали жодного плейлиста"}
+            textColor={"grey"}
+          />
+        )}
         <MediaList>
           {dataAdd?.map(({ _id, playListName, playListAvatarURL }) => {
             return (

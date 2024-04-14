@@ -14,7 +14,6 @@ import {
   useGetCreatePlaylistByIdForUserQuery,
   useFavoritePlaylistForUserQuery,
   useAddPlaylistForUserQuery,
-  // useGetCreatePlaylistsForUserQuery,
 } from "../../../redux/playlistsUserSlice";
 
 const TracksPage = () => {
@@ -31,12 +30,7 @@ const TracksPage = () => {
 
   const { data: dataFavorite } = useFavoritePlaylistForUserQuery();
   const { data: dataAdd } = useAddPlaylistForUserQuery();
-  // const {
-  //   data: createPlaylists,
-  //   isFetching: isFetchingCreatePlaylists,
-  //   isSuccess: isSuccesCreatePlaylists,
-  //   isError: isErrorCreatePlaylists,
-  // } = useGetCreatePlaylistsForUserQuery();
+
   const {
     data,
     isFetching: isFetchingPlaylistById,

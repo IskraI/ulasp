@@ -7,7 +7,6 @@ import {
   useGetLatestPlaylistsForUserQuery,
   useFavoritePlaylistForUserQuery,
   useAddPlaylistForUserQuery,
-  useGetCreatePlaylistsForUserQuery,
 } from "../../../redux/playlistsUserSlice";
 import { useGetTracksInChartQuery } from "../../../redux/tracksSlice";
 import { useGetAllShopsUserQuery } from "../../../redux/shopsUserSlice";
@@ -53,18 +52,8 @@ const MediaLibraryForUser = () => {
     forseRefetch: true,
   });
 
-  const {
-    data: createPlaylists,
-    isFetching: isFetchingCreatePlaylists,
-    isSuccess: isSuccesCreatePlaylists,
-    isError: isErrorCreatePlaylists,
-  } = useGetCreatePlaylistsForUserQuery();
-
   const { data: dataAdd, isLoading: isLoadingAddPlaylist } =
     useAddPlaylistForUserQuery();
-
-  console.log("dataAdd playlist", dataAdd);
-  console.log("dataFavorite playlist", favoritePlaylist);
 
   const fetching =
     isFetchingAllGenre &&
@@ -88,7 +77,6 @@ const MediaLibraryForUser = () => {
       {success && !fetching && (
         <>
           <Genres
-            displayPlayer={"none"}
             data={genres}
             isFetching={isFetchingAllGenre}
             isError={isErrorAllGenre}
@@ -115,7 +103,6 @@ const MediaLibraryForUser = () => {
           )}
 
           <NewSongs
-            createPlaylists={createPlaylists}
             data={tracksInChart.tracksInChart}
             isFetching={isFetchingTracksInChart}
             isError={isErrorTracksInChart}

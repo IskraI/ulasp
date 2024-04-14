@@ -1,7 +1,8 @@
-import { useLocation } from "react-router-dom";
-
 import FavoritePlaylistsItem from "./FavoritePlaylistsItem";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
+
+import { NoData } from "../../Errors/Errors";
+
 import {
   TitleWrapper,
   ControlWrapper,
@@ -32,28 +33,14 @@ const FavoritePlaylists = ({
     isError: isErrorAddPlaylist,
   } = useAddPlaylistForUserQuery();
 
-  const location = useLocation();
-
   return (
     <>
       <TitleContainer>
         <TitleWrapper>{title}</TitleWrapper>
       </TitleContainer>
-      {/* {isFetching && (
-        <MediaList>
-          <li
-            style={{
-              marginTop: "26px",
-              marginBottom: "26px",
-              display: "flex",
-              width: "100%",
-              justifyContent: "center",
-            }}
-          >
-            <LoaderButton color={"#00BFFF"} width={100} height={100} />
-          </li>
-        </MediaList>
-      )} */}
+      {dataFavorite?.length === 0 && (
+        <NoData text={"Ви ще не додали жодного плейлиста"} textColor={"grey"} />
+      )}
       {!error && (
         <>
           <MediaList>

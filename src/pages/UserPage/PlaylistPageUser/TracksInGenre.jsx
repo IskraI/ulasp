@@ -1,7 +1,6 @@
 import TabNavigation from "../../../components/TabNavigation/TabNavigation";
 import TracksTable from "../../../components/UserMediaComponent/TracksTable/TracksTableUser";
 import { useGetTracksByGenreIdQuery } from "../../../redux/tracksUserSlice";
-import { useGetCreatePlaylistsForUserQuery } from "../../../redux/playlistsUserSlice";
 import { BtnSort } from "../AllTracksUser/AllTracksUser.styled";
 import symbol from "../../../assets/symbol.svg";
 import { useState, useEffect, useId, useRef } from "react";
@@ -9,7 +8,7 @@ import NavMusic from "../../../components/UserMediaComponent/NavMusic/NavMusic";
 import { useParams } from "react-router-dom";
 import DropDownTracksInGenres from "../../../components/DropDownGeners/DropDownTracksInGener";
 import { Loader } from "../../../components/Loader/Loader";
-// const RowsTitle = ["", "Назва пісні", "Виконавець", "Тривалість", "Жанр", ""];
+
 
 const AllTracksUser = () => {
   const id = useId();
@@ -18,18 +17,7 @@ const AllTracksUser = () => {
   const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  // const {
-  //   data: allTracks,
 
-  //   error: errorLoadingAllTracks,
-  //   isFetching: isFetchingAllTracks,
-  // } = useGetAllTracksforUserQuery();
-  const {
-    data: createPlaylists,
-    isFetching: isFetchingGetCreatePlaylists,
-    isSuccess: isSuccesCreatePlaylists,
-    isError: isErrorCreatePlaylists,
-  } = useGetCreatePlaylistsForUserQuery();
   const {
     data: allTracks,
     error: errorLoadingAllTracks,
@@ -152,7 +140,6 @@ const AllTracksUser = () => {
               <use href={`${symbol}#icon-sort`}></use>
             </svg>
           </BtnSort>
-          {console.log("allTracks.tracks", allTracks.tracks)}
           <TracksTable
             title={"In playlist"}
             showTitle={false}
@@ -172,9 +159,7 @@ const AllTracksUser = () => {
             totalPages={allTracks.totalPages}
             totalTracks={allTracks.totalTracks}
             tracksSRC={allTracks.tracksSRC}
-            createPlaylists={createPlaylists}
           />
-          {/* <Player tracks={allTracks.tracks} /> */}
         </>
       )}
     </>

@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import TracksTable from "../../../components/UserMediaComponent/TracksTable/TracksTableUser";
 import {
   useGetCreatePlaylistByIdForUserQuery,
-  useGetCreatePlaylistsForUserQuery,
   useFavoritePlaylistForUserQuery,
 } from "../../../redux/playlistsUserSlice";
 
@@ -36,12 +35,6 @@ const TracksPageCreateUser = () => {
     limit: pageSize,
     sort: sortedBy,
   });
-  const {
-    data: createPlaylists,
-    isFetching: isFetchingCreatePlaylists,
-    isSuccess: isSuccesCreatePlaylists,
-    isError: isErrorCreatePlaylists,
-  } = useGetCreatePlaylistsForUserQuery();
 
   const { data: dataFavorite, isLoading: isLoadingFavoritePlaylist } =
     useFavoritePlaylistForUserQuery();
@@ -117,7 +110,6 @@ const TracksPageCreateUser = () => {
             tracksSRC={data.tracksSRC}
             deleteButton={true}
             isSorted={isSorted}
-            createPlaylists={createPlaylists}
           />
         )}
       </>

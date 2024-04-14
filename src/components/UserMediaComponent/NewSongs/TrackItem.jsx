@@ -1,6 +1,8 @@
-/* eslint-disable react/prop-types */
-import { useDispatch, useSelector } from "react-redux";
+import PropTypes from "prop-types";
+
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
@@ -12,32 +14,20 @@ import {
   PlaylistImg,
   PlaylistItemText,
   PlaylistIconsWrapper,
-  PlaylistDeleteButton,
   TextWrapper,
   PlaylistItemText2,
 } from "./PlayLists.styled";
 
 import { PlaylistAddButton } from "../../UserCabinetPage/UserTrack/PlayLists.styled";
 
-import { Link } from "react-router-dom";
-
 import {
   setPreloadSrcPlayer,
   stopPlay,
-  setCurrentIndex,
   setSrcPlaying,
 } from "../../../redux/playerSlice";
 import { getPlayerState } from "../../../redux/playerSelectors";
 
-const TrackItem = ({
-  id,
-  title,
-  icon,
-  artist,
-  trackURL,
-  isLoading,
-  addPlaylist,
-}) => {
+const TrackItem = ({ id, title, icon, artist, trackURL }) => {
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
   const [isPlayingTrack, setIsPlayingTrack] = useState(false);
@@ -135,6 +125,14 @@ const TrackItem = ({
       )}
     </>
   );
+};
+
+TrackItem.propTypes = {
+  id: PropTypes.string,
+  title: PropTypes.string,
+  icon: PropTypes.string,
+  artist: PropTypes.string,
+  trackURL: PropTypes.string,
 };
 
 export default TrackItem;

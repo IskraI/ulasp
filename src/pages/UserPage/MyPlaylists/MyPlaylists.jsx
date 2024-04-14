@@ -20,13 +20,6 @@ const MyPlaylists = () => {
     isError: isErrorCreatePlaylists,
   } = useGetCreatePlaylistsForUserQuery({ page: 1, limit: 6 });
 
-  // const {
-  //   data: allTracks,
-
-  //   isFetching: isFetchingNewSongs,
-  //   isSuccess: isSuccesLatestNewSongs,
-  //   isError: isErrorNewSongs,
-  // } = useGetAllTracksforUserQuery(`?&limit=${6}`);
   const {
     data: tracksInAdd,
     error: errorLoadingTracksInAdd,

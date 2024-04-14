@@ -1,87 +1,30 @@
+import PropTypes from "prop-types";
+
 import { useState } from "react";
 
 import CreatePlayListItem from "./CreatePlaylistItem";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
 
-import {
-  TitleWrapper,
-  ControlWrapper,
-  MediaList,
-  TitleContainer,
-} from "../../UserMediaComponent/PlayLists/MediaList.styled";
-import {
-  useFavoritePlaylistForUserQuery,
-  useCreatePlaylistForUserMutation,
-} from "../../../redux/playlistsUserSlice";
-import symbol from "../../../assets/symbol.svg";
 import ControlMyplaylists from "../ControlMyplaylists/ControlMyplaylists";
-import { Modal } from "../../Modal/Modal";
-import { ModalInfoText } from "../../Modal/Modal.styled";
-import { ErrorNotFound, NoData } from "../../Errors/Errors";
-import ModalFormMyplaylist from "../ControlMyplaylists/ModalFormMyplaylist";
 
-import useChooseAvatar from "../../../hooks/useChooseAvatar";
+import { NoData } from "../../Errors/Errors";
+
+import CreateUsersPlaylists from "./CreateUsersPlaylists";
+
+import symbol from "../../../assets/symbol.svg";
+import { MediaList } from "../../UserMediaComponent/MediaList/MediaList.styled";
 
 const CreatePlaylists = ({
   title,
   showNavigationLink,
   data: createPlaylists,
   dataFavorite,
-  isFetching,
-  error,
-
-  //   genre,
-  // shopCategoryName,
+  isError,
 }) => {
   const minLengthInput = 1;
   const maxLengthInput = 29;
 
   const [showModal, setShowModal] = useState(false);
-  const [showModalErrorCreate, setShowModalErrorCreate] = useState(false);
-
-  // const {
-  //   data: dataFavorite,
-  //   isLoading: isLoadingFavoritePlaylist,
-  // } = useFavoritePlaylistForUserQuery();
-
-  const [
-    createPlaylist,
-    {
-      isSuccess,
-      isLoading: isLoadingCreatePlaylist,
-      isError: isErrorCreatePlaylist,
-      error: errorCreatePlaylist,
-    },
-  ] = useCreatePlaylistForUserMutation();
-
-  const [avatar, chooseAvatar, resetAvatar] = useChooseAvatar();
-
-  const formDataFunction = (data) => {
-    const formData = new FormData();
-
-    formData.append("playListName", data.playListName),
-      formData.append("type", data.type),
-      formData.append("picsURL", avatar);
-
-    return formData;
-  };
-
-  const handleSubmitPlaylist = async (data) => {
-    try {
-      await createPlaylist(formDataFunction(data)).unwrap();
-
-      closeModal();
-    } catch (error) {
-      console.log(error);
-      setShowModalErrorCreate(true);
-    }
-  };
-
-  const clearImageCover = () => resetAvatar(null);
-  const closeModal = () => {
-    clearImageCover();
-    return setShowModal(false);
-  };
 
   const toogleModal = () => setShowModal(() => !showModal);
   return (
@@ -98,7 +41,7 @@ const CreatePlaylists = ({
           textColor={"grey"}
         />
       )}
-      {!error && (
+      {!isError && (
         <>
           <MediaList>
             {createPlaylists?.map(
@@ -126,46 +69,16 @@ const CreatePlaylists = ({
           />
         </>
       )}
-      {showModal && (
-        <Modal width={"814px"} onClose={closeModal} showCloseButton={true}>
-          <ModalFormMyplaylist
-            onSubmit={handleSubmitPlaylist}
-            changePlayListAvatar={chooseAvatar}
-            img={avatar}
-            clearImageCover={clearImageCover}
-            idInputImg={"picsURL"}
-            idInputFirst={"playListName"}
-            idInputSecond={"type"}
-            marginTopInputFirst="24px"
-            valueInputSecond={"playlist"}
-            placeholderFirst={`Назва плейлисту*`}
-            cover={true}
-            minLength={minLengthInput}
-            maxLength={maxLengthInput}
-          />
-        </Modal>
-      )}
-      {showModalErrorCreate && (
-        <Modal
-          width={"25vw"}
-          height={"25vh"}
-          onClose={() => setShowModalErrorCreate(false)}
-          showCloseButton={true}
-        >
-          <ModalInfoText fontSize={"20px"} marginBottom={"34px"}>
-            {isErrorCreatePlaylist &&
-            errorCreatePlaylist.data?.code === "4091" ? (
-              <ErrorNotFound
-                error={`Плейлист "${errorCreatePlaylist.data?.object}" вже використовується`}
-              />
-            ) : (
-              <ErrorNotFound error={errorCreatePlaylist.data?.message} />
-            )}
-          </ModalInfoText>
-        </Modal>
-      )}
+      {showModal && <CreateUsersPlaylists onClose={toogleModal} />}
     </>
   );
 };
 
+CreatePlaylists.propTypes = {
+  title: PropTypes.string,
+  showNavigationLink: PropTypes.bool,
+  data: PropTypes.array,
+  dataFavorite: PropTypes.object,
+  isError: PropTypes.bool,
+};
 export default CreatePlaylists;

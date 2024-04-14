@@ -8,6 +8,7 @@ import Select from "rc-select";
 
 import localeUA from "../../../constants/paginationLocaleUA.js";
 import { compareArray, findPage } from "../../../helpers/helpers.js";
+import SelectPageSize from "../../EditorComponents/TracksTable/SelectSize.jsx";
 
 import TrackItem from "./TrackItemUser";
 import { ErrorNotFound, NoData } from "../../Errors/Errors";
@@ -34,7 +35,6 @@ import {
 } from "../TracksTable/TracksTableUser.styled";
 
 import "../../../styles/pagination.css";
-import "../../../styles/rc-select.css";
 
 const TracksTable = ({
   rows,
@@ -61,7 +61,6 @@ const TracksTable = ({
   totalPages,
   deleteButton = false,
   isSorted,
-  // createPlaylists,
 }) => {
   const { id: idUser } = useSelector(getUserState);
   console.log("user TracksTable :>> ", idUser);
@@ -114,11 +113,7 @@ const TracksTable = ({
     [dispatch, onChangeCurrentPage]
   );
 
-  // const onPageSizeChange = (size) => {
-  //   console.log(size);
-  //   setPageSize(size);
-  //   onChangeSizePage(size);
-  // };
+  const onPageSizeChange = (size) => onChangeSizePage(size);
   useEffect(() => {
     console.log("currentPageLocal", currentPage);
     console.log("currentPageGlobal", currentPageGlobalState);
@@ -319,12 +314,6 @@ const TracksTable = ({
                         deleteCheckedTrackId={deleteCheckedTrackId}
                         addTrackToCheckedList={addTrackToCheckedList}
                         isAddTrackUser={addTrackByUsers?.includes(idUser)}
-                        // addPlaylist={
-                        //   (createPlaylists || []).filter(
-                        //     (item) => !item.trackList.includes(_id)
-                        //   ) || []
-                        // }
-                        // createPlaylists={createPlaylists}
                       />
                     );
                   }
@@ -351,23 +340,37 @@ const TracksTable = ({
                 onClick={deletingMultipleTracks}
               />
             )}
+
             {isSuccess && (
-              <Pagination
-                // style={{ marginBottom: "24px" }}
-                defaultCurrent={1}
-                current={currentPage}
-                total={totalTracks}
-                showLessItems
-                selectComponentClass={Select}
-                showSizeChanger={false}
-                defaultPageSize={pageSize}
-                pageSize={pageSize}
-                hideOnSinglePage
-                // onShowSizeChange={onPageSizeChange}
-                // onChangeSizePage={onPageSizeChange}
-                onChange={(page) => onChangePage(page)}
-                // locale={localeUA}
-              />
+              <div
+                style={{
+                  display: "flex",
+                  marginLeft: "auto",
+                  alignItems: "center",
+                }}
+              >
+                <SelectPageSize
+                  pageSize={pageSize}
+                  onChange={onPageSizeChange}
+                  totalPages={totalPages}
+                  optionValue={[10, 20, 50, 100]}
+                />
+
+                <Pagination
+                  // style={{ marginBottom: "24px" }}
+                  defaultCurrent={1}
+                  current={currentPage}
+                  total={totalTracks}
+                  showLessItems
+                  selectComponentClass={Select}
+                  showSizeChanger={false}
+                  defaultPageSize={pageSize}
+                  pageSize={pageSize}
+                  hideOnSinglePage
+                  onChange={(page) => onChangePage(page)}
+                  // locale={localeUA}
+                />
+              </div>
             )}
           </div>
         </>

@@ -2,11 +2,9 @@ import TabNavigation from "../../../components/TabNavigation/TabNavigation";
 import TracksTable from "../../../components/UserMediaComponent/TracksTable/TracksTableUser";
 import rowsNewTracksUser from "./RowsAddTracksUserPage";
 import { useGetAllAddTrackByUserQuery } from "../../../redux/tracksUserSlice";
-import { useGetCreatePlaylistsForUserQuery } from "../../../redux/playlistsUserSlice";
 import { useState } from "react";
 
-import { Loader } from "../../../components/Loader/Loader";
-
+import { TitleWrapper } from "../../../components/EditorComponents/MediaList/MediaList.styled";
 const AddTracksUserPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -23,14 +21,6 @@ const AddTracksUserPage = () => {
     forseRefetch: true,
   });
 
-  const {
-    data: createPlaylists,
-    isFetching: isFetchingCreatePlaylists,
-    isSuccess: isSuccesCreatePlaylists,
-    isError: isErrorCreatePlaylists,
-  } = useGetCreatePlaylistsForUserQuery();
-
-  console.log("createPlaylists :>> ", createPlaylists);
   const onPageChange = (page) => {
     setCurrentPage(page);
   };
@@ -39,14 +29,10 @@ const AddTracksUserPage = () => {
     setPageSize(size);
   };
 
-  const handleSortClick = () => {
-    // setSortAlphabetically(!sortAlphabetically);
-  };
-  console.log("tracksInAdd :>> ", tracksInAdd);
   return (
     <>
       {/* <TabNavigation /> */}
-
+      <TitleWrapper>Обрані пісні</TitleWrapper>
       {/* {isFetchingTracksInAdd && <Loader />} */}
       {isSuccessTracksInAdd && !errorLoadingTracksInAdd && (
         <>
@@ -67,7 +53,6 @@ const AddTracksUserPage = () => {
             currentPage={currentPage}
             pageSize={pageSize}
             totalPages={tracksInAdd.totalPages}
-            createPlaylists={createPlaylists}
           />
         </>
       )}

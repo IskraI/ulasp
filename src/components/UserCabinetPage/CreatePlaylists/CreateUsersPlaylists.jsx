@@ -4,7 +4,7 @@ import { useState } from "react";
 import useChooseAvatar from "../../../hooks/useChooseAvatar";
 
 import { Modal } from "../../Modal/Modal";
-import ModalFormMyplaylist from "../../UserCabinetPage/ControlMyplaylists/ModalFormMyplaylist";
+import ModalFormMyplaylist from "../ControlMyplaylists/ModalFormMyplaylist";
 
 import { ErrorNotFound } from "../../Errors/Errors";
 

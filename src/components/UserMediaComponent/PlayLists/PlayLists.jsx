@@ -1,13 +1,14 @@
 import PlayListItem from "./PlayListsItem";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
-import { TitleWrapper, MediaList, TitleContainer } from "./MediaList.styled";
+
 import {
   useFavoritePlaylistForUserQuery,
   useAddPlaylistForUserQuery,
-  useGetCreatePlaylistsForUserQuery,
 } from "../../../redux/playlistsUserSlice";
 
 import { NoData } from "../../Errors/Errors";
+
+import { TitleWrapper, MediaList, TitleContainer } from "./MediaList.styled";
 
 const LatestPlaylists = ({
   title,
@@ -25,12 +26,7 @@ const LatestPlaylists = ({
 
   const { data: dataAdd, isLoading: isLoadingAddPlaylist } =
     useAddPlaylistForUserQuery();
-  const {
-    data: createPlaylists,
-    isFetching: isFetchingCreatePlaylists,
-    isSuccess: isSuccesCreatePlaylists,
-    isError: isErrorCreatePlaylists,
-  } = useGetCreatePlaylistsForUserQuery();
+
   // console.log('dataFavorite playlist', dataFavorite.favorites)
 
   return (
