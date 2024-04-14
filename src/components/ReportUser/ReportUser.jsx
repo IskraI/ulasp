@@ -21,14 +21,13 @@ import ReportFormDataTemplate from "../ReportForm/FormForReport";
 import ReportUserTable from "./ReportUserTable";
 import { getQuarterRange } from "../../helpers/helpers";
 import { ExportToExcel } from "./ExportXLS";
+
 const ReportUser = () => {
   const [responseData, setResponseData] = useState();
   const [date, setDate] = useState({});
   const { id } = useParams();
   const { data: user, error, isLoading } = useGetUserByIdQuery(id);
   const [selectedOption, setSelectedOption] = useState("date");
-
-  console.log("зашли в репорт :>> ");
 
   const handleSelectedOptionChange = (newSelectedOption) => {
     setSelectedOption(newSelectedOption); // обновляем selectedOption внутри ReportUser
