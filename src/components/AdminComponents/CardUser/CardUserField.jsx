@@ -37,7 +37,7 @@ const CardUserField = ({
   editor,
 }) => {
   // console.log("user", user);
-  console.log("errors :>> ", errors);
+
   return (
     <Fieldform>
       <RegisterLeftBlock>
