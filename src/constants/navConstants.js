@@ -143,3 +143,12 @@ export const propUserNav = [
     ],
   },
 ];
+
+export const propUserBlockNav = [
+  {
+    id: "navCabinet",
+    title: "Кабінет",
+    navigation: "cabinet",
+    picture: `${symbol}#icon-cabinet`,
+  },
+];

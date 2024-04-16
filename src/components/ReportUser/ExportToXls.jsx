@@ -2,6 +2,7 @@ import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx-js-style";
 import { Button } from "../Button/Button";
 import symbol from "../../assets/symbol.svg";
+import { formatDateFromString } from "../../helpers/helpers";
 
 export const ExportToExcel = ({ data, fileName, user, date }) => {
   const fileType =
@@ -10,51 +11,14 @@ export const ExportToExcel = ({ data, fileName, user, date }) => {
   const calculateTotalListens = (listens) => {
     return listens.reduce((acc, cur) => acc + cur.countOfListenes, 0);
   };
-  const formatDate = (dateString) => {
-    const months = [
-      "січня",
-      "лютого",
-      "березня",
-      "квітня",
-      "травня",
-      "червня",
-      "липня",
-      "серпня",
-      "вересня",
-      "жовтня",
-      "листопада",
-      "грудня",
-    ];
 
-    const date = new Date(dateString);
-    const day = date.getDate();
-    const month = months[date.getMonth()];
-    const year = date.getFullYear();
-
-    return `${day} ${month} ${year}`;
-  };
-  const months = [
-    "січня",
-    "лютого",
-    "березня",
-    "квітня",
-    "травня",
-    "червня",
-    "липня",
-    "серпня",
-    "вересня",
-    "жовтня",
-    "листопада",
-    "грудня",
-  ];
   const now = new Date();
   const currentYear = now.getFullYear();
   const currentMonth = String(now.getMonth() + 1).padStart(2, "0");
   const currentDay = String(now.getDate()).padStart(2, "0");
-  const currentMonthIndex = now.getMonth();
   const currentHour = String(now.getHours()).padStart(2, "0");
   const currentMinute = String(now.getMinutes()).padStart(2, "0");
-  const currentSecond = String(now.getSeconds()).padStart(2, "0");
+
   const fileNameFormat = `${fileName}_${currentDay}${currentMonth}${currentYear}${currentHour}${currentMinute}`;
 
   const exportToCSV = (data, fileNameFormat) => {
@@ -148,9 +112,9 @@ export const ExportToExcel = ({ data, fileName, user, date }) => {
       v:
         "про використані Об’єкти суміжних прав та Об’єкти авторського права за " +
         (date.dateOfStart !== "" && date.dateOfEnd !== ""
-          ? `період з ${formatDate(date.dateOfStart)} p. по ${formatDate(
-              date.dateOfEnd
-            )} p.`
+          ? `період з ${formatDateFromString(
+              date.dateOfStart
+            )} p. по ${formatDateFromString(date.dateOfEnd)} p.`
           : `${date.quarterDate} квартал ${date.quarterYearDate} року`),
     };
 
@@ -209,7 +173,9 @@ export const ExportToExcel = ({ data, fileName, user, date }) => {
         "",
         "",
         "",
-        `${currentDay} ${months[currentMonthIndex]} ${currentYear}`,
+        `${formatDateFromString(
+          `${currentYear}-${currentMonth}-${currentDay}`
+        )}`,
       ],
       [
         "(підпис уповноваженої особи Користувача)",
@@ -341,7 +307,6 @@ export const ExportToExcel = ({ data, fileName, user, date }) => {
 
   return (
     <Button
-      // text={"Export"}
       type="button"
       showIcon={true}
       icon={`${symbol}#icon-save`}
@@ -353,11 +318,6 @@ export const ExportToExcel = ({ data, fileName, user, date }) => {
       margintop={`20px`}
       ariaLabel={`export`}
       svgmarginright={`0px`}
-      // fillColor={"rgba(23, 22, 28, 1)"}
-    >
-      {/* <SvgStyled width="24" height="24">
-        <use href={`${symbol}#icon-save`}></use>
-      </SvgStyled> */}
-    </Button>
+    ></Button>
   );
 };
