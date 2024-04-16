@@ -72,22 +72,22 @@ export function findPage(index, itemsPerPage) {
   return Math.ceil((index + 1) / itemsPerPage);
 }
 export const isEmptyMediaUpdateData = (firstStr, secondStr, isError, image) => {
-    if (isError) {
-      // console.log("Должны быть тут");
-      return true;
-    }
-    if (firstStr === "" || (firstStr === secondStr && image === null)) {
-      // console.log("Кнопка выключена");
-      return true;
-    }
-    if (firstStr === "" && firstStr === secondStr && image !== null) {
-      // console.log("Кнопка включена");
-      return false;
-    }
-
+  if (isError) {
+    // console.log("Должны быть тут");
+    return true;
+  }
+  if (firstStr === "" || (firstStr === secondStr && image === null)) {
+    // console.log("Кнопка выключена");
+    return true;
+  }
+  if (firstStr === "" && firstStr === secondStr && image !== null) {
     // console.log("Кнопка включена");
     return false;
-  };
+  }
+
+  // console.log("Кнопка включена");
+  return false;
+};
 export function getQuarterRange(quarter, year) {
   const startMonth = (quarter - 1) * 3 + 1; // Начальный месяц квартала
   const startDate = new Date(year, startMonth - 1, 1); // Начало квартала
@@ -104,4 +104,29 @@ export function getQuarterRange(quarter, year) {
   const formattedStartDate = `${yearStart}-${monthStart}-${dayStart}`;
 
   return { formattedStartDate, formattedEndDate };
+}
+
+export function formatDateFromString(dateString) {
+  const months = [
+    "січня",
+    "лютого",
+    "березня",
+    "квітня",
+    "травня",
+    "червня",
+    "липня",
+    "серпня",
+    "вересня",
+    "жовтня",
+    "листопада",
+    "грудня",
+  ];
+
+  const date = new Date(dateString);
+
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${day} ${month} ${year}`;
 }
