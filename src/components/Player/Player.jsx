@@ -5,7 +5,7 @@ import {
   setPreloadSrcPlayer,
   setCurrentIndex,
   pause,
-  updateIsFirstPlay,
+  // updateIsFirstPlay,
   stopPlay,
   setDefaultState,
   setNextPage,
@@ -35,7 +35,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
   const isLastTrack = playerState.isLastTrack;
   const isLastPage = playerState.isLastPage;
   const currentPage = playerState.currentPage;
-  const isFirst = playerState.isFirstPlay;
+  // const isFirst = playerState.isFirstPlay;
   const nextPage = playerState.nextPage;
   const currentPageSize = playerState.pageSize;
 
@@ -80,28 +80,28 @@ const Player = ({ tracks = [], inHeader = false }) => {
   const handlePlayLoadStart = async (track) => {
     // console.log("listenDuration :>> ", listenDuration);
     // console.log("isFirst :>> ", isFirst);
-    if (isFirst) {
-      console.log(
-        `handlePlayLoadStart Песня с ${track}. попробуем отправить счетчик dispatchListenCountTrack`
-      );
+    // if (isFirst) {
+    console.log(
+      ` ${track}. попробуем отправить счетчик dispatchListenCountTrack`
+    );
 
-      if (track) {
-        try {
-          // Отправка запроса в бэкенд
+    if (track) {
+      try {
+        // Отправка запроса в бэкенд
 
-          await dispatchListenCountTrack(track);
+        await dispatchListenCountTrack(track);
 
-          console.log("Счетчик Запрос в бэкенд отправлен успешно");
-          dispatch(updateIsFirstPlay(false));
-        } catch (error) {
-          console.error("Ошибка при отправке запроса в бэкенд:", error);
-        }
-      } else {
-        console.log(
-          "запрос не отправляли - нет Значение track не определено. Запрос на бэкенд не отправлен."
-        );
+        console.log("Счетчик Запрос в бэкенд отправлен успешно", track);
+        // dispatch(updateIsFirstPlay(false));
+      } catch (error) {
+        console.error("Ошибка при отправке запроса в бэкенд:", error);
       }
+    } else {
+      console.log(
+        "запрос не отправляли - нет Значение track не определено. Запрос на бэкенд не отправлен."
+      );
     }
+    // }
   };
 
   const noData = tracks[currentTrack]?.trackURL === undefined;
@@ -129,7 +129,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
       setIsPressedPrev(false);
       setIsEndOfPlaylist(false);
       setListenDuration(0);
-      // requestSentRef.current = false;
+      requestSentRef.current = false;
       // dispatch(updateIsFirstPlay(true));
       clearInterval(intervalId);
     }
@@ -142,7 +142,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
   }, [isPaused]);
 
   const handleClickNext = () => {
-    dispatch(updateIsFirstPlay(true));
+    // dispatch(updateIsFirstPlay(true));
     setIsPressedNext(true);
     setListenDuration(0);
     requestSentRef.current = false;
@@ -158,7 +158,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
   };
 
   const handleClickPrevious = () => {
-    dispatch(updateIsFirstPlay(true));
+    // dispatch(updateIsFirstPlay(true));
     setIsPressedPrev(true);
     requestSentRef.current = false;
     setTrackIndex((currentTrack) =>
@@ -170,7 +170,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
 
   const handleEnd = () => {
     console.log("Песня завершила проигрывание.");
-    dispatch(updateIsFirstPlay(true));
+    // dispatch(updateIsFirstPlay(true));
     setIsEndOfPlaylist(true);
     setListenDuration(0);
     clearInterval(intervalId);
@@ -189,28 +189,19 @@ const Player = ({ tracks = [], inHeader = false }) => {
   // console.log("isFirst :>> ", isFirst);
 
   useEffect(() => {
-    // console.log("requestSentRef.current :>> ", requestSentRef.current);
-
     if (playerRef?.current?.audio.current.error) {
       //если ошибка при проигрывании то выходим из этого еффекта и ничего не делаем. если ошибки нет то считаем время
       // console.log("error :>> ", playerRef?.current?.audio.current.error);
       return;
     }
-
-    if (isPlaying && listenDuration < 5 && !requestSentRef.current) {
+    console.log("listenDuration :>> ", listenDuration);
+    if (isPlaying && listenDuration < 10 && !requestSentRef.current) {
       const id = setInterval(() => {
         setListenDuration((prevSeconds) => prevSeconds + 1);
       }, 1000);
 
       return () => clearInterval(id); // Очистка интервала при размонтировании компонента
-    } else if (isPlaying && listenDuration >= 5 && !requestSentRef.current) {
-      console.log(
-        "listenDuration >= 5 && !requestSentRef.current :>> ",
-        listenDuration >= 5 && !requestSentRef.current
-      );
-      console.log("listenDuration >= 5 :>> ", listenDuration >= 5);
-      console.log("!requestSentRef.current :>> ", !requestSentRef.current);
-      console.log("отправляем на бек это useEffect:>> ");
+    } else if (isPlaying && listenDuration >= 10 && !requestSentRef.current) {
       handlePlayLoadStart(tracks[currentTrack]?.id);
       requestSentRef.current = true;
     }
@@ -277,9 +268,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
               if (!isPlaying) {
                 dispatch(pause());
               }
-              // if (isPlaying && isFirst) {
-              //   setListenDuration(0);
-              // }
+
               // if (!isPlaying && playerState.src.length === 0) {
               //   dispatch(
               //     setSrcPlaying({
