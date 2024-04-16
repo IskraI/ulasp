@@ -1,3 +1,5 @@
+import { startOfQuarter, endOfQuarter, format } from "date-fns";
+import { uk } from "date-fns/locale";
 export function getNoun(number, one, two, five) {
   let n = Math.abs(number);
   n %= 100;
@@ -89,44 +91,17 @@ export const isEmptyMediaUpdateData = (firstStr, secondStr, isError, image) => {
   return false;
 };
 export function getQuarterRange(quarter, year) {
-  const startMonth = (quarter - 1) * 3 + 1; // Начальный месяц квартала
-  const startDate = new Date(year, startMonth - 1, 1); // Начало квартала
-  const endDate = new Date(year, startMonth + 2, 0); // Конец квартала
+  const start = startOfQuarter(new Date(year, (quarter - 1) * 3));
+  const end = endOfQuarter(new Date(year, (quarter - 1) * 3));
 
-  const yearEnd = endDate.getFullYear();
-  const monthEnd = String(endDate.getMonth() + 1).padStart(2, "0");
-  const dayEnd = String(endDate.getDate()).padStart(2, "0");
-  const formattedEndDate = `${yearEnd}-${monthEnd}-${dayEnd}`;
-
-  const yearStart = startDate.getFullYear();
-  const monthStart = String(startDate.getMonth() + 1).padStart(2, "0");
-  const dayStart = String(startDate.getDate()).padStart(2, "0");
-  const formattedStartDate = `${yearStart}-${monthStart}-${dayStart}`;
-
-  return { formattedStartDate, formattedEndDate };
+  return {
+    formattedStartDate: format(start, "yyyy-MM-dd"),
+    formattedEndDate: format(end, "yyyy-MM-dd"),
+  };
 }
 
 export function formatDateFromString(dateString) {
-  const months = [
-    "січня",
-    "лютого",
-    "березня",
-    "квітня",
-    "травня",
-    "червня",
-    "липня",
-    "серпня",
-    "вересня",
-    "жовтня",
-    "листопада",
-    "грудня",
-  ];
-
-  const date = new Date(dateString);
-
-  const day = date.getDate();
-  const month = months[date.getMonth()];
-  const year = date.getFullYear();
-
-  return `${day} ${month} ${year}`;
+  return format(new Date(dateString), "dd MMMM yyyy", {
+    locale: uk,
+  });
 }

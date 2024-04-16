@@ -76,13 +76,13 @@ const Player = ({ tracks = [], inHeader = false }) => {
   // const [isLoadStarted, setIsLoadStarted] = useState(false);
 
   const [dispatchListenCountTrack] = useUpdateListenCountTrackByIdMutation();
-  // console.log("isFirstPlay", isFirst);
 
   const handlePlayLoadStart = async (track) => {
+    // console.log("listenDuration :>> ", listenDuration);
     // console.log("isFirst :>> ", isFirst);
     if (isFirst) {
       console.log(
-        `handlePlayLoadStart Песня с ${track} ID начала проигрываться. попробуем отправить счетчик dispatchListenCountTrack`
+        `handlePlayLoadStart Песня с ${track}. попробуем отправить счетчик dispatchListenCountTrack`
       );
 
       if (track) {
@@ -129,7 +129,8 @@ const Player = ({ tracks = [], inHeader = false }) => {
       setIsPressedPrev(false);
       setIsEndOfPlaylist(false);
       setListenDuration(0);
-      requestSentRef.current = false;
+      // requestSentRef.current = false;
+      // dispatch(updateIsFirstPlay(true));
       clearInterval(intervalId);
     }
   }, [currentTrack, dispatch, isEndOfPlaylist, isPressedNext, isPressedPrev]);
@@ -141,7 +142,6 @@ const Player = ({ tracks = [], inHeader = false }) => {
   }, [isPaused]);
 
   const handleClickNext = () => {
-    console.log("handleClickNext :>> ", isFirst);
     dispatch(updateIsFirstPlay(true));
     setIsPressedNext(true);
     setListenDuration(0);
@@ -184,7 +184,6 @@ const Player = ({ tracks = [], inHeader = false }) => {
     }
   };
 
-  // console.log("listenDuration :>> ", listenDuration);
   // console.log("isPlaying :>> ", isPlaying);
   // console.log("isPaused :>> ", isPaused);
   // console.log("isFirst :>> ", isFirst);
@@ -198,14 +197,20 @@ const Player = ({ tracks = [], inHeader = false }) => {
       return;
     }
 
-    if (isPlaying && listenDuration < 30 && !requestSentRef.current) {
+    if (isPlaying && listenDuration < 5 && !requestSentRef.current) {
       const id = setInterval(() => {
         setListenDuration((prevSeconds) => prevSeconds + 1);
       }, 1000);
 
       return () => clearInterval(id); // Очистка интервала при размонтировании компонента
-    } else if (listenDuration === 30 && !requestSentRef.current) {
-      // console.log("отправляем на бек :>> ");
+    } else if (isPlaying && listenDuration >= 5 && !requestSentRef.current) {
+      console.log(
+        "listenDuration >= 5 && !requestSentRef.current :>> ",
+        listenDuration >= 5 && !requestSentRef.current
+      );
+      console.log("listenDuration >= 5 :>> ", listenDuration >= 5);
+      console.log("!requestSentRef.current :>> ", !requestSentRef.current);
+      console.log("отправляем на бек это useEffect:>> ");
       handlePlayLoadStart(tracks[currentTrack]?.id);
       requestSentRef.current = true;
     }
@@ -272,9 +277,9 @@ const Player = ({ tracks = [], inHeader = false }) => {
               if (!isPlaying) {
                 dispatch(pause());
               }
-              if (isPlaying && isFirst) {
-                setListenDuration(0);
-              }
+              // if (isPlaying && isFirst) {
+              //   setListenDuration(0);
+              // }
               // if (!isPlaying && playerState.src.length === 0) {
               //   dispatch(
               //     setSrcPlaying({
