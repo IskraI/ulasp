@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 
 import TracksTable from "../../../components/UserMediaComponent/TracksTable/TracksTableUser";
@@ -39,9 +39,17 @@ const TracksPageCreateUser = () => {
   const { data: dataFavorite, isLoading: isLoadingFavoritePlaylist } =
     useFavoritePlaylistForUserQuery();
 
-  const onPageChange = (page) => setCurrentPage(page);
+  const onPageChange = (page) => {
+    setIsSorterd(false);
+    console.log("4 Step - setCurrentPage in mutation", page);
+    setCurrentPage(page);
+  };
 
-  const onPageSizeChange = (size) => setPageSize(size);
+  const onPageSizeChange = (size) => {
+    setIsSorterd(false);
+    console.log(size);
+    setPageSize(size);
+  };
 
   const handleClickSort = (data) => {
     setSortedBy(data);
@@ -50,6 +58,12 @@ const TracksPageCreateUser = () => {
     }
     setIsSorterd(true);
   };
+
+  const favStatus = useCallback(
+    () =>
+      dataFavorite?.favorites.some(({ _id }) => _id === data?.playlist?._id),
+    [data?.playlist?._id, dataFavorite?.favorites]
+  );
 
   return (
     <>
@@ -67,9 +81,10 @@ const TracksPageCreateUser = () => {
               countTracks={data.totalTracks}
               showPlusBtn={false}
               owner={data.playlist.owner}
-              favoriteStatus={dataFavorite.favorites.some(
-                (item) => item._id === playlistId
-              )}
+              // favoriteStatus={dataFavorite.favorites.some(
+              //   (item) => item._id === playlistId
+              // )}
+              favoriteStatus={favStatus()}
             />
             {data?.playlist?.trackList?.length > 1 && (
               <SortTracks

@@ -74,10 +74,11 @@ const TracksPage = () => {
     updateSort({ playlistId, data });
     if (currentPage > 1) {
       setCurrentPage(1);
-      setIsSorterd(true);
+
       setCheckedMainCheckBox(false);
     }
     setIsSearching(false);
+    setIsSorterd(true);
   };
 
   const checkedAllFn = (data) => {
