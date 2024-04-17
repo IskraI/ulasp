@@ -4,6 +4,7 @@ import {
   propAdminNav,
   propEditorNav,
   propUserNav,
+  propUserBlockNav,
 } from "../../constants/navConstants";
 import {
   Nav,
@@ -26,7 +27,9 @@ export const NavMenu = () => {
     ? propAdminNav
     : user.editorRole
     ? propEditorNav
-    : propUserNav;
+    : user.status
+    ? propUserNav
+    : propUserBlockNav;
 
   return (
     <Nav>

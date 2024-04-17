@@ -89,8 +89,8 @@ function App() {
   const user = useSelector(getUserState);
   const navigate = useNavigate();
 
-  // console.log("user.token", user.token);
-  // console.log(" user.editorRole", user.editorRole);
+  // console.log("user APP", user);
+  // console.log(" user.access", user.access);
   // console.log("user.adminRole", user.adminRole);
   // console.log("user.userRole", user.userRole);
   // console.log("user.isLoggedIn", user.isLoggedIn);
@@ -159,7 +159,7 @@ function App() {
               element={<PublicRoute component={ErrorPage} />}
             />
 
-            {user.userRole && (
+            {user.userRole && user.access && (
               <Route
                 path="/user"
                 element={<PrivateUserRoute component={UserPage} />}
@@ -167,110 +167,122 @@ function App() {
                 <Route index element={<UserCabinetPage />} />
                 <Route path="cabinet" element={<UserCabinetPage />} />
                 <Route path="cabinet/messages" element={<MessagesUser />} />
-                <Route path="medialibrary" element={<MediaLibraryForUser />} />
-                <Route
-                  path="medialibrary/genres"
-                  element={<AllGenresForUser display={"none"} />}
-                />
-                <Route
-                  path="medialibrary/genres/:genreId/playlists"
-                  element={<PlaylistsPageUserInGenre />}
-                />
-                <Route
-                  path="medialibrary/genres/:genreId/tracks"
-                  element={<TracksInGenre />}
-                />
-                <Route
-                  path="medialibrary/genres/:genreId/playlists/:playlistId/tracks"
-                  element={<TracksPageUser display={"none"} />}
-                />
-                <Route path="medialibrary/shops" element={<ShopsUserPage />} />
-                <Route
-                  path="medialibrary/shops/:shopId"
-                  element={<ShopsItemPageUser />}
-                />
-                <Route
-                  path="medialibrary/shops/:shopId/:shopItemId"
-                  element={<ShopSubCategoryPageUser />}
-                />
-                <Route
-                  path="medialibrary/shops/:shopId/:shopItemId/:shopSubCategoryId"
-                  element={<PlaylistInShopSubCategoryPageUser />}
-                />
-                <Route
-                  path="medialibrary/shops/:shopId/:shopItemId/:shopSubCategoryId/:playlistId/tracks"
-                  element={<TracksPageUser />}
-                />
-                <Route
-                  path="medialibrary/shops/:shopId/:shopItemId/:playlistId/tracks"
-                  element={<TracksPageUser />}
-                />
-                <Route
-                  path="medialibrary/shops/:shopId/:playlistId/tracks"
-                  element={<TracksPageUser />}
-                />
-                {/* <Route
+                {user.status && (
+                  <>
+                    <Route
+                      path="medialibrary"
+                      element={<MediaLibraryForUser />}
+                    />
+                    <Route
+                      path="medialibrary/genres"
+                      element={<AllGenresForUser display={"none"} />}
+                    />
+                    <Route
+                      path="medialibrary/genres/:genreId/playlists"
+                      element={<PlaylistsPageUserInGenre />}
+                    />
+                    <Route
+                      path="medialibrary/genres/:genreId/tracks"
+                      element={<TracksInGenre />}
+                    />
+                    <Route
+                      path="medialibrary/genres/:genreId/playlists/:playlistId/tracks"
+                      element={<TracksPageUser display={"none"} />}
+                    />
+                    <Route
+                      path="medialibrary/shops"
+                      element={<ShopsUserPage />}
+                    />
+                    <Route
+                      path="medialibrary/shops/:shopId"
+                      element={<ShopsItemPageUser />}
+                    />
+                    <Route
+                      path="medialibrary/shops/:shopId/:shopItemId"
+                      element={<ShopSubCategoryPageUser />}
+                    />
+                    <Route
+                      path="medialibrary/shops/:shopId/:shopItemId/:shopSubCategoryId"
+                      element={<PlaylistInShopSubCategoryPageUser />}
+                    />
+                    <Route
+                      path="medialibrary/shops/:shopId/:shopItemId/:shopSubCategoryId/:playlistId/tracks"
+                      element={<TracksPageUser />}
+                    />
+                    <Route
+                      path="medialibrary/shops/:shopId/:shopItemId/:playlistId/tracks"
+                      element={<TracksPageUser />}
+                    />
+                    <Route
+                      path="medialibrary/shops/:shopId/:playlistId/tracks"
+                      element={<TracksPageUser />}
+                    />
+                    {/* <Route
                   path="medialibrary/shops/:shopId/playlists"
                   element={<PlaylistsPageUserInShop />}
                 /> */}
-                {/* <Route
+                    {/* <Route
                   path="medialibrary/shops/:shopId/playlists/:playlistId/tracks"
                   element={<TracksPageUser display={"none"} />}
                 /> */}
-                <Route
-                  path="medialibrary/:playlistId/tracks"
-                  element={<TracksPageUser />}
-                />
-                <Route
-                  path="medialibrary/newplaylists"
-                  element={<NewPlaylistsUser display={"none"} />}
-                />
-                <Route
-                  path="medialibrary/newplaylists/:playlistId/tracks"
-                  element={<TracksPageUser display={"none"} />}
-                />
-                <Route
-                  path="medialibrary/newtracks"
-                  element={<NewTracksUser />}
-                />
-                <Route path="cabinet/myplaylists" element={<MyPlaylists />} />
-                <Route
-                  path="cabinet/myplaylists/createplaylists"
-                  element={<CreateAllPlaylists />}
-                />
-                <Route
-                  path="cabinet/myplaylists/createplaylists/:playlistId/tracks"
-                  element={<TracksPageCreateUser />}
-                />
-                <Route
-                  path="cabinet/myplaylists/addplaylists"
-                  element={<AddAllPlaylists />}
-                />
-                <Route
-                  path="cabinet/myplaylists/addplaylists/:playlistId/tracks"
-                  element={<TracksPageUser />}
-                />
-                <Route
-                  path="cabinet/myplaylists/favoriteplaylists"
-                  element={<FavoriteAllPlaylists />}
-                />
-                <Route
-                  path="cabinet/myplaylists/favoriteplaylists/:playlistId/tracks"
-                  element={<TracksPageUser />}
-                />
-                <Route
-                  path="cabinet/myplaylists/:playlistId/tracks"
-                  element={<TracksPageUser />}
-                />
-                <Route
-                  path="cabinet/myplaylists/newtracks"
-                  element={<AllTracksUser />}
-                />
-
-                <Route
-                  path="cabinet/myplaylists/addtracks"
-                  element={<AddTracksUserPage />}
-                />
+                    <Route
+                      path="medialibrary/:playlistId/tracks"
+                      element={<TracksPageUser />}
+                    />
+                    <Route
+                      path="medialibrary/newplaylists"
+                      element={<NewPlaylistsUser display={"none"} />}
+                    />
+                    <Route
+                      path="medialibrary/newplaylists/:playlistId/tracks"
+                      element={<TracksPageUser display={"none"} />}
+                    />
+                    <Route
+                      path="medialibrary/newtracks"
+                      element={<NewTracksUser />}
+                    />
+                    <Route
+                      path="cabinet/myplaylists"
+                      element={<MyPlaylists />}
+                    />
+                    <Route
+                      path="cabinet/myplaylists/createplaylists"
+                      element={<CreateAllPlaylists />}
+                    />
+                    <Route
+                      path="cabinet/myplaylists/createplaylists/:playlistId/tracks"
+                      element={<TracksPageCreateUser />}
+                    />
+                    <Route
+                      path="cabinet/myplaylists/addplaylists"
+                      element={<AddAllPlaylists />}
+                    />
+                    <Route
+                      path="cabinet/myplaylists/addplaylists/:playlistId/tracks"
+                      element={<TracksPageUser />}
+                    />
+                    <Route
+                      path="cabinet/myplaylists/favoriteplaylists"
+                      element={<FavoriteAllPlaylists />}
+                    />
+                    <Route
+                      path="cabinet/myplaylists/favoriteplaylists/:playlistId/tracks"
+                      element={<TracksPageUser />}
+                    />
+                    <Route
+                      path="cabinet/myplaylists/:playlistId/tracks"
+                      element={<TracksPageUser />}
+                    />
+                    <Route
+                      path="cabinet/myplaylists/newtracks"
+                      element={<AllTracksUser />}
+                    />
+                    <Route
+                      path="cabinet/myplaylists/addtracks"
+                      element={<AddTracksUserPage />}
+                    />{" "}
+                  </>
+                )}
 
                 <Route path="*" element={<ErrorPage />} />
               </Route>

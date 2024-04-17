@@ -2,60 +2,26 @@ import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx-js-style";
 import { Button } from "../Button/Button";
 import symbol from "../../assets/symbol.svg";
+import { formatDateFromString } from "../../helpers/helpers";
+import { format } from "date-fns";
+import { uk } from "date-fns/locale";
 
 export const ExportToExcel = ({ data, fileName, user, date }) => {
   const fileType =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
   const fileExtension = ".xlsx";
+  //подсчет суммі прослушиваний из данных data - используется при заполнении таблицы
   const calculateTotalListens = (listens) => {
     return listens.reduce((acc, cur) => acc + cur.countOfListenes, 0);
   };
-  const formatDate = (dateString) => {
-    const months = [
-      "січня",
-      "лютого",
-      "березня",
-      "квітня",
-      "травня",
-      "червня",
-      "липня",
-      "серпня",
-      "вересня",
-      "жовтня",
-      "листопада",
-      "грудня",
-    ];
 
-    const date = new Date(dateString);
-    const day = date.getDate();
-    const month = months[date.getMonth()];
-    const year = date.getFullYear();
+  // дата складання отчета
+  const formatDateFns = format(new Date(), "dd MMMM yyyy", { locale: uk });
 
-    return `${day} ${month} ${year}`;
-  };
-  const months = [
-    "січня",
-    "лютого",
-    "березня",
-    "квітня",
-    "травня",
-    "червня",
-    "липня",
-    "серпня",
-    "вересня",
-    "жовтня",
-    "листопада",
-    "грудня",
-  ];
-  const now = new Date();
-  const currentYear = now.getFullYear();
-  const currentMonth = String(now.getMonth() + 1).padStart(2, "0");
-  const currentDay = String(now.getDate()).padStart(2, "0");
-  const currentMonthIndex = now.getMonth();
-  const currentHour = String(now.getHours()).padStart(2, "0");
-  const currentMinute = String(now.getMinutes()).padStart(2, "0");
-  const currentSecond = String(now.getSeconds()).padStart(2, "0");
-  const fileNameFormat = `${fileName}_${currentDay}${currentMonth}${currentYear}${currentHour}${currentMinute}`;
+  //дата для именни файла 20220416_2240 = 16 апреля 22 года в 22:40
+  const formatDateFileName = format(new Date(), "yyyyMMdd_HHmm");
+
+  const fileNameFormat = `${fileName}_${formatDateFileName}`;
 
   const exportToCSV = (data, fileNameFormat) => {
     const cellStyle = {
@@ -100,7 +66,7 @@ export const ExportToExcel = ({ data, fileName, user, date }) => {
       origin: { r: 4, c: 0 }, // Начать заполнение с ячейки A4
     });
 
-    // Применяем стили к заголовку
+    // назначаем стили к заголовку
     const headerStyle = {
       font: { bold: true },
       alignment: { horizontal: "center", wrapText: true, vertical: "center" },
@@ -117,8 +83,9 @@ export const ExportToExcel = ({ data, fileName, user, date }) => {
       },
       fill: { fgColor: { rgb: "b4b7bb" } },
     };
-    const range = { s: { r: 4, c: 0 }, e: { r: 4, c: 5 } }; // Диапазон от A4 до F4
 
+    const range = { s: { r: 4, c: 0 }, e: { r: 4, c: 5 } }; // Диапазон от A4 до F4
+    //применяем стили к аголовкам колонок
     for (let r = range.s.r; r <= range.e.r; ++r) {
       for (let c = range.s.c; c <= range.e.c; ++c) {
         const cellAddress = XLSX.utils.encode_cell({ r, c });
@@ -126,7 +93,7 @@ export const ExportToExcel = ({ data, fileName, user, date }) => {
       }
     }
 
-    // Вставляем шапку
+    // Вставляем шапку построчно
     ws.A1 = {
       t: "s",
       v: "ФОРМА ЗВIТУ",
@@ -148,9 +115,9 @@ export const ExportToExcel = ({ data, fileName, user, date }) => {
       v:
         "про використані Об’єкти суміжних прав та Об’єкти авторського права за " +
         (date.dateOfStart !== "" && date.dateOfEnd !== ""
-          ? `період з ${formatDate(date.dateOfStart)} p. по ${formatDate(
-              date.dateOfEnd
-            )} p.`
+          ? `період з ${formatDateFromString(
+              date.dateOfStart
+            )} p. по ${formatDateFromString(date.dateOfEnd)} p.`
           : `${date.quarterDate} квартал ${date.quarterYearDate} року`),
     };
 
@@ -203,14 +170,7 @@ export const ExportToExcel = ({ data, fileName, user, date }) => {
           "але не більше ніж на 10% загального часу використання музичних творів.",
       ],
       // [""],
-      [
-        "",
-        "",
-        "",
-        "",
-        "",
-        `${currentDay} ${months[currentMonthIndex]} ${currentYear}`,
-      ],
+      ["", "", "", "", "", `${formatDateFns}`],
       [
         "(підпис уповноваженої особи Користувача)",
         "",
@@ -229,7 +189,7 @@ export const ExportToExcel = ({ data, fileName, user, date }) => {
       });
       return styledRow;
     });
-
+    //стили для последнец строки футера
     const lastFooterRowStyles = [
       {
         font: {
@@ -341,11 +301,10 @@ export const ExportToExcel = ({ data, fileName, user, date }) => {
 
   return (
     <Button
-      // text={"Export"}
       type="button"
       showIcon={true}
       icon={`${symbol}#icon-save`}
-      onClick={(e) => exportToCSV(data, fileNameFormat)}
+      onClick={() => exportToCSV(data, fileNameFormat)}
       border={`none`}
       background={`none`}
       marginleft={`0px`}
@@ -353,11 +312,6 @@ export const ExportToExcel = ({ data, fileName, user, date }) => {
       margintop={`20px`}
       ariaLabel={`export`}
       svgmarginright={`0px`}
-      // fillColor={"rgba(23, 22, 28, 1)"}
-    >
-      {/* <SvgStyled width="24" height="24">
-        <use href={`${symbol}#icon-save`}></use>
-      </SvgStyled> */}
-    </Button>
+    ></Button>
   );
 };

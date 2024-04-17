@@ -23,27 +23,7 @@ import {
   FlexChild,
 } from "./ReportUserTable.styled";
 
-// function fnExcelReport() {
-//   let tab_text = "<table border='2px'><tr bgcolor='#FFFFFF'>";
-//   let j = 0;
-//   const tab = document.getElementById("tableList");
-
-//   for (j = 2; j < tab.rows.length; j++) {
-//     tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
-//   }
-
-//   tab_text = tab_text + "</table>";
-//   tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");
-//   tab_text = tab_text.replace(/<img[^>]*>/gi, "");
-//   tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, "");
-
-//   var uri = "data:application/vnd.ms-excel,";
-//   var a = document.createElement("a");
-//   a.setAttribute("href", uri + encodeURIComponent(tab_text));
-//   a.setAttribute("download", new Date() + ".xls");
-//   document.body.appendChild(a);
-//   a.click();
-// }
+import { formatDateFromString } from "../../helpers/helpers";
 
 export const columns = [
   {
@@ -117,29 +97,7 @@ export const columns = [
     },
   },
 ];
-const formatDate = (dateString) => {
-  const months = [
-    "січня",
-    "лютого",
-    "березня",
-    "квітня",
-    "травня",
-    "червня",
-    "липня",
-    "серпня",
-    "вересня",
-    "жовтня",
-    "листопада",
-    "грудня",
-  ];
 
-  const date = new Date(dateString);
-  const day = date.getDate();
-  const month = months[date.getMonth()];
-  const year = date.getFullYear();
-
-  return `${day} ${month} ${year}`;
-};
 const getPageMargins = () => {
   return `@page { margin: 10mm 5mm 10mm 5mm !important;
  }`;
@@ -171,8 +129,8 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
           про використані Об’єкти суміжних прав та Об’єкти авторського права за{" "}
           {date.dateOfStart !== "" && date.dateOfEnd !== "" ? (
             <>
-              період <br />з {formatDate(date.dateOfStart)} p. по{" "}
-              {formatDate(date.dateOfEnd)} p.
+              період <br />з {formatDateFromString(date.dateOfStart)} p. по{" "}
+              {formatDateFromString(date.dateOfEnd)} p.
             </>
           ) : (
             ` ${date.quarterDate} квартал  ${date.quarterYearDate} року`

@@ -121,7 +121,7 @@ const CardUser = () => {
         setActiveModal("error");
       });
   };
-  console.log("tracksCount :>> ", tracksCount?.count);
+
   return (
     <>
       <TabNavigation />

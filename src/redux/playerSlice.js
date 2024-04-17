@@ -115,7 +115,7 @@ export const playerSlice = createSlice({
     },
     updateIsFirstPlay: {
       reducer(state, action) {
-        console.log("updateIsFirstPlay :>> ", action.payload);
+        // console.log("updateIsFirstPlay :>> ", action.payload);
         state = {
           ...state,
 
