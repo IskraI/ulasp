@@ -14,9 +14,12 @@ import {
   useGetCreatePlaylistByIdForUserQuery,
   useFavoritePlaylistForUserQuery,
   useAddPlaylistForUserQuery,
+  playlistsUserApi,
 } from "../../../redux/playlistsUserSlice";
+import { useDispatch } from "react-redux";
 
 const TracksPage = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -49,18 +52,22 @@ const TracksPage = () => {
     if (currentPage > 1) {
       setCurrentPage(1);
     }
+
     setIsSorterd(true);
+    // dispatch(playlistsUserApi.util.invalidateTags(["Playlists"]));
 
     //localStorage.setItem("sortOrder", data);
   };
 
   const onPageChange = (page) => {
-    console.log("4 Step - setCurrentPage in mutation", page);
+    setIsSorterd(false);
+    // console.log("4 Step - setCurrentPage in mutation", page);
     setCurrentPage(page);
   };
 
   const onPageSizeChange = (size) => {
-    console.log(size);
+    setIsSorterd(false);
+    // console.log(size);
     setPageSize(size);
   };
 

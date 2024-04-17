@@ -7,7 +7,7 @@ export const PlayerWrapper = styled.div`
   display: flex;
   flex-direction: ${({ inHeader }) => (inHeader ? "row-reverse" : "column")};
   gap: ${({ inHeader }) => (inHeader ? "24px" : null)};
-  width: ${({ inHeader }) => (inHeader ? "70%" : "100%")};
+  width: ${({ inHeader }) => (inHeader ? "80%" : "100%")};
   height: ${({ inHeader }) => (inHeader ? "80px" : "156px")};
   /* border: 1px solid black; */
   justify-content: center;
@@ -32,6 +32,7 @@ export const TrackName = styled.p`
   line-height: 1.21;
   align-self: center;
   padding: 4px;
+  overflow-x: hidden;
 `;
 
 export const PlayerReact = styled(AudioPlayer)`

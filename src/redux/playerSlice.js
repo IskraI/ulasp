@@ -14,6 +14,7 @@ const initialState = {
   nextPage: null,
   pageSize: null,
   location: null,
+  isSorted: false,
 };
 
 export const playerSlice = createSlice({
@@ -62,6 +63,7 @@ export const playerSlice = createSlice({
             : state.indexTrack,
           isLoaded: true,
           isPlaying: true,
+          isSorted: false,
         };
         return state;
       },
@@ -77,6 +79,7 @@ export const playerSlice = createSlice({
           nextPage: state.isPaused ? state.nextPage : null,
           isLastTrack: state.isPaused ? state.isLastTrack : false,
           isLastPage: state.isPaused ? state.isLastTrack : false,
+          isSorted: false,
           // isFirstPlay: state.isPaused ? false : true,
         };
         return state;
@@ -95,12 +98,15 @@ export const playerSlice = createSlice({
       },
     },
     pause: {
-      reducer(state) {
+      reducer(state, action) {
         // console.log("action.payload pause ", state.isPaused);
         state = {
           ...state,
-          isPlaying: state.isPlaying ? false : true,
-          isPaused: state.isPaused ? false : true,
+          //полурабочая версия
+          // isPlaying: state.isPlaying ? false : true,
+          // isPaused: state.isPaused ? false : true,
+          isPlaying: action.payload.isPlaying,
+          isPaused: action.payload.isPaused,
           isLoaded: true,
           // isFirstPlay: false,
         };
@@ -150,6 +156,15 @@ export const playerSlice = createSlice({
         return state;
       },
     },
+    setIsSorted: {
+      reducer(state, action) {
+        state = {
+          ...state,
+          isSorted: action.payload.isSorted,
+        };
+        return state;
+      },
+    },
   },
 });
 
@@ -165,6 +180,7 @@ export const {
   setDefaultPreloadSrc,
   setNextPage,
   isFirstPlay,
+  setIsSorted,
 } = playerSlice.actions;
 
 export const playerReducer = playerSlice.reducer;

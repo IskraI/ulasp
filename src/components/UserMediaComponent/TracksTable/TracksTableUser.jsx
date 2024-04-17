@@ -23,6 +23,7 @@ import {
   setNextPage,
   setSrcPlaying,
   setDefaultState,
+  setIsSorted,
 } from "../../../redux/playerSlice";
 import { getPlayerState } from "../../../redux/playerSelectors.js";
 
@@ -63,7 +64,7 @@ const TracksTable = ({
   isSorted,
 }) => {
   const { id: idUser } = useSelector(getUserState);
-  console.log("user TracksTable :>> ", idUser);
+  // console.log("user TracksTable :>> ", idUser);
   const [
     removeTracksFromPlaylist,
     { isLoading: isLoadingRemoveTracksFromPlaylist },
@@ -113,10 +114,14 @@ const TracksTable = ({
     [dispatch, onChangeCurrentPage]
   );
 
-  const onPageSizeChange = (size) => onChangeSizePage(size);
+  const onPageSizeChange = (size) => {
+    onChangeSizePage(size);
+    onChangePage(1);
+  };
+
   useEffect(() => {
-    console.log("currentPageLocal", currentPage);
-    console.log("currentPageGlobal", currentPageGlobalState);
+    // console.log("currentPageLocal", currentPage);
+    // console.log("currentPageGlobal", currentPageGlobalState);
     if (currentPage === 1 && !isFetching) {
       // console.log("В прелоад");
       const trackURL = tracksSRC?.map((track) => {
@@ -140,10 +145,10 @@ const TracksTable = ({
 
     if (currentPage !== currentPageGlobalState && !isFetching) {
       if (location.pathname !== playerState.location) {
-        console.log("Здесь установилось значение");
+        // console.log("Здесь установилось значение");
         onChangePage(currentPage);
       } else {
-        console.log("Здесь установилось глобальное значение");
+        // console.log("Здесь установилось глобальное значение");
 
         onChangePage(currentPageGlobalState);
       }
@@ -199,14 +204,6 @@ const TracksTable = ({
     lastTrackInPage,
   ]);
 
-  // const getCheckedTrackId = (data) => {
-  //   if (data !== undefined) {
-  //     setTracksIdList((prev) => [...prev, data]);
-  //   } else {
-  //     setTracksIdList([]);
-  //   }
-  // };
-
   const addTrackToCheckedList = (data) => {
     setTracksIdList((prev) => [...prev, data]);
   };
@@ -223,14 +220,18 @@ const TracksTable = ({
     if (isSorted) {
       onChangePage(currentPage);
       setTracksIdList([]);
+      dispatch(setIsSorted({ isSorted: true }));
     }
-  }, [currentPage, isSorted, onChangePage]);
+  }, [currentPage, dispatch, isSorted, onChangePage]);
 
   const deletingMultipleTracks = () => {
-    console.log(tracksIdList);
-    removeTracksFromPlaylist({ playListId, tracksIdList }).then(
-      clearAfterDeleting
-    );
+    removeTracksFromPlaylist({ playListId, tracksIdList })
+      .then(clearAfterDeleting)
+      .unwrap();
+
+    // if (isPlaying) {
+    //   dispatch(setSrcPlaying({ indexTrack: playerState.indexTrack }));
+    // }
   };
 
   const clearAfterDeleting = () => {
@@ -241,8 +242,6 @@ const TracksTable = ({
 
     setTracksIdList([]);
   };
-
-  console.log("new songs пропс пришел в тейблюзер", tracks);
 
   return (
     <>

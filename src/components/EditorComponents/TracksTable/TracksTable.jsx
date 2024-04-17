@@ -27,6 +27,7 @@ import {
   setLastTrack,
   setNextPage,
   setDefaultState,
+  setIsSorted,
 } from "../../../redux/playerSlice";
 
 import { useDeleteTrackInPlaylistMutation } from "../../../redux/playlistsSlice";
@@ -158,7 +159,6 @@ const TracksTable = ({
   );
 
   const onPageSizeChange = (size) => {
-    console.log(size);
     onChangeSizePage(size);
     onChangePage(1);
   };
@@ -221,8 +221,9 @@ const TracksTable = ({
     if (isSorted) {
       onChangePage(currentPage);
       setTracksIdList([]);
+      dispatch(setIsSorted({ isSorted: true }));
     }
-  }, [currentPage, isSorted, onChangePage]);
+  }, [currentPage, dispatch, isSorted, onChangePage]);
 
   useEffect(() => {
     if (isSearching) {
