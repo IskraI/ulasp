@@ -62,15 +62,22 @@ export const RegisterBlock = styled.div`
 export const RegisterLeftBlock = styled.div`
   display: flex;
   flex-direction: column;
+
+  flex-grow: 1;
   width: ${(props) => (props.width ? props.width : "558px")};
+  max-width: ${(props) => (props.width ? props.width : "700px")};
+  flex-basis: ${(props) => (props.flexBasis ? props.flexBasis : "auto")};
+  min-width: ${(props) => (props.minWidth ? props.minWidth : "auto")};
   margin-bottom: 20px;
 `;
 export const RegisterRigthBlock = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* width: ${(props) => (props.width ? props.width : "auto")}; */
-  /* width: 630px; */
+  width: ${(props) => (props.width ? props.width : "auto")};
+  flex-grow: 1;
+  /* min-width: ${(props) => (props.minWidth ? props.minWidth : "auto")}; */
+  flex-basis: ${(props) => (props.flexBasis ? props.flexBasis : "auto")};
 `;
 export const RegisterField = styled.div`
   display: flex;

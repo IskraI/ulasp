@@ -40,7 +40,11 @@ const CardUserField = ({
 
   return (
     <Fieldform>
-      <RegisterLeftBlock width="630px">
+      <RegisterLeftBlock
+        // width="calc(50% - 27px)"
+        flexBasis="617px"
+        minWidth="617px"
+      >
         <RegisterNameFieldCard
           isEditing={isEditing}
           handleEditActivation={handleEditActivation}
@@ -243,7 +247,10 @@ const CardUserField = ({
           />
         )}
       </RegisterLeftBlock>
-      <RegisterRigthBlock>
+      <RegisterRigthBlock
+        // width="calc(50% - 27px)"
+        flexBasis="250px"
+      >
         <RegisterCommentField>
           <Commentlabel>Примітка </Commentlabel>
           <Controller
