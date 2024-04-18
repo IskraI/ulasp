@@ -154,7 +154,9 @@ const UsersTable = ({ users, visibleColumns }) => {
                           onMouseEnter={() => handleRowHover(index)}
                           onMouseLeave={() => handleRowHover(null)}
                         >
-                          {`${user.name} ${user.userFop === "tov" && "ТОВ"}`}
+                          {`${capitalize(user.name)} ${
+                            user.userFop === "tov" && "ТОВ"
+                          }`}
                         </Link>
                       ) : (
                         <Link
