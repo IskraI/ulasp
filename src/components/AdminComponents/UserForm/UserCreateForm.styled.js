@@ -46,7 +46,8 @@ export const SectionUser = styled.div`
 `;
 export const Fieldform = styled.div`
   display: flex;
-  gap: 24px;
+  flex-wrap: wrap;
+  gap: 54px;
 `;
 export const RegisterForm = styled.div`
   display: flex;
@@ -61,17 +62,19 @@ export const RegisterBlock = styled.div`
 export const RegisterLeftBlock = styled.div`
   display: flex;
   flex-direction: column;
+  width: ${(props) => (props.width ? props.width : "558px")};
+  margin-bottom: 20px;
 `;
 export const RegisterRigthBlock = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  width: 100%;
+  /* width: ${(props) => (props.width ? props.width : "auto")}; */
+  /* width: 630px; */
 `;
 export const RegisterField = styled.div`
   display: flex;
-  width: 558px;
+  /* width: 558px; */
   font-family: Inter;
   font-size: 20px;
   font-style: normal;
@@ -85,7 +88,7 @@ export const RegisterInput = styled.input`
   display: flex;
   position: relative;
   background-color: rgba(234, 234, 234, 0.32);
-  /* width: 100%; */
+  width: 100%;
   padding-left: 8px;
 
   align-items: center;
@@ -214,7 +217,7 @@ export const RegisterNameBlock = styled.div`
   align-items: center;
   padding: 8px;
   gap: 4px;
-  width: 558px;
+  /* width: 558px; */
   /* gap: 16px; */
   border: 0.25px solid rgba(23, 22, 28, 0.5);
   background: rgba(234, 234, 234, 0.32);
