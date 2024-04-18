@@ -102,10 +102,10 @@ const UserFieldForm = ({
             />
 
             <RegisterField>
-              <RegisterLabel>Надання доступу до</RegisterLabel>
+              <RegisterLabel>Дата договору*</RegisterLabel>
               <RegisterInput
                 type="text"
-                placeholder="Надання доступу до"
+                placeholder="Дата договору"
                 aria-describedby="dateOfAccessTooltip"
                 className={`${errors.dateOfAccess ? "invalid" : ""}${
                   !errors.dateOfAccess && dirtyFields.dateOfAccess

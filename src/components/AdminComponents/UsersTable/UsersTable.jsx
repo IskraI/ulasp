@@ -103,7 +103,7 @@ const UsersTable = ({ users, visibleColumns }) => {
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
-  // console.log("users.length :>> ", users.length);
+  console.log("users.length :>> ", users);
   return (
     <>
       <Table>
@@ -154,7 +154,9 @@ const UsersTable = ({ users, visibleColumns }) => {
                           onMouseEnter={() => handleRowHover(index)}
                           onMouseLeave={() => handleRowHover(null)}
                         >
-                          {user.name}
+                          {`${capitalize(user.name)} ${
+                            user.userFop === "tov" && "ТОВ"
+                          }`}
                         </Link>
                       ) : (
                         <Link
@@ -164,7 +166,7 @@ const UsersTable = ({ users, visibleColumns }) => {
                         >
                           {`${capitalize(user.firstName)} ${capitalize(
                             user.lastName
-                          )}`}
+                          )} ${user.userFop === "fop" && "ФОП"}`}
                         </Link>
                       )
                     ) : column.type === "link" ? (

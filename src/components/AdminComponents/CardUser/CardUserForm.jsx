@@ -119,7 +119,7 @@ const CardUserForm = ({ user, playlistCount, tracksCount }) => {
   return (
     <>
       <Title margintop="8px" marginbottom="16px">
-        Картка кориcтувача
+        Картка кориcтувача {user.userFop === "tov" ? "ТОВ" : "ФОП"}
       </Title>
 
       <form onSubmit={handleSubmit(onFormSubmit)}>

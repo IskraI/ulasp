@@ -35,7 +35,7 @@ const UserCabinetPage = () => {
           <DataUser>{user.taxCode}</DataUser>
           {/* <TitleSecond>Остання оплата</TitleSecond>
           <DataUser>{user.lastPay}</DataUser> */}
-          <TitleSecond>Надання доступу до</TitleSecond>
+          <TitleSecond>Дата договору</TitleSecond>
           <DataUser>{user.dateOfAccess}</DataUser>
         </InfoWrapper>
         <ReportForm user={user} userpage={true} />

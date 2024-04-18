@@ -40,7 +40,11 @@ const CardUserField = ({
 
   return (
     <Fieldform>
-      <RegisterLeftBlock>
+      <RegisterLeftBlock
+        // width="calc(50% - 27px)"
+        flexBasis="617px"
+        minWidth="617px"
+      >
         <RegisterNameFieldCard
           isEditing={isEditing}
           handleEditActivation={handleEditActivation}
@@ -139,7 +143,7 @@ const CardUserField = ({
             />
 
             <RegisterField>
-              <RegisterLabel>Надання доступу до*</RegisterLabel>
+              <RegisterLabel>Дата договору*</RegisterLabel>
               <Controller
                 name="dateOfAccess"
                 control={control}
@@ -148,7 +152,7 @@ const CardUserField = ({
                   <>
                     <RegisterInput
                       type="text"
-                      placeholder="Надання доступу до"
+                      placeholder="Дата договору"
                       readOnly={!isEditing}
                       value={field.value}
                       onChange={(e) => field.onChange(e.target.value)}
@@ -243,7 +247,10 @@ const CardUserField = ({
           />
         )}
       </RegisterLeftBlock>
-      <RegisterRigthBlock>
+      <RegisterRigthBlock
+        // width="calc(50% - 27px)"
+        flexBasis="250px"
+      >
         <RegisterCommentField>
           <Commentlabel>Примітка </Commentlabel>
           <Controller

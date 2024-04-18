@@ -1,5 +1,5 @@
 import * as yup from "yup";
-export const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+export const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,20})+$/;
 export const loginAdminRegexp = /^[a-z]+$/;
 export const innRegexp = /^\d{10}$/;
 export const nameRegexp = /^([а-яА-ЯїЇіІєЄ'ʼ-])+$/;
@@ -36,7 +36,7 @@ export const UserFopSchema = yup.object().shape({
     .max(16, "Повинно бути від 6 до 16 цифр!")
     .matches(onlyNumberRegexp, "Повинно бути від 6 до 16 цифр!")
     .required("Обов'язкове поле!"),
-    contractNumberDoc: yup
+  contractNumberDoc: yup
     .string()
     .min(6, "Повинно бути від 6 до 30 символів!")
     .max(30, "Повинно бути від 6 до 30 символів!")
@@ -138,7 +138,7 @@ export const UserCompanySchema = yup.object().shape({
     .max(16, "Повинно бути від 6 до 16 цифр!")
     .matches(onlyNumberRegexp, "Повинно бути від 6 до 16 цифр!")
     .required("Обов'язкове поле!"),
-    contractNumberDoc: yup
+  contractNumberDoc: yup
     .string()
     .min(6, "Повинно бути від 6 до 30 символів!")
     .max(30, "Повинно бути від 6 до 30 символів!")
@@ -299,7 +299,7 @@ export const UserFopCardSchema = yup.object().shape({
     .max(16, "Повинно бути від 6 до 16 цифр!")
     .matches(onlyNumberRegexp, "Повинно бути від 6 до 16 цифр!")
     .required("Обов'язкове поле!"),
-    contractNumberDoc: yup
+  contractNumberDoc: yup
     .string()
     .min(6, "Повинно бути від 6 до 30 символів!")
     .max(30, "Повинно бути від 6 до 30 символів!")
@@ -397,7 +397,7 @@ export const UserCompanyCardSchema = yup.object().shape({
     .string()
     .required("Обов'язкове поле!")
     .matches(nameInstitutionRegexp, "Назва компанії українською мовою"),
-    contractNumberDoc: yup
+  contractNumberDoc: yup
     .string()
     .min(6, "Повинно бути від 6 до 30 символів!")
     .max(30, "Повинно бути від 6 до 30 символів!")
