@@ -7,7 +7,7 @@ export const InputStyle = styled.input`
   position: relative;
   width: 200px;
   margin-top: 5px;
-  width: 100%;
+  width: 50%;
 
   &[title]:hover::before {
     content: attr(title);
@@ -97,7 +97,7 @@ export const RegisterInput = styled.input`
   display: flex;
   position: relative;
   background-color: rgba(234, 234, 234, 0.32);
-  width: 100%;
+  width: 50%;
   padding-left: 8px;
 
   align-items: center;
@@ -149,7 +149,7 @@ export const RegisterInputButtonDate = styled.button`
   /* position: relative; */
 
   background-color: rgba(234, 234, 234, 0.32);
-  width: 100%;
+  width: 50%;
   padding-left: 8px;
   height: 42px;
   align-items: center;
@@ -200,7 +200,7 @@ export const RegisterInputButtonDate = styled.button`
 export const RegisterLabel = styled.label`
   border: 0.25px solid rgba(23, 22, 28, 0.5);
   background: rgba(234, 234, 234, 0.32);
-  width: 100%;
+  width: 50%;
   display: flex;
   align-items: center;
   padding-left: 8px;
