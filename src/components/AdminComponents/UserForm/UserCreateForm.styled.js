@@ -525,8 +525,6 @@ export const RegisterLoginInput = styled.input`
     left: 25%;
     transform: translateX(-50%);
     width: 50%;
-
-    /* Дополнительные стили для видимой подсказки при ховере */
   }
 `;
 export const StyledDatePicker = styled(DatePicker)`
