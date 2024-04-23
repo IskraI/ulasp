@@ -130,13 +130,11 @@ const Player = ({ tracks = [], inHeader = false }) => {
 
   useEffect(() => {
     if (isPlaying || isPaused) {
-      console.log("(isPlaying || isPaused ");
       setTrackIndex(currentTrackIndex);
       setCurrentTrackArtist(tracks[currentTrack]?.artist);
 
       setCurrentTrackName(tracks[currentTrack]?.trackName);
     } else {
-      console.log("isPlaying || isPaused 2:>> ", isPlaying || isPaused);
       setTrackIndex();
       setListenDuration(0);
       requestSentRef.current = false;
@@ -145,7 +143,6 @@ const Player = ({ tracks = [], inHeader = false }) => {
 
   useEffect(() => {
     if (isEndOfPlaylist || isPressedPrev || isPressedNext) {
-      console.log("isEndOfPlaylist || isPressedPrev || isPressedNext :>> ");
       if (currentTrack === 0) {
         dispatch(setNextPage({ currentPage: 1 }));
       }
@@ -157,7 +154,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
       setListenDuration(0);
       requestSentRef.current = false;
       // dispatch(updateIsFirstPlay(true));
-      clearInterval(intervalId);
+      // clearInterval(intervalId);
       if (isSorted) {
         dispatch(setIsSorted({ isSorted: false }));
       }
@@ -294,7 +291,6 @@ const Player = ({ tracks = [], inHeader = false }) => {
     }
     console.log("listenDuration :>> ", listenDuration);
     if (isPlaying && listenDuration < 10 && !requestSentRef.current) {
-      console.log("запустили счетчик :>> ");
       const id = setInterval(() => {
         setListenDuration((prevSeconds) => prevSeconds + 1);
       }, 1000);
@@ -310,7 +306,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
     listenDuration,
     currentTrack,
     tracks,
-
+    handlePlayLoadStart,
     playerRef?.current?.audio.current.error,
   ]);
 

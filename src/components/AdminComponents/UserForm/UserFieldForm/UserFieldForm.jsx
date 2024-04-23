@@ -1,5 +1,12 @@
 //typeOfUser - fop , tov
 //activeSection createuser, create editor, carduser, cardeditor
+import { useState } from "react";
+import DatePicker from "react-datepicker";
+import { uk } from "date-fns/locale";
+import "react-datepicker/dist/react-datepicker.css";
+import React, { forwardRef } from "react";
+import { subMonths } from "date-fns";
+import CustomInputDate from "./CustomInputDate";
 import {
   RegisterField,
   RegisterLabel,
@@ -13,11 +20,14 @@ import {
   Tooltip,
   RegisterLoginForm,
   RegisterLoginInput,
+  StyledDatePicker,
 } from "../UserCreateForm.styled";
 import ContactFaceField from "./ContactFaceField";
 import RegisterNameFieldForm from "./RegisterNameFieldForm";
 import CommonFieldForm from "./CommonFields";
 import { Button } from "../../../Button/Button";
+import "../../../../styles/datePicker.css";
+
 const UserFieldForm = ({
   form,
   control,
@@ -29,9 +39,37 @@ const UserFieldForm = ({
   errors,
   register,
   dirtyFields,
+  setValue,
 }) => {
   // console.log("errors", errors);
   // console.log("isValid", isValid);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const today = new Date();
+  function range(start, end, step = 1) {
+    const result = [];
+    for (let i = start; i < end; i += step) {
+      result.push(i);
+    }
+    return result;
+  }
+  const currentYear = new Date().getFullYear();
+  const years = range(1990, currentYear + 1, 1);
+  const months = [
+    "Січень",
+    "Лютий",
+    "Березень",
+    "Квітень",
+    "Травень",
+    "Червень",
+    "Липень",
+    "Серпень",
+    "Вересень",
+    "Жовтень",
+    "Листопад",
+    "Грудень",
+  ];
+
+  console.log("selectedDate :>> ", selectedDate);
 
   return (
     <Fieldform>
@@ -102,8 +140,32 @@ const UserFieldForm = ({
             />
 
             <RegisterField>
-              <RegisterLabel>Дата договору*</RegisterLabel>
-              <RegisterInput
+              <RegisterLabel>Дата договору</RegisterLabel>
+              <DatePicker
+                wrapperClassName="datePicker"
+                todayButton="Сьогодні"
+                // customInput={
+                //   <CustomInputDate value={selectedDate || "Оберіть дату"} />
+                // }
+                selected={selectedDate} // Передайте значение даты
+                dateFormat="dd.MM.yyyy" // Устанавливаем формат даты
+                // minDate={subMonths(new Date(), 20)}
+                // showMonthYearDropdown
+                maxDate={today}
+                locale={uk}
+                onChange={(date) => {
+                  setValue("dateOfAccess", date); // Установите значение даты с помощью setValue из React Hook Form
+                  setSelectedDate(date); // Обновите локальное состояние для отображения выбранной даты
+                }}
+                placeholderText="Оберіть дату"
+                className={`${errors.dateOfAccess ? "invalid" : ""}${
+                  !errors.dateOfAccess && dirtyFields.dateOfAccess
+                    ? "valid"
+                    : "date"
+                }`}
+                // {...register("dateOfAccess")} // Подключите к React Hook Form
+              />
+              {/* <RegisterInput
                 type="text"
                 placeholder="Дата договору"
                 aria-describedby="dateOfAccessTooltip"
@@ -113,7 +175,7 @@ const UserFieldForm = ({
                     : ""
                 }`}
                 {...register("dateOfAccess")}
-              />
+              /> */}
               <Tooltip
                 id="dateOfAccessTooltip"
                 className={`${errors.dateOfAccess ? "visible" : ""}`}

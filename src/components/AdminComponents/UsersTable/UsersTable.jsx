@@ -103,7 +103,7 @@ const UsersTable = ({ users, visibleColumns }) => {
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
-  console.log("users.length :>> ", users);
+  // console.log("users.length :>> ", users);
   return (
     <>
       <Table>
