@@ -5,7 +5,7 @@ import {
   TableRow,
   TableCell,
   RowTitle,
-  Details,
+  WrapperTablePagination,
 } from "../SearchUsers/SearchUsers.styled";
 import { Button } from "../../Button/Button";
 import {
@@ -81,160 +81,161 @@ const UsersTable = ({ users, visibleColumns }) => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = users.slice(indexOfFirstItem, indexOfLastItem);
-  // const onChangePage = useCallback(
-  //   (page) => {
-  //     // setCurrentPage(page);
-  //     onChangeCurrentPage(page);
-  //     dispatch(
-  //       setNextPage({
-  //         currentPage: page,
-  //       })
-  //     );
-  //     window.scrollTo({
-  //       top: 0,
-  //       behavior: "instant",
-  //     });
-  //     // checkedAllFn(false);
-  //     setTracksIdList([]);
-  //   },
 
-  //   [dispatch, onChangeCurrentPage]
-  // );
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
   // console.log("users.length :>> ", users);
   return (
     <>
-      <Table>
-        <thead>
-          <TableRow>
-            {visibleColumns.map((column, columnIndex, array) => (
-              <RowTitle
-                key={column.key}
-                isFirstColumn={columnIndex === 0}
-                isLastColumn={columnIndex === array.length - 1}
-              >
-                {column.label}
-              </RowTitle>
-            ))}
-          </TableRow>
-        </thead>
+      <WrapperTablePagination>
+        <Table>
+          <thead>
+            <TableRow>
+              {visibleColumns.map((column, columnIndex, array) => (
+                <RowTitle
+                  key={column.key}
+                  isFirstColumn={columnIndex === 0}
+                  isLastColumn={columnIndex === array.length - 1}
+                >
+                  {column.label}
+                </RowTitle>
+              ))}
+            </TableRow>
+          </thead>
 
-        <tbody>
-          {currentItems.map((user, index) => {
-            {
-              // console.log("users", user._id, user.access);
-            }
-            return (
-              <TableRow
-                key={user._id}
-                className={index === hoveredRow ? "hovered" : ""}
-              >
-                {visibleColumns.map((column, columnIndex, array) => (
-                  <TableCell
-                    key={column.key}
-                    isFirstColumn={columnIndex === 0}
-                    isLastColumn={columnIndex === array.length - 1}
-                  >
-                    {column.type === "date" ? (
-                      formatDate(user[column.key])
-                    ) : column.type === "name" ? (
-                      user.name ? (
-                        user.name
-                      ) : (
-                        capitalize(user.firstName) +
-                        " " +
-                        capitalize(user.lastName)
-                      )
-                    ) : column.type === "nameLink" ? (
-                      user.name ? (
+          <tbody>
+            {currentItems.map((user, index) => {
+              {
+                // console.log("users", user._id, user.access);
+              }
+              return (
+                <TableRow
+                  key={user._id}
+                  className={index === hoveredRow ? "hovered" : ""}
+                >
+                  {visibleColumns.map((column, columnIndex, array) => (
+                    <TableCell
+                      key={column.key}
+                      isFirstColumn={columnIndex === 0}
+                      isLastColumn={columnIndex === array.length - 1}
+                    >
+                      {column.type === "date" ? (
+                        formatDate(user[column.key])
+                      ) : column.type === "name" ? (
+                        user.name ? (
+                          user.name
+                        ) : (
+                          capitalize(user.firstName) +
+                          " " +
+                          capitalize(user.lastName)
+                        )
+                      ) : column.type === "nameLink" ? (
+                        user.name ? (
+                          <Link
+                            to={`/admin/users/carduser/${user._id}`}
+                            onMouseEnter={() => handleRowHover(index)}
+                            onMouseLeave={() => handleRowHover(null)}
+                          >
+                            {`${capitalize(user.name)} ${
+                              user.userFop === "tov" && "ТОВ"
+                            }`}
+                          </Link>
+                        ) : (
+                          <Link
+                            to={`/admin/users/carduser/${user._id}`}
+                            onMouseEnter={() => handleRowHover(index)}
+                            onMouseLeave={() => handleRowHover(null)}
+                          >
+                            {`${capitalize(user.firstName)} ${capitalize(
+                              user.lastName
+                            )} ${user.userFop === "fop" && "ФОП"}`}
+                          </Link>
+                        )
+                      ) : column.type === "link" ? (
                         <Link
                           to={`/admin/users/carduser/${user._id}`}
                           onMouseEnter={() => handleRowHover(index)}
                           onMouseLeave={() => handleRowHover(null)}
                         >
-                          {`${capitalize(user.name)} ${
-                            user.userFop === "tov" && "ТОВ"
-                          }`}
+                          картка
                         </Link>
-                      ) : (
+                      ) : column.type === "nameLinkEditor" ? (
                         <Link
-                          to={`/admin/users/carduser/${user._id}`}
+                          to={`/admin/users/cardeditor/${user._id}`}
                           onMouseEnter={() => handleRowHover(index)}
                           onMouseLeave={() => handleRowHover(null)}
                         >
-                          {`${capitalize(user.firstName)} ${capitalize(
-                            user.lastName
-                          )} ${user.userFop === "fop" && "ФОП"}`}
+                          {`${user.firstName} ${user.lastName}`}
                         </Link>
-                      )
-                    ) : column.type === "link" ? (
-                      <Link
-                        to={`/admin/users/carduser/${user._id}`}
-                        onMouseEnter={() => handleRowHover(index)}
-                        onMouseLeave={() => handleRowHover(null)}
-                      >
-                        картка
-                      </Link>
-                    ) : column.type === "nameLinkEditor" ? (
-                      <Link
-                        to={`/admin/users/cardeditor/${user._id}`}
-                        onMouseEnter={() => handleRowHover(index)}
-                        onMouseLeave={() => handleRowHover(null)}
-                      >
-                        {`${user.firstName} ${user.lastName}`}
-                      </Link>
-                    ) : column.type === "typeEditor" ? (
-                      <>
-                        {user.editorRole
-                          ? "Музичний редактор"
-                          : "Адміністратор"}{" "}
-                      </>
-                    ) : column.key === "access" ? (
-                      <ButtonSwitch
-                        isTrue={user[column.key]}
-                        idUser={user._id}
-                      />
-                    ) : column.key === "status" ? (
-                      <>
-                        {user[column.key] === true ? "Відкрито" : "Заблоковано"}
-                      </>
-                    ) : column.key === "sendEmail" ? (
-                      <Button
-                        border={"1px solid rgb(23 22 28 / 50%) "}
-                        type="button"
-                        text="Відправити"
-                        padding="8px"
-                        fontsize="14px"
-                        onClick={() => handleSend(user._id)}
-                      ></Button>
-                    ) : (
-                      user[column.key]
-                    )}
-                  </TableCell>
-                ))}
-              </TableRow>
-            );
-          })}
-        </tbody>
-      </Table>
-      {users.length > 10 && (
-        <Pagination
-          // style={{ marginBottom: "24px" }}
-          defaultCurrent={1}
-          current={currentPage}
-          total={users.length}
-          // showLessItems
-          // selectComponentClass={Select}
-          // showSizeChanger={false}
-          defaultPageSize={itemsPerPage}
-          pageSize={itemsPerPage}
-          // onShowSizeChange={onPageSizeChange}
-          // onChangeSizePage={onPageSizeChange}
-          onChange={(page) => handlePageChange(page)}
-        />
-      )}
+                      ) : column.type === "typeEditor" ? (
+                        <>
+                          {user.editorRole
+                            ? "Музичний редактор"
+                            : "Адміністратор"}{" "}
+                        </>
+                      ) : column.key === "access" ? (
+                        <ButtonSwitch
+                          isTrue={user[column.key]}
+                          idUser={user._id}
+                        />
+                      ) : column.key === "status" ? (
+                        <>
+                          {user[column.key] === true
+                            ? "Відкрито"
+                            : "Заблоковано"}
+                        </>
+                      ) : column.key === "sendEmail" ? (
+                        <Button
+                          border={"1px solid rgb(23 22 28 / 50%) "}
+                          type="button"
+                          text="Відправити"
+                          padding="8px"
+                          fontsize="14px"
+                          onClick={() => handleSend(user._id)}
+                        ></Button>
+                      ) : (
+                        user[column.key]
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              );
+            })}
+          </tbody>
+        </Table>
+        {users.length > 10 && (
+          <div
+            style={{
+              display: "flex",
+              marginLeft: "auto",
+              alignItems: "center",
+            }}
+          >
+            {/* <SelectPageSize
+            pageSize={pageSize}
+            onChange={onPageSizeChange}
+            totalPages={totalPages}
+            optionValue={[10, 20, 50, 100]}
+          /> */}
+
+            <Pagination
+              style={{ marginBottom: "12px" }}
+              defaultCurrent={1}
+              current={currentPage}
+              total={users.length}
+              showLessItems
+              showSizeChanger={false}
+              defaultPageSize={itemsPerPage}
+              pageSize={itemsPerPage}
+              hideOnSinglePage
+              onChange={(page) => handlePageChange(page)}
+              // locale={localeUA}
+              showTitle
+            />
+          </div>
+        )}
+      </WrapperTablePagination>
       {activeModal === "sendMail" && (
         <Modal
           width={"664px"}

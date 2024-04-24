@@ -1,7 +1,19 @@
 .datePicker {
   width: 50%;
 }
-
+.datePickerCard {
+  position: relative;
+  width: 50%;
+}
+.buttonCalendarCardUser {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background-color: inherit;
+  z-index: 100;
+}
 .date {
   display: flex;
   position: relative;
@@ -45,6 +57,7 @@
   /* background-color: rgba(164, 188, 212); */
   border-radius: 10px;
   border: 0.25px solid rgba(23, 22, 28, 0.5);
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 .react-datepicker__header {
@@ -87,3 +100,19 @@ bgHeaderColor: "#3E6DA3",
 inputGrayColor: "rgba(0, 0, 0, 0.4)",
 errorColor: "#870505",
 backGroundGreyColor: "#CECCC180", */
+.react-datepicker__day:hover,
+.react-datepicker__day:focus {
+  transition: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: #fff3bf;
+  color: #000000;
+  font-weight: 600;
+}
+
+.react-datepicker__navigation-icon::before {
+  border-color: #0f0f0f;
+  color: #181715;
+}
+.react-datepicker__navigation:hover *::before {
+  border-color: #fff3bf;
+  color: #fff3bf;
+}

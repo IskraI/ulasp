@@ -276,7 +276,7 @@ export const RegisterArea = styled.div`
 export const RegisterNameBlock = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   padding: 8px;
   gap: 4px;
   /* width: 558px; */
@@ -451,6 +451,7 @@ export const LoginInput = styled.input`
 `;
 
 export const IconsWrapperUserEdit = styled.div`
+  margin-top: ${(props) => (props.marginTop ? props.marginTop : 0)};
   display: flex;
 `;
 

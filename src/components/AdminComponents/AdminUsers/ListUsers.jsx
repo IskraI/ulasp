@@ -11,7 +11,7 @@ const ListUsers = ({ searchTerm }) => {
     { key: "firstName", label: "Ім’я", type: "nameLink" },
 
     { key: "contractNumber", label: "Логін", type: "string" },
-    { key: "taxCode", label: "ИНН", type: "string" },
+    { key: "taxCode", label: "ІНН", type: "string" },
 
     { key: "contractNumberDoc", label: "№ договору", type: "string" },
     { key: "dateOfAccess", label: "Дата договору", type: "string" },
