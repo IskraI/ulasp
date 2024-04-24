@@ -27,6 +27,9 @@ export const ButtonCustomSwitch = styled.button`
   border-radius: 10px;
   border: 0.4px solid rgba(23, 22, 28, 0.4);
   transition: ${transition.duration};
+  /* margin-top: ${(props) =>
+    props.marginTop ? `${props.marginTop}` : `0`}; */
+
   /* margin-bottom: 20px; */
   &:hover {
     background-color: ${(props) =>

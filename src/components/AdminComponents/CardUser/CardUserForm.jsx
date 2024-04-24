@@ -58,6 +58,7 @@ const CardUserForm = ({ user, playlistCount, tracksCount }) => {
   };
 
   const onFormSubmit = (data) => {
+    console.log("data :>> ", data);
     if (typeOfUser === "fop") {
       console.log("data :>> ", data);
       const formData = {
@@ -138,6 +139,7 @@ const CardUserForm = ({ user, playlistCount, tracksCount }) => {
           playlistCount={playlistCount}
           tracksCount={tracksCount}
           access={access}
+          dirtyFields={dirtyFields}
         />
       </form>
       {activeModal === "update" && (

@@ -1,5 +1,12 @@
 //typeOfUser - fop , tov
 //activeSection createuser, create editor, carduser, cardeditor
+import { useState } from "react";
+import DatePicker from "react-datepicker";
+import { uk } from "date-fns/locale";
+import "react-datepicker/dist/react-datepicker.css";
+
+import { format } from "date-fns";
+
 import {
   RegisterField,
   RegisterLabel,
@@ -18,6 +25,9 @@ import ContactFaceField from "./ContactFaceField";
 import RegisterNameFieldForm from "./RegisterNameFieldForm";
 import CommonFieldForm from "./CommonFields";
 import { Button } from "../../../Button/Button";
+import "../../../../styles/datePicker.css";
+import { Controller } from "react-hook-form";
+
 const UserFieldForm = ({
   form,
   control,
@@ -32,6 +42,8 @@ const UserFieldForm = ({
 }) => {
   // console.log("errors", errors);
   // console.log("isValid", isValid);
+  const [selectedDate, setSelectedDate] = useState("");
+  const today = new Date();
 
   return (
     <Fieldform>
@@ -102,25 +114,49 @@ const UserFieldForm = ({
             />
 
             <RegisterField>
-              <RegisterLabel>Дата договору*</RegisterLabel>
-              <RegisterInput
-                type="text"
-                placeholder="Дата договору"
-                aria-describedby="dateOfAccessTooltip"
-                className={`${errors.dateOfAccess ? "invalid" : ""}${
-                  !errors.dateOfAccess && dirtyFields.dateOfAccess
-                    ? "valid"
-                    : ""
-                }`}
-                {...register("dateOfAccess")}
+              <RegisterLabel>Дата договору</RegisterLabel>
+              <Controller
+                name="dateOfAccess"
+                control={control}
+                render={({ field }) => (
+                  <>
+                    <DatePicker
+                      wrapperClassName="datePicker"
+                      todayButton="Сьогодні" //кнопка Сегодня
+                      selected={selectedDate || ""} // Передайте значение даты или null
+                      dateFormat="dd.MM.yyyy" // Устанавливаем формат даты
+                      maxDate={today}
+                      locale={uk} //на укр
+                      onChange={(date) => {
+                        if (date) {
+                          field.onChange(format(date, "dd.MM.yyyy")); // преобразование в нужный формат
+                          // field.onChange(date);
+                          setSelectedDate(date);
+                        } else {
+                          field.onChange(""); // Если дата не выбрана, передайте пустую строку
+                          setSelectedDate(null);
+                        }
+                      }}
+                      placeholderText="Оберіть дату"
+                      className={`date ${errors.dateOfAccess ? "invalid" : ""}${
+                        !errors.dateOfAccess && dirtyFields.dateOfAccess
+                          ? "valid"
+                          : ""
+                      }`}
+                    />
+
+                    {errors && errors.dateOfAccess && (
+                      <Tooltip
+                        className={`${errors.dateOfAccess ? "visible" : ""}`}
+                      >
+                        {errors.dateOfAccess.message}
+                      </Tooltip>
+                    )}
+                  </>
+                )}
               />
-              <Tooltip
-                id="dateOfAccessTooltip"
-                className={`${errors.dateOfAccess ? "visible" : ""}`}
-              >
-                {errors.dateOfAccess && errors.dateOfAccess.message}
-              </Tooltip>
             </RegisterField>
+
             {/* <RegisterField>
               <RegisterLabel>Остання оплата* </RegisterLabel>
               <RegisterInput

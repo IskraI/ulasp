@@ -1,11 +1,13 @@
 import styled from "@emotion/styled";
 import { colors, mainCubicTransition } from "../../../styles/vars";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export const InputStyle = styled.input`
   position: relative;
   width: 200px;
   margin-top: 5px;
-  width: 100%;
+  width: 50%;
 
   &[title]:hover::before {
     content: attr(title);
@@ -95,7 +97,7 @@ export const RegisterInput = styled.input`
   display: flex;
   position: relative;
   background-color: rgba(234, 234, 234, 0.32);
-  width: 100%;
+  width: 50%;
   padding-left: 8px;
 
   align-items: center;
@@ -142,10 +144,63 @@ export const RegisterInput = styled.input`
     width: 40%;
   }
 `;
+export const RegisterInputButtonDate = styled.button`
+  display: flex;
+  /* position: relative; */
+
+  background-color: rgba(234, 234, 234, 0.32);
+  width: 50%;
+  padding-left: 8px;
+  height: 42px;
+  align-items: center;
+
+  outline: none;
+  border: 1px solid rgba(23, 22, 28, 0.5);
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  &:focus,
+  &:hover {
+    outline: 1px solid rgba(23, 22, 28, 0.5);
+  }
+  &.invalid:focus,
+  &.invalid:hover {
+    background-color: rgba(234, 234, 234, 0.5);
+  }
+  &.valid:focus,
+  &.valid:hover {
+    background-color: rgba(234, 234, 234, 0.5);
+  }
+  &.invalid {
+    /* border: 0.25px solid red; */
+    /* background-color: rgba(255, 243, 191, 1); */
+    outline: 1px solid red;
+    /* border: none; */
+  }
+  &.valid {
+    /* background-color: rgba(234, 234, 234, 0.55); */
+    /* border: 1px solid green; */
+    outline: 1px solid green;
+    /* border: none; */
+  }
+
+  &.invalid:hover + span {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    top: 100%; /* Положение подсказки относительно верхней границы input */
+    left: 75%;
+    transform: translateX(-40%);
+    width: 40%;
+  }
+`;
+
 export const RegisterLabel = styled.label`
   border: 0.25px solid rgba(23, 22, 28, 0.5);
   background: rgba(234, 234, 234, 0.32);
-  width: 100%;
+  width: 50%;
   display: flex;
   align-items: center;
   padding-left: 8px;
@@ -221,7 +276,7 @@ export const RegisterArea = styled.div`
 export const RegisterNameBlock = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   padding: 8px;
   gap: 4px;
   /* width: 558px; */
@@ -396,6 +451,7 @@ export const LoginInput = styled.input`
 `;
 
 export const IconsWrapperUserEdit = styled.div`
+  margin-top: ${(props) => (props.marginTop ? props.marginTop : 0)};
   display: flex;
 `;
 
@@ -470,7 +526,52 @@ export const RegisterLoginInput = styled.input`
     left: 25%;
     transform: translateX(-50%);
     width: 50%;
+  }
+`;
+export const StyledDatePicker = styled(DatePicker)`
+  display: flex;
+  position: relative;
+  background-color: rgba(234, 234, 234, 0.32);
+  width: 100%;
+  padding-left: 8px;
 
-    /* Дополнительные стили для видимой подсказки при ховере */
+  align-items: center;
+  & .react-datepicker {
+    background-color: green !important;
+    border-radius: 10px !important;
+  }
+  outline: none;
+  border: 1px solid rgba(23, 22, 28, 0.5);
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  & .react-datepicker-popper {
+    background-color: green !important;
+    border-radius: 10px !important;
+  }
+
+  & .react-datepicker {
+    background-color: green; /* Новый цвет фона */
+    border-radius: 10px;
+  }
+  & .react-datepicker__header {
+    background-color: green;
+  }
+  & .react-datepicker__month-container {
+    background-color: #f0f0f0; /* Новый цвет фона */
+  }
+  &:focus,
+  &:hover {
+    outline: 1px solid rgba(23, 22, 28, 0.5);
+  }
+
+  &.invalid {
+    outline: 1px solid red;
+  }
+
+  &.valid {
+    outline: 1px solid green;
   }
 `;

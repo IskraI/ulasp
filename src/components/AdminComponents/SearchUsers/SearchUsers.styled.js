@@ -60,8 +60,9 @@ export const Table = styled.table`
 
   display: flex;
   flex-direction: column;
-  margin-right: 20px;
+  /* margin-right: 20px; */
   width: 100%;
+
   border-collapse: collapse;
 
   th,
@@ -76,12 +77,13 @@ export const Table = styled.table`
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  /* th:last-child,
-td:last-child{
-  display:flex;
-  justify-content: end;
-  padding-right: 24px;
-} */
+  th:last-child,
+  td:last-child {
+    display: flex;
+    justify-content: end;
+    padding-right: 24px;
+    flex: 0 0 15%;
+  }
 
   tbody {
     tr:nth-of-type(odd) {
@@ -93,46 +95,6 @@ td:last-child{
     }
   }
 `;
-
-/* thead th:nth-of-type(1) {
-    width: 30%;
-  }
-
-  thead th:nth-of-type(2) {
-    width: 20%;
-  }
-
-  thead th:nth-of-type(3) {
-    width: 15%;
-  }
-
-  thead th:nth-of-type(4) {
-    width: 15%;
-  }
-
-  thead th:nth-of-type(5) {
-    width: 20%;
-  }
-
-  tbody td:nth-of-type(1) {
-    width: 30%;
-  }
-
-  tbody td:nth-of-type(2) {
-    width: 20%;
-  }
-
-  tbody td:nth-of-type(3) {
-    width: 15%;
-  }
-
-  thead td:nth-of-type(4) {
-    width: 15%;
-  }
-
-  tbody td:nth-of-type(5) {
-    width: 20%;
-  } */
 
 export const RowTitle = styled.th`
   color: ${colors.mainFontColor};
@@ -202,4 +164,11 @@ export const SearchInputWrapper = styled.div`
   height: 40px;
   outline: none;
   border: none;
+`;
+
+export const WrapperTablePagination = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
 `;
