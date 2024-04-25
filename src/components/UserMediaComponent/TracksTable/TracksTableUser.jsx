@@ -65,6 +65,9 @@ const TracksTable = ({
 }) => {
   const { id: idUser } = useSelector(getUserState);
   // console.log("user TracksTable :>> ", idUser);
+
+  console.log("typeOF", typeof pageSize);
+
   const [
     removeTracksFromPlaylist,
     { isLoading: isLoadingRemoveTracksFromPlaylist },

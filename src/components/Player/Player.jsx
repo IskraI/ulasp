@@ -6,8 +6,9 @@ import {
   useState,
   useRef,
   useCallback,
-  useMemo,
 } from "react";
+import { BASE_URL } from "../../constants/constants";
+
 import {
   setPreloadSrcPlayer,
   setCurrentIndex,
@@ -23,11 +24,11 @@ import { useUpdateListenCountTrackByIdMutation } from "../../redux/tracksUserSli
 import { usePrefetch } from "../../redux/tracksSlice";
 
 import { getPlayerState } from "../../redux/playerSelectors";
-
-import { BASE_URL } from "../../constants/constants";
+import CustomControl from "./CustomControl";
 import {
   PlayerWrapper,
   PlayerReact,
+  TrackInfoWrapper,
   TracksArtist,
   TrackName,
 } from "./Player.styled";
@@ -63,6 +64,8 @@ const Player = ({ tracks = [], inHeader = false }) => {
   const [isEndOfPlaylist, setIsEndOfPlaylist] = useState(false);
   const [currentTrackArtist, setCurrentTrackArtist] = useState("Невизначений");
   const [currentTrackName, setCurrentTrackName] = useState("Невизначений");
+  const [loop, setLoop] = useState(false);
+
   const [error, setError] = useState(true);
 
   const [showModalToPage, setShowModalToPage] = useState(false);
@@ -74,12 +77,11 @@ const Player = ({ tracks = [], inHeader = false }) => {
   const [intervalId, setIntervalId] = useState(null);
   const prefetchPage = usePrefetch("getAllTracks");
 
-  useMemo(() => {
+  useLayoutEffect(() => {
     if (inHeader) {
-      const el = document.getElementsByClassName("rhap_stacked");
+      const el = document.getElementsByClassName("rhap_controls-section");
       if (el[0] !== undefined) {
-        el[0].className =
-          ".rhap_stacked .rhap_controls-section .without_margin";
+        el[0].style.marginTop = 0;
       }
     }
   }, [inHeader]);
@@ -244,11 +246,15 @@ const Player = ({ tracks = [], inHeader = false }) => {
     }
 
     console.log("handleEnd currentTrack :>> ", currentTrack);
+    if (isLastPage && isLastTrack && !loop) {
+      dispatch(setNextPage({ currentPage: nextPage }));
+      dispatch(stopPlay({ indexTrack: 0 }));
+      return;
+    }
     if (isLastTrack) {
       dispatch(setNextPage({ currentPage: nextPage }));
     }
   };
-
 
   const isSortedTracks = (typeOfButton) => {
     switch (typeOfButton) {
@@ -314,43 +320,35 @@ const Player = ({ tracks = [], inHeader = false }) => {
   //   playerRef?.current?.audio.current.error
   // );
 
+  const trackArtist = isPlaying
+    ? currentTrackArtist
+    : isPaused
+    ? currentTrackArtist
+    : noData
+    ? currentTrackArtist
+    : currentTrackArtist;
+
+  const trackName = isPlaying
+    ? currentTrackName
+    : isPaused
+    ? currentTrackName
+    : noData
+    ? currentTrackName
+    : currentTrackName;
+
   return (
     <>
       <PlayerWrapper inHeader={inHeader}>
         <>
-          <div
-            style={{
-              width: "30%",
-              display: inHeader ? "flex" : "block",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "4px",
-              textAlign: "center",
-              border: "0px",
-              // outline: "1px solid red",
-            }}
-          >
-            <TracksArtist inHeader={inHeader}>
-              {isPlaying
-                ? currentTrackArtist
-                : isPaused
-                ? currentTrackArtist
-                : noData
-                ? currentTrackArtist
-                : currentTrackArtist}
+          <TrackInfoWrapper inHeader={inHeader}>
+            <TracksArtist inHeader={inHeader} title={trackArtist}>
+              {trackArtist}
             </TracksArtist>
 
-            <TrackName inHeader={inHeader}>
-              {isPlaying
-                ? currentTrackName
-                : isPaused
-                ? currentTrackName
-                : noData
-                ? currentTrackName
-                : currentTrackName}
+            <TrackName inHeader={inHeader} title={trackName}>
+              {trackName}
             </TrackName>
-          </div>
+          </TrackInfoWrapper>
 
           <PlayerReact
             onPause={() => {
@@ -411,6 +409,13 @@ const Player = ({ tracks = [], inHeader = false }) => {
             // onError={"onError"}
             // onPlayError={"onPlayError"}
             // onLoadStart={() => handlePlayLoadStart(tracks[currentTrack]?.id)}
+            customAdditionalControls={[
+              <CustomControl
+                key={1}
+                onClick={() => setLoop(!loop)}
+                loop={loop}
+              />,
+            ]}
           />
         </>
       </PlayerWrapper>
