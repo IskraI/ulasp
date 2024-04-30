@@ -99,9 +99,9 @@ const Player = ({ tracks = [], inHeader = false }) => {
     // console.log("listenDuration :>> ", listenDuration);
     // console.log("isFirst :>> ", isFirst);
     // if (isFirst) {
-    console.log(
-      ` ${track}. попробуем отправить счетчик dispatchListenCountTrack`
-    );
+    // console.log(
+    //   ` ${track}. попробуем отправить счетчик dispatchListenCountTrack`
+    // );
 
     if (track) {
       try {
@@ -157,7 +157,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
       setListenDuration(0);
       requestSentRef.current = false;
       // dispatch(updateIsFirstPlay(true));
-      clearInterval(intervalId);
+      // clearInterval(intervalId);
       if (isSorted) {
         dispatch(setIsSorted({ isSorted: false }));
       }
@@ -178,6 +178,10 @@ const Player = ({ tracks = [], inHeader = false }) => {
     }
   }, [isSorted]);
   useLayoutEffect(() => {
+    console.log("replacedToPage", replacedToPage);
+    // requestSentRef.current = false;
+    // setListenDuration(0);
+
     if (currPageTrack === 0 || isNaN(currPageTrack) || replacedToPage) {
       return;
     }
@@ -227,6 +231,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
   const handleClickPrevious = () => {
     // dispatch(updateIsFirstPlay(true));
     setIsPressedPrev(true);
+    setListenDuration(0);
     requestSentRef.current = false;
     if (isSorted) {
       isSortedTracks("prev");
@@ -298,12 +303,8 @@ const Player = ({ tracks = [], inHeader = false }) => {
         console.log("this type is not supported");
     }
   };
-  //
-  // console.log("listenDuration :>> ", listenDuration);
 
-  // console.log("isPlaying :>> ", isPlaying);
-  // console.log("isPaused :>> ", isPaused);
-  // console.log("isFirst :>> ", isFirst);
+  // console.log("listenDuration :>> ", listenDuration);
 
   useEffect(() => {
     if (playerRef?.current?.audio.current.error) {
@@ -319,6 +320,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
 
       return () => clearInterval(id); // Очистка интервала при размонтировании компонента
     } else if (isPlaying && listenDuration >= 10 && !requestSentRef.current) {
+      console.log("отправили запрос :>> ");
       handlePlayLoadStart(tracks[currentTrack]?.id);
       requestSentRef.current = true;
     }
@@ -326,13 +328,17 @@ const Player = ({ tracks = [], inHeader = false }) => {
     isPlaying,
     listenDuration,
     currentTrack,
+    tracks,
+    handlePlayLoadStart,
     playerRef?.current?.audio.current.error,
   ]);
 
-  // console.log(
-  //   "playerRef.current.audio.current :>> ",
-  //   playerRef?.current?.audio.current.error
-  // );
+  //при смене трека в списке обнуляем значения отправки сообщения и обнуляем счетчик
+
+  useEffect(() => {
+    requestSentRef.current = false;
+    setListenDuration(0);
+  }, [trackSRC]);
 
   const trackArtist = isPlaying
     ? currentTrackArtist
@@ -392,7 +398,9 @@ const Player = ({ tracks = [], inHeader = false }) => {
             // if (isPlaying && !isPaused && isFirst) {
 
             //
-
+            // onClick={() => {
+            //   handleClickNext();
+            // }}
             onListen={() => {
               if (
                 Math.ceil(playerRef.current.audio.current.duration * 0.95) ===

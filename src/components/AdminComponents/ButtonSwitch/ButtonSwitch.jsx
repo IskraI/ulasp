@@ -19,6 +19,7 @@ export const ButtonSwitch = ({
   form,
   handleTypeOfAccess,
   editor,
+  marginTop,
 }) => {
   const [typeOfAccess, setTypeOfAccess] = useState(isTrue);
 
@@ -60,6 +61,7 @@ export const ButtonSwitch = ({
           )}
           {!isLoadingAccess && typeOfAccess && (
             <ButtonCustomSwitch
+              marginTop={marginTop}
               type="button"
               isTrue={typeOfAccess}
               onMouseEnter={() => setIsHovered(true)}
@@ -86,6 +88,7 @@ export const ButtonSwitch = ({
           )}
           {!isLoadingAccess && !typeOfAccess && (
             <ButtonCustomSwitch
+              marginTop={marginTop}
               type="button"
               isTrue={typeOfAccess}
               onMouseEnter={() => setIsHovered(true)}

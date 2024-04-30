@@ -47,7 +47,7 @@ const RegisterNameFieldCard = ({
           </IconsButtonUserEdit>
         </IconsWrapperUserEdit>
       ) : (
-        <IconsWrapperUserEdit>
+        <IconsWrapperUserEdit marginTop={"8px"}>
           <IconsButtonUserSave type="submit">
             <IconsSvgUserEdit width="24" height="24">
               <use href={`${symbol}#icon-check-in`}></use>
@@ -190,15 +190,17 @@ const RegisterNameFieldCard = ({
               />
             </RegisterNameField>
           )}
-
-          <ButtonSwitch
-            // form={true}
-            idUser={user._id}
-            type="button"
-            isTrue={typeOfAccess}
-            // handleTypeOfAccess={handleTypeOfAccess}
-            onClick={() => handleTypeOfAccess()}
-          />
+          <IconsWrapperUserEdit marginTop={"8px"}>
+            <ButtonSwitch
+              marginTop={"8px"}
+              // form={true}
+              idUser={user._id}
+              type="button"
+              isTrue={typeOfAccess}
+              // handleTypeOfAccess={handleTypeOfAccess}
+              onClick={() => handleTypeOfAccess()}
+            />
+          </IconsWrapperUserEdit>
         </>
       ) : (
         <>

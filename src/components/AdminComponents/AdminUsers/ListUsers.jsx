@@ -9,11 +9,14 @@ const ListUsers = ({ searchTerm }) => {
 
   const visibleColumns = [
     { key: "firstName", label: "Ім’я", type: "nameLink" },
-    { key: "contractNumber", label: "№ договору", type: "string" },
-    { key: "taxCode", label: "ИНН", type: "string" },
+
+    { key: "contractNumber", label: "Логін", type: "string" },
+    { key: "taxCode", label: "ІНН", type: "string" },
+
+    { key: "contractNumberDoc", label: "№ договору", type: "string" },
+    { key: "dateOfAccess", label: "Дата договору", type: "string" },
+    // { key: "lastPay", label: "Дата оплати", type: "string" },
     { key: "status", label: "Статус", type: "status" }, // відкрито заблоковано
-    { key: "lastPay", label: "Дата оплати", type: "string" },
-    { key: "dateOfAccess", label: "Відкрито до", type: "string" },
     { key: "access", label: "Допуск", type: "access" }, // он - офф
   ];
 
