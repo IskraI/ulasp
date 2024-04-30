@@ -148,6 +148,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
       if (currentTrack === 0) {
         dispatch(setNextPage({ currentPage: 1 }));
       }
+
       dispatch(setCurrentIndex(currentTrack));
 
       setIsPressedNext(false);
@@ -177,7 +178,6 @@ const Player = ({ tracks = [], inHeader = false }) => {
     }
   }, [isSorted]);
   useLayoutEffect(() => {
-    console.log("replacedToPage", replacedToPage);
     if (currPageTrack === 0 || isNaN(currPageTrack) || replacedToPage) {
       return;
     }
@@ -212,6 +212,15 @@ const Player = ({ tracks = [], inHeader = false }) => {
 
     if (isLastTrack) {
       dispatch(setNextPage({ currentPage: nextPage }));
+
+      if (isLastPage) {
+        if (!loop) {
+          dispatch(stopPlay([]));
+        } else {
+          setTrackIndex(0);
+        }
+        return;
+      }
     }
   };
 
@@ -246,11 +255,16 @@ const Player = ({ tracks = [], inHeader = false }) => {
     }
 
     console.log("handleEnd currentTrack :>> ", currentTrack);
-    if (isLastPage && isLastTrack && !loop) {
+    if (isLastPage && isLastTrack) {
       dispatch(setNextPage({ currentPage: nextPage }));
-      dispatch(stopPlay({ indexTrack: 0 }));
+      if (!loop) {
+        dispatch(stopPlay([]));
+      } else {
+        setTrackIndex(0);
+      }
       return;
     }
+
     if (isLastTrack) {
       dispatch(setNextPage({ currentPage: nextPage }));
     }

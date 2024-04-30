@@ -63,19 +63,16 @@ const TracksTable = ({
   deleteButton = false,
   isSorted,
 }) => {
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const playerState = useSelector(getPlayerState);
   const { id: idUser } = useSelector(getUserState);
   // console.log("user TracksTable :>> ", idUser);
-
-  console.log("typeOF", typeof pageSize);
 
   const [
     removeTracksFromPlaylist,
     { isLoading: isLoadingRemoveTracksFromPlaylist },
   ] = useRemoveTrackFromPlaylistUserMutation();
-
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const playerState = useSelector(getPlayerState);
 
   const [tracksIdList, setTracksIdList] = useState([]);
   const tracksTableProps = {

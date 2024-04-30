@@ -18,6 +18,7 @@ const MyPlaylists = () => {
     isFetching: isFetchingCreatePlaylists,
     isSuccess: isSuccesCreatePlaylists,
     isError: isErrorCreatePlaylists,
+    isLoading: isLoadingCreatePlaylists,
   } = useGetCreatePlaylistsForUserQuery({ page: 1, limit: 6 });
 
   const {
@@ -36,6 +37,7 @@ const MyPlaylists = () => {
     isFetching: isFetchingAllCreatePlaylists,
     isSuccess: isSuccesAllCreatePlaylists,
     isError: isErrorAllCreatePlaylists,
+    isLoading: isLoadingAllCreatePlaylists,
   } = useGetCreatePlaylistsForUserQuery({ page: "", limit: "" });
   const {
     data: favoritePlaylist,
@@ -87,7 +89,11 @@ const MyPlaylists = () => {
 
   return (
     <>
-      {loading && <Loader />}
+      {isLoadingCreatePlaylists &&
+        isLoadingTracksInAdd &&
+        isLoadingAllCreatePlaylists &&
+        isLoadingFavoritePlaylist &&
+        isLoadingAddPlaylist && <Loader />}
       {success && !fetching && (
         <>
           <CreatePlaylists
@@ -98,7 +104,7 @@ const MyPlaylists = () => {
             error={isErrorCreatePlaylists}
             showNavigationLink={true}
           />
-          {/* {!isLoadingAddPlaylist && !isLoadingFavoritePlaylist && ( */}
+
           <AddPlaylists
             title={"Додані плейлисти"}
             data={dataAdd?.add.slice(0, 6)}
@@ -109,7 +115,6 @@ const MyPlaylists = () => {
             isLoadingAddPlaylist={isLoadingAddPlaylist}
             createPlaylists={allCreatePlaylists}
           />
-          {/* )} */}
 
           <>
             {isFetchingFavoritePlaylist && isFetchingAddPlaylist && <Loader />}
