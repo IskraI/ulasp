@@ -191,7 +191,6 @@ const TrackItem = ({
   };
 
   const selectTrack = (id) => {
-    console.log(ref.current);
     if (!ref.current.checked) {
       ref.current.checked = false;
       setIsChecked(false);

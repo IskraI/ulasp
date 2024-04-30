@@ -67,6 +67,10 @@ export const formDataFunction = (
 };
 
 export const compareArray = function (a1, a2) {
+  if (a1 === undefined && a2 === undefined) {
+    console.warn("No arguments were passed to CompareArray function call");
+    return;
+  }
   return a1.length == a2.length && a1.every((v, i) => v === a2[i]);
 };
 

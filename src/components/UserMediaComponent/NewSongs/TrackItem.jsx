@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -24,10 +24,13 @@ import {
   setPreloadSrcPlayer,
   stopPlay,
   setSrcPlaying,
+  setCurrentIndex,
 } from "../../../redux/playerSlice";
 import { getPlayerState } from "../../../redux/playerSelectors";
 
-const TrackItem = ({ id, title, icon, artist, trackURL }) => {
+import { compareArray } from "../../../helpers/helpers";
+
+const TrackItem = ({ id, title, icon, artist, trackURL, index }) => {
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
   const [isPlayingTrack, setIsPlayingTrack] = useState(false);
@@ -35,6 +38,7 @@ const TrackItem = ({ id, title, icon, artist, trackURL }) => {
   const ref = useRef();
 
   const currentTrackIndex = playerState.indexTrack;
+  const isPause = playerState.isPaused;
 
   useEffect(() => {
     if (id === playerState?.src[currentTrackIndex]?.id) {
@@ -69,21 +73,43 @@ const TrackItem = ({ id, title, icon, artist, trackURL }) => {
     document.body.classList.remove("modal-open");
     setShowModalAddTrackToPlaylist(false);
   };
-  const playMusic = () => {
-    dispatch(stopPlay([]));
-    const newTrackObject = {
-      id,
-      trackURL,
-      artist,
-      trackName: title,
-    };
 
-    dispatch(
-      setPreloadSrcPlayer({
-        preloadSrc: [newTrackObject],
-      })
-    );
-    dispatch(setSrcPlaying({ indexTrack: 0 }));
+  const playMusic = () => {
+    const isMySRC = compareArray(playerState.src, playerState.preloadSrc);
+
+    console.log("isMySRC", isMySRC);
+
+    if (isPlayingTrack) {
+      dispatch(stopPlay([]));
+    }
+    // const newTrackObject = {
+    //   id,
+    //   trackURL,
+    //   artist,
+    //   trackName: title,
+    // };
+
+    // dispatch(
+    //   setPreloadSrcPlayer({
+    //     preloadSrc: [newTrackObject],
+    //   })
+    // );
+
+    // if (isPause) {
+    //   dispatch(setCurrentIndex(index));
+    //   return;
+    // }
+    // dispatch(setSrcPlaying({ indexTrack: index }));
+
+    if (
+      !playerState.src.length ||
+      (playerState.preloadSrc.length && !isMySRC)
+    ) {
+      dispatch(setSrcPlaying({ indexTrack: index }));
+    } else {
+      dispatch(setCurrentIndex(index));
+    }
+
     setIsPlayingTrack(!isPlayingTrack);
   };
 

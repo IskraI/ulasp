@@ -134,12 +134,14 @@
   flex: 1 1 auto;
   justify-content: space-between;
   align-items: center;
+  margin-top: 0px;
 }
 
 .rhap_additional-controls {
   display: flex;
   flex: 1 0 auto;
   align-items: center;
+  margin-left: 12px;
 }
 
 .rhap_repeat-button {

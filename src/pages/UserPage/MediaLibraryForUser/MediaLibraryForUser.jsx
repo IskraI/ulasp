@@ -71,6 +71,9 @@ const MediaLibraryForUser = () => {
 
   const error =
     isErrorAllGenre && isErrorLatestPlaylist && isErrorTracksInChart;
+  
+  
+  
   return (
     <>
       {fetching && <Loader />}
@@ -104,7 +107,9 @@ const MediaLibraryForUser = () => {
 
           <NewSongs
             data={tracksInChart.tracksInChart}
+            playerSRC={tracksInChart.tracksSRC}
             isFetching={isFetchingTracksInChart}
+            isSuccess={isSuccessTracksInChart}
             isError={isErrorTracksInChart}
             showNavigationLink={true}
           />

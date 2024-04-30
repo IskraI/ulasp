@@ -280,7 +280,7 @@ function App() {
                     <Route
                       path="cabinet/myplaylists/addtracks"
                       element={<AddTracksUserPage />}
-                    />{" "}
+                    />
                   </>
                 )}
 

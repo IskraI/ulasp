@@ -28,7 +28,7 @@ const SelectPageSize = ({
         value={pageSize}
         selected={pageSize}
         totalPages={totalPages}
-        onChange={(e) => onChange(e.currentTarget.value)}
+        onChange={(e) => onChange(Number(e.currentTarget.value))}
       >
         {optionValue.map((value) => (
           <option key={value} value={value}>

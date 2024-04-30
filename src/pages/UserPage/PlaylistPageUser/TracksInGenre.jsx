@@ -3,18 +3,15 @@ import TracksTable from "../../../components/UserMediaComponent/TracksTable/Trac
 import { useGetTracksByGenreIdQuery } from "../../../redux/tracksUserSlice";
 import { BtnSort } from "../AllTracksUser/AllTracksUser.styled";
 import symbol from "../../../assets/symbol.svg";
-import { useState, useEffect, useId, useRef } from "react";
+import { useState } from "react";
 import NavMusic from "../../../components/UserMediaComponent/NavMusic/NavMusic";
 import { useParams } from "react-router-dom";
 import DropDownTracksInGenres from "../../../components/DropDownGeners/DropDownTracksInGener";
 import { Loader } from "../../../components/Loader/Loader";
-
+import rowsTracksInGenre from "./RowsTracksInGenre";
 
 const AllTracksUser = () => {
-  const id = useId();
-  const BaseInputRef = useRef(null);
   const { genreId } = useParams();
-  const [checkedMainCheckBox, setCheckedMainCheckBox] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
@@ -38,90 +35,11 @@ const AllTracksUser = () => {
     { path: `/user/medialibrary/genres/${genreId}/tracks`, title: "Пісні" },
   ];
 
-  const rows = () => {
-    const RowsTitle = [
-      {
-        title: "",
-        type: "none",
-        titleSize: "2%",
-        showData: false,
-      },
-
-      {
-        title: "",
-        type: "button",
-        titleSize: "2%",
-        showData: true,
-      },
-      {
-        title: "",
-        type: "image",
-        titleSize: "10%",
-        showData: true,
-      },
-      {
-        title: "Назва пісні",
-        type: "text",
-        titleSize: "25%",
-        showData: true,
-      },
-      {
-        title: "Виконавець",
-        type: "text",
-        titleSize: "25%",
-        showData: true,
-      },
-      {
-        title: "Тривалість",
-        type: "text",
-        titleSize: "12%",
-        showData: true,
-      },
-      {
-        title: "Жанр",
-        type: "text",
-        titleSize: "10%",
-        showData: true,
-      },
-      {
-        title: "Плейлист",
-        type: "text",
-        titleSize: "0%",
-        showData: false,
-      },
-
-      {
-        title: "",
-        type: "button",
-        titleSize: "5%",
-        showData: true,
-      },
-    ];
-
-    return RowsTitle;
-  };
-
-  const [sortAlphabetically, setSortAlphabetically] = useState(false);
-
-  const handleSortClick = () => {
-    setSortAlphabetically(!sortAlphabetically);
-  };
-
-  const sortedTracks = allTracks
-    ? [...allTracks.tracks].sort((a, b) => {
-        const titleA = (a.trackName || "").toUpperCase();
-        const titleB = (b.trackName || "").toUpperCase();
-        return sortAlphabetically ? titleA.localeCompare(titleB) : 0;
-      })
-    : [];
-
   const onPageChange = (page) => {
-    console.log("4 Step - setCurrentPage in mutation", page);
     setCurrentPage(page);
   };
 
   const onPageSizeChange = (size) => {
-    console.log(size);
     setPageSize(size);
   };
 
@@ -135,11 +53,11 @@ const AllTracksUser = () => {
         <>
           <DropDownTracksInGenres currentGenreId={genreId} />
           <NavMusic links={links} />
-          <BtnSort onClick={handleSortClick}>
+          {/* <BtnSort onClick={handleSortClick}>
             <svg width="24" height="24">
               <use href={`${symbol}#icon-sort`}></use>
             </svg>
-          </BtnSort>
+          </BtnSort> */}
           <TracksTable
             title={"In playlist"}
             showTitle={false}
@@ -151,7 +69,7 @@ const AllTracksUser = () => {
             error={errorLoadingAllTracks}
             isFetching={isFetchingAllTracks}
             isSuccess={isSuccess}
-            rows={rows()}
+            rows={rowsTracksInGenre}
             onChangeCurrentPage={onPageChange}
             onChangeSizePage={onPageSizeChange}
             currentPage={currentPage}
