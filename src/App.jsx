@@ -158,7 +158,7 @@ function App() {
               path="/error"
               element={<PublicRoute component={ErrorPage} />}
             />
-
+            {/* && user.acces */}
             {user.userRole && user.access && (
               <Route
                 path="/user"

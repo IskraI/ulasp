@@ -30,7 +30,15 @@ import {
 const persistConfig = {
   key: "user",
   storage,
-  whitelist: ["token", "adminRole", "userRole", "editorRole", "isLoggedIn"],
+  whitelist: [
+    "token",
+    "adminRole",
+    "userRole",
+    "editorRole",
+    "isLoggedIn",
+    "status",
+    "access",
+  ],
   // whitelist: ["token","adminRole", "userRole", "editorRole", "isLoggedIn"],
 };
 
