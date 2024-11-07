@@ -18,8 +18,7 @@ import {
   PlaylistItemText2,
 } from "./PlayLists.styled";
 
-import { PlaylistAddButton } from "../../UserCabinetPage/UserTrack/PlayLists.styled";
-
+import { PlaylistAddButton } from "./PlayLists.styled";
 import {
   setPreloadSrcPlayer,
   stopPlay,
@@ -76,8 +75,6 @@ const TrackItem = ({ id, title, icon, artist, trackURL, index }) => {
 
   const playMusic = () => {
     const isMySRC = compareArray(playerState.src, playerState.preloadSrc);
-
-    console.log("isMySRC", isMySRC);
 
     if (isPlayingTrack) {
       dispatch(stopPlay([]));

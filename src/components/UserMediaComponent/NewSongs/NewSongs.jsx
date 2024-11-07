@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TracksItem from "./TrackItem";
 import MediaNavigationLink from "../../NavigationLink/NavigationLink";
+import { NoData } from "../../Errors/Errors";
 
 import { setPreloadSrcPlayer } from "../../../redux/playerSlice";
 
@@ -13,15 +14,19 @@ import { getPlayerState } from "../../../redux/playerSelectors";
 import { setLastTrack } from "../../../redux/playerSlice";
 
 const NewSongs = ({
-  data: trackInChart,
+  data: tracks,
   playerSRC,
   isFetching,
   isSuccess,
   isError,
   showNavigationLink,
+  pageTitle,
+  noDataMessage,
+  link,
 }) => {
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
+
 
   useEffect(() => {
     if (isSuccess) {
@@ -43,7 +48,7 @@ const NewSongs = ({
     }
   }, [dispatch, isSuccess, playerSRC]);
 
-  const lastTrackInPage = playerState.indexTrack === trackInChart.length - 1;
+  const lastTrackInPage = playerState.indexTrack === tracks.length - 1;
 
   useEffect(() => {
     if (lastTrackInPage) {
@@ -58,14 +63,16 @@ const NewSongs = ({
   }, [dispatch, lastTrackInPage]);
   return (
     <>
-      {/* {console.log("isLastTrack?", indexOfLastTrackInPage)} */}
       {!isFetching && !isError && (
         <>
           <ControlWrapper>
-            <TitleWrapper>Нові пісні</TitleWrapper>
+            <TitleWrapper>{pageTitle}</TitleWrapper>
           </ControlWrapper>
+          {tracks?.length === 0 && (
+            <NoData text={noDataMessage} textColor={"grey"} />
+          )}
           <Tracks>
-            {trackInChart.map(
+            {tracks.map(
               (
                 { _id, trackPictureURL, trackName, artist, trackURL },
                 index
@@ -78,13 +85,13 @@ const NewSongs = ({
                   artist={artist}
                   icon={trackPictureURL}
                   trackURL={trackURL}
-                  lastTrackInPage={trackInChart.length - 1}
+                  lastTrackInPage={tracks.length - 1}
                 />
               )
             )}
           </Tracks>
           <MediaNavigationLink
-            link={"newtracks"}
+            link={link}
             showNavigationLink={showNavigationLink}
           />
         </>
@@ -100,6 +107,9 @@ NewSongs.propTypes = {
   isSuccess: PropTypes.bool,
   isError: PropTypes.bool,
   showNavigationLink: PropTypes.bool,
+  pageTitle: PropTypes.string,
+  noDataMessage: PropTypes.string,
+  link: PropTypes.string,
 };
 
 export default NewSongs;

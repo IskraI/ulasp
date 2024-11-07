@@ -56,7 +56,7 @@ export const PlaylistItem = styled.li`
 export const PlaylistImg = styled.img`
   border-radius: 10px;
   margin-right: 8px;
-    width: 60px;
+  width: 60px;
   height: 40px;
   object-fit: cover;
 `;
@@ -101,4 +101,14 @@ export const TextWrapper = styled.div`
   justify-content: center;
   overflow: hidden;
   max-width: calc(100% - 100px);
+`;
+
+export const PlaylistAddButton = styled.button`
+  background: none;
+  border: none;
+  cursor: cell;
+  outline: none;
+  &:disabled {
+    pointer-events: none;
+  }
 `;

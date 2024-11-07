@@ -47,6 +47,8 @@ import {
   CheckBoxInput,
 } from "../../CustomCheckBox/CustomCheckBox.styled";
 
+import img from "../../../assets/error500.png";
+
 const TrackItem = ({
   idTrack,
   trackPictureURL,
@@ -300,8 +302,17 @@ const TrackItem = ({
         <TableCell showData={showData[2] || false}>
           <TrackCover
             src={BASE_URL + "/" + trackPictureURL}
+            // onError={(e) => console.log(e, "Error")}
+            // onError={({ currentTarget }) => {
+            //   currentTarget.onerror = null;
+            //   currentTarget.src = img;
+            //    currentTarget.src.width = 55;
+            //   console.log(currentTarget);
+     
+            // }}
             alt={trackName}
             width={55}
+        
           />
         </TableCell>
         <TableCell showData={showData[3] || false}>{trackName}</TableCell>

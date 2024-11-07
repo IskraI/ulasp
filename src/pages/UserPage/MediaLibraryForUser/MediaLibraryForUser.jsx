@@ -71,9 +71,7 @@ const MediaLibraryForUser = () => {
 
   const error =
     isErrorAllGenre && isErrorLatestPlaylist && isErrorTracksInChart;
-  
-  
-  
+
   return (
     <>
       {fetching && <Loader />}
@@ -112,6 +110,9 @@ const MediaLibraryForUser = () => {
             isSuccess={isSuccessTracksInChart}
             isError={isErrorTracksInChart}
             showNavigationLink={true}
+            pageTitle={"Нові пісні"}
+            noDataMessage={"Пісні ще не додані"}
+            link={"newtracks"}
           />
         </>
       )}
