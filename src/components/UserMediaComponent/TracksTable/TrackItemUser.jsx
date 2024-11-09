@@ -1,4 +1,7 @@
 /* eslint-disable react/prop-types */
+
+import {ImgTrackError} from "../../../helpers/helpers.js"
+
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect, useRef } from "react";
 
@@ -254,6 +257,7 @@ const TrackItem = ({
             src={BASE_URL + "/" + trackPictureURL}
             alt={trackName}
             width={55}
+            onError={(e) => ImgTrackError(e)}
           />
         </TableCell>
         <TableCell showData={showData[3] || false}>{trackName}</TableCell>

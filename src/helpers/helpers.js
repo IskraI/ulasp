@@ -1,3 +1,4 @@
+import defaultTrackCover from "../assets/55x36_trackCover_default.jpg";
 import { startOfQuarter, endOfQuarter, format } from "date-fns";
 import { uk } from "date-fns/locale";
 export function getNoun(number, one, two, five) {
@@ -109,3 +110,5 @@ export function formatDateFromString(dateString) {
     locale: uk,
   });
 }
+
+export const ImgTrackError = (e) => (e.currentTarget.src = defaultTrackCover);
