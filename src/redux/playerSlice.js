@@ -99,7 +99,7 @@ export const playerSlice = createSlice({
     },
     pause: {
       reducer(state, action) {
-        // console.log("action.payload pause ", state.isPaused);
+        console.log("action.payload pause ", action);
         state = {
           ...state,
           //полурабочая версия
