@@ -1,3 +1,5 @@
+import defaultTrackCover from "../assets/55x36_trackCover_default.jpg";
+
 import { startOfQuarter, endOfQuarter, format } from 'date-fns';
 import { uk } from 'date-fns/locale';
 
@@ -115,3 +117,4 @@ export const currentDate = () => {
   return format(new Date(), 'yyyy-MM-dd');
 };
 
+export const ImgTrackError = (e) => (e.currentTarget.src = defaultTrackCover);
