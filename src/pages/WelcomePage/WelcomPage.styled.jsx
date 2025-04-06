@@ -1,8 +1,8 @@
-import styled from "@emotion/styled";
-import { keyframes } from "@emotion/react";
-import { colors } from "../../styles/vars";
-import { NavLink } from "react-router-dom";
-import { sizes } from "../../styles/SharedStyles";
+import styled from '@emotion/styled';
+import { keyframes } from '@emotion/react';
+import { colors } from '../../styles/vars';
+import { NavLink } from 'react-router-dom';
+import { sizes } from '../../styles/SharedStyles';
 
 export const WelcomeSection = styled.div`
   /* padding: 203px 0; */ //Anton

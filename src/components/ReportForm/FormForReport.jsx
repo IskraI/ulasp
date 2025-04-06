@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { useWatch } from "react-hook-form";
+import { useState } from 'react';
+import { useWatch } from 'react-hook-form';
+
+import { currentDate } from '../../helpers/helpers';
 
 import {
   ReportForm,
@@ -9,10 +11,10 @@ import {
   FormField,
   ReportFormInputRadio,
   TitleText,
-  ReportFormButton,
-} from "./ReportForm.styled";
+  ReportFormButton
+} from './ReportForm.styled';
 
-import { Button } from "../Button/Button";
+import { Button } from '../Button/Button';
 const ReportFormDataTemplate = ({
   user,
   handleSubmit,
@@ -25,27 +27,27 @@ const ReportFormDataTemplate = ({
   titleText,
   control,
   getValues,
-  reset,
+  reset
 }) => {
   // console.log("errors :>> ", errors?);
-  const [selectedOption, setSelectedOption] = useState("date"); // По умолчанию выбрана дата
+  const [selectedOption, setSelectedOption] = useState('date'); // По умолчанию выбрана дата
 
   const isDateOfStart = useWatch({
     control,
-    name: "dateOfStart",
-    defaultValue: "",
+    name: 'dateOfStart',
+    defaultValue: ''
   }).trim();
 
   const isDateOfEnd = useWatch({
     control,
-    name: "dateOfEnd",
-    defaultValue: "",
+    name: 'dateOfEnd',
+    defaultValue: ''
   }).trim();
 
   const isQuarterDate = useWatch({
     control,
-    name: "quarterDate",
-    defaultValue: "",
+    name: 'quarterDate',
+    defaultValue: ''
   }).trim();
 
   // console.log("isDateOfStart :>> ", isDateOfStart);
@@ -64,16 +66,16 @@ const ReportFormDataTemplate = ({
 
   //если кликаем на поле дата - то радио баттон переходит на дата
   const handleDateInputChange = () => {
-    setSelectedOption("date");
-    onSelectedOptionChange("date");
+    setSelectedOption('date');
+    onSelectedOptionChange('date');
     // Очистити помилки для поля кварталу
     // setError("dateOfStart", { type: "", message: "" });
     // setError("dateOfEnd", { type: "", message: "" });
   };
   //если кликаем на квартал - то радиобаттон на квартал
   const handleQuaterInputChange = () => {
-    setSelectedOption("quarter");
-    onSelectedOptionChange("quarter");
+    setSelectedOption('quarter');
+    onSelectedOptionChange('quarter');
     // Очистити помилки для поля дати
     // setError("quarterDate", {});
     // setError("quarterYearDate", {});
@@ -91,7 +93,7 @@ const ReportFormDataTemplate = ({
           id="date"
           name="dateOption"
           value="date"
-          checked={selectedOption === "date"}
+          checked={selectedOption === 'date'}
           onChange={handleOptionChange}
         />
         <label className="radio-container" htmlFor="date"></label>
@@ -102,12 +104,13 @@ const ReportFormDataTemplate = ({
             name="date"
             placeholder="дата"
             aria-describedby="dateOfStartTooltip"
-            max={new Date().toISOString().split("T")[0]}
+            // max={new Date().toISOString().split("T")[0]}
+            max={currentDate()}
             // className={`${errors.dateOfStart ? "invalid" : ""}${
             //   !errors.dateOfStart && dirtyFields.dateOfStart ? "valid" : ""
             // }`}
-            {...register("dateOfStart", {
-              required: selectedOption === "date",
+            {...register('dateOfStart', {
+              required: selectedOption === 'date'
             })}
             onClick={handleDateInputChange}
           />
@@ -119,12 +122,13 @@ const ReportFormDataTemplate = ({
             name="date"
             placeholder="дата"
             aria-describedby="dateOfEndTooltip"
-            max={new Date().toISOString().split("T")[0]}
+            max={currentDate()}
+            // max={new Date().toISOString().split("T")[0]}
             // className={`${errors.dateOfEnd ? "invalid" : ""}${
             //   !errors.dateOfEnd && dirtyFields.dateOfEnd ? "valid" : ""
             // }`}
-            {...register("dateOfEnd", {
-              required: selectedOption === "date",
+            {...register('dateOfEnd', {
+              required: selectedOption === 'date'
             })}
             onClick={handleDateInputChange}
           />
@@ -136,7 +140,7 @@ const ReportFormDataTemplate = ({
           id="quarter"
           name="dateOption"
           value="quarter"
-          checked={selectedOption === "quarter"}
+          checked={selectedOption === 'quarter'}
           onChange={handleOptionChange}
         />
         <label className="radio-container" htmlFor="quarter"></label>
@@ -148,17 +152,17 @@ const ReportFormDataTemplate = ({
             max="4"
             name="quater"
             placeholder="кв"
-            width={"60px"}
+            width={'60px'}
             aria-describedby="quarterDateTooltip"
-            className={`${errors.quarterDate ? "invalid" : ""}${
-              !errors.quarterDate ? "valid" : ""
+            className={`${errors.quarterDate ? 'invalid' : ''}${
+              !errors.quarterDate ? 'valid' : ''
             }`}
-            {...register("quarterDate", {
-              required: selectedOption === "quater",
+            {...register('quarterDate', {
+              required: selectedOption === 'quater',
               pattern: {
                 value: /^[1-4]$/,
-                message: "Значення повинно бути від 1 до 4",
-              },
+                message: 'Значення повинно бути від 1 до 4'
+              }
             })}
             onClick={handleQuaterInputChange}
           />
@@ -169,17 +173,17 @@ const ReportFormDataTemplate = ({
             type="number"
             min="2023"
             max={currentYear}
-            width={"100px"}
+            width={'100px'}
             defaultValue={currentYear}
             aria-describedby="quarterYearDateTooltip"
-            className={`${errors.quarterYearDate ? "invalid" : ""}${
-              !errors.quarterYearDate ? "valid" : ""
+            className={`${errors.quarterYearDate ? 'invalid' : ''}${
+              !errors.quarterYearDate ? 'valid' : ''
             }`}
-            {...register("quarterYearDate", {
+            {...register('quarterYearDate', {
               pattern: {
                 value: /^(2023|202[4-9]|[2-9]\d{3})$/, // Шаблон для значений, начиная с 2023 и выше
-                message: "Год должен быть 2023 или больше",
-              },
+                message: 'Год должен быть 2023 или больше'
+              }
             })}
             onClick={handleQuaterInputChange}
           />
@@ -201,7 +205,7 @@ const ReportFormDataTemplate = ({
           padding="8px"
           text="Cформувати"
           disabled={
-            selectedOption === "date"
+            selectedOption === 'date'
               ? !isDateOfStart || !isDateOfEnd
               : !isQuarterDate
           }
