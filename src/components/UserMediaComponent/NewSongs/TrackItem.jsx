@@ -1,11 +1,13 @@
 import PropTypes from "prop-types";
 
+
 import { useState, useEffect, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { BASE_URL } from "../../../constants/constants";
 import symbol from "../../../assets/symbol.svg";
+import { ImgTrackError} from "../../../helpers/helpers"
 
 import AddTracksUser from "../../UserCabinetPage/AddTracks/AddTracksUser";
 
@@ -18,8 +20,7 @@ import {
   PlaylistItemText2,
 } from "./PlayLists.styled";
 
-import { PlaylistAddButton } from "../../UserCabinetPage/UserTrack/PlayLists.styled";
-
+import { PlaylistAddButton } from "./PlayLists.styled";
 import {
   setPreloadSrcPlayer,
   stopPlay,
@@ -77,8 +78,6 @@ const TrackItem = ({ id, title, icon, artist, trackURL, index }) => {
   const playMusic = () => {
     const isMySRC = compareArray(playerState.src, playerState.preloadSrc);
 
-    console.log("isMySRC", isMySRC);
-
     if (isPlayingTrack) {
       dispatch(stopPlay([]));
     }
@@ -130,7 +129,11 @@ const TrackItem = ({ id, title, icon, artist, trackURL, index }) => {
             alignItems: "center",
           }}
         >
-          <PlaylistImg src={BASE_URL + "/" + icon} alt={title} />
+          <PlaylistImg
+            src={BASE_URL + "/" + icon}
+            alt={title}
+            onError={(e) => ImgTrackError(e)}
+          />
           <TextWrapper>
             <PlaylistItemText>{title}</PlaylistItemText>
             <PlaylistItemText2 style={{ fontWeight: "400px" }}>

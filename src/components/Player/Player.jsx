@@ -61,7 +61,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
   const [currentTrack, setTrackIndex] = useState();
   const [isPressedNext, setIsPressedNext] = useState(false);
   const [isPressedPrev, setIsPressedPrev] = useState(false);
-  const [isEndOfPlaylist, setIsEndOfPlaylist] = useState(false);
+  const [isEndTrack, setIsEndTrack] = useState(false);
   const [currentTrackArtist, setCurrentTrackArtist] = useState("Невизначений");
   const [currentTrackName, setCurrentTrackName] = useState("Невизначений");
   const [loop, setLoop] = useState(false);
@@ -144,16 +144,27 @@ const Player = ({ tracks = [], inHeader = false }) => {
   }, [currentTrack, currentTrackIndex, isPaused, isPlaying, tracks]);
 
   useEffect(() => {
-    if (isEndOfPlaylist || isPressedPrev || isPressedNext) {
-      if (currentTrack === 0) {
+    if (isEndTrack || isPressedPrev || isPressedNext) {
+      if (currentTrack === 0 && currentPage !== 1) {
+        console.log(Date.now().toLocaleString());
         dispatch(setNextPage({ currentPage: 1 }));
       }
 
-      dispatch(setCurrentIndex(currentTrack));
+      // if (isLastPage && isLastTrack) {
+      //   if (!loop) {
+      //     dispatch(setCurrentIndex());
+      //   } else {
+      //     dispatch(setCurrentIndex(currentTrack));
+      //   }
+      // }
+      if (currentTrack !== null) {
+        dispatch(setCurrentIndex(currentTrack));
+      }
+      // dispatch(setCurrentIndex(2));
 
       setIsPressedNext(false);
       setIsPressedPrev(false);
-      setIsEndOfPlaylist(false);
+      setIsEndTrack(false);
       setListenDuration(0);
       requestSentRef.current = false;
       // dispatch(updateIsFirstPlay(true));
@@ -165,11 +176,13 @@ const Player = ({ tracks = [], inHeader = false }) => {
   }, [
     currentTrack,
     dispatch,
-    // intervalId,
-    isEndOfPlaylist,
+    isEndTrack,
+    isLastPage,
+    isLastTrack,
     isPressedNext,
     isPressedPrev,
     isSorted,
+    loop,
   ]);
 
   useEffect(() => {
@@ -200,34 +213,6 @@ const Player = ({ tracks = [], inHeader = false }) => {
     }
   }, [isPaused]);
 
-  const handleClickNext = () => {
-    // dispatch(updateIsFirstPlay(true));
-    setIsPressedNext(true);
-    setListenDuration(0);
-    requestSentRef.current = false;
-
-    if (isSorted) {
-      isSortedTracks("next");
-    } else {
-      setTrackIndex((currentTrack) =>
-        currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
-      );
-    }
-
-    if (isLastTrack) {
-      dispatch(setNextPage({ currentPage: nextPage }));
-
-      if (isLastPage) {
-        if (!loop) {
-          dispatch(stopPlay([]));
-        } else {
-          setTrackIndex(0);
-        }
-        return;
-      }
-    }
-  };
-
   const handleClickPrevious = () => {
     // dispatch(updateIsFirstPlay(true));
     setIsPressedPrev(true);
@@ -244,10 +229,42 @@ const Player = ({ tracks = [], inHeader = false }) => {
     }
   };
 
+  const handleClickNext = () => {
+    // dispatch(updateIsFirstPlay(true));
+    setIsPressedNext(true);
+    setListenDuration(0);
+
+    requestSentRef.current = false;
+
+    if (isSorted) {
+      isSortedTracks("next");
+    } else {
+      setTrackIndex((currentTrack) =>
+        currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
+      );
+    }
+
+    if (isLastTrack && !isLastPage) {
+      dispatch(setNextPage({ currentPage: nextPage }));
+    }
+
+    // console.log("handleEnd currentTrack :>> ", currentTrack);
+    if (isLastPage && isLastTrack) {
+      if (!loop) {
+        dispatch(stopPlay([]));
+        setTrackIndex(null);
+      } else {
+        setTrackIndex(0);
+      }
+      dispatch(setNextPage({ currentPage: nextPage }));
+      return;
+    }
+  };
+
   const handleEnd = () => {
     console.log("Песня завершила проигрывание.");
     // dispatch(updateIsFirstPlay(true));
-    setIsEndOfPlaylist(true);
+    setIsEndTrack(true);
     setListenDuration(0);
     clearInterval(intervalId);
     requestSentRef.current = false;
@@ -258,8 +275,11 @@ const Player = ({ tracks = [], inHeader = false }) => {
         currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
       );
     }
+    if (isLastTrack && !isLastPage) {
+      dispatch(setNextPage({ currentPage: nextPage }));
+    }
 
-    console.log("handleEnd currentTrack :>> ", currentTrack);
+    // console.log("handleEnd currentTrack :>> ", currentTrack);
     if (isLastPage && isLastTrack) {
       dispatch(setNextPage({ currentPage: nextPage }));
       if (!loop) {
@@ -268,10 +288,6 @@ const Player = ({ tracks = [], inHeader = false }) => {
         setTrackIndex(0);
       }
       return;
-    }
-
-    if (isLastTrack) {
-      dispatch(setNextPage({ currentPage: nextPage }));
     }
   };
 

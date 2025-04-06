@@ -10,7 +10,7 @@ import {
 
 import { useGetAllAddTrackByUserQuery } from "../../../redux/tracksUserSlice";
 import { Loader } from "../../../components/Loader/Loader";
-import TrackAddByUser from "../../../components/UserCabinetPage/UserTrack/UserTrack";
+import NewSongs from "../../../components/UserMediaComponent/NewSongs/NewSongs";
 
 const MyPlaylists = () => {
   const {
@@ -25,7 +25,7 @@ const MyPlaylists = () => {
     data: tracksInAdd,
     error: errorLoadingTracksInAdd,
     isFetching: isFetchingTracksInAdd,
-    isSuccess: isSuccessTracksInAddt,
+    isSuccess: isSuccessTracksInAdd,
     isLoading: isLoadingTracksInAdd,
   } = useGetAllAddTrackByUserQuery({
     page: 1,
@@ -78,7 +78,7 @@ const MyPlaylists = () => {
   const success =
     isSuccesCreatePlaylists &&
     isSuccesLatestFavoritePlaylist &&
-    isSuccessTracksInAddt;
+    isSuccessTracksInAdd;
   isSuccesAddPlaylist;
 
   const error =
@@ -130,13 +130,15 @@ const MyPlaylists = () => {
             />
           </>
 
-          <TrackAddByUser
+          <NewSongs
             data={tracksInAdd.tracksInAdd}
+            playerSRC={tracksInAdd.tracksSRC}
             isFetching={isFetchingTracksInAdd}
-            // error={isErrorNewSongs}
-            // mediaLibrary={true}
-            // showTitle={false}
+            isSuccess={isSuccessTracksInAdd}
+            pageTitle={"Обрані пісні"}
+            noDataMessage={"Ви ще не додали жодної пісні"}
             showNavigationLink={true}
+            link={"addtracks"}
           />
         </>
       )}

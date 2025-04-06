@@ -1,5 +1,6 @@
 import { startOfQuarter, endOfQuarter, format } from 'date-fns';
 import { uk } from 'date-fns/locale';
+
 export function getNoun(number, one, two, five) {
   let n = Math.abs(number);
   n %= 100;
@@ -113,3 +114,4 @@ export function formatDateFromString(dateString) {
 export const currentDate = () => {
   return format(new Date(), 'yyyy-MM-dd');
 };
+
