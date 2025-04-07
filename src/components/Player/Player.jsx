@@ -71,12 +71,17 @@ const Player = ({ tracks = [], inHeader = false }) => {
   const [showModalToPage, setShowModalToPage] = useState(false);
   const [replacedToPage, setReplacedToPage] = useState(true);
 
+  const [requestSent, setRequestSent] = useState(false);
   const requestSentRef = useRef(false);
   const [listenDuration, setListenDuration] = useState(0);
 
   const [intervalId, setIntervalId] = useState(null);
   const prefetchPage = usePrefetch("getAllTracks");
 
+  const updateRequestSent = (value) => {
+    requestSentRef.current = value;
+    setRequestSent(value);
+  };
   useLayoutEffect(() => {
     if (inHeader) {
       const el = document.getElementsByClassName("rhap_controls-section");
@@ -139,7 +144,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
     } else {
       setTrackIndex();
       setListenDuration(0);
-      requestSentRef.current = false;
+      updateRequestSent(false);
     }
   }, [currentTrack, currentTrackIndex, isPaused, isPlaying, tracks]);
 
@@ -166,7 +171,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
       setIsPressedPrev(false);
       setIsEndTrack(false);
       setListenDuration(0);
-      requestSentRef.current = false;
+      updateRequestSent(false);
       // dispatch(updateIsFirstPlay(true));
       // clearInterval(intervalId);
       if (isSorted) {
@@ -217,7 +222,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
     // dispatch(updateIsFirstPlay(true));
     setIsPressedPrev(true);
     setListenDuration(0);
-    requestSentRef.current = false;
+    updateRequestSent(false);
     if (isSorted) {
       isSortedTracks("prev");
     } else {
@@ -234,7 +239,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
     setIsPressedNext(true);
     setListenDuration(0);
 
-    requestSentRef.current = false;
+    updateRequestSent(false);
 
     if (isSorted) {
       isSortedTracks("next");
@@ -267,7 +272,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
     setIsEndTrack(true);
     setListenDuration(0);
     clearInterval(intervalId);
-    requestSentRef.current = false;
+    updateRequestSent(false);
     if (isSorted) {
       isSortedTracks("end");
     } else {
@@ -323,6 +328,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
   // console.log("listenDuration :>> ", listenDuration);
 
   useEffect(() => {
+    console.log("requestSentRef.current :>> ", requestSentRef.current);
     if (playerRef?.current?.audio.current.error) {
       //если ошибка при проигрывании то выходим из этого еффекта и ничего не делаем. если ошибки нет то считаем время
       // console.log("error :>> ", playerRef?.current?.audio.current.error);
@@ -338,7 +344,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
     } else if (isPlaying && listenDuration >= 10 && !requestSentRef.current) {
       console.log("отправили запрос :>> ");
       handlePlayLoadStart(tracks[currentTrack]?.id);
-      requestSentRef.current = true;
+      updateRequestSent(true);
     }
   }, [
     isPlaying,
@@ -347,12 +353,13 @@ const Player = ({ tracks = [], inHeader = false }) => {
     tracks,
     handlePlayLoadStart,
     playerRef?.current?.audio.current.error,
+    requestSent,
   ]);
 
   //при смене трека в списке обнуляем значения отправки сообщения и обнуляем счетчик
 
   useEffect(() => {
-    requestSentRef.current = false;
+    updateRequestSent(false);
     setListenDuration(0);
   }, [trackSRC]);
 
@@ -418,6 +425,12 @@ const Player = ({ tracks = [], inHeader = false }) => {
             //   handleClickNext();
             // }}
             onListen={() => {
+              if (
+                playerRef.current.audio.current.currentTime < 5 &&
+                requestSentRef.current
+              ) {
+                updateRequestSent(false);
+              }
               if (
                 Math.ceil(playerRef.current.audio.current.duration * 0.95) ===
                   Math.ceil(playerRef.current.audio.current.currentTime) &&
