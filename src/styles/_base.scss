@@ -1,34 +1,39 @@
 * {
   box-sizing: border-box;
 }
+
+html,
 body {
-  // width: 100vw;
-  height: 100vh;
+  height: 100%;
   margin: 0;
-  font-family: "Inter", sans-serif;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh; /* для мобильных */
+  margin: 0;
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 1.28;
 
   background: #3e6da3;
-  // background: linear-gradient(
-  //   to right,
-  //   #7b94bd 35%,
 
-  //   #3e6da3 65%
-  // );
   @media screen and (max-width: 1441px) {
-    background-image: url("../src/assets/Background@2x.jpg");
+    background-image: url('../src/assets/Background@2x.jpg');
     @media (-webkit-min-device-pixel-ratio: 2) {
-      background-image: url("../src/assets/Background@2x.jpg");
+      background-image: url('../src/assets/Background@2x.jpg');
     }
     background-size: auto;
   }
 
   @media screen and (min-width: 1442px) {
-    background-image: url("../src/assets/Background@2x.jpg");
+    background-image: url('../src/assets/Background@2x.jpg');
     @media (-webkit-min-device-pixel-ratio: 2) {
-      background-image: url("../src/assets/Background@2x.jpg");
+      background-image: url('../src/assets/Background@2x.jpg');
     }
     background-size: auto;
   }
@@ -39,13 +44,8 @@ body {
 }
 
 main {
-  flex-grow: 1;
-  min-height: calc(100vh - 148px);
-  margin-top: 80px;
-
-  @media screen and (min-width: 1921px) {
-    min-height: calc(100vh - 148px);
-  }
+  display: flex;
+  flex: 1;
 }
 
 h1,
@@ -96,101 +96,4 @@ button {
 .modal-open {
   overflow: hidden;
   // padding-right: 15px;
-}
-// .footer {
-//   margin-top: auto;
-// }
-// a {
-//   font-weight: 500;
-//   color: #646cff;
-//   text-decoration: inherit;
-// }
-// a:hover {
-//   color: #535bf2;
-// }
-
-// body {
-//   margin: 0;
-//   place-items: center;
-//   min-width: 320px;
-//   min-height: 100vh;
-//   background-image: url("../src/assets/Background.jpg");
-//   @media (-webkit-min-device-pixel-ratio: 2) {
-//     background-image: url("../src/assets/Background@2x.jpg");
-//   }
-//   background-repeat: no-repeat;
-//   background-size: cover;
-//   /* animation: rotateBackground 500ms linear 1ms; */
-// }
-
-// /* body.animation-end {
-//   animation: none;
-// background-size: 100% 100%;
-//  } */
-
-// h1 {
-//   font-size: 3.2em;
-//   line-height: 1.1;
-// }
-
-//  @keyframes rotateBackground {
-//    0%{background-position:0% 50%}
-
-// 50%{background-position:100% 50%}
-
-// 100%{background-position:0% 50%}
-//  }
-@media print {
-  * {
-    overflow: visible !important;
-  }
-}
-
-input[type="radio"] {
-  display: none;
-}
-
-/* Стилизация для контейнера радиокнопки */
-.radio-container {
-  display: inline-block;
-  position: relative;
-  cursor: pointer;
-  width: 12px;
-  // margin-right: 12px; /* Расстояние между радиокнопками */
-}
-
-/* Оформление видимой части радиокнопки */
-.radio-container::before {
-  content: "";
-  display: inline-block;
-  width: 10px; /* Ширина видимой части */
-  height: 10px; /* Высота видимой части */
-  border: 1px solid #49689e; /* Обводка */
-  border-radius: 50%; /* Круглая форма */
-  background-color: #a3abb9;
-  position: absolute;
-
-  left: 0%;
-  top: 30%;
-}
-
-/* Оформление точки в центре радиокнопки (выбранной) */
-.radio-container::after {
-  content: "";
-  display: block;
-  width: 7px; /* Размер точки */
-  height: 7px; /* Размер точки */
-  background-color: #4d6075; /* Цвет точки */
-  border-radius: 50%; /* Круглая форма */
-  position: absolute;
-  left: 32%;
-  top: 45%;
-  transform: translate(-20%, -50%);
-  opacity: 0; /* Изначально скрыта */
-  transition: opacity 0.2s ease-in-out; /* Плавное появление/исчезновение */
-}
-
-/* Отображение точки (выбранной) при клике на радиокнопку */
-input[type="radio"]:checked + .radio-container::after {
-  opacity: 1; /* Отображение точки */
 }

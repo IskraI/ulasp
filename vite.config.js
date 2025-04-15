@@ -1,15 +1,16 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import svgr from "vite-plugin-svgr";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), svgr()],
   // base: "/ulasp/",
-  base: "/",
+  base: '/',
   server: {
-    port: 9080,
+    host: ['localhost', '192.168.0.100'],
+    port: 9080
   },
-  node: { fs: "empty" },
-  externals: [{ "./cptable": "var cptable" }, { "./jszip": "jszip" }],
+  node: { fs: 'empty' },
+  externals: [{ './cptable': 'var cptable' }, { './jszip': 'jszip' }]
 });

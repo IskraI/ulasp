@@ -2,18 +2,16 @@ import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
 import { colors } from '../../styles/vars';
 import { NavLink } from 'react-router-dom';
-import { sizes } from '../../styles/SharedStyles';
+import { sizes, media } from '../../styles/vars';
 
 export const WelcomeSection = styled.div`
-  /* padding: 203px 0; */ //Anton
-  /* margin: 0 auto; //Anton */
   display: flex;
   flex-direction: column;
   justify-content: center;
 
   align-items: center;
-  justify-content: center;
-  height: calc(100vh - (${sizes.header.height} + ${sizes.footer.height}));
+  margin: 0 auto;
+  padding: 20px 0;
 `;
 
 const slideInAnimation = keyframes`
@@ -41,16 +39,34 @@ opacity: 0;
 export const WelcomeTitle = styled.h1`
   color: ${colors.primaryColor};
   text-align: center;
-  font-size: 74px;
-  font-weight: 500;
+  font-size: 36px;
+
   margin-bottom: 36px;
   animation: ${slideInAnimation} 1s linear;
+
+  ${media.tablet} {
+    font-size: 74px;
+    font-weight: 500;
+  }
 `;
+
+export const WelcomeSubTitle = styled.p`
+  color: ${colors.primaryColor};
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`;
+
 export const WelcomeText = styled.div`
   color: ${colors.primaryColor};
   text-align: center;
-  font-size: 32px;
+  font-size: 20px;
   animation: ${slideUpAnimation} 1s linear;
+
+  ${media.tablet} {
+    font-size: 32px;
+  }
 `;
 
 export const SignInNavLink = styled(NavLink)`
@@ -74,5 +90,9 @@ export const SignInNavLink = styled(NavLink)`
 
   &:hover {
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.4) inset;
+  }
+
+  ${media.tablet} {
+    font-size: 32px;
   }
 `;

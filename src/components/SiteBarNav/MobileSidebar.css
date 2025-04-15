@@ -1,0 +1,108 @@
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.menu-button {
+  font-size: 28px;
+  padding: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: block;
+}
+
+/* @media (min-width: 768px) {
+  .menu-button {
+    display: none;
+  }
+} */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  z-index: 1000;
+}
+
+/* меню */
+.sidebar {
+  width: 250px;
+  background-color: #fff;
+  height: 100%;
+  padding: 20px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1001;
+  transform: translateX(-100%);
+}
+
+/* анимации */
+.slide-in {
+  animation: slideIn 0.3s forwards ease-out;
+}
+
+.slide-out {
+  animation: slideOut 0.3s forwards ease-in;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.sidebar-nav a {
+  margin: 10px 0;
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.sidebar-nav a:hover {
+  color: #000;
+}
+
+.backdrop {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
