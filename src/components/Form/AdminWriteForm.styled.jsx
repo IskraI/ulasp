@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { colors } from "../../styles/vars";
 
 export const AdminForm = styled.form`
-  margin-left: 24px;
+  /* margin-left: 24px; */
 `;
 
 export const FormInput1 = styled.input`
@@ -77,8 +77,8 @@ export const TitleThird = styled.h3`
   font-size: 20px;
   font-weight: 400;
   line-height: 1.21;
-  margin-top: 48px;
-  margin-left: 24px;
+  margin-top: 36px;
+  /* margin-left: 24px; */
 `;
 
 export const FormInput = styled.input`

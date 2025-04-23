@@ -9,7 +9,7 @@ export default defineConfig({
   base: '/',
   server: {
     host: ['localhost', '192.168.0.100'],
-    port: 9080
+    port: 80
   },
   node: { fs: 'empty' },
   externals: [{ './cptable': 'var cptable' }, { './jszip': 'jszip' }]

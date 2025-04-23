@@ -2,8 +2,8 @@ import styled from "@emotion/styled";
 import { colors } from "../../styles/vars";
 
 export const ListContact = styled.ul`
-  padding-top: 172px;
-  margin-left: 59px;
+  /* padding-top: 172px;
+  margin-left: 59px; */
 `;
 
 export const ItemContact = styled.li`

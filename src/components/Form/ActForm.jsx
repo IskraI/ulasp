@@ -1,10 +1,10 @@
-import { useForm, useWatch } from "react-hook-form";
-import { useState } from "react";
-import { Button } from "../Button/Button";
-import { TitleThird, FormInput, Textarea } from "./AdminWriteForm.styled";
-import { useSendMailUserForActByIdMutation } from "../../redux/dataUsersSlice";
-import { Modal } from "../Modal/Modal";
-import { TextModal } from "../Modal/Modal.styled";
+import { useForm, useWatch } from 'react-hook-form';
+import { useState } from 'react';
+import { Button } from '../Button/Button';
+import { TitleThird, FormInput, Textarea } from './AdminWriteForm.styled';
+import { useSendMailUserForActByIdMutation } from '../../redux/dataUsersSlice';
+import { Modal } from '../Modal/Modal';
+import { TextModal } from '../Modal/Modal.styled';
 export const ActForm = ({ user }) => {
   const { control, register, handleSubmit, setValue } = useForm();
   const [dispatchSendMail, { isLoading: isLoadingSendMail }] =
@@ -12,34 +12,34 @@ export const ActForm = ({ user }) => {
 
   const textValue = useWatch({
     control,
-    name: "actText",
-    defaultValue: "",
+    name: 'actText',
+    defaultValue: ''
   }).trim();
   const onSubmit = (data) => {
     const formData = {
       ...data,
-      id: user.id,
+      id: user.id
     };
 
     dispatchSendMail(formData)
       .unwrap()
       .then(() => {
-        handleShowModal("sendact");
-        setValue("actText", "");
+        handleShowModal('sendact');
+        setValue('actText', '');
       })
       .catch((e) => {
         let errorMessage = e.data?.message;
         setErrorMessage(errorMessage);
-        handleShowModal("error");
+        handleShowModal('error');
       });
   };
   const [activeModal, setActiveModal] = useState(null); //после успешного добавления спрашиваем добавить ли еще
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const handleShowModal = (modalContent) => {
     setActiveModal(modalContent);
   };
   const handleCloseModal = () => {
-    document.body.classList.remove("modal-open");
+    document.body.classList.remove('modal-open');
     setActiveModal(null);
   };
 
@@ -50,7 +50,7 @@ export const ActForm = ({ user }) => {
         <Textarea
           type="text"
           placeholder="Текст для запиту (період, примітки, тощо)"
-          {...register("actText")}
+          {...register('actText')}
         />
 
         <Button
@@ -60,14 +60,15 @@ export const ActForm = ({ user }) => {
           text="Запросити"
           showIcon={false}
           margintop="24px"
+          marginleft="auto"
           disabled={!textValue}
         ></Button>
       </form>
 
-      {activeModal === "sendact" && (
+      {activeModal === 'sendact' && (
         <Modal
-          width={"520px"}
-          padding={"44px 24px"}
+          width={'520px'}
+          padding={'44px 24px'}
           onClose={handleCloseModal}
           showCloseButton={true}
           flexDirection="column"
@@ -85,10 +86,10 @@ export const ActForm = ({ user }) => {
           />
         </Modal>
       )}
-      {activeModal === "error" && (
+      {activeModal === 'error' && (
         <Modal
-          width={"520px"}
-          padding={"24px"}
+          width={'520px'}
+          padding={'24px'}
           onClose={handleCloseModal}
           showCloseButton={true}
         >

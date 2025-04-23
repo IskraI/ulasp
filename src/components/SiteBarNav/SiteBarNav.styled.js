@@ -35,4 +35,6 @@ export const SideBarBottomLineWrapper = styled.div`
   height: 100%;
 `;
 
-export const BottomSection = styled.div``;
+export const BottomSection = styled.div`
+  margin: 0 auto;
+`;
