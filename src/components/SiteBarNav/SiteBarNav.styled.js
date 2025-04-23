@@ -16,9 +16,9 @@ export const SiteBarNavConteiner = styled.div`
   );
   transform: translateX(0);
   transition: transform 400ms ease-out;
-  outline: 1px solid red;
+  /* outline: 1px solid red; */
 
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 1199px) {
     display: none;
     transform: translateX(-100%);
   }

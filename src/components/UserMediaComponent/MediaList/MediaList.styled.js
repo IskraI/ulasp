@@ -1,6 +1,12 @@
-import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
-import { colors, mainCubicTransition } from "../../../styles/vars";
+import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
+import {
+  colors,
+  mainCubicTransition,
+  sizes,
+  media,
+  breakpoints
+} from '../../../styles/vars';
 
 export const ControlWrapper = styled.div`
   display: flex;
@@ -24,7 +30,13 @@ export const TitleContainer = styled.div`
 export const MediaList = styled.ul`
   display: flex;
   flex-wrap: wrap;
-  gap: 24px;
+  gap: ${sizes.cardSetGap};
+
+  @media screen and (max-width: 767px) {
+    justify-content: center;
+  }
+
+  /* outline: 1px solid red; */
 `;
 
 export const MediaItem = styled.li`
@@ -32,7 +44,26 @@ export const MediaItem = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: ${({ width }) => width || "310px"};
+  flex-basis: ${({ width }) => width || '310px'};
+  /* min-width: 310px; */
+
+  @media screen and (min-width: ${breakpoints.tablet}) and (max-width: 1439px) {
+    flex-basis: calc((100% - (${sizes.cardSetGap})) / 2);
+  }
+
+  @media screen and (min-width: ${breakpoints.desktop}) and (max-width: 1639px) {
+    flex-basis: calc((100% - (${sizes.cardSetGap} * 2)) / 3);
+  }
+
+  @media screen and (min-width: 1640px) and (max-width: 1919px) {
+    flex-basis: calc((100% - (${sizes.cardSetGap} * 3)) / 4);
+  }
+
+  ${media.largeDesktop} {
+    flex-basis: calc((100% - (${sizes.cardSetGap} * 3)) / 4);
+  }
+  /* flex-basis: ${({ width }) =>
+    width || `calc((100% - (${sizes.cardSetGap} * 3)) / 4)`}; */
 
   padding: 10px;
   border: ${(props) =>
@@ -52,9 +83,41 @@ export const MediaItem = styled.li`
   }
 `;
 
+// export const MediaItem = styled.li`
+//   width: 100%;
+//   max-width: 310px;
+
+//   padding: 10px;
+//   border: ${(props) =>
+//     props.isError
+//       ? `1px solid ${colors.errorColor}`
+//       : props.isEditing
+//       ? `1px solid green`
+//       : `1px solid ${colors.accentHoverColor}`};
+//   border-radius: 10px;
+//   background-color: ${colors.activeBtnColor};
+//   transition: background-color 500ms ${mainCubicTransition};
+//   cursor: pointer;
+
+//   &:hover {
+//     background-color: ${colors.accentHoverColor};
+//     transition: background-color 500ms ${mainCubicTransition};
+//   }
+
+//   @media screen and (min-width: 768px) {
+//     flex-basis: 310px;
+//   }
+// `;
+
+export const LinkWrapper = styled(Link)`
+  display: flex;
+  width: 100%;
+  align-items: center;
+`;
+
 export const MediaImg = styled.img`
   border-radius: 10px;
-  margin-right: ${(props) => props.marginRight ?? "4px"};
+  margin-right: ${(props) => props.marginRight ?? '4px'};
 
   width: 60px;
   height: 40px;
@@ -62,14 +125,14 @@ export const MediaImg = styled.img`
 `;
 
 export const MediaItemText = styled.p`
-  max-width: ${({ maxWidth }) => maxWidth || "180px"};
+  max-width: ${({ maxWidth }) => maxWidth || '180px'};
   font-size: 16px;
   line-height: 1.19;
   font-weight: 400;
   color: ${colors.mainFontColor};
   margin: 0 auto;
 
-  padding: ${({ padding }) => padding || "0px 6px"};
+  padding: ${({ padding }) => padding || '0px 6px'};
   text-align: center;
   overflow-wrap: break-word;
 `;
@@ -90,16 +153,10 @@ export const MediaButton = styled.button`
   }
 `;
 
-export const LinkWrapper = styled(Link)`
-  width: 100%;
-  display: flex;
-  align-items: center;
-`;
-
 export const SvgMedia = styled.svg`
   fill: #000000;
   transform: rotate(
-    ${(props) => (props.transformIcon ? props.transformIcon + "deg" : "0deg")}
+    ${(props) => (props.transformIcon ? props.transformIcon + 'deg' : '0deg')}
   );
 
   transition: all 550ms ${mainCubicTransition};
@@ -108,7 +165,7 @@ export const SvgMedia = styled.svg`
     fill: ${colors.bgHeaderColor};
 
     transform: rotate(
-      ${(props) => (props.transformIcon ? props.transformIcon + "deg" : "0deg")}
+      ${(props) => (props.transformIcon ? props.transformIcon + 'deg' : '0deg')}
     );
     transition: all 550ms ${mainCubicTransition};
   }

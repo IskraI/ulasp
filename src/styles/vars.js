@@ -16,7 +16,9 @@ export const sizes = {
   header: { height: '80px' },
   footer: { height: '68px' },
 
-  container: { width: '1440px' }
+  container: { width: '1440px' },
+
+  cardSetGap: '24px'
 };
 
 export const transition = {
@@ -31,11 +33,14 @@ export const mainCubicTransition = 'cubic-bezier(0.4, 0, 0.2, 1)';
 export const breakpoints = {
   mobile: '480px',
   tablet: '768px',
-  desktop: '1440px'
+  laptop: '1200px',
+  desktop: '1440px',
+  largeDesktop: '1920px'
 };
 
 export const media = {
   mobile: `@media screen and (min-width: ${breakpoints.mobile})`,
   tablet: `@media screen and (min-width: ${breakpoints.tablet})`,
-  laptop: `@media screen and (min-width: ${breakpoints.desktop})`
+  laptop: `@media screen and (min-width: ${breakpoints.desktop})`,
+  largeDesktop: `@media screen and (min-width: ${breakpoints.largeDesktop})`
 };

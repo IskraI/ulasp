@@ -1,35 +1,37 @@
-import Genres from "../../../components/UserMediaComponent/Genres/Genres";
-import LatestPlaylists from "../../../components/UserMediaComponent/PlayLists/PlayLists";
-import NewSongs from "../../../components/UserMediaComponent/NewSongs/NewSongs";
-import ShopsPage from "../ShopsUserPage/ShopUserPage";
-import { useGetAllGenresForUserQuery } from "../../../redux/genersUserSlice";
+import Genres from '../../../components/UserMediaComponent/Genres/Genres';
+import LatestPlaylists from '../../../components/UserMediaComponent/PlayLists/PlayLists';
+import NewSongs from '../../../components/UserMediaComponent/NewSongs/NewSongs';
+import ShopsPage from '../ShopsUserPage/ShopUserPage';
+import { useGetAllGenresForUserQuery } from '../../../redux/genersUserSlice';
 import {
   useGetLatestPlaylistsForUserQuery,
   useFavoritePlaylistForUserQuery,
-  useAddPlaylistForUserQuery,
-} from "../../../redux/playlistsUserSlice";
-import { useGetTracksInChartQuery } from "../../../redux/tracksSlice";
-import { useGetAllShopsUserQuery } from "../../../redux/shopsUserSlice";
-import { Loader } from "../../../components/Loader/Loader";
+  useAddPlaylistForUserQuery
+} from '../../../redux/playlistsUserSlice';
+import { useGetTracksInChartQuery } from '../../../redux/tracksSlice';
+import { useGetAllShopsUserQuery } from '../../../redux/shopsUserSlice';
+import { Loader } from '../../../components/Loader/Loader';
 
 const MediaLibraryForUser = () => {
   const {
     data: genres,
     isFetching: isFetchingAllGenre,
     isSuccess: isSuccesAllGenre,
-    isError: isErrorAllGenre,
+    isError: isErrorAllGenre
   } = useGetAllGenresForUserQuery(`?&limit=${12}`);
+
   const {
     data: shops,
     isFetching: isFetchingShops,
     isSuccess: isSuccessShops,
-    isError: isErrorShops,
+    isError: isErrorShops
   } = useGetAllShopsUserQuery(`?&limit=${12}`);
+
   const {
     data: playlists,
     isFetching: isFetchingLatestPlaylist,
     isSuccess: isSuccesLatestPlaylist,
-    isError: isErrorLatestPlaylist,
+    isError: isErrorLatestPlaylist
   } = useGetLatestPlaylistsForUserQuery(`?&limit=${12}`);
 
   const {
@@ -37,7 +39,7 @@ const MediaLibraryForUser = () => {
     isLoading: isLoadingFavoritePlaylist,
     isFetching: isFetchingFavoritePlaylist,
     isSuccess: isSuccesLatestFavoritePlaylist,
-    isError: isErrorFavoritePlaylist,
+    isError: isErrorFavoritePlaylist
   } = useFavoritePlaylistForUserQuery();
 
   const {
@@ -46,10 +48,10 @@ const MediaLibraryForUser = () => {
     isFetching: isFetchingTracksInChart,
     isSuccess: isSuccessTracksInChart,
     isLoading: isLoadingTracksInChart,
-    isError: isErrorTracksInChart,
+    isError: isErrorTracksInChart
   } = useGetTracksInChartQuery({
     limit: 6,
-    forseRefetch: true,
+    forseRefetch: true
   });
 
   const { data: dataAdd, isLoading: isLoadingAddPlaylist } =
@@ -93,7 +95,7 @@ const MediaLibraryForUser = () => {
 
           {!isLoadingFavoritePlaylist && !isLoadingAddPlaylist && (
             <LatestPlaylists
-              title={"Нові плейлисти"}
+              title={'Нові плейлисти'}
               data={playlists}
               dataFavorite={favoritePlaylist}
               dataAdd={dataAdd}
@@ -110,9 +112,9 @@ const MediaLibraryForUser = () => {
             isSuccess={isSuccessTracksInChart}
             isError={isErrorTracksInChart}
             showNavigationLink={true}
-            pageTitle={"Нові пісні"}
-            noDataMessage={"Пісні ще не додані"}
-            link={"newtracks"}
+            pageTitle={'Нові пісні'}
+            noDataMessage={'Пісні ще не додані'}
+            link={'newtracks'}
           />
         </>
       )}

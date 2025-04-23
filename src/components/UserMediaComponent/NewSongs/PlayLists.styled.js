@@ -79,6 +79,7 @@ export const PlaylistItemText2 = styled.p`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  
 `;
 
 export const PlaylistIconsWrapper = styled.div`

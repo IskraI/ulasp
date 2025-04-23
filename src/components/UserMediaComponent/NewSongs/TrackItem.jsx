@@ -41,6 +41,8 @@ const TrackItem = ({ id, title, icon, artist, trackURL, index }) => {
   const currentTrackIndex = playerState.indexTrack;
   const isPause = playerState.isPaused;
 
+  const imgSRC = `${BASE_URL}/${icon}`
+
   useEffect(() => {
     if (id === playerState?.src[currentTrackIndex]?.id) {
       setIsPlayingTrack(true);
@@ -124,19 +126,19 @@ const TrackItem = ({ id, title, icon, artist, trackURL, index }) => {
           key={id}
           onClick={() => PlayButtonToogle()}
           style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center'
           }}
         >
           <PlaylistImg
-            src={BASE_URL + "/" + icon}
+            src={imgSRC}
             alt={title}
             onError={(e) => ImgTrackError(e)}
           />
           <TextWrapper>
             <PlaylistItemText>{title}</PlaylistItemText>
-            <PlaylistItemText2 style={{ fontWeight: "400px" }}>
+            <PlaylistItemText2 style={{ fontWeight: '400px' }}>
               {artist}
             </PlaylistItemText2>
           </TextWrapper>
