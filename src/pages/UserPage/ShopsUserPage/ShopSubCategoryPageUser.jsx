@@ -1,23 +1,23 @@
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 
-import ControlMediateca from "../../../components/UserMediaComponent/ControlMediatecaUser/ControlMediatecaUser";
-import MediaListItemShop from "../../../components/UserMediaComponent/MediaList/MediaListShop";
-import { Loader } from "../../../components/Loader/Loader";
+import ControlMediateca from '../../../components/UserMediaComponent/ControlMediatecaUser/ControlMediatecaUser';
+import MediaListItemShop from '../../../components/UserMediaComponent/MediaList/MediaListShop';
+import { Loader } from '../../../components/Loader/Loader';
 
-import LatestPlaylists from "../../../components/UserMediaComponent/PlayLists/PlayLists";
+import LatestPlaylists from '../../../components/UserMediaComponent/PlayLists/PlayLists';
 
 import {
   Error500,
   ErrorNotFound,
-  NoData,
-} from "../../../components/Errors/Errors";
+  NoData
+} from '../../../components/Errors/Errors';
 
-import { useGetShopCategoryByIdUserQuery } from "../../../redux/shopsUserSlice";
+import { useGetShopCategoryByIdUserQuery } from '../../../redux/shopsUserSlice';
 
-import { ShopsList } from "./Shops.styled";
+import { ShopsList } from './Shops.styled';
 
 const ShopSubCategoryPage = () => {
-  const valueMediaLibrary = "shopItem";
+  const valueMediaLibrary = 'shopItem';
 
   const { shopItemId: idShopLibrary } = useParams();
 
@@ -26,20 +26,21 @@ const ShopSubCategoryPage = () => {
     isFetching: isFetchingShopCategory,
     isError: isErrorShopCategory,
     error: errorShopCategory,
-    isSuccess: isSuccessShopCategory,
+    isSuccess: isSuccessShopCategory
   } = useGetShopCategoryByIdUserQuery(idShopLibrary);
 
   return (
     <>
       {isFetchingShopCategory && !isSuccessShopCategory && <Loader />}
-      {errorShopCategory?.status === "500" && <Error500 />}
+      {errorShopCategory?.status === '500' && <Error500 />}
       {errorShopCategory && <ErrorNotFound />}
       {isSuccessShopCategory && !isErrorShopCategory && (
         <>
           <ControlMediateca title={shopCategory.shop.shopItemName} />
 
           {shopCategory.shop.shopChildSubType.length === 0 ? (
-            <NoData text={"На данний час, ще не додано жодної підкатегорії."} />
+            // <NoData text={"На данний час, ще не додано жодної підкатегорії."} />
+            <></>
           ) : (
             <ShopsList>
               {shopCategory.shop.shopChildSubType.map(
@@ -49,9 +50,9 @@ const ShopSubCategoryPage = () => {
                     id={_id}
                     title={shopSubTypeName}
                     icon={shopSubTypeAvatarURL}
-                    typeMediaLibrary={"subCategoryShop"}
-                    fieldForUpdate={"shopSubTypeName"}
-                    typeCover={"shop"}
+                    typeMediaLibrary={'subCategoryShop'}
+                    fieldForUpdate={'shopSubTypeName'}
+                    typeCover={'shop'}
                     // linkToPage={linkToPage}
                   />
                 )

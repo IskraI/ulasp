@@ -1,31 +1,34 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
-import { BASE_URL } from "../../../constants/constants";
+import { BASE_URL } from '../../../constants/constants';
 
 import {
   MediaItem,
   MediaImg,
   MediaItemText,
-} from "../MediaList/MediaList.styled";
+  LinkWrapper
+} from '../MediaList/MediaList.styled';
 
 const GenreListItem = ({ id, title, icon }) => {
   const location = useLocation();
 
+  const imgSrc = `${BASE_URL}/${icon}`;
+
   return (
     <>
-      <Link
-        key={id}
-        to={`/user/medialibrary/genres/${id}/playlists`}
-        state={{ from: location }}
-      >
-        <MediaItem>
-          <MediaImg src={BASE_URL + "/" + icon} alt={title} />
+      <MediaItem>
+        <LinkWrapper
+          key={id}
+          to={`/user/medialibrary/genres/${id}/playlists`}
+          state={{ from: location }}
+        >
+          <MediaImg src={imgSrc} alt={title} />
 
-          <MediaItemText padding={"0px 40px 0px 6px"}>{title}</MediaItemText>
-        </MediaItem>
-      </Link>
+          <MediaItemText padding={'0px 40px 0px 6px'}>{title}</MediaItemText>
+        </LinkWrapper>
+      </MediaItem>
     </>
   );
 };
@@ -35,7 +38,7 @@ GenreListItem.propTypes = {
   title: PropTypes.string,
   icon: PropTypes.string,
   minLengthInput: PropTypes.number,
-  maxLengthInput: PropTypes.number,
+  maxLengthInput: PropTypes.number
 };
 
 export default GenreListItem;

@@ -1,16 +1,16 @@
-import CreatePlaylists from "../../../components/UserCabinetPage/CreatePlaylists/CreatePlaylists";
-import FavoritePlaylists from "../../../components/UserCabinetPage/FavoritePlaylists/FavoritePlaylists";
-import AddPlaylists from "../../../components/UserCabinetPage/AddPlaylists/AddPlaylists";
+import CreatePlaylists from '../../../components/UserCabinetPage/CreatePlaylists/CreatePlaylists';
+import FavoritePlaylists from '../../../components/UserCabinetPage/FavoritePlaylists/FavoritePlaylists';
+import AddPlaylists from '../../../components/UserCabinetPage/AddPlaylists/AddPlaylists';
 
 import {
   useFavoritePlaylistForUserQuery,
   useAddPlaylistForUserQuery,
-  useGetCreatePlaylistsForUserQuery,
-} from "../../../redux/playlistsUserSlice";
+  useGetCreatePlaylistsForUserQuery
+} from '../../../redux/playlistsUserSlice';
 
-import { useGetAllAddTrackByUserQuery } from "../../../redux/tracksUserSlice";
-import { Loader } from "../../../components/Loader/Loader";
-import NewSongs from "../../../components/UserMediaComponent/NewSongs/NewSongs";
+import { useGetAllAddTrackByUserQuery } from '../../../redux/tracksUserSlice';
+import { Loader } from '../../../components/Loader/Loader';
+import NewSongs from '../../../components/UserMediaComponent/NewSongs/NewSongs';
 
 const MyPlaylists = () => {
   const {
@@ -18,7 +18,7 @@ const MyPlaylists = () => {
     isFetching: isFetchingCreatePlaylists,
     isSuccess: isSuccesCreatePlaylists,
     isError: isErrorCreatePlaylists,
-    isLoading: isLoadingCreatePlaylists,
+    isLoading: isLoadingCreatePlaylists
   } = useGetCreatePlaylistsForUserQuery({ page: 1, limit: 6 });
 
   const {
@@ -26,25 +26,25 @@ const MyPlaylists = () => {
     error: errorLoadingTracksInAdd,
     isFetching: isFetchingTracksInAdd,
     isSuccess: isSuccessTracksInAdd,
-    isLoading: isLoadingTracksInAdd,
+    isLoading: isLoadingTracksInAdd
   } = useGetAllAddTrackByUserQuery({
     page: 1,
     limit: 6,
-    forseRefetch: true,
+    forseRefetch: true
   });
   const {
     data: allCreatePlaylists,
     isFetching: isFetchingAllCreatePlaylists,
     isSuccess: isSuccesAllCreatePlaylists,
     isError: isErrorAllCreatePlaylists,
-    isLoading: isLoadingAllCreatePlaylists,
-  } = useGetCreatePlaylistsForUserQuery({ page: "", limit: "" });
+    isLoading: isLoadingAllCreatePlaylists
+  } = useGetCreatePlaylistsForUserQuery({ page: '', limit: '' });
   const {
     data: favoritePlaylist,
     isLoading: isLoadingFavoritePlaylist,
     isFetching: isFetchingFavoritePlaylist,
     isSuccess: isSuccesLatestFavoritePlaylist,
-    isError: isErrorFavoritePlaylist,
+    isError: isErrorFavoritePlaylist
   } = useFavoritePlaylistForUserQuery();
 
   const {
@@ -52,7 +52,7 @@ const MyPlaylists = () => {
     isLoading: isLoadingAddPlaylist,
     isFetching: isFetchingAddPlaylist,
     isSuccess: isSuccesAddPlaylist,
-    isError: isErrorAddPlaylist,
+    isError: isErrorAddPlaylist
   } = useAddPlaylistForUserQuery();
 
   const fetching =
@@ -97,36 +97,38 @@ const MyPlaylists = () => {
       {success && !fetching && (
         <>
           <CreatePlaylists
-            title={"Cтворені плейлисти"}
+            title={'Cтворені плейлисти'}
             data={createPlaylists}
             dataFavorite={favoritePlaylist}
             isFetching={isFetchingCreatePlaylists}
             error={isErrorCreatePlaylists}
-            showNavigationLink={true}
+            showNavigationLink={createPlaylists?.length !== 0 ? true : false}
           />
 
           <AddPlaylists
-            title={"Додані плейлисти"}
+            title={'Додані плейлисти'}
             data={dataAdd?.add.slice(0, 6)}
             isFetching={isFetchingAddPlaylist}
             isError={isErrorAddPlaylist}
             isSuccess={isSuccesAddPlaylist}
-            showNavigationLink={true}
             isLoadingAddPlaylist={isLoadingAddPlaylist}
             createPlaylists={allCreatePlaylists}
+            showNavigationLink={dataAdd?.add?.length !== 0 ? true : false}
           />
 
           <>
             {isFetchingFavoritePlaylist && isFetchingAddPlaylist && <Loader />}
             <FavoritePlaylists
-              title={"Улюблені плейлисти"}
+              title={'Улюблені плейлисти'}
               data={favoritePlaylist?.favorites.slice(0, 6)}
               // dataFavorite={favoritePlaylist}
               dataAdd={dataAdd}
               isFetching={isFetchingFavoritePlaylist}
               error={isErrorFavoritePlaylist}
-              showNavigationLink={true}
               createPlaylists={allCreatePlaylists}
+              showNavigationLink={
+                favoritePlaylist?.favorites?.length !== 0 ? true : false
+              }
             />
           </>
 
@@ -135,10 +137,12 @@ const MyPlaylists = () => {
             playerSRC={tracksInAdd.tracksSRC}
             isFetching={isFetchingTracksInAdd}
             isSuccess={isSuccessTracksInAdd}
-            pageTitle={"Обрані пісні"}
-            noDataMessage={"Ви ще не додали жодної пісні"}
-            showNavigationLink={true}
-            link={"addtracks"}
+            pageTitle={'Обрані пісні'}
+            noDataMessage={'Ви ще не додали жодної пісні'}
+            link={'addtracks'}
+            showNavigationLink={
+              tracksInAdd?.tracksInAdd?.length !== 0 ? true : false
+            }
           />
         </>
       )}

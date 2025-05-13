@@ -1,16 +1,16 @@
-import { useForm, useWatch } from "react-hook-form";
-import { useState } from "react";
-import { Button } from "../Button/Button";
-import { Modal } from "../Modal/Modal";
-import { TextModal } from "../Modal/Modal.styled";
+import { useForm, useWatch } from 'react-hook-form';
+import { useState } from 'react';
+import { Button } from '../Button/Button';
+import { Modal } from '../Modal/Modal';
+import { TextModal } from '../Modal/Modal.styled';
 import {
   AdminForm,
   FormInput1,
   Textarea,
   // Button,
-  TitleThird,
-} from "./AdminWriteForm.styled";
-import { useSendMailUserToAdminMutation } from "../../redux/dataUsersSlice";
+  TitleThird
+} from './AdminWriteForm.styled';
+import { useSendMailUserToAdminMutation } from '../../redux/dataUsersSlice';
 
 export const AdminWriteForm = ({ user }) => {
   const { control, register, handleSubmit, setValue } = useForm();
@@ -18,44 +18,44 @@ export const AdminWriteForm = ({ user }) => {
     useSendMailUserToAdminMutation();
   const subjectValue = useWatch({
     control,
-    name: "subject",
-    defaultValue: "",
+    name: 'subject',
+    defaultValue: ''
   }).trim();
 
   const textValue = useWatch({
     control,
-    name: "text",
-    defaultValue: "",
+    name: 'text',
+    defaultValue: ''
   }).trim();
 
   const onSubmit = (data) => {
     const formData = {
       ...data,
-      id: user.id,
+      id: user.id
     };
     dispatchSendMail(formData)
       .unwrap()
       .then(() => {
-        handleShowModal("sendmail");
-        setValue("text", "");
-        setValue("subject", "");
+        handleShowModal('sendmail');
+        setValue('text', '');
+        setValue('subject', '');
       })
       .catch((e) => {
         let errorMessage = e.data?.message;
         setErrorMessage(errorMessage);
-        handleShowModal("error");
+        handleShowModal('error');
       });
-    console.log("Отправлено:", formData);
+    console.log('Отправлено:', formData);
   };
   const [activeModal, setActiveModal] = useState(null); //после успешного добавления спрашиваем добавить ли еще
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleShowModal = (modalContent) => {
-    console.log("modalContent", modalContent);
+    console.log('modalContent', modalContent);
     setActiveModal(modalContent);
   };
   const handleCloseModal = () => {
-    document.body.classList.remove("modal-open");
+    document.body.classList.remove('modal-open');
     setActiveModal(null);
   };
   return (
@@ -63,16 +63,16 @@ export const AdminWriteForm = ({ user }) => {
       <AdminForm onSubmit={handleSubmit(onSubmit)}>
         <TitleThird>Написати адміністратору:</TitleThird>
         <FormInput1
-          {...register("subject")}
+          {...register('subject')}
           placeholder="Тема"
-          maxLength={"100"}
+          maxLength={'100'}
         />
 
         <Textarea
-          {...register("text")}
+          {...register('text')}
           placeholder="Текст"
-          marginTop={"25px"}
-          height={"145px"}
+          marginTop={'25px'}
+          height={'145px'}
         />
 
         <Button
@@ -82,13 +82,14 @@ export const AdminWriteForm = ({ user }) => {
           text="Відправити"
           showIcon={false}
           margintop="24px"
+          marginleft="auto"
           disabled={!subjectValue || !textValue}
         ></Button>
       </AdminForm>
-      {activeModal === "sendmail" && (
+      {activeModal === 'sendmail' && (
         <Modal
-          width={"520px"}
-          padding={"44px 24px"}
+          width={'520px'}
+          padding={'44px 24px'}
           onClose={handleCloseModal}
           showCloseButton={true}
           flexDirection="column"
@@ -106,10 +107,10 @@ export const AdminWriteForm = ({ user }) => {
           />
         </Modal>
       )}
-      {activeModal === "error" && (
+      {activeModal === 'error' && (
         <Modal
-          width={"520px"}
-          padding={"24px"}
+          width={'520px'}
+          padding={'24px'}
           onClose={handleCloseModal}
           showCloseButton={true}
         >

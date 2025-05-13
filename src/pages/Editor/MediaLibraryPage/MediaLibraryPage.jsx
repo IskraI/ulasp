@@ -74,7 +74,7 @@ const MediaLibraryPage = () => {
   return (
     <>
       {/* {error && <div>{ERROR_NOT_FOUND}</div>} */}
-      {loading && <Loader />}
+      {(loading || !success) && <Loader />}
       {success && !fetching && (
         <>
           <Genres
@@ -85,9 +85,9 @@ const MediaLibraryPage = () => {
             showNavigationLink={true}
           />
 
-          <ShopsPage limit={"12"} showNavigationLink={true} />
+          <ShopsPage limit={'12'} showNavigationLink={true} />
           <LatestPlaylists
-            title={"Нові плейлисти"}
+            title={'Нові плейлисти'}
             data={playlists}
             isFetching={isFetchingLatestPlaylist}
             isLoading={isLoadingLatestPlaylist}
@@ -97,7 +97,7 @@ const MediaLibraryPage = () => {
 
           <NewTracksPage
             mediaLibrary={true}
-            limit={"9"}
+            limit={'9'}
             showTitle={false}
             showNavigationLink={true}
           />

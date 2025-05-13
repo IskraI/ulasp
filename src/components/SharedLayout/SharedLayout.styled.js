@@ -1,16 +1,9 @@
-import styled from "@emotion/styled";
-import { sizes } from "../../styles/SharedStyles";
-
-export const Container = styled.div`
-  /* min-height: calc(100vh); */
-  /* margin: auto; */
-`;
+import styled from '@emotion/styled';
+import { sizes } from '../../styles/vars';
 
 export const ContainerWrraper = styled.div`
-  /* max-height: 100vh; */
-  min-height: calc(100vh - (${sizes.header.height} + ${sizes.footer.height}));
-
   display: flex;
-  flex-direction: column;
-  /* margin: auto; */
+  margin-top: ${sizes.header.height};
+  min-height: calc(100dvh - ${sizes.header.height} - ${sizes.footer.height});
+  height: calc(100% - (${sizes.header.height} + ${sizes.footer.height}));
 `;

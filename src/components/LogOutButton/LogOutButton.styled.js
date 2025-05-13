@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import { colors } from "../../styles/vars";
+import styled from '@emotion/styled';
+import { colors, media } from '../../styles/vars';
 
 export const LogOutButton = styled.button`
   color: ${colors.mainFontColor};

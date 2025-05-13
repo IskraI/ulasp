@@ -1,17 +1,17 @@
-import AddPlayListsItem from "./AddPlaylistsItem";
-import MediaNavigationLink from "../../NavigationLink/NavigationLink";
+import AddPlayListsItem from './AddPlaylistsItem';
+import MediaNavigationLink from '../../NavigationLink/NavigationLink';
 import {
   TitleWrapper,
   ControlWrapper,
   MediaList,
-  TitleContainer,
-} from "../../UserMediaComponent/MediaList/MediaList.styled";
+  TitleContainer
+} from '../../UserMediaComponent/MediaList/MediaList.styled';
 import {
   useFavoritePlaylistForUserQuery,
-  useAddPlaylistForUserQuery,
-} from "../../../redux/playlistsUserSlice";
+  useAddPlaylistForUserQuery
+} from '../../../redux/playlistsUserSlice';
 
-import { NoData } from "../../Errors/Errors";
+import { NoData } from '../../Errors/Errors';
 
 const AddPlaylists = ({
   title,
@@ -24,7 +24,7 @@ const AddPlaylists = ({
   isFetching,
   error,
   genre,
-  shopCategoryName,
+  shopCategoryName
 }) => {
   const { data: dataFavorite, isLoading: isLoadingFavoritePlaylist } =
     useFavoritePlaylistForUserQuery();
@@ -38,8 +38,8 @@ const AddPlaylists = ({
       <>
         {dataAdd?.length === 0 && (
           <NoData
-            text={"Ви ще не додали жодного плейлиста"}
-            textColor={"grey"}
+            text={'Ви ще не додали жодного плейлиста'}
+            textColor={'grey'}
           />
         )}
         <MediaList>
@@ -62,7 +62,7 @@ const AddPlaylists = ({
         </MediaList>
 
         <MediaNavigationLink
-          link={"addplaylists"}
+          link={'addplaylists'}
           showNavigationLink={showNavigationLink}
         />
       </>

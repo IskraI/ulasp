@@ -203,15 +203,14 @@ const ReportFormDataTemplate = ({
         <Button
           type="submit"
           padding="8px"
+          margintop="24px"
           text="Cформувати"
           disabled={
             selectedOption === 'date'
               ? !isDateOfStart || !isDateOfEnd
               : !isQuarterDate
           }
-          // disabled={isValidDatePeriod}
           showIcon={false}
-          // marginleft={"auto"}
         />
       </ReportFormButton>
     </ReportForm>

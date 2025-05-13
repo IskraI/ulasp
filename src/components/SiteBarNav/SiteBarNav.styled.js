@@ -1,32 +1,28 @@
-import styled from "@emotion/styled";
-import { colors } from "../../styles/vars";
-import { NavLink } from "react-router-dom";
-import { sizes } from "../../styles/SharedStyles";
+import styled from '@emotion/styled';
+import { colors, sizes } from '../../styles/vars';
 
 export const SiteBarNavConteiner = styled.div`
+  /* display: none; */
   display: flex;
   flex-direction: column;
   width: 287px;
   min-height: calc(100vh - (${sizes.header.height} + ${sizes.footer.height}));
-  /* border-right: 2px solid ${colors.primaryColor}; */
-  /* border-top: 2px solid ${colors.primaryColor}; */
-  /* border-bottom: 2px solid ${colors.primaryColor}; */
-  /* position: fixed;
-  top: 0;
-  bottom: 0;
-  height: 100%;
-   left: 0; */
-
-  /* background: linear-gradient(
-    180deg,
-    rgba(28, 84, 141, 0.01) 30%,
-    rgba(255, 243, 191, 0.5) 100%
-  ); */
+  padding-left: 10px;
   background: linear-gradient(
     180deg,
     transparent 50%,
     rgba(255, 243, 191, 0.5) 100%
   );
+
+  /* background-color: #3e6da3; */
+  transform: translateX(0);
+  transition: transform 400ms ease-out;
+  /* outline: 1px solid red; */
+
+  /* @media screen and (max-width: 1199px) {
+    display: none;
+    transform: translateX(-100%);
+  } */
 `;
 
 export const SideBarLineWrapper = styled.div`
@@ -40,4 +36,38 @@ export const SideBarBottomLineWrapper = styled.div`
   height: 100%;
 `;
 
-export const BottomSection = styled.div``;
+export const BottomSection = styled.div`
+  margin: 0 auto;
+`;
+
+// ********* Mobile Section
+
+export const SiteBarNavContainerMobile = styled.div`
+  /* display: none; */
+  display: flex;
+  flex-direction: column;
+  width: 287px;
+  height: 100vh;
+  padding-left: 10px;
+  background: linear-gradient(
+    180deg,
+    transparent 50%,
+    rgba(255, 243, 191, 0.5) 100%
+  );
+  background-image: url('/src/assets/Background@2x.jpg');
+
+  background-size: auto;
+  /* background-color: #3e6da3; */
+  transform: translateX(0);
+  transition: transform 400ms ease-out;
+  /* outline: 1px solid red; */
+
+  /* @media screen and (max-width: 1199px) {
+    display: none;
+    transform: translateX(-100%);
+  } */
+`;
+
+export const BottomSectionMobile = styled.div`
+  margin: 0 auto;
+`;

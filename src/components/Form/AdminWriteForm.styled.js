@@ -1,11 +1,15 @@
-import styled from "@emotion/styled";
-import { colors } from "../../styles/vars";
+import styled from '@emotion/styled';
+import { colors, media } from '../../styles/vars';
 
 export const AdminForm = styled.form`
-  margin-left: 24px;
+  /* margin-left: 24px; */
 `;
 
 export const FormInput1 = styled.input`
+  ${media.tabletMax} {
+    width: 100%;
+  }
+
   display: flex;
   width: 421px;
   height: 45px;
@@ -77,8 +81,8 @@ export const TitleThird = styled.h3`
   font-size: 20px;
   font-weight: 400;
   line-height: 1.21;
-  margin-top: 48px;
-  margin-left: 24px;
+  margin-top: 36px;
+  /* margin-left: 24px; */
 `;
 
 export const FormInput = styled.input`
@@ -94,9 +98,12 @@ export const FormInput = styled.input`
   margin-top: 25px;
 `;
 export const Textarea = styled.textarea`
+  ${media.tabletMax} {
+    width: 100%;
+  }
   background-color: rgba(234, 234, 234, 0.32);
   width: 422px;
-  height: ${(props) => (props.height ? props.height : "213px")};
+  height: ${(props) => (props.height ? props.height : '213px')};
   padding: 8px;
   display: flex;
   align-items: center;
@@ -108,7 +115,7 @@ export const Textarea = styled.textarea`
   outline: none;
   border: 0.25px solid rgba(23, 22, 28, 0.5);
   resize: none;
-  margin-top: ${(props) => (props.marginTop ? props.marginTop : "25px")};
+  margin-top: ${(props) => (props.marginTop ? props.marginTop : '25px')};
   ::placeholder {
     color: rgba(0, 0, 0, 0.3);
     font-size: 20px;

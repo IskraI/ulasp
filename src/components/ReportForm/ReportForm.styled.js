@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import { colors } from "../../styles/vars";
+import styled from '@emotion/styled';
+import { colors, media } from '../../styles/vars';
 
 // export const ReportFormContainer = styled.div`
 //   width: 421px;
@@ -118,14 +118,6 @@ export const Title = styled.h2`
   margin-bottom: 16px;
 `;
 
-export const FormField = styled.div`
-  display: flex;
-
-  color: #17161c;
-
-  font-size: 24px;
-  font-weight: 500;
-`;
 export const ReportFormField = styled.div`
   display: flex;
 
@@ -149,7 +141,7 @@ export const ReportFormInput = styled.input`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  width: ${(props) => props.width ?? "154px"};
+  width: ${(props) => props.width ?? '154px'};
   &.invalid {
     outline: 1px solid red;
   }
@@ -199,8 +191,14 @@ export const ReportFormData = styled.div`
 export const ReportForm = styled.form`
   display: flex;
   flex-direction: column;
+  ${media.tabletMax} {
+    margin-top: 24px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   gap: 16px;
-  width: 421px;
+  max-width: 422px;
   background: #7f99c0;
   font-size: 24px;
   font-weight: 500;
@@ -208,6 +206,22 @@ export const ReportForm = styled.form`
   border-radius: 10px;
 
   padding: 16px 12px;
+
+  /* outline: 1px solid yellow; */
+`;
+
+export const FormField = styled.div`
+  color: #17161c;
+
+  font-size: 24px;
+  font-weight: 500;
+  /* width: 100%; */
+
+  /* outline: 1px solid red; */
+
+  ${media.tablet} {
+    display: flex;
+  }
 `;
 export const ReportFormButton = styled.div`
   display: flex;

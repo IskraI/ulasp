@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import { colors, mainCubicTransition } from "../../../styles/vars";
+import styled from '@emotion/styled';
+import { colors, mainCubicTransition } from '../../../styles/vars';
 
 export const ControlWrapper = styled.div`
   display: flex;
@@ -35,6 +35,7 @@ export const MediaList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
+  width: 100%;
 `;
 
 export const MediaItem = styled.li`
@@ -42,9 +43,9 @@ export const MediaItem = styled.li`
   display: flex;
   /* justify-content: space-between; */
   align-items: center;
-  width: ${(props) => props.width ?? "310px"};
+  width: ${(props) => props.width ?? '310px'};
 
-  padding: ${(props) => props.padding ?? "10px"};
+  padding: ${(props) => props.padding ?? '10px'};
   border: 1px solid ${colors.accentHoverColor};
   border-radius: 10px;
   background-color: ${colors.activeBtnColor};
@@ -144,7 +145,7 @@ export const SvgMedia = styled.svg`
 export const PlaylistModalContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: ${({ alignItems }) => alignItems || "start"};
+  align-items: ${({ alignItems }) => alignItems || 'start'};
   justify-content: center;
   gap: 4px;
 `;

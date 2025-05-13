@@ -1,35 +1,35 @@
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 
-import PlayListItemForAdd from "./PlayListsItemForAddUser";
-import ControlMyplaylists from "../../UserCabinetPage/ControlMyplaylists/ControlMyplaylists";
+import PlayListItemForAdd from './PlayListsItemForAddUser';
+import ControlMyplaylists from '../../UserCabinetPage/ControlMyplaylists/ControlMyplaylists';
 
-import CreateUsersPlaylists from "../../UserCabinetPage/CreatePlaylists/CreateUsersPlaylists";
+import CreateUsersPlaylists from '../../UserCabinetPage/CreatePlaylists/CreateUsersPlaylists';
 
-import { Modal } from "../../Modal/Modal";
-import { Loader } from "../../Loader/Loader";
-import { NoData } from "../../Errors/Errors";
+import { Modal } from '../../Modal/Modal';
+import { Loader } from '../../Loader/Loader';
+import { NoData } from '../../Errors/Errors';
 
-import { useGetPlaylistCreatedUserWithoutTrackIdQuery } from "../../../redux/playlistsUserSlice";
+import { useGetPlaylistCreatedUserWithoutTrackIdQuery } from '../../../redux/playlistsUserSlice';
 
-import symbol from "../../../assets/symbol.svg";
+import symbol from '../../../assets/symbol.svg';
 
-import { ModalInfoText } from "../../Modal/Modal.styled";
+import { ModalInfoText } from '../../Modal/Modal.styled';
 
 import {
   TitleWrapperModal,
   MediaList,
-  PlaylistModalContainer,
-} from "./MediaList.styled";
+  PlaylistModalContainer
+} from './MediaList.styled';
 
 const PlaylistsForAdd = ({ title, trackId }) => {
   const {
     data,
     isSuccess: isSuccesCreatePlaylists,
     isError: isErrorCreatePlaylists,
-    isLoading,
+    isLoading
   } = useGetPlaylistCreatedUserWithoutTrackIdQuery(trackId, {
-    refetchOnFocus: true,
+    refetchOnFocus: true
   });
 
   const [showModalSuccess, setShowModalSuccess] = useState(false);
@@ -47,11 +47,11 @@ const PlaylistsForAdd = ({ title, trackId }) => {
     setShowModalCreatePlaylist(() => !showModalCreatePlaylist);
 
   const noPlaylists =
-    "Доступних плейлистів для цієї пісні не знайдено. Ви можете створити новий плейлист";
+    'Доступних плейлистів для цієї пісні не знайдено. Ви можете створити новий плейлист';
 
   return (
     <PlaylistModalContainer
-      alignItems={data?.playlistsWithoutTrack?.length > 3 ? "center" : "start"}
+      alignItems={data?.playlistsWithoutTrack?.length > 3 ? 'center' : 'start'}
     >
       {isLoading && <Loader />}
       {isSuccesCreatePlaylists && (
@@ -61,12 +61,12 @@ const PlaylistsForAdd = ({ title, trackId }) => {
               ? title
               : data?.countPlaylists
               ? null
-              : "Створіть свій перший плейлист"}
+              : 'Створіть свій перший плейлист'}
             {(!data?.countPlaylists ||
               data?.playlistsWithoutTrack?.length > 0) && (
               <ControlMyplaylists
                 iconButton={`${symbol}#icon-playlist-add`}
-                textButton={"Плейлист"}
+                textButton={'Плейлист'}
                 onClick={toogleModal}
               />
             )}
@@ -78,37 +78,39 @@ const PlaylistsForAdd = ({ title, trackId }) => {
                 data?.countPlaylists >= 1 && (
                   <div
                     style={{
-                      width: "100%",
-                      padding: "12px",
-                      textAlign: "center",
+                      width: '100%',
+                      padding: '12px',
+                      textAlign: 'center'
                     }}
                   >
-                    <NoData text={noPlaylists} textColor={"grey"}>
+                    <NoData text={noPlaylists} textColor={'grey'}>
                       <ControlMyplaylists
                         iconButton={`${symbol}#icon-playlist-add`}
-                        textButton={"Плейлист"}
+                        textButton={'Плейлист'}
                         onClick={toogleModal}
                       />
                     </NoData>
                   </div>
                 )}
 
-              <MediaList>
-                {data?.playlistsWithoutTrack?.map(
-                  ({ _id, playListName, playListAvatarURL }) => {
-                    return (
-                      <PlayListItemForAdd
-                        key={_id}
-                        id={_id}
-                        title={playListName}
-                        icon={playListAvatarURL}
-                        trackId={trackId}
-                        showSuccess={(data) => setShowModalSuccess(data)}
-                      />
-                    );
-                  }
-                )}
-              </MediaList>
+   
+                <MediaList>
+                  {data?.playlistsWithoutTrack?.map(
+                    ({ _id, playListName, playListAvatarURL }) => {
+                      return (
+                        <PlayListItemForAdd
+                          key={_id}
+                          id={_id}
+                          title={playListName}
+                          icon={playListAvatarURL}
+                          trackId={trackId}
+                          showSuccess={(data) => setShowModalSuccess(data)}
+                        />
+                      );
+                    }
+                  )}
+                </MediaList>
+
             </>
           )}
         </>
@@ -118,18 +120,18 @@ const PlaylistsForAdd = ({ title, trackId }) => {
       )}
       {showModalSuccess && (
         <Modal
-          width={"25vw"}
-          padding={"4px"}
-          borderColor={"#FFF3BF"}
-          borderStyle={"solid"}
-          borderWidth={"1px"}
-          margintop={"2px"}
+          width={'25vw'}
+          padding={'4px'}
+          borderColor={'#FFF3BF'}
+          borderStyle={'solid'}
+          borderWidth={'1px'}
+          margintop={'2px'}
           onClose={() => setShowModalSuccess(false)}
         >
           <ModalInfoText
-            marginTop={"2px"}
-            paddingTop={"4px"}
-            paddingBottom={"4px"}
+            marginTop={'2px'}
+            paddingTop={'4px'}
+            paddingBottom={'4px'}
           >
             Успішно додано
           </ModalInfoText>
@@ -141,7 +143,7 @@ const PlaylistsForAdd = ({ title, trackId }) => {
 
 PlaylistsForAdd.propTypes = {
   title: PropTypes.string,
-  trackId: PropTypes.string,
+  trackId: PropTypes.string
 };
 
 export default PlaylistsForAdd;
