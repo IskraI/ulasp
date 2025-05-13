@@ -30,7 +30,7 @@ const WelcomePage = () => {
     <WelcomeSection>
       <WelcomeTitle>
         УЛАСП
-        <WelcomeSubTitle>Streem Music</WelcomeSubTitle>
+        <WelcomeSubTitle>Stream Music</WelcomeSubTitle>
       </WelcomeTitle>
       <WelcomeText>
         Зручний інструмент для Вашого бізнесу!
@@ -39,6 +39,7 @@ const WelcomePage = () => {
 
       <SignInNavLink to="/signin">Увійти</SignInNavLink>
     </WelcomeSection>
+
   );
 };
 

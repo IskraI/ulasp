@@ -1,23 +1,41 @@
 import styled from '@emotion/styled';
 import AudioPlayer from 'react-h5-audio-player';
-import { sizes } from '../../styles/vars';
+import { sizes, media } from '../../styles/vars';
 import './player.css';
 export const PlayerWrapper = styled.div`
-  margin-top: auto;
-  padding: ${({ inHeader }) => (inHeader ? '4px' : '12px')};
   display: flex;
-  flex-direction: ${({ inHeader }) => (inHeader ? 'row-reverse' : 'column')};
-  gap: ${({ inHeader }) => (inHeader ? '24px' : null)};
-  width: ${({ inHeader }) => (inHeader ? '80%' : '100%')};
-  height: ${({ inHeader }) => (inHeader ? '80px' : '156px')};
-  /* border: 1px solid black; */
-  justify-content: center;
-  align-items: center;
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: auto;
+
+  ${media.tabletMax} {
+    flex-direction: column-reverse;
+    gap: 4px;
+    padding: 2px;
+    width: 100%;
+    /* justify-content: center; */
+    /* align-items: center; */
+  }
+
+  ${media.laptop} {
+    flex-direction: ${({ inHeader }) => (inHeader ? 'row-reverse' : 'column')};
+    gap: ${({ inHeader }) => (inHeader ? '24px' : null)};
+    padding: ${({ inHeader }) => (inHeader ? '4px' : '12px')};
+    width: ${({ inHeader }) => (inHeader ? '80%' : '100%')};
+    height: ${({ inHeader }) => (inHeader ? '80px' : '156px')};
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
 `;
 
 export const TrackInfoWrapper = styled.div`
+  ${media.tabletMax} {
+    display: none;
+    /* display: flex;
+    flex-direction: row;
+    width: 100%; */
+  }
+
   /* width: 20%; */
   min-width: 20%;
   max-width: 20%;
@@ -29,6 +47,8 @@ export const TrackInfoWrapper = styled.div`
   gap: 4px;
   border: 0px;
   overflow: hidden;
+
+  /* outline: 1px solid red; */
 `;
 
 export const TracksArtist = styled.p`

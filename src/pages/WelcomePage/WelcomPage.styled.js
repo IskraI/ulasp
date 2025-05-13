@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
-import { colors } from '../../styles/vars';
 import { NavLink } from 'react-router-dom';
-import { sizes, media } from '../../styles/vars';
+import { media, colors } from '../../styles/vars';
 
 export const WelcomeSection = styled.div`
   display: flex;
@@ -11,7 +10,7 @@ export const WelcomeSection = styled.div`
 
   align-items: center;
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 20px 12px;
 `;
 
 const slideInAnimation = keyframes`
@@ -71,7 +70,7 @@ export const WelcomeText = styled.div`
 
 export const SignInNavLink = styled(NavLink)`
   display: flex;
-  width: 380px;
+  width: 300px;
   height: 66px;
   padding: 8px;
   justify-content: center;
@@ -94,5 +93,6 @@ export const SignInNavLink = styled(NavLink)`
 
   ${media.tablet} {
     font-size: 32px;
+    width: 380px;
   }
 `;

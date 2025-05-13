@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { colors } from '../../../styles/vars';
+import { colors, media } from '../../../styles/vars';
 
 export const UserCabinetContainer = styled.div`
   display: flex;
@@ -7,14 +7,21 @@ export const UserCabinetContainer = styled.div`
 `;
 
 export const FormContainer = styled.div`
+  ${media.tabletMax} {
+    width: 100%;
+    display: block;
+    padding: 0 4px;
+  }
+
   display: flex;
-  /* gap: 135px; */
+  gap: 135px;
   width: 1200px;
   margin-right: auto;
-  /* margin: 0 auto; */
+  margin: 0 auto;
   padding: 0 20px;
   align-items: center;
   justify-content: space-between;
+
   /* outline: 1px solid green; */
 `;
 

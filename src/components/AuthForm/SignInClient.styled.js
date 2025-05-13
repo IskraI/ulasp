@@ -1,17 +1,24 @@
-import styled from "@emotion/styled";
-import { colors } from "../../styles/vars";
+import styled from '@emotion/styled';
+
+import { colors, media } from '../../styles/vars';
 
 export const StyledForm = styled.form`
+  width: 320px;
   /* height: auto; */
   display: flex;
   justify-content: center;
   /* align-items: center; */
   flex-direction: column; // Добавил
+
+  ${media.tablet} {
+    width: 100%;
+  }
 `;
 
 export const StyledFormInsight = styled.div`
   display: flex;
   flex-direction: column;
+
   /* align-items: center;  */
   /* height: auto;  */
 `;
@@ -35,7 +42,7 @@ export const StyledInputWrap = styled.div`
 `;
 
 export const StyledInput = styled.input`
-  width: 455px;
+  width: 100%;
   box-sizing: border-box;
   height: 57px;
   border-radius: 10px;
@@ -70,11 +77,15 @@ export const StyledInput = styled.input`
     outline: none;
     background-color: transparent;
   }
+
+  ${media.tablet} {
+    width: 456px;
+  }
 `;
 
 export const StyledButton = styled.button`
   display: block;
-  width: 380px;
+  width: 100%;
   height: 66px;
   padding: 8px;
   justify-content: center;
@@ -105,6 +116,10 @@ export const StyledButton = styled.button`
     border-color: ${colors.mainFontColor};
     background: ${colors.primaryColor};
   } */
+
+  ${media.tablet} {
+    width: 380px;
+  }
 `;
 
 export const StyledError = styled.div`
