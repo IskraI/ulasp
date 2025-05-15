@@ -1,6 +1,6 @@
-import { ListContact, ItemContact, StyledLink } from "./ContactInfo.styled";
+import { ListContact, ItemContact, StyledLink } from './ContactInfo.styled';
 
-import { memo } from "react";
+import { memo } from 'react';
 
 export const ContactInfo = memo(function ContactInfo() {
   return (
@@ -9,6 +9,7 @@ export const ContactInfo = memo(function ContactInfo() {
         Номер телефону:
         <StyledLink href="tel:+380504038208">+380504038208</StyledLink>
       </ItemContact>
+
       <ItemContact>
         E-mail бухгалтерія:
         <StyledLink href="mailto:buhgalter@ulasp.org.ua">

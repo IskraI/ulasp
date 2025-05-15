@@ -1,28 +1,32 @@
+import { useState } from 'react';
 import { ContactInfo } from '../../components/ContactInfo/ContactInfo';
 import { NavMenu } from '../../components/NavMenu/NavMenu';
 import { Profile } from '../../components/Profile/Profile';
 import LogOutBtn from '../LogOutButton/LogOutButton';
+import MobileMenu from './MobileMenu';
 import {
   SiteBarNavConteiner,
   BottomSection,
   SideBarLineWrapper,
-  SideBarBottomLineWrapper,
-  SiteBarNavContainerMobile,
-  BottomSectionMobile
+  SideBarBottomLineWrapper
 } from './SiteBarNav.styled';
-import './MobileSidebar.css';
 import { isMobile } from 'react-device-detect';
 
-import { useState } from 'react';
-
-import CloseButtonComponent from '../CloseBtn/CloseBtn';
-
-import symbol from '../../assets/symbol.svg';
+import useScrollBlock from '../../hooks/useScrollBlock';
 
 export const SiteBarNav = () => {
   const [open, setOpen] = useState(false);
+  const [blockScroll, allowScroll] = useScrollBlock();
 
-  const toogleButton = () => setOpen(!open);
+  const openMobileMenu = () => {
+    setOpen(true);
+    blockScroll();
+  };
+
+  const closeMobileMenu = () => {
+    setOpen(false);
+    allowScroll();
+  };
 
   return (
     <>
@@ -44,41 +48,12 @@ export const SiteBarNav = () => {
 
       {isMobile && (
         <>
-          <button
-            style={{
-              position: 'fixed',
-              top: 50,
-              left: 0,
-              backgroundColor: 'transparent',
-              border: 'none',
-              zIndex: 999
-            }}
-            type="button"
-            onClick={toogleButton}
-          >
-            <svg width="32px" height="32px">
-              <use href={`${symbol}#icon-menu`}></use>
-            </svg>
-          </button>
-
-          {open && (
-            <div className="overlay">
-              <SiteBarNavContainerMobile>
-                <CloseButtonComponent onClick={toogleButton} />
-                <SideBarLineWrapper>
-                  <Profile />
-                </SideBarLineWrapper>
-                <NavMenu />
-                <SideBarBottomLineWrapper>
-                  <BottomSectionMobile>
-                    <ContactInfo />
-
-                    <LogOutBtn />
-                  </BottomSectionMobile>
-                </SideBarBottomLineWrapper>
-              </SiteBarNavContainerMobile>
-            </div>
-          )}
+          <MobileMenu
+            open={open}
+            closeMobileMenu={closeMobileMenu}
+            openMobileMenu={openMobileMenu}
+            isMobile={isMobile}
+          />
         </>
       )}
     </>

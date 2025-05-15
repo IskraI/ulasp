@@ -4,18 +4,24 @@ import { sizes, media } from '../../styles/vars';
 import './player.css';
 export const PlayerWrapper = styled.div`
   display: flex;
-  margin-top: auto;
+  /* margin-top: auto; */
+  outline: 1px solid red;
+  justify-self: center;
 
-  ${media.tabletMax} {
-    flex-direction: column-reverse;
+  /* ${media.tabletMax} { */
+    /* flex-direction: column-reverse;
     gap: 4px;
-    padding: 2px;
-    width: 100%;
+    padding: 2px; */
+
+
+
+    /* width: 100%; */
+    /* justify-content: center; */
     /* justify-content: center; */
     /* align-items: center; */
-  }
+  /* } */
 
-  ${media.laptop} {
+  /* ${media.laptop} {
     flex-direction: ${({ inHeader }) => (inHeader ? 'row-reverse' : 'column')};
     gap: ${({ inHeader }) => (inHeader ? '24px' : null)};
     padding: ${({ inHeader }) => (inHeader ? '4px' : '12px')};
@@ -25,7 +31,7 @@ export const PlayerWrapper = styled.div`
     align-items: center;
     margin-left: auto;
     margin-right: auto;
-  }
+  } */
 `;
 
 export const TrackInfoWrapper = styled.div`
@@ -90,6 +96,10 @@ export const PlayerReact = styled(AudioPlayer)`
   padding-top: 0;
   width: 100%;
   height: 80%;
+
+  ${media.tabletMax} {
+    width: 300px;
+  }
 `;
 
 export const SvgLoop = styled.svg`

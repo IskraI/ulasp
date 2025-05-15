@@ -394,6 +394,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
           </TrackInfoWrapper>
 
           <PlayerReact
+            
             onPause={() => {
               if (isPlaying && !isPaused) {
                 dispatch(pause({ isPlaying: false, isPaused: true }));
