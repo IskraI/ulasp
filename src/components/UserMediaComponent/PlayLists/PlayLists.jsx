@@ -8,7 +8,8 @@ import {
 
 import { NoData } from "../../Errors/Errors";
 
-import { TitleWrapper, MediaList, TitleContainer } from "./MediaList.styled";
+import { TitleWrapper, TitleContainer } from "./MediaList.styled";
+import { MediaList } from "../MediaList/MediaList.styled";
 
 const LatestPlaylists = ({
   title,

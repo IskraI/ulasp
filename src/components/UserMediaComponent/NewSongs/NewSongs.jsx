@@ -7,7 +7,7 @@ import { NoData } from "../../Errors/Errors";
 
 import { setPreloadSrcPlayer } from "../../../redux/playerSlice";
 
-import { TitleWrapper, ControlWrapper } from "../MediaList/MediaList.styled";
+import { TitleWrapper, ControlWrapper, MediaList } from "../MediaList/MediaList.styled";
 import { Tracks } from "./NewSongs.styled";
 
 import { getPlayerState } from "../../../redux/playerSelectors";
@@ -71,7 +71,7 @@ const NewSongs = ({
           {tracks?.length === 0 && (
             <NoData text={noDataMessage} textColor={"grey"} />
           )}
-          <Tracks>
+          <MediaList>
             {tracks.map(
               (
                 { _id, trackPictureURL, trackName, artist, trackURL },
@@ -89,7 +89,7 @@ const NewSongs = ({
                 />
               )
             )}
-          </Tracks>
+          </MediaList>
           <MediaNavigationLink
             link={link}
             showNavigationLink={showNavigationLink}
