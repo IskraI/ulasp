@@ -1,20 +1,21 @@
-import { createPortal } from "react-dom";
-import { useEffect } from "react";
+import { createPortal } from 'react-dom';
+import { useEffect } from 'react';
 import {
   Overlay,
   ModalWindow,
   CloseBtn,
-  CloseIconStyled,
-} from "./Modal.styled";
+  CloseIconStyled
+} from './Modal.styled';
 
-import Close from "../../images/close.svg?react";
+import Close from '../../images/close.svg?react';
 
-const modalRoot = document.querySelector("#modal-root");
+const modalRoot = document.querySelector('#modal-root');
 
 const CloseIcon = CloseIconStyled(Close);
 
 export const Modal = ({
   width,
+  mobileWidth,
   height,
   padding,
   bcgTransparent,
@@ -24,15 +25,15 @@ export const Modal = ({
   flexDirection,
   borderStyle,
   borderWidth,
-  borderColor,
+  borderColor
 }) => {
   useEffect(() => {
     const handleKeydown = (e) => {
-      if (e.code === "Escape") onClose();
+      if (e.code === 'Escape') onClose();
     };
-    window.addEventListener("keydown", handleKeydown);
+    window.addEventListener('keydown', handleKeydown);
     return () => {
-      window.removeEventListener("keydown", handleKeydown);
+      window.removeEventListener('keydown', handleKeydown);
     };
   }, [onClose]);
 
@@ -41,20 +42,21 @@ export const Modal = ({
   // };
 
   const closeButtonStyle = {
-    display: showCloseButton ? "block" : "none",
+    display: showCloseButton ? 'block' : 'none'
   };
 
   const overlayStyle = {
     backgroundColor: bcgTransparent
-      ? "rgba(0, 0, 0, 0)"
-      : "rgba(18, 20, 23, 0.5)",
+      ? 'rgba(0, 0, 0, 0)'
+      : 'rgba(18, 20, 23, 0.5)'
   };
 
   return createPortal(
     // <Overlay onClick={handleBackdropClick} style={overlayStyle}>
-    <Overlay style={overlayStyle}>
+    <Overlay style={overlayStyle} onClick={onClose}>
       <ModalWindow
         width={width}
+        mobileWidth={mobileWidth}
         height={height}
         padding={padding}
         flexDirection={flexDirection}

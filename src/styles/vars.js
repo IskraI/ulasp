@@ -44,7 +44,7 @@ export const media = {
   laptop: `@media screen and (min-width: ${breakpoints.desktop})`,
   largeDesktop: `@media screen and (min-width: ${breakpoints.largeDesktop})`,
 
-  mobileMax: `@media screen and (max-width: 479px})`,
+  mobileMax: `@media screen and (max-width: 479px)`,
   tabletMax: `@media screen and (max-width: 767px)`,
   laptopMax: `@media screen and (max-width: 1199px)`,
   desktopMax: `@media screen and (max-width: 1439px)`

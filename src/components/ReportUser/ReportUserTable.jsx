@@ -1,5 +1,5 @@
-import { useTable } from "react-table";
-import React, { forwardRef } from "react";
+import { useTable } from 'react-table';
+import React, { forwardRef } from 'react';
 // import { COLUMNS } from "./Colums";
 import {
   TableWrapper,
@@ -20,15 +20,15 @@ import {
   YearText,
   UnderlineDate,
   NoteText,
-  FlexChild,
-} from "./ReportUserTable.styled";
+  FlexChild
+} from './ReportUserTable.styled';
 
-import { formatDateFromString } from "../../helpers/helpers";
+import { formatDateFromString } from '../../helpers/helpers';
 
 export const columns = [
   {
-    Header: "№ п/п",
-    accessor: (_, rowIndex) => rowIndex + 1,
+    Header: '№ п/п',
+    accessor: (_, rowIndex) => rowIndex + 1
   },
   {
     Header: (
@@ -38,7 +38,7 @@ export const columns = [
         використаного твору
       </span>
     ),
-    accessor: "trackName",
+    accessor: 'trackName'
   },
   {
     Header: (
@@ -51,10 +51,10 @@ export const columns = [
         або назва колективу)
       </span>
     ),
-    accessor: "artist",
+    accessor: 'artist'
   },
   {
-    id: "music",
+    id: 'music',
     Header: (
       <>
         <span>Автор</span>
@@ -62,10 +62,10 @@ export const columns = [
         <span>музики</span>
       </>
     ),
-    accessor: "",
+    accessor: ''
   },
   {
-    id: "author",
+    id: 'author',
     Header: (
       <>
         <span>Автор</span>
@@ -73,10 +73,10 @@ export const columns = [
         <span>твору</span>
       </>
     ),
-    accessor: "",
+    accessor: ''
   },
   {
-    id: "count",
+    id: 'count',
     Header: (
       <>
         <span>Кількість</span>
@@ -94,8 +94,8 @@ export const columns = [
         0
       );
       return sum;
-    },
-  },
+    }
+  }
 ];
 
 const getPageMargins = () => {
@@ -105,7 +105,7 @@ const getPageMargins = () => {
 const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
   const tableInstance = useTable({
     columns,
-    data,
+    data
   });
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
@@ -126,10 +126,10 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
         }/`}</ReportTitle>
 
         <ReportTitleDesc>
-          про використані Об’єкти суміжних прав та Об’єкти авторського права за{" "}
-          {date.dateOfStart !== "" && date.dateOfEnd !== "" ? (
+          про використані Об’єкти суміжних прав та Об’єкти авторського права за{' '}
+          {date.dateOfStart !== '' && date.dateOfEnd !== '' ? (
             <>
-              період <br />з {formatDateFromString(date.dateOfStart)} p. по{" "}
+              період <br />з {formatDateFromString(date.dateOfStart)} p. по{' '}
               {formatDateFromString(date.dateOfEnd)} p.
             </>
           ) : (
@@ -143,7 +143,7 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
               <tr key={ind} {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup?.headers.map((column, ind) => (
                   <TableReportRow key={ind} {...column.getHeaderProps()}>
-                    {column.render("Header")}
+                    {column.render('Header')}
                   </TableReportRow>
                 ))}
               </tr>
@@ -159,7 +159,7 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
                   {row.cells.map((cell, cellIndex) => {
                     return (
                       <TableCell key={cellIndex} {...cell.getCellProps()}>
-                        {cell.render("Cell")}
+                        {cell.render('Cell')}
                       </TableCell>
                     );
                   })}
@@ -184,7 +184,6 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
             <FlexChild alignSelf="flex-end">
               <ReportFooterDesc>
                 <UnderlinedText>
-                  {" "}
                   <Underline />
                   (підпис уповноваженої особи Користувача)
                 </UnderlinedText>
@@ -193,13 +192,13 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
             <FlexChild alignSelf="flex-end">
               <ReportFooterDesc>
                 <UnderlinedText>
-                  {" "}
                   <Underline />
-                  (посада та П.І.Б. уповноваженої особи Користувача){" "}
+                  (посада та П.І.Б. уповноваженої особи Користувача){' '}
                 </UnderlinedText>
               </ReportFooterDesc>
             </FlexChild>
             {/* <ReportFooterDesc> */}
+
             <UnderlinedTextContainer>
               <LineAndYearContainer>
                 <YearText>{`"\u00A0\u00A0\u00A0\u00A0"`}</YearText>
@@ -216,5 +215,5 @@ const ReportUserTable = forwardRef(({ data, date, user }, ref) => {
   );
 });
 
-ReportUserTable.displayName = "ReportUserTable";
+ReportUserTable.displayName = 'ReportUserTable';
 export default ReportUserTable;

@@ -50,7 +50,7 @@ export const StyledInput = styled.input`
   background-color: transparent;
   padding: 8px;
   color: ${colors.mainFontColor};
-  font-size: 14px;
+  font-size: 16px;
   align-items: center;
 
   &::placeholder {

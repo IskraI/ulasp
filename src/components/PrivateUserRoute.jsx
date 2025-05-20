@@ -11,7 +11,7 @@ const PrivateUserRoute = ({ component: Component, redirectTo = "/signin" }) => {
   const { data, isLoading, isError } = useCurrentClientQuery("", {
     skip,
   });
-  console.log("user PrivateUserRoute :>> ", user);
+  // console.log("user PrivateUserRoute :>> ", user);
   if (isLoading) return <>Loading....</>;
   // console.log("user.isLoggedIn", user.isLoggedIn);
   if (isError) {

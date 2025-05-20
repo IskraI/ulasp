@@ -11,7 +11,9 @@ import {
   FormField,
   ReportFormInputRadio,
   TitleText,
-  ReportFormButton
+  ReportFormButton,
+  InputContainer,
+  Separator
 } from './ReportForm.styled';
 
 import { Button } from '../Button/Button';
@@ -97,43 +99,46 @@ const ReportFormDataTemplate = ({
           onChange={handleOptionChange}
         />
         <label className="radio-container" htmlFor="date"></label>
-        <ReportFormField>
-          <ReportFormLabel>З</ReportFormLabel>
-          <ReportFormInput
-            type="date"
-            name="date"
-            placeholder="дата"
-            aria-describedby="dateOfStartTooltip"
-            // max={new Date().toISOString().split("T")[0]}
-            max={currentDate()}
-            // className={`${errors.dateOfStart ? "invalid" : ""}${
-            //   !errors.dateOfStart && dirtyFields.dateOfStart ? "valid" : ""
-            // }`}
-            {...register('dateOfStart', {
-              required: selectedOption === 'date'
-            })}
-            onClick={handleDateInputChange}
-          />
-        </ReportFormField>
-        <ReportFormField>
-          <ReportFormLabel>по: </ReportFormLabel>
-          <ReportFormInput
-            type="date"
-            name="date"
-            placeholder="дата"
-            aria-describedby="dateOfEndTooltip"
-            max={currentDate()}
-            // max={new Date().toISOString().split("T")[0]}
-            // className={`${errors.dateOfEnd ? "invalid" : ""}${
-            //   !errors.dateOfEnd && dirtyFields.dateOfEnd ? "valid" : ""
-            // }`}
-            {...register('dateOfEnd', {
-              required: selectedOption === 'date'
-            })}
-            onClick={handleDateInputChange}
-          />
-        </ReportFormField>
+        <InputContainer>
+          <ReportFormField>
+            <ReportFormLabel>З:</ReportFormLabel>
+            <ReportFormInput
+              type="date"
+              name="date"
+              placeholder="дата"
+              aria-describedby="dateOfStartTooltip"
+              // max={new Date().toISOString().split("T")[0]}
+              max={currentDate()}
+              // className={`${errors.dateOfStart ? "invalid" : ""}${
+              //   !errors.dateOfStart && dirtyFields.dateOfStart ? "valid" : ""
+              // }`}
+              {...register('dateOfStart', {
+                required: selectedOption === 'date'
+              })}
+              onClick={handleDateInputChange}
+            />
+          </ReportFormField>
+          <ReportFormField>
+            <ReportFormLabel>по:</ReportFormLabel>
+            <ReportFormInput
+              type="date"
+              name="date"
+              placeholder="дата"
+              aria-describedby="dateOfEndTooltip"
+              max={currentDate()}
+              // max={new Date().toISOString().split("T")[0]}
+              // className={`${errors.dateOfEnd ? "invalid" : ""}${
+              //   !errors.dateOfEnd && dirtyFields.dateOfEnd ? "valid" : ""
+              // }`}
+              {...register('dateOfEnd', {
+                required: selectedOption === 'date'
+              })}
+              onClick={handleDateInputChange}
+            />
+          </ReportFormField>
+        </InputContainer>
       </FormField>
+      <Separator />
       <FormField>
         <ReportFormInputRadio
           type="radio"
@@ -144,51 +149,54 @@ const ReportFormDataTemplate = ({
           onChange={handleOptionChange}
         />
         <label className="radio-container" htmlFor="quarter"></label>
-        <ReportFormField>
-          <ReportFormLabel>За </ReportFormLabel>
-          <ReportFormInput
-            type="number"
-            min="1"
-            max="4"
-            name="quater"
-            placeholder="кв"
-            width={'60px'}
-            aria-describedby="quarterDateTooltip"
-            className={`${errors.quarterDate ? 'invalid' : ''}${
-              !errors.quarterDate ? 'valid' : ''
-            }`}
-            {...register('quarterDate', {
-              required: selectedOption === 'quater',
-              pattern: {
-                value: /^[1-4]$/,
-                message: 'Значення повинно бути від 1 до 4'
-              }
-            })}
-            onClick={handleQuaterInputChange}
-          />
-          <ReportFormLabel> квартал</ReportFormLabel>
-        </ReportFormField>
-        <ReportFormField>
-          <ReportFormInput
-            type="number"
-            min="2023"
-            max={currentYear}
-            width={'100px'}
-            defaultValue={currentYear}
-            aria-describedby="quarterYearDateTooltip"
-            className={`${errors.quarterYearDate ? 'invalid' : ''}${
-              !errors.quarterYearDate ? 'valid' : ''
-            }`}
-            {...register('quarterYearDate', {
-              pattern: {
-                value: /^(2023|202[4-9]|[2-9]\d{3})$/, // Шаблон для значений, начиная с 2023 и выше
-                message: 'Год должен быть 2023 или больше'
-              }
-            })}
-            onClick={handleQuaterInputChange}
-          />
-          <ReportFormLabel> рік </ReportFormLabel>
-        </ReportFormField>
+
+        <InputContainer center={'center'}>
+          <ReportFormField>
+            <ReportFormLabel>За </ReportFormLabel>
+            <ReportFormInput
+              type="number"
+              min="1"
+              max="4"
+              name="quater"
+              placeholder="кв"
+              width={'60px'}
+              aria-describedby="quarterDateTooltip"
+              className={`${errors.quarterDate ? 'invalid' : ''}${
+                !errors.quarterDate ? 'valid' : ''
+              }`}
+              {...register('quarterDate', {
+                required: selectedOption === 'quater',
+                pattern: {
+                  value: /^[1-4]$/,
+                  message: 'Значення повинно бути від 1 до 4'
+                }
+              })}
+              onClick={handleQuaterInputChange}
+            />
+            <ReportFormLabel> квартал</ReportFormLabel>
+          </ReportFormField>
+          <ReportFormField>
+            <ReportFormInput
+              type="number"
+              min="2023"
+              max={currentYear}
+              width={'100px'}
+              defaultValue={currentYear}
+              aria-describedby="quarterYearDateTooltip"
+              className={`${errors.quarterYearDate ? 'invalid' : ''}${
+                !errors.quarterYearDate ? 'valid' : ''
+              }`}
+              {...register('quarterYearDate', {
+                pattern: {
+                  value: /^(2023|202[4-9]|[2-9]\d{3})$/, // Шаблон для значений, начиная с 2023 и выше
+                  message: 'Год должен быть 2023 или больше'
+                }
+              })}
+              onClick={handleQuaterInputChange}
+            />
+            <ReportFormLabel> рік </ReportFormLabel>
+          </ReportFormField>
+        </InputContainer>
       </FormField>
       <ReportFormButton>
         {/* <Button

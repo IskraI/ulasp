@@ -21,6 +21,10 @@ export const TitleText = styled.h3`
   margin-top: 16px;
   text-align: center;
   margin-bottom: 16px;
+
+  ${media.mobileMax} {
+    margin: 8px 0;
+  }
 `;
 
 export const Button = styled.button`
@@ -40,10 +44,6 @@ export const Button = styled.button`
   font-size: 20px;
   margin-left: 211px;
   margin-top: 24px;
-`;
-
-export const InputContainer = styled.div`
-  display: flex;
 `;
 
 export const Input = styled.input`
@@ -185,19 +185,23 @@ export const ReporTabletWrapper = styled.div`
   box-shadow: -2px 4px 30px 0px rgba(0, 0, 0, 0.3);
 `;
 
+// export const ReportFormData = styled.div`
+//   max-width: 421px;
+// `;
+
 export const ReportFormData = styled.div`
+  width: 100%;
   max-width: 421px;
+  margin: 0 auto;
+  padding: 0 16px;
 `;
+
 export const ReportForm = styled.form`
   display: flex;
   flex-direction: column;
-  ${media.tabletMax} {
-    margin-top: 24px;
-    margin-left: auto;
-    margin-right: auto;
-  }
 
   gap: 16px;
+  width: 100%;
   max-width: 422px;
   background: #7f99c0;
   font-size: 24px;
@@ -207,24 +211,62 @@ export const ReportForm = styled.form`
 
   padding: 16px 12px;
 
-  /* outline: 1px solid yellow; */
+  ${media.tabletMax} {
+    max-width: 350px;
+    margin-top: 24px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 18px;
+    padding: 12px 8px;
+    gap: 18px;
+  }
 `;
 
 export const FormField = styled.div`
+  display: flex;
   color: #17161c;
-
   font-size: 24px;
   font-weight: 500;
-  /* width: 100%; */
 
-  /* outline: 1px solid red; */
-
-  ${media.tablet} {
-    display: flex;
+  ${media.tabletMax} {
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    gap: 18px;
   }
 `;
 export const ReportFormButton = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 24px;
+`;
+
+export const InputContainer = styled.div`
+  display: none;
+  display: flex;
+
+  ${media.tabletMax} {
+    flex-direction: column;
+    align-items: ${({ center }) => center || 'end'};
+    gap: 8px;
+  }
+`;
+
+export const Separator = styled.hr`
+  display: none;
+  ${media.tabletMax} {
+    display: flex;
+    width: 100%;
+    border-color: #7f99c0;
+  }
+`;
+
+export const PrintExportBtnWrapper = styled.div`
+  ${media.tabletMax} {
+    display: flex;
+    gap: 12px;
+    position: absolute;
+    top: 0px;
+    left: 30px;
+  }
 `;
