@@ -27,6 +27,11 @@ export const TableWrapper = styled.div`
     width: 90vw;
     padding: 8px;
   }
+
+  ${media.fromTabletToLaptop} {
+    width: 720px;
+    padding: 10px;
+  }
 `;
 
 export const TableReport = styled.table`
@@ -49,7 +54,7 @@ export const TableReportRow = styled.th`
   padding: 8px;
   text-align: center;
 
-  ${media.mobileMax} {
+  ${media.tabletMax} {
     font-size: 7px;
     padding: 4px;
   }
@@ -67,7 +72,7 @@ export const TableCell = styled.td`
     text-align: center;
   }
 
-  ${media.mobileMax} {
+  ${media.tabletMax} {
     font-size: 8px;
     padding: 4px;
   }

@@ -211,8 +211,7 @@ export const ReportForm = styled.form`
 
   padding: 16px 12px;
 
-  ${media.tabletMax} {
-    max-width: 350px;
+  ${media.laptopMax} {
     margin-top: 24px;
     margin-left: auto;
     margin-right: auto;
@@ -262,7 +261,7 @@ export const Separator = styled.hr`
 `;
 
 export const PrintExportBtnWrapper = styled.div`
-  ${media.tabletMax} {
+  ${media.laptopMax} {
     display: flex;
     gap: 12px;
     position: absolute;

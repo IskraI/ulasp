@@ -114,4 +114,8 @@ export const ReportModal = styled.div`
   ${media.tabletMax} {
     padding: 60px 0px 12px 0px;
   }
+
+  ${media.fromTabletToLaptop} {
+    padding: 60px 20px 12px 20px;
+  }
 `;

@@ -3,15 +3,23 @@ import { colors, media } from '../../styles/vars';
 
 export const AdminForm = styled.form`
   /* margin-left: 24px; */
+  ${media.tabletMax} {
+    width: 100%;
+    max-width: 422px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media screen and (min-width: 1200px) and (max-width: 1400px) {
+    width: 100%;
+    max-width: 380px;
+  }
 `;
 
 export const FormInput1 = styled.input`
-  ${media.tabletMax} {
-    width: 100%;
-  }
-
   display: flex;
-  width: 421px;
+  width: 100%;
+  max-width: 421px;
   height: 45px;
   padding: 8px;
   margin-top: 25px;
@@ -41,6 +49,10 @@ export const FormInput1 = styled.input`
         ? `2px solid ${colors.errorColor}`
         : `2px solid ${colors.accentHoverColor}`};
   }
+
+  @media screen and (min-width: 1200px) and (max-width: 1400px) {
+    max-width: 380px;
+  }
 `;
 export const FormInput2 = styled.input`
   width: 421px;
@@ -58,6 +70,10 @@ export const FormInput2 = styled.input`
     position: absolute;
     top: 8px;
     left: 8px;
+  }
+
+  @media screen and (min-width: 1200px) and (max-width: 1400px) {
+    max-width: 380px;
   }
 `;
 export const Button = styled.button`
@@ -138,5 +154,9 @@ export const Textarea = styled.textarea`
       props.isError
         ? `2px solid ${colors.errorColor}`
         : `2px solid ${colors.accentHoverColor}`};
+  }
+
+  @media screen and (min-width: 1200px) and (max-width: 1400px) {
+    max-width: 380px;
   }
 `;

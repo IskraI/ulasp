@@ -72,4 +72,6 @@ export const Modal = ({
     </Overlay>,
     modalRoot
   );
+
+
 };
