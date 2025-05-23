@@ -12,6 +12,8 @@ import {
 } from './SiteBarNav.styled';
 import { isMobile } from 'react-device-detect';
 
+import { MobileContainer } from '../UserMediaComponent/TracksTable/TracksTableUser.styled';
+
 import useScrollBlock from '../../hooks/useScrollBlock';
 
 export const SiteBarNav = () => {
@@ -30,32 +32,28 @@ export const SiteBarNav = () => {
 
   return (
     <>
-      {!isMobile && (
-        <SiteBarNavConteiner>
-          <SideBarLineWrapper>
-            <Profile />
-          </SideBarLineWrapper>
-          <NavMenu />
-          <SideBarBottomLineWrapper>
-            <BottomSection>
-              <ContactInfo />
+      <SiteBarNavConteiner>
+        <SideBarLineWrapper>
+          <Profile />
+        </SideBarLineWrapper>
+        <NavMenu />
+        <SideBarBottomLineWrapper>
+          <BottomSection>
+            <ContactInfo />
 
-              <LogOutBtn />
-            </BottomSection>
-          </SideBarBottomLineWrapper>
-        </SiteBarNavConteiner>
-      )}
+            <LogOutBtn />
+          </BottomSection>
+        </SideBarBottomLineWrapper>
+      </SiteBarNavConteiner>
 
-      {isMobile && (
-        <>
-          <MobileMenu
-            open={open}
-            closeMobileMenu={closeMobileMenu}
-            openMobileMenu={openMobileMenu}
-            isMobile={isMobile}
-          />
-        </>
-      )}
+      <>
+        <MobileMenu
+          open={open}
+          closeMobileMenu={closeMobileMenu}
+          openMobileMenu={openMobileMenu}
+          isMobile={isMobile}
+        />
+      </>
     </>
   );
 };

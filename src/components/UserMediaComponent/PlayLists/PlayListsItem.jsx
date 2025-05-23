@@ -1,26 +1,26 @@
-import { useState, useMemo } from "react";
-import { useLocation, useNavigate, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { BASE_URL } from "../../../constants/constants";
-import symbol from "../../../assets/symbol.svg";
-import CountTracks from "../../EditorComponents/CountTracks/CountTracks";
+import { useState, useMemo } from 'react';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { BASE_URL } from '../../../constants/constants';
+import symbol from '../../../assets/symbol.svg';
+import CountTracks from '../../EditorComponents/CountTracks/CountTracks';
 
 import {
   useUpdateFavoriteStatusApiMutation,
   useUpdateAddStatusApiMutation,
   useFavoritePlaylistForUserQuery,
-  useUpdateFavoriteStatusPlaylistUserMutation,
-} from "../../../redux/playlistsUserSlice";
-import { getUserState } from "../../../redux/userSelectors";
-import { PlaylistInfoWrapper } from "./PlayLists.styled";
+  useUpdateFavoriteStatusPlaylistUserMutation
+} from '../../../redux/playlistsUserSlice';
+import { getUserState } from '../../../redux/userSelectors';
+import { PlaylistInfoWrapper } from './PlayLists.styled';
 
 import {
   MediaItem,
   MediaImg,
   MediaItemText,
-  MediaIconsWrapper,
-} from "../MediaList/MediaList.styled";
-import { LoaderButton } from "../../Loader/Loader";
+  MediaIconsWrapper
+} from '../MediaList/MediaList.styled';
+import { LoaderButton } from '../../Loader/Loader';
 
 const PlayListItem = ({
   id,
@@ -32,7 +32,7 @@ const PlayListItem = ({
   placeListCardInfo,
   countTracks,
   showPlusBtn = true,
-  owner,
+  owner
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ const PlayListItem = ({
     useUpdateFavoriteStatusApiMutation(id);
   const [
     toggleFavoritePlaylistUser,
-    { isLoading: isLoadingFavoriteStatusPlaylistUser },
+    { isLoading: isLoadingFavoriteStatusPlaylistUser }
   ] = useUpdateFavoriteStatusPlaylistUserMutation(id);
   const [toggleAdd] = useUpdateAddStatusApiMutation(id);
   // const [favoriteStatus] = useFavoritePlaylistForUserQuery();
@@ -61,6 +61,7 @@ const PlayListItem = ({
 
   const cabinet = `/user/cabinet/myplaylists/createplaylists`;
   const newPlaylists = `/user/medialibrary/newplaylists/${id}/tracks`;
+  const thumbURL = `${BASE_URL}/${icon}`
 
   const itsMy = useMemo(() => {
     if (userID === owner) {
@@ -71,7 +72,7 @@ const PlayListItem = ({
   }, [owner, userID]);
 
   const handleToggleFavorite = async () => {
-    console.log("playlistId:", id);
+    console.log('playlistId:', id);
     try {
       // Call the API to update the favorite status
       if (itsMy) {
@@ -82,31 +83,20 @@ const PlayListItem = ({
       // Update the local state after a successful API call
       setIsFavorite((prevIsFavorite) => !prevIsFavorite);
     } catch (error) {
-      console.error("Error updating favorite status:", error);
+      console.error('Error updating favorite status:', error);
     }
   };
 
   const handleToggleAdd = async () => {
-    console.log("playlistId:", id);
+    console.log('playlistId:', id);
     try {
-      // Call the API to update the favorite status
       await toggleAdd(id);
-      // Update the local state after a successful API call
       setIsAdd((prevIsAdd) => !prevIsAdd);
     } catch (error) {
-      console.error("Error updating add status:", error);
+      console.error('Error updating add status:', error);
     }
   };
 
-  // useEffect(() => {
-  //   // Fetch initial favorite status from the backend when the component mounts
-  //   if (!favoriteStatus) {
-  //     // Use your API call to get the favorite status from the backend
-  //     // For example: fetchFavoriteStatusFromBackend(id).then(response => setIsFavorite(response));
-  //   }
-  // }, [favoriteStatus, id]);
-
-  // console.log("isLoadingeFavoriteStatus", isLoadingFavoriteStatus);
   return (
     <MediaItem>
       {!placeListCardInfo ? (
@@ -120,17 +110,17 @@ const PlayListItem = ({
           state={{ from: location }}
           disabled={placeListCardInfo ? true : false}
           style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center'
           }}
         >
-          <MediaImg src={BASE_URL + "/" + icon} alt={title} />
+          <MediaImg src={thumbURL} alt={title} />
           <MediaItemText>{title}</MediaItemText>
         </Link>
       ) : (
         <>
-          <MediaImg src={BASE_URL + "/" + icon} alt={title} />
+          <MediaImg src={thumbURL} alt={title} />
           <PlaylistInfoWrapper>
             <MediaItemText>{title}</MediaItemText>
             <CountTracks countTracks={countTracks} />
@@ -138,19 +128,19 @@ const PlayListItem = ({
         </>
       )}
       <MediaIconsWrapper>
-        {isLoadingFavoriteStatus && <LoaderButton width={"24"} height={"24"} />}
+        {isLoadingFavoriteStatus && <LoaderButton width={'24'} height={'24'} />}
         {isLoadingFavoriteStatusPlaylistUser && (
-          <LoaderButton width={"24"} height={"24"} />
+          <LoaderButton width={'24'} height={'24'} />
         )}
 
         {!isLoadingFavoriteStatus && !isLoadingFavoriteStatusPlaylistUser && (
           <svg
             width="24"
             height="24"
-            fill={isFavorite ? "#17161C" : "none"}
+            fill={isFavorite ? '#17161C' : 'none'}
             stroke="#17161C"
             onClick={() => handleToggleFavorite(id)}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: 'pointer' }}
           >
             <use href={`${symbol}#icon-heart-empty`}></use>
           </svg>
@@ -166,7 +156,7 @@ const PlayListItem = ({
                   await handleToggleAdd();
                   setIsAdd(true);
                 }}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: 'pointer' }}
               >
                 <use href={`${symbol}#icon-plus`}></use>
               </svg>
@@ -178,7 +168,7 @@ const PlayListItem = ({
                   await handleToggleAdd();
                   setIsAdd(false);
                 }}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: 'pointer' }}
               >
                 <use href={`${symbol}#icon-check`}></use>
               </svg>

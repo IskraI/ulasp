@@ -1,20 +1,19 @@
 /* eslint-disable react/prop-types */
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState, useCallback, useRef } from "react";
-import { useLocation } from "react-router-dom";
-import { getUserState } from "../../../redux/userSelectors.js";
-import Pagination from "rc-pagination";
-import Select from "rc-select";
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
+import { getUserState } from '../../../redux/userSelectors.js';
+import Pagination from 'rc-pagination';
+import Select from 'rc-select';
 
-import localeUA from "../../../constants/paginationLocaleUA.js";
-import { compareArray, findPage } from "../../../helpers/helpers.js";
-import SelectPageSize from "../../EditorComponents/TracksTable/SelectSize.jsx";
+import { compareArray, findPage } from '../../../helpers/helpers.js';
+import SelectPageSize from '../../EditorComponents/TracksTable/SelectSize.jsx';
 
-import TrackItem from "./TrackItemUser";
-import { ErrorNotFound, NoData } from "../../Errors/Errors";
-import { Button } from "../../Button/Button.jsx";
+import TrackItem from './TrackItemUser';
+import { ErrorNotFound, NoData } from '../../Errors/Errors';
+import { Button } from '../../Button/Button.jsx';
 
-import { useRemoveTrackFromPlaylistUserMutation } from "../../../redux/playlistsUserSlice.js";
+import { useRemoveTrackFromPlaylistUserMutation } from '../../../redux/playlistsUserSlice.js';
 
 import {
   setPreloadSrcPlayer,
@@ -23,19 +22,20 @@ import {
   setNextPage,
   setSrcPlaying,
   setDefaultState,
-  setIsSorted,
-} from "../../../redux/playerSlice";
-import { getPlayerState } from "../../../redux/playerSelectors.js";
+  setIsSorted
+} from '../../../redux/playerSlice';
+import { getPlayerState } from '../../../redux/playerSelectors.js';
 
 import {
+  MobileContainer,
   TracksTableWrapper,
   ThTitle,
   TableStyle,
   THeadStyle,
-  TracksTitle,
-} from "../TracksTable/TracksTableUser.styled";
+  TracksTitle
+} from '../TracksTable/TracksTableUser.styled';
 
-import "../../../styles/pagination.css";
+import '../../../styles/pagination.css';
 
 const TracksTable = ({
   rows,
@@ -61,24 +61,23 @@ const TracksTable = ({
   pageSize,
   totalPages,
   deleteButton = false,
-  isSorted,
+  isSorted
 }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const playerState = useSelector(getPlayerState);
   const { id: idUser } = useSelector(getUserState);
-  // console.log("user TracksTable :>> ", idUser);
 
   const [
     removeTracksFromPlaylist,
-    { isLoading: isLoadingRemoveTracksFromPlaylist },
+    { isLoading: isLoadingRemoveTracksFromPlaylist }
   ] = useRemoveTrackFromPlaylistUserMutation();
 
   const [tracksIdList, setTracksIdList] = useState([]);
   const tracksTableProps = {
-    showTitle: showTitle ? "table-caption" : "none",
-    marginTop: marginTopWrapper ? `${marginTopWrapper}` : "auto",
-    showData: rows.map((rows) => (rows.showData ? true : false)),
+    showTitle: showTitle ? 'table-caption' : 'none',
+    marginTop: marginTopWrapper ? `${marginTopWrapper}` : 'auto',
+    showData: rows.map((rows) => (rows.showData ? true : false))
   };
 
   const skip = (currentPage - 1) * pageSize;
@@ -103,12 +102,12 @@ const TracksTable = ({
       onChangeCurrentPage(page);
       dispatch(
         setNextPage({
-          currentPage: page,
+          currentPage: page
         })
       );
       window.scrollTo({
         top: 0,
-        behavior: "instant",
+        behavior: 'instant'
       });
     },
     [dispatch, onChangeCurrentPage]
@@ -129,7 +128,7 @@ const TracksTable = ({
           id: track._id,
           trackURL: track.trackURL,
           artist: track.artist,
-          trackName: track.trackName,
+          trackName: track.trackName
         };
         return transformTrackObject;
       });
@@ -138,7 +137,7 @@ const TracksTable = ({
           preloadSrc: trackURL,
           currentPage: currentPage,
           pageSize: pageSize,
-          location: location.pathname,
+          location: location.pathname
         })
       );
     }
@@ -162,7 +161,7 @@ const TracksTable = ({
     onChangePage,
     pageSize,
     playerState.location,
-    tracksSRC,
+    tracksSRC
   ]);
 
   useEffect(() => {
@@ -172,7 +171,7 @@ const TracksTable = ({
         setLastTrack({
           isLastTrack: true,
           isLastPage: false,
-          nextPage: currentPageForTrackPlaying + 1,
+          nextPage: currentPageForTrackPlaying + 1
         })
       );
     }
@@ -184,24 +183,24 @@ const TracksTable = ({
             setLastTrack({
               isLastTrack: true,
               isLastPage: true,
-              nextPage: 1,
+              nextPage: 1
             })
           )
         : dispatch(
             setLastTrack({
               isLastTrack: true,
               isLastPage: true,
-              nextPage: currentPageForTrackPlaying + 1,
+              nextPage: currentPageForTrackPlaying + 1
             })
           );
-      console.log("Это конец");
+      console.log('Это конец');
     }
   }, [
     anyMorePages,
     currentPage,
     currentPageForTrackPlaying,
     dispatch,
-    lastTrackInPage,
+    lastTrackInPage
   ]);
 
   const addTrackToCheckedList = (data) => {
@@ -244,10 +243,10 @@ const TracksTable = ({
   };
 
   return (
-    <>
+    <MobileContainer>
       {error && <ErrorNotFound error={error?.data?.message} />}
       {tracks?.length === 0 && !isLoading && !error && (
-        <NoData text={"Музика ще не завантажена"} textColor={"grey"} />
+        <NoData text={'Музика ще не завантажена'} textColor={'grey'} />
       )}
 
       {isSuccess && !error && tracks?.length !== 0 && (
@@ -284,7 +283,7 @@ const TracksTable = ({
                       trackDuration,
                       playList,
                       trackURL,
-                      addTrackByUsers,
+                      addTrackByUsers
                     },
                     index
                   ) => {
@@ -322,19 +321,19 @@ const TracksTable = ({
           </TracksTableWrapper>
           <div
             style={{
-              display: "flex",
-              alignItems: "center",
+              display: 'flex',
+              alignItems: 'center'
             }}
           >
             {deleteButton && (
               <Button
-                type={"button"}
-                width={"140px"}
-                padding={"6px"}
-                fontsize={"16px"}
-                border={"1px solid #A4A2A2"}
-                background={"transparent"}
-                text={"Видалити"}
+                type={'button'}
+                width={'140px'}
+                padding={'6px'}
+                fontsize={'16px'}
+                border={'1px solid #A4A2A2'}
+                background={'transparent'}
+                text={'Видалити'}
                 disabled={tracksIdList.length ? false : true}
                 onClick={deletingMultipleTracks}
               />
@@ -343,9 +342,9 @@ const TracksTable = ({
             {isSuccess && (
               <div
                 style={{
-                  display: "flex",
-                  marginLeft: "auto",
-                  alignItems: "center",
+                  display: 'flex',
+                  marginLeft: 'auto',
+                  alignItems: 'center'
                 }}
               >
                 <SelectPageSize
@@ -374,7 +373,7 @@ const TracksTable = ({
           </div>
         </>
       )}
-    </>
+    </MobileContainer>
   );
 };
 

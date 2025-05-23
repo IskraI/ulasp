@@ -10,10 +10,31 @@ import {
 
 export const ControlWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+
+  flex-direction: column;
   margin-top: 26px;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
+  gap: 12px;
+  /* outline: 1px solid red; // */
+
+  ${media.tablet} {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+`;
+
+export const MobileWrapper = styled.div`
+  display: flex;
+  /* flex-direction: row-reverse; */
+  justify-content: center;
+  margin-top: 10px;
+
+  ${media.tablet} {
+    width: 100%;
+    justify-content: flex-start;
+  }
 `;
 
 export const TitleWrapper = styled.p`
@@ -44,8 +65,12 @@ export const MediaItem = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-basis: ${({ width }) => width || '310px'};
-  /* min-width: 310px; */
+
+  width: ${({ width }) => width || '310px'};
+
+  /* ${media.tabletMax} {
+    width: 270px;
+  } */
 
   @media screen and (min-width: ${breakpoints.tablet}) and (max-width: 1439px) {
     flex-basis: calc((100% - (${sizes.cardSetGap})) / 2);
@@ -62,10 +87,12 @@ export const MediaItem = styled.li`
   ${media.largeDesktop} {
     flex-basis: calc((100% - (${sizes.cardSetGap} * 3)) / 4);
   }
-  /* flex-basis: ${({ width }) =>
-    width || `calc((100% - (${sizes.cardSetGap} * 3)) / 4)`}; */
 
   padding: 10px;
+
+  transition: background-color 500ms ${mainCubicTransition};
+  cursor: pointer;
+
   border: ${(props) =>
     props.isError
       ? `1px solid ${colors.errorColor}`
@@ -74,8 +101,6 @@ export const MediaItem = styled.li`
       : `1px solid ${colors.accentHoverColor}`};
   border-radius: 10px;
   background-color: ${colors.activeBtnColor};
-  transition: background-color 500ms ${mainCubicTransition};
-  cursor: pointer;
 
   &:hover {
     background-color: ${colors.accentHoverColor};
@@ -83,30 +108,11 @@ export const MediaItem = styled.li`
   }
 `;
 
-// export const MediaItem = styled.li`
-//   width: 100%;
-//   max-width: 310px;
-
-//   padding: 10px;
-//   border: ${(props) =>
-//     props.isError
-//       ? `1px solid ${colors.errorColor}`
-//       : props.isEditing
-//       ? `1px solid green`
-//       : `1px solid ${colors.accentHoverColor}`};
-//   border-radius: 10px;
-//   background-color: ${colors.activeBtnColor};
-//   transition: background-color 500ms ${mainCubicTransition};
-//   cursor: pointer;
-
-//   &:hover {
-//     background-color: ${colors.accentHoverColor};
-//     transition: background-color 500ms ${mainCubicTransition};
-//   }
-
-//   @media screen and (min-width: 768px) {
-//     flex-basis: 310px;
-//   }
+// export const MediaItem1 = styled.li`
+//   position: relative;
+//   display: flex;
+//   justify-content: space-between;
+//   flex-basis: ${({ width }) => width || '310px'};
 // `;
 
 export const LinkWrapper = styled(Link)`

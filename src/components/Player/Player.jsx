@@ -195,6 +195,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
       setReplacedToPage(false);
     }
   }, [isSorted]);
+  
   useLayoutEffect(() => {
     console.log("replacedToPage", replacedToPage);
     // requestSentRef.current = false;

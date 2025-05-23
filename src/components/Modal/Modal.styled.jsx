@@ -34,7 +34,7 @@ export const ModalWindow = styled.div`
   z-index: 999;
 
   ${media.tabletMax} {
-    width: ${(props) => props.mobileWidth || '350px'};
+    width: ${(props) => props.mobileWidth || '90vw'};
   }
 `;
 
@@ -45,6 +45,7 @@ export const CloseBtn = styled.button`
   border: none;
   background: none;
   cursor: pointer;
+  z-index: 999;
 `;
 
 export const CloseIconStyled = (component) => styled(component)`

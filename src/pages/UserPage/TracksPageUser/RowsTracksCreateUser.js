@@ -3,7 +3,7 @@ const rowsTracksCreateUser = () => {
     {
       title: "",
       type: "checkbox",
-      titleSize: "2%",
+      titleSize: "3%",
       showData: true,
     },
 

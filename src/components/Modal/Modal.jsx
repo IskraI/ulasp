@@ -53,7 +53,7 @@ export const Modal = ({
 
   return createPortal(
     // <Overlay onClick={handleBackdropClick} style={overlayStyle}>
-    <Overlay style={overlayStyle} onClick={onClose}>
+    <Overlay style={overlayStyle}>
       <ModalWindow
         width={width}
         mobileWidth={mobileWidth}

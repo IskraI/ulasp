@@ -6,9 +6,11 @@ import { NoData } from "../../Errors/Errors";
 import {
   TitleWrapper,
   ControlWrapper,
-  MediaList,
   TitleContainer,
 } from "../../UserMediaComponent/PlayLists/MediaList.styled";
+
+
+import { MediaList } from "../../UserMediaComponent/MediaList/MediaList.styled";
 import { useAddPlaylistForUserQuery } from "../../../redux/playlistsUserSlice";
 
 const FavoritePlaylists = ({

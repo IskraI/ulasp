@@ -1,25 +1,22 @@
-import { useCallback, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
-import TracksTable from "../../../components/UserMediaComponent/TracksTable/TracksTableUser";
+import { useCallback, useState } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
+import TracksTable from '../../../components/UserMediaComponent/TracksTable/TracksTableUser';
 
-import PlaylistListItem from "../../../components/UserMediaComponent/PlayLists/PlayListsItem";
-import { ErrorNotFound, Error500 } from "../../../components/Errors/Errors";
+import PlaylistListItem from '../../../components/UserMediaComponent/PlayLists/PlayListsItem';
+import { ErrorNotFound, Error500 } from '../../../components/Errors/Errors';
 
-import { Loader } from "../../../components/Loader/Loader";
-import SortTracks from "../../../components/EditorComponents/Sort/SortTracks";
-import rowsTracksPageUser from "./RowsTracksPageUser";
+import { Loader } from '../../../components/Loader/Loader';
+import SortTracks from '../../../components/EditorComponents/Sort/SortTracks';
+import rowsTracksPageUser from './RowsTracksPageUser';
 
 import {
   useGetPlaylistByIdForUserQuery,
   useGetCreatePlaylistByIdForUserQuery,
   useFavoritePlaylistForUserQuery,
-  useAddPlaylistForUserQuery,
-  playlistsUserApi,
-} from "../../../redux/playlistsUserSlice";
-import { useDispatch } from "react-redux";
+  useAddPlaylistForUserQuery
+} from '../../../redux/playlistsUserSlice';
 
 const TracksPage = () => {
-  const dispatch = useDispatch();
   const location = useLocation();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -27,7 +24,7 @@ const TracksPage = () => {
   const { playlistId } = useParams();
   const [sortedBy, setSortedBy] = useState(1);
 
-  const playlistQuery = location.pathname.includes("createplaylists")
+  const playlistQuery = location.pathname.includes('createplaylists')
     ? useGetCreatePlaylistByIdForUserQuery
     : useGetPlaylistByIdForUserQuery;
 
@@ -39,12 +36,12 @@ const TracksPage = () => {
     isFetching: isFetchingPlaylistById,
     isSuccess,
     error,
-    isError,
+    isError
   } = playlistQuery({
     playlistId,
     page: currentPage,
     limit: pageSize,
-    sort: sortedBy,
+    sort: sortedBy
   });
 
   const handleClickSort = (data) => {
@@ -84,12 +81,12 @@ const TracksPage = () => {
 
   return (
     <>
-      {error?.status === "500" && <Error500 />}
+      {error?.status === '500' && <Error500 />}
       {error && <ErrorNotFound />}
 
       <>
         {data && !isError && (
-          <div style={{ display: "flex" }}>
+          <div style={{ display: 'flex' }}>
             <PlaylistListItem
               icon={data.playlist.playListAvatarURL}
               title={data.playlist.playListName}
@@ -102,9 +99,9 @@ const TracksPage = () => {
             {data?.playlist?.trackList?.length > 1 && (
               <SortTracks
                 onClick={handleClickSort}
-                sortType={"Az"}
+                sortType={'Az'}
                 sortedBy={sortedBy}
-                marginTop={"0px"}
+                marginTop={'0px'}
               />
             )}
           </div>
@@ -113,9 +110,9 @@ const TracksPage = () => {
         {isFetchingPlaylistById && <Loader />}
         {isSuccess && !isError && !isFetchingPlaylistById && (
           <TracksTable
-            title={"In playlist"}
+            title={'In playlist'}
             showTitle={false}
-            marginTopWrapper={"24px"}
+            marginTopWrapper={'24px'}
             isInPlayList={true}
             playListId={data.playlist._id}
             playListGenre={data.playlist.playlistGenre}

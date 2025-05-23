@@ -9,7 +9,8 @@ import {
   BottomSectionMobile,
   SiteBarNavContainerMobile,
   Overlay,
-  OpenMobileMenuBtn
+  OpenMobileMenuBtn,
+  DisplayMobile
 } from './SiteBarNav.styled';
 import { Profile } from '../Profile/Profile';
 import { NavMenu } from '../NavMenu/NavMenu';
@@ -20,7 +21,7 @@ const MobileMenu = ({ open, closeMobileMenu, openMobileMenu }) => {
   const mobileRef = useRef(null);
 
   return (
-    <>
+    <DisplayMobile>
       <OpenMobileMenuBtn type="button" onClick={openMobileMenu}>
         <svg width="40px" height="40px">
           <use href={`${symbol}#icon-menu`}></use>
@@ -41,7 +42,7 @@ const MobileMenu = ({ open, closeMobileMenu, openMobileMenu }) => {
           </BottomSectionMobile>
         </SideBarBottomLineWrapper>
       </SiteBarNavContainerMobile>
-    </>
+    </DisplayMobile>
   );
 };
 

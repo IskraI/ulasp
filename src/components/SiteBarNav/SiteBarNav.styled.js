@@ -1,9 +1,8 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
-import { colors, sizes } from '../../styles/vars';
+import { colors, sizes, media } from '../../styles/vars';
 
 export const SiteBarNavConteiner = styled.div`
-  /* display: none; */
   display: flex;
   flex-direction: column;
   width: 287px;
@@ -20,10 +19,9 @@ export const SiteBarNavConteiner = styled.div`
   transition: transform 400ms ease-out;
   /* outline: 1px solid red; */
 
-  /* @media screen and (max-width: 1199px) {
+  ${media.laptopMax} {
     display: none;
-    transform: translateX(-100%);
-  } */
+  }
 `;
 
 export const SideBarLineWrapper = styled.div`
@@ -100,4 +98,10 @@ export const OpenMobileMenuBtn = styled.button`
   background-color: transparent;
   border: none;
   z-index: 998;
+`;
+
+export const DisplayMobile = styled.div`
+  ${media.laptop} {
+    display: none;
+  }
 `;

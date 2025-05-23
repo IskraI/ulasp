@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
+import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect, useRef } from 'react';
 
 import {ImgTrackError} from "../../../helpers/helpers.js"
 
-import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect, useRef } from "react";
+
 
 import { sToStr, compareArray } from "../../../helpers/helpers";
 import { BASE_URL } from "../../../constants/constants";

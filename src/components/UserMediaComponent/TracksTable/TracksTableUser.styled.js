@@ -1,5 +1,11 @@
-import styled from "@emotion/styled";
-import { colors, transition, mainCubicTransition } from "../../../styles/vars";
+import styled from '@emotion/styled';
+import { colors, mainCubicTransition, media } from '../../../styles/vars';
+
+export const MobileContainer = styled.div`
+  ${media.laptopMax} {
+    display: none;
+  }
+`;
 
 export const TracksTableWrapper = styled.div`
   margin-top: ${(props) => props.marginTop};
@@ -11,7 +17,6 @@ export const TableStyle = styled.table`
   font-size: 18px;
   table-layout: fixed;
   width: 100%;
-  /* border-collapse: collapse; */
   border-collapse: separate;
   border-spacing: 0 2px;
 `;
@@ -31,42 +36,21 @@ export const THeadStyle = styled.thead``;
 
 export const ThTitle = styled.th`
   color: ${colors.mainFontColor};
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 1.21;
   text-align: left;
   gap: 20px;
   padding: 8px 10px 18px 10px;
-  /* display: ${(props) => (props.showData ? null : "none")}; */
   opacity: ${(props) => (props.showData ? 1 : 0)};
 
-  /* outline: 1px solid green; */
-
-  &:nth-of-type(${(props) => props.index || "1"}) {
-    width: ${(props) => props.widthTh || "10%"};
+  &:nth-of-type(${(props) => props.index || '1'}) {
+    width: ${(props) => props.widthTh || '10%'};
   }
 
-  /* &:nth-of-type(2) {
-    width: 25%;
+  ${media.tablet} {
+    font-size: 20px;
   }
-  &:nth-of-type(3) {
-    width: 15%;
-  }
-  &:nth-of-type(4) {
-    width: 15%;
-  }
-  &:nth-of-type(5) {
-    width: 10%;
-  }
-  &:nth-of-type(6) {
-    width: 10%;
-  }
-  &:nth-of-type(7) {
-    width: 5%;
-  }
-  &:nth-of-type(8) {
-    width: 5%;
-  } */
 `;
 
 export const TrStyle = styled.tr`
@@ -78,18 +62,18 @@ export const TrStyle = styled.tr`
 
 export const TableCell = styled.td`
   padding: 8px 0px 8px 10px;
-  /* display: ${(props) => (props.showData ? null : "none")}; */
+  /* display: ${(props) => (props.showData ? null : 'none')}; */
   opacity: ${(props) => (props.showData ? 1 : 0)};
 
-  /* position: ${(props) => (props.showData ? "" : "absolute")}; */
-  width: ${(props) => (props.showData ? "" : "1px")};
-  height: ${(props) => (props.showData ? "" : "1px")};
-  margin: ${(props) => (props.showData ? "" : "-1px")};
-  border: ${(props) => (props.showData ? "" : 0)};
-  padding: ${(props) => (props.showData ? "" : 0)};
+  /* position: ${(props) => (props.showData ? '' : 'absolute')}; */
+  width: ${(props) => (props.showData ? '' : '1px')};
+  height: ${(props) => (props.showData ? '' : '1px')};
+  margin: ${(props) => (props.showData ? '' : '-1px')};
+  border: ${(props) => (props.showData ? '' : 0)};
+  padding: ${(props) => (props.showData ? '' : 0)};
 
-  white-space: ${(props) => (props.showData ? "" : "nowrap")};
-  overflow: ${(props) => (props.showData ? "" : "hidden")};
+  white-space: ${(props) => (props.showData ? '' : 'nowrap')};
+  overflow: ${(props) => (props.showData ? '' : 'hidden')};
 
   /* border: solid 1px transparent;
   border-style: none solid; */
@@ -110,7 +94,7 @@ export const TableCell = styled.td`
 `;
 
 export const InfoBlock = styled.p`
-  display: ${(props) => (props.showData ? "" : "none")};
+  display: ${(props) => (props.showData ? '' : 'none')};
 `;
 
 export const TrackCover = styled.img`
@@ -123,18 +107,6 @@ export const TracksNotFound = styled.p`
   margin-top: 40px;
   font-size: 28px;
   color: #535250;
-`;
-
-export const MockPlayer = styled.div`
-  margin-top: auto;
-  display: flex;
-  width: 100%;
-  height: 86px;
-  border: 1px solid black;
-  justify-content: center;
-  align-items: center;
-  font-size: 30px;
-  color: yellowgreen;
 `;
 
 export const DotsButton = styled.button`
