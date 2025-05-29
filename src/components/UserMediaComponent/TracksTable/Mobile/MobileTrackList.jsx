@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 
 // REDUX
@@ -11,6 +11,7 @@ import {
   setIsSorted
 } from '../../../../redux/playerSlice';
 import { getPlayerState } from '../../../../redux/playerSelectors';
+import { getUserState } from '../../../../redux/userSelectors';
 // END OF REDUX
 
 import Pagination from 'rc-pagination';
@@ -37,12 +38,13 @@ const MobileSongList = ({
   totalPages,
   totalTracks,
   tracksSRC,
-  isSorted
+  isSorted,
+  options
 }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const playerState = useSelector(getPlayerState);
-  const [tracksIdList, setTracksIdList] = useState([]);
+  const { id: idUser } = useSelector(getUserState);
 
   const skip = (currentPage - 1) * pageSize;
 
@@ -155,7 +157,6 @@ const MobileSongList = ({
   useEffect(() => {
     if (isSorted) {
       onChangePage(currentPage);
-      setTracksIdList([]);
       dispatch(setIsSorted({ isSorted: true }));
     }
   }, [currentPage, dispatch, isSorted, onChangePage]);
@@ -171,8 +172,6 @@ const MobileSongList = ({
               trackName,
               artist,
               trackDuration,
-              playList,
-              trackURL,
               addTrackByUsers
             },
             index
@@ -186,6 +185,9 @@ const MobileSongList = ({
               artist={artist}
               duration={trackDuration}
               countOfSkip={skip}
+              isAddTrackUser={addTrackByUsers?.includes(idUser)}
+              playListId={playListId}
+              options={options}
             />
           )
         )}
@@ -199,12 +201,14 @@ const MobileSongList = ({
             marginTop: '12px'
           }}
         >
-          <SelectPageSize
-            pageSize={pageSize}
-            onChange={onPageSizeChange}
-            totalPages={totalPages}
-            optionValue={[10, 20, 50, 100]}
-          />
+          {options.pageSize && (
+            <SelectPageSize
+              pageSize={pageSize}
+              onChange={onPageSizeChange}
+              totalPages={totalPages}
+              optionValue={[10, 20, 50, 100]}
+            />
+          )}
 
           <Pagination
             defaultCurrent={1}
@@ -227,13 +231,17 @@ const MobileSongList = ({
 MobileSongList.propTypes = {
   playListId: PropTypes.string,
   tracks: PropTypes.array,
+  isFetching: PropTypes.bool,
   isSuccess: PropTypes.bool,
   onChangeCurrentPage: PropTypes.func,
   onChangeSizePage: PropTypes.func,
   currentPage: PropTypes.number,
   pageSize: PropTypes.number,
   totalPages: PropTypes.number,
-  totalTracks: PropTypes.number
+  totalTracks: PropTypes.number,
+  tracksSRC: PropTypes.array,
+  isSorted: PropTypes.bool,
+  options: PropTypes.object
 };
 
 export default MobileSongList;

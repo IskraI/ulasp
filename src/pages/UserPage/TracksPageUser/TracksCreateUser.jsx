@@ -1,6 +1,5 @@
 import { useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
-import { isMobile } from 'react-device-detect';
 
 import TracksTable from '../../../components/UserMediaComponent/TracksTable/TracksTableUser';
 import {
@@ -11,7 +10,7 @@ import {
 import PlaylistListItem from '../../../components/UserMediaComponent/PlayLists/PlayListsItem';
 import { ErrorNotFound, Error500 } from '../../../components/Errors/Errors';
 import symbol from '../../../assets/symbol.svg';
-
+import options from './optionsMobileSongList';
 import { Loader } from '../../../components/Loader/Loader';
 import AddTrackToPlaylistFromDB from '../../../components/UserCabinetPage/AddTrackToPlaylistFromDB/AddTrackToPlaylistFromDB';
 import rowsTracksCreateUser from './RowsTracksCreateUser';
@@ -77,18 +76,25 @@ const TracksPageCreateUser = () => {
       <>
         {data && !isError && (
           <ControlWrapper>
-            <>
-              <PlaylistListItem
-                icon={data.playlist.playListAvatarURL}
-                title={data.playlist.playListName}
-                placeListCardInfo={true}
-                id={playlistId}
-                countTracks={data.totalTracks}
-                showPlusBtn={false}
-                owner={data.playlist.owner}
-                favoriteStatus={favStatus()}
-              />
+            <PlaylistListItem
+              icon={data.playlist.playListAvatarURL}
+              title={data.playlist.playListName}
+              placeListCardInfo={true}
+              id={playlistId}
+              countTracks={data.totalTracks}
+              showPlusBtn={false}
+              owner={data.playlist.owner}
+              favoriteStatus={favStatus()}
+            />
 
+            <div
+              style={{
+                display: 'flex',
+                // outline: '1px solid red',
+                gap: '12px',
+                width: '100%'
+              }}
+            >
               {data?.playlist?.trackList?.length > 1 && (
                 <SortTracks
                   onClick={handleClickSort}
@@ -97,13 +103,13 @@ const TracksPageCreateUser = () => {
                   marginTop={'0px'}
                 />
               )}
-            </>
-            <AddTrackToPlaylistFromDB
-              iconButton={`${symbol}#icon-plus`}
-              textButton={'Музику'}
-              idPlaylist={playlistId}
-              trackListPlaylist={data.playlist.trackList}
-            />
+              <AddTrackToPlaylistFromDB
+                iconButton={`${symbol}#icon-plus`}
+                textButton={'Музику'}
+                idPlaylist={playlistId}
+                trackListPlaylist={data.playlist.trackList}
+              />
+            </div>
           </ControlWrapper>
         )}
         {isFetchingPlaylistById && <Loader />}
@@ -145,6 +151,7 @@ const TracksPageCreateUser = () => {
               totalTracks={data.totalTracks}
               tracksSRC={data.tracksSRC}
               isSorted={isSorted}
+              options={options}
             />
           </>
         )}

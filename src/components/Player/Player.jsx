@@ -472,13 +472,13 @@ const Player = ({ tracks = [], inHeader = false }) => {
           />
         </>
       </PlayerWrapper>
-      {showModalToPage && (
+      {/* {showModalToPage && (
         <ModalPlayerToPage
           onClose={() => setShowModalToPage(false)}
           moveToPage={currPageTrack}
           isReplacedToPage={() => setReplacedToPage(true)}
         />
-      )}
+      )} */}
     </>
   );
 };

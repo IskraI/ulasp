@@ -1,32 +1,34 @@
-import PropTypes from "prop-types";
-import { useState, useCallback } from "react";
+import PropTypes from 'prop-types';
+import { useState, useCallback } from 'react';
 
-import { Button } from "../../Button/Button";
-import { Modal } from "../../Modal/Modal";
-import SearchTracks from "../../../pages/Editor/SearchTracks/SearchTracks";
-import TracksTableModalUser from "../../UserMediaComponent/TracksTable/TracksTableModalUser";
-import RowsAddTrackFromDB from "./RowsAddTrackToPlaylistFromDB";
+import { Button } from '../../Button/Button';
+import { Modal } from '../../Modal/Modal';
+import SearchTracks from '../../../pages/Editor/SearchTracks/SearchTracks';
+import TracksTableModalUser from '../../UserMediaComponent/TracksTable/TracksTableModalUser';
+import RowsAddTrackFromDB from './RowsAddTrackToPlaylistFromDB';
+import MobileSongList from '../../UserMediaComponent/TracksTable/Mobile/MobileTrackList';
 
-import { Loader } from "../../Loader/Loader";
-import { NoData } from "../../Errors/Errors";
-import { SEARCH_FAILED } from "../../../constants/constants";
+import { Loader } from '../../Loader/Loader';
+import { NoData } from '../../Errors/Errors';
+import { SEARCH_FAILED } from '../../../constants/constants';
+import options from './optionsMobileSongList';
 
-import { useGetAllTracksForUsersPlaylistQuery } from "../../../redux/tracksUserSlice";
-import { ControlWrapper } from "../../EditorComponents/MediaList/MediaList.styled";
-import { Wrapper, TitleSearchInput } from "./AddTrackToPlaylistFromDB.styled";
+import { useGetAllTracksForUsersPlaylistQuery } from '../../../redux/tracksUserSlice';
+import { ControlWrapper } from '../../EditorComponents/MediaList/MediaList.styled';
+import { Wrapper, TitleSearchInput } from './AddTrackToPlaylistFromDB.styled';
 
 const AddTrackToPlaylistFromDB = ({
   iconButton,
   textButton,
   idPlaylist,
-  trackListPlaylist,
+  trackListPlaylist
 }) => {
   const [showModal, setShowModal] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(6);
 
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
 
   const {
@@ -35,13 +37,13 @@ const AddTrackToPlaylistFromDB = ({
     isFetching: isFetchingAllTracks,
     isSuccess: isSuccessAllTracks,
     isLoading: isLoadingAllTracks,
-    refetch,
+    refetch
   } = useGetAllTracksForUsersPlaylistQuery({
     id: idPlaylist,
     page: currentPage,
     limit: pageSize,
     query,
-    forseRefetch: true,
+    forseRefetch: true
   });
 
   const onPageChange = (page) => {
@@ -63,20 +65,20 @@ const AddTrackToPlaylistFromDB = ({
     }
   }, []);
 
-  const isSearchResultFail = query !== "" && allTracks?.tracks.length === 0;
+  const isSearchResultFail = query !== '' && allTracks?.tracks.length === 0;
 
   return (
     <>
-      <ControlWrapper marginBottom={"0px"} style={{ marginLeft: "auto" }}>
+      <ControlWrapper marginBottom={'0px'} style={{ marginLeft: 'auto' }}>
         <Button
-          type={"button"}
+          type={'button'}
           text={textButton}
-          width={"198px"}
+          width={'198px'}
           showIcon={true}
           icon={iconButton}
-          fontsize={"24px"}
-          padding={"8px"}
-          marginbottom={"0"}
+          fontsize={'24px'}
+          padding={'8px'}
+          marginbottom={'0'}
           onClick={() => {
             setShowModal(true);
           }}
@@ -85,43 +87,43 @@ const AddTrackToPlaylistFromDB = ({
 
       {showModal && (
         <Modal
-          width={"75vw"}
-          height={"80vh"}
-          padding={"16px"}
-          flexDirection={"column"}
+          width={'75vw'}
+          height={'80vh'}
+          padding={'16px'}
+          flexDirection={'column'}
           showCloseButton={true}
           bcgTransparent={false}
           onClose={() => {
             setShowModal(false);
             setCurrentPage(1);
-            setQuery("");
+            setQuery('');
           }}
         >
           <Wrapper>
             <TitleSearchInput>Пошук пісень:</TitleSearchInput>
             <SearchTracks
               handleSearchTracks={handleSearchTracks}
-              width={"100%"}
-              height={"68px"}
-              fontSize={"20px"}
-              placeholderText={"Виконавець або назва пісні*"}
-              placeholderAlign={"start"}
+              width={'100%'}
+              height={'68px'}
+              fontSize={'20px'}
+              placeholderText={'Виконавець або назва пісні*'}
+              placeholderAlign={'start'}
             />
             {isSearchResultFail && (
               <NoData
                 text={isSearchResultFail && SEARCH_FAILED}
-                textColor={"grey"}
+                textColor={'grey'}
               />
             )}
-            {isFetchingAllTracks && <Loader loaderHeight={"100%"} />}
+            {isFetchingAllTracks && <Loader loaderHeight={'100%'} />}
             {!isFetchingAllTracks && (
               <>
-                {query !== "" && (
+                {query !== '' && (
                   <>
                     <TracksTableModalUser
                       rows={RowsAddTrackFromDB()}
                       isInPlayList={false}
-                      marginTopWrapper={"2px"}
+                      marginTopWrapper={'2px'}
                       tracks={allTracks.tracks}
                       totalTracks={allTracks.totalTracks}
                       error={errorLoadingAllTracks}
@@ -136,6 +138,19 @@ const AddTrackToPlaylistFromDB = ({
                       isSearching={isSearching}
                       playListId={idPlaylist}
                       refetch={() => refetch()}
+                    />
+                    <MobileSongList
+                      playListId={idPlaylist}
+                      tracks={allTracks.tracks}
+                      isFetching={isFetchingAllTracks}
+                      isSuccess={isSuccessAllTracks}
+                      onChangeCurrentPage={onPageChange}
+                      onChangeSizePage={onPageSizeChange}
+                      currentPage={currentPage}
+                      pageSize={pageSize}
+                      totalPages={allTracks.totalPages}
+                      totalTracks={allTracks.totalTracks}
+                      options={options}
                     />
                   </>
                 )}
@@ -152,7 +167,7 @@ AddTrackToPlaylistFromDB.propTypes = {
   iconButton: PropTypes.string,
   textButton: PropTypes.string,
   idPlaylist: PropTypes.string,
-  trackListPlaylist: PropTypes.array,
+  trackListPlaylist: PropTypes.array
 };
 
 export default AddTrackToPlaylistFromDB;

@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { BASE_URL } from '../../../constants/constants';
 import symbol from '../../../assets/symbol.svg';
@@ -8,7 +8,6 @@ import CountTracks from '../../EditorComponents/CountTracks/CountTracks';
 import {
   useUpdateFavoriteStatusApiMutation,
   useUpdateAddStatusApiMutation,
-  useFavoritePlaylistForUserQuery,
   useUpdateFavoriteStatusPlaylistUserMutation
 } from '../../../redux/playlistsUserSlice';
 import { getUserState } from '../../../redux/userSelectors';
@@ -35,9 +34,7 @@ const PlayListItem = ({
   owner
 }) => {
   const location = useLocation();
-  const navigate = useNavigate();
   const { id: userID } = useSelector(getUserState);
-  // { _id, title, icon, isFavorite: initialFavorite }
   const [toggleFavorite, { isLoading: isLoadingFavoriteStatus }] =
     useUpdateFavoriteStatusApiMutation(id);
   const [
@@ -45,23 +42,14 @@ const PlayListItem = ({
     { isLoading: isLoadingFavoriteStatusPlaylistUser }
   ] = useUpdateFavoriteStatusPlaylistUserMutation(id);
   const [toggleAdd] = useUpdateAddStatusApiMutation(id);
-  // const [favoriteStatus] = useFavoritePlaylistForUserQuery();
-
-  // const { data: dataFavorites } = useFavoritePlaylistForUserQuery();
-
-  // console.log("favoriteStatus item", favoriteStatus);
 
   const [isFavorite, setIsFavorite] = useState(favoriteStatus || false);
 
   const [isAdd, setIsAdd] = useState(addStatus || false);
-  // const handleToggleFavorite = (playlistId) => {
-  //   toggleFavorite(playlistId)
-
-  //   };
 
   const cabinet = `/user/cabinet/myplaylists/createplaylists`;
   const newPlaylists = `/user/medialibrary/newplaylists/${id}/tracks`;
-  const thumbURL = `${BASE_URL}/${icon}`
+  const thumbURL = `${BASE_URL}/${icon}`;
 
   const itsMy = useMemo(() => {
     if (userID === owner) {

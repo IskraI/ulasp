@@ -68,11 +68,13 @@ export const MediaItem = styled.li`
 
   width: ${({ width }) => width || '310px'};
 
-  /* ${media.tabletMax} {
-    width: 270px;
-  } */
+  ${media.tabletMax} {
+    align-self: center;
+    flex-basis: calc((100% - (${sizes.cardSetGap})));
+  }
 
   @media screen and (min-width: ${breakpoints.tablet}) and (max-width: 1439px) {
+    width: 310px;
     flex-basis: calc((100% - (${sizes.cardSetGap})) / 2);
   }
 

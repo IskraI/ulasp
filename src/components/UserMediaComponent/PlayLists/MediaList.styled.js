@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { colors, mainCubicTransition } from '../../../styles/vars';
+import { colors, mainCubicTransition, media } from '../../../styles/vars';
 
 export const ControlWrapper = styled.div`
   display: flex;
@@ -26,9 +26,16 @@ export const TitleWrapperModal = styled.div`
   line-height: 1.21;
   font-weight: 500;
   color: ${colors.mainFontColor};
-  /* text-align: center; */
   margin-bottom: 2px;
   gap: 12px;
+  padding: 10px;
+
+  ${media.tabletMax} {
+    margin-top: 24px;
+    flex-direction: column;
+    font-size: 20px;
+    gap: 0;
+  }
 `;
 
 export const MediaList = styled.ul`
@@ -36,6 +43,10 @@ export const MediaList = styled.ul`
   flex-wrap: wrap;
   gap: 24px;
   width: 100%;
+
+  @media screen and (max-width: 767px) {
+    justify-content: center;
+  }
 `;
 
 export const MediaItem = styled.li`

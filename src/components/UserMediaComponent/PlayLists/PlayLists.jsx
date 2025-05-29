@@ -1,15 +1,15 @@
-import PlayListItem from "./PlayListsItem";
-import MediaNavigationLink from "../../NavigationLink/NavigationLink";
+import PlayListItem from './PlayListsItem';
+import MediaNavigationLink from '../../NavigationLink/NavigationLink';
 
 import {
   useFavoritePlaylistForUserQuery,
-  useAddPlaylistForUserQuery,
-} from "../../../redux/playlistsUserSlice";
+  useAddPlaylistForUserQuery
+} from '../../../redux/playlistsUserSlice';
 
-import { NoData } from "../../Errors/Errors";
+import { NoData } from '../../Errors/Errors';
 
-import { TitleWrapper, TitleContainer } from "./MediaList.styled";
-import { MediaList } from "../MediaList/MediaList.styled";
+import { TitleWrapper, TitleContainer } from './MediaList.styled';
+import { MediaList } from '../MediaList/MediaList.styled';
 
 const LatestPlaylists = ({
   title,
@@ -20,7 +20,7 @@ const LatestPlaylists = ({
   isFetching,
   error,
   genre,
-  shopCategoryName,
+  shopCategoryName
 }) => {
   const { data: dataFavorite, isLoading: isLoadingFavoritePlaylist } =
     useFavoritePlaylistForUserQuery();
@@ -36,7 +36,7 @@ const LatestPlaylists = ({
         <TitleWrapper>{title}</TitleWrapper>
       </TitleContainer>
       {!isFetching && !playlists.length && (
-        <NoData text={"Плейлисти ще не додані"} textColor={"grey"} />
+        <NoData text={'Плейлисти ще не додані'} textColor={'grey'} />
       )}
       {!isFetching &&
         !error &&
@@ -45,11 +45,6 @@ const LatestPlaylists = ({
           <>
             <MediaList>
               {playlists.map(({ _id, playListName, playListAvatarURL }) => {
-                // console.log(
-                //   "dataFavorite.favorites.includes(_id)",
-                //   dataFavorite.favorites.some((item) => item._id === _id)
-                // );
-
                 return (
                   <PlayListItem
                     key={_id}
@@ -67,7 +62,7 @@ const LatestPlaylists = ({
               })}
             </MediaList>
             <MediaNavigationLink
-              link={"newplaylists"}
+              link={'newplaylists'}
               showNavigationLink={showNavigationLink}
             />
           </>

@@ -1,28 +1,27 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import Pagination from "rc-pagination";
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import Pagination from 'rc-pagination';
 
-import localeUA from "../../../constants/paginationLocaleUA.js";
+import TrackItemModal from './TrackItemModalUser.jsx';
+import { ErrorNotFound } from '../../Errors/Errors.jsx';
+import { Button } from '../../Button/Button.jsx';
 
-import TrackItemModal from "./TrackItemModalUser.jsx";
-import { ErrorNotFound } from "../../Errors/Errors.jsx";
-import { Button } from "../../Button/Button.jsx";
-
-import { useAddTrackToPlaylistUserMutation } from "../../../redux/playlistsUserSlice";
-import { tracksUserApi } from "../../../redux/tracksUserSlice.js";
+import { useAddTrackToPlaylistUserMutation } from '../../../redux/playlistsUserSlice';
+import { tracksUserApi } from '../../../redux/tracksUserSlice.js';
 
 import {
+  TracksTableMobileWrapper,
   TracksTableWrapper,
   ThTitle,
   TableStyle,
-  THeadStyle,
-} from "./TracksTableModalUser.styled.js";
+  THeadStyle
+} from './TracksTableModalUser.styled.js';
 
-import symbol from "../../../assets/symbol.svg";
+import symbol from '../../../assets/symbol.svg';
 
-import "../../../styles/pagination.css";
-import "../../../styles/rc-select.css";
+import '../../../styles/pagination.css';
+import '../../../styles/rc-select.css';
 
 const TracksTableModalUser = ({
   rows,
@@ -49,7 +48,7 @@ const TracksTableModalUser = ({
   isSearching,
   loaderHeight,
 
-  refetch,
+  refetch
 }) => {
   const [addTracks, { isLoading: isLoadingAddTrackToPlaylist }] =
     useAddTrackToPlaylistUserMutation();
@@ -57,15 +56,13 @@ const TracksTableModalUser = ({
   const dispatch = useDispatch();
 
   const tracksTableProps = {
-    showTitle: showTitle ? "table-caption" : "none",
-    marginTop: marginTopWrapper ? `${marginTopWrapper}` : "auto",
-    showData: rows.map((rows) => (rows.showData ? true : false)),
+    showTitle: showTitle ? 'table-caption' : 'none',
+    marginTop: marginTopWrapper ? `${marginTopWrapper}` : 'auto',
+    showData: rows.map((rows) => (rows.showData ? true : false))
   };
 
   const [tracksIdList, setTracksIdList] = useState([]);
   const [showMessageSuccess, setShowMessageSuccess] = useState(false);
-
-  console.log("tracksIdList", tracksIdList);
 
   const skip = (currentPage - 1) * pageSize;
 
@@ -89,7 +86,7 @@ const TracksTableModalUser = ({
       })
       .finally(() =>
         setTimeout(
-          () => dispatch(tracksUserApi.util.invalidateTags(["Tracks"])),
+          () => dispatch(tracksUserApi.util.invalidateTags(['Tracks'])),
           1000
         )
       );
@@ -100,11 +97,11 @@ const TracksTableModalUser = ({
     return (
       <div
         style={{
-          marginTop: "auto",
-          marginBottom: "auto",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          marginTop: 'auto',
+          marginBottom: 'auto',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
         }}
       >
         <svg width="134px" height="134px" fill="green">
@@ -114,7 +111,7 @@ const TracksTableModalUser = ({
     );
   }
   return (
-    <>
+    <TracksTableMobileWrapper>
       {error && <ErrorNotFound error={error?.data?.message} />}
       {!error && isSuccess && tracks?.length !== 0 && (
         <>
@@ -147,7 +144,7 @@ const TracksTableModalUser = ({
                       trackDuration,
                       playList,
                       trackURL,
-                      isTopChart,
+                      isTopChart
                     },
                     index
                   ) => {
@@ -179,22 +176,22 @@ const TracksTableModalUser = ({
               </tbody>
             </TableStyle>
             <Button
-              type={"button"}
-              width={"140px"}
-              padding={"6px"}
-              fontsize={"16px"}
-              border={"1px solid #A4A2A2"}
-              background={"transparent"}
-              text={"Додати"}
+              type={'button'}
+              width={'140px'}
+              padding={'6px'}
+              fontsize={'16px'}
+              border={'1px solid #A4A2A2'}
+              background={'transparent'}
+              text={'Додати'}
               disabled={tracksIdList.length ? false : true}
               onClick={addingMultipleTracks}
             />
           </TracksTableWrapper>
           <div
             style={{
-              display: "flex",
-              alignItems: "center",
-              marginTop: "auto",
+              display: 'flex',
+              alignItems: 'center',
+              marginTop: 'auto'
             }}
           >
             {isSuccess && (
@@ -215,7 +212,7 @@ const TracksTableModalUser = ({
           </div>
         </>
       )}
-    </>
+    </TracksTableMobileWrapper>
   );
 };
 

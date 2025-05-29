@@ -150,7 +150,7 @@ export const playerSlice = createSlice({
         state = {
           ...state,
           // preloadSrc: [],
-          src: state.src.length === 0 ? state.preloadSrc : state.src,
+          src: state?.src?.length === 0 ? state.preloadSrc : state.src,
           currentPage: action.payload.currentPage,
         };
         return state;

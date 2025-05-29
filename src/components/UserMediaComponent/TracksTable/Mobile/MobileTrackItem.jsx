@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect, useRef } from 'react';
-
+import { toast } from 'sonner';
 import { BASE_URL } from '../../../../constants/constants';
 import {
   sToStr,
@@ -11,6 +11,7 @@ import {
 
 import PopUpButtons from '../PopUpButtons';
 import DotsBtn from '../DotsButton';
+import AddTracksUser from '../../../UserCabinetPage/AddTracks/AddTracksUser';
 
 // REDUX
 import { getPlayerState } from '../../../../redux/playerSelectors';
@@ -19,7 +20,12 @@ import {
   setCurrentIndex,
   setSrcPlaying
 } from '../../../../redux/playerSlice';
-
+import {
+  useAddTrackToAddMutation,
+  useDeleteTrackFromAddMutation
+} from '../../../../redux/tracksUserSlice';
+import { useRemoveTrackFromPlaylistUserMutation } from '../../../../redux/playlistsUserSlice';
+// END OF REDUX
 import {
   SongRow,
   LeftSection,
@@ -39,22 +45,31 @@ import symbol from '../../../../assets/symbol.svg';
 const MobileTrackItem = ({
   index,
   idTrack,
+  playListId,
   _id,
   cover,
   title,
   artist,
   duration,
-  countOfSkip
+  countOfSkip,
+  isAddTrackUser,
+  options
 }) => {
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
 
+  const [addTrack] = useAddTrackToAddMutation();
+  const [deleteTrack] = useDeleteTrackFromAddMutation();
+
+  const [removeTracksFromPlaylist] = useRemoveTrackFromPlaylistUserMutation();
+
   const [isPlayingTrack, setIsPlayingTrack] = useState(false);
   const [isPausedTrack, setIsPausedTrack] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  //   const [isAddTrack, setIsAddTrack] = useState(isAddTrackUser);
+  const [isAddTrack, setIsAddTrack] = useState(isAddTrackUser);
 
   const [showPopUp, setShowPopUp] = useState(false);
+  const [showModalAddTrackToPlaylist, setShowModalAddTrackToPlaylist] =
+    useState(false);
 
   const isLoadedTrack = playerState.isLoaded;
   const currentTrackIndex = playerState.indexTrack;
@@ -75,6 +90,35 @@ const MobileTrackItem = ({
     } else {
       playMusic();
     }
+  };
+
+  const addTrackToAdd = () => {
+    addTrack(idTrack)
+      .unwrap()
+      .then(() => {
+        toast.success(title, {
+          description: 'додано до обраних',
+          position: 'bottom-center',
+          duration: 6000
+        });
+
+        setIsAddTrack(true);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const removeTrackFromAdd = () => {
+    deleteTrack(idTrack)
+      .unwrap()
+      .then(() => {
+        toast.info(title, {
+          description: 'видалено з обраних',
+          position: 'bottom-center',
+          duration: 6000
+        });
+        setIsAddTrack(false);
+      })
+      .catch((error) => console.log(error.data.message));
   };
 
   useEffect(() => {
@@ -112,56 +156,85 @@ const MobileTrackItem = ({
     setIsPausedTrack(isPaused);
   };
 
+  const deleteTrackFromPlaylist = () => {
+    const tracksIdList = [idTrack];
+    removeTracksFromPlaylist({ playListId, tracksIdList })
+      .unwrap()
+      .then(() => {
+        toast.info(title, {
+          description: 'видалено з плейлиста',
+          position: 'bottom-center',
+          duration: 6000
+        });
+      });
+  };
+
   return (
     <SongRow key={_id}>
       <LeftSection>
-        <PlayButton
-          ref={playBtnRef}
-          data-idtrack={idTrack}
-          type="button"
-          id="playBtn"
-          onClick={() => PlayButtonToogle(idTrack)}
-        >
-          <svg width="22" height="22">
-            <use
-              href={
-                isPlayingTrack
-                  ? `${symbol}#icon-stop-play`
-                  : isPausedTrack
-                  ? `${symbol}#icon-pause`
-                  : `${symbol}#icon-play`
-              }
-            ></use>
-          </svg>
-        </PlayButton>
-        <CoverImage
-          src={`${BASE_URL}/${cover}`}
-          alt={title}
-          onError={(e) => ImgTrackError(e)}
-        />
+        {options?.playButton && (
+          <PlayButton
+            ref={playBtnRef}
+            data-idtrack={idTrack}
+            type="button"
+            id="playBtn"
+            onClick={() => PlayButtonToogle(idTrack)}
+          >
+            <svg width="22" height="22">
+              <use
+                href={
+                  isPlayingTrack
+                    ? `${symbol}#icon-stop-play`
+                    : isPausedTrack
+                    ? `${symbol}#icon-pause`
+                    : `${symbol}#icon-play`
+                }
+              ></use>
+            </svg>
+          </PlayButton>
+        )}
+        {options?.coverImage && (
+          <CoverImage
+            src={`${BASE_URL}/${cover}`}
+            alt={title}
+            onError={(e) => ImgTrackError(e)}
+          />
+        )}
         <Info>
-          <Title>{title}</Title>
-          <Artist>{artist}</Artist>
+          {options?.title && <Title>{title}</Title>}
+          {options?.artist && <Artist>{artist}</Artist>}
         </Info>
       </LeftSection>
       <RightSection>
-        <Duration>{sToStr(duration)}</Duration>
-        <MenuButton>
-          {showPopUp && (
-            <PopUpButtons
-            //   removeTrackFromAddTrackFn={removeTrackFromAdd}
-            //   addTrackToAddTrackFn={addTrackToAdd}
-            //   isAddTrack={isAddTrack}
-            //   addTrackToPlaylistFn={addTrackToPlaylistsModal}
+        {options?.duration && <Duration>{sToStr(duration)}</Duration>}
+        {options?.menu?.visible && (
+          <MenuButton>
+            {showPopUp && (
+              <PopUpButtons
+                removeTrackFromAddTrackFn={removeTrackFromAdd}
+                addTrackToAddTrackFn={addTrackToAdd}
+                isAddTrack={isAddTrack}
+                addTrackToPlaylistFn={() =>
+                  setShowModalAddTrackToPlaylist(true)
+                }
+                deleteTrackFn={deleteTrackFromPlaylist}
+                menuOptions={options.menu}
+              />
+            )}
+            <DotsBtn
+              popUpToogle={PopUpToogle}
+              disablePopUp={() => setShowPopUp(false)}
+              icon={`${symbol}#icon-more-dots`}
             />
-          )}
-          <DotsBtn
-            popUpToogle={PopUpToogle}
-            disablePopUp={() => setShowPopUp(false)}
-            icon={`${symbol}#icon-more-dots`}
-          />
-        </MenuButton>
+          </MenuButton>
+        )}
       </RightSection>
+      {showModalAddTrackToPlaylist && (
+        <AddTracksUser
+          idTrack={idTrack}
+          handleCloseModal={() => setShowModalAddTrackToPlaylist(false)}
+        />
+      )}
     </SongRow>
   );
 };
@@ -169,10 +242,15 @@ const MobileTrackItem = ({
 export default MobileTrackItem;
 
 MobileTrackItem.propTypes = {
+  index: PropTypes.number,
   idTrack: PropTypes.string,
+  playListId: PropTypes.string,
   _id: PropTypes.string,
   cover: PropTypes.string,
   title: PropTypes.string,
   artist: PropTypes.string,
-  duration: PropTypes.string
+  duration: PropTypes.string,
+  countOfSkip: PropTypes.number,
+  isAddTrackUser: PropTypes.bool,
+  options: PropTypes.object
 };

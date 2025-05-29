@@ -87,6 +87,11 @@ address {
 
 button {
   cursor: pointer;
+  color: inherit;
+}
+
+select {
+  color: inherit;
 }
 .icon {
   fill: none;
