@@ -231,11 +231,11 @@ function App() {
                   />
                   <Route
                     path="medialibrary/newplaylists"
-                    element={<NewPlaylistsUser display={'none'} />}
+                    element={<NewPlaylistsUser />}
                   />
                   <Route
                     path="medialibrary/newplaylists/:playlistId/tracks"
-                    element={<TracksPageUser display={'none'} />}
+                    element={<TracksPageUser />}
                   />
                   <Route
                     path="medialibrary/newtracks"
