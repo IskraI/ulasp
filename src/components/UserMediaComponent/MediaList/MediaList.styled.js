@@ -42,6 +42,11 @@ export const TitleWrapper = styled.p`
   line-height: 1.21;
   font-weight: 500;
   color: ${colors.mainFontColor};
+  padding: ${({ padding }) => padding || 0};
+
+  ${media.laptopMax} {
+    padding: ${({ paddingMobile }) => paddingMobile || 0};
+  }
 `;
 
 export const TitleContainer = styled.div`

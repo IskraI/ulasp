@@ -8,6 +8,11 @@ import { ErrorNotFound, Error500 } from '../../../components/Errors/Errors';
 import { Loader } from '../../../components/Loader/Loader';
 import SortTracks from '../../../components/EditorComponents/Sort/SortTracks';
 import rowsTracksPageUser from './RowsTracksPageUser';
+import { ControlWrapper } from '../../../components/UserMediaComponent/MediaList/MediaList.styled';
+
+import { optionsTracksPage } from './optionsMobileSongList';
+
+import MobileSongList from '../../../components/UserMediaComponent/TracksTable/Mobile/MobileTrackList';
 
 import {
   useGetPlaylistByIdForUserQuery,
@@ -86,7 +91,7 @@ const TracksPage = () => {
 
       <>
         {data && !isError && (
-          <div style={{ display: 'flex' }}>
+          <ControlWrapper>
             <PlaylistListItem
               icon={data.playlist.playListAvatarURL}
               title={data.playlist.playListName}
@@ -104,32 +109,49 @@ const TracksPage = () => {
                 marginTop={'0px'}
               />
             )}
-          </div>
+          </ControlWrapper>
         )}
 
         {isFetchingPlaylistById && <Loader />}
         {isSuccess && !isError && !isFetchingPlaylistById && (
-          <TracksTable
-            title={'In playlist'}
-            showTitle={false}
-            marginTopWrapper={'24px'}
-            isInPlayList={true}
-            playListId={data.playlist._id}
-            playListGenre={data.playlist.playlistGenre}
-            tracks={data.playlist.trackList}
-            error={error}
-            isFetching={isFetchingPlaylistById}
-            isSuccess={isSuccess}
-            rows={rowsTracksPageUser()}
-            onChangeCurrentPage={onPageChange}
-            onChangeSizePage={onPageSizeChange}
-            currentPage={currentPage}
-            pageSize={pageSize}
-            totalPages={data.totalPages}
-            totalTracks={data.totalTracks}
-            tracksSRC={data.tracksSRC}
-            isSorted={isSorted}
-          />
+          <>
+            <TracksTable
+              title={'In playlist'}
+              showTitle={false}
+              marginTopWrapper={'24px'}
+              isInPlayList={true}
+              playListId={data.playlist._id}
+              playListGenre={data.playlist.playlistGenre}
+              tracks={data.playlist.trackList}
+              error={error}
+              isFetching={isFetchingPlaylistById}
+              isSuccess={isSuccess}
+              rows={rowsTracksPageUser()}
+              onChangeCurrentPage={onPageChange}
+              onChangeSizePage={onPageSizeChange}
+              currentPage={currentPage}
+              pageSize={pageSize}
+              totalPages={data.totalPages}
+              totalTracks={data.totalTracks}
+              tracksSRC={data.tracksSRC}
+              isSorted={isSorted}
+            />
+            <MobileSongList
+              playListId={data.playlist._id}
+              tracks={data.playlist.trackList}
+              isFetching={isFetchingPlaylistById}
+              isSuccess={isSuccess}
+              onChangeCurrentPage={onPageChange}
+              onChangeSizePage={onPageSizeChange}
+              currentPage={currentPage}
+              pageSize={pageSize}
+              totalPages={data.totalPages}
+              totalTracks={data.totalTracks}
+              tracksSRC={data.tracksSRC}
+              isSorted={isSorted}
+              options={optionsTracksPage}
+            />
+          </>
         )}
       </>
     </>

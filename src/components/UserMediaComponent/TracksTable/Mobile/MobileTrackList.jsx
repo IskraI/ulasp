@@ -201,7 +201,7 @@ const MobileSongList = ({
             marginTop: '12px'
           }}
         >
-          {options.pageSize && (
+          {options?.pageSize && (
             <SelectPageSize
               pageSize={pageSize}
               onChange={onPageSizeChange}

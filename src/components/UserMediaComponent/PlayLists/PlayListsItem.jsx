@@ -11,7 +11,7 @@ import {
   useUpdateFavoriteStatusPlaylistUserMutation
 } from '../../../redux/playlistsUserSlice';
 import { getUserState } from '../../../redux/userSelectors';
-import { PlaylistInfoWrapper } from './PlayLists.styled';
+import { PlaylistCardInfo, PlaylistInfoWrapper } from './PlayLists.styled';
 
 import {
   MediaItem,
@@ -85,36 +85,27 @@ const PlayListItem = ({
     }
   };
 
-  return (
+  return !placeListCardInfo ? (
     <MediaItem>
-      {!placeListCardInfo ? (
-        <Link
-          key={id}
-          to={
-            location.pathname === cabinet
-              ? `myplaylists/createplaylists/${id}/tracks`
-              : `${id}/tracks`
-          }
-          state={{ from: location }}
-          disabled={placeListCardInfo ? true : false}
-          style={{
-            width: '100%',
-            display: 'flex',
-            alignItems: 'center'
-          }}
-        >
-          <MediaImg src={thumbURL} alt={title} />
-          <MediaItemText>{title}</MediaItemText>
-        </Link>
-      ) : (
-        <>
-          <MediaImg src={thumbURL} alt={title} />
-          <PlaylistInfoWrapper>
-            <MediaItemText>{title}</MediaItemText>
-            <CountTracks countTracks={countTracks} />
-          </PlaylistInfoWrapper>
-        </>
-      )}
+      <Link
+        key={id}
+        to={
+          location.pathname === cabinet
+            ? `myplaylists/createplaylists/${id}/tracks`
+            : `${id}/tracks`
+        }
+        state={{ from: location }}
+        disabled={placeListCardInfo ? true : false}
+        style={{
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center'
+        }}
+      >
+        <MediaImg src={thumbURL} alt={title} />
+        <MediaItemText>{title}</MediaItemText>
+      </Link>
+
       <MediaIconsWrapper>
         {isLoadingFavoriteStatus && <LoaderButton width={'24'} height={'24'} />}
         {isLoadingFavoriteStatusPlaylistUser && (
@@ -165,6 +156,63 @@ const PlayListItem = ({
         )}
       </MediaIconsWrapper>
     </MediaItem>
+  ) : (
+    <PlaylistCardInfo>
+      <MediaImg src={thumbURL} alt={title} />
+      <PlaylistInfoWrapper>
+        <MediaItemText>{title}</MediaItemText>
+        <CountTracks countTracks={countTracks} />
+      </PlaylistInfoWrapper>
+      <MediaIconsWrapper>
+        {isLoadingFavoriteStatus && <LoaderButton width={'24'} height={'24'} />}
+        {isLoadingFavoriteStatusPlaylistUser && (
+          <LoaderButton width={'24'} height={'24'} />
+        )}
+
+        {!isLoadingFavoriteStatus && !isLoadingFavoriteStatusPlaylistUser && (
+          <svg
+            width="24"
+            height="24"
+            fill={isFavorite ? '#17161C' : 'none'}
+            stroke="#17161C"
+            onClick={() => handleToggleFavorite(id)}
+            style={{ cursor: 'pointer' }}
+          >
+            <use href={`${symbol}#icon-heart-empty`}></use>
+          </svg>
+        )}
+
+        {showPlusBtn && (
+          <>
+            {!isAdd ? (
+              <svg
+                width="24"
+                height="24"
+                onClick={async () => {
+                  await handleToggleAdd();
+                  setIsAdd(true);
+                }}
+                style={{ cursor: 'pointer' }}
+              >
+                <use href={`${symbol}#icon-plus`}></use>
+              </svg>
+            ) : (
+              <svg
+                width="24"
+                height="24"
+                onClick={async () => {
+                  await handleToggleAdd();
+                  setIsAdd(false);
+                }}
+                style={{ cursor: 'pointer' }}
+              >
+                <use href={`${symbol}#icon-check`}></use>
+              </svg>
+            )}
+          </>
+        )}
+      </MediaIconsWrapper>
+    </PlaylistCardInfo>
   );
 };
 

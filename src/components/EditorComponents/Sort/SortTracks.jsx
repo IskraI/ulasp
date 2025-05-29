@@ -84,7 +84,7 @@ const SortTracks = ({
           onClick(switchForSort());
         }}
       >
-        <SvgSort width="28" height="28" transformIcon={rotateIcon}>
+        <SvgSort width="30" height="30" transformIcon={rotateIcon}>
           <use href={`${symbol}#${selectIcon()}`}></use>
         </SvgSort>
       </SortBtn>

@@ -10,7 +10,7 @@ import {
 import PlaylistListItem from '../../../components/UserMediaComponent/PlayLists/PlayListsItem';
 import { ErrorNotFound, Error500 } from '../../../components/Errors/Errors';
 import symbol from '../../../assets/symbol.svg';
-import options from './optionsMobileSongList';
+import { optionsTracksCreate} from './optionsMobileSongList';
 import { Loader } from '../../../components/Loader/Loader';
 import AddTrackToPlaylistFromDB from '../../../components/UserCabinetPage/AddTrackToPlaylistFromDB/AddTrackToPlaylistFromDB';
 import rowsTracksCreateUser from './RowsTracksCreateUser';
@@ -40,8 +40,7 @@ const TracksPageCreateUser = () => {
     sort: sortedBy
   });
 
-  const { data: dataFavorite, isLoading: isLoadingFavoritePlaylist } =
-    useFavoritePlaylistForUserQuery();
+  const { data: dataFavorite } = useFavoritePlaylistForUserQuery();
 
   const onPageChange = (page) => {
     setIsSorterd(false);
@@ -92,7 +91,9 @@ const TracksPageCreateUser = () => {
                 display: 'flex',
                 // outline: '1px solid red',
                 gap: '12px',
-                width: '100%'
+                width: '100%',
+                marginRight: '24px',
+                alignItems: 'center'
               }}
             >
               {data?.playlist?.trackList?.length > 1 && (
@@ -151,7 +152,7 @@ const TracksPageCreateUser = () => {
               totalTracks={data.totalTracks}
               tracksSRC={data.tracksSRC}
               isSorted={isSorted}
-              options={options}
+              options={optionsTracksCreate}
             />
           </>
         )}

@@ -1,4 +1,4 @@
-const options = {
+export const optionsTracksCreate = {
   pageSize: true,
   playButton: true,
   coverImage: true,
@@ -11,4 +11,15 @@ const options = {
   }
 };
 
-export default options;
+export const optionsTracksPage = {
+  pageSize: true,
+  playButton: true,
+  coverImage: true,
+  title: true,
+  artist: true,
+  duration: true,
+  menu: {
+    visible: true,
+    deleteFn: false
+  }
+};

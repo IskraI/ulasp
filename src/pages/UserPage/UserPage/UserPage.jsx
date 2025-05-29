@@ -13,7 +13,6 @@ const UserPage = () => {
   return (
     <PageSection>
       <SiteBarNav />
-      {/* <MobileSidebar /> */}
       <PageSubpage>
         <Suspense fallback={<Loader />}>
           <Outlet />
