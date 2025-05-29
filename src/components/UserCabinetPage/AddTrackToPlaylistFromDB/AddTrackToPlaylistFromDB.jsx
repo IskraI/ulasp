@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState, useCallback } from 'react';
+import { skipToken } from '@reduxjs/toolkit/query';
 
 import { Button } from '../../Button/Button';
 import { Modal } from '../../Modal/Modal';
@@ -31,6 +32,8 @@ const AddTrackToPlaylistFromDB = ({
   const [query, setQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
 
+  const shouldFetch = query?.trim() !== '';
+
   const {
     data: allTracks,
     error: errorLoadingAllTracks,
@@ -38,13 +41,17 @@ const AddTrackToPlaylistFromDB = ({
     isSuccess: isSuccessAllTracks,
     isLoading: isLoadingAllTracks,
     refetch
-  } = useGetAllTracksForUsersPlaylistQuery({
-    id: idPlaylist,
-    page: currentPage,
-    limit: pageSize,
-    query,
-    forseRefetch: true
-  });
+  } = useGetAllTracksForUsersPlaylistQuery(
+    shouldFetch
+      ? {
+          id: idPlaylist,
+          page: currentPage,
+          limit: pageSize,
+          query,
+          forseRefetch: true
+        }
+      : skipToken
+  );
 
   const onPageChange = (page) => {
     setCurrentPage(page);

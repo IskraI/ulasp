@@ -21,6 +21,7 @@ import { findPage } from '../../../../helpers/helpers';
 import SelectPageSize from '../../../EditorComponents/TracksTable/SelectSize';
 
 import MobileTrackItem from './MobileTrackItem';
+import optionsDefault from './options';
 import {
   SongListContainer,
   SongMobileContainer
@@ -41,6 +42,10 @@ const MobileSongList = ({
   isSorted,
   options
 }) => {
+
+  if (options === undefined || options === null) {
+    options = optionsDefault;
+  }
   const dispatch = useDispatch();
   const location = useLocation();
   const playerState = useSelector(getPlayerState);

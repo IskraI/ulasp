@@ -44,7 +44,6 @@ const TracksPageCreateUser = () => {
 
   const onPageChange = (page) => {
     setIsSorterd(false);
-    console.log('4 Step - setCurrentPage in mutation', page);
     setCurrentPage(page);
   };
 
