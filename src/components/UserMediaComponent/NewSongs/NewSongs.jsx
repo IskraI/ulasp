@@ -12,7 +12,6 @@ import {
   ControlWrapper,
   MediaList
 } from '../MediaList/MediaList.styled';
-import { Tracks } from './NewSongs.styled';
 
 import { getPlayerState } from '../../../redux/playerSelectors';
 import { setLastTrack } from '../../../redux/playerSlice';

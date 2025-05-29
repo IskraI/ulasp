@@ -29,7 +29,7 @@ const MyPlaylists = () => {
     isLoading: isLoadingTracksInAdd
   } = useGetAllAddTrackByUserQuery({
     page: 1,
-    limit: 6,
+    limit: 8,
     forseRefetch: true
   });
   const {

@@ -8,6 +8,7 @@ import {
   ImgTrackError,
   compareArray
 } from '../../../../helpers/helpers';
+import optionsDefault from './options';
 
 import PopUpButtons from '../PopUpButtons';
 import DotsBtn from '../DotsButton';
@@ -55,6 +56,10 @@ const MobileTrackItem = ({
   isAddTrackUser,
   options
 }) => {
+  if (options === undefined || options === null) {
+    options = optionsDefault;
+  }
+
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
 
@@ -218,7 +223,7 @@ const MobileTrackItem = ({
                   setShowModalAddTrackToPlaylist(true)
                 }
                 deleteTrackFn={deleteTrackFromPlaylist}
-                menuOptions={options.menu}
+                menuOptions={options?.menu}
               />
             )}
             <DotsBtn
