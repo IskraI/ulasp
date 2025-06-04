@@ -124,6 +124,8 @@ const MobileSongList = ({
     playerState.location,
     tracksSRC
   ]);
+
+  
   useEffect(() => {
     if (anyMorePages && lastTrackInPage) {
       dispatch(
@@ -159,6 +161,9 @@ const MobileSongList = ({
     dispatch,
     lastTrackInPage
   ]);
+
+
+
   useEffect(() => {
     if (isSorted) {
       onChangePage(currentPage);

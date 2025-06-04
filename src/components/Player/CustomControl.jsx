@@ -1,36 +1,29 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import symbol from "../../assets/symbol.svg";
+import symbol from '../../assets/symbol.svg';
+
+import { LoopBtn } from './Player.styled';
 
 const CustomControl = ({ onClick, loop }) => {
   return (
-    <button
-      style={{
-        width: "28px",
-        height: "28px",
-        padding: "0",
-        border: "none",
-        outline: "none",
-        background: "none",
-        marginLeft: "24px",
-      }}
-      title={loop ? "Повторювання увімкнено" : "Повторювання вимкнено"}
+    <LoopBtn
+      title={loop ? 'Повторювання увімкнено' : 'Повторювання вимкнено'}
       onClick={onClick}
     >
-      <svg width="32px" height="32px">
+      <svg>
         {loop ? (
-          <use href={`${symbol}#icon-loop`} />
+          <use href={`${symbol}#icon-loop-on`} />
         ) : (
-          <use href={`${symbol}#icon-loop-false`} />
+          <use href={`${symbol}#icon-loop-off`} />
         )}
       </svg>
-    </button>
+    </LoopBtn>
   );
 };
 
 CustomControl.propTypes = {
   onClick: PropTypes.func,
-  loop: PropTypes.bool,
+  loop: PropTypes.bool
 };
 
 export default CustomControl;

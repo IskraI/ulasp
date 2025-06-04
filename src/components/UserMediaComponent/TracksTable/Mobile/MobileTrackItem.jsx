@@ -148,7 +148,7 @@ const MobileTrackItem = ({
     if (!comparedPlayerSRC && futurePlayerSRC.length !== 0) {
       dispatch(setSrcPlaying({ indexTrack: index + countOfSkip }));
     } else {
-      dispatch(setCurrentIndex(index + countOfSkip));
+    //   dispatch(setCurrentIndex(index + countOfSkip));
     }
 
     setIsPlayingTrack(isPlaying);

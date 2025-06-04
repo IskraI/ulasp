@@ -1,13 +1,16 @@
-import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   useEffect,
   useLayoutEffect,
   useState,
   useRef,
-  useCallback,
-} from "react";
-import { BASE_URL } from "../../constants/constants";
+  useCallback
+} from 'react';
+
+import useIsMobile from '../../hooks/useMobile';
+
+import { BASE_URL } from '../../constants/constants';
 
 import {
   setPreloadSrcPlayer,
@@ -18,24 +21,26 @@ import {
   setDefaultState,
   setNextPage,
   setSrcPlaying,
-  setIsSorted,
-} from "../../redux/playerSlice";
-import { useUpdateListenCountTrackByIdMutation } from "../../redux/tracksUserSlice";
-import { usePrefetch } from "../../redux/tracksSlice";
+  setIsSorted
+} from '../../redux/playerSlice';
+import { useUpdateListenCountTrackByIdMutation } from '../../redux/tracksUserSlice';
+import { usePrefetch } from '../../redux/tracksSlice';
 
-import { getPlayerState } from "../../redux/playerSelectors";
-import CustomControl from "./CustomControl";
+import { getPlayerState } from '../../redux/playerSelectors';
+import { RHAP_UI } from 'react-h5-audio-player';
+
+import CustomControl from './CustomControl';
 import {
   PlayerWrapper,
   PlayerReact,
   TrackInfoWrapper,
   TracksArtist,
-  TrackName,
-} from "./Player.styled";
+  TrackName
+} from './Player.styled';
 
-import useIsCurrentPageForTrack from "./useIsCurrentPageForTrack";
+import useIsCurrentPageForTrack from './useIsCurrentPageForTrack';
 
-import ModalPlayerToPage from "./ModalPlayerToPage";
+import ModalPlayerToPage from './ModalPlayerToPage';
 
 const Player = ({ tracks = [], inHeader = false }) => {
   const playerRef = useRef();
@@ -49,21 +54,19 @@ const Player = ({ tracks = [], inHeader = false }) => {
     isLastPage,
     currentPage,
     nextPage,
-    isSorted,
+    isSorted
   } = playerState;
 
   const currentTrackIndex = playerState.indexTrack;
 
-  //const isFirst = playerState.isFirstPlay;
-
   const currentPageSize = playerState.pageSize;
-
+  const [isMobile] = useIsMobile(1200);
   const [currentTrack, setTrackIndex] = useState();
   const [isPressedNext, setIsPressedNext] = useState(false);
   const [isPressedPrev, setIsPressedPrev] = useState(false);
   const [isEndTrack, setIsEndTrack] = useState(false);
-  const [currentTrackArtist, setCurrentTrackArtist] = useState("Невизначений");
-  const [currentTrackName, setCurrentTrackName] = useState("Невизначений");
+  const [currentTrackArtist, setCurrentTrackArtist] = useState('');
+  const [currentTrackName, setCurrentTrackName] = useState('');
   const [loop, setLoop] = useState(false);
 
   const [error, setError] = useState(true);
@@ -76,7 +79,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
   const [listenDuration, setListenDuration] = useState(0);
 
   const [intervalId, setIntervalId] = useState(null);
-  const prefetchPage = usePrefetch("getAllTracks");
+  const prefetchPage = usePrefetch('getAllTracks');
 
   const updateRequestSent = (value) => {
     requestSentRef.current = value;
@@ -84,7 +87,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
   };
   useLayoutEffect(() => {
     if (inHeader) {
-      const el = document.getElementsByClassName("rhap_controls-section");
+      const el = document.getElementsByClassName('rhap_controls-section');
       if (el[0] !== undefined) {
         el[0].style.marginTop = 0;
       }
@@ -100,35 +103,54 @@ const Player = ({ tracks = [], inHeader = false }) => {
 
   const [dispatchListenCountTrack] = useUpdateListenCountTrackByIdMutation();
 
-  const handlePlayLoadStart = async (track) => {
-    // console.log("listenDuration :>> ", listenDuration);
-    // console.log("isFirst :>> ", isFirst);
-    // if (isFirst) {
-    // console.log(
-    //   ` ${track}. попробуем отправить счетчик dispatchListenCountTrack`
-    // );
+  // const handlePlayLoadStart = async (track) => {
+  //   // console.log("listenDuration :>> ", listenDuration);
+  //   // console.log("isFirst :>> ", isFirst);
+  //   // if (isFirst) {
+  //   // console.log(
+  //   //   ` ${track}. попробуем отправить счетчик dispatchListenCountTrack`
+  //   // );
 
-    if (track) {
-      try {
-        // Отправка запроса в бэкенд
+  //   if (track) {
+  //     try {
+  //       // Отправка запроса в бэкенд
 
-        await dispatchListenCountTrack(track);
+  //       await dispatchListenCountTrack(track);
 
-        console.log("Счетчик Запрос в бэкенд отправлен успешно", track);
-        // dispatch(updateIsFirstPlay(false));
-      } catch (error) {
-        console.error("Ошибка при отправке запроса в бэкенд:", error);
+  //       console.log('Счетчик Запрос в бэкенд отправлен успешно', track);
+  //       // dispatch(updateIsFirstPlay(false));
+  //     } catch (error) {
+  //       console.error('Ошибка при отправке запроса в бэкенд:', error);
+  //     }
+  //   } else {
+  //     console.log(
+  //       'запрос не отправляли - нет Значение track не определено. Запрос на бэкенд не отправлен.'
+  //     );
+  //   }
+  //   // }
+  // };
+
+  const handlePlayLoadStart = useCallback(
+    async (track) => {
+      if (track) {
+        try {
+          await dispatchListenCountTrack(track);
+
+          console.log('Счетчик Запрос в бэкенд отправлен успешно', track);
+        } catch (error) {
+          console.error('Ошибка при отправке запроса в бэкенд:', error);
+        }
+      } else {
+        console.log(
+          'запрос не отправляли - нет Значение track не определено. Запрос на бэкенд не отправлен.'
+        );
       }
-    } else {
-      console.log(
-        "запрос не отправляли - нет Значение track не определено. Запрос на бэкенд не отправлен."
-      );
-    }
-    // }
-  };
+    },
+    [dispatchListenCountTrack]
+  );
 
   const noData = tracks[currentTrack]?.trackURL === undefined;
-  const trackSRC = BASE_URL + "/" + tracks[currentTrack]?.trackURL;
+  const trackSRC = BASE_URL + '/' + tracks[currentTrack]?.trackURL;
 
   const [idxOfTrack, currPageTrack] = useIsCurrentPageForTrack();
 
@@ -151,67 +173,47 @@ const Player = ({ tracks = [], inHeader = false }) => {
   useEffect(() => {
     if (isEndTrack || isPressedPrev || isPressedNext) {
       if (currentTrack === 0 && currentPage !== 1) {
-        console.log(Date.now().toLocaleString());
         dispatch(setNextPage({ currentPage: 1 }));
       }
 
-      // if (isLastPage && isLastTrack) {
-      //   if (!loop) {
-      //     dispatch(setCurrentIndex());
-      //   } else {
-      //     dispatch(setCurrentIndex(currentTrack));
-      //   }
-      // }
       if (currentTrack !== null) {
         dispatch(setCurrentIndex(currentTrack));
       }
-      // dispatch(setCurrentIndex(2));
 
       setIsPressedNext(false);
       setIsPressedPrev(false);
       setIsEndTrack(false);
       setListenDuration(0);
       updateRequestSent(false);
-      // dispatch(updateIsFirstPlay(true));
-      // clearInterval(intervalId);
+
       if (isSorted) {
         dispatch(setIsSorted({ isSorted: false }));
       }
     }
-  }, [
-    currentTrack,
-    dispatch,
-    isEndTrack,
-    isLastPage,
-    isLastTrack,
-    isPressedNext,
-    isPressedPrev,
-    isSorted,
-    loop,
-  ]);
+  }, [currentTrack, dispatch, isEndTrack, isPressedNext, isPressedPrev]);
 
   useEffect(() => {
     if (isSorted) {
       setReplacedToPage(false);
     }
   }, [isSorted]);
-  
-  useLayoutEffect(() => {
-    console.log("replacedToPage", replacedToPage);
-    // requestSentRef.current = false;
-    // setListenDuration(0);
 
-    if (currPageTrack === 0 || isNaN(currPageTrack) || replacedToPage) {
-      return;
-    }
-    if (
-      currPageTrack !== 0 &&
-      currPageTrack !== currentPage &&
-      !replacedToPage
-    ) {
-      setShowModalToPage(true);
-    }
-  }, [currPageTrack, currentPage, replacedToPage]);
+  // useLayoutEffect(() => {
+  //   console.log("replacedToPage", replacedToPage);
+  //   // requestSentRef.current = false;
+  //   // setListenDuration(0);
+
+  //   if (currPageTrack === 0 || isNaN(currPageTrack) || replacedToPage) {
+  //     return;
+  //   }
+  //   if (
+  //     currPageTrack !== 0 &&
+  //     currPageTrack !== currentPage &&
+  //     !replacedToPage
+  //   ) {
+  //     setShowModalToPage(true);
+  //   }
+  // }, [currPageTrack, currentPage, replacedToPage]);
 
   useEffect(() => {
     if (!isPaused && playerRef.current.audio.current.currentTime !== 0) {
@@ -225,7 +227,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
     setListenDuration(0);
     updateRequestSent(false);
     if (isSorted) {
-      isSortedTracks("prev");
+      isSortedTracks('prev');
     } else {
       setTrackIndex((currentTrack) =>
         currentTrack > tracks.length - 1 || currentTrack === 0
@@ -243,7 +245,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
     updateRequestSent(false);
 
     if (isSorted) {
-      isSortedTracks("next");
+      isSortedTracks('next');
     } else {
       setTrackIndex((currentTrack) =>
         currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
@@ -268,14 +270,14 @@ const Player = ({ tracks = [], inHeader = false }) => {
   };
 
   const handleEnd = () => {
-    console.log("Песня завершила проигрывание.");
+    console.log('Песня завершила проигрывание.');
     // dispatch(updateIsFirstPlay(true));
     setIsEndTrack(true);
     setListenDuration(0);
     clearInterval(intervalId);
     updateRequestSent(false);
     if (isSorted) {
-      isSortedTracks("end");
+      isSortedTracks('end');
     } else {
       setTrackIndex((currentTrack) =>
         currentTrack < tracks.length - 1 ? currentTrack + 1 : 0
@@ -299,16 +301,16 @@ const Player = ({ tracks = [], inHeader = false }) => {
 
   const isSortedTracks = (typeOfButton) => {
     switch (typeOfButton) {
-      case "end":
+      case 'end':
         dispatch(
           setSrcPlaying({
-            indexTrack: idxOfTrack < tracks.length - 1 ? idxOfTrack + 1 : 0,
+            indexTrack: idxOfTrack < tracks.length - 1 ? idxOfTrack + 1 : 0
           })
         );
 
         break;
 
-      case "prev":
+      case 'prev':
         setTrackIndex(
           idxOfTrack > tracks.length - 1 || idxOfTrack === 0
             ? tracks.length - 1
@@ -317,25 +319,25 @@ const Player = ({ tracks = [], inHeader = false }) => {
         dispatch(setSrcPlaying());
         break;
 
-      case "next":
+      case 'next':
         setTrackIndex(idxOfTrack < tracks.length - 1 ? idxOfTrack + 1 : 0);
         dispatch(setSrcPlaying());
         break;
       default:
-        console.log("this type is not supported");
+        console.log('this type is not supported');
     }
   };
 
   // console.log("listenDuration :>> ", listenDuration);
 
   useEffect(() => {
-    console.log("requestSentRef.current :>> ", requestSentRef.current);
+    console.log('requestSentRef.current :>> ', requestSentRef.current);
     if (playerRef?.current?.audio.current.error) {
       //если ошибка при проигрывании то выходим из этого еффекта и ничего не делаем. если ошибки нет то считаем время
       // console.log("error :>> ", playerRef?.current?.audio.current.error);
       return;
     }
-    console.log("listenDuration :>> ", listenDuration);
+    console.log('listenDuration :>> ', listenDuration);
     if (isPlaying && listenDuration < 10 && !requestSentRef.current) {
       const id = setInterval(() => {
         setListenDuration((prevSeconds) => prevSeconds + 1);
@@ -343,7 +345,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
 
       return () => clearInterval(id); // Очистка интервала при размонтировании компонента
     } else if (isPlaying && listenDuration >= 10 && !requestSentRef.current) {
-      console.log("отправили запрос :>> ");
+      console.log('отправили запрос :>> ');
       handlePlayLoadStart(tracks[currentTrack]?.id);
       updateRequestSent(true);
     }
@@ -354,7 +356,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
     tracks,
     handlePlayLoadStart,
     playerRef?.current?.audio.current.error,
-    requestSent,
+    requestSent
   ]);
 
   //при смене трека в списке обнуляем значения отправки сообщения и обнуляем счетчик
@@ -395,7 +397,6 @@ const Player = ({ tracks = [], inHeader = false }) => {
           </TrackInfoWrapper>
 
           <PlayerReact
-            
             onPause={() => {
               if (isPlaying && !isPaused) {
                 dispatch(pause({ isPlaying: false, isPaused: true }));
@@ -405,27 +406,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
               if (!isPlaying) {
                 dispatch(pause({ isPaused: false, isPlaying: true }));
               }
-
-              // if (!isPlaying && playerState.src.length === 0) {
-              //   dispatch(
-              //     setSrcPlaying({
-              //       indexTrack: 0,
-              //     })
-              //   );
-              // } else {
-              //   dispatch(
-              //     setCurrentIndex(
-              //       currentTrack + (currentPage - 1) * currentPageSize
-              //     )
-              //   );
-              // }
             }}
-            // if (isPlaying && !isPaused && isFirst) {
-
-            //
-            // onClick={() => {
-            //   handleClickNext();
-            // }}
             onListen={() => {
               if (
                 playerRef.current.audio.current.currentTime < 5 &&
@@ -449,7 +430,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
             // autoPlayAfterSrcChange={isPlaying ? true : false}
             autoPlayAfterSrcChange={isPlaying ? true : isPaused ? true : false}
             volume={0.2}
-            preload={"none"}
+            preload={'none'}
             src={trackSRC}
             showSkipControls={tracks?.length > 1 ? true : false}
             showFilledVolume={true}
@@ -462,13 +443,18 @@ const Player = ({ tracks = [], inHeader = false }) => {
             // onError={"onError"}
             // onPlayError={"onPlayError"}
             // onLoadStart={() => handlePlayLoadStart(tracks[currentTrack]?.id)}
-            customAdditionalControls={[
-              <CustomControl
-                key={1}
-                onClick={() => setLoop(!loop)}
-                loop={loop}
-              />,
-            ]}
+            customAdditionalControls={
+              tracks?.length > 1
+                ? [
+                    <CustomControl
+                      key={1}
+                      onClick={() => setLoop(!loop)}
+                      loop={loop}
+                    />
+                  ]
+                : []
+            }
+            customVolumeControls={isMobile ? [] : [RHAP_UI.VOLUME]}
           />
         </>
       </PlayerWrapper>
@@ -485,7 +471,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
 
 Player.propTypes = {
   tracks: PropTypes.array,
-  inHeader: PropTypes.bool,
+  inHeader: PropTypes.bool
 };
 
 export default Player;

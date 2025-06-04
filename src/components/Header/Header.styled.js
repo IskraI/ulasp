@@ -4,10 +4,10 @@ import { colors, media } from '../../styles/vars';
 export const PageHeader = styled.header`
   display: flex;
 
-  ${media.tabletMax} {
+  ${media.laptopMax} {
     /* padding: 0 60px; */
     justify-content: center;
-    max-width: 767px;
+    /* max-width: 767px; */
     height: 100px;
     /* align-items: flex-start; */
   }
@@ -57,5 +57,11 @@ export const HeaderPlayerWrapper = styled.div`
   margin-top: 2px;
   /* margin: 0 8px;
   justify-content: flex-end; */
-  outline: 1px solid orange;
+
+  ${media.tabletMax} {
+    margin-left: 12px;
+    align-self: flex-start;
+    max-width: 80%;
+    height: 95%;
+  }
 `;

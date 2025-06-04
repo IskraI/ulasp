@@ -1,6 +1,6 @@
-import styled from "@emotion/styled";
-import { colors, mainCubicTransition } from "../../../styles/vars";
-import { keyframes } from "@emotion/react";
+import styled from '@emotion/styled';
+import { colors, mainCubicTransition, media, sizes, breakpoints } from '../../../styles/vars';
+import { keyframes } from '@emotion/react';
 
 export const PlaylistWrapper = styled.section`
   /* display: flex; */
@@ -51,6 +51,28 @@ export const PlaylistItem = styled.li`
     transform: translateY(-5px);
     transition: transform 250ms ${mainCubicTransition};
   }
+
+  ${media.tabletMax} {
+    align-self: center;
+    flex-basis: calc((100% - (${sizes.cardSetGap})));
+  }
+
+  @media screen and (min-width: ${breakpoints.tablet}) and (max-width: 1439px) {
+    width: 310px;
+    flex-basis: calc((100% - (${sizes.cardSetGap})) / 2);
+  }
+
+  @media screen and (min-width: ${breakpoints.desktop}) and (max-width: 1639px) {
+    flex-basis: calc((100% - (${sizes.cardSetGap} * 2)) / 3);
+  }
+
+  @media screen and (min-width: 1640px) and (max-width: 1919px) {
+    flex-basis: calc((100% - (${sizes.cardSetGap} * 3)) / 4);
+  }
+
+  ${media.largeDesktop} {
+    flex-basis: calc((100% - (${sizes.cardSetGap} * 3)) / 4);
+  }
 `;
 
 export const PlaylistImg = styled.img`
@@ -79,7 +101,6 @@ export const PlaylistItemText2 = styled.p`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  
 `;
 
 export const PlaylistIconsWrapper = styled.div`
