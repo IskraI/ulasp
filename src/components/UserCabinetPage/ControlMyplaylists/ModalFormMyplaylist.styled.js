@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import { colors } from "../../../styles/vars";
+import styled from '@emotion/styled';
+import { colors, media } from '../../../styles/vars';
 
 export const FormControlModal = styled.form`
   display: flex;
@@ -8,14 +8,18 @@ export const FormControlModal = styled.form`
   margin-bottom: ${(props) => props.marginbottom};
   margin-left: ${(props) => props.marginleft};
   margin-right: ${(props) => props.marginright};
+
+  ${media.tabletMax} {
+    width: 90%;
+  }
 `;
 
 export const InputControlModal = styled.input`
-  display: ${(props) => props.display || "block"};
+  display: ${(props) => props.display || 'block'};
   width: 649px;
   height: 64px;
   padding: 8px;
-  margin-top: ${(props) => props.margintop ?? "64px"};
+  margin-top: ${(props) => props.margintop ?? '64px'};
   margin-bottom: 24px;
   border-radius: 10px;
   border: none;
@@ -35,12 +39,21 @@ export const InputControlModal = styled.input`
         ? `2px solid ${colors.errorColor}`
         : `2px solid ${colors.accentHoverColor}`};
   }
+
+  ${media.tabletMax} {
+    width: 100%;
+    margin-bottom: 8px;
+  }
 `;
 
 export const ErrorValidateInput = styled.p`
   font-size: 12px;
   font-weight: 600;
   color: ${colors.errorColor};
+
+  ${media.tabletMax} {
+    margin-bottom: 10px;
+  }
 `;
 
 export const TextControlModal = styled.p`

@@ -27,13 +27,13 @@ const RowsAddTrackFromDB = () => {
     {
       // title: "Жанр",
       type: "text",
-      titleSize: "25%",
-      showData: true,
+      titleSize: "0%",
+      showData: false,
     },
     {
       // title: "",
       type: "text",
-      titleSize: "1%",
+      titleSize: "0%",
       showData: false,
     },
   ];

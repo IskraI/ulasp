@@ -6,7 +6,6 @@ import { Suspense } from 'react';
 import { Loader } from '../../../components/Loader/Loader';
 import { PageSection, PageSubpage } from '../../AdminPage/AdminPage.styled';
 // import Player from "../../../components/Player/Player";
-import MobileSidebar from '../../../components/SiteBarNav/SiteBarNav.mobile';
 
 const UserPage = () => {
   // const playerState = useSelector(getPlayerState);
@@ -14,7 +13,6 @@ const UserPage = () => {
   return (
     <PageSection>
       <SiteBarNav />
-      {/* <MobileSidebar /> */}
       <PageSubpage>
         <Suspense fallback={<Loader />}>
           <Outlet />

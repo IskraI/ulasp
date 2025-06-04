@@ -1,11 +1,15 @@
-import styled from "@emotion/styled";
-import { colors } from "../../styles/vars";
+import styled from '@emotion/styled';
+import { colors, media } from '../../styles/vars';
 
 export const ErrorText = styled.p`
   color: #535250;
   text-align: center;
   font-size: 28px;
   margin: 40px 0;
+
+  ${media.mobileMax} {
+    font-size: 20px;
+  }
 `;
 
 export const TableWrapper = styled.div`
@@ -18,6 +22,16 @@ export const TableWrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
   border: none;
+
+  ${media.tabletMax} {
+    width: 90vw;
+    padding: 8px;
+  }
+
+  ${media.fromTabletToLaptop} {
+    width: 720px;
+    padding: 10px;
+  }
 `;
 
 export const TableReport = styled.table`
@@ -39,6 +53,11 @@ export const TableReportRow = styled.th`
   border: 1px solid rgba(130, 130, 130, 1);
   padding: 8px;
   text-align: center;
+
+  ${media.tabletMax} {
+    font-size: 7px;
+    padding: 4px;
+  }
 `;
 
 export const TableReportBody = styled.tbody``;
@@ -52,14 +71,23 @@ export const TableCell = styled.td`
   &:last-child {
     text-align: center;
   }
+
+  ${media.tabletMax} {
+    font-size: 8px;
+    padding: 4px;
+  }
 `;
 export const ReportTitle = styled.h3`
   font-family: Inter;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 600;
   /* line-height: 19px; */
   letter-spacing: 0em;
   text-align: center;
+
+  ${media.tablet} {
+    font-size: 16px;
+  }
 `;
 
 export const ReportTitleDesc = styled.p`
@@ -149,10 +177,15 @@ export const UnderlinedText = styled.span`
   display: inline-block;
   position: relative;
   text-decoration: none;
+
+  ${media.tabletMax} {
+    font-size: 6px;
+  }
 `;
 export const LineAndYearContainer = styled.div`
   display: flex;
   /* flex-direction: row; */
+  /* width: 70%; */
   align-items: flex-end;
 `;
 export const FlexChild = styled.div`
@@ -172,6 +205,11 @@ export const UnderlineDate = styled.span`
 `;
 export const YearText = styled.span`
   margin-left: 8px; /* Расстояние между линией и текстом с годом */
+
+  ${media.tabletMax} {
+    font-size: 6px;
+    width: 100%;
+  }
 `;
 export const NoteText = styled.span`
   /* margin-top: 2px; Расстояние между годом и текстом с примечанием */
@@ -180,6 +218,10 @@ export const NoteText = styled.span`
   font-weight: 400;
   line-height: 18px;
   letter-spacing: 0em;
+
+  ${media.tabletMax} {
+    font-size: 8px;
+  }
 `;
 
 export const Underline = styled.span`
@@ -189,16 +231,20 @@ export const Underline = styled.span`
   width: 100%;
   height: 1px;
   background-color: black;
+
+  ${media.tabletMax} {
+    width: 80%;
+  }
 `;
 export const TextWithUnderline = styled.span`
   position: relative;
   display: inline-block;
   &:before {
-    content: "${(props) => props.text}";
+    content: '${(props) => props.text}';
     position: absolute;
     top: 10%;
-    left: ${(props) => props.underlineLeft ?? "0%"};
-    width: ${(props) => props.underlineWidth ?? "70%"};
+    left: ${(props) => props.underlineLeft ?? '0%'};
+    width: ${(props) => props.underlineWidth ?? '70%'};
     height: 1px;
     background-color: black;
   }
@@ -213,10 +259,15 @@ export const ReportFooterBlockDesc = styled.div`
 
 export const ReportFooterComment = styled.p`
   font-family: Inter;
-  font-size: 12px; //8px
+  font-size: 8px; //8px
   font-weight: 600;
-  line-height: 18px;
+  line-height: 12px;
   letter-spacing: 0em;
   text-align: center;
   margin-bottom: 24px;
+
+  ${media.tablet} {
+    font-size: 12px;
+    line-height: 18px;
+  }
 `;

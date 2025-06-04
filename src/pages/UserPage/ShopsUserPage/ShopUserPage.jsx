@@ -13,6 +13,7 @@ import ControlMediateca from "../../../components/UserMediaComponent/ControlMedi
 import { useGetAllShopsUserQuery } from "../../../redux/shopsUserSlice";
 
 import { ShopsWrapper, ShopsList } from "./Shops.styled";
+import { MediaList } from "../../../components/UserMediaComponent/MediaList/MediaList.styled";
 
 const ShopsPage = ({ showNavigationLink, limit }) => {
   const {
@@ -40,7 +41,7 @@ const ShopsPage = ({ showNavigationLink, limit }) => {
         <>
           <ControlMediateca title={"Плейлисти по типу закладу"} />
           <ShopsWrapper>
-            <ShopsList>
+            <MediaList>
               {shops.map(({ _id, shopCategoryName, shopAvatarURL }) => (
                 <MediaListItemShop
                   key={_id}
@@ -53,7 +54,7 @@ const ShopsPage = ({ showNavigationLink, limit }) => {
                   linkToPage={linkToPage}
                 />
               ))}
-            </ShopsList>
+            </MediaList>
             <MediaNavigationLink
               link={linkToPage}
               showNavigationLink={showNavigationLink}

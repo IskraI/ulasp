@@ -11,6 +11,9 @@ import {
   FormContainer,
   InfoWrapper
 } from './UserCabinetPage.styled';
+
+import { userCabinetVars } from './userCabinetVars';
+
 import { useSelector } from 'react-redux';
 import { getUserState } from '../../../redux/userSelectors';
 import { AdminWriteForm } from '../../../components/Form/AdminWriteForm';
@@ -23,24 +26,23 @@ const UserCabinetPage = () => {
 
   return (
     <>
-      <TitleFirst>Кабінет</TitleFirst>
+      <TitleFirst>{userCabinetVars.cabinet}</TitleFirst>
       <FormContainer>
         <InfoWrapper>
-          <TitleSecond>Номер договору</TitleSecond>
+          <TitleSecond>{userCabinetVars.contractNumberDoc}</TitleSecond>
           <DataUser>
             {user.contractNumberDoc
               ? user.contractNumberDoc
               : user.contractNumber}
           </DataUser>
-          <TitleSecond>Ідентифікаційний номер (код ЄДРПОУ)</TitleSecond>
+          <TitleSecond>{userCabinetVars.taxCode}</TitleSecond>
           <DataUser>{user.taxCode}</DataUser>
-          <TitleSecond>Дата договору</TitleSecond>
+          <TitleSecond>{userCabinetVars.accessDate}</TitleSecond>
           <DataUser>{user.dateOfAccess}</DataUser>
         </InfoWrapper>
         <ReportForm user={user} userpage={true} />
       </FormContainer>
-   
-   
+
       <FormContainer>
         <AdminWriteForm user={user} />
         <ActForm user={user} />

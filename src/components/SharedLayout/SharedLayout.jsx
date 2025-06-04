@@ -8,15 +8,12 @@ import { Loader } from '../Loader/Loader';
 
 import { ContainerWrraper } from './SharedLayout.styled';
 
-import MobileSidebar from '../SiteBarNav/SiteBarNav.mobile';
-
 export const SharedLayout = ({ avatarURL, logo }) => {
   return (
     <>
       <Header avatarURL={avatarURL} logo={logo} />
 
       <ContainerWrraper>
-        {/* <MobileSidebar></MobileSidebar> */}
         <main>
           <Suspense fallback={<Loader />}>
             <Outlet />

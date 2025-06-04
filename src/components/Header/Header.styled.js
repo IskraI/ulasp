@@ -2,14 +2,16 @@ import styled from '@emotion/styled';
 import { colors, media } from '../../styles/vars';
 
 export const PageHeader = styled.header`
-  ${media.tabletMax} {
+  display: flex;
+
+  ${media.laptopMax} {
     /* padding: 0 60px; */
-    max-width: 767px;
+    justify-content: center;
+    /* max-width: 767px; */
     height: 100px;
-    align-items: flex-start;
+    /* align-items: flex-start; */
   }
 
-  display: flex;
   /* justify-content: center; */
 
   align-items: center;
@@ -49,8 +51,17 @@ export const AvatarHeader = styled.img`
 
 export const HeaderPlayerWrapper = styled.div`
   display: flex;
-  width: 100%;
+  /* width: 100%; */
+  width: 90%;
+  justify-content: center;
+  margin-top: 2px;
   /* margin: 0 8px;
   justify-content: flex-end; */
-  /* outline: 1px solid red; */
+
+  ${media.tabletMax} {
+    margin-left: 12px;
+    align-self: flex-start;
+    max-width: 80%;
+    height: 95%;
+  }
 `;

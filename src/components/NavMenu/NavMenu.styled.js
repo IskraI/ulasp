@@ -1,6 +1,6 @@
-import styled from "@emotion/styled";
-import { colors } from "../../styles/vars";
-import { NavLink, Link } from "react-router-dom";
+import styled from '@emotion/styled';
+import { colors } from '../../styles/vars';
+import { NavLink, Link } from 'react-router-dom';
 
 export const Nav = styled.nav`
   display: flex;
@@ -14,21 +14,7 @@ export const List = styled.ul`
   display: flex;
   flex-direction: column;
   color: black;
-  /* margin-right: 10px; */
-
   margin-left: auto;
-
-  // gap: 21px;
-
-  /* &.active {
-     border: 2px solid #FFF3BF;
-     background-image: url('../../../src/assets/VectorActive.svg');
-      z-index:10;
-    background-size: contain; 
-/* opacity: 0.5; */
-  /* background-repeat: no-repeat;
-    background-position: right center;
-   } */
 `;
 
 export const Item = styled.li`
@@ -37,10 +23,10 @@ export const Item = styled.li`
   // padding-left: 30px;
 `;
 
-export const SubItem = styled.li`
-  /* margin-left: auto; */
-  margin-left: 50px;
-`;
+//  const SubItem = styled.li`
+//   /* margin-left: auto; */
+//   margin-left: 50px;
+// `;
 
 export const NavigationLink = styled(NavLink)`
   color: ${colors.mainFontColor};
@@ -76,10 +62,6 @@ export const NavigationLink = styled(NavLink)`
     border-left: 2px solid #fff3bf;
     color: #000;
 
-    /* border: 2px solid #fff3bf;
-    border-right: none;
-    border-top-right-radius: -20px; */
-    /* background-image: url("../../../src/assets/VectorActive.svg"); */
     background: linear-gradient(
       90deg,
       rgba(28, 84, 141, 0.6) 80%,
@@ -87,22 +69,14 @@ export const NavigationLink = styled(NavLink)`
       transparent 100%
     );
 
-    transition: border 450ms cubic-bezier(0.4, 0, 0.2, 1);
-    /* z-index: 10;
-    background-size: contain; */
-    /* opacity: 0.5; */
-    /* background-repeat: no-repeat;
-    background-position: right center; */
+    transition: all 450ms cubic-bezier(0.4, 0, 0.2, 1);
 
     svg {
-      /* fill: #fff3bf; */
       stroke: #fff3bf;
     }
   }
 
   &:hover {
-    /* box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.6) inset; */
-
     svg {
       stroke: #fff3bf;
       transition: stroke 250ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -125,7 +99,7 @@ export const SubMenuLink = styled(NavLink)`
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 
-  border-right: 2px solid #fff3bf;
+  /* border-right: 2px solid #fff3bf; */
   padding-top: 9px;
   padding-bottom: 18px;
   svg {
@@ -149,6 +123,28 @@ export const CustomSVG = styled.svg`
 `;
 
 export const SvgStyled = styled.svg`
-  fill: ${(props) => props.fillColor ?? "black"};
-  stroke: ${(props) => props.strokeColor ?? "none"};
+  fill: ${(props) => props.fillColor ?? 'black'};
+  stroke: ${(props) => props.strokeColor ?? 'none'};
+`;
+
+export const SubMenu = styled.ul`
+  overflow: hidden;
+  max-height: ${({ open }) => (open ? '500px' : '0')};
+  opacity: ${({ open }) => (open ? 1 : 0)};
+  transform: ${({ open }) => (open ? 'translateY(0)' : 'translateY(-4px)')};
+  transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+`;
+
+export const SubItem = styled.li`
+  margin-left: 50px;
+  opacity: ${({ active }) => (active ? 1 : 0)};
+  transform: ${({ active }) =>
+    active ? 'translateX(0)' : 'translateX(-10px)'};
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition-delay: ${({ index }) => index * 50}ms;
+`;
+
+export const Wrapper = styled.div`
+  height: 100%;
+  border-right: 2px solid #fff3bf;
 `;

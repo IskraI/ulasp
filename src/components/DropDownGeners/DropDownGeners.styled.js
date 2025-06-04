@@ -25,9 +25,9 @@ background-color: transparent;
 `;
 
 export const StyledDropDown = styled.div`
-   position:absolute;
+   /* position:absolute;
     right: 64px; 
-  top: 125px;
+  top: 125px; */
 
 `;
 

@@ -1,20 +1,20 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { setupListeners } from "@reduxjs/toolkit/query";
-import { authApi } from "./authSlice";
-import { userReducer } from "./userSlice";
-import { authClientApi } from "./authClientSlice";
-import { dataUsersApi } from "./dataUsersSlice";
-import { statisticApi } from "./statisticSlice";
-import storage from "redux-persist/lib/storage";
-import { tracksApi } from "./tracksSlice";
-import { genresApi } from "./genresSlice";
-import { playlistsApi } from "./playlistsSlice";
-import { shopsApi } from "./shopsSlice";
-import { shopsUserApi } from "./shopsUserSlice";
-import { tracksUserApi } from "./tracksUserSlice";
-import { genresUserApi } from "./genersUserSlice";
-import { playlistsUserApi } from "./playlistsUserSlice";
-import { playerReducer } from "./playerSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
+import { authApi } from './authSlice';
+import { userReducer } from './userSlice';
+import { authClientApi } from './authClientSlice';
+import { dataUsersApi } from './dataUsersSlice';
+import { statisticApi } from './statisticSlice';
+import storage from 'redux-persist/lib/storage';
+import { tracksApi } from './tracksSlice';
+import { genresApi } from './genresSlice';
+import { playlistsApi } from './playlistsSlice';
+import { shopsApi } from './shopsSlice';
+import { shopsUserApi } from './shopsUserSlice';
+import { tracksUserApi } from './tracksUserSlice';
+import { genresUserApi } from './genersUserSlice';
+import { playlistsUserApi } from './playlistsUserSlice';
+import { playerReducer } from './playerSlice';
 
 import {
   persistStore,
@@ -24,28 +24,40 @@ import {
   PAUSE,
   PERSIST,
   PURGE,
-  REGISTER,
-} from "redux-persist";
+  REGISTER
+} from 'redux-persist';
 
 const persistConfig = {
-  key: "user",
+  key: 'user',
   storage,
   whitelist: [
-    "token",
-    "adminRole",
-    "userRole",
-    "editorRole",
-    "isLoggedIn",
-    "status",
-    "access",
-  ],
+    'token',
+    'adminRole',
+    'userRole',
+    'editorRole',
+    'isLoggedIn',
+    'status',
+    'access'
+  ]
   // whitelist: ["token","adminRole", "userRole", "editorRole", "isLoggedIn"],
 };
 
+const loggerMiddleware = (store) => (next) => (action) => {
+  console.log('%cAction dispatched:', 'color: green;', action);
+  console.log('%cState before:', 'color: gray;', store.getState());
+
+  const result = next(action);
+
+  console.log('%cState after:', 'color: blue;', store.getState());
+  console.trace(); // покажет стек вызова (компонент-инициатор)
+
+  return result;
+};
+
 const playerPersistConfig = {
-  key: "player",
+  key: 'player',
   storage,
-  whitelist: ["prevIdTrack"],
+  whitelist: ['prevIdTrack']
 };
 
 export const store = configureStore({
@@ -65,14 +77,15 @@ export const store = configureStore({
     [shopsUserApi.reducerPath]: shopsUserApi.reducer,
     user: persistReducer(persistConfig, userReducer),
     // player: persistReducer(playerPersistConfig, playerReducer),
-    player: playerReducer,
+    player: playerReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+      }
     })
+      // .concat(loggerMiddleware)
       .concat(authApi.middleware)
       .concat(authClientApi.middleware)
       .concat(dataUsersApi.middleware)
@@ -84,7 +97,7 @@ export const store = configureStore({
       .concat(tracksUserApi.middleware)
       .concat(genresUserApi.middleware)
       .concat(playlistsUserApi.middleware)
-      .concat(shopsUserApi.middleware),
+      .concat(shopsUserApi.middleware)
 });
 
 setupListeners(store.dispatch);

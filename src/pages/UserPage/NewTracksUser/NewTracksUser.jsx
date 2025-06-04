@@ -1,10 +1,11 @@
-import TabNavigation from "../../../components/TabNavigation/TabNavigation";
-import TracksTable from "../../../components/UserMediaComponent/TracksTable/TracksTableUser";
-import rowsNewTracksUser from "./RowsNewTracksUser";
-import { useGetTracksInChartQuery } from "../../../redux/tracksSlice";
-import { useState } from "react";
-import NavMusic from "../../../components/UserMediaComponent/NavMusic/NavMusic";
-import { Loader } from "../../../components/Loader/Loader";
+import TracksTable from '../../../components/UserMediaComponent/TracksTable/TracksTableUser';
+import rowsNewTracksUser from './RowsNewTracksUser';
+import { useGetTracksInChartQuery } from '../../../redux/tracksSlice';
+import { useState } from 'react';
+import NavMusic from '../../../components/UserMediaComponent/NavMusic/NavMusic';
+import { Loader } from '../../../components/Loader/Loader';
+
+import MobileSongList from '../../../components/UserMediaComponent/TracksTable/Mobile/MobileTrackList';
 
 const NewTracksUser = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,11 +16,11 @@ const NewTracksUser = () => {
     error: errorLoadingTracksInChart,
     isFetching: isFetchingTracksInChart,
     isSuccess: isSuccessTracksInChart,
-    isLoading: isLoadingTracksInChart,
+    isLoading: isLoadingTracksInChart
   } = useGetTracksInChartQuery({
     page: currentPage,
     limit: pageSize,
-    forseRefetch: true,
+    forseRefetch: true
   });
 
   const onPageChange = (page) => {
@@ -31,26 +32,21 @@ const NewTracksUser = () => {
   };
 
   const links = [
-    { path: "/user/medialibrary/newplaylists", title: "Нові плейлисти" },
-    { path: "/user/medialibrary/newtracks", title: "Нова музика" },
+    { path: '/user/medialibrary/newplaylists', title: 'Нові плейлисти' },
+    { path: '/user/medialibrary/newtracks', title: 'Нова музика' }
   ];
-
-  const handleSortClick = () => {
-    // setSortAlphabetically(!sortAlphabetically);
-  };
 
   return (
     <>
-      {/* <TabNavigation /> */}
       <NavMusic links={links} />
 
       {isFetchingTracksInChart && <Loader />}
       {!isFetchingTracksInChart && !errorLoadingTracksInChart && (
         <>
           <TracksTable
-            title={"In playlist"}
+            title={'In playlist'}
             showTitle={false}
-            marginTopWrapper={"24px"}
+            marginTopWrapper={'24px'}
             isInPlayList={false}
             tracks={tracksInChart.tracksInChart}
             tracksSRC={tracksInChart.tracksSRC}
@@ -64,6 +60,20 @@ const NewTracksUser = () => {
             currentPage={currentPage}
             pageSize={pageSize}
             totalPages={tracksInChart.totalPages}
+          />
+          <MobileSongList
+            tracks={tracksInChart.tracksInChart}
+            isFetching={isFetchingTracksInChart}
+            isSuccess={isSuccessTracksInChart}
+            onChangeCurrentPage={onPageChange}
+            onChangeSizePage={onPageSizeChange}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            totalPages={tracksInChart.totalPages}
+            totalTracks={tracksInChart.totalTracks}
+            tracksSRC={tracksInChart.tracksSRC}
+
+            // options={options}
           />
         </>
       )}

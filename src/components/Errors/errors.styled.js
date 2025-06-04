@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import { colors } from "../../styles/vars";
+import styled from '@emotion/styled';
+import { colors, media } from '../../styles/vars';
 
 export const ErrorWrapper = styled.div`
   display: flex;
@@ -12,6 +12,10 @@ export const ErrorWrapper = styled.div`
     props.textColor ? props.textColor : colors.mainFontColor};
   font-size: 28px;
   font-weight: 500;
+
+  ${media.tabletMax} {
+    font-size: 22px;
+  }
 `;
 
 export const ErrorText = styled.p`

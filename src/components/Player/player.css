@@ -8,6 +8,10 @@
   padding: 10px 15px;
   /* background-color: #fff;
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2); */
+
+  @media screen and (max-width: 767px) {
+    padding: 0;
+  }
 }
 .rhap_container:focus:not(:focus-visible) {
   outline: 0;
@@ -142,6 +146,10 @@
   flex: 1 0 auto;
   align-items: center;
   margin-left: 12px;
+
+  @media screen and (max-width: 480px) {
+    margin-left: 0;
+  }
 }
 
 .rhap_repeat-button {

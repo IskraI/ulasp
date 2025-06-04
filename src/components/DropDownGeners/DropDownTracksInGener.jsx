@@ -1,17 +1,14 @@
-import { useEffect, useState } from "react";
-import { useGetAllGenresForUserQuery } from "../../redux/genersUserSlice";
-import { useGetTracksByGenreIdQuery } from "../../redux/tracksUserSlice";
-import { Loader } from "../Loader/Loader";
-import { StyledDropDown, Select, Option } from "./DropDownGeners.styled";
-import { useNavigate } from "react-router-dom";
-import symbol from "../../assets/symbol.svg";
+import { useEffect, useState } from 'react';
+import { useGetAllGenresForUserQuery } from '../../redux/genersUserSlice';
+import { Loader } from '../Loader/Loader';
+import { StyledDropDown, Select, Option } from './DropDownGeners.styled';
+import { useNavigate } from 'react-router-dom';
 
 const DropDownTracksInGenres = ({ currentGenreId }) => {
   const navigate = useNavigate();
-  const [selectedGenre, setSelectedGenre] = useState("");
+  const [selectedGenre, setSelectedGenre] = useState('');
   const { data: genres, error, isLoading } = useGetAllGenresForUserQuery();
   // const { data: tracksData, error: tracksError, isLoading: tracksLoading } = useGetTracksByGenreIdQuery(currentGenreId);
-  console.log("currentGenreId DropDownTracksInGenres:>> ", currentGenreId);
   const datasort = (genres, currentGenreId) => {
     const sortedArr = [];
     const remainingArr = [];
@@ -29,7 +26,7 @@ const DropDownTracksInGenres = ({ currentGenreId }) => {
 
   useEffect(() => {
     if (error) {
-      console.error("Ошибка при получении жанров:", error);
+      console.error('Ошибка при получении жанров:', error);
     }
 
     if (genres) {
@@ -70,17 +67,6 @@ const DropDownTracksInGenres = ({ currentGenreId }) => {
           </Select>
         </StyledDropDown>
       )}
-      {/* {tracksLoading && <Loader />} 
-      {tracksError && <div>Error loading tracks: {tracksError}</div>} 
-      {tracksData && (
-        <div>
-            {tracksData.map((track) => (
-            <div key={track._id}>
-                {track.name}
-            </div>
-          ))}
-        </div>
-      )} */}
     </div>
   );
 };

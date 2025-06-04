@@ -1,7 +1,7 @@
 import { useForm, useWatch } from 'react-hook-form';
 import { useState } from 'react';
 import { Button } from '../Button/Button';
-import { TitleThird, FormInput, Textarea } from './AdminWriteForm.styled';
+import { TitleThird, FormInput, Textarea, AdminForm } from './AdminWriteForm.styled';
 import { useSendMailUserForActByIdMutation } from '../../redux/dataUsersSlice';
 import { Modal } from '../Modal/Modal';
 import { TextModal } from '../Modal/Modal.styled';
@@ -45,7 +45,7 @@ export const ActForm = ({ user }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <AdminForm onSubmit={handleSubmit(onSubmit)}>
         <TitleThird>Запросити акт звірки:</TitleThird>
         <Textarea
           type="text"
@@ -63,7 +63,7 @@ export const ActForm = ({ user }) => {
           marginleft="auto"
           disabled={!textValue}
         ></Button>
-      </form>
+      </AdminForm>
 
       {activeModal === 'sendact' && (
         <Modal

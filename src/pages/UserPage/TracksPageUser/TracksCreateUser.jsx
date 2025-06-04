@@ -1,20 +1,24 @@
-import { useState, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useCallback } from 'react';
+import { useParams } from 'react-router-dom';
 
-import TracksTable from "../../../components/UserMediaComponent/TracksTable/TracksTableUser";
+import TracksTable from '../../../components/UserMediaComponent/TracksTable/TracksTableUser';
 import {
   useGetCreatePlaylistByIdForUserQuery,
-  useFavoritePlaylistForUserQuery,
-} from "../../../redux/playlistsUserSlice";
+  useFavoritePlaylistForUserQuery
+} from '../../../redux/playlistsUserSlice';
 
-import PlaylistListItem from "../../../components/UserMediaComponent/PlayLists/PlayListsItem";
-import { ErrorNotFound, Error500 } from "../../../components/Errors/Errors";
-import symbol from "../../../assets/symbol.svg";
+import PlaylistListItem from '../../../components/UserMediaComponent/PlayLists/PlayListsItem';
+import { ErrorNotFound, Error500 } from '../../../components/Errors/Errors';
+import symbol from '../../../assets/symbol.svg';
+import { optionsTracksCreate} from './optionsMobileSongList';
+import { Loader } from '../../../components/Loader/Loader';
+import AddTrackToPlaylistFromDB from '../../../components/UserCabinetPage/AddTrackToPlaylistFromDB/AddTrackToPlaylistFromDB';
+import rowsTracksCreateUser from './RowsTracksCreateUser';
+import SortTracks from '../../../components/EditorComponents/Sort/SortTracks';
 
-import { Loader } from "../../../components/Loader/Loader";
-import AddTrackToPlaylistFromDB from "../../../components/UserCabinetPage/AddTrackToPlaylistFromDB/AddTrackToPlaylistFromDB";
-import rowsTracksCreateUser from "./RowsTracksCreateUser";
-import SortTracks from "../../../components/EditorComponents/Sort/SortTracks";
+import { ControlWrapper } from '../../../components/UserMediaComponent/MediaList/MediaList.styled';
+
+import MobileSongList from '../../../components/UserMediaComponent/TracksTable/Mobile/MobileTrackList';
 
 const TracksPageCreateUser = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,26 +32,23 @@ const TracksPageCreateUser = () => {
     isFetching: isFetchingPlaylistById,
     isSuccess,
     isError,
-    error,
+    error
   } = useGetCreatePlaylistByIdForUserQuery({
     playlistId,
     page: currentPage,
     limit: pageSize,
-    sort: sortedBy,
+    sort: sortedBy
   });
 
-  const { data: dataFavorite, isLoading: isLoadingFavoritePlaylist } =
-    useFavoritePlaylistForUserQuery();
+  const { data: dataFavorite } = useFavoritePlaylistForUserQuery();
 
   const onPageChange = (page) => {
     setIsSorterd(false);
-    console.log("4 Step - setCurrentPage in mutation", page);
     setCurrentPage(page);
   };
 
   const onPageSizeChange = (size) => {
     setIsSorterd(false);
-    console.log(size);
     setPageSize(size);
   };
 
@@ -67,12 +68,12 @@ const TracksPageCreateUser = () => {
 
   return (
     <>
-      {error?.status === "500" && <Error500 />}
+      {error?.status === '500' && <Error500 />}
       {error && <ErrorNotFound />}
 
       <>
         {data && !isError && (
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <ControlWrapper>
             <PlaylistListItem
               icon={data.playlist.playListAvatarURL}
               title={data.playlist.playListName}
@@ -81,51 +82,78 @@ const TracksPageCreateUser = () => {
               countTracks={data.totalTracks}
               showPlusBtn={false}
               owner={data.playlist.owner}
-              // favoriteStatus={dataFavorite.favorites.some(
-              //   (item) => item._id === playlistId
-              // )}
               favoriteStatus={favStatus()}
             />
-            {data?.playlist?.trackList?.length > 1 && (
-              <SortTracks
-                onClick={handleClickSort}
-                sortType={"Az"}
-                sortedBy={sortedBy}
-                marginTop={"0px"}
+
+            <div
+              style={{
+                display: 'flex',
+                // outline: '1px solid red',
+                gap: '12px',
+                width: '100%',
+                marginRight: '24px',
+                alignItems: 'center'
+              }}
+            >
+              {data?.playlist?.trackList?.length > 1 && (
+                <SortTracks
+                  onClick={handleClickSort}
+                  sortType={'Az'}
+                  sortedBy={sortedBy}
+                  marginTop={'0px'}
+                />
+              )}
+              <AddTrackToPlaylistFromDB
+                iconButton={`${symbol}#icon-plus`}
+                textButton={'Музику'}
+                idPlaylist={playlistId}
+                trackListPlaylist={data.playlist.trackList}
               />
-            )}
-            <AddTrackToPlaylistFromDB
-              iconButton={`${symbol}#icon-plus`}
-              textButton={"Музику"}
-              idPlaylist={playlistId}
-              trackListPlaylist={data.playlist.trackList}
-            />
-          </div>
+            </div>
+          </ControlWrapper>
         )}
         {isFetchingPlaylistById && <Loader />}
         {isSuccess && !isFetchingPlaylistById && !isError && (
-          <TracksTable
-            title={"In playlist"}
-            showTitle={false}
-            checkBox={true}
-            marginTopWrapper={"24px"}
-            isInPlayList={false}
-            playListId={data.playlist._id}
-            tracks={data.playlist.trackList}
-            error={error}
-            isFetching={isFetchingPlaylistById}
-            isSuccess={isSuccess}
-            rows={rowsTracksCreateUser()}
-            onChangeCurrentPage={onPageChange}
-            onChangeSizePage={onPageSizeChange}
-            currentPage={currentPage}
-            pageSize={pageSize}
-            totalPages={data.totalPages}
-            totalTracks={data.totalTracks}
-            tracksSRC={data.tracksSRC}
-            deleteButton={true}
-            isSorted={isSorted}
-          />
+          <>
+            <TracksTable
+              title={'In playlist'}
+              showTitle={false}
+              checkBox={true}
+              marginTopWrapper={'24px'}
+              isInPlayList={false}
+              playListId={data.playlist._id}
+              tracks={data.playlist.trackList}
+              error={error}
+              isFetching={isFetchingPlaylistById}
+              isSuccess={isSuccess}
+              rows={rowsTracksCreateUser()}
+              onChangeCurrentPage={onPageChange}
+              onChangeSizePage={onPageSizeChange}
+              currentPage={currentPage}
+              pageSize={pageSize}
+              totalPages={data.totalPages}
+              totalTracks={data.totalTracks}
+              tracksSRC={data.tracksSRC}
+              deleteButton={true}
+              isSorted={isSorted}
+            />
+
+            <MobileSongList
+              playListId={data.playlist._id}
+              tracks={data.playlist.trackList}
+              isFetching={isFetchingPlaylistById}
+              isSuccess={isSuccess}
+              onChangeCurrentPage={onPageChange}
+              onChangeSizePage={onPageSizeChange}
+              currentPage={currentPage}
+              pageSize={pageSize}
+              totalPages={data.totalPages}
+              totalTracks={data.totalTracks}
+              tracksSRC={data.tracksSRC}
+              isSorted={isSorted}
+              options={optionsTracksCreate}
+            />
+          </>
         )}
       </>
     </>

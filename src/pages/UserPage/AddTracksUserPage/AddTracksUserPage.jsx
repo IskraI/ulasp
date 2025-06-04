@@ -1,10 +1,14 @@
-import TabNavigation from "../../../components/TabNavigation/TabNavigation";
-import TracksTable from "../../../components/UserMediaComponent/TracksTable/TracksTableUser";
-import rowsNewTracksUser from "./RowsAddTracksUserPage";
-import { useGetAllAddTrackByUserQuery } from "../../../redux/tracksUserSlice";
-import { useState } from "react";
+import { useState } from 'react';
 
-import { TitleWrapper } from "../../../components/EditorComponents/MediaList/MediaList.styled";
+import TracksTable from '../../../components/UserMediaComponent/TracksTable/TracksTableUser';
+import MobileSongList from '../../../components/UserMediaComponent/TracksTable/Mobile/MobileTrackList';
+import rowsNewTracksUser from './RowsAddTracksUserPage';
+import { useGetAllAddTrackByUserQuery } from '../../../redux/tracksUserSlice';
+
+import {
+  ControlWrapper,
+  TitleWrapper
+} from '../../../components/UserMediaComponent/MediaList/MediaList.styled';
 const AddTracksUserPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -14,11 +18,11 @@ const AddTracksUserPage = () => {
     error: errorLoadingTracksInAdd,
     isFetching: isFetchingTracksInAdd,
     isSuccess: isSuccessTracksInAdd,
-    isLoading: isLoadingTracksInAdd,
+    isLoading: isLoadingTracksInAdd
   } = useGetAllAddTrackByUserQuery({
     page: currentPage,
     limit: pageSize,
-    forseRefetch: true,
+    forseRefetch: true
   });
 
   const onPageChange = (page) => {
@@ -31,15 +35,16 @@ const AddTracksUserPage = () => {
 
   return (
     <>
-      {/* <TabNavigation /> */}
-      <TitleWrapper>Обрані пісні</TitleWrapper>
+      <ControlWrapper>
+        <TitleWrapper>Обрані пісні</TitleWrapper>
+      </ControlWrapper>
       {/* {isFetchingTracksInAdd && <Loader />} */}
       {isSuccessTracksInAdd && !errorLoadingTracksInAdd && (
         <>
           <TracksTable
-            title={"In playlist"}
+            title={'In playlist'}
             showTitle={false}
-            marginTopWrapper={"24px"}
+            marginTopWrapper={'24px'}
             isInPlayList={false}
             tracks={tracksInAdd.tracksInAdd}
             tracksSRC={tracksInAdd.tracksSRC}
@@ -53,6 +58,19 @@ const AddTracksUserPage = () => {
             currentPage={currentPage}
             pageSize={pageSize}
             totalPages={tracksInAdd.totalPages}
+          />
+          <MobileSongList
+            tracks={tracksInAdd.tracksInAdd}
+            isFetching={isFetchingTracksInAdd}
+            isSuccess={isSuccessTracksInAdd}
+            onChangeCurrentPage={onPageChange}
+            onChangeSizePage={onPageSizeChange}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            totalPages={tracksInAdd.totalPages}
+            totalTracks={tracksInAdd.totalTracks}
+            tracksSRC={tracksInAdd.tracksSRC}
+            options={null}
           />
         </>
       )}

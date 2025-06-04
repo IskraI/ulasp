@@ -1,6 +1,11 @@
-import styled from "@emotion/styled";
-import { colors, transition, mainCubicTransition } from "../../../styles/vars";
+import styled from '@emotion/styled';
+import { colors, media } from '../../../styles/vars';
 
+export const TracksTableMobileWrapper = styled.div`
+  ${media.laptopMax} {
+    display: none;
+  }
+`;
 export const TracksTableWrapper = styled.div`
   margin-top: ${(props) => props.marginTop};
 `;
@@ -40,8 +45,8 @@ export const ThTitle = styled.th`
   padding: 0px;
   opacity: ${(props) => (props.showData ? 1 : 0)};
 
-  &:nth-of-type(${(props) => props.index || "1"}) {
-    width: ${(props) => props.widthTh || "10%"};
+  &:nth-of-type(${(props) => props.index || '1'}) {
+    width: ${(props) => props.widthTh || '10%'};
   }
 `;
 
@@ -56,14 +61,14 @@ export const TableCell = styled.td`
   padding: 4px 0px 8px 12px;
   opacity: ${(props) => (props.showData ? 1 : 0)};
 
-  width: ${(props) => (props.showData ? "" : "1px")};
-  height: ${(props) => (props.showData ? "" : "1px")};
-  margin: ${(props) => (props.showData ? "" : "-1px")};
-  border: ${(props) => (props.showData ? "" : 0)};
-  padding: ${(props) => (props.showData ? "" : 0)};
+  width: ${(props) => (props.showData ? '' : '1px')};
+  height: ${(props) => (props.showData ? '' : '1px')};
+  margin: ${(props) => (props.showData ? '' : '-1px')};
+  border: ${(props) => (props.showData ? '' : 0)};
+  padding: ${(props) => (props.showData ? '' : 0)};
 
-  white-space: ${(props) => (props.showData ? "" : "nowrap")};
-  overflow: ${(props) => (props.showData ? "" : "hidden")};
+  white-space: ${(props) => (props.showData ? '' : 'nowrap')};
+  overflow: ${(props) => (props.showData ? '' : 'hidden')};
 
   &:first-of-type {
     border-top-left-radius: 10px;
@@ -81,15 +86,10 @@ export const TableCell = styled.td`
 `;
 
 export const InfoBlock = styled.p`
-  display: ${(props) => (props.showData ? "" : "none")};
+  display: ${(props) => (props.showData ? '' : 'none')};
 `;
 
 export const TrackCover = styled.img`
   border-radius: 10%;
   margin: 0 auto;
 `;
-
-
-
-
-

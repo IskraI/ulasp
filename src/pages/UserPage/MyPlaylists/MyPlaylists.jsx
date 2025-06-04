@@ -8,6 +8,8 @@ import {
   useGetCreatePlaylistsForUserQuery
 } from '../../../redux/playlistsUserSlice';
 
+import { skipToken } from '@reduxjs/toolkit/query';
+
 import { useGetAllAddTrackByUserQuery } from '../../../redux/tracksUserSlice';
 import { Loader } from '../../../components/Loader/Loader';
 import NewSongs from '../../../components/UserMediaComponent/NewSongs/NewSongs';
@@ -29,7 +31,7 @@ const MyPlaylists = () => {
     isLoading: isLoadingTracksInAdd
   } = useGetAllAddTrackByUserQuery({
     page: 1,
-    limit: 6,
+    limit: 8,
     forseRefetch: true
   });
   const {

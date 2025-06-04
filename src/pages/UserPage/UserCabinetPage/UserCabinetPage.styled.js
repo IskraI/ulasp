@@ -7,20 +7,27 @@ export const UserCabinetContainer = styled.div`
 `;
 
 export const FormContainer = styled.div`
-  ${media.tabletMax} {
-    width: 100%;
-    display: block;
-    padding: 0 4px;
-  }
-
   display: flex;
-  gap: 135px;
-  width: 1200px;
-  margin-right: auto;
+  width: 100%;
+
+  gap: auto;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
   align-items: center;
   justify-content: space-between;
+
+  ${media.laptopMax} {
+    max-width: 422px;
+    display: block;
+    /* flex-direction: column; */
+    padding: 0 4px;
+    margin: 0 auto;
+  }
+
+  @media screen and (min-width: 1200px) and (max-width: 1400px) {
+    padding: 0 4px;
+  }
 
   /* outline: 1px solid green; */
 `;

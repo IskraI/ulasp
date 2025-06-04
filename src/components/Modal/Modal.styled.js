@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import { colors } from "../../styles/vars";
+import styled from '@emotion/styled';
+import { colors, media } from '../../styles/vars';
 
 export const Overlay = styled.div`
   position: fixed;
@@ -18,11 +18,11 @@ export const Overlay = styled.div`
 export const ModalWindow = styled.div`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
-  padding: ${(props) => props.padding || "none"};
+  padding: ${(props) => props.padding || 'none'};
   flex-direction: ${(props) => props.flexDirection};
-  border-style: ${(props) => props.borderStyle || "none"};
-  border-width: ${(props) => props.borderWidth || "none"};
-  border-color: ${(props) => props.borderColor || "none"};
+  border-style: ${(props) => props.borderStyle || 'none'};
+  border-width: ${(props) => props.borderWidth || 'none'};
+  border-color: ${(props) => props.borderColor || 'none'};
 
   border-radius: 15px;
   background: #7f99c0;
@@ -32,6 +32,10 @@ export const ModalWindow = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 999;
+
+  ${media.tabletMax} {
+    width: ${(props) => props.mobileWidth || '90vw'};
+  }
 `;
 
 export const CloseBtn = styled.button`
@@ -41,6 +45,7 @@ export const CloseBtn = styled.button`
   border: none;
   background: none;
   cursor: pointer;
+  z-index: 999;
 `;
 
 export const CloseIconStyled = (component) => styled(component)`
@@ -54,21 +59,26 @@ export const ButtonsModalWrapper = styled.div`
   align-items: center;
   gap: 24px;
   margin-right: 24px;
-  margin-bottom: ${({ marginBottom }) => marginBottom || "24px"};
+  margin-bottom: ${({ marginBottom }) => marginBottom || '24px'};
 `;
 
 export const ModalInfoText = styled.div`
-  font-size: ${(props) => props.fontSize || "24px"};
+  font-size: ${(props) => props.fontSize || '24px'};
   line-height: 1.5;
-  padding-top: ${(props) => props.paddingTop || "38px"};
-  padding-bottom: ${(props) => props.paddingBottom || "38px"};
+  padding-top: ${(props) => props.paddingTop || '38px'};
+  padding-bottom: ${(props) => props.paddingBottom || '38px'};
   padding-left: 22px;
   padding-right: 22px;
-  margin-top: ${(props) => props.marginTop || "34px"};
+  margin-top: ${(props) => props.marginTop || '34px'};
   margin-bottom: ${(props) => props.marginBottom};
   text-align: center;
   color: ${({ warning }) =>
     warning ? `${colors.errorColor}` : `${colors.mainFontColor}`};
+
+  ${media.tabletMax} {
+    font-size: 18px;
+    padding: 12px 8px;
+  }
 `;
 
 export const ModalInfoTextBold = styled.span`
@@ -93,10 +103,19 @@ export const ModalBtnContainer = styled.div`
 `;
 
 export const ReportModal = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 16px;
   height: inherit;
   padding: 44px 64px 44px 24px;
+
+  ${media.tabletMax} {
+    padding: 60px 0px 12px 0px;
+  }
+
+  ${media.fromTabletToLaptop} {
+    padding: 60px 20px 12px 20px;
+  }
 `;

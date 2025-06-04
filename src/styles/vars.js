@@ -41,11 +41,13 @@ export const breakpoints = {
 export const media = {
   mobile: `@media screen and (min-width: ${breakpoints.mobile})`,
   tablet: `@media screen and (min-width: ${breakpoints.tablet})`,
-  laptop: `@media screen and (min-width: ${breakpoints.desktop})`,
+  laptop: `@media screen and (min-width: ${breakpoints.laptop})`,
   largeDesktop: `@media screen and (min-width: ${breakpoints.largeDesktop})`,
 
-  mobileMax: `@media screen and (max-width: 479px})`,
+  mobileMax: `@media screen and (max-width: 479px)`,
   tabletMax: `@media screen and (max-width: 767px)`,
   laptopMax: `@media screen and (max-width: 1199px)`,
-  desktopMax: `@media screen and (max-width: 1439px)`
+  desktopMax: `@media screen and (max-width: 1439px)`,
+
+  fromTabletToLaptop: `@media screen and (min-width: 768px) and (max-width: ${breakpoints.laptop})`
 };

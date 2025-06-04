@@ -58,7 +58,6 @@ export const SignInClient = () => {
       .unwrap()
       .then(() => {
         navigate('/user/cabinet');
-
         reset();
       })
       .catch((e) => {

@@ -143,7 +143,6 @@
 
 
   
-
   <symbol id="icon-pause" viewBox="0 0 32 32">
 <svg  xml:space="preserve" style="enable-background:new 0 0 32 32" viewBox="0 0 122.9 122.9">
   <path d="M61 0a61 61 0 0 1 62 61 61 61 0 0 1-62 62A61 61 0 0 1 0 61 61 61 0 0 1 61 0zM42 39h14v44H42V39zm25 0h14v44H67V39zm30-14a51 51 0 0 0-86 36 51 51 0 0 0 86 36 51 51 0 0 0 0-72z"/>
@@ -151,21 +150,27 @@
 </symbol>
   
 
-
+<!-- 
   <symbol id="icon-loop-false" viewBox="0 0 32 32">
-  <svg width="28px" height="28px" viewBox="0 0 24 24">
   <path fill="currentColor" d="M2 5.27L3.28 4L20 20.72L18.73 22l-3-3H7v3l-4-4l4-4v3h6.73L7 10.27V11H5V8.27zM17 13h2v4.18l-2-2zm0-8V2l4 4l-4 4V7H8.82l-2-2z"/>
-  </svg>
   </symbol>
 
-<symbol id="icon-loop">
-<svg  width="28px" height="28px" viewBox="0 0 24 24">
+<symbol id="icon-loop" viewBox="0 0 32 32">
 <path fill="currentColor" d="M17 17H7v-3l-4 4l4 4v-3h12v-6h-2M7 7h10v3l4-4l-4-4v3H5v6h2z"/>
-</svg>
-</symbol>
+</symbol> -->
 <symbol id="icon-menu" viewBox="0 0 32 32">
 <path d="M6.4 11.734v-2.134h19.2v2.134h-19.2zM6.4 17.066h19.2v-2.133h-19.2v2.133zM6.4 22.4h19.2v-2.134h-19.2v2.134z"></path>
 </symbol>
+
+
+ <symbol id="icon-loop-on" viewBox="0 0 24 24">
+  <path fill="currentColor" d="M17 17H7v-3l-4 4l4 4v-3h12v-6h-2M7 7h10v3l4-4l-4-4v3H5v6h2z"/>
+  </symbol>
+
+  <symbol id="icon-loop-off" viewBox="0 0 24 24">
+  <path fill="currentColor" d="M2 5.27L3.28 4L20 20.72L18.73 22l-3-3H7v3l-4-4l4-4v3h6.73L7 10.27V11H5V8.27z"/>
+  <path fill="currentColor" d="M17 13h2v4.18l-2-2zM17 2v3H8.82l2 2H17v3l4-4l-4-4z"/>
+  </symbol>
 
   </defs>
 

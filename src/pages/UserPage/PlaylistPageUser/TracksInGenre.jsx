@@ -1,14 +1,16 @@
-import TabNavigation from "../../../components/TabNavigation/TabNavigation";
-import TracksTable from "../../../components/UserMediaComponent/TracksTable/TracksTableUser";
-import { useGetTracksByGenreIdQuery } from "../../../redux/tracksUserSlice";
-import { BtnSort } from "../AllTracksUser/AllTracksUser.styled";
-import symbol from "../../../assets/symbol.svg";
-import { useState } from "react";
-import NavMusic from "../../../components/UserMediaComponent/NavMusic/NavMusic";
-import { useParams } from "react-router-dom";
-import DropDownTracksInGenres from "../../../components/DropDownGeners/DropDownTracksInGener";
-import { Loader } from "../../../components/Loader/Loader";
-import rowsTracksInGenre from "./RowsTracksInGenre";
+import { useState } from 'react';
+
+import TracksTable from '../../../components/UserMediaComponent/TracksTable/TracksTableUser';
+import { useGetTracksByGenreIdQuery } from '../../../redux/tracksUserSlice';
+
+import NavMusic from '../../../components/UserMediaComponent/NavMusic/NavMusic';
+import { useParams } from 'react-router-dom';
+import DropDownTracksInGenres from '../../../components/DropDownGeners/DropDownTracksInGener';
+import { Loader } from '../../../components/Loader/Loader';
+import rowsTracksInGenre from './RowsTracksInGenre';
+import MobileSongList from '../../../components/UserMediaComponent/TracksTable/Mobile/MobileTrackList';
+
+import { GenresWrapper } from './PageUserCommon.styled';
 
 const AllTracksUser = () => {
   const { genreId } = useParams();
@@ -20,19 +22,19 @@ const AllTracksUser = () => {
     error: errorLoadingAllTracks,
     isFetching: isFetchingAllTracks,
     isSuccess,
-    isError,
+    isError
   } = useGetTracksByGenreIdQuery({
     genreId,
     page: currentPage,
-    limit: pageSize,
+    limit: pageSize
   });
 
   const links = [
     {
       path: `/user/medialibrary/genres/${genreId}/playlists`,
-      title: "Плейлисти",
+      title: 'Плейлисти'
     },
-    { path: `/user/medialibrary/genres/${genreId}/tracks`, title: "Пісні" },
+    { path: `/user/medialibrary/genres/${genreId}/tracks`, title: 'Пісні' }
   ];
 
   const onPageChange = (page) => {
@@ -47,21 +49,17 @@ const AllTracksUser = () => {
     <>
       {!isSuccess && !isError && <Loader />}
 
-      {/* <TabNavigation /> */}
-
       {!isFetchingAllTracks && !errorLoadingAllTracks && (
         <>
-          <DropDownTracksInGenres currentGenreId={genreId} />
-          <NavMusic links={links} />
-          {/* <BtnSort onClick={handleSortClick}>
-            <svg width="24" height="24">
-              <use href={`${symbol}#icon-sort`}></use>
-            </svg>
-          </BtnSort> */}
+          <GenresWrapper>
+            <NavMusic links={links} />
+            <DropDownTracksInGenres currentGenreId={genreId} />
+          </GenresWrapper>
+
           <TracksTable
-            title={"In playlist"}
+            title={'In playlist'}
             showTitle={false}
-            marginTopWrapper={"24px"}
+            marginTopWrapper={'24px'}
             isInPlayList={true}
             // playListId={allTracks.playlist._id}
             playListGenre={allTracks.playlistGenre}
@@ -77,6 +75,20 @@ const AllTracksUser = () => {
             totalPages={allTracks.totalPages}
             totalTracks={allTracks.totalTracks}
             tracksSRC={allTracks.tracksSRC}
+          />
+          <MobileSongList
+            tracks={allTracks.tracks}
+            isFetching={isFetchingAllTracks}
+            isSuccess={isSuccess}
+            onChangeCurrentPage={onPageChange}
+            onChangeSizePage={onPageSizeChange}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            totalPages={allTracks.totalPages}
+            totalTracks={allTracks.totalTracks}
+            tracksSRC={allTracks.tracksSRC}
+
+            // options={options}
           />
         </>
       )}

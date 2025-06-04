@@ -1,17 +1,17 @@
 import {
   UserName,
   ProfileAvatar,
-  ProfileAvatarWrapper,
-} from "./Profile.styled";
+  ProfileAvatarWrapper
+} from './Profile.styled';
 
-import { getUserState } from "../../redux/userSelectors";
-import { useSelector } from "react-redux";
+import { getUserState } from '../../redux/userSelectors';
+import { useSelector } from 'react-redux';
 
-import { useUpdateClientAvatarMutation } from "../../redux/authClientSlice/";
-import { useUpdateAdminAvatarMutation } from "../../redux/authSlice/";
-import { useEffect, useState, memo } from "react";
-import FileUpload from "../FIleUpload/FIleUpload";
-import { BASE_URL, defaultAvatarSrc } from "../../constants/constants";
+import { useUpdateClientAvatarMutation } from '../../redux/authClientSlice/';
+import { useUpdateAdminAvatarMutation } from '../../redux/authSlice/';
+import { useEffect, useState, memo } from 'react';
+import FileUpload from '../FIleUpload/FIleUpload';
+import { BASE_URL, defaultAvatarSrc } from '../../constants/constants';
 
 export const Profile = memo(function Profile() {
   const user = useSelector(getUserState);
@@ -32,20 +32,20 @@ export const Profile = memo(function Profile() {
       return;
     }
 
-    formData.append("avatarURL", selectedImage);
+    formData.append('avatarURL', selectedImage);
 
     if (userRole) {
       dispatchClient(formData)
         .unwrap()
         .then(() => {
-          console.log("Your profile has been updated", "success");
+          console.log('Your profile has been updated', 'success');
         })
         .catch((e) => console.log(e.data.message));
     } else {
       dispatchAdmin(formData)
         .unwrap()
         .then(() => {
-          console.log("Your profile has been updated", "success");
+          console.log('Your profile has been updated', 'success');
         })
         .catch((e) => console.log(e.data.message));
     }
@@ -77,7 +77,7 @@ export const Profile = memo(function Profile() {
       <form>
         <ProfileAvatarWrapper>
           <FileUpload
-            selectedImage={""}
+            selectedImage={''}
             setSelectedImage={setSelectedImage}
             accept="image/*"
             change={handleChooseIcon}
@@ -89,8 +89,8 @@ export const Profile = memo(function Profile() {
       </form>
 
       <UserName>
-        {lastName && `${lastName}${" "}`}
-        {firstName && `${firstName.slice(0, 1)}${"."}`}
+        {lastName && `${lastName}${' '}`}
+        {firstName && `${firstName.slice(0, 1)}${'.'}`}
         {fatherName && fatherName.slice(0, 1)}
       </UserName>
     </>

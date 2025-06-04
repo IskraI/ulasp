@@ -6,8 +6,8 @@ export const ControlWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* margin-top: 26px; */
-  margin-bottom: ${(props) => props.marginBottom || "24px"};
+
+  margin-bottom: ${(props) => props.marginBottom || '24px'};
 `;
 
 export const TitleWrapper = styled.p`
