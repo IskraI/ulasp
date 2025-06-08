@@ -30,6 +30,7 @@ const ListUsers = ({ searchTerm }) => {
           dataUsers={data?.allUsers}
           isLoading={isLoading}
           visibleColumns={visibleColumns}
+          showSortOptions={true}
         />
       )}
 

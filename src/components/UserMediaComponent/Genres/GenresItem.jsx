@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 
 import { BASE_URL } from '../../../constants/constants';
+import { playlistCoverError } from '../../../helpers/helpers';
 
 import {
   MediaItem,
@@ -24,7 +25,11 @@ const GenreListItem = ({ id, title, icon }) => {
           to={`/user/medialibrary/genres/${id}/playlists`}
           state={{ from: location }}
         >
-          <MediaImg src={imgSrc} alt={title} />
+          <MediaImg
+            src={imgSrc}
+            alt={title}
+            onError={(e) => playlistCoverError(e)}
+          />
 
           <MediaItemText padding={'0px 40px 0px 6px'}>{title}</MediaItemText>
         </LinkWrapper>

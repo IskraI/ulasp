@@ -1,4 +1,5 @@
-import defaultTrackCover from "../assets/55x36_trackCover_default.jpg";
+import defaultTrackCover from '../assets/55x36_trackCover_default.jpg';
+import defaultPlayListCover from '../assets/60x40_playlist_default.jpg';
 
 import { startOfQuarter, endOfQuarter, format } from 'date-fns';
 import { uk } from 'date-fns/locale';
@@ -118,3 +119,5 @@ export const currentDate = () => {
 };
 
 export const ImgTrackError = (e) => (e.currentTarget.src = defaultTrackCover);
+
+export const playlistCoverError = (e) => (e.currentTarget.src = defaultPlayListCover);

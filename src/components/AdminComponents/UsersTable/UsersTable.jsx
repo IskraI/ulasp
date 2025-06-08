@@ -1,3 +1,6 @@
+import { useNavigate, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+
 import { Link } from 'react-router-dom';
 import Pagination from 'rc-pagination';
 import {
@@ -13,8 +16,7 @@ import {
   useAccessUserUpdateByIdMutation,
   useSendMailUserByIdMutation
 } from '../../../redux/dataUsersSlice';
-import { useNavigate, useParams } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+
 import { ButtonSwitch } from '../ButtonSwitch/ButtonSwitch';
 import { Modal } from '../../Modal/Modal';
 import { TextModal } from '../../Modal/Modal.styled';
@@ -76,7 +78,10 @@ const UsersTable = ({ users, visibleColumns }) => {
     }
   };
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(
+    () => localStorage.getItem('userPage') || 1
+  );
+
   const itemsPerPage = 10; // Количество элементов на странице
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -84,6 +89,7 @@ const UsersTable = ({ users, visibleColumns }) => {
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
+    localStorage.setItem('userPage', newPage);
   };
   // console.log("users.length :>> ", users);
   return (
