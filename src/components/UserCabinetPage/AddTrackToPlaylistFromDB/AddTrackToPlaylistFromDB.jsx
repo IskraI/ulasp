@@ -27,6 +27,7 @@ const AddTrackToPlaylistFromDB = ({
   const [showModal, setShowModal] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
+
   const [pageSize, setPageSize] = useState(6);
 
   const [query, setQuery] = useState('');
@@ -54,6 +55,7 @@ const AddTrackToPlaylistFromDB = ({
   );
 
   const onPageChange = (page) => {
+    console.log('PAGE===>>>>', page);
     setCurrentPage(page);
     setIsSearching(false);
   };
@@ -151,13 +153,14 @@ const AddTrackToPlaylistFromDB = ({
                       tracks={allTracks.tracks}
                       isFetching={isFetchingAllTracks}
                       isSuccess={isSuccessAllTracks}
-                      onChangeCurrentPage={onPageChange}
-                      onChangeSizePage={onPageSizeChange}
                       currentPage={currentPage}
                       pageSize={pageSize}
                       totalPages={allTracks.totalPages}
                       totalTracks={allTracks.totalTracks}
                       options={options}
+                      addTrackInModal={true}
+                      onChangeCurrentPage={onPageChange}
+                      onChangeSizePage={onPageSizeChange}
                     />
                   </>
                 )}

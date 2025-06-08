@@ -79,7 +79,6 @@ const TracksTableModalUser = ({
   };
 
   const addingMultipleTracks = () => {
-    console.log(tracksIdList);
     addTracks({ playListId, tracksIdList })
       .then(() => {
         setTracksIdList([]);
@@ -206,7 +205,6 @@ const TracksTableModalUser = ({
                 hideOnSinglePage
                 onChangeSizePage={onChangeSizePage}
                 onChange={(page) => onChangeCurrentPage(page)}
-                // locale={localeUA}
               />
             )}
           </div>

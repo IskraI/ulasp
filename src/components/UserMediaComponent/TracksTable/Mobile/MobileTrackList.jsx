@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 // REDUX
@@ -40,9 +40,9 @@ const MobileSongList = ({
   totalTracks,
   tracksSRC,
   isSorted,
-  options
+  options,
+  addTrackInModal
 }) => {
-
   if (options === undefined || options === null) {
     options = optionsDefault;
   }
@@ -50,6 +50,8 @@ const MobileSongList = ({
   const location = useLocation();
   const playerState = useSelector(getPlayerState);
   const { id: idUser } = useSelector(getUserState);
+
+  const [currentLocalPage, setCurrentLocalPage] = useState(1);
 
   const skip = (currentPage - 1) * pageSize;
 
@@ -80,12 +82,19 @@ const MobileSongList = ({
     [dispatch, onChangeCurrentPage]
   );
 
+  const modalPagination = (page) => {
+    onChangeCurrentPage(page);
+  };
+
   const onPageSizeChange = (size) => {
     onChangeSizePage(size);
     onChangePage(1);
   };
 
   useEffect(() => {
+    if (addTrackInModal) {
+      return;
+    }
     if (currentPage === 1 && !isFetching) {
       const trackURL = tracksSRC?.map((track) => {
         const transformTrackObject = {
@@ -122,10 +131,10 @@ const MobileSongList = ({
     onChangePage,
     pageSize,
     playerState.location,
-    tracksSRC
+    tracksSRC,
+    addTrackInModal
   ]);
 
-  
   useEffect(() => {
     if (anyMorePages && lastTrackInPage) {
       dispatch(
@@ -162,8 +171,6 @@ const MobileSongList = ({
     lastTrackInPage
   ]);
 
-
-
   useEffect(() => {
     if (isSorted) {
       onChangePage(currentPage);
@@ -198,6 +205,7 @@ const MobileSongList = ({
               isAddTrackUser={addTrackByUsers?.includes(idUser)}
               playListId={playListId}
               options={options}
+              addTrackInModal={addTrackInModal}
             />
           )
         )}
@@ -211,7 +219,7 @@ const MobileSongList = ({
             marginTop: '12px'
           }}
         >
-          {options?.pageSize && (
+          {options?.pageSize && tracks.length !== 0 && (
             <SelectPageSize
               pageSize={pageSize}
               onChange={onPageSizeChange}
@@ -230,7 +238,7 @@ const MobileSongList = ({
             defaultPageSize={pageSize}
             pageSize={pageSize}
             hideOnSinglePage
-            onChange={onChangePage}
+            onChange={addTrackInModal ? modalPagination : onChangePage}
           />
         </div>
       )}
@@ -251,7 +259,8 @@ MobileSongList.propTypes = {
   totalTracks: PropTypes.number,
   tracksSRC: PropTypes.array,
   isSorted: PropTypes.bool,
-  options: PropTypes.object
+  options: PropTypes.object,
+  addTrackInModal: PropTypes.bool
 };
 
 export default MobileSongList;
