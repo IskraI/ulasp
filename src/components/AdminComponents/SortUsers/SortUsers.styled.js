@@ -4,6 +4,8 @@ export const SortWrapper = styled.div`
   display: flex;
   align-items: baseline;
   gap: 10px;
+
+  
 `;
 
 export const SortSelect = styled.select`

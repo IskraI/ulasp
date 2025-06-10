@@ -1,7 +1,12 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
+// REDUX
+import { useLazyGetUserListenCountQuery } from '../../../redux/statisticSlice';
+// END OF REDUX
+
+import { Button } from '../../Button/Button';
 import { SortWrapper, SortSelect, SortOption } from './SortUsers.styled';
 
 const SortUsers = ({
@@ -18,6 +23,8 @@ const SortUsers = ({
     }
   ]
 }) => {
+  const [trigger] = useLazyGetUserListenCountQuery();
+
   const [sortOrder, setSortOrder] = useState(() => {
     return localStorage.getItem('userSortOrder') || 'defaultValue';
   });
@@ -75,6 +82,12 @@ const SortUsers = ({
               );
             })}
           </SortSelect>
+          <Button
+            text={'Перерахувати прослуховування'}
+            fontsize={'14px'}
+            padding={'8px'}
+            onClick={() => trigger()}
+          />
         </SortWrapper>
       )}
     </>
