@@ -1,23 +1,25 @@
-import { Link } from "react-router-dom";
-import Pagination from "rc-pagination";
+import { useNavigate, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+
+import { Link } from 'react-router-dom';
+import Pagination from 'rc-pagination';
 import {
   Table,
   TableRow,
   TableCell,
   RowTitle,
-  WrapperTablePagination,
-} from "../SearchUsers/SearchUsers.styled";
-import { Button } from "../../Button/Button";
+  WrapperTablePagination
+} from '../SearchUsers/SearchUsers.styled';
+import { Button } from '../../Button/Button';
 import {
   useUnblockUserByIdMutation,
   useAccessUserUpdateByIdMutation,
-  useSendMailUserByIdMutation,
-} from "../../../redux/dataUsersSlice";
-import { useNavigate, useParams } from "react-router-dom";
-import React, { useState, useEffect } from "react";
-import { ButtonSwitch } from "../ButtonSwitch/ButtonSwitch";
-import { Modal } from "../../Modal/Modal";
-import { TextModal } from "../../Modal/Modal.styled";
+  useSendMailUserByIdMutation
+} from '../../../redux/dataUsersSlice';
+
+import { ButtonSwitch } from '../ButtonSwitch/ButtonSwitch';
+import { Modal } from '../../Modal/Modal';
+import { TextModal } from '../../Modal/Modal.styled';
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
@@ -26,11 +28,11 @@ const UsersTable = ({ users, visibleColumns }) => {
   const [activeModal, setActiveModal] = useState(null);
   const handleShowModal = (modalContent) => {
     setActiveModal(modalContent);
-    document.body.classList.add("modal-open");
+    document.body.classList.add('modal-open');
   };
 
   const handleCloseModal = () => {
-    document.body.classList.remove("modal-open");
+    document.body.classList.remove('modal-open');
     setActiveModal(null);
   };
 
@@ -38,10 +40,10 @@ const UsersTable = ({ users, visibleColumns }) => {
     setHoveredRow(index);
   };
   const formatDate = (dateString) => {
-    const originalDate = new Date("2023-11-10T14:58:20.594Z");
+    const originalDate = new Date('2023-11-10T14:58:20.594Z');
 
-    const day = String(originalDate.getDate()).padStart(2, "0");
-    const month = String(originalDate.getMonth() + 1).padStart(2, "0"); // Месяцы начинаются с 0
+    const day = String(originalDate.getDate()).padStart(2, '0');
+    const month = String(originalDate.getMonth() + 1).padStart(2, '0'); // Месяцы начинаются с 0
     const year = originalDate.getFullYear();
     const formattedDate = `${day}.${month}.${year}`;
     return formattedDate;
@@ -58,14 +60,14 @@ const UsersTable = ({ users, visibleColumns }) => {
     try {
       const [unblockResult, accessResult] = await Promise.all([
         dispatchUnblock(id).unwrap(),
-        dispatchAccess(id).unwrap(),
+        dispatchAccess(id).unwrap()
       ]);
 
       // Если обе операции успешны, выполнить отправку письма
       await dispatchSendMail(id)
         .unwrap()
         .then(() => {
-          setActiveModal("sendMail");
+          setActiveModal('sendMail');
         })
         .catch((error) => alert(error.data.message));
 
@@ -76,7 +78,10 @@ const UsersTable = ({ users, visibleColumns }) => {
     }
   };
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(
+    () => localStorage.getItem('userPage') || 1
+  );
+
   const itemsPerPage = 10; // Количество элементов на странице
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -84,6 +89,7 @@ const UsersTable = ({ users, visibleColumns }) => {
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
+    localStorage.setItem('userPage', newPage);
   };
   // console.log("users.length :>> ", users);
   return (
@@ -112,7 +118,7 @@ const UsersTable = ({ users, visibleColumns }) => {
               return (
                 <TableRow
                   key={user._id}
-                  className={index === hoveredRow ? "hovered" : ""}
+                  className={index === hoveredRow ? 'hovered' : ''}
                 >
                   {visibleColumns.map((column, columnIndex, array) => (
                     <TableCell
@@ -120,17 +126,19 @@ const UsersTable = ({ users, visibleColumns }) => {
                       isFirstColumn={columnIndex === 0}
                       isLastColumn={columnIndex === array.length - 1}
                     >
-                      {column.type === "date" ? (
+                      {column.type === 'date' ? (
                         formatDate(user[column.key])
-                      ) : column.type === "name" ? (
+                      ) : column.type === 'name' ? (
                         user.name ? (
                           user.name
                         ) : (
                           capitalize(user.firstName) +
-                          " " +
+                          ' ' +
                           capitalize(user.lastName)
                         )
-                      ) : column.type === "nameLink" ? (
+                      ) : column.type === 'listens' ? (
+                        <div>{user.listenCount}</div>
+                      ) : column.type === 'nameLink' ? (
                         user.name ? (
                           <Link
                             to={`/admin/users/carduser/${user._id}`}
@@ -138,7 +146,7 @@ const UsersTable = ({ users, visibleColumns }) => {
                             onMouseLeave={() => handleRowHover(null)}
                           >
                             {`${capitalize(user.name)} ${
-                              user.userFop === "tov" && "ТОВ"
+                              user.userFop === 'tov' && 'ТОВ'
                             }`}
                           </Link>
                         ) : (
@@ -149,10 +157,10 @@ const UsersTable = ({ users, visibleColumns }) => {
                           >
                             {`${capitalize(user.firstName)} ${capitalize(
                               user.lastName
-                            )} ${user.userFop === "fop" && "ФОП"}`}
+                            )} ${user.userFop === 'fop' && 'ФОП'}`}
                           </Link>
                         )
-                      ) : column.type === "link" ? (
+                      ) : column.type === 'link' ? (
                         <Link
                           to={`/admin/users/carduser/${user._id}`}
                           onMouseEnter={() => handleRowHover(index)}
@@ -160,7 +168,7 @@ const UsersTable = ({ users, visibleColumns }) => {
                         >
                           картка
                         </Link>
-                      ) : column.type === "nameLinkEditor" ? (
+                      ) : column.type === 'nameLinkEditor' ? (
                         <Link
                           to={`/admin/users/cardeditor/${user._id}`}
                           onMouseEnter={() => handleRowHover(index)}
@@ -168,26 +176,26 @@ const UsersTable = ({ users, visibleColumns }) => {
                         >
                           {`${user.firstName} ${user.lastName}`}
                         </Link>
-                      ) : column.type === "typeEditor" ? (
+                      ) : column.type === 'typeEditor' ? (
                         <>
                           {user.editorRole
-                            ? "Музичний редактор"
-                            : "Адміністратор"}{" "}
+                            ? 'Музичний редактор'
+                            : 'Адміністратор'}{' '}
                         </>
-                      ) : column.key === "access" ? (
+                      ) : column.key === 'access' ? (
                         <ButtonSwitch
                           isTrue={user[column.key]}
                           idUser={user._id}
                         />
-                      ) : column.key === "status" ? (
+                      ) : column.key === 'status' ? (
                         <>
                           {user[column.key] === true
-                            ? "Відкрито"
-                            : "Заблоковано"}
+                            ? 'Відкрито'
+                            : 'Заблоковано'}
                         </>
-                      ) : column.key === "sendEmail" ? (
+                      ) : column.key === 'sendEmail' ? (
                         <Button
-                          border={"1px solid rgb(23 22 28 / 50%) "}
+                          border={'1px solid rgb(23 22 28 / 50%) '}
                           type="button"
                           text="Відправити"
                           padding="8px"
@@ -207,9 +215,9 @@ const UsersTable = ({ users, visibleColumns }) => {
         {users.length > 10 && (
           <div
             style={{
-              display: "flex",
-              marginLeft: "auto",
-              alignItems: "center",
+              display: 'flex',
+              marginLeft: 'auto',
+              alignItems: 'center'
             }}
           >
             {/* <SelectPageSize
@@ -220,7 +228,7 @@ const UsersTable = ({ users, visibleColumns }) => {
           /> */}
 
             <Pagination
-              style={{ marginBottom: "12px" }}
+              style={{ marginBottom: '12px' }}
               defaultCurrent={1}
               current={currentPage}
               total={users.length}
@@ -236,10 +244,10 @@ const UsersTable = ({ users, visibleColumns }) => {
           </div>
         )}
       </WrapperTablePagination>
-      {activeModal === "sendMail" && (
+      {activeModal === 'sendMail' && (
         <Modal
-          width={"664px"}
-          padding={"38px 38px "}
+          width={'664px'}
+          padding={'38px 38px '}
           onClose={handleCloseModal}
           showCloseButton={true}
           flexDirection="column"

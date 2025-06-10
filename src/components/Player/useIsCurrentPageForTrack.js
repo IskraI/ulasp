@@ -12,7 +12,7 @@ const useIsCurrentPageForTrack = () => {
 
   const idx = useCallback(() => {
     return preloadSrc?.findIndex(
-      (el) => el.id === playerState.src[indexTrack]?.id
+      (el) => el?.id === playerState.src[indexTrack]?.id
     );
   }, [indexTrack, playerState.src, preloadSrc]);
 

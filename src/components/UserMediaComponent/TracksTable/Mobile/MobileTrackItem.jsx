@@ -26,6 +26,8 @@ import {
   useDeleteTrackFromAddMutation
 } from '../../../../redux/tracksUserSlice';
 import { useRemoveTrackFromPlaylistUserMutation } from '../../../../redux/playlistsUserSlice';
+import { useAddTrackToPlaylistUserMutation } from '../../../../redux/playlistsUserSlice';
+import { tracksUserApi } from '../../../../redux/tracksUserSlice';
 // END OF REDUX
 import {
   SongRow,
@@ -54,7 +56,8 @@ const MobileTrackItem = ({
   duration,
   countOfSkip,
   isAddTrackUser,
-  options
+  options,
+  addTrackInModal
 }) => {
   if (options === undefined || options === null) {
     options = optionsDefault;
@@ -63,6 +66,7 @@ const MobileTrackItem = ({
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
 
+  const [addTracks] = useAddTrackToPlaylistUserMutation();
   const [addTrack] = useAddTrackToAddMutation();
   const [deleteTrack] = useDeleteTrackFromAddMutation();
 
@@ -148,7 +152,7 @@ const MobileTrackItem = ({
     if (!comparedPlayerSRC && futurePlayerSRC.length !== 0) {
       dispatch(setSrcPlaying({ indexTrack: index + countOfSkip }));
     } else {
-    //   dispatch(setCurrentIndex(index + countOfSkip));
+      //   dispatch(setCurrentIndex(index + countOfSkip));
     }
 
     setIsPlayingTrack(isPlaying);
@@ -172,6 +176,31 @@ const MobileTrackItem = ({
           duration: 6000
         });
       });
+  };
+
+  const addingMultipleTracks = () => {
+    const tracksIdList = [idTrack];
+
+    addTracks({ playListId, tracksIdList })
+      .then(() => {
+        toast.info(title, {
+          description: 'додано',
+          position: 'bottom-center',
+          duration: 6000
+        });
+      })
+      .finally(() => {
+        setTimeout(
+          () => dispatch(tracksUserApi.util.invalidateTags(['Tracks'])),
+          1000
+        );
+      });
+  };
+
+  const addTrackToPlayList = () => {
+    addTrackInModal
+      ? addingMultipleTracks()
+      : setShowModalAddTrackToPlaylist(true);
   };
 
   return (
@@ -219,9 +248,7 @@ const MobileTrackItem = ({
                 removeTrackFromAddTrackFn={removeTrackFromAdd}
                 addTrackToAddTrackFn={addTrackToAdd}
                 isAddTrack={isAddTrack}
-                addTrackToPlaylistFn={() =>
-                  setShowModalAddTrackToPlaylist(true)
-                }
+                addTrackToPlaylistFn={addTrackToPlayList}
                 deleteTrackFn={deleteTrackFromPlaylist}
                 menuOptions={options?.menu}
               />
@@ -257,5 +284,6 @@ MobileTrackItem.propTypes = {
   duration: PropTypes.string,
   countOfSkip: PropTypes.number,
   isAddTrackUser: PropTypes.bool,
-  options: PropTypes.object
+  options: PropTypes.object,
+  addTrackInModal: PropTypes.bool
 };

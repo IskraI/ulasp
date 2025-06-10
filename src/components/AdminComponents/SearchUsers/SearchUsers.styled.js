@@ -1,7 +1,7 @@
-import styled from "@emotion/styled";
-import { colors, transition } from "../../../styles/vars";
+import styled from '@emotion/styled';
+import { colors, transition } from '../../../styles/vars';
 
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 
 export const Link = styled(NavLink)`
   &.active {
@@ -41,9 +41,9 @@ export const Input = styled.input`
   border: 1px solid ${colors.mainFontColor};
   background-color: transparent;
   outline: none;
-  position: ${(props) => props.pageType === "list" && "absolute"};
-  top: ${(props) => props.pageType === "list" && " 104px"};
-  right: ${(props) => props.pageType === "list" && "60px"};
+  position: ${(props) => props.pageType === 'list' && 'absolute'};
+  top: ${(props) => props.pageType === 'list' && ' 104px'};
+  right: ${(props) => props.pageType === 'list' && '60px'};
   transition: ${transition.duration};
   &:hover,
   &:focus {
@@ -104,7 +104,7 @@ export const RowTitle = styled.th`
   padding: 8px;
 
   flex: ${(props) =>
-    props.isFirstColumn ? "0 0 20%" : props.isLastColumn ? "0 0 10%" : "1"};
+    props.isFirstColumn ? '0 0 20%' : props.isLastColumn ? '0 0 10%' : '1'};
 `;
 
 export const TableRow = styled.tr`
@@ -125,7 +125,7 @@ export const TableCell = styled.td`
   padding: 8px;
   text-align: left;
   flex: ${(props) =>
-    props.isFirstColumn ? "0 0 20%" : props.isLastColumn ? "0 0 10%" : "1"};
+    props.isFirstColumn ? '0 0 20%' : props.isLastColumn ? '0 0 10%' : '1'};
 `;
 
 export const TitleTab = styled.h3`
