@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { colors, sizes, media } from '../../styles/vars';
 
+import bgImageSiteBarNavMobile from '../../assets/Background@2x.jpg';
+
 export const SiteBarNavConteiner = styled.div`
   display: flex;
   flex-direction: column;
@@ -73,7 +75,7 @@ export const SiteBarNavContainerMobile = styled.div`
     transparent 50%,
     rgba(255, 243, 191, 0.5) 100%
   );
-  background-image: url('../src/assets/Background@2x.jpg');
+  background-image: url(${bgImageSiteBarNavMobile});
 
   background-size: auto;
   position: fixed;
