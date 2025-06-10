@@ -73,7 +73,7 @@ export const SiteBarNavContainerMobile = styled.div`
     transparent 50%,
     rgba(255, 243, 191, 0.5) 100%
   );
-  background-image: url('/src/assets/Background@2x.jpg');
+  background-image: url('../src/assets/Background@2x.jpg');
 
   background-size: auto;
   position: fixed;
