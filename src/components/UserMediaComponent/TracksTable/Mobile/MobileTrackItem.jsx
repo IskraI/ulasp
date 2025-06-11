@@ -148,11 +148,10 @@ const MobileTrackItem = ({
 
   const playMusic = () => {
     const comparedPlayerSRC = compareArray(futurePlayerSRC, playerSRC);
-
     if (!comparedPlayerSRC && futurePlayerSRC.length !== 0) {
       dispatch(setSrcPlaying({ indexTrack: index + countOfSkip }));
     } else {
-      //   dispatch(setCurrentIndex(index + countOfSkip));
+      dispatch(setCurrentIndex(index + countOfSkip));
     }
 
     setIsPlayingTrack(isPlaying);

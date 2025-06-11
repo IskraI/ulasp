@@ -51,8 +51,6 @@ const MobileSongList = ({
   const playerState = useSelector(getPlayerState);
   const { id: idUser } = useSelector(getUserState);
 
-  const [currentLocalPage, setCurrentLocalPage] = useState(1);
-
   const skip = (currentPage - 1) * pageSize;
 
   const currentPageGlobalState = playerState.currentPage;
@@ -92,9 +90,9 @@ const MobileSongList = ({
   };
 
   useEffect(() => {
-    if (addTrackInModal) {
-      return;
-    }
+    // if (addTrackInModal) {
+    //   return;
+    // }
     if (currentPage === 1 && !isFetching) {
       const trackURL = tracksSRC?.map((track) => {
         const transformTrackObject = {
