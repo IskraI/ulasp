@@ -8,6 +8,8 @@ import {
   useCallback
 } from 'react';
 
+import { useNavigate } from 'react-router-dom';
+
 import useIsMobile from '../../hooks/useMobile';
 
 import { BASE_URL } from '../../constants/constants';
@@ -46,6 +48,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
   const playerRef = useRef();
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
+  const navigate = useNavigate();
 
   const {
     isPlaying,
@@ -60,6 +63,7 @@ const Player = ({ tracks = [], inHeader = false }) => {
   const currentTrackIndex = playerState.indexTrack;
 
   const currentPageSize = playerState.pageSize;
+  const currentLocation = playerState.navigate;
   const [isMobile] = useIsMobile(1200);
   const [currentTrack, setTrackIndex] = useState();
   const [isPressedNext, setIsPressedNext] = useState(false);
@@ -382,11 +386,21 @@ const Player = ({ tracks = [], inHeader = false }) => {
     ? currentTrackName
     : currentTrackName;
 
+  console.log('currPageTrack', currPageTrack);
+
   return (
     <>
       <PlayerWrapper inHeader={inHeader}>
         <>
-          <TrackInfoWrapper inHeader={inHeader}>
+          <TrackInfoWrapper
+            inHeader={inHeader}
+            onClick={() => {
+              console.log('Нажали', currentLocation);
+              console.log('currPageTrack', currPageTrack);
+              dispatch(setNextPage({ currentPage: currPageTrack }));
+              navigate(currentLocation);
+            }}
+          >
             <TracksArtist inHeader={inHeader} title={trackArtist}>
               {trackArtist}
             </TracksArtist>

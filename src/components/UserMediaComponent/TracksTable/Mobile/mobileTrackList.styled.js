@@ -19,19 +19,20 @@ export const SongRow = styled.li`
   justify-content: space-between;
   align-items: center;
   padding: 10px 14px;
-  /* border-bottom: 1px solid #e1e1e1; */
-  /* background: #fff; */
-  transition: background 0.2s;
 
-  /* &:hover {
-    background: #f9f9f9;
-  } */
+  transition: background 0.2s;
 
   &:nth-of-type(even) {
     background-color: rgba(234, 234, 234, 0.32);
   }
 
   border-radius: 10px;
+
+  border: ${({ isPlayingTrack }) => {
+    if (isPlayingTrack) {
+      return '2px solid green';
+    }
+  }};
 `;
 
 export const LeftSection = styled.div`

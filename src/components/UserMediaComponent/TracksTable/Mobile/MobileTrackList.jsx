@@ -41,7 +41,7 @@ const MobileSongList = ({
   tracksSRC,
   isSorted,
   options,
-  addTrackInModal
+  addTrackInModal = false
 }) => {
   if (options === undefined || options === null) {
     options = optionsDefault;
@@ -90,9 +90,9 @@ const MobileSongList = ({
   };
 
   useEffect(() => {
-    // if (addTrackInModal) {
-    //   return;
-    // }
+    if (addTrackInModal) {
+      return;
+    }
     if (currentPage === 1 && !isFetching) {
       const trackURL = tracksSRC?.map((track) => {
         const transformTrackObject = {

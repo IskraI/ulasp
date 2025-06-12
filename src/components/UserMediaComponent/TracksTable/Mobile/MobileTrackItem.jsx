@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 import { BASE_URL } from '../../../../constants/constants';
 import {
@@ -65,6 +66,7 @@ const MobileTrackItem = ({
 
   const dispatch = useDispatch();
   const playerState = useSelector(getPlayerState);
+  const location = useLocation();
 
   const [addTracks] = useAddTrackToPlaylistUserMutation();
   const [addTrack] = useAddTrackToAddMutation();
@@ -149,7 +151,12 @@ const MobileTrackItem = ({
   const playMusic = () => {
     const comparedPlayerSRC = compareArray(futurePlayerSRC, playerSRC);
     if (!comparedPlayerSRC && futurePlayerSRC.length !== 0) {
-      dispatch(setSrcPlaying({ indexTrack: index + countOfSkip }));
+      dispatch(
+        setSrcPlaying({
+          indexTrack: index + countOfSkip,
+          navigate: location.pathname
+        })
+      );
     } else {
       dispatch(setCurrentIndex(index + countOfSkip));
     }
@@ -203,7 +210,7 @@ const MobileTrackItem = ({
   };
 
   return (
-    <SongRow key={_id}>
+    <SongRow key={_id} isPlayingTrack={isPlayingTrack}>
       <LeftSection>
         {options?.playButton && (
           <PlayButton
