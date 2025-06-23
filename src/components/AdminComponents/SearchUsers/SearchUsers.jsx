@@ -25,8 +25,16 @@ export const SearchUsers = ({
   const [sortedData, setSortedData] = useState([]);
   const [showNoResults, setShowNoResults] = useState(false);
 
+  const [isSearching, setIsSearching] = useState(false);
+
   const handleSearchTermChange = (value) => {
     setSearchTerm(value);
+
+    if (value === '') {
+      setIsSearching(false);
+      return;
+    }
+    setIsSearching(true);
   };
 
   useMemo(() => {
@@ -34,9 +42,9 @@ export const SearchUsers = ({
       const filtered = dataUsers.filter((user) =>
         [user.name, user.firstName, user.lastName, user.contractNumber]
           .filter(Boolean)
-          .some((field) =>
-            field.toLowerCase().includes(searchTerm.toLowerCase())
-          )
+          .some((field) => {
+            return field.toLowerCase().includes(searchTerm.toLowerCase());
+          })
       );
       setFilteredData(filtered);
       setShowNoResults(filtered.length === 0);
@@ -76,7 +84,11 @@ export const SearchUsers = ({
       ) : sortedData.length === 0 && showNoResults ? (
         <TextInfo>не знайдено</TextInfo>
       ) : (
-        <UsersTable users={sortedData} visibleColumns={visibleColumns} />
+        <UsersTable
+          users={sortedData}
+          visibleColumns={visibleColumns}
+          isSearching={isSearching}
+        />
       )}
     </>
   );

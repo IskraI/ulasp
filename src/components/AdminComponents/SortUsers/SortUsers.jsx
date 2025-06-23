@@ -4,6 +4,8 @@ import { useLocation } from 'react-router-dom';
 
 // REDUX
 import { useLazyGetUserListenCountQuery } from '../../../redux/statisticSlice';
+import { dataUsersApi } from '../../../redux/dataUsersSlice';
+import { useDispatch } from 'react-redux';
 // END OF REDUX
 
 import { Button } from '../../Button/Button';
@@ -23,6 +25,7 @@ const SortUsers = ({
     }
   ]
 }) => {
+  const dispatch = useDispatch();
   const [trigger] = useLazyGetUserListenCountQuery();
 
   const [sortOrder, setSortOrder] = useState(() => {
@@ -86,7 +89,10 @@ const SortUsers = ({
             text={'Перерахувати прослуховування'}
             fontsize={'14px'}
             padding={'8px'}
-            onClick={() => trigger()}
+            onClick={() => {
+              trigger();
+              dispatch(dataUsersApi.util.invalidateTags(['dataUsers']));
+            }}
           />
         </SortWrapper>
       )}
