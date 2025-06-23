@@ -23,7 +23,7 @@ import { TextModal } from '../../Modal/Modal.styled';
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
-const UsersTable = ({ users, visibleColumns }) => {
+const UsersTable = ({ users, visibleColumns, isSearching = false }) => {
   const [hoveredRow, setHoveredRow] = useState(null);
   const [activeModal, setActiveModal] = useState(null);
   const handleShowModal = (modalContent) => {
@@ -82,6 +82,13 @@ const UsersTable = ({ users, visibleColumns }) => {
     () => localStorage.getItem('userPage') || 1
   );
 
+  useEffect(() => {
+    if (!isSearching) return;
+    if (isSearching) {
+      setCurrentPage(1);
+    }
+  }, [isSearching]);
+
   const itemsPerPage = 10; // Количество элементов на странице
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -113,7 +120,7 @@ const UsersTable = ({ users, visibleColumns }) => {
           <tbody>
             {currentItems.map((user, index) => {
               {
-                // console.log("users", user._id, user.access);
+                // console.log('users', user._id, user.access);
               }
               return (
                 <TableRow

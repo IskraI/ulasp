@@ -4,7 +4,10 @@ import { SearchUsers } from '../SearchUsers/SearchUsers';
 import { Loader } from '../../Loader/Loader';
 
 const ListUsers = ({ searchTerm }) => {
-  const { data, isLoading } = useGetUsersListQuery();
+  const { data, isLoading } = useGetUsersListQuery(undefined, {
+    pollingInterval: 60000 * 2,
+    refetchOnFocus: true
+  });
 
   const visibleColumns = [
     { key: 'firstName', label: 'Ім’я', type: 'nameLink' },

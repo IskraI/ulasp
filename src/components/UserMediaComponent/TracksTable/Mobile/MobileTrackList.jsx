@@ -41,7 +41,7 @@ const MobileSongList = ({
   tracksSRC,
   isSorted,
   options,
-  addTrackInModal
+  addTrackInModal = false
 }) => {
   if (options === undefined || options === null) {
     options = optionsDefault;
@@ -50,8 +50,6 @@ const MobileSongList = ({
   const location = useLocation();
   const playerState = useSelector(getPlayerState);
   const { id: idUser } = useSelector(getUserState);
-
-  const [currentLocalPage, setCurrentLocalPage] = useState(1);
 
   const skip = (currentPage - 1) * pageSize;
 

@@ -9,7 +9,7 @@ const AdminCabinetPage = () => {
 
   //чекають на підтвердження ті у кого статус- status та доступ - access false
   const filteredUsers = useMemo(() => {
-    const users = data ? data.allUsers : [];
+    const users = data ? data?.allUsers : [];
     if (users) {
       return users.filter(
         (user) => user.status === false && user.access === false

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   preloadSrc: [],
@@ -15,10 +15,11 @@ const initialState = {
   pageSize: null,
   location: null,
   isSorted: false,
+  navigate: null
 };
 
 export const playerSlice = createSlice({
-  name: "player",
+  name: 'player',
   initialState,
 
   reducers: {
@@ -34,10 +35,10 @@ export const playerSlice = createSlice({
           isLastTrack: false,
           isLastPage: false,
           pageSize: action.payload.pageSize,
-          location: action.payload.location,
+          location: action.payload.location
         };
         return state;
-      },
+      }
     },
     setDefaultPreloadSrc: {
       reducer(state) {
@@ -45,10 +46,10 @@ export const playerSlice = createSlice({
           ...state,
           preloadSrc: [],
           isLoaded: false,
-          isPlaying: true,
+          isPlaying: true
         };
         return state;
-      },
+      }
     },
     setSrcPlaying: {
       reducer(state, action) {
@@ -64,9 +65,10 @@ export const playerSlice = createSlice({
           isLoaded: true,
           isPlaying: true,
           isSorted: false,
+          navigate: action.payload.navigate
         };
         return state;
-      },
+      }
     },
 
     setCurrentIndex: {
@@ -79,11 +81,11 @@ export const playerSlice = createSlice({
           nextPage: state.isPaused ? state.nextPage : null,
           isLastTrack: state.isPaused ? state.isLastTrack : false,
           isLastPage: state.isPaused ? state.isLastTrack : false,
-          isSorted: false,
+          isSorted: false
           // isFirstPlay: state.isPaused ? false : true,
         };
         return state;
-      },
+      }
     },
     stopPlay: {
       reducer(state, action) {
@@ -92,14 +94,14 @@ export const playerSlice = createSlice({
 
           indexTrack: action.payload,
           isPlaying: false,
-          isFirstPlay: true,
+          isFirstPlay: true
         };
         return state;
-      },
+      }
     },
     pause: {
       reducer(state, action) {
-        console.log("action.payload pause ", action);
+        console.log('action.payload pause ', action);
         state = {
           ...state,
           //полурабочая версия
@@ -107,11 +109,11 @@ export const playerSlice = createSlice({
           // isPaused: state.isPaused ? false : true,
           isPlaying: action.payload.isPlaying,
           isPaused: action.payload.isPaused,
-          isLoaded: true,
+          isLoaded: true
           // isFirstPlay: false,
         };
         return state;
-      },
+      }
     },
     updateIsFirstPlay: {
       reducer(state, action) {
@@ -119,11 +121,11 @@ export const playerSlice = createSlice({
         state = {
           ...state,
 
-          isFirstPlay: action.payload,
+          isFirstPlay: action.payload
         };
 
         return state;
-      },
+      }
     },
     setLastTrack: {
       reducer(state, action) {
@@ -131,19 +133,19 @@ export const playerSlice = createSlice({
         state = {
           ...state,
           // isLastPage, isLastTrack
-          ...action.payload,
+          ...action.payload
         };
         return state;
-      },
+      }
     },
     setDefaultState: {
       reducer(state) {
         console.log(state);
         state = {
-          ...initialState,
+          ...initialState
         };
         return state;
-      },
+      }
     },
     setNextPage: {
       reducer(state, action) {
@@ -151,21 +153,21 @@ export const playerSlice = createSlice({
           ...state,
           // preloadSrc: [],
           src: state?.src?.length === 0 ? state.preloadSrc : state.src,
-          currentPage: action.payload.currentPage,
+          currentPage: action.payload.currentPage
         };
         return state;
-      },
+      }
     },
     setIsSorted: {
       reducer(state, action) {
         state = {
           ...state,
-          isSorted: action.payload.isSorted,
+          isSorted: action.payload.isSorted
         };
         return state;
-      },
-    },
-  },
+      }
+    }
+  }
 });
 
 export const {
@@ -180,7 +182,7 @@ export const {
   setDefaultPreloadSrc,
   setNextPage,
   isFirstPlay,
-  setIsSorted,
+  setIsSorted
 } = playerSlice.actions;
 
 export const playerReducer = playerSlice.reducer;
