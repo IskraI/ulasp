@@ -1,54 +1,57 @@
-import { StatsListWrapper, StatItem } from "./Statistic.styled";
 import {
   useGetNewClientsCountQuery,
   useGetTracksCountAdminQuery,
   useGetOnlineClientsCountQuery,
   useGetNewClientsByMonthCountQuery,
-  useGetClientsCountQuery,
-} from "../../redux/statisticSlice";
-import { useState, useEffect, useMemo } from "react";
+  useGetClientsCountQuery
+} from '../../redux/statisticSlice';
+
+import { StatsListWrapper, StatItem } from './Statistic.styled';
 
 export const Statistic = () => {
   const {
     data: tracksCount,
     error: isErrorTracksCount,
-    isFetching: isFetchingTracksCount,
-  } = useGetTracksCountAdminQuery();
+    isFetching: isFetchingTracksCount
+  } = useGetTracksCountAdminQuery(undefined, {
+    refetchOnMountOrArgChange: true
+  });
   const {
     data: newClientsCount,
     error: isErrorNewClients,
-    isFetching: isFetchingNewClients,
-    refetch: refetchNewClientsCount,
-  } = useGetNewClientsCountQuery();
+    isFetching: isFetchingNewClients
+  } = useGetNewClientsCountQuery(undefined, {
+    refetchOnMountOrArgChange: true
+  });
   const {
     data: onlineClientsCount,
     error: isErrorOnlineClients,
-    isFetching: isFetchingOnlineClients,
-    refetch: refetchOnlineClients,
-  } = useGetOnlineClientsCountQuery();
+    isFetching: isFetchingOnlineClients
+  } = useGetOnlineClientsCountQuery(undefined, {
+    pollingInterval: 60000,
+    refetchOnMountOrArgChange: true
+  });
   const {
     data: newClientsByMonthCount,
     error: isErrorNewClientsByMonthCount,
-    isFetching: isFetchingNewClientsByMonthCount,
-  } = useGetNewClientsByMonthCountQuery();
+    isFetching: isFetchingNewClientsByMonthCount
+  } = useGetNewClientsByMonthCountQuery(undefined, {
+    refetchOnMountOrArgChange: true
+  });
 
   const {
     data: clientsCount,
     error: isErrorClientsCount,
-    isFetching: isFetchingClientsCount,
-  } = useGetClientsCountQuery();
-
-  useEffect(() => {
-    refetchOnlineClients();
-    refetchNewClientsCount();
-    // Выполнить запрос при монтировании компонента
-  }, [refetchOnlineClients, refetchNewClientsCount]);
+    isFetching: isFetchingClientsCount
+  } = useGetClientsCountQuery(undefined, {
+    refetchOnMountOrArgChange: true
+  });
 
   const getCurrentMonth = () => {
     const currentDate = new Date();
 
-    const options = { month: "long" };
-    const currentMonthStringUA = currentDate.toLocaleString("uk-UA", options);
+    const options = { month: 'long' };
+    const currentMonthStringUA = currentDate.toLocaleString('uk-UA', options);
 
     return currentMonthStringUA;
   };

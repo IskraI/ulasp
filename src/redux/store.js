@@ -32,6 +32,7 @@ const persistConfig = {
   storage,
   whitelist: [
     'token',
+    'refreshToken',
     'adminRole',
     'userRole',
     'editorRole',
@@ -40,18 +41,6 @@ const persistConfig = {
     'access'
   ]
   // whitelist: ["token","adminRole", "userRole", "editorRole", "isLoggedIn"],
-};
-
-const loggerMiddleware = (store) => (next) => (action) => {
-  console.log('%cAction dispatched:', 'color: green;', action);
-  console.log('%cState before:', 'color: gray;', store.getState());
-
-  const result = next(action);
-
-  console.log('%cState after:', 'color: blue;', store.getState());
-  console.trace(); // покажет стек вызова (компонент-инициатор)
-
-  return result;
 };
 
 const playerPersistConfig = {
@@ -85,7 +74,6 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
       }
     })
-      // .concat(loggerMiddleware)
       .concat(authApi.middleware)
       .concat(authClientApi.middleware)
       .concat(dataUsersApi.middleware)

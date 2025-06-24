@@ -1,44 +1,40 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASE_URL } from "../constants/constants";
+import { createApi } from '@reduxjs/toolkit/query/react';
+
+import baseQueryWithReauth from './userAuthBaseQuery';
 
 export const shopsUserApi = createApi({
-  reducerPath: "shopsUserApi",
-  tagTypes: ["Shops"],
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-    prepareHeaders: (headers, { getState }) => {
-      const token = getState().user.token;
-      if (token) {
-        headers.set("authorization", `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  reducerPath: 'shopsUserApi',
+  tagTypes: ['Shops'],
+  baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     getAllShopsUser: builder.query({
-      query: (page = "", limit = "") => ({
+      query: (page = '', limit = '') => ({
         url: `/user/shops/all?${page && `page=${page}`} & ${
           limit && `limit=${limit}`
-        }`,
+        }`
       }),
-      providesTags: ["Shops"],
+      providesTags: ['Shops']
     }),
     getShopByIdforUser: builder.query({
       query: (id) => ({ url: `/user/shops/${id}` }),
-      providesTags: (_result, _err, id) => [{ type: "Shops", id }],
+      providesTags: (_result, _err, id) => [{ type: 'Shops', id }]
     }),
     getShopCategoryByIdUser: builder.query({
       query: (id) => ({ url: `/user/shops/shopitem/${id}` }),
 
-      providesTags: (_result, _err, id) => [{ type: "ShopItem", id }],
+      providesTags: (_result, _err, id) => [{ type: 'ShopItem', id }]
     }),
- getSubShopCategoryByIdUser: builder.query({
+    getSubShopCategoryByIdUser: builder.query({
       query: (id) => ({ url: `/user/shops/shopitem/subcategory/${id}` }),
 
-      providesTags: (_result, _err, id) => [{ type: "SubShopItem", id }],
-    }),
-
-      }),
+      providesTags: (_result, _err, id) => [{ type: 'SubShopItem', id }]
+    })
+  })
 });
 
-export const { useGetAllShopsUserQuery, useGetShopByIdforUserQuery, useGetShopCategoryByIdUserQuery, useGetSubShopCategoryByIdUserQuery } = shopsUserApi;
+export const {
+  useGetAllShopsUserQuery,
+  useGetShopByIdforUserQuery,
+  useGetShopCategoryByIdUserQuery,
+  useGetSubShopCategoryByIdUserQuery
+} = shopsUserApi;

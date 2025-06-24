@@ -1,93 +1,85 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASE_URL } from "../constants/constants";
+import { createApi } from '@reduxjs/toolkit/query/react';
+
+import baseQueryWithReauth from './userAuthBaseQuery';
 
 export const tracksUserApi = createApi({
-  reducerPath: "tracksUserApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-    prepareHeaders: (headers, { getState }) => {
-      const token = getState().user.token;
-      if (token) {
-        headers.set("authorization", `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
-  tagTypes: ["Tracks", "AddTrackByUsers", "TracksByUser"],
+  reducerPath: 'tracksUserApi',
+  baseQuery: baseQueryWithReauth,
+  tagTypes: ['Tracks', 'AddTrackByUsers', 'TracksByUser'],
 
   endpoints: (builder) => ({
     getAllTracksforUser: builder.query({
-      query: ({ page = "", limit = "", query = "" }) => ({
+      query: ({ page = '', limit = '', query = '' }) => ({
         url: `/user/tracks/latestTracks?${page && `page=${page}`} ${
           limit && `&limit=${limit}`
-        }${`&query=${query}`}`,
+        }${`&query=${query}`}`
       }),
 
-      providesTags: (_result, _err, id) => [{ type: "Tracks", id }],
+      providesTags: (_result, _err, id) => [{ type: 'Tracks', id }]
     }),
 
     getAllTracksForUsersPlaylist: builder.query({
-      query: ({ page = "", limit = "", query = "", id }) => ({
+      query: ({ page = '', limit = '', query = '', id }) => ({
         url: `/user/tracks/tracksForUserPlaylists?${page && `page=${page}`} ${
           limit && `&limit=${limit}`
-        }${`&query=${query}`}${`&id=${id}`}`,
+        }${`&query=${query}`}${`&id=${id}`}`
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["Tracks"],
+      providesTags: ['Tracks']
     }),
 
     getTracksByGenreId: builder.query({
-      query: ({ genreId, page = "", limit = "" }) => (
+      query: ({ genreId, page = '', limit = '' }) => (
         console.log(genreId, page, limit),
         {
           url: `user/genre/${genreId}/tracks?${page && `page=${page}`} ${
             limit && `&limit=${limit}`
-          }`,
+          }`
         }
       ),
       // invalidatesTags: ["Tracks"],
-      providesTags: (_result, _error, genreId) => [{ type: "Tracks", genreId }],
+      providesTags: (_result, _error, genreId) => [{ type: 'Tracks', genreId }]
     }),
     deleteTrackFromAdd: builder.mutation({
       query: (id) => ({
         url: `/user/tracks/removeFromAdd/${id}`,
-        method: "DELETE",
+        method: 'DELETE'
       }),
-      invalidatesTags: ["TracksByUser"],
+      invalidatesTags: ['TracksByUser']
     }),
 
     addTrackToAdd: builder.mutation({
       query: (id) => ({
         url: `/user/tracks/add/${id}`,
-        method: "POST",
+        method: 'POST'
       }),
-      invalidatesTags: ["TracksByUser", "AddTrackByUsers"],
+      invalidatesTags: ['TracksByUser', 'AddTrackByUsers']
     }),
     deleteTrack: builder.mutation({
       query: (id) => ({
         url: `/user/tracks/delete/${id}`,
-        method: "DELETE",
+        method: 'DELETE'
       }),
-      invalidatesTags: ["Tracks"],
+      invalidatesTags: ['Tracks']
     }),
 
     getAllAddTrackByUser: builder.query({
-      query: ({ page = "", limit = "" }) => ({
+      query: ({ page = '', limit = '' }) => ({
         url: `user/tracks/add?${page && `page=${page}`} ${
           limit && `&limit=${limit}`
-        }`,
+        }`
       }),
-      providesTags: ["TracksByUser"],
+      providesTags: ['TracksByUser']
     }),
 
     updateListenCountTrackById: builder.mutation({
       query: (id) => ({
         url: `user/tracks/countlisten/${id}`,
-        method: "POST",
+        method: 'POST'
       }),
-      invalidatesTags: ["ListenCountTrack"],
-    }),
-  }),
+      invalidatesTags: ['ListenCountTrack']
+    })
+  })
 });
 
 export const {
@@ -98,5 +90,5 @@ export const {
   useGetAllTracksForUsersPlaylistQuery,
   useGetTracksByGenreIdQuery,
   useDeleteTrackMutation,
-  useUpdateListenCountTrackByIdMutation,
+  useUpdateListenCountTrackByIdMutation
 } = tracksUserApi;
